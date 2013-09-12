@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePostsTable extends Migration {
+class CreateCommentsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,16 +12,15 @@ class CreatePostsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('posts', function(Blueprint $table)
+		Schema::create('comments', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->integer('user_id');
-			$table->string('title');
-			$table->string('alias');
-			$table->string('tagline');
-			$table->string('category');
-			$table->string('image');
+			$table->integer('post_id');
 			$table->text('body');
+			$table->integer('up');
+			$table->integer('down');
+			$table->boolean('published');
 			$table->timestamps();
 		});
 	}
@@ -33,7 +32,7 @@ class CreatePostsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('posts');
+		Schema::drop('comments');
 	}
 
 }

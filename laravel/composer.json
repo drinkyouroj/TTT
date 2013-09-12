@@ -3,7 +3,9 @@
 	"description": "The Laravel Framework.",
 	"keywords": ["framework", "laravel"],
 	"require": {
-		"laravel/framework": "4.0.*"
+		"laravel/framework": "4.0.*",
+		"zizaco/entrust": "dev-master",
+		"zizaco/confide": "1.0.x"
 	},
 	"autoload": {
 		"classmap": [
