@@ -11,33 +11,33 @@
 |
 */
 
-//Normal Pages
-Route::get('/', 'HomeController@index');
-Route::get('about', 'HomeController@about');
-
-//Logged in Views
-Route::get('profile', 'HomeController@profile');
-
 
 //Rest API
-Route::group(array('prefix' => 'rest', 'before' => 'auth.basic'), function()
+Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 {
 	//Meat of the Application
-	Route::resource('post', 'PostController');
-    Route::resource('category', 'CategoryController');
-	Route::resource('profile', 'ProfileController');
-	Route::resource('comment', 'CommentController');
+	Route::resource('posts', 'PostController');
+    Route::resource('categories', 'CategoryController');
+	Route::resource('profiles', 'ProfileController');
+	Route::resource('comments', 'CommentController');
+	Route::resource('messages', 'MessageController');
 	
 	//Binary action controllers aka minimal information is passed (follow, fav, repost)
 	$binary_limits = array('only'=>array('index','create','show','destroy'));
-	Route::resource('follow', 'FollowController',$binary_limits);//let's limit the useable controller functions
-	Route::resource('favorite', 'FavoriteController',$binary_limits);
-	Route::resource('repost', 'RepostController',$binary_limits);
+	Route::resource('follows', 'FollowController',$binary_limits);//let's limit the useable controller functions
+	Route::resource('favorites', 'FavoriteController',$binary_limits);
+	Route::resource('reposts', 'RepostController',$binary_limits);
 	
 });
+
+//Admin protection.
+//Route::when('admin/*', 'admin');
+//Route::controller('admin','AdminController');
 
 //The Authentication Routes  (Confide RESTful route)
 Route::get('user/confirm/{code}', 'UserController@getConfirm');
 Route::get('user/reset/{token}', 'UserController@getReset');
 Route::controller( 'user', 'UserController');
 
+//Home and about pages
+Route::controller( '/', 'HomeController');

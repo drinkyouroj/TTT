@@ -32,16 +32,38 @@ App::after(function($request, $response)
 | integrates HTTP Basic authentication for quick, simple checking.
 |
 */
-
+/*
 Route::filter('auth', function()
 {
 	if (Auth::guest()) return Redirect::guest('login');
+});
+*/
+
+Route::filter('auth', function()
+{
+    if ( Auth::guest() ) // If the user is not logged in
+    {
+        // Set the loginRedirect session variable
+        Session::put( 'loginRedirect', Request::url() );
+
+        // Redirect back to user login
+        return Redirect::to( 'user/login' );
+    }
 });
 
 
 Route::filter('auth.basic', function()
 {
 	return Auth::basic('username');
+});
+
+
+Route::filter('admin', function()
+{
+    if (! Entrust::hasRole('admin') ) // Checks the current user
+    {
+        App::abort(404);
+    }
 });
 
 /*

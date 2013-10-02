@@ -11,13 +11,19 @@
 
 class UserController extends BaseController {
 
+	protected $layout = 'layouts.master';
+
+	public function getSignup(){
+		$this->getCreate();
+	}
+
     /**
      * Displays the form for account creation
      *
      */
     public function getCreate()
     {
-        return View::make(Config::get('confide::signup_form'));
+        $this->layout->content = View::make('user.signup');
     }
 
     /**
@@ -71,7 +77,7 @@ class UserController extends BaseController {
         }
         else
         {
-            return View::make(Config::get('confide::login_form'));
+            $this->layout->content = View::make('user.login');
         }
     }
 
@@ -155,7 +161,8 @@ class UserController extends BaseController {
      */
     public function getForgot()
     {
-        return View::make(Config::get('confide::forgot_password_form'));
+    	$this->layout->content = View::make('user.forgot');
+        //return View::make(Config::get('confide::forgot_password_form'));
     }
 
     /**
@@ -185,8 +192,9 @@ class UserController extends BaseController {
      */
     public function getReset( $token )
     {
-        return View::make(Config::get('confide::reset_password_form'))
-                ->with('token', $token);
+        //return View::make(Config::get('confide::reset_password_form'))
+        //        ->with('token', $token);
+        $this->layout->content = View::make('user.reset')->with('token', $token);
     }
 
     /**
@@ -224,8 +232,8 @@ class UserController extends BaseController {
     public function getLogout()
     {
         Confide::logout();
-        
-        return Redirect::to('/');
+        //Below view is to say "thank you"
+        $this->layout->content = View::make('user.logout');
     }
 
 }

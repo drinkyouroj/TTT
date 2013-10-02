@@ -19,7 +19,7 @@ class CreatePostsTable extends Migration {
 			$table->string('title');
 			$table->string('alias');
 			$table->string('tagline');
-			$table->string('category');
+			$table->integer('category');
 			$table->string('image');
 			$table->text('body');
 			$table->timestamps();

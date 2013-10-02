@@ -6,8 +6,12 @@
        
     
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-
+    <link href="{{Config::get('app.url')}}/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="{{Config::get('app.url')}}/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+	
+	<!--Application CSS-->
+	@yield('css')
+	
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="../../assets/js/html5shiv.js"></script>
@@ -15,18 +19,43 @@
     <![endif]-->
   </head>
   <body>
-    
-    <div class="container">
-    	<div class="row">
-			<div class="col-md-12">
-    		@yield('content','fudge')
-	    	</div>
+
+<div class="header-wrapper">
+  	<header class="container">
+  		<nav>
+
+  			<ul>
+  				@if(Auth::guest())
+  				<li>
+  					<a href="{{Config::get('app.url')}}/">Home</a>
+				</li>
+  				<li>
+  					<a href="{{Config::get('app.url')}}/user/login">Login</a>
+				</li>
+				<li>
+					<a href="{{Config::get('app.url')}}/user/signup">Signup</a>
+				</li>
+				<li>
+					<a href="{{Config::get('app.url')}}/user/signup">Signup</a>
+				</li>
+				@else
+				<li>
+  					<a href="{{Config::get('app.url')}}/user/logout">Logout</a>
+				</li>
+				@endif
+  			</ul>
+  		</nav>
+  	</header>
+</div>
+  	
+	<div class="container">
+		<div class="row">
+			@yield('content','Fudge no content defined.')
 	 	</div>
-    </div>
+	</div>
 	
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="//code.jquery.com/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+    <!--Extra Javascript-->
+	@yield('js')
+    
   </body>
 </html>

@@ -1,5 +1,7 @@
 <?php
 
+Blade::setEscapedContentTags('{{{','}}}');
+
 /*
 |--------------------------------------------------------------------------
 | Register The Laravel Class Loader
