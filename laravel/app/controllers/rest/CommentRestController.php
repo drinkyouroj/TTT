@@ -1,6 +1,5 @@
 <?php
-
-class CommentController extends \BaseController {
+class CommentRestController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.

@@ -16,6 +16,16 @@ class UserTableSeeder extends Seeder {
         $user->confirmed = 1;
 		$user->save();
 		
+		$user = new User;
+		
+		//First user
+        $user->username = 'max';
+        $user->email = 'max@y-designs.com';
+        $user->password = 'max';
+		$user->password_confirmation = 'max';
+        $user->confirmed = 1;
+		$user->save();
+		
     }
 	
 }

@@ -1,32 +1,48 @@
-@extends('layouts.master')
+@extends('master')
 
-
+@section('filters')
+	@include('partials/generic-filter')
+@stop
 
 @section('content')
 	
-	@if(Auth::check())
-		{{--
-			This is a logged in scenario.  This will display if the user is LOGGED IN.
-				Below is escaping the Ember.js handlebars layout by using an include.
-			--}}
+	{{--We'll implement the layout selector in the backend and we should use partials at that point to separate the layouts.--}}
+	
+	<div class="col-md-10 col-md-offset-1">
+		<div class="row top-featured">
+			
+			{{--This is temporary to get things working.--}}
+			
+			@foreach($featured as $post)
+				<div class="col-md-4">
+					<h3>{{ link_to('posts/'.$post->alias, $post->title) }}</h3>
+					<h4>by {{$post->user->username}}</h4>
+					<div class="the-content">
+						{{ substr($post->body, 0, 50) }}...
+						{{ link_to('posts/'.$post->alias, 'read on.') }}
+					</div>
+				</div>
+			@endforeach
+		</div>
 		
-		@include('handlebars/main')
-		
-		@include('handlebars/posts')
-		
-		@include('handlebars/profile')
-		
-		@include('handlebars/messages')
-		
-	@else
-		{{--
-			This is a not logged in scenario.  This will display if the user is not logged in.
-			--}}
-		@foreach($posts as $post)
-			<p>Test {{$post->id}}</p>
-		@endforeach
-	@endif	
-
+		@if(count($past_featured))
+		<div class="row bottom-featured">
+			<div class="past_featured_box">
+				@foreach($past_featured as $k => $post)
+					<div class="col-md-2 {{$k ? '': 'col-md-offset1'}}">{{--This will have offset of 1 if $k = 0 --}}
+						
+						<div class="the-image">
+							{{ link_to('posts/'.$post->alias, 'read on.') }}
+						</div>
+						<h3>{{ link_to('posts/'.$post->alias, $post->title) }}</h3>
+						<h4>by {{$post->user->username}}</h4>
+					</div>
+				@endforeach
+			</div>
+		</div>
+		@endif
+	</div>
+	
 @stop
 
 
@@ -35,36 +51,14 @@
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/jquery-1.9.1.js"></script>
 		
 	@if(Auth::check())
-		<!--Ember/Bootstrap-->
-		<script type="text/javascript">window.user_id = {{Auth::user()->id}};</script><!--//user id is passed as a global variable-->
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/handlebars-1.0.0.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/ember-1.0.0.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/ember-data-1.0.0.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/ember-easyForm-1.0.0.beta1.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/ember_bs/bs-core.min.js"></script>
-		
-		<!--App Router-->
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/app/app.js"></script>
-		
-		<!--Route extentions aka the real controllers-->
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/app/route.js"></script>
-
-		<!--Models-->
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/app/models/posts_model.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/app/models/profiles_model.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/app/models/messages_model.js"></script>
-		
-		<!--Controllers or really View-Models-->
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/app/controllers/posts.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/app/controllers/profiles.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/app/controllers/messages.js"></script>
-				
-		<!--Views-->
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/app/views/posts.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/app/views/profiles.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/app/views/messages.js"></script>
-		
+		<!--//user id is passed as a global variable-->
+		<script type="text/javascript">window.user_id = {{Auth::user()->id}};</script>
 	@else
 		
 	@endif
+@stop
+
+
+@section('css')
+
 @stop

@@ -28,27 +28,15 @@ class User extends ConfideUser {
 		return $this->hasMany('Message', 'from_uid');
 	}
 	
+	//users who follow this user.
+	public function followers()
+	{
+		return $this->hasMany('Follow', 'user_id');
+	}
+	
+	public function following()
+	{
+		return $this->hasMany('Follow', 'follower_id');
+	}
+	
 }
-/*
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableInterface;
-class User extends Eloquent implements UserInterface, RemindableInterface {
-	protected $table = 'users';
-	protected $hidden = array('password');
-	public function getAuthIdentifier()
-	{
-		return $this->getKey();
-	}
-
-	public function getAuthPassword()
-	{
-		return $this->password;
-	}
-	public function getReminderEmail()
-	{
-		return $this->email;
-	}
-
-}
- 
- */

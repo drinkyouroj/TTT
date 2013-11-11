@@ -1,6 +1,6 @@
 <script type="text/javascript">
-	function user_id() {
-		return <?php echo Auth::user()->id; ?>
+	function auth_user_id() {
+		return <?php echo Auth::user()->id; ?>;
 	}
 </script>
 
@@ -13,17 +13,29 @@
 	</div>
 </script>
 
+<!--Application -->
+<script type="text/x-handlebars" data-template-name="application">
+	<div class="container" role="main" id="main">
+  	{{partial 'menu'}}
+    {{outlet}}
+    {{partial 'footer'}}
+    </div>
+</script>
 
 <!--Main Page Display-->
-<script type="text/x-handlebars">
-	{{partial 'menu'}}
+<script type="text/x-handlebars" data-template-name="index">
+	
+	<div class="profile_info">
+		{{username}} {{#link-to 'profiles.edit' id}}Edit Profile {{/link-to}}
+	</div>
 	<div class="container">
 		{{outlet main}}
 	</div>
 </script>
 
-
 <!--Ember Partials-->
+
+<!--Menu-->
 <script type="text/x-handlebars" data-template-name="_menu">
 	<header class="container">
 		<div class="col-md-12 col-lg-12">
@@ -34,7 +46,7 @@
 						{{#link-to 'index' }}Home{{/link-to}}
 					</li>
 					<li>
-						{{#link-to 'posts' }}Posts{{/link-to}}
+						{{#link-to 'posts' }}My Posts{{/link-to}}
 					</li>
 					<li>
 						{{#link-to 'profiles' }}Profile{{/link-to}}
@@ -47,4 +59,14 @@
 			
 		</div>
 	</header>
+</script>
+
+<script type="text/x-handlebars" data-template-name="_footer">
+	<div class="footer-wrapper">
+	<footer>
+		<div class="">
+			
+		</div>
+	</footer>
+	</div>
 </script>

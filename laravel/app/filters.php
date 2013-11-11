@@ -14,6 +14,12 @@
 App::before(function($request)
 {
 	//
+	Blade::extend(function($value) {
+    	return preg_replace('/\{\?(.+)\?\}/', '<?php ${1} ?>', $value);
+	});
+	
+	
+	
 });
 
 
@@ -99,4 +105,9 @@ Route::filter('csrf', function()
 	{
 		throw new Illuminate\Session\TokenMismatchException;
 	}
+});
+
+//This will need to be figured out later as the view composer is unable to figure out how to reach the layouts.master.blade.php file
+View::composer('*', function($view) {
+	$view->with('categories', Category::all());
 });
