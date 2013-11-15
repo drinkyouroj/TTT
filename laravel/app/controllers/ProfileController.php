@@ -105,7 +105,8 @@ class ProfileController extends BaseController {
 			$post->save();
 			//Put it into the profile post table 
 			$profile_post = new ProfilePost;
-			$profile_post->user_id = Auth::user()->id;//post as new to yourself
+			$profile_post->profile_id = Auth::user()->id;//post on your wall
+			$profile_post->user_id = Auth::user()->id;//post by me
 			$profile_post->post_id = $post->id;
 			$profile_post->post_type = 'post';
 			$profile_post->save();
@@ -118,6 +119,7 @@ class ProfileController extends BaseController {
 				$profile_post->post_id = $post->id;//set the id of the post.
 				$profile_post->post_type = 'post';//new post by poster.
 				$profile_post->save();
+				//Gotta add notifications.
 			}
 			
 			return Redirect::to('profile');

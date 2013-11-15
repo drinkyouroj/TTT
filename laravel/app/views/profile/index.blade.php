@@ -57,9 +57,9 @@
 					</div>
 					<div class="the-taglines">
 						<span class="taglines">
-						{{$act->post->tagline1}} |
-						{{$act->post->tagline2}} |
-						{{$act->post->tagline3}}
+						{{$act->post->tagline_1}} |
+						{{$act->post->tagline_2}} |
+						{{$act->post->tagline_3}}
 						</span>
 					</div>
 				</section>
