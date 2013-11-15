@@ -111,3 +111,8 @@ Route::filter('csrf', function()
 View::composer('*', function($view) {
 	$view->with('categories', Category::all());
 });
+
+
+
+
+

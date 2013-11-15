@@ -21,12 +21,12 @@ class CreatePostsTable extends Migration {
 			$table->string('tagline_1');
 			$table->string('tagline_2');
 			$table->string('tagline_3');
-			$table->integer('category');
+			$table->string('category');
 			$table->enum('story_type', array(
 					'story',
 					'advice',
 					'thought'
-				));
+					));
 			$table->string('image');
 			$table->text('body');
 			$table->boolean('featured');

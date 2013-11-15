@@ -15,13 +15,14 @@ class CreateProfilepostsTable extends Migration {
 		Schema::create('profile_posts', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('post_id');
-			$table->integer('user_id');
+			$table->integer('profile_id');//This is the id that should be used to search for (EX to compare against Session::get('user_id')) 
+			$table->integer('post_id');//The post associated witht he feed item
+			$table->integer('user_id');//user associated with the feed item
 			$table->enum('post_type', array(
 						'post',
 						'repost',
 						'favorite'
-						));
+						));				//Action associated with the feed item.
 			$table->softDeletes();
 			$table->timestamps();
 		});

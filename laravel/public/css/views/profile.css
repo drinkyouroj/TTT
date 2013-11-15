@@ -1,0 +1,73 @@
+.profile-top {
+	border-bottom: 2px;
+}
+
+.profile-top:after {
+	content: " ";
+	
+}
+
+.user {
+	position: relative;
+	text-align: center;
+	width: 100%;
+}
+
+ul.profile-options {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	list-style:none;
+	margin:0;
+	padding: 0;
+}
+
+
+ul.profile-options li {
+	display:inline-block;
+	margin:0;
+	padding: 0;
+}
+
+ul.profile-options li a {
+	
+}
+
+
+ul.profile-options li a.new-post {
+	
+}
+
+ul.profile-options li a.edit-profile {
+	
+}
+
+ul.profile-options li a.follow {
+	
+}
+
+ul.profile-options li a.new-message {
+	
+}
+
+
+
+.follow-container {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 200px;
+	text-align: center;
+}
+
+.follow-container>div{
+	display:inline-block;
+}
+
+.follow-container .followering {
+	
+}
+
+.follow-container .followers {
+	
+}

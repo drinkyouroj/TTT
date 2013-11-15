@@ -64,8 +64,15 @@ Route::controller( '/user', 'UserController');
 Route::get( '/categories/{alais}', 'CategoryController@getCategory');
 
 //Posts routes
-Route::get( '/posts/new', 'PostController@getNew');
 Route::get( '/posts/{alias}', 'PostController@getPost');
+
+//Profile routes
+Route::get( '/profile/editpost/{id}', 'ProfileController@getPostForm');
+Route::get( '/profile/newpost', 'ProfileController@getPostForm');
+Route::post( '/profile/submitpost', 'ProfileController@postPostForm');
+Route::get( '/profile/newmessage', 'ProfileController@getMessageForm');
+Route::get( '/profile/{alias}', 'ProfileController@getProfile');
+Route::get( '/profile', 'ProfileController@getProfile');
 
 //
 Route::controller( '/', 'HomeController');

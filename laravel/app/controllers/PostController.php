@@ -16,15 +16,4 @@ class PostController extends BaseController {
     }
 
 
-	/**
-	 * New Post
-	 */
-	public function getNew() {
-		return View::make('posts/form');
-	}
-	
-	public function getForm() {
-		return $this->getNew();
-	}
-
 }

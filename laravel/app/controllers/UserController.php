@@ -99,6 +99,15 @@ class UserController extends BaseController {
         // logAttempt will check if the 'email' perhaps is the username.
         if ( Confide::logAttempt( $input ) ) 
         {
+        	//YD change here: Let's store the UN and stuff.
+        	$user = User::where('email', '=', $input['email'])
+        			->orwhere('username', '=', $input['email'])
+        			->first();
+			Session::set('username', $user->username);
+			Session::set('email', $user->email);
+			Session::set('user_id', $user->id);
+			Session::set('join_date', $user->created_at);
+						
             // If the session 'loginRedirect' is set, then redirect
             // to that route. Otherwise redirect to '/'
             $r = Session::get('loginRedirect');
