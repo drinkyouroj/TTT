@@ -11,5 +11,7 @@ Login
 @stop
 
 @section('content')
-	{{ Confide::makeLoginForm()->render() }}
+	<div class="col-md-6 col-md-offset-3">
+		{{ Confide::makeLoginForm()->render() }}
+	</div>
 @stop

@@ -115,7 +115,8 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Zizaco\Confide\ConfideServiceProvider',
 		'Zizaco\Entrust\EntrustServiceProvider',
-		'Way\Console\GuardLaravelServiceProvider'
+		'Way\Console\GuardLaravelServiceProvider',
+		'Way\Generators\GeneratorsServiceProvider'
 	),
 
 	/*

@@ -99,10 +99,23 @@ class ProfileController extends BaseController {
 		}
 		
 		$post = self::object_input_filter($new);//Post object takes objects.
-		$validator = $post->validate(self::array_input_filter($new));//validation takes arrays
+		$validator = $post->validate($post->toArray());//validation takes arrays (this is so stupid Laravel!)
 		
 		if($validator->passes()) {//Successful Validation
 			$post->save();
+
+			//Gotta put in a thing here to get rid of all relations if this is an update.
+			$post->categories()->detach();
+
+			//Gotta save the categories pivot
+			foreach(Input::get('category') as $k => $category) {
+				if($k <= 2) {//This will ensure that no more than 3 are added at a time.
+					$post->categories()->attach($category);
+				} else {
+					break;//let's not waste processes
+				}
+			}
+		
 			//Put it into the profile post table 
 			$profile_post = new ProfilePost;
 			$profile_post->profile_id = Auth::user()->id;//post on your wall
@@ -110,6 +123,8 @@ class ProfileController extends BaseController {
 			$profile_post->post_id = $post->id;
 			$profile_post->post_type = 'post';
 			$profile_post->save();
+			
+			
 			
 			//Send it out to your followers (maybe this function should be queued)
 			$followers = Follow::where('user_id', Auth::user()->id);
@@ -149,7 +164,9 @@ class ProfileController extends BaseController {
 		
 	}
 	
-	
+	/**
+	 * Laravel, you're a fucking retard when it comes to input filtering.
+	 */
 		private function object_input_filter($new = false)
 		{
 			//Creates a new post
@@ -168,7 +185,7 @@ class ProfileController extends BaseController {
 			$post->tagline_2 = Request::get('tagline_2');
 			$post->tagline_3 = Request::get('tagline_3');
 			
-			$post->category = Request::get('category');
+			$post->category = serialize(Request::get('category'));
 			$post->image = Request::get('image','1');
 			$post->body = Request::get('body');
 			
@@ -188,7 +205,7 @@ class ProfileController extends BaseController {
 			$post['tagline_2'] = Request::get('tagline_2');
 			$post['tagline_3'] = Request::get('tagline_3');
 			
-			$post['category'] = Request::get('category');
+			$post['category'] = serialize(Request::get('category'));
 			$post['image'] = Request::get('image','1');
 			$post['body'] = Request::get('body');
 			

@@ -10,13 +10,19 @@ class CategoryController extends BaseController {
      * Get Category
      */
     public function getCategory($alias)
-    {	
-    	$cat = Category::where('alias', $alias)->take(1)->get();
-		$cat = $cat->toArray();
-        $posts = Post::where('category', $cat[0]['id'])->get();
+    {
+    	//figure out the category id from alias	
+    	$cat = Category::where('alias', $alias)->take(1)->first();
+		//Grab the right posts.
+		$posts = Category::find($cat->id)->posts; 
+		
+		if(!count($posts)) {
+		
+			$posts = 'No Posts in this Category!';
+		}
 
         return View::make('generic.index')
-							->with('posts', $posts);
+						->with('posts', $posts);
     }
 
 }

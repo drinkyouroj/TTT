@@ -78,7 +78,7 @@
 			
 			<div class="form-group">
 				{{ Form::label('category','Story Category', array('class'=>'control-label')) }}
-				{{ Form::select('category', $category_select , 1, array('class'=>'form-control')  ) }}
+				{{ Form::select('category[]', $category_select , 1, array('class'=>'form-control', 'multiple'=>'multiple')  ) }}
 				{{ $errors->first('category') }}
 			</div>
 			

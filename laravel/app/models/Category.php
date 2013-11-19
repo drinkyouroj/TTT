@@ -6,7 +6,7 @@ class Category extends Eloquent {
 	
 	public function posts()
     {
-        return $this->hasMany('Post', 'category_id');
+        return $this->belongsToMany('Post', 'category_post');
     }
 	
 }

@@ -20,7 +20,7 @@ class Post extends Eloquent {
 	
 	public function categories()
 	{
-		return $this->hasMany('Category','category_id');
+		return $this->belongsToMany('Category', 'category_post');
 	}
 	
 	public function validate($input)
