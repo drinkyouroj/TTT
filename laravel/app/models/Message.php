@@ -14,4 +14,12 @@ class Message extends Eloquent {
 		return $this->belongsTo('User', 'from_uid');
 	}
 	
+	public function validate($input) {
+		$rules = array(
+				'body' => 'Required',
+				'to_uid' => 'Required',
+				'from_uid' => 'Required'
+		);
+		return Validator::make($input, $rules);
+	}
 }

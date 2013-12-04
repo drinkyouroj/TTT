@@ -6,7 +6,7 @@ class Follow extends Eloquent {
 	
 	public function users()
 	{
-		return $this->belongsTo('User', 'user_id');
+		return $this->belongsToMany('User');
 	}
 	
 }

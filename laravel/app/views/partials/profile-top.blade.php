@@ -16,22 +16,30 @@
 			
 			@if(!$is_following)
 			<li>
-				<a class="follow" href="{{Config::get('app.url')}}/follow/{{$user->id}}">follow user</a>
+				<a class="follow" href="{{Config::get('app.url')}}/follow/{{$user->id}}" data-user="{{$user->id}}">
+					<span>Follow {{$user->username}}</span>
+				</a>
 			</li>
 			@endif
 			
 			@if($mutual)
 			<li>
-				<a class="new-message" href="{{Config::get('app.url')}}/profile/newmessage">message</a>
+				<a class="new-message" href="{{Config::get('app.url')}}/profile/newmessage/{{$user->id}}">
+					<span>Message</span>
+				</a>
 			</li>
 			@endif
 			
 		@else
 			<li>
-				<a class="new-post" href="{{Config::get('app.url')}}/profile/newpost">Post</a>
+				<a class="new-post" href="{{Config::get('app.url')}}/profile/newpost">
+					<span>Post</span>
+				</a>
 			</li>
 			<li>
-				<a class="edit-profile" href="{{Config::get('app.url')}}/profile/edit">Edit Info</a>
+				<a class="edit-profile" href="{{Config::get('app.url')}}/profile/edit">
+					<span>Edit Info</span>
+				</a>
 			</li>
 		@endif
 	</ul>

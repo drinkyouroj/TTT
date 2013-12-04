@@ -16,7 +16,7 @@
 			@foreach($featured as $post)
 				<div class="col-md-4">
 					<h3>{{ link_to('posts/'.$post->alias, $post->title) }}</h3>
-					<h4>by {{$post->user->username}}</h4>
+					<h4>by {{link_to('profile/'.$post->user->username, $post->user->username)}}</h4>
 					<div class="the-content">
 						{{ substr($post->body, 0, 50) }}...
 						{{ link_to('posts/'.$post->alias, 'read on.') }}

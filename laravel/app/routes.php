@@ -18,22 +18,25 @@
  * 	This thing is kind of a bastard of a REST API.
  *  I'm just trying to make it work with Ember.js Which is kind of finicky when it comes to the JSON that it wants.
  * */
- /*
+ 
 Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 {
-	//Meat of the Application
+/*
+	//Meat of the Profile JS app when it is built....
 	Route::resource('posts', 'PostRestController');
     Route::resource('categories', 'CategoryRestController');
 	Route::resource('profiles', 'ProfileRestController');//This controller happens to be called "ProfileController" since the "UserController" is used by Confide
 	Route::resource('comments', 'CommentRestController');
 	Route::resource('messages', 'MessageRestController', array('except'=>array('delete')));
 	Route::resource('sent', 'SentRestController', array('only'=>array('index','show')));//a controller for getting sent messages
+*/
 	
 	//Binary action controllers aka minimal information is passed (follow, fav, repost)  Index is used to list followers, etc.
 	$binary_limits = array('only'=>array('index','create','show','destroy'));
 	
 	//Followers, Followees  (FollowController's index shows the people you follow)
-	Route::resource('follows', 'FollowRestController',$binary_limits);//let's limit the useable controller functions
+	//let's limit the useable controller functions
+	
 	//FollowingController shows the people that follow you.
 	Route::resource('following', 'FollowingRestController',array('only'=>array('index')));
 	
@@ -45,8 +48,9 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	
 	//Flickr!!!!!
 	Route::resource('flickr', 'FlickrRestController', array('only'=>array('index','show')));
+	Route::resource('follows', 'FollowRestController', array('only'=>array('index','show','store')));
 });
-*/
+
 
 //Admin protection.
 //Route::when('admin/*', 'admin');
@@ -66,11 +70,24 @@ Route::get( '/categories/{alais}', 'CategoryController@getCategory');
 //Posts routes
 Route::get( '/posts/{alias}', 'PostController@getPost');
 
+//Follow routes
+Route::get( '/follow/{alias}', 'FollowController@getFollow');
+Route::get( '/unfollow/{alias}', 'FollowController@getUnFollow');
+
 //Profile routes
+//Posts
 Route::get( '/profile/editpost/{id}', 'ProfileController@getPostForm');
 Route::get( '/profile/newpost', 'ProfileController@getPostForm');
 Route::post( '/profile/submitpost', 'ProfileController@postPostForm');
-Route::get( '/profile/newmessage', 'ProfileController@getMessageForm');
+
+//Messages
+Route::get( '/profile/replymessage/{reply_id}', 'ProfileController@getMessageReplyForm');
+Route::get( '/profile/newmessage/{user_id}', 'ProfileController@getMessageForm');
+
+Route::post( '/profile/submitmessage', 'ProfileController@postMessageForm');
+Route::get( '/profile/messages', 'ProfileController@getMessageInbox');
+
+//General Posts
 Route::get( '/profile/{alias}', 'ProfileController@getProfile');
 Route::get( '/profile', 'ProfileController@getProfile');
 

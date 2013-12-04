@@ -6,7 +6,8 @@ class Category extends Eloquent {
 	
 	public function posts()
     {
-        return $this->belongsToMany('Post', 'category_post');
+        return $this->belongsToMany('Post', 'category_post')
+					->orderBy('id', 'DESC');
     }
 	
 }

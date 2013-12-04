@@ -68,6 +68,7 @@ return array(
 	),
 	"unique"           => "The :attribute has already been taken.",
 	"url"              => "The :attribute format is invalid.",
+	'twothousand'=>'You have more than 2000 words.',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +81,9 @@ return array(
 	|
 	*/
 
-	'custom' => array(),
+	'custom' => array(
+		
+	),
 
 	/*
 	|--------------------------------------------------------------------------

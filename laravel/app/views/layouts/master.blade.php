@@ -47,7 +47,7 @@
 		  					<a href="{{Config::get('app.url')}}/profile/newpost">post</a>
 						</li>
 						<li>
-		  					<a href="{{Config::get('app.url')}}/profile/newmessage">message</a>
+		  					<a href="{{Config::get('app.url')}}/profile/messages">message</a>
 						</li>
 						@endif
 		  			</ul>

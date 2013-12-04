@@ -10,7 +10,8 @@
 .user {
 	position: relative;
 	text-align: center;
-	width: 100%;
+	width: 30%;
+	margin: 0 auto;
 }
 
 ul.profile-options {
@@ -30,9 +31,8 @@ ul.profile-options li {
 }
 
 ul.profile-options li a {
-	
+	text-transform:uppercase;
 }
-
 
 ul.profile-options li a.new-post {
 	
@@ -71,3 +71,17 @@ ul.profile-options li a.new-message {
 .follow-container .followers {
 	
 }
+
+
+
+/*Forms*/
+
+.post-form input[type=text], .post-form textarea, .post-form select {
+	padding: 5px;
+	background: #eeece6;
+	color: #333;
+	border: 2px solid #9f9f9f;
+	border-radius:0;
+}
+
+

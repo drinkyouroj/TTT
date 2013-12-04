@@ -12,7 +12,9 @@ class ProfileController extends BaseController {
 						'newpost',
 						'editpost',
 						'newmessage',
-						'submitpost'
+						'replymessage',
+						'submitpost',
+						'messages'
 						);
 			
 			if($alias && !in_array($alias, $not_segment) ) {//This is for other users. not yourself
@@ -92,14 +94,14 @@ class ProfileController extends BaseController {
 	}
 	
 	public function postPostForm() {
-
+		//Detect if this is an update scenario or if its new
 		$new = true;
 		if(Input::get('id')) {
 			$new = false;
 		}
 		
-		$post = self::object_input_filter($new);//Post object takes objects.
-		$validator = $post->validate($post->toArray());//validation takes arrays (this is so stupid Laravel!)
+		$post = self::post_object_input_filter($new);//Post object takes objects.
+		$validator = $post->validate($post->toArray());//validation takes arrays
 		
 		if($validator->passes()) {//Successful Validation
 			$post->save();
@@ -124,8 +126,6 @@ class ProfileController extends BaseController {
 			$profile_post->post_type = 'post';
 			$profile_post->save();
 			
-			
-			
 			//Send it out to your followers (maybe this function should be queued)
 			$followers = Follow::where('user_id', Auth::user()->id);
 			foreach($followers as $follower){
@@ -140,39 +140,27 @@ class ProfileController extends BaseController {
 			return Redirect::to('profile');
 					
 		} else {//Failed Validation
-			dd($validator->failed());
 			if($new) {
-				return Redirect::to('profile/newpost')->withErrors($validator);
+				return Redirect::to('profile/newpost')
+							->withErrors($validator)
+							->withInput();
 			} else {
-				return Redirect::to('profile/editpost/'.Input::get('id'))->withErrors($validator);
+				return Redirect::to('profile/editpost/'.Input::get('id'))
+							->withErrors($validator)
+							->withInput();
 			}
 			
 		}
 		
 	}
-	
-	
-	public function getPostMessage($id=false) {
-		if($id) {
-			//should probably put a drafts checker or something.
-			$message = Message::where('id', '=', $id);
-			return View::make('posts/form')
-					->with('message', $message);
-		} else {
-			return View::make('posts/form');
-		}
-		
-	}
-	
+
+
 	/**
-	 * Laravel, you're a fucking retard when it comes to input filtering.
+	 * Input filtering.
 	 */
-		private function object_input_filter($new = false)
+		private function post_object_input_filter($new = false)
 		{
 			//Creates a new post
-			/*
-			
-			*/
 			$post = new Post;
 			$post->user_id = Auth::user()->id;
 			$post->title = Request::get('title');
@@ -186,29 +174,101 @@ class ProfileController extends BaseController {
 			$post->tagline_3 = Request::get('tagline_3');
 			
 			$post->category = serialize(Request::get('category'));
-			$post->image = Request::get('image','1');
+			$post->image = Request::get('image','0');//If 0, then it means no photo.
 			$post->body = Request::get('body');
 			
 			return $post;
 		}
+
+/********************************************************************
+ * Messages
+*/
+	/**
+	 * Messages inbox
+	 */
 	
-		private function array_input_filter($new = false) {
-			$post = array();
-			$post['user_id'] = Auth::user()->id;
-			$post['title'] = Request::get('title');
-			if($new) {
-				$post['alias'] = str_replace(' ', '-',Request::get('title'));//makes alias.  Maybe it should include other bits too...
+	public function getMessageInbox() {
+		$messages = Message::where('to_uid', Session::get('user_id'))
+						->orderBy('id', 'DESC')
+						->get();
+		return View::make('messages/inbox')
+					->with('messages', $messages);
+	}
+	
+	/**
+	 * Message form 
+	 */
+	public function getMessageForm($user_id=false, $reply_id = false) {
+		if($reply_id) {
+			//message you're replying to.
+			$message = Message::where('id', '=', $reply_id)->first();
+			$user = User::where('id', '=', $message->from_uid)->first();
+			return View::make('messages/form')
+					->with('message', $message)
+					->with('message_user', $user);
+		} else {
+			$user = User::where('id', '=', $user_id)->first();
+			//Can't find that user?
+			if(is_null($user)) {
+				//Gotta find all the mutual follows!
+				$user = Follow::where('follower_id', '=', Session::get('user_id'))
+								->where('follower_id', '=', $user_id)
+								->where('user_id', '=', Session::get('user_id'))
+								->where('user_id', '=', $user_id)
+								->get();
+				$user = $user->toArray();//pass on only the user info
+				//This gets checked is_array on the otherside
 			}
-			$post['story_type'] = Request::get('story_type');
-			
-			$post['tagline_1'] = Request::get('tagline_1');
-			$post['tagline_2'] = Request::get('tagline_2');
-			$post['tagline_3'] = Request::get('tagline_3');
-			
-			$post['category'] = serialize(Request::get('category'));
-			$post['image'] = Request::get('image','1');
-			$post['body'] = Request::get('body');
-			
-			return $post;
+			return View::make('messages/form')
+					->with('message_user', $user);
 		}
+	}
+	
+	public function getMessageReplyForm($reply_id=false) {
+		if($reply_id) {
+			return self::getMessageForm(false, $reply_id);
+		} else {
+			return Redirect::to('profile');
+		}
+	}
+	
+	
+	public function postMessageForm() {
+		
+		$message = self::message_object_input_filter();//Post object takes objects.
+		$validator = $message->validate($message->toArray());//validation takes arrays
+		
+		if($validator->passes()) {//Successful Validation
+			//Gotta check to see if they are mutually following.
+			
+			$message->save();
+			return Redirect::to('profile');
+		} else {
+			if($message->reply_id != 0 || !empty($message->reply_id)) {
+				//this is a reply situation
+				return Redirect::to('profile/replymessage/'.$message->reply_id)->withErrors($validator)->withInput();
+			} else {
+				//this is a new message situation
+				return Redirect::to('profile/newmessage/')->withErrors($validator)->withInput();;
+			}
+		}
+	}
+	
+	
+		private function message_object_input_filter($new = false)
+		{
+			//Creates a new post
+			$message = new Message;
+			$message->from_uid = Auth::user()->id;
+			$message->to_uid = Request::get('to_uid');
+			$message->reply_id = Request::get('reply_id');//which message are we replying to?			
+			$message->body = Request::get('body');
+			
+			return $message;
+		}
+		
+		private function mutual_follow_check($uid1, $uid2) {
+			
+		}
+	
 }
