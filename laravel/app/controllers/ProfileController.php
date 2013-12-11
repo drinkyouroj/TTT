@@ -6,6 +6,9 @@ class ProfileController extends BaseController {
 		View::composer('*', function($view) {
 			$alias = Request::segment(2);
 			
+			
+			
+			
 			//Unfortunately view composer currently sucks at things so this is a crappy work around.
 			$not_segment = array(
 						Session::get('username'),
@@ -14,6 +17,8 @@ class ProfileController extends BaseController {
 						'newmessage',
 						'replymessage',
 						'submitpost',
+						'comment',
+						'commentform',
 						'messages'
 						);
 			
@@ -65,13 +70,17 @@ class ProfileController extends BaseController {
 			//We're doing the user info loading this way to keep the view clean.
 			$user_id = Session::get('user_id');
 			$user = User::where('id', '=', $user_id)->first();
-			$activity = ProfilePost::where('profile_id','=', $user_id)->get();//get the 
+			$activity = ProfilePost::where('profile_id','=', $user_id)
+						->orderBy('created_at', 'DESC')
+						->get();//get the activities 
+			
 		}
-		
+		$likes = Like::where('user_id', '=', $user_id)->take(5)->get();
 		$posts = Post::where('user_id', '=', $user_id)->get();
 		
 		return View::make('profile/index')
 				->with('posts', $posts)
+				->with('likes', $likes)
 				->with('activity', $activity)
 				->with('user', $user)
 				->with('is_following', $is_following)//you are following this profile
@@ -165,7 +174,8 @@ class ProfileController extends BaseController {
 			$post->user_id = Auth::user()->id;
 			$post->title = Request::get('title');
 			if($new) {
-				$post->alias = str_replace(' ', '-',Request::get('title'));//makes alias.  Maybe it should include other bits too...
+				//Gotta make sure to make the alias only alunum
+				$post->alias = preg_replace('/[^A-Za-z0-9]/', '', Request::get('title'));//makes alias.  Maybe it should include other bits too...
 			}
 			$post->story_type = Request::get('story_type');
 			
@@ -179,6 +189,45 @@ class ProfileController extends BaseController {
 			
 			return $post;
 		}
+/********************************************************************
+ * Comments
+*/
+
+	public function postCommentForm()
+	{
+		$post_id = Request::segment(3);
+		$comment = self::comment_object_input_filter();
+		$validator = $comment->validate($comment->toArray());
+		
+		if($validator->passes()) {
+			$comment->save();
+			return Redirect::to('posts/'.$comment->post->alias);
+		} else {
+			return Redirect::to('posts/'.$comment->post->alias)
+							->withErrors($validator)
+							->withInput();;
+		} 
+	}
+
+
+		private function comment_object_input_filter()
+		{
+			$comment = new Comment;
+			$comment->user_id = Auth::user()->id;
+			$comment->post_id = Request::segment(3);
+			if(Request::get('reply_id')) {
+				$comment->parent_id = Request::get('reply_id');
+			}
+			$comment->body = Request::get('body');
+			return $comment;
+		}
+
+	public function getCommentForm($post_id, $reply_id) {
+		$post = Post::find($post_id);
+		return View::make('generic/commentform')
+				->with('post', $post)
+				->with('reply_id', $reply_id);
+	}
 
 /********************************************************************
  * Messages

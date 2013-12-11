@@ -1,14 +1,34 @@
+jQuery.validator.addMethod("maxthree", function(value, element) {
+  return $(element).find(":selected").length <= 3;
+},"Max Three Categories.");
+
 $(function(){
-	$('.form-group a').tooltip({
-		placement: 'top'
+	
+	$('.post-form form').validate({
+		rules: {
+			title: {
+				required: true,
+				minlength: 5,
+				remote: {
+					url: window.site_url+'rest/posttitle',
+					type: 'GET',
+					contentType: "application/json"
+				}
+			},
+			category: {
+				maxthree: true
+			}
+		},
+		messages: {
+			title: {
+				remote: 'The title is already in use'
+			}
+		}
+		
 	});
 	
-	$('.post-form form').bind("keyup keypress", function(e) {
-	  var code = e.keyCode || e.which; 
-	  if (code  == 13) {               
-	    e.preventDefault();
-	    return false;
-	  }
+	$('.form-group a').tooltip({
+		placement: 'top'
 	});
 	
 	
@@ -26,7 +46,6 @@ $(function(){
 	$('.photo-results').on('click','img',function() {
 		img = $(this).data('image');//HTML5 rocks!
 		$('.photo-chosen').html('');
-		
 		$newImage = $('<img src="'+img+'"> <input type="hidden" name="image" value="'+img+'" >');
 		$('.photo-chosen').append($newImage);
 	});
@@ -38,12 +57,13 @@ function image_pull() {
 	if($('.photos input.search-query').val().length >= 3) {
 		
 		//Let's do the load.gif
-		$('.photos .photo-results').html('<img src="'+window.site_url+'">');
+		$('.photos .photo-results').html('<img width="200" src="'+window.site_url+'img/profile/loading.gif">');
 		
 		keyword = $('.photos input.search-query').val();
 		$.ajax({
 			url: window.site_url+'rest/flickr/?text='+ keyword,
 			success: function(data) {
+				$('.photos .photo-results').html('');
 				photos = data.photos.photo;
 				$.each(photos,function(index, value) {
 					

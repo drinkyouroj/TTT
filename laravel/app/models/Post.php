@@ -3,16 +3,22 @@ class Post extends Eloquent {
 	
 	public function __construct() {
 		Validator::extend('Twothousand', function($attribute, $value, $parameters)
-		{	
+		{		
 		    if(!is_null($value)) {//make sure its not empty.
-		    	//currently only includes alphanumeric.
-		    	$word_count = count(str_word_count($value, 1, '0..9'));
-				//might want to add a character limit in the future also.
-				if($word_count <= 2100) {
-					return true;
-				} else {
-					return false;
-				}
+		    	if(strlen($value) <= 11500) {
+		    		//currently only includes alphanumeric.
+			    	$word_count = count(str_word_count($value, 1, '0..9'));
+					//might want to add a character limit in the future also.
+					if($word_count <= 2100) {
+						return true;
+					} else {
+						return false;//more than 2100 words
+					}
+		    	} else {
+		    		return false;//more than 11500 chars
+		    	}
+		    } else {
+		    	return false;//no value
 		    }
 		});
 		
@@ -30,9 +36,24 @@ class Post extends Eloquent {
         return $this->hasMany('Comment', 'post_id');
     }
 	
+	public function nochildcomments()
+	{
+		return $this->hasMany('Comment', 'post_id')->where('parent_id','=', 0);
+	}
+	
+	public function favorites()
+	{
+		return $this->hasMany('Favorite');
+	}
+	
 	public function reposts()
 	{
-		return $this->belongsToMany('Repost');
+		return $this->hasMany('Repost');
+	}
+	
+	public function likes()
+	{
+		return $this->hasMany('Like');
 	}
 	
 	public function categories()

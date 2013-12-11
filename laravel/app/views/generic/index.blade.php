@@ -17,11 +17,11 @@
 				{?$c = 0?}
 				{?$total = count($posts)?}
 				@foreach($posts as $k => $post)
-					@if($c == 0 )
+					@if( $c == 0 )
 						<div class="row">
 					@endif
 						<div class="col-md-4">
-							<div class="generic-item">
+							<div class="generic-item equal-height">
 								<h3>{{ link_to('posts/'.$post->alias, $post->title) }}</h3>
 								<h4><span>by</span> {{link_to('profile/'.$post->user->username, $post->user->username)}}</h4>
 								@if($post->image)

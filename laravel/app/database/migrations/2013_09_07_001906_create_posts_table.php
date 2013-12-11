@@ -30,6 +30,7 @@ class CreatePostsTable extends Migration {
 			$table->string('image');
 			$table->text('body');
 			$table->boolean('featured');
+			$table->bigInteger('views');
 			$table->date('featured_date');
 			$table->softDeletes();
 			$table->timestamps();

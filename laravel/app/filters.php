@@ -18,8 +18,6 @@ App::before(function($request)
     	return preg_replace('/\{\?(.+)\?\}/', '<?php ${1} ?>', $value);
 	});
 	
-	
-	
 });
 
 

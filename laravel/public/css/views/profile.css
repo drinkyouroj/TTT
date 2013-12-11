@@ -50,8 +50,6 @@ ul.profile-options li a.new-message {
 	
 }
 
-
-
 .follow-container {
 	position: absolute;
 	right: 0;
@@ -72,6 +70,10 @@ ul.profile-options li a.new-message {
 	
 }
 
+/*Profile Listing*/
+.activity-container .add-new {
+	
+}
 
 
 /*Forms*/
@@ -83,5 +85,11 @@ ul.profile-options li a.new-message {
 	border: 2px solid #9f9f9f;
 	border-radius:0;
 }
+
+label.error {
+	color: red;
+}
+
+
 
 

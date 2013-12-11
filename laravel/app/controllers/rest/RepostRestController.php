@@ -20,9 +20,40 @@ class RepostRestController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show()
 	{
-		//
+		$exists = Repost::where('post_id', '=', Request::segment(3))
+						->where('user_id', '=', Auth::user()->id)
+						->count();
+		
+		if(!$exists) {//Doesn't exists
+			//Crete a new follow
+			$repost = new Repost;
+			$repost->post_id = Request::segment(3);
+			$repost->user_id = Auth::user()->id;//Gotta be from you.
+			$repost->save();
+			if($repost->id) {
+				//Add to notifications
+				
+				//Add to profile
+				
+				
+				return Response::json(
+					array('result'=>'success'),
+					200//response is OK!
+				);
+			}
+		} elseif($exists) {//Relationship already exists
+			return Response::json(
+				array('result'=>'exists'),
+				200//response is OK!
+			);
+		}
+		
+		return Response::json(
+			array('result'=>'fail'),
+			200//response is OK!
+		);
 	}
 
 	/**

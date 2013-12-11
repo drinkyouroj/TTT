@@ -40,22 +40,24 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	//FollowingController shows the people that follow you.
 	Route::resource('following', 'FollowingRestController',array('only'=>array('index')));
 	
-	//Post Favorites
-	Route::resource('favorites', 'FavoriteRestController',$binary_limits);
-	
-	//Repost them posts.
-	Route::resource('reposts', 'RepostRestController',$binary_limits);
-	
 	//Flickr!!!!!
 	Route::resource('flickr', 'FlickrRestController', array('only'=>array('index','show')));
+
+	//Page Actions
+	Route::resource('likes', 'LikeRestController', array('only'=>array('index','show','store')));
+	Route::resource('favorites', 'FavoriteRestController', array('only'=>array('index','show','store')));
 	Route::resource('follows', 'FollowRestController', array('only'=>array('index','show','store')));
+	Route::resource('reposts', 'RepostRestController',$binary_limits);
+	
+	//Title CHKR
+	Route::resource('posttitle', 'PostTitleRestController', array('only'=>array('index')));
+	
 });
 
 
 //Admin protection.
 //Route::when('admin/*', 'admin');
 //Route::controller('admin','AdminController');
-
 
 
 /********************The Authentication Routes  (Confide RESTful route)************************/
@@ -74,11 +76,16 @@ Route::get( '/posts/{alias}', 'PostController@getPost');
 Route::get( '/follow/{alias}', 'FollowController@getFollow');
 Route::get( '/unfollow/{alias}', 'FollowController@getUnFollow');
 
-//Profile routes
+//Profile routes (handles 90% of text based inputs)
 //Posts
 Route::get( '/profile/editpost/{id}', 'ProfileController@getPostForm');
 Route::get( '/profile/newpost', 'ProfileController@getPostForm');
 Route::post( '/profile/submitpost', 'ProfileController@postPostForm');
+
+//Comments
+Route::get( '/profile/commentform/{post_id}/{reply_id}', 'ProfileController@getCommentForm');//This is for getting the reply forms.
+Route::post( '/profile/comment/{post_id}', 'ProfileController@postCommentForm');
+
 
 //Messages
 Route::get( '/profile/replymessage/{reply_id}', 'ProfileController@getMessageReplyForm');

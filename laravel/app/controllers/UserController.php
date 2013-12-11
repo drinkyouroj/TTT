@@ -103,10 +103,10 @@ class UserController extends BaseController {
         	$user = User::where('email', '=', $input['email'])
         			->orwhere('username', '=', $input['email'])
         			->first();
-			Session::set('username', $user->username);
-			Session::set('email', $user->email);
-			Session::set('user_id', $user->id);
-			Session::set('join_date', $user->created_at);
+			Session::put('username', $user->username);
+			Session::put('email', $user->email);
+			Session::put('user_id', $user->id);
+			Session::put('join_date', $user->created_at);
 						
             // If the session 'loginRedirect' is set, then redirect
             // to that route. Otherwise redirect to '/'

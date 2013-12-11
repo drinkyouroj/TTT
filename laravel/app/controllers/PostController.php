@@ -24,6 +24,10 @@ class PostController extends BaseController {
 							->where('user_id', '=', Session::get('user_id'))
 							->count();
 		
+		//Add the fact that the post has been viewed.
+		$post->views = $post->views+1;
+		$post->save();
+		
         return View::make('generic.post')
 						->with('post', $post)
 						->with('is_following', $is_following)//you are following this profile

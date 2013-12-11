@@ -7,11 +7,13 @@
 		"zizaco/entrust": "dev-master",
 		"zizaco/confide": "1.0.x",
 		"way/guard-laravel": "dev-master",
-		"way/generators": "dev-master"
+		"way/generators": "dev-master",
+		"solarium/solarium": "dev-develop"
 	},
 	"autoload": {
 		"classmap": [
 			"app/commands",
+			"app/helpers",
 			"app/controllers/rest",
 			"app/controllers/admin",
 			"app/controllers",

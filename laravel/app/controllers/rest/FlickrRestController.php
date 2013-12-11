@@ -9,8 +9,8 @@ class FlickrRestController extends \BaseController {
 	/**
 	 * API Keys and stuff
 	 */
-	private static $api_key = "4007f7ba7ba7140bdbe7019d92f8d204";
-	private static $secret = "2d10c3bd19990c67";
+	private static $api_key = "199d51aaaeb7c32a953f13ec958358c9";
+	private static $secret = "d35085a81eb05474";
 	private static $url = "http://api.flickr.com/services/rest/?";
 
 	/**

@@ -1,8 +1,8 @@
 <?php 
-class Favorite extends Eloquent {
+class Like extends Eloquent {
 		
 	//Just to be sure!
-	protected $table = 'favorites';
+	protected $table = 'likes';
 	
 	public function user()
 	{
@@ -13,6 +13,5 @@ class Favorite extends Eloquent {
 	{
 		return $this->belongsTo('Post');
 	}
-	
 	
 }

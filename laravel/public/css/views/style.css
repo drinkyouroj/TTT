@@ -149,6 +149,7 @@ body,html a:hover{
 	padding: 20px 0 0 0;
 	margin: 20px 0 0 0;
 	background: url('../../img/global/x-small.png') center top no-repeat;
+	word-break: break-all;
 }
 
 .generic-listing .generic-item h4{
