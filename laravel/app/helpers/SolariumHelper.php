@@ -21,6 +21,11 @@ class SolariumHelper {
 		
 	}
 	
+	//Creates a new Solarium Client instance
+	private function new_solarium_client() {
+		return new Solarium\Client($sconfig);
+	}
+	
 	/**
 	 * In Solr, update is create and create is update
 	 */
@@ -42,8 +47,20 @@ class SolariumHelper {
 		
 	}
 	
-		private function new_solarium_client() {
-			return new Solarium\Client($sconfig);
-		}
+	
+	
+	public function updateUser($user) {
+		$client = self::new_solarium_client();
+		$update = $client->createUpdate();
+		
+		$new_user = $update->createDocument();
+		
+		//Add the new user queries here.
+		
+		
+		$update->addDocuments(array($new_user));
+		$update->addCommit();
+		$client->update($update);
+	}
 	
 }
