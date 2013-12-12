@@ -67,6 +67,12 @@ body,html a:hover{
 	display:none;
 }
 
+
+.header-wrapper form.search input[type="submit"] {
+    position: absolute;
+    top: -1000px
+}
+
 /*Footer Nav*/
 .footer-container {
 	float: left;

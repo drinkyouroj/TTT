@@ -53,11 +53,13 @@
 		  			</ul>
 		  			
 		  			{{--Remember that float: right is inverse visually.--}}
-		  			<form class="navbar-form navbar-right" role="search">
+		  			{{ Form::open(array('url'=> 'search', 'class' => 'navbar-form navbar-right search', 'role'=>'search' )) }}
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Search">
+							<input autocomplete="off" name="term" type="text" class="form-control" placeholder="Search">
+							<input type="submit" value="Search" class="hidden" >
+							<div class="result-box"></div>
 						</div>
-				    </form>
+					{{ Form::close() }}
 				    @if(!Auth::guest())
 		  			<ul class="nav navbar-nav navbar-right">
 						<li>

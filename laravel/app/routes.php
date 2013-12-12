@@ -72,6 +72,11 @@ Route::get( '/categories/{alais}', 'CategoryController@getCategory');
 //Posts routes
 Route::get( '/posts/{alias}', 'PostController@getPost');
 
+//Search routes
+Route::get('/search/{term}', 'SearchController@getResult');//Might turn into a rest system later
+Route::post('/search', 'SearchController@postResult');
+
+
 //Follow routes
 Route::get( '/follow/{alias}', 'FollowController@getFollow');
 Route::get( '/unfollow/{alias}', 'FollowController@getUnFollow');

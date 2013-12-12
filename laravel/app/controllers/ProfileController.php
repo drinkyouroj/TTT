@@ -6,9 +6,6 @@ class ProfileController extends BaseController {
 		View::composer('*', function($view) {
 			$alias = Request::segment(2);
 			
-			
-			
-			
 			//Unfortunately view composer currently sucks at things so this is a crappy work around.
 			$not_segment = array(
 						Session::get('username'),
@@ -109,14 +106,17 @@ class ProfileController extends BaseController {
 			$new = false;
 		}
 		
-		$post = self::post_object_input_filter($new);//Post object takes objects.
+		$post = self::post_object_input_filter($new);//Post object creates objects.
 		$validator = $post->validate($post->toArray());//validation takes arrays
 		
 		if($validator->passes()) {//Successful Validation
+		
 			$post->save();
+		
+			SolariumHelper::updatePost($post);//Let's add the data to solarium
 
 			//Gotta put in a thing here to get rid of all relations if this is an update.
-			$post->categories()->detach();
+			$post->categories()->detach();//Pivot! Pivot! 
 
 			//Gotta save the categories pivot
 			foreach(Input::get('category') as $k => $category) {
@@ -134,6 +134,7 @@ class ProfileController extends BaseController {
 			$profile_post->post_id = $post->id;
 			$profile_post->post_type = 'post';
 			$profile_post->save();
+			
 			
 			//Send it out to your followers (maybe this function should be queued)
 			$followers = Follow::where('user_id', Auth::user()->id);

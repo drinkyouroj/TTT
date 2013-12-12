@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('js')
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/generic-listing.js"></script>
+@stop
+
 @section('filters')
 	@include('partials/generic-filter')
 @stop

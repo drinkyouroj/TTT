@@ -8,7 +8,8 @@
 		"zizaco/confide": "1.0.x",
 		"way/guard-laravel": "dev-master",
 		"way/generators": "dev-master",
-		"solarium/solarium": "dev-develop"
+		"solarium/solarium": "dev-develop",
+		"pda/pheanstalk": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

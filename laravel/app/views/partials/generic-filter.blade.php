@@ -10,13 +10,14 @@
 				</ul>
 			</div>
 			
+			{{--We need to figure out a way to do the redirect sort based on what controller you're coming from--}}
 			<div class="col-md-3 col-sm-3">
 				<select name="sort_by" class="sort_by_filter pull-right">
 					<option selected="selected">sort by</option>
-					<option>Most Favorited</option>
-					<option>Most Viewed</option>
-					<option>Most Fucked Up</option>
-					<option>Advanced</option>
+					<option value="">Most Favorited</option>
+					<option value="">Most Viewed</option>
+					<option value="">Most Fucked Up</option>
+					<option value="">Advanced</option>
 				</select>
 			</div>
 		</div>
