@@ -63,7 +63,17 @@
 					<div class="photo-chosen">
 						
 					</div>
-					
+					<div class="photo-processor" style="display:none;">
+						<img src="{{Config::get('app.url')}}/img/photos/gotham.png" data-process="Gotham"/>
+						<img src="{{Config::get('app.url')}}/img/photos/toaster.png" data-process="Toaster"/>
+						<img src="{{Config::get('app.url')}}/img/photos/nashville.png" data-process="Nashville"/>
+						<img src="{{Config::get('app.url')}}/img/photos/lomo.png" data-process="Lomo"/>
+						<img src="{{Config::get('app.url')}}/img/photos/kelvin.png" data-process="Kelvin"/>
+						<img src="{{Config::get('app.url')}}/img/photos/tilt_shift.png" data-process="TiltShift"/>
+					</div>
+					<div class="photo-processed">
+						
+					</div>
 				</div>
 			</div>
 			

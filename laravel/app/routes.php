@@ -52,6 +52,9 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	//Title CHKR
 	Route::resource('posttitle', 'PostTitleRestController', array('only'=>array('index')));
 	
+	//Photo Processor
+	Route::resource('photo', 'PhotoRestController', array('only'=>array('index','store','show')) );
+	
 });
 
 

@@ -22,7 +22,6 @@ class ProfileController extends BaseController {
 			if($alias && !in_array($alias, $not_segment) ) {//This is for other users. not yourself
 				$user = User::where('username', '=', $alias)->first();
 				$user_id = $user->id;//set the profile user id for rest of the session.
-				
 			} else {
 				//We're doing the user info loading this way to keep the view clean.
 				$user_id = Session::get('user_id');
@@ -112,7 +111,7 @@ class ProfileController extends BaseController {
 		if($validator->passes()) {//Successful Validation
 		
 			$post->save();
-		
+			
 			SolariumHelper::updatePost($post);//Let's add the data to solarium
 
 			//Gotta put in a thing here to get rid of all relations if this is an update.
@@ -176,7 +175,7 @@ class ProfileController extends BaseController {
 			$post->title = Request::get('title');
 			if($new) {
 				//Gotta make sure to make the alias only alunum
-				$post->alias = preg_replace('/[^A-Za-z0-9]/', '', Request::get('title'));//makes alias.  Maybe it should include other bits too...
+				$post->alias = preg_replace('/[^A-Za-z0-9]/', '', Request::get('title')).'-'.date('m-d-Y');//makes alias.  Maybe it should exclude other bits too...
 			}
 			$post->story_type = Request::get('story_type');
 			
