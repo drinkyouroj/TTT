@@ -76,7 +76,7 @@ class PhotoRestController extends \BaseController {
 			
 		} else {
 			return Response::json(
-				array('Validation Failed'.$url),
+				'Validation Failed'.$url,
 				200
 			);
 		}

@@ -39,21 +39,23 @@ $(function(){
 			image_pull();
 			return false;
 		}
-	});
+	});//Pulls in images from Flickr
 	
-	$('.activate-search').on('click', image_pull());
+	$('.activate-search').on('click', function() {
+		image_pull();
+	});//The Search button alias of the above.
 	
 	window.selected_image = 0;
 	
 	$('.photo-results').on('click','img',function() {
 		img = $(this).data('image');//HTML5 rocks!
 		$('.photo-chosen').html('');
-		$newImage = $('<img src="'+img+'"> <input type="hidden" name="image" value="'+img+'" >');
+		$newImage = $('<img src="'+img+'">');
 		$('.photo-chosen').append($newImage);
 		window.selected_image = img;//attach the source to a global variable
 		$('.photo-results').fadeOut();//Hide the photo options
 		$('.photo-processor').fadeIn();//fade in the photo process options
-	});
+	});//Loads in the chosen photos
 	
 	$('.photo-processor').on('click', 'img', function() {
 		url = window.selected_image;
@@ -69,7 +71,7 @@ $(function(){
 				type: "GET",
 				url: window.site_url+'rest/photo/',
 				data: {
-					url: encodeURIComponent(url),
+					url: encodeURIComponent(url),//Gotta encode that url
 					title: title,
 					process: process
 				},
@@ -77,11 +79,13 @@ $(function(){
 					console.log(data);
 					$('.photo-processed').html('');
 					$('.photo-processed').append('<img src="'+window.site_url+'uploads/final_images/'+data+'">');
+					$('<input type="hidden" name="image" value="'+data+'" >');
+					
 				}
 			});
 		}
 		
-	});
+	});//End of Photo Processor
 	
 	
 });
