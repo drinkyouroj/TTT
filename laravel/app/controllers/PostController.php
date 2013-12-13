@@ -24,9 +24,11 @@ class PostController extends BaseController {
 							->where('user_id', '=', Session::get('user_id'))
 							->count();
 		
-		//Add the fact that the post has been viewed.
-		$post->views = $post->views+1;
-		$post->save();
+		//Add the fact that the post has been viewed if you're not the owner
+		if($user_id != Session::get('user_id')) {
+			$post->views = $post->views+1;
+			$post->save();
+		}
 		
         return View::make('generic.post')
 						->with('post', $post)

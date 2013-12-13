@@ -39,7 +39,7 @@ class SolariumHelper {
 			$query = '(';
 			foreach($multi as $k => $item) {
 				if($k != 0) {
-					$query .= 'OR *'.$item.'*';
+					$query .= 'AND *'.$item.'*';
 				}else {
 					$query .= '*'.$item.'*';
 				}

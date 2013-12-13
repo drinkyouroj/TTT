@@ -85,7 +85,9 @@
 						</header>
 						<section>
 							<div class="the-image">
-								<img src="{{$act->post->image}}">
+								<a href="{{URL::to('posts/'.$act->post->alias)}}">
+									<img src="{{Config::get('app.url')}}/uploads/final_images/{{$act->post->image}}">
+								</a>
 							</div>
 							<div class="the-taglines">
 								<span class="taglines">
@@ -127,10 +129,6 @@
 				@endif			
 			@endif
 		</div>
-	
-		
-	
-	
 	
 @stop
 

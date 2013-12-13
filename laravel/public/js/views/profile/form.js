@@ -59,11 +59,8 @@ $(function(){
 	
 	$('.photo-processor').on('click', 'img', function() {
 		url = window.selected_image;
-		console.log(url);
 		title = $('form input.title').val();
-		console.log(title);
 		process = $(this).data('process');//pick up the process type
-		console.log(process);
 		
 		//make sure we have all 3 values.
 		if(url.length && title.length && process.length) {
@@ -76,11 +73,10 @@ $(function(){
 					process: process
 				},
 				success: function(data) {
-					console.log(data);
+					$('.post-form form input.processed-image').remove();//Let's remove this just incase
 					$('.photo-processed').html('');
 					$('.photo-processed').append('<img src="'+window.site_url+'uploads/final_images/'+data+'">');
-					$('<input type="hidden" name="image" value="'+data+'" >');
-					
+					$('.post-form form').append($('<input class="processed-image" type="hidden" name="image" value="'+data+'" >'));
 				}
 			});
 		}

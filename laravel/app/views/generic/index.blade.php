@@ -31,7 +31,7 @@
 								@if($post->image)
 								<div class="the-image">
 									<a href="{{ URL::to('posts/'.$post->alias) }}">
-										<img src="{{$post->image}}">
+										<img src="{{Config::get('app.url')}}/uploads/final_images/{{$post->image}}">
 									</a>
 								</div>
 								@endif

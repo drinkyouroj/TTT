@@ -75,7 +75,7 @@
 	@if($post->image)
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1 the-image">
-			<img src="{{$post->image}}">
+			<img src="{{Config::get('app.url')}}/uploads/final_images/{{$post->image}}">
 			<div class="clearfix"></div>
 		</div>
 	</div>

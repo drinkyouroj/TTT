@@ -93,6 +93,18 @@ class ProfileController extends BaseController {
 			return View::make('posts/form')
 					->with('post', $post);
 		} else {
+			//Gotta put in a query here to see if the user submitted something in the last 5 minutes 
+			$post = Post::where('user_id','=', Session::get('user_id'))
+					->orderBy('created_at', 'DESC')//latest first
+					->first();
+			
+			if(isset($post->id)) {
+				if(Session::get('username') != 'ryuhei'  && strtotime(date('Y-m-d H:i:s', strtotime('-5 minutes'))) <= strtotime($post->created_at)  ){
+					return View::make('generic/error')
+						->with('message', "Can't be spammin around!");
+				}
+			}
+					
 			return View::make('posts/form');
 		}
 		

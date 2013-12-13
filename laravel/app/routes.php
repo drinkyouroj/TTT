@@ -70,6 +70,7 @@ Route::controller( '/user', 'UserController');
 
 /********************Normal non rest controllers********************************************/
 //Category routes
+Route::get( '/categories/{alais}/{sort}', 'CategoryController@getCategory');
 Route::get( '/categories/{alais}', 'CategoryController@getCategory');
 
 //Posts routes

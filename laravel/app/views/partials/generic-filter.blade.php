@@ -14,10 +14,10 @@
 			<div class="col-md-3 col-sm-3">
 				<select name="sort_by" class="sort_by_filter pull-right">
 					<option selected="selected">sort by</option>
-					<option value="">Most Favorited</option>
-					<option value="">Most Viewed</option>
-					<option value="">Most Fucked Up</option>
-					<option value="">Advanced</option>
+					<option value="{{Request::url()}}/favorited">Most Favorited</option>
+					<option value="{{Request::url()}}/viewed">Most Viewed</option>
+					<option value="{{Request::url()}}/fucked">Most Fucked Up</option>
+					<option value="{{Request::url()}}/advanced">Advanced</option>
 				</select>
 			</div>
 		</div>
