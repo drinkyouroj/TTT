@@ -36,7 +36,11 @@ class FlickrRestController extends \BaseController {
 			$encoded_params[] = urlencode($k).'='.urlencode($v);
 		}
 		
-		$response = file_get_contents(self::$url.implode('&', $encoded_params));
+		$res = curl_init(self::$url.implode('&', $encoded_params));
+		
+		curl_setopt($res, CURLOPT_RETURNTRANSFER, true);
+		
+		$response = curl_exec($res);
 		
 		if(count($response)) {
 			return Response::json(
@@ -73,7 +77,11 @@ class FlickrRestController extends \BaseController {
 			$encoded_params[] = urlencode($k).'='.urlencode($v);
 		}
 		
-		$response = file_get_contents(self::$url.implode('&', $encoded_params));
+		$res = curl_init(self::$url.implode('&', $encoded_params));
+		
+		curl_setopt($res, CURLOPT_RETURNTRANSFER, true);
+		
+		$response = curl_exec($res);
 		
 		if(count($response)) {
 			return Response::json(

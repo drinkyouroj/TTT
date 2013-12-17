@@ -5,7 +5,21 @@
  * @package  Laravel
  * @author   Taylor Otwell <taylorotwell@gmail.com>
  */
+ 
+/**
+ * This below is added by Ryuhei to check for if the system is in dev locally or on Vagrant
+ */
+$system_name = gethostname();
 
+if(strpos($system_name,'vagrant') !== false) {
+	//This system is Vagrant
+	$system_dir = '/vagrant/2000/laravel/public';//where we are now.
+} else {
+	//This system is Local
+	$system_dir = __DIR__;
+}
+ 
+ 
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
@@ -18,7 +32,7 @@
 |
 */
 
-require __DIR__.'/../bootstrap/autoload.php';
+require $system_dir.'/../bootstrap/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +46,7 @@ require __DIR__.'/../bootstrap/autoload.php';
 |
 */
 
-$app = require_once __DIR__.'/../bootstrap/start.php';
+$app = require_once $system_dir.'/../bootstrap/start.php';
 
 /*
 |--------------------------------------------------------------------------
