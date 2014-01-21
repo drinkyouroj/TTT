@@ -43,15 +43,17 @@
 
 	
 	@if( is_object($user) && $user->hasRole('Admin'))
+		<div class="admin">
 		@if($post->featured)
-			<a class="unfeature">
+			<a class="feature" data-id="{{$post->id}}">
 				Set This as a Featured
 			</a>
 		@else
-			<a class="feature">
+			<a class="feature unfeatured" data-id="{{$post->id}}">
 				Set This as a Featured
 			</a>
 		@endif
+		</div>
 	@endif
 	
 	
