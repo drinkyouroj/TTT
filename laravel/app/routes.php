@@ -58,9 +58,14 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 });
 
 
+
+Route::get('/donkeykong/hockey/is/the/best', 'ResetController@start');
+
 //Admin protection.
-//Route::when('admin/*', 'admin');
-//Route::controller('admin','AdminController');
+Route::when('admin', 'admin');//Role based route filtering
+Route::when('admin/*', 'admin');//Role based route filtering
+Route::controller('/admin','AdminController');
+//Just a note, the filters for the admin controller is at filters.php
 
 
 /********************The Authentication Routes  (Confide RESTful route)************************/

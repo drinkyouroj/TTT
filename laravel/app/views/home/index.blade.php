@@ -13,8 +13,9 @@
 			
 			{{--This is temporary to get things working.--}}
 			
-			@foreach($featured as $post)
-				<div class="col-md-4">
+			<div class="col-md-4 left">
+			@foreach($featured as $k=>$post)
+				<div class="left-post">
 					<h3>{{ link_to('posts/'.$post->alias, $post->title) }}</h3>
 					<h4>by {{link_to('profile/'.$post->user->username, $post->user->username)}}</h4>
 					<div class="the-content">
@@ -22,7 +23,24 @@
 						{{ link_to('posts/'.$post->alias, 'read on.') }}
 					</div>
 				</div>
+				{? if($k == 3 ) {break;}?}
 			@endforeach
+			</div>
+			
+			<div class="col-md-8 right">
+			@foreach($featured as $k=>$post)
+				@if($k >=3)
+				<div class="right-post">
+					<h3>{{ link_to('posts/'.$post->alias, $post->title) }}</h3>
+					<h4>by {{link_to('profile/'.$post->user->username, $post->user->username)}}</h4>
+					<div class="the-content">
+						{{ substr($post->body, 0, 50) }}...
+						{{ link_to('posts/'.$post->alias, 'read on.') }}
+					</div>
+				</div>
+				@endif
+			@endforeach
+			</div>
 		</div>
 		
 		@if(count($past_featured))
@@ -60,5 +78,5 @@
 
 
 @section('css')
-
+	<link href="{{Config::get('app.url')}}/css/views/style.css" rel="stylesheet" media="screen">
 @stop

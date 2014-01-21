@@ -16,15 +16,52 @@ class UserTableSeeder extends Seeder {
         $user->confirmed = 1;
 		$user->save();
 		
-		$user = new User;
+		unset($user);
+		
+		$max_user = new User;
 		
 		//First user
-        $user->username = 'max';
-        $user->email = 'max@y-designs.com';
-        $user->password = 'max';
-		$user->password_confirmation = 'max';
-        $user->confirmed = 1;
-		$user->save();
+        $max_user->username = 'max';
+        $max_user->email = 'max@y-designs.com';
+        $max_user->password = 'maximus';
+		$max_user->password_confirmation = 'max';
+        $max_user->confirmed = 1;
+		$max_user->save();
+		
+		unset($user);
+		
+		//Below are the 2 user Roles for now.
+		$nobody = new Role;
+		$nobody->name = 'Nobody';
+		$nobody->save();
+		
+		$admin = new Role;
+		$admin->name = 'Admin';
+		$admin->save();
+		
+		//Below are set of permissions for TTT
+		$setFeatured = new Permission;
+		$setFeatured->name = 'set_featured';
+		$setFeatured->display_name = 'Set/unset Featured';
+		$setFeatured->save();
+		
+		$manageUsers = new Permission;
+		$manageUsers->name = 'manage_users';
+		$manageUsers->display_name = 'Manage Users';
+		$manageUsers->save();
+		
+		//Attach the permissions to the role
+		$admin->attachPermission($setFeatured);
+		$admin->attachPermission($manageUsers);
+		
+		//Let's give the admins their rights
+		$ryuhei = User::where('username', '=', 'ryuhei')
+				->first();
+		
+		$max = User::where('username', '=', 'max')
+				->first();
+		
+		$ryuhei->attachRole($admin);
 		
     }
 	

@@ -8,6 +8,8 @@ use Zizaco\Entrust\HasRole;
  	
 class User extends ConfideUser {
 	
+	use HasRole;
+	
 	public function posts()
     {
         return $this->hasMany('Post', 'user_id');

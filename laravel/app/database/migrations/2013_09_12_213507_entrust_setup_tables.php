@@ -47,6 +47,7 @@ class EntrustSetupTables extends Migration {
             $table->foreign('permission_id')->references('id')->on('permissions'); // assumes a users table
             $table->foreign('role_id')->references('id')->on('roles');
         });
+		
     }
 
     /**

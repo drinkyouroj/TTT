@@ -29,8 +29,22 @@ body,html a:hover{
 .menu-wrapper .navbar .container { height: 30px; }
 
 /*Top Menu*/
-.header-wrapper .menu{
-	
+.header-wrapper{
+	font-family: 'EB Garamond';
+}
+
+.header-wrapper form.search {
+	margin-top: 5px;
+}
+
+.header-wrapper .search input {
+	font-size: 11px;
+	font-style:italic;
+	background:none;
+	padding: 2px 5px;
+	height: 22px;
+	border: 1px solid #9F9F9F;
+	border-radius: 10px;
 }
 
 /*Top Banner*/
@@ -50,7 +64,8 @@ body,html a:hover{
 .header-wrapper .banner .today {
 	text-align: right;
 	width: 100%;
-	color: #f4f4f6;
+	color: #9F9F9F;
+	
 }
 
 .header-wrapper .banner h1 {
@@ -71,6 +86,14 @@ body,html a:hover{
 .header-wrapper form.search input[type="submit"] {
     position: absolute;
     top: -1000px
+}
+
+.header-wrapper .navbar {
+	background:none;
+}
+
+.header-wrapper .navbar li a {
+	padding-top: 5px;
 }
 
 /*Footer Nav*/
@@ -210,20 +233,11 @@ body,html a:hover{
 
 .single-post .the-image {
 	text-align: center;
-	height: 200px;
+	height: 400px;
 	overflow:hidden;
-	-webkit-transition: height 1s;
-	-moz-transition: height 1s;
-	-o-transition: height 1s;
-	transition: height 1s;
-}
-/*
-.single-post .the-image:hover {
-	height: 100%;
-}
-*/
-.single-post .the-image img {
-	width: 100%;
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat; 
 }
 
 .single-post .the-content {

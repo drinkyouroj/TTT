@@ -1,4 +1,5 @@
 @extends('layouts.master')
+	{? $user= Auth::user() ?}
 
 @section('filters')
 	@include('partials/generic-filter')
@@ -6,11 +7,15 @@
 
 @section('js')
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/post.js"></script>
+	
+	@if( is_object($user) && $user->hasRole('Admin'))
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/feature.js"></script>
+	@endif
+	
 @stop
 
 @section('content')	
 <div class="col-md-10 col-md-offset-1 single-post">
-	
 	<hgroup>
 		<h2>{{$post->title}}</h2>
 		<h4>
@@ -35,6 +40,20 @@
 			@endif
 		</h4>
 	</hgroup>
+
+	
+	@if( is_object($user) && $user->hasRole('Admin'))
+		@if($post->featured)
+			<a class="unfeature">
+				Set This as a Featured
+			</a>
+		@else
+			<a class="feature">
+				Set This as a Featured
+			</a>
+		@endif
+	@endif
+	
 	
 	<div class="the-share">
 		@if(Auth::check() && $post->user->id != Session::get('user_id'))
@@ -74,9 +93,8 @@
 	
 	@if($post->image)
 	<div class="row">
-		<div class="col-md-10 col-md-offset-1 the-image">
-			<img src="{{Config::get('app.url')}}/uploads/final_images/{{$post->image}}">
-			<div class="clearfix"></div>
+		<div class="col-md-10 col-md-offset-1 the-image" style="background-image: url('{{Config::get('app.url')}}/uploads/final_images/{{$post->image}}');">
+			
 		</div>
 	</div>
 	@endif

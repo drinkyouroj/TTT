@@ -14,7 +14,6 @@ class PostController extends BaseController {
 		
 		//Do the post math here
 		$body_array = self::divide_text($post->body, 3000);//the length is currently set to 300 chars
-		
 		$user_id = $post->user->id;
 		
 		$is_following = Follow::where('follower_id', '=', Session::get('user_id'))
@@ -34,7 +33,8 @@ class PostController extends BaseController {
 						->with('post', $post)
 						->with('is_following', $is_following)//you are following this profile
 						->with('is_follower', $is_follower)//This profile follows you.
-						->with('bodyarray', $body_array);
+						->with('bodyarray', $body_array)
+						;
     }
 	
 		//Straight out of compton (or stackoverflow)

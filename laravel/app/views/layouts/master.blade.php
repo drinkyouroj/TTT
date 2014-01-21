@@ -4,6 +4,7 @@
     <title>@yield('title','Title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
        
+	<link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
     
     <!-- Bootstrap -->
     <link href="{{Config::get('app.url')}}/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -54,7 +55,7 @@
 		  			
 		  			{{--Remember that float: right is inverse visually.--}}
 		  			{{ Form::open(array('url'=> 'search', 'class' => 'navbar-form navbar-right search', 'role'=>'search' )) }}
-						<div class="form-group">
+						<div class="form-group search">
 							<input autocomplete="off" name="term" type="text" class="form-control" placeholder="Search">
 							<input type="submit" value="Search" class="hidden" >
 							<div class="result-box"></div>

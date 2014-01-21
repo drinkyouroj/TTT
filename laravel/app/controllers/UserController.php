@@ -45,6 +45,10 @@ class UserController extends BaseController {
 
         // Save if valid. Password field will be hashed before save
         $user->save();
+		
+		$userRole = Role::where('name', '=', 'Nobody')->first();
+		
+		$user->attachRole($userRole);//Attach the user role to a user.
 
         if ( $user->id )
         {

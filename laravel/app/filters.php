@@ -1,5 +1,10 @@
 <?php
 
+
+App::missing(function($exception) {
+	return Response::view('missing',array(), 404);
+});
+
 /*
 |--------------------------------------------------------------------------
 | Application & Route Filters
@@ -64,9 +69,9 @@ Route::filter('auth.basic', function()
 
 Route::filter('admin', function()
 {
-    if (! Entrust::hasRole('admin') ) // Checks the current user
+    if (! Entrust::hasRole('Admin') ) // Checks the current user
     {
-        App::abort(404);
+        return Redirect::to('/');
     }
 });
 
@@ -112,5 +117,9 @@ View::composer('*', function($view) {
 
 
 
+/**
+ * Below are Entrust Filters for the admin system
+ */
+ 
 
 

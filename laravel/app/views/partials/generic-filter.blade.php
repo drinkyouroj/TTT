@@ -14,10 +14,12 @@
 			<div class="col-md-3 col-sm-3">
 				<select name="sort_by" class="sort_by_filter pull-right">
 					<option selected="selected">sort by</option>
-					<option value="{{Request::url()}}/favorited">Most Favorited</option>
-					<option value="{{Request::url()}}/viewed">Most Viewed</option>
-					<option value="{{Request::url()}}/fucked">Most Fucked Up</option>
-					<option value="{{Request::url()}}/advanced">Advanced</option>
+					{{--This might need some weird switches and stuff for different scenarios--}}
+					{? $current_seg = Request::segment(1).'/'.Request::segment(2) ?}
+					<option value="{{Config::get('app.url')}}/{{$current_seg}}/favorited">Most Favorited</option>
+					<option value="{{Config::get('app.url')}}/{{$current_seg}}/viewed">Most Viewed</option>
+					<option value="{{Config::get('app.url')}}/{{$current_seg}}/fucked">Most Fucked Up</option>
+					<option value="{{Config::get('app.url')}}/{{$current_seg}}/advanced">Advanced</option>
 				</select>
 			</div>
 		</div>

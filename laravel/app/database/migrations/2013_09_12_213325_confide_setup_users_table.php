@@ -30,6 +30,7 @@ class ConfideSetupUsersTable extends Migration {
             $t->string('token');
             $t->timestamp('created_at');
         });
+		
     }
 
     /**
