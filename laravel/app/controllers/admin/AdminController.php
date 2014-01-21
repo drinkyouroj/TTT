@@ -20,8 +20,10 @@ class AdminController extends Controller {
 		//flip the featured
 		if($post->featured) {
 			$post->featured = false;
+			$post->featured_date = date();
 		} else {
 			$post->featured = true;
+			$post->featured_date = date();
 		}
 		$post->save();
 		

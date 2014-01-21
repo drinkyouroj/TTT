@@ -36,7 +36,7 @@
 					data-user="{{$post->user->id}}">
 					Message {{$post->user->username}}
 				</a>
-			</span>	
+			</span>
 			@endif
 		</h4>
 	</hgroup>

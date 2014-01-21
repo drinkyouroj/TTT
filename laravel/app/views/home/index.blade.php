@@ -9,38 +9,29 @@
 	{{--We'll implement the layout selector in the backend and we should use partials at that point to separate the layouts.--}}
 	
 	<div class="col-md-10 col-md-offset-1">
-		<div class="row top-featured">
+		<div id="top-featured" class="row top-featured generic-listing">
 			
 			{{--This is temporary to get things working.--}}
 			
-			<div class="col-md-4 left">
 			@foreach($featured as $k=>$post)
-				<div class="left-post">
+				<div class="featured-item generic-item @if($k<2) w2 @endif">
 					<h3>{{ link_to('posts/'.$post->alias, $post->title) }}</h3>
 					<h4>by {{link_to('profile/'.$post->user->username, $post->user->username)}}</h4>
+					@if($post->image)
+					<div class="the-image">
+						<a href="{{ URL::to('posts/'.$post->alias) }}">
+							<img src="{{Config::get('app.url')}}/uploads/final_images/{{$post->image}}">
+						</a>
+					</div>
+					@endif
 					<div class="the-content">
 						{{ substr($post->body, 0, 50) }}...
 						{{ link_to('posts/'.$post->alias, 'read on.') }}
+						<div class="clearfix"></div>
 					</div>
+					<div class="clearfix"></div>
 				</div>
-				{? if($k == 3 ) {break;}?}
 			@endforeach
-			</div>
-			
-			<div class="col-md-8 right">
-			@foreach($featured as $k=>$post)
-				@if($k >=3)
-				<div class="right-post">
-					<h3>{{ link_to('posts/'.$post->alias, $post->title) }}</h3>
-					<h4>by {{link_to('profile/'.$post->user->username, $post->user->username)}}</h4>
-					<div class="the-content">
-						{{ substr($post->body, 0, 50) }}...
-						{{ link_to('posts/'.$post->alias, 'read on.') }}
-					</div>
-				</div>
-				@endif
-			@endforeach
-			</div>
 		</div>
 		
 		@if(count($past_featured))
@@ -67,6 +58,9 @@
 @section('js')
 	{{-- Include all the JS required for the situation--}}
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/packery.min.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/home.js"></script>
+		
 		
 	@if(Auth::check())
 		<!--//user id is passed as a global variable-->
@@ -78,5 +72,5 @@
 
 
 @section('css')
-	<link href="{{Config::get('app.url')}}/css/views/style.css" rel="stylesheet" media="screen">
+	<link href="{{Config::get('app.url')}}/css/views/featured.css" rel="stylesheet" media="screen">
 @stop

@@ -1,3 +1,20 @@
 .top-featured {
-	
+	width: 100%;
+}
+
+
+.top-featured .featured-item{
+	width: 24.5%;
+}
+
+.top-featured .featured-item.w2{
+	width: 49%;
+}
+
+.top-featured .featured-item img{
+	width: 100%;
+}
+
+.top-featured .featured-item .the-content {
+	height: auto !important;
 }
