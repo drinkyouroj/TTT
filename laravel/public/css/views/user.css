@@ -1,0 +1,18 @@
+/**
+ * 	These styles are for the user login, signup 
+ */
+
+/*LOGIN*/
+.login-container {}
+
+.login-container .login-form {}
+
+.login-container .login-disclaimer {}
+
+
+/*SIGN UP*/
+.signup-container {}
+
+.signup-container .signup-form {}
+
+.signup-container .explantion {}

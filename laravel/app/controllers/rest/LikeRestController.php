@@ -28,9 +28,6 @@ class LikeRestController extends \BaseController {
 			$like->user_id = Auth::user()->id;//Gotta be from you.
 			$like->save();
 			if($like->id) {
-				//Add to notifications
-				
-				
 				
 				return Response::json(
 					array('result'=>'success'),
@@ -38,8 +35,13 @@ class LikeRestController extends \BaseController {
 				);
 			}
 		} elseif($exists) {//Relationship already exists
+		
+			Like::where('post_id', '=', Request::segment(3))
+				->where('user_id', '=', Auth::user()->id)
+				->delete();
+		
 			return Response::json(
-				array('result'=>'exists'),
+				array('result'=>'deleted'),
 				200//response is OK!
 			);
 		}

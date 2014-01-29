@@ -33,7 +33,20 @@ class RepostRestController extends \BaseController {
 			$repost->user_id = Auth::user()->id;//Gotta be from you.
 			$repost->save();
 			if($repost->id) {
-				//Add to notifications
+				//Add to the OP's notification
+				$notification = new Notification;
+				$notification->post_id = Request::segment(3);
+				$notification->user_id = Auth::user()->id;
+				$notification->notification_type = 'favorite';
+				$notification->save();
+				
+				//Add to follower's notifications
+				Queue::push('UserAction@repost', 
+							array(
+								'post_id' => Request::segment(3),
+								'user_id' => Auth::user()->id
+								)
+							);
 				
 				//Add to profile
 				

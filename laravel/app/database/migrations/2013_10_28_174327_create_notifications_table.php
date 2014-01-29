@@ -22,7 +22,8 @@ class CreateNotificationsTable extends Migration {
 						'comment'
 					));
 			$table->integer('post_id');//What was affected?
-			$table->integer('user_id');//Who did it?
+			$table->integer('action_id');//Who did it?
+			$table->integer('user_id');//Whose notification is this going to?
 			$table->timestamps();
 		});
 	}

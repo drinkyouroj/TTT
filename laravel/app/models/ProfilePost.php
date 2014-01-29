@@ -1,4 +1,8 @@
-<?php 
+<?php
+/**
+ * Profile Post is the user "activity" piece
+ */
+
 class ProfilePost extends Eloquent {
 		
 	//Just to be sure!

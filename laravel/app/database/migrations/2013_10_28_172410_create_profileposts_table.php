@@ -15,7 +15,7 @@ class CreateProfilepostsTable extends Migration {
 		Schema::create('profile_posts', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('profile_id');//This is the id that should be used to search for (EX to compare against Session::get('user_id')) 
+			$table->integer('profile_id');//This is the id that should be used to search for (EX to compare against Session::get('user_id'))  As in this is the profile owner's ID 
 			$table->integer('post_id');//The post associated witht he feed item
 			$table->integer('user_id');//user associated with the feed item
 			$table->enum('post_type', array(

@@ -1,3 +1,20 @@
+/*Font Import*/
+
+@font-face {
+    font-family: 'bebas';
+    src: url('../../fonts/bebas/BebasNeue-webfont.eot');
+    src: url('../../fonts/bebas/BebasNeue-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/bebas/BebasNeue-webfont.woff') format('woff'),
+         url('../../fonts/bebas/BebasNeue-webfont.ttf') format('truetype'),
+         url('../../fonts/bebas/BebasNeue-webfont.svg#bebas_neueregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+/*Main Styles*/
 body,html {
 	background-color: #f4f4f6;
 }
@@ -26,7 +43,10 @@ body,html a:hover{
 
 .menu-wrapper .navbar {height:30px;}
 
-.menu-wrapper .navbar .container { height: 30px; }
+.menu-wrapper .navbar .container { 
+	height: 30px;
+	font-family: 'bebas'; 
+}
 
 /*Top Menu*/
 .header-wrapper{
@@ -82,10 +102,41 @@ body,html a:hover{
 	display:none;
 }
 
+.header-wrapper form.navbar-form {
+	width: 20%;
+	float: right;
+	padding-right: 0;
+}
+
+.header-wrapper form.navbar-form div.search {
+	width: 100%;
+	
+}
+
+.header-wrapper form.search input[type="text"] {
+	width: 100%;
+}
 
 .header-wrapper form.search input[type="submit"] {
     position: absolute;
     top: -1000px
+}
+
+.header-wrapper form.search .result-box {
+	background: #333333;
+}
+
+.header-wrapper form.search .result-box ul {
+	margin: 0;
+	padding: 10px 5px;
+	list-style:none;
+}
+
+.header-wrapper form.search .result-box ul li {
+}
+
+.header-wrapper form.search .result-box ul li a{
+	color:#fff;
 }
 
 .header-wrapper .navbar {
@@ -94,6 +145,15 @@ body,html a:hover{
 
 .header-wrapper .navbar li a {
 	padding-top: 5px;
+}
+
+/*Bottom Exes*/
+.footer-exes {
+	width: 100%;
+	height: 20px;
+	background-image: url('../../img/global/x-bold.png');
+	background-position: top center;
+	background-repeat: no-repeat;
 }
 
 /*Footer Nav*/
@@ -136,15 +196,22 @@ body,html a:hover{
 }
 
 .filters-container ul.category-filter li {
-	display:inline-block;
+	display:inline-block;	
+	
+}
+
+.filters-container ul.category-filter li span.ex{
+	font-family: sans-serif;
+	padding: 0 5px;
 }
 
 .filters-container ul.category-filter li a {
+	font-family: 'bebas';
+	font-size: 17px;
 	display:inline-block;
 	color: #000;
 	text-decoration:none;
 	text-transform: uppercase;
-	font-weight: bold;
 }
 
 .filters-container ul.category-filter li a:hover {
@@ -156,6 +223,7 @@ body,html a:hover{
 	background: #eeece6;
 	color: #9f9f9f;
 	border: 2px solid #9f9f9f;
+	font-family: 'EB Garamond';
 }
 
 /**Generic Listing*/
@@ -179,6 +247,11 @@ body,html a:hover{
 	margin: 20px 0 0 0;
 	background: url('../../img/global/x-small.png') center top no-repeat;
 	word-break: break-all;
+	font-family: 'bebas';
+}
+
+.generic-listing .generic-item span.author {
+	font-family: 'EB Garamond';
 }
 
 .generic-listing .generic-item h4{
@@ -187,13 +260,20 @@ body,html a:hover{
 }
 
 .generic-listing .generic-item h4 span{
-	font-size: 12px;
+	font-size: 12px;	
 }
 
 .generic-listing .generic-item .the-image{
-	height: 150px;
+	margin-top: 4px;
+	max-height: 150px;
+	height: auto;
 	overflow:hidden;
 }
+
+.generic-listing .generic-item.w2 .the-image{
+	max-height: 300px;	
+}
+
 .generic-listing .generic-item .the-image img{
 	width: 100%;
 }
@@ -203,7 +283,7 @@ body,html a:hover{
 }
 
 .generic-listing .generic-item .the-tags {
-	font-weight:bold;
+	font-family:'bebas';
 	height: 40px;
 	margin-bottom: 10px;
 }
@@ -266,5 +346,3 @@ body,html a:hover{
 	float: right;
 	text-align: right;
 }
-
-

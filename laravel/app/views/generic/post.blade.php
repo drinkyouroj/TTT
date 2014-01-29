@@ -46,11 +46,11 @@
 		<div class="admin">
 		@if($post->featured)
 			<a class="feature" data-id="{{$post->id}}">
-				Set This as a Featured
+				Un-Feature this Article
 			</a>
 		@else
 			<a class="feature unfeatured" data-id="{{$post->id}}">
-				Set This as a Featured
+				Set Article as a Featured
 			</a>
 		@endif
 		</div>

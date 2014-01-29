@@ -27,57 +27,59 @@
 <div class="header-wrapper">
 	<div class="menu-wrapper">
 	  	<header class="container menu">
-	  		<nav class="col-md-10 col-md-offset-1 navbar navbar-inverse" role="navigation">
-	  			<div class="container">
-		  			<ul class="nav navbar-nav">
-		  				@if(Auth::guest())
-		  				<li>
-		  					<a href="{{Config::get('app.url')}}/about">About</a>
-						</li>
-		  				<li>
-		  					<a href="{{Config::get('app.url')}}/user/login">Sign in</a>
-						</li>
-						<li>
-							<a href="{{Config::get('app.url')}}/user/signup">Signup</a>
-						</li>
-						@else
-						<li>
-		  					<a href="{{Config::get('app.url')}}/profile">profile</a>
-						</li>
-						<li>
-		  					<a href="{{Config::get('app.url')}}/profile/newpost">post</a>
-						</li>
-						<li>
-		  					<a href="{{Config::get('app.url')}}/profile/messages">message</a>
-						</li>
-						@endif
-		  			</ul>
-		  			
-		  			{{--Remember that float: right is inverse visually.--}}
-		  			{{ Form::open(array('url'=> 'search', 'class' => 'navbar-form navbar-right search', 'role'=>'search' )) }}
-						<div class="form-group search">
-							<input autocomplete="off" name="term" type="text" class="form-control" placeholder="Search">
-							<input type="submit" value="Search" class="hidden" >
-							<div class="result-box"></div>
-						</div>
-					{{ Form::close() }}
-				    @if(!Auth::guest())
-		  			<ul class="nav navbar-nav navbar-right">
-						<li>
-		  					<a href="{{Config::get('app.url')}}/user/logout">Sign out</a>
-						</li>
-		  			</ul>
-		  			@endif
-				</div>
-	  		</nav>
+	  		<div class="row">
+		  		<nav class="col-md-12 navbar navbar-inverse" role="navigation">
+		  			<div class="container">
+			  			<ul class="nav navbar-nav">
+			  				@if(Auth::guest())
+			  				<li>
+			  					<a href="{{Config::get('app.url')}}/about">About</a>
+							</li>
+			  				<li>
+			  					<a href="{{Config::get('app.url')}}/user/login">Sign in</a>
+							</li>
+							<li>
+								<a href="{{Config::get('app.url')}}/user/signup">Signup</a>
+							</li>
+							@else
+							<li>
+			  					<a href="{{Config::get('app.url')}}/profile">My Profile</a>
+							</li>
+							<li>
+			  					<a href="{{Config::get('app.url')}}/profile/newpost">Post</a>
+							</li>
+							<li>
+			  					<a href="{{Config::get('app.url')}}/profile/messages">Message</a>
+							</li>
+							@endif
+			  			</ul>
+			  			
+			  			{{--Remember that float: right is inverse visually.--}}
+			  			{{ Form::open(array('url'=> 'search', 'class' => 'navbar-form navbar-right search', 'role'=>'search' )) }}
+							<div class="form-group search">
+								<input autocomplete="off" name="term" type="text" class="form-control" placeholder="Search">
+								<input type="submit" value="Search" class="hidden" >
+								<div class="result-box"></div>
+							</div>
+						{{ Form::close() }}
+					    @if(!Auth::guest())
+			  			<ul class="nav navbar-nav navbar-right">
+							<li>
+			  					<a href="{{Config::get('app.url')}}/user/logout">Sign out</a>
+							</li>
+			  			</ul>
+			  			@endif
+					</div>
+		  		</nav>
+	  		</div>
 	  	</header>
   	</div>
   	
   	<div class="banner">
   		<div class="container">
   			<div class="row">
-  				<div class="col-md-10 col-md-offset-1">
-  					<div class="today">{{date('l, F m, Y')}}</div>
+  				<div class="col-md-12">
+  					<div class="today row">{{date('l, F m, Y')}}</div>
   				</div>
   			</div>
   		</div>
@@ -93,11 +95,12 @@
 		<div class="row content">
 			@yield('content','Fudge no content defined.')
 	 	</div>
-	 	<div class="row exes">
-	 		<div class=""></div>
+	 	<div class="footer-exes">
+	 		
 	 	</div>
 	</div>
-	
+
+
 	
 <div class="footer-container">
 	<div class="container">

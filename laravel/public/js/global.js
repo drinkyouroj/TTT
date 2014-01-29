@@ -6,9 +6,18 @@ $(function() {
 		event.preventDefault;
 	});
 	
+	//Follow someone
 	$('.follow').on('click', function() {
 		follow(event, $(this).data('user'));
 	});
+		//See the followers list
+		$('.followers').on('click', function(event){
+			followers_box(event, $(this).data('user'));
+		});
+		
+		$('.following').on('click', function(event){
+			following_box(event, $(this).data('user'));
+		});
 	
 	$('.fav').on('click', function() {
 		fav(event, $(this).data('post'));
@@ -77,24 +86,47 @@ function follow(e,id) {
 		url: window.site_url+'rest/follows/'+id,
 		//type:"POST",
 		success: function(data) {
-			switch(data.result) {
-				case 'success':
-					console.log('success');
-				break;
-				case 'mutual':
-					console.log('mutual');
-				break;
-				case 'exists':
-					console.log('exists');
-				break;
-				default:
-				case 'fail':
-					console.log(window.error);
-				break;
-			}
+			
 		}
 	});
 }
+
+function followers_box(e,id) {
+	e.preventDefault();
+	$.ajax({
+		url: window.site_url+'rest/followers/'+id,
+		//type:"POST",
+		success: function(data) {
+			
+			$('#followbox .modal-body').empty();
+			$.each(data.followers, function(index, value) {
+				$('#followbox .modal-body').append('<a href="'+window.site_url+'profile/'+value.username+'">'+value.username+'</a>');
+			});
+			
+			$('#followbox .modal-title').html('Your Followers');
+			$('#followbox').modal('show');
+		}
+	});
+}
+
+function following_box(e,id) {
+	e.preventDefault();
+	$.ajax({
+		url: window.site_url+'rest/following/'+id,
+		//type:"POST",
+		success: function(data) {
+			
+			$('#followbox .modal-body').empty();
+			$.each(data.following, function(index, value) {
+				$('#followbox .modal-body').append('<a href="'+window.site_url+'profile/'+value.username+'">'+value.username+'</a>');
+			});
+			
+			$('#followbox .modal-title').html('People You Follow');
+			$('#followbox').modal('show');
+		}
+	});
+}
+
 
 /**
  * Post (as in the articles) based function 
@@ -105,18 +137,7 @@ function fav(e,id) {
 		url: window.site_url+'rest/favorites/'+id,
 		//type:"POST",
 		success: function(data) {
-			switch(data.result) {
-				case 'success':
-					console.log('success');
-				break;
-				case 'exists':
-					console.log('exists');
-				break;
-				default:
-				case 'fail':
-					console.log(window.error);
-				break;
-			}
+			error_log(data.result);
 		}
 	});
 }
@@ -129,19 +150,7 @@ function repost(e,id) {
 		url: window.site_url+'rest/reposts/'+id,
 		//type:"POST",
 		success: function(data) {
-			console.log(data.result);
-			switch(data.result) {
-				case 'success':
-					console.log('success');
-				break;
-				case 'exists':
-					console.log('exists');
-				break;
-				default:
-				case 'fail':
-					console.log(window.error);
-				break;
-			}
+			error_log(data.result);
 		}
 	});
 }
@@ -153,18 +162,26 @@ function like(e,id) {
 		url: window.site_url+'rest/likes/'+id,
 		//type:"POST",
 		success: function(data) {
-			switch(data.result) {
-				case 'success':
-					console.log('success');
-				break;
-				case 'exists':
-					console.log('exists');
-				break;
-				default:
-				case 'fail':
-					console.log(window.error);
-				break;
-			}
+			error_log(data.result);
 		}
 	});
+}
+
+
+function error_log(result) {
+	switch(result) {
+		case 'success':
+			console.log('success');
+		break;
+		case 'mutual':
+			console.log('mutual');
+		break;
+		case 'exists':
+			console.log('exists');
+		break;
+		default:
+		case 'fail':
+			console.log(window.error);
+		break;
+	}
 }

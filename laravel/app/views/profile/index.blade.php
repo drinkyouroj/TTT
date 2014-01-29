@@ -4,15 +4,12 @@
 
 @section('left_sidebar')
 	<div class="the-content">
-		{{$user->username}}
-		<br/>
-		
 		<div class="likes">
-			<h3>Your recent likes:</h3>
+			<h3>Recent likes:</h3>
 			@if(count($likes))
 				<ul>
 				@foreach($likes as $like)
-					<li><strong>{{$like->post->title}}</strong> by {{$like->post->user->username}}</li>
+					<li><a href="{{ 'posts/'.$like->post->alias}}"><strong>{{$like->post->title}}</strong> by {{$like->post->user->username}}</a></li>
 				@endforeach
 				</ul>
 			@else
@@ -89,12 +86,10 @@
 									<img src="{{Config::get('app.url')}}/uploads/final_images/{{$act->post->image}}">
 								</a>
 							</div>
-							<div class="the-taglines">
-								<span class="taglines">
+							<div class="the-tags">
 								{{$act->post->tagline_1}} |
 								{{$act->post->tagline_2}} |
 								{{$act->post->tagline_3}}
-								</span>
 							</div>
 						</section>
 					</div>

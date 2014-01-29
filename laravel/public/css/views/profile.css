@@ -1,11 +1,26 @@
 .profile-top {
-	border-bottom: 2px;
+	border-bottom: 2px solid #000;
+	padding-bottom: 10px;
+	margin-bottom: 30px;
 }
 
 .profile-top:after {
-	content: " ";
-	
+		
 }
+
+.profile-top h2 {
+	font-family: 'bebas';
+	font-size: 35px;
+	margin-top: 30px;
+	margin-bottom: 0px;
+}
+
+.profile-top h3 {
+	margin: 0;
+	font-size: 14px;
+	font-family: 'EB Garamond';
+}
+
 
 .user {
 	position: relative;
@@ -16,7 +31,7 @@
 
 ul.profile-options {
 	position: absolute;
-	bottom: 0;
+	bottom: 10px;
 	left: 0;
 	list-style:none;
 	margin:0;
@@ -28,14 +43,26 @@ ul.profile-options li {
 	display:inline-block;
 	margin:0;
 	padding: 0;
+vertical-align: middle;
 }
 
 ul.profile-options li a {
+	display:inline-block;
+	height: 30px;
+	padding-top: 5px;
+	
+	color:#000;
 	text-transform:uppercase;
+	font-family: 'bebas';
+	font-size: 14px;
+	padding-left: 35px;
+	margin-right: 20px;
+	background-position: top left;
+	background-repeat: no-repeat;
 }
 
 ul.profile-options li a.new-post {
-	
+	background-image: url('../../img/global/post-colored.png');
 }
 
 ul.profile-options li a.edit-profile {
@@ -47,13 +74,13 @@ ul.profile-options li a.follow {
 }
 
 ul.profile-options li a.new-message {
-	
+	background-image: url('../../img/global/post-colored.png');
 }
 
 .follow-container {
 	position: absolute;
 	right: 0;
-	bottom: 0;
+	bottom: 10px;
 	width: 200px;
 	text-align: center;
 }
@@ -62,15 +89,60 @@ ul.profile-options li a.new-message {
 	display:inline-block;
 }
 
-.follow-container .followering {
+.follow-container .numbers{
+	display:block;
+	font-size: 30px;
+	font-weight:bold;
+	line-height: 35px;
+}
+
+.follow-container .following-link {
+	color:#000;
+	font-family: 'EB Garamond';
+}
+
+.follow-container .followers-link {
+	color:#000;
+	font-family: 'EB Garamond';
+}
+
+/*Left Sidebar*/
+
+.left-sidebar {
+	font-family: 'EB Garamond';
+}
+
+
+.left-sidebar h3 {
+	font-family: 'bebas';
+}
+
+/*Likes*/
+.left-sidebar .likes {
+	padding-bottom: 30px;
+	border-bottom: 1px solid #ccc;
 	
 }
 
-.follow-container .followers {
-	
+.left-sidebar .likes ul {
+	margin: 0;
+	padding: 0;
+	list-style:none;
+}
+
+.left-sidebar .likes ul li{
+	padding: 0;
+	margin: 0;
 }
 
 /*Profile Listing*/
+
+.activity-container {
+	border-left: 1px solid #ccc;
+	padding-bottom: 40px;
+	
+}
+
 .activity-container .add-new {
 	
 }

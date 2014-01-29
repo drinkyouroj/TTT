@@ -38,7 +38,8 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	//let's limit the useable controller functions
 	
 	//FollowingController shows the people that follow you.
-	Route::resource('following', 'FollowingRestController',array('only'=>array('index')));
+	Route::resource('following', 'FollowingRestController',$binary_limits);
+	Route::resource('followers', 'FollowersRestController',$binary_limits);
 	
 	//Flickr!!!!!
 	Route::resource('flickr', 'FlickrRestController', array('only'=>array('index','show')));
@@ -58,7 +59,7 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 });
 
 
-
+//This controller is a dev only test controller.
 Route::get('/donkeykong/hockey/is/the/best', 'ResetController@start');
 
 //Admin protection.

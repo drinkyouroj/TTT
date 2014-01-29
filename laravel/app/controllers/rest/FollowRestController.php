@@ -21,21 +21,25 @@ class FollowRestController extends \BaseController {
 						->where('follower_id', '=', Auth::user()->id)
 						->count();
 		
-		if(!count($exists)) {//Doesn't exists
+		if($exists) {//Relationship already exists
+			
+			Follow::where('user_id', '=', Request::segment(3))
+					->where('follower_id', '=', Auth::user()->id)
+					->delete();
+		
+			return Response::json(
+				array('result'=>'deleted'),
+				200//response is OK!
+			);
+		} else {//Doesn't exists
 			//Crete a new follow
 			$follow = new Follow;
 			$follow->user_id = Request::segment(3);
 			$follow->follower_id = Auth::user()->id;//Gotta be from you.
 			$follow->save();
-			if($follow->id) {
-				return Response::json(
-					array('result'=>'success'),
-					200//response is OK!
-				);
-			}
-		} elseif(count($exists)) {//Relationship already exists
+			
 			return Response::json(
-				array('result'=>'exists'),
+				array('result'=>'success'),
 				200//response is OK!
 			);
 		}

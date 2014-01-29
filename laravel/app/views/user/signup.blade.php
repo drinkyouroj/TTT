@@ -2,6 +2,7 @@
 
 
 @section('css')
+	<link href="{{Config::get('app.url')}}/css/views/user.css" rel="stylesheet" media="screen">
 @stop
 
 @section('js')
@@ -13,14 +14,12 @@ Sign up!
 
 
 @section('content')
-	<div class="col-md-6 col-md-offset-2">
-		<div class="row">
-			<div class="col-md-4 col-md-offset-1">
-				{{ Confide::makeSignupForm()->render() }}
-			</div>
+	<div class="col-md-4 col-md-offset-4 signup-container">
+		<div class="signup-form">
+		{{ Confide::makeSignupForm()->render() }}
 		</div>
+		<aside class="explanation">
+			<p>Explantion for the signup process.  Potentially put some disclaimer here or something.</p>
+		</aside>
 	</div>
-	<aside class="col-md-2">
-		<p>Explantion for the signup process.  Potentially put some disclaimer here or something.</p>
-	</aside>
 @stop
