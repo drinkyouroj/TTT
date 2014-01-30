@@ -19,71 +19,71 @@
 	<hgroup>
 		<h2>{{$post->title}}</h2>
 		<h4>
-			by {{link_to('profile/'.$post->user->username, $post->user->username)}}
-			@if(!$is_following && $post->user->id != Session::get('user_id'))
-			<span class="follow-container">
-				<a class="follow" 
+			by {{link_to('profile/'.$post->user->username, $post->user->username)}}			
+		</h4>
+		@if(!$is_following && $post->user->id != Session::get('user_id'))
+			<div class="follow-container">
+				<a class="follow action" 
 					href="{{Config::get('app.url')}}/follow/{{$post->user->id}}"
 					data-user="{{$post->user->id}}">
 					Follow {{$post->user->username}}
 				</a>
-			</span>
+			</div>
 			@elseif($is_following && $is_follower)
 				{{--Mutual--}}
-			<span class="message-container">
-				<a class="message" 
+			<div class="message-container">
+				<a class="message action" 
 					href="{{Config::get('app.url')}}/profile/newmessage/{{$post->user->id}}" 
 					data-user="{{$post->user->id}}">
 					Message {{$post->user->username}}
 				</a>
-			</span>
-			@endif
-		</h4>
-	</hgroup>
-
-	
-	@if( is_object($user) && $user->hasRole('Admin'))
-		<div class="admin">
-		@if($post->featured)
-			<a class="feature" data-id="{{$post->id}}">
-				Un-Feature this Article
-			</a>
-		@else
-			<a class="feature unfeatured" data-id="{{$post->id}}">
-				Set Article as a Featured
-			</a>
+			</div>
 		@endif
-		</div>
-	@endif
+		
+		@if( is_object($user) && $user->hasRole('Admin'))
+			<div class="admin">
+			@if($post->featured)
+				<a class="feature action" data-id="{{$post->id}}">
+					Un-Feature this Article
+				</a>
+			@else
+				<a class="feature unfeatured action" data-id="{{$post->id}}">
+					Set Article as a Featured
+				</a>
+			@endif
+			</div>
+		@endif
+		
+	</hgroup>
 	
 	
 	<div class="the-share">
 		@if(Auth::check() && $post->user->id != Session::get('user_id'))
 			<div class="system-share">
-				<span class="fav-container">
+				<span class="fav-container share-action">
 					<a class="fav"
 						href="{{Config::get('app.url')}}/favorite/{{$post->id}}" 
 						data-post="{{$post->id}}">
 						Favorite
-						{{$post->favorites->count() ? '(<span>'.$post->favorites->count().'</span>)' : ''}}
+						{{$post->favorites->count() ? '<span class="brackets">(<span class="numbers">'.$post->favorites->count().'</span>)</span>' : ''}}
 					</a>
 				</span>
-				<span> | </span>
-				<span class="repost-container">
+				
+				<span class="repost-container share-action">
 					<a class="repost"
 						href="{{Config::get('app.url')}}/repost/{{$post->id}}" 
 						data-post="{{$post->id}}">
 						Repost
-						{{$post->reposts->count() ? '(<span>'.$post->reposts->count().'</span>)' : ''}}
+						{{$post->reposts->count() ? '<span class="brackets">(<span class="numbers">'.$post->reposts->count().'</span>)</span>' : ''}}
 					</a>
 				</span>
-				<span> | </span>
-				<span class="like-container">
+				
+				<span class="like-container share-action">
 					<a class="like"
 						href="{{Config::get('app.url')}}/like/{{$post->id}}" 
 						data-post="{{$post->id}}">
 						Like
-						{{$post->likes->count() ? '(<span>'.$post->likes->count().'</span>)' : ''}}
+						{{$post->likes->count() ? '<span class="brackets">(<span class="numbers">'.$post->likes->count().'</span>)</span>' : ''}}
 					</a>
 				</span> 
 			</div>
@@ -112,6 +112,7 @@
 				</div>
 				<div class="col-md-10 col-md-offset-1 row-divider">
 					<span class="page-count">{? echo $c+1 ?}/{{$total}}</span>
+					<div class="clearfix"></div>
 				</div>
 			</div>
 		@endforeach

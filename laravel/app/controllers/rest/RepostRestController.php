@@ -32,33 +32,35 @@ class RepostRestController extends \BaseController {
 			$repost->post_id = Request::segment(3);
 			$repost->user_id = Auth::user()->id;//Gotta be from you.
 			$repost->save();
-			if($repost->id) {
-				//Add to the OP's notification
-				$notification = new Notification;
-				$notification->post_id = Request::segment(3);
-				$notification->user_id = Auth::user()->id;
-				$notification->notification_type = 'favorite';
-				$notification->save();
-				
-				//Add to follower's notifications
-				Queue::push('UserAction@repost', 
-							array(
-								'post_id' => Request::segment(3),
-								'user_id' => Auth::user()->id
-								)
-							);
-				
-				//Add to profile
-				
-				
-				return Response::json(
-					array('result'=>'success'),
-					200//response is OK!
-				);
-			}
-		} elseif($exists) {//Relationship already exists
+			
+			//Add to the OP's notification
+			$notification = new Notification;
+			$notification->post_id = Request::segment(3);
+			$notification->user_id = Auth::user()->id;
+			$notification->notification_type = 'favorite';
+			$notification->save();
+			/*
+			//Add to follower's notifications
+			Queue::push('UserAction@repost', 
+						array(
+							'post_id' => Request::segment(3),
+							'user_id' => Auth::user()->id
+							)
+						);
+			*/
+			//This has to be outside 
 			return Response::json(
-				array('result'=>'exists'),
+				array('result'=>'success'),
+				200//response is OK!
+			);
+		} elseif($exists) {//Relationship already exists
+			
+			Repost::where('post_id', '=', Request::segment(3))
+				->where('user_id', '=', Auth::user()->id)
+				->delete();
+			
+			return Response::json(
+				array('result'=>'deleted'),
 				200//response is OK!
 			);
 		}

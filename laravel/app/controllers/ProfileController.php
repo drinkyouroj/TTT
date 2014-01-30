@@ -213,7 +213,7 @@ class ProfileController extends BaseController {
 		
 		if($validator->passes()) {
 			$comment->save();
-			return Redirect::to('posts/'.$comment->post->alias);
+			return Redirect::to('posts/'.$comment->post->alias.'#comment-'.$comment->id);
 		} else {
 			return Redirect::to('posts/'.$comment->post->alias)
 							->withErrors($validator)
@@ -233,6 +233,12 @@ class ProfileController extends BaseController {
 			$comment->body = Request::get('body');
 			return $comment;
 		}
+		
+		private function comment_body_filter($body)
+		{
+			
+		}
+		
 
 	public function getCommentForm($post_id, $reply_id) {
 		$post = Post::find($post_id);

@@ -108,14 +108,14 @@
 							</header>
 							<section>
 								<div class="the-image">
-									<img src="{{$post->image}}">
+								<a href="{{URL::to('posts/'.$post->alias)}}">
+									<img src="{{Config::get('app.url')}}/uploads/final_images/{{$post->image}}">
+								</a>
 								</div>
-								<div class="the-taglines">
-									<span class="taglines">
+								<div class="the-tags">
 									{{$post->tagline_1}} |
 									{{$post->tagline_2}} |
 									{{$post->tagline_3}}
-									</span>
 								</div>
 							</section>
 						</div>

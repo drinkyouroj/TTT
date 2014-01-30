@@ -137,7 +137,7 @@ function fav(e,id) {
 		url: window.site_url+'rest/favorites/'+id,
 		//type:"POST",
 		success: function(data) {
-			error_log(data.result);
+			error_log(data.result,'fav');
 		}
 	});
 }
@@ -150,7 +150,7 @@ function repost(e,id) {
 		url: window.site_url+'rest/reposts/'+id,
 		//type:"POST",
 		success: function(data) {
-			error_log(data.result);
+			error_log(data.result,'repost');
 		}
 	});
 }
@@ -162,16 +162,17 @@ function like(e,id) {
 		url: window.site_url+'rest/likes/'+id,
 		//type:"POST",
 		success: function(data) {
-			error_log(data.result);
+			error_log(data.result,'like');
 		}
 	});
 }
 
 
-function error_log(result) {
+function error_log(result, action) {
 	switch(result) {
 		case 'success':
 			console.log('success');
+			add_result(action);
 		break;
 		case 'mutual':
 			console.log('mutual');
@@ -179,9 +180,38 @@ function error_log(result) {
 		case 'exists':
 			console.log('exists');
 		break;
+		case 'deleted':
+			del_result(action);
+		break;
 		default:
 		case 'fail':
 			console.log(window.error);
 		break;
+	}
+	console.log(result);
+}
+
+//This function controls the live adding of numbers to the existing likes, etc
+function add_result(action) {
+	val = parseInt($('.system-share a.'+action+' span.numbers').html());
+	//if the value isn't false
+	if(val) {
+		$('.system-share a.'+action+' span.numbers').html(val+1);
+	} else {
+		$('.system-share a.'+action).append('<span class="brackets">(<span class="numbers">1</span>)</span>');
+	}
+}
+
+
+//This function controls live deleting.
+function del_result(action) {
+	val = parseInt($('.system-share a.'+action+' span.numbers').html());
+	if(val) {
+		if(val-1 >= 1) {
+			$('.system-share a.'+action+' span.numbers').html(val-1);
+		} else {
+			$('.system-share a.'+action+' span.brackets').detach();
+			console.log('detach');
+		}
 	}
 }

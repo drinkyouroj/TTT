@@ -5,7 +5,7 @@
 	{{ Form::hidden('reply_id', $reply_id ) }}
 	@endif
 
-	<div class="form-group {{$errors->first('body') ? 'has-error' : '' }}">
+	<div class="form-group comment-form {{$errors->first('body') ? 'has-error' : '' }}">
 		{{ Form::label('body','Comment', array('class'=>'control-label')) }}
 		{{ Form::textarea('body', Input::old('body'), array('class'=>'form-control', 'required', 'minlength' =>'5')) }}
 		<span class="error">{{ $errors->first('body') }}</span>
@@ -14,4 +14,6 @@
 	<div class="form-group pull-right">
 		{{ Form::submit('Comment') }}
 	</div>
+	
+	<div class="clearfix"></div>
 {{ Form::close() }}
