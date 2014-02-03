@@ -25,8 +25,11 @@ class RepostRestController extends \BaseController {
 		$exists = Repost::where('post_id', '=', Request::segment(3))
 						->where('user_id', '=', Auth::user()->id)
 						->count();
+		$owns = Post::where('id', '=', Request::segment(3))
+				->where('user_id', '=', Auth::user()->id)
+				->count();
 		
-		if(!$exists) {//Doesn't exists
+		if(!$exists && !$owns) {//Doesn't exists
 			//Crete a new follow
 			$repost = new Repost;
 			$repost->post_id = Request::segment(3);

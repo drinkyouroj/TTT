@@ -20,7 +20,10 @@ class FavoriteRestController extends \BaseController {
 		$exists = Favorite::where('post_id', '=', Request::segment(3))
 						->where('user_id', '=', Auth::user()->id)
 						->count();
-		if(!$exists) {//Doesn't exists
+		$owns = Post::where('id', '=', Request::segment(3))
+					->where('user_id', '=', Auth::user()->id)
+					->count();
+		if(!$exists && !$owns) {//Doesn't exists
 			//Crete a new follow
 			$favorite = new Favorite;
 			$favorite->post_id = Request::segment(3);

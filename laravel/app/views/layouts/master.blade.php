@@ -133,6 +133,11 @@
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/jquery-1.9.1.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/bootstrap.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/global.js"></script>
+	@if(Auth::check())
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/global-loggedin.js"></script>
+	@else
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/global-nologin.js"></script>
+	@endif
 	
 	<!--Extra Javascript-->
 	@yield('js')

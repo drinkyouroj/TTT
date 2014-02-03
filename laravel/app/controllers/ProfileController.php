@@ -234,6 +234,10 @@ class ProfileController extends BaseController {
 			return $comment;
 		}
 		
+		/****
+		 * Below function is a future function for filtering the body
+		 * so that we can define links within the comments to profiles.
+		 */ 
 		private function comment_body_filter($body)
 		{
 			

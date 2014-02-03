@@ -59,10 +59,12 @@
 	
 	<div class="the-share">
 		@if(Auth::check() && $post->user->id != Session::get('user_id'))
+		href="{{Config::get('app.url')}}/favorite/{{$post->id}}" 
+		@endif
 			<div class="system-share">
 				<span class="fav-container share-action">
 					<a class="fav"
-						href="{{Config::get('app.url')}}/favorite/{{$post->id}}" 
+						
 						data-post="{{$post->id}}">
 						Favorite
 						{{$post->favorites->count() ? '<span class="brackets">(<span class="numbers">'.$post->favorites->count().'</span>)</span>' : ''}}
@@ -87,7 +89,7 @@
 					</a>
 				</span> 
 			</div>
-		@endif
+		
 		<div class="external-share">
 			//Addthis will go here.
 		</div>

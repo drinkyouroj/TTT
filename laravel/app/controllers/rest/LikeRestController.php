@@ -20,8 +20,11 @@ class LikeRestController extends \BaseController {
 		$exists = Like::where('post_id', '=', Request::segment(3))
 						->where('user_id', '=', Auth::user()->id)
 						->count();
+		$owns = Post::where('id', '=', Request::segment(3))
+					->where('user_id', '=', Auth::user()->id)
+					->count();
 		
-		if(!$exists) {//Doesn't exists
+		if(!$exists && !$owns) {//Doesn't exists
 			//Crete a new follow
 			$like = new Like;
 			$like->post_id = Request::segment(3);
