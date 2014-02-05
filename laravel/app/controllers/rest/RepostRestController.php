@@ -36,21 +36,33 @@ class RepostRestController extends \BaseController {
 			$repost->user_id = Auth::user()->id;//Gotta be from you.
 			$repost->save();
 			
-			//Add to the OP's notification
-			$notification = new Notification;
-			$notification->post_id = Request::segment(3);
-			$notification->user_id = Auth::user()->id;
-			$notification->notification_type = 'favorite';
-			$notification->save();
-			/*
-			//Add to follower's notifications
-			Queue::push('UserAction@repost', 
-						array(
-							'post_id' => Request::segment(3),
-							'user_id' => Auth::user()->id
-							)
-						);
-			*/
+			
+			$notification_exists = Notification::where('post_id', '=', Request::segment(3))
+								->where('action_id', '=', Auth::user()->id)
+								->count();
+			
+			if(!$notification_exists){
+			
+				$post = Post::where('id','=', Request::segment(3))
+							->first();
+				
+				//Add to the OP's notification
+				$notification = new Notification;
+				$notification->post_id = Request::segment(3);
+				$notification->user_id = $post->user_id;
+				$notification->action_id = Auth::user()->id;
+				$notification->notification_type = 'repost';
+				$notification->save();
+				/*
+				//Add to follower's notifications
+				Queue::push('UserAction@repost', 
+							array(
+								'post_id' => Request::segment(3),
+								'user_id' => Auth::user()->id
+								)
+							);
+				*/
+			}
 			//This has to be outside 
 			return Response::json(
 				array('result'=>'success'),

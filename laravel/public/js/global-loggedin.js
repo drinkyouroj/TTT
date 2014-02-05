@@ -27,6 +27,15 @@ $(function() {
 	$('.like').on('click', function() {
 		like(event, $(this).data('post'));
 	});
+	
+	$('.navbar-right .notifications-parent')
+		.mouseenter(function() {
+			$('ul.notifications',this).slideDown();
+		})
+		.mouseleave(function() {
+			$('ul.notifications',this).slideUp();
+		});	
+	
 });
 
 

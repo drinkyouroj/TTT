@@ -112,7 +112,32 @@ Route::filter('csrf', function()
 
 //This will need to be figured out later as the view composer is unable to figure out how to reach the layouts.master.blade.php file
 View::composer('*', function($view) {
-	$view->with('categories', Category::all());
+	if(!Auth::guest()) {
+		$notifications = Notification::where('user_id', '=', Session::get('user_id'))
+										->where('noticed', '=', 0)
+										->take(30)//This is an artificial limit.
+										->get();
+		
+		//Gotta parse the $notifications here:
+		$compiled = array();
+		//First push all the notificaiton IDs into the post array according to their post id.
+		foreach($notifications as $not) {
+			if(isset($compiled[$not->post_id][$not->notification_type])) {
+				array_push($compiled[$not->post_id][$not->notification_type], $not);
+			}else {
+				$compiled[$not->post_id][$not->notification_type] = array($not);
+			}
+			
+		}
+		
+		$view->with('categories', Category::all())
+			 //->with('notifications', $notifications)
+			 ->with('notifications', $compiled);
+			 
+	} else {
+		$view->with('categories', Category::all());
+		
+	}
 });
 
 

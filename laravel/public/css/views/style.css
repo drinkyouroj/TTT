@@ -459,3 +459,55 @@ body,html a:hover{
 	padding: 10px 20px;
 	border: 3px solid #ccc;;
 }
+
+
+/******************Notifications*/
+ul.notifications {
+	position: absolute;
+	display:none;
+	width: 300px;
+	color:#fff;
+	background:#000;
+	list-style:none;
+	font-size: 12px;
+	margin: 0;
+	padding: 10px;
+}
+
+ul.notifications>li {
+	margin: 0;
+	padding: 2px 3px;
+	border-top: 1px solid #ccc;
+}
+
+ul.notifications li span.show-people {
+	color:#ccc;
+	display:inline-block;
+	
+}
+
+ul.notifications li .show-people:hover ul{
+	display:block;
+	background:#000;
+	
+}
+
+ul.notifications li ul {
+	position: absolute;
+	display:none;
+	margin: 0;
+	padding: 0;
+	list-style:none;
+}
+
+ul.notifications li ul li {
+	margin: 0;
+	display:inline-block;
+}
+
+ul.notifications li ul li a{
+	margin: 0;
+	padding: 3px 4px;
+}
+
+

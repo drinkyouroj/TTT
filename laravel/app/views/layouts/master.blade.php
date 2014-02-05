@@ -64,6 +64,121 @@
 						{{ Form::close() }}
 					    @if(!Auth::guest())
 			  			<ul class="nav navbar-nav navbar-right">
+			  				<li class="notifications-parent">
+			  					<a href="#notifications">Notifications</a>
+			  					<ul class="notifications">
+			  						@if(count($notifications))
+			  						
+				  						@foreach($notifications as $not)
+				  							
+				  							{{--Favorites only--}}
+				  							@if(isset($not['favorite']))
+				  							<li>
+				  								<span class="item">
+				  									<span class="username">
+				  										<a href="{{Config::get('app.url')}}/profile/{{$not['favorite'][0]->user->username}}">
+				  											{{$not['favorite'][0]->user->username}}
+				  										</a>
+			  										</span>
+				  								
+				  									favorited your post
+				  								
+				  									<span>
+				  										<a href="{{Config::get('app.url')}}/posts/{{$not['favorite'][0]->post->alias}}">
+				  											{{$not['favorite'][0]->post->title}}
+				  										</a>
+				  									</span>
+				  									{? $fav_count = count($not['favorite'])-1?}
+				  									
+				  									@if($fav_count)
+					  									along with
+					  									<span class="show-people"> 
+					  									{{ $fav_count }}
+					  									@if($fav_count >= 2)
+					  										other people
+					  									@else
+					  										other person
+					  									@endif
+						  									<ul> 
+							  								@foreach($not['favorite'] as $k => $n)
+							  									{{--Have to skip the first person--}}
+							  									@if(!$k)
+							  									<li>
+								  									<a href="{{Config::get('app.url')}}/profile/{{$n->user->username}}">
+								  										{{$n->user->username}}
+								  									</a>
+							  									</li>
+							  									@endif
+							  								@endforeach
+							  								</ul>
+					  									</span>
+					  								@endif
+				  								</span>
+				  							</li>
+				  							@endif
+				  							
+				  							@if(isset($not['repost']))
+				  							<li>
+				  								<span class="item">
+				  									<span class="username">
+				  										<a href="{{Config::get('app.url')}}/profile/{{$not['repost'][0]->user->username}}">
+				  											{{$not['repost'][0]->user->username}}
+				  										</a>
+			  										</span>
+				  								
+				  									reposted your post
+				  								
+				  									<span>
+				  										<a href="{{Config::get('app.url')}}/posts/{{$not['repost'][0]->post->alias}}">
+				  											{{$not['repost'][0]->post->title}}
+				  										</a>
+				  									</span>
+				  									{? $rep_count = count($not['repost'])-1?}
+				  									
+				  									@if($rep_count)
+					  									along with
+					  									<span class="show-people"> 
+					  									{{ $rep_count }}
+					  									@if($rep_count >= 2)
+					  										other people
+					  									@else
+					  										other person
+					  									@endif
+						  									<ul> 
+							  								@foreach($not['repost'] as $k => $n)
+							  									{{--Have to skip the first person--}}
+							  									@if(!$k)
+							  									<li>
+								  									<a href="{{Config::get('app.url')}}/profile/{{$n->user->username}}">
+								  										{{$n->user->username}}
+								  									</a>
+							  									</li>
+							  									@endif
+							  								@endforeach
+							  								</ul>
+					  									</span>
+					  								@endif
+				  								</span>
+				  							</li>
+				  							
+			  								@endif
+				  						@endforeach
+				  						
+				  					@else
+				  					<li>
+				  						<span>You have no notifications!</span>
+				  					</li>
+				  					@endif
+			  					</ul>
+			  				</li>
+			  				<li class="message-list-parent">
+			  					<ul class="message-list-container">
+			  						
+			  					</ul>
+			  				</li>
+			  				<li>
+			  					|
+			  				</li>
 							<li>
 			  					<a href="{{Config::get('app.url')}}/user/logout">Sign out</a>
 							</li>
