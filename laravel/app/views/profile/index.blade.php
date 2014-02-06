@@ -4,12 +4,16 @@
 
 @section('left_sidebar')
 	<div class="the-content">
-		<div class="likes">
+		
+		
+		{{--Below 3 are for the user's own profile--}}
+		@if($likes)
+		<div class="likes recents">
 			<h3>Recent likes:</h3>
 			@if(count($likes))
 				<ul>
 				@foreach($likes as $like)
-					<li><a href="{{ 'posts/'.$like->post->alias}}"><strong>{{$like->post->title}}</strong> by {{$like->post->user->username}}</a></li>
+					<li><a href="{{ Config::get('app.url').'/posts/'.$like->post->alias}}"><strong>{{$like->post->title}}</strong> by {{$like->post->user->username}}</a></li>
 				@endforeach
 				</ul>
 			@else
@@ -21,6 +25,32 @@
 				</div>
 			@endif
 		</div>
+		@endif
+		
+		@if($follows && count($follows))
+		<div class="follows recents">
+			<h3>Recent Follows:</h3>
+			<ul>
+				@foreach($follows as $follow)
+					<li><a href="{{ Config::get('app.url').'/profile/'.$follow->users->username}}">{{$follow->users->username}}</a></li>
+				@endforeach
+			</ul>
+		</div>
+		@endif
+		
+		@if($reposts && count($reposts))
+		<div class="follows recents">
+			<h3>Recent Reposts:</h3>
+			<ul>
+				@foreach($reposts as $repost)
+					<li><a href="{{ Config::get('app.url').'/posts/'.$repost->posts->alias}}">{{$repost->posts->title}}</a></li>
+				@endforeach
+			</ul>
+		</div>
+		@endif
+		
+		{{--Below is for the person visiting the profile--}}
+		
 		
 	</div>
 @stop
@@ -32,7 +62,6 @@
 			This is a logged in scenario.  This will display if the user is LOGGED IN.
 				Below is escaping the Ember.js handlebars layout by using an include.
 			--}}
-		
 		
 	@else
 		{{--
@@ -59,6 +88,7 @@
 					</div>
 				</div>
 				@endif
+				
 			@if(!empty($activity))
 				@foreach($activity as $act)
 				<div class="col-md-4">
@@ -95,33 +125,6 @@
 					</div>
 				</div>
 				@endforeach
-			@else
-				@if(!empty($posts))
-					@foreach($posts as $post)
-					<div class="col-md-4">
-						<div class="generic-item equal-height activity">
-							<header>
-								<h3 class="post">
-									{{ link_to('posts/'.$post->alias, $post->title) }}
-								</h3>
-								<span class="author">by {{ link_to('profile/'.$post->user->username, $post->user->username) }}</span>
-							</header>
-							<section>
-								<div class="the-image">
-								<a href="{{URL::to('posts/'.$post->alias)}}">
-									<img src="{{Config::get('app.url')}}/uploads/final_images/{{$post->image}}">
-								</a>
-								</div>
-								<div class="the-tags">
-									{{$post->tagline_1}} |
-									{{$post->tagline_2}} |
-									{{$post->tagline_3}}
-								</div>
-							</section>
-						</div>
-					</div>
-					@endforeach
-				@endif			
 			@endif
 		</div>
 	

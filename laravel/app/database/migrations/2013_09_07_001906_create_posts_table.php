@@ -29,6 +29,7 @@ class CreatePostsTable extends Migration {
 					));
 			$table->string('image');
 			$table->text('body');
+			$table->bigInteger('like_count');//This is pretty much artificial counter used for the Most Popular system. 
 			$table->boolean('featured');
 			$table->bigInteger('views');
 			$table->date('featured_date');

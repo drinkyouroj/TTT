@@ -115,20 +115,12 @@ View::composer('*', function($view) {
 	if(!Auth::guest()) {
 		$notifications = Notification::where('user_id', '=', Session::get('user_id'))
 										->where('noticed', '=', 0)
-										->take(30)//This is an artificial limit.
+										->take(30)//This is an artificial limit. I think the limit should be set by a 5 day limit instead.
+										->orderBy('created_at', 'DESC')
 										->get();
 		
-		//Gotta parse the $notifications here:
-		$compiled = array();
-		//First push all the notificaiton IDs into the post array according to their post id.
-		foreach($notifications as $not) {
-			if(isset($compiled[$not->post_id][$not->notification_type])) {
-				array_push($compiled[$not->post_id][$not->notification_type], $not);
-			}else {
-				$compiled[$not->post_id][$not->notification_type] = array($not);
-			}
-			
-		}
+		//Shared function for re-ordering the notifications per initial ID and per type.
+		$compiled = NotificationParser::parse($notifications);
 		
 		$view->with('categories', Category::all())
 			 //->with('notifications', $notifications)

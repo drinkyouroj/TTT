@@ -16,7 +16,8 @@ class ProfileController extends BaseController {
 						'submitpost',
 						'comment',
 						'commentform',
-						'messages'
+						'messages',
+						'notifications'
 						);
 			
 			if($alias && !in_array($alias, $not_segment) ) {//This is for other users. not yourself
@@ -44,6 +45,9 @@ class ProfileController extends BaseController {
 		$is_follower = false;
 		$mutual = false;
 		$activity = false;
+		$follows = false;
+		$reposts = false;
+		$likes = false;
 		
 		if($alias && $alias != Session::get('username')) {//This is for other users. not yourself
 			$user = User::where('username', '=', $alias)->first();
@@ -66,22 +70,46 @@ class ProfileController extends BaseController {
 			//We're doing the user info loading this way to keep the view clean.
 			$user_id = Session::get('user_id');
 			$user = User::where('id', '=', $user_id)->first();
-			$activity = ProfilePost::where('profile_id','=', $user_id)
+			
+			//Recent Follows
+			$follows = Follow::where('follower_id','=', $user_id)->orderBy('created_at', 'DESC')->take(5)->get();
+			
+			//Recent Reposts
+			$reposts = Repost::where('user_id','=', $user_id)->orderBy('created_at', 'DESC')->take(5)->get();
+			
+			//Recent Likes
+			$likes = Like::where('user_id', '=', $user_id)->orderBy('created_at', 'DESC')->take(5)->get();
+		}
+		
+		$activity = ProfilePost::where('profile_id','=', $user_id)
 						->orderBy('created_at', 'DESC')
 						->get();//get the activities 
-			
-		}
-		$likes = Like::where('user_id', '=', $user_id)->take(5)->get();
-		$posts = Post::where('user_id', '=', $user_id)->get();
+		
+		//$posts = Post::where('user_id', '=', $user_id)->orderBy('created_at', 'DESC')->get();
 		
 		return View::make('profile/index')
-				->with('posts', $posts)
 				->with('likes', $likes)
+				->with('follows', $follows)
+				->with('reposts', $reposts)
 				->with('activity', $activity)
 				->with('user', $user)
 				->with('is_following', $is_following)//you are following this profile
 				->with('is_follower', $is_follower)//This profile follows you.
 				->with('mutual', $mutual);
+	}
+
+	/*
+	 * Gives you the full notification history 
+ 	*/
+	public function getNotifications() {
+		$notifications = Notification::where('user_id', '=', Session::get('user_id'))
+										->where('noticed', '=', 0)
+										->get();
+										
+		$compiled = NotificationParser::parse($notifications);
+		
+		return View::make('profile/notifications')
+				->with('notifications', $compiled);
 	}
 
 	/**

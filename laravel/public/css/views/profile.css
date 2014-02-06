@@ -118,19 +118,19 @@ ul.profile-options li a.new-message {
 }
 
 /*Likes*/
-.left-sidebar .likes {
+.left-sidebar .recents {
 	padding-bottom: 30px;
 	border-bottom: 1px solid #ccc;
 	
 }
 
-.left-sidebar .likes ul {
+.left-sidebar .recents ul {
 	margin: 0;
 	padding: 0;
 	list-style:none;
 }
 
-.left-sidebar .likes ul li{
+.left-sidebar .recentslikes ul li{
 	padding: 0;
 	margin: 0;
 }
@@ -145,6 +145,14 @@ ul.profile-options li a.new-message {
 
 .activity-container .add-new {
 	
+}
+
+/*Styling them favorites*/
+.activity-container h3.favorite a{
+	padding-left: 25px;
+	background-repeat: no-repeat;
+	background-image: url('../../img/profile/favorite-label.png');
+	background-position: left top;
 }
 
 

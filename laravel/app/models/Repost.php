@@ -6,7 +6,12 @@ class Repost extends Eloquent {
 
 	public function posts()
     {
-        return $this->hasMany('Post', 'post_id');
+        return $this->belongsTo('Post', 'post_id');
     }	
+	
+	public function users()
+	{
+		return $this->belongsTo('User','user_id');
+	}
 	
 }

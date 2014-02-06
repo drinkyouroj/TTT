@@ -45,15 +45,15 @@
 				</a>
 			</li>
 			<li>
-				<a class="edit-profile" href="{{Config::get('app.url')}}/profile/edit">
-					<span>Edit Info</span>
+				<a class="edit-profile" href="{{Config::get('app.url')}}/profile/notifications">
+					<span>All Notifications</span>
 				</a>
 			</li>
 		@endif
 	</ul>
 	
 	<div class="user">
-		<h2>{{$username}}</h2>
+		<h2><a href="{{Config::get('app.url')}}/profile/{{$username}}">{{$username}}</a></h2>
 		<h3 class="join-date">Member since {{$date->format('m.d.Y') }}</h3>
 	</div>
 	

@@ -62,6 +62,15 @@ return array(
     'email_account_confirmation' => 'confide::emails.confirm', // with $user
 
     /*
+	|
+	| Disabled the Email Confirmation
+	|
+	*/
+    
+    'signup_email' => false,
+    'signup_confirm' => false, 
+    
+    /*
     |--------------------------------------------------------------------------
     | Signup (create) Cache
     |--------------------------------------------------------------------------
