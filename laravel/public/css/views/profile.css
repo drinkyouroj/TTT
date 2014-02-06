@@ -158,6 +158,21 @@ ul.profile-options li a.new-message {
 
 /*Forms*/
 
+.post-form .form-nav {
+	text-align: center;
+}
+
+.post-form .form-nav ul{
+	margin: 0;
+	padding: 0;
+	list-style:none;
+}
+
+.post-form .form-nav ul li{
+	display:inline-block;
+	margin: 0 20px;
+}
+
 .post-form input[type=text], .post-form textarea, .post-form select {
 	padding: 5px;
 	background: #eeece6;
@@ -170,6 +185,29 @@ label.error {
 	color: red;
 }
 
+.form-container {
+	height: 400px;
+	overflow:hidden;
+}
 
+.form-container .page {
+	display:inline-block;
+	height: 400px;
+	width: 100%;
+}
 
+.post-form  .photo-system .photo-chosen,.post-form .photo-system .photo-processor {
+	position: relative;
+	float: left;
+	width: 50%;
+}
 
+.post-form  .photo-system .photo-chosen img {
+	width: 100%;	
+}
+
+.post-form .photo-system .photo-processor img{
+	position: relative;
+	float: left;
+	width: 33.3%;
+}

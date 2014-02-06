@@ -66,6 +66,8 @@ class ProfileController extends BaseController {
 				}
 			}
 			
+			//Big col 12
+			$fullscreen = true;
 		} else {
 			//We're doing the user info loading this way to keep the view clean.
 			$user_id = Session::get('user_id');
@@ -79,6 +81,9 @@ class ProfileController extends BaseController {
 			
 			//Recent Likes
 			$likes = Like::where('user_id', '=', $user_id)->orderBy('created_at', 'DESC')->take(5)->get();
+			
+			//Big col 9
+			$fullscreen = false;
 		}
 		
 		$activity = ProfilePost::where('profile_id','=', $user_id)
@@ -95,7 +100,8 @@ class ProfileController extends BaseController {
 				->with('user', $user)
 				->with('is_following', $is_following)//you are following this profile
 				->with('is_follower', $is_follower)//This profile follows you.
-				->with('mutual', $mutual);
+				->with('mutual', $mutual)
+				->with('fullscreen', $fullscreen);;
 	}
 
 	/*
@@ -109,7 +115,8 @@ class ProfileController extends BaseController {
 		$compiled = NotificationParser::parse($notifications);
 		
 		return View::make('profile/notifications')
-				->with('notifications', $compiled);
+				->with('notifications', $compiled)
+				->with('fullscreen', true);
 	}
 
 	/**
@@ -119,7 +126,8 @@ class ProfileController extends BaseController {
 		if($id) {
 			$post = Post::where('id', '=', $id);
 			return View::make('posts/form')
-					->with('post', $post);
+					->with('post', $post)
+					->with('fullscreen', true);
 		} else {
 			//Gotta put in a query here to see if the user submitted something in the last 5 minutes 
 			$post = Post::where('user_id','=', Session::get('user_id'))
@@ -133,7 +141,7 @@ class ProfileController extends BaseController {
 				}
 			}
 					
-			return View::make('posts/form');
+			return View::make('posts/form')->with('fullscreen', true);
 		}
 		
 	}

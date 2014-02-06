@@ -20,12 +20,29 @@
 	@parent
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/additional-methods.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/scrollto.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/localscrollto.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/profile/form.js"></script>
 @stop
 
 {{--The main content area--}}
 @section('main')
 <div class="row post-form">
+	
+	<div class="form-nav">
+		<ul>
+			<li>
+				<a href="#page-1">Content</a>
+			</li>
+			<li>
+				<a href="#page-2">Image</a>
+			</li>
+			<li>
+				<a href="#page-3">Details</a>
+			</li>
+		</ul>
+	</div>
+	
 	{{ Form::open(array('url'=>'profile/submitpost', 'method'=>'post','class'=>'form-horizontal','role'=>'form'))}}
 		
 		{{--Get the update bit done once we have the edit function down --}}
@@ -34,8 +51,8 @@
 			{{ Form::hidden('id', Request::segment(3) ) }}
 		@endif
 		
-		<div class="col-md-8 col-md-offset-1">
-			<div class="page-1 title-text">
+		<div class="col-md-8 col-md-offset-2 form-container">			
+			<div id="page-1" class="page title-text">
 				<div class="form-group {{$errors->first('title') ? 'has-error' : '' }}">
 					{{ Form::label('title','Title') }}
 					<a href="#" data-toggle="tooltip" title="Need to pick a title!">?</a>
@@ -50,12 +67,13 @@
 				</div>
 			</div>
 			
-			<div class="page-2 photos">
+			<div id="page-2" class="page photos">
 				<div class="photo-system">
 					<h4>Search Photos</h4>
 					<div class="input-append">
 						<input type="text" class="span2 search-query" placeholder="type in more than 3 characters!">
 						<a class="btn activate-search">Search</a>
+						<a class="btn reset-search">Reset</a>
 					</div>
 					<div class="photo-results">
 						
@@ -77,25 +95,7 @@
 				</div>
 			</div>
 			
-			<div class="page-3 tags">
-				<div class="form-group {{$errors->first('tagline_1') ? 'has-error' : '' }}">
-					{{ Form::label('tagline_1','Tag Line 1', array('class'=>'control-label')) }}
-					<a href="#" data-toggle="tooltip" title="Taglines define what your story might be in less than 3 words per tag">?</a>
-					{{ Form::text('tagline_1', Input::old('tagline_1'), array('class'=>'form-control', 'required', 'minlength' =>'5') ) }}
-					<span class="error">{{ $errors->first('tagline_1') }}</span>
-				</div>
-				
-				<div class="form-group {{$errors->first('tagline_2') ? 'has-error' : '' }}">
-					{{ Form::label('tagline_2','Tag Line 2', array('class'=>'control-label')) }}
-					{{ Form::text('tagline_2', Input::old('tagline_2'), array('class'=>'form-control', 'required', 'minlength' =>'5')) }}
-					<span class="error">{{ $errors->first('tagline_2') }}</span>
-				</div>
-				
-				<div class="form-group {{$errors->first('tagline_3') ? 'has-error' : '' }}">
-					{{ Form::label('tagline_3','Tag Line 3', array('class'=>'control-label')) }}
-					{{ Form::text('tagline_3', Input::old('tagline_3'), array('class'=>'form-control', 'required', 'minlength' =>'5')) }}
-					<span class="error">{{ $errors->first('tagline_3') }}</span>
-				</div>
+			<div id="page-3" class="page tags">
 				
 				<div class="form-group {{$errors->first('story_type') ? 'has-error' : '' }}">
 					{{ Form::label('story_type','Story Type', array('class'=>'control-label', 'required')) }}
@@ -105,27 +105,52 @@
 													'thought'=>'Thought'), Input::old('story_type'), array('class'=>'form-control')) }}
 					<span class="error">{{ $errors->first('story_type') }}</span>
 				</div>
-				
-				<div class="form-group">
-					{{--This foreach is just for creating the correct format for the multiselect--}}
-					{? $category_select = array(); ?}
-					@foreach($categories as $category)
-						{? $category_select[$category->id] = $category->title ?}
-					@endforeach
+				<div class="row">
+					<div class="col-md-5">
+						<div class="form-group {{$errors->first('tagline_1') ? 'has-error' : '' }}">
+							{{ Form::label('tagline_1','Tag Line 1', array('class'=>'control-label')) }}
+							<a href="#" data-toggle="tooltip" title="Taglines define what your story might be in less than 3 words per tag">?</a>
+							{{ Form::text('tagline_1', Input::old('tagline_1'), array('class'=>'form-control', 'required', 'minlength' =>'5') ) }}
+							<span class="error">{{ $errors->first('tagline_1') }}</span>
+						</div>
+						
+						<div class="form-group {{$errors->first('tagline_2') ? 'has-error' : '' }}">
+							{{ Form::label('tagline_2','Tag Line 2', array('class'=>'control-label')) }}
+							{{ Form::text('tagline_2', Input::old('tagline_2'), array('class'=>'form-control', 'required', 'minlength' =>'5')) }}
+							<span class="error">{{ $errors->first('tagline_2') }}</span>
+						</div>
+						
+						<div class="form-group {{$errors->first('tagline_3') ? 'has-error' : '' }}">
+							{{ Form::label('tagline_3','Tag Line 3', array('class'=>'control-label')) }}
+							{{ Form::text('tagline_3', Input::old('tagline_3'), array('class'=>'form-control', 'required', 'minlength' =>'5')) }}
+							<span class="error">{{ $errors->first('tagline_3') }}</span>
+						</div>
+					</div>
 					
-					{{ Form::label('category','Story Category', array('class'=>'control-label')) }}
-					<a href="#" data-toggle="tooltip" title="Choose 3 categories that this story might fit in.">?</a>
-					{{ Form::select('category[]', $category_select , 1, array('class'=>'form-control', 'multiple'=>'multiple', 'required')  ) }}
-					<span class="error">{{ $errors->first('category') }}</span>
+					<div class="col-md-6 col-md-offset-1">
+						<div class="form-group">
+							{{--This foreach is just for creating the correct format for the multiselect--}}
+							{? $category_select = array(); ?}
+							@foreach($categories as $category)
+								{? $category_select[$category->id] = $category->title ?}
+							@endforeach
+							
+							{{ Form::label('category','Story Category', array('class'=>'control-label')) }}
+							<a href="#" data-toggle="tooltip" title="Choose 3 categories that this story might fit in.">?</a>
+							{{ Form::select('category[]', $category_select , 1, array('class'=>'form-control', 'multiple'=>'multiple', 'required')  ) }}
+							<span class="error">{{ $errors->first('category') }}</span>
+						</div>
+						<div class="form-group">
+						@if(Request::segment(2) == 'newpost')
+							{{ Form::submit('Submit') }}
+						@else
+							{{ Form::submit('Update') }}
+						@endif
+						</div>
+					</div>
 				</div>
 				
-				<div class="form-group">
-				@if(Request::segment(2) == 'newpost')
-					{{ Form::submit('Submit') }}
-				@else
-					{{ Form::submit('Update') }}
-				@endif
-				</div>
+				
 			</div>
 		</div>
 		

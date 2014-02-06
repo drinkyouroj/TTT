@@ -20,6 +20,12 @@ class FlickrRestController extends \BaseController {
 	 */
 	public function index()
 	{
+		$page = Input::get('page');
+		
+		if(!$page) {//As in if no page is defined.
+			$page = 1;
+		}
+		
 		//
 		$params = array(
 			'api_key' => self::$api_key,
@@ -27,7 +33,9 @@ class FlickrRestController extends \BaseController {
 			'format'	=> 'php_serial',
 			'text' => Input::get( 'text' ),//This one we'll have to think about a bit, but it shouldn't be too hard.
 			'safe_search' => '2',
-			'license' => '1,2,3,4,5,6,7,8'//This one can be CSVed
+			'license' => '1,2,3,4,5,6,7,8',//This one can be CSVed
+			'per_page' => 30,
+			'page' => $page
 		);
 		
 		$encoded_params = array();
