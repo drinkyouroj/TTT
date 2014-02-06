@@ -34,19 +34,130 @@ body,html a:hover{
 	
 }
 
-
 .menu-wrapper {
 	width: 100%;
 	height: 30px;
 	background:#000;
 }
 
-.menu-wrapper .navbar {height:30px;}
+.menu-wrapper .navbar {
+	height:30px;
+}
+
+.menu-wrapper .navbar.nav-conatiner{
+	border:none;
+}
 
 .menu-wrapper .navbar .container { 
 	height: 30px;
 	font-family: 'bebas'; 
 }
+/*The normal Menu items (About, Signin profile, etc)*/
+.menu-wrapper .navbar .container ul.main-nav {
+	
+}
+.menu-wrapper .navbar .container ul.main-nav li {
+	text-align: middle;
+	height: 22px;
+}
+.menu-wrapper .navbar .container ul.main-nav li a{
+	padding: 2px 0;
+	margin: 0 20px 0 0 ;
+}
+
+.menu-wrapper .navbar .container ul.main-nav li.loggedin {
+	margin-top: 3px;
+	padding-left: 25px;
+	height: 22px;
+	line-height: 22px;
+	background-repeat: no-repeat;
+	background-position: top left;
+	text-align: top;
+}
+
+.menu-wrapper .navbar .container ul.main-nav li.loggedin:hover {
+	background-position: bottom left;
+}
+
+.menu-wrapper .navbar .container ul.main-nav li.profile {
+	background-image: url('../../img/icons/profile.png');
+}
+.menu-wrapper .navbar .container ul.main-nav li.post {
+	background-image: url('../../img/icons/post-nav.png');
+}
+.menu-wrapper .navbar .container ul.main-nav li.message {
+	background-image: url('../../img/icons/message-nav.png');
+}
+
+
+
+/******************Notifications*/
+
+li.notifications-parent {
+	margin-top: 3px;
+	padding: 0 0 0 25px !important;
+	height: 22px;
+	line-height: 22px;
+	text-align: top;
+	background-repeat: no-repeat;
+	background-position: top left;
+	background-image: url('../../img/icons/notifications.png');
+}
+
+li.notifications-parent>a {
+	padding-top: 0;
+}
+
+ul.notifications {
+	position: absolute;
+	display:none;
+	width: 300px;
+	color:#fff;
+	background:#000;
+	list-style:none;
+	font-size: 12px;
+	margin: 0 0 0 -10px;
+	padding: 10px;
+}
+
+ul.notifications>li {
+	margin: 0;
+	padding: 2px 3px;
+	border-top: 1px solid #ccc;
+}
+
+
+ul.notifications li span.show-people {
+	color:#ccc;
+	display:inline-block;
+	
+}
+
+ul.notifications li .show-people:hover ul{
+	display:block;
+	background:#000;
+	
+}
+
+ul.notifications li ul {
+	position: absolute;
+	display:none;
+	margin: 0;
+	padding: 0;
+	list-style:none;
+}
+
+ul.notifications li ul li {
+	margin: 0;
+	display:inline-block;
+}
+
+ul.notifications li ul li a{
+	margin: 0;
+	padding: 3px 4px;
+}
+
+
 
 /*Top Menu*/
 .header-wrapper{
@@ -143,8 +254,12 @@ body,html a:hover{
 	background:none;
 }
 
+.header-wrapper .navbar li {
+	margin-top: 3px;
+}
+
 .header-wrapper .navbar li a {
-	padding-top: 5px;
+	padding: 2px 0;
 }
 
 /*Bottom Exes*/
@@ -350,7 +465,7 @@ body,html a:hover{
 	color:#000;
 	background-repeat: no-repeat;
 	background-position: top left;
-	padding: 5px 0 5px 35px;
+	padding: 2px 0 2px 35px;
 }
 
 .single-post .the-share .share-action a:hover{
@@ -358,13 +473,13 @@ body,html a:hover{
 }
 
 .single-post .the-share .fav {
-	background-image: url('../../img/post/favorite.png');
+	background-image: url('../../img/icons/favorite.png');
 }
 .single-post .the-share .repost {
-	background-image: url('../../img/post/repost.png');
+	background-image: url('../../img/icons/repost.png');
 }
 .single-post .the-share .like {
-	background-image: url('../../img/post/like.png');
+	background-image: url('../../img/icons/like.png');
 }
 
 .single-post .the-share .fav-container, .single-post .the-share .repost-container {
@@ -435,11 +550,11 @@ body,html a:hover{
 }
 
 .single-post .the-comment-container .vote.up {
-	background-image: url('../../img/post/like.png');
+	background-image: url('../../img/icons/like.png');
 }
 
 .single-post .the-comment-container .vote.down {
-	background-image: url('../../img/post/like.png');
+	background-image: url('../../img/icons/like.png');
 }
 
 .single-post .the-comment-container .vote span{
@@ -458,56 +573,6 @@ body,html a:hover{
 	margin: 10px 0;
 	padding: 10px 20px;
 	border: 3px solid #ccc;;
-}
-
-
-/******************Notifications*/
-ul.notifications {
-	position: absolute;
-	display:none;
-	width: 300px;
-	color:#fff;
-	background:#000;
-	list-style:none;
-	font-size: 12px;
-	margin: 0;
-	padding: 10px;
-}
-
-ul.notifications>li {
-	margin: 0;
-	padding: 2px 3px;
-	border-top: 1px solid #ccc;
-}
-
-ul.notifications li span.show-people {
-	color:#ccc;
-	display:inline-block;
-	
-}
-
-ul.notifications li .show-people:hover ul{
-	display:block;
-	background:#000;
-	
-}
-
-ul.notifications li ul {
-	position: absolute;
-	display:none;
-	margin: 0;
-	padding: 0;
-	list-style:none;
-}
-
-ul.notifications li ul li {
-	margin: 0;
-	display:inline-block;
-}
-
-ul.notifications li ul li a{
-	margin: 0;
-	padding: 3px 4px;
 }
 
 

@@ -28,9 +28,9 @@
 	<div class="menu-wrapper">
 	  	<header class="container menu">
 	  		<div class="row">
-		  		<nav class="col-md-12 navbar navbar-inverse" role="navigation">
+		  		<nav class="col-md-12 navbar navbar-inverse nav-conatiner" role="navigation">
 		  			<div class="container">
-			  			<ul class="nav navbar-nav">
+			  			<ul class="nav navbar-nav main-nav">
 			  				@if(Auth::guest())
 			  				<li>
 			  					<a href="{{Config::get('app.url')}}/about">About</a>
@@ -42,13 +42,13 @@
 								<a href="{{Config::get('app.url')}}/user/signup">Signup</a>
 							</li>
 							@else
-							<li>
+							<li class="loggedin profile">
 			  					<a href="{{Config::get('app.url')}}/profile">{{Session::get('username')}}</a>
 							</li>
-							<li>
+							<li class="loggedin post">
 			  					<a href="{{Config::get('app.url')}}/profile/newpost">Post</a>
 							</li>
-							<li>
+							<li class="loggedin message">
 			  					<a href="{{Config::get('app.url')}}/profile/messages">Message</a>
 							</li>
 							@endif
@@ -77,11 +77,6 @@
 				  						<span>You have no notifications!</span>
 				  					</li>
 				  					@endif
-			  					</ul>
-			  				</li>
-			  				<li class="message-list-parent">
-			  					<ul class="message-list-container">
-			  						
 			  					</ul>
 			  				</li>
 			  				<li>

@@ -29,10 +29,10 @@
 @section('main')
 <div class="row post-form">
 	
-	<div class="form-nav">
+	<div class="form-nav col-md-3">
 		<ul>
 			<li>
-				<a href="#page-1">Content</a>
+				<a href="#page-1" class="active">Content</a>
 			</li>
 			<li>
 				<a href="#page-2">Image</a>
@@ -51,7 +51,7 @@
 			{{ Form::hidden('id', Request::segment(3) ) }}
 		@endif
 		
-		<div class="col-md-8 col-md-offset-2 form-container">			
+		<div class="col-md-8 form-container">			
 			<div id="page-1" class="page title-text">
 				<div class="form-group {{$errors->first('title') ? 'has-error' : '' }}">
 					{{ Form::label('title','Title') }}
@@ -78,9 +78,6 @@
 					<div class="photo-results">
 						
 					</div>
-					<div class="photo-chosen">
-						
-					</div>
 					<div class="photo-processor" style="display:none;">
 						<img src="{{Config::get('app.url')}}/img/photos/gotham.png" data-process="Gotham"/>
 						<img src="{{Config::get('app.url')}}/img/photos/toaster.png" data-process="Toaster"/>
@@ -88,6 +85,9 @@
 						<img src="{{Config::get('app.url')}}/img/photos/lomo.png" data-process="Lomo"/>
 						<img src="{{Config::get('app.url')}}/img/photos/kelvin.png" data-process="Kelvin"/>
 						<img src="{{Config::get('app.url')}}/img/photos/tilt_shift.png" data-process="TiltShift"/>
+					</div>
+					<div class="photo-chosen">
+						
 					</div>
 					<div class="photo-processed">
 						
@@ -125,6 +125,7 @@
 							{{ Form::text('tagline_3', Input::old('tagline_3'), array('class'=>'form-control', 'required', 'minlength' =>'5')) }}
 							<span class="error">{{ $errors->first('tagline_3') }}</span>
 						</div>
+						<div class="clearfix"></div>
 					</div>
 					
 					<div class="col-md-6 col-md-offset-1">
@@ -140,6 +141,12 @@
 							{{ Form::select('category[]', $category_select , 1, array('class'=>'form-control', 'multiple'=>'multiple', 'required')  ) }}
 							<span class="error">{{ $errors->first('category') }}</span>
 						</div>
+						<div class="clearfix"></div>
+					</div>
+					
+					<div class="clearfix"></div>
+					
+					<div class="col-md-12 submit">
 						<div class="form-group">
 						@if(Request::segment(2) == 'newpost')
 							{{ Form::submit('Submit') }}
@@ -147,6 +154,7 @@
 							{{ Form::submit('Update') }}
 						@endif
 						</div>
+						<div class="clearfix"></div>
 					</div>
 				</div>
 				

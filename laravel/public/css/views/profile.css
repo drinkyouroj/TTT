@@ -48,7 +48,7 @@ vertical-align: middle;
 
 ul.profile-options li a {
 	display:inline-block;
-	height: 30px;
+	height: 28px;
 	padding-top: 5px;
 	
 	color:#000;
@@ -61,8 +61,13 @@ ul.profile-options li a {
 	background-repeat: no-repeat;
 }
 
+ul.profile-options li:hover a {
+	background-position: bottom left;
+}
+
+
 ul.profile-options li a.new-post {
-	background-image: url('../../img/global/post-colored.png');
+	background-image: url('../../img/icons/post.png');
 }
 
 ul.profile-options li a.edit-profile {
@@ -74,7 +79,7 @@ ul.profile-options li a.follow {
 }
 
 ul.profile-options li a.new-message {
-	background-image: url('../../img/global/post-colored.png');
+	background-image: url('../../img/icons/post.png');
 }
 
 .follow-container {
@@ -151,7 +156,7 @@ ul.profile-options li a.new-message {
 .activity-container h3.favorite a{
 	padding-left: 25px;
 	background-repeat: no-repeat;
-	background-image: url('../../img/profile/favorite-label.png');
+	background-image: url('../../img/icons/favorite.png');
 	background-position: left top;
 }
 
@@ -169,9 +174,23 @@ ul.profile-options li a.new-message {
 }
 
 .post-form .form-nav ul li{
-	display:inline-block;
-	margin: 0 20px;
+	font-family: 'bebas';
+	font-size: 30px;
+	display:block;
+	margin: 0 20px 40px 20px;
+	padding: 20px 0;
+	background:#fff;
+	box-shadow: 0 0 5px #ccc;
+	border-radius: 3px;
 }
+
+.post-form .form-nav ul li a {
+	color:#333333;
+}
+
+.post-form .form-nav ul li a.active{
+	color:#428bca;;
+} 
 
 .post-form input[type=text], .post-form textarea, .post-form select {
 	padding: 5px;
@@ -181,33 +200,61 @@ ul.profile-options li a.new-message {
 	border-radius:0;
 }
 
+.post-form textarea {
+	height: 470px;
+	resize: none;
+}
+
 label.error {
 	color: red;
 }
 
 .form-container {
-	height: 400px;
+	height: 600px;
+	padding: 30px;
 	overflow:hidden;
+	background:#fff;
+	box-shadow: 0 0 5px #ccc;
+	border-radius: 3px;
 }
 
 .form-container .page {
 	display:inline-block;
-	height: 400px;
+	height: 600px;
 	width: 100%;
 }
 
-.post-form  .photo-system .photo-chosen,.post-form .photo-system .photo-processor {
-	position: relative;
-	float: left;
-	width: 50%;
+.post-form  .photo-system {
+	width: 100%;
 }
 
-.post-form  .photo-system .photo-chosen img {
+.post-form  .photo-system .photo-chosen, .post-form  .photo-system .photo-processed {
+	position: relative;
+	float: left;
+	width: 45%;
+}
+.post-form .photo-system .photo-processor {
+	position: relative;
+	float: left;
+	width: 10%;
+}
+.post-form .photo-system .photo-processor img, 
+.post-form .photo-system .photo-processed img, 
+.post-form  .photo-system .photo-chosen img{
 	width: 100%;	
 }
 
-.post-form .photo-system .photo-processor img{
-	position: relative;
-	float: left;
-	width: 33.3%;
+/*Submit form*/
+.post-form .submit {
+	margin: 20px 0;
+	text-align: center;
 }
+.post-form .submit input {
+	font-family: 'bebas';
+	font-size: 30px;
+	width: 20%;
+	background:#428bca;
+	padding: 20px 40px;
+	border:none;
+}
+

@@ -20,17 +20,14 @@ class PhotoRestController extends \BaseController {
 	{
 		$url = urldecode(Input::get('url'));//decode the URL first
 		$process = Input::get('process');
-		$title = Input::get('title');
 		
 		$validator = Validator::make(
 			array(
 				'url' => $url,
-				'title' => $title,
 				'process' => $process
 			),
 			array(
 				'url' => 'required|url',
-				'title' => 'required',
 				'process' => 'Processes:Gotham,Toaster,Nashville,Lomo,Kelvin,TiltShift'
 			)
 		);
@@ -46,8 +43,8 @@ class PhotoRestController extends \BaseController {
 				);
 			}
 			
-			//Let's just run this name thing just once only.
-			$md5_title = md5($title.rand()); //Titles Must be unique at all times, but let's add the "rand" just to be sure.
+			//fuck using titles, let's just use the time stamp as the source of unique.
+			$md5_title = md5(date('Ymdhis').rand()); //Titles Must be unique at all times, but let's add the "rand" just to be sure.
 			
 			//Let's grab the image
 			file_put_contents(public_path().'/uploads/orig_images/'.$md5_title.'.jpg' , fopen($url, 'r'));

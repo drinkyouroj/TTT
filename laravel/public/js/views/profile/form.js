@@ -50,6 +50,15 @@ $(function(){
 		image_pull();//Pulls in images from Flickr
 	});//The Search button alias of the above.
 	
+	//Paginated 
+	window.photo_search_page = 1;
+	
+	$('.photo-results').on('click', 'a.more', function() {
+		window.photo_search_page = $(this).data('page');
+		console.log(window.photo_search_page);
+		image_pull();
+	});
+	
 	window.selected_image = 0;
 	
 	//Click on the photo results to select the image.
@@ -75,22 +84,18 @@ $(function(){
 	//Effects Processor: Instahamming it.
 	$('.photo-processor').on('click', 'img', function() {
 		url = window.selected_image;
-		title = $('form input.title').val();
 		process = $(this).data('process');//pick up the process type
 		
 		//make sure we have all 3 values.
-		if(url.length && title.length && process.length) {
+		if(url.length && process.length) {
 			$.ajax({
 				type: "GET",
 				url: window.site_url+'rest/photo/',
 				data: {
 					url: encodeURIComponent(url),//Gotta encode that url
-					title: title,
 					process: process
 				},
 				success: function(data) {
-					$('.photo-chosen').fadeOut;
-					$('.photo-processor').fadeOut;
 					$('.post-form form input.processed-image').remove();//Let's remove this just incase
 					$('.photo-processed').html('');
 					$('.photo-processed').append('<img src="'+window.site_url+'uploads/final_images/'+data+'">');
@@ -113,13 +118,19 @@ $(function(){
 		target: '.form-container', // could be a selector or a jQuery object too.
 		queue:true,
 		duration:1000,
-		hash:true,
+		hash:false,
 		onBefore:function( e, anchor, $target ){
 			// The 'this' is the settings object, can be modified
+			
 		},
 		onAfter:function( anchor, settings ){
 			// The 'this' contains the scrolled element (#content)
 		}
+	});
+	
+	$('.form-nav a').click(function() {
+		$('.form-nav a').removeClass('active');
+		$(this).addClass('active');
 	});
 	
 	
@@ -146,7 +157,14 @@ function image_pull() {
 					
 					var $newAppend = $('<img class="result-image '+value.id+'" src="'+image_url+'" data-image="'+image_url_orig+'">');
 					$('.photos .photo-results').append($newAppend);
+					image_counter = index;
 				});
+				console.log(image_counter);
+				if(image_counter >= 29) {
+					next_page = window.photo_search_page + 1;
+					$more = $('<a class="more" data-page="'+next_page+'">more</a>');
+					$('.photos .photo-results').append($more);
+				}
 				
 			}
 		});
