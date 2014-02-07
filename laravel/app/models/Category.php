@@ -21,7 +21,29 @@ class Category extends Eloquent {
     {
         return $this->belongsToMany('Post', 'category_post')
 					->with('favorites');
-					
     }
 	
+	public function postspopular()
+	{
+		return $this->belongsToMany('Post', 'category_post')
+					->orderBy('like_count','DESC');
+	}
+	
+	public function postsdiscussed()
+	{
+		return $this->belongsToMany('Post', 'category_post')
+					->orderBy('comment_count','DESC');
+	}
+	
+	public function longest()
+	{
+		return $this->belongsToMany('Post', 'category_post')
+					->orderBy(DB::raw('LENGTH(body)'),'DESC');	
+	}
+	
+	public function shortest()
+	{
+		return $this->belongsToMany('Post', 'category_post')
+					->orderBy(DB::raw('LENGTH(body)'),'ASC');	
+	}
 }

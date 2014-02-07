@@ -25,26 +25,6 @@ class CommentRestController extends \BaseController {
 	}
 
 	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
-
-	/**
 	 * Display the specified resource.
 	 *
 	 * @param  int  $id
@@ -53,12 +33,12 @@ class CommentRestController extends \BaseController {
 	public function show($id)
 	{
 		//
-		$comment = Comment::where('id', $id)->get();
+		$comment = Comment::where('id', $id)->first();
 		$comment = $comment->toArray();
 		
 		return Response::json(
 			array(
-				'comments' => $comment[0]
+				'comments' => $comment
 			),
 			200//response is OK!
 		);
@@ -93,8 +73,34 @@ class CommentRestController extends \BaseController {
 	 * @return Response
 	 */
 	public function destroy($id)
-	{
-		//
+	{	
+		$owns = Comment::where('user_id', '=', Auth::user()->id)
+						->where('id', '=', $id)
+						->count();
+		
+		if($owns) {
+			$owns = Comment::where('user_id', '=', Auth::user()->id)
+							->where('id', '=', $id)
+							->update(array('published' => 0));
+							//unpublished = deleted.	
+			
+			return Response::json(
+				array(
+					'result' => 'deleted'
+				),
+				200//response is OK!
+			);
+		} else {
+			return Response::json(
+				array(
+					'result' => 'failed'
+				),
+				200//response is OK!
+			);
+		}
+		
+		
+
 	}
 
 }

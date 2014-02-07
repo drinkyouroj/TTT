@@ -1,11 +1,12 @@
 $(function() {
 	$('.system-share a').on('click', function(event){
-		event.preventDefault;
+		event.preventDefault();
 	});
 	
 	//Follow someone
-	$('.follow').on('click', function() {
-		follow(event, $(this).data('user'));
+	$('.profile-options .follow, .follow-container .follow').on('click', function(event) {
+		event.preventDefault();
+		follow($(this).data('user'));
 	});
 		//See the followers list
 		$('.followers').on('click', function(event){
@@ -16,18 +17,18 @@ $(function() {
 			following_box(event, $(this).data('user'));
 		});
 	
-	$('.fav').on('click', function() {
-		fav(event, $(this).data('post'));
+	$('.system-share a.fav').on('click', function() {
+		fav($(this).data('post'));
 	});
 	
-	$('.repost').on('click', function() {
-		repost(event, $(this).data('post'));
+	$('.system-share a.repost').on('click', function() {
+		repost($(this).data('post'));
 	});
 	
-	$('.like').on('click', function() {
-		like(event, $(this).data('post'));
+	$('.system-share a.like').on('click', function() {
+		like($(this).data('post'));
 	});
-	
+/*
 	$('.navbar-right .notifications-parent')
 		.mouseenter(function() {
 			$('ul.notifications',this).slideDown();
@@ -35,6 +36,11 @@ $(function() {
 		.mouseleave(function() {
 			$('ul.notifications',this).slideUp();
 		});	
+*/
+	$('.comments-listing a.delete').on('click', function(event) {
+		event.preventDefault();
+		comment_delete($(this).data('delid'));
+	});
 	
 });
 
@@ -51,20 +57,17 @@ $(function() {
 /**
  * User based function 
  */
-function follow(e,id) {
-	e.preventDefault();
-	
+function follow(id) {
 	$.ajax({
 		url: window.site_url+'rest/follows/'+id,
 		//type:"POST",
 		success: function(data) {
-			
+			error_log(data.result, 'follow');
 		}
 	});
 }
 
-function followers_box(e,id) {
-	e.preventDefault();
+function followers_box(id) {
 	$.ajax({
 		url: window.site_url+'rest/followers/'+id,
 		//type:"POST",
@@ -81,8 +84,7 @@ function followers_box(e,id) {
 	});
 }
 
-function following_box(e,id) {
-	e.preventDefault();
+function following_box(id) {
 	$.ajax({
 		url: window.site_url+'rest/following/'+id,
 		//type:"POST",
@@ -103,38 +105,51 @@ function following_box(e,id) {
 /**
  * Post (as in the articles) based function 
  */
-function fav(e,id) {
-	e.preventDefault();
+function fav(id) {
 	$.ajax({
 		url: window.site_url+'rest/favorites/'+id,
 		//type:"POST",
 		success: function(data) {
+			console.log('fav');
 			error_log(data.result,'fav');
 		}
 	});
 }
 
 
-function repost(e,id) {
-	e.preventDefault();
-	
+function repost(id) {
 	$.ajax({
 		url: window.site_url+'rest/reposts/'+id,
 		//type:"POST",
 		success: function(data) {
+			console.log('repost');
 			error_log(data.result,'repost');
 		}
 	});
 }
 
-function like(e,id) {
-	e.preventDefault();
+function like(id) {
 	console.log(id);
 	$.ajax({
 		url: window.site_url+'rest/likes/'+id,
 		//type:"POST",
 		success: function(data) {
 			error_log(data.result,'like');
+		}
+	});
+}
+
+
+function comment_delete(id) {
+	$.ajax({
+		url: window.site_url+'rest/comments/'+id,
+		type:"DELETE",//
+		success: function(data) {
+			if(data.result == 'deleted') {
+				$('#comment-'+id+' .comment-body').html('<span class="deleted">Comment was deleted</span>');
+			} else {
+				
+			}
 		}
 	});
 }
@@ -165,25 +180,41 @@ function error_log(result, action) {
 
 //This function controls the live adding of numbers to the existing likes, etc
 function add_result(action) {
-	val = parseInt($('.system-share a.'+action+' span.numbers').html());
-	//if the value isn't false
-	if(val) {
-		$('.system-share a.'+action+' span.numbers').html(val+1);
-	} else {
-		$('.system-share a.'+action).append('<span class="brackets">(<span class="numbers">1</span>)</span>');
+	if(action != 'follow') {
+		val = parseInt($('.system-share a.'+action+' span.numbers').html());
+		//if the value isn't false
+		if(val) {
+			$('.system-share a.'+action+' span.numbers').html(val+1);
+		} else {
+			$('.system-share a.'+action).append('<span class="brackets">(<span class="numbers">1</span>)</span>');
+		}
+	} else if(action == 'follow') {
+		//Gotta check to see if you're mutual now.
+		
+		
+		//if mutual, put in the message user
+		
+		//put in the unfollow mark either way.
+	
 	}
 }
 
 
 //This function controls live deleting.
 function del_result(action) {
-	val = parseInt($('.system-share a.'+action+' span.numbers').html());
-	if(val) {
-		if(val-1 >= 1) {
-			$('.system-share a.'+action+' span.numbers').html(val-1);
-		} else {
-			$('.system-share a.'+action+' span.brackets').detach();
-			console.log('detach');
+	if(action != 'follow') {
+		val = parseInt($('.system-share a.'+action+' span.numbers').html());
+		if(val) {
+			if(val-1 >= 1) {
+				$('.system-share a.'+action+' span.numbers').html(val-1);
+			} else {
+				$('.system-share a.'+action+' span.brackets').detach();
+				console.log('detach');
+			}
 		}
+	} else if(action == 'follow') {
+		
+		//Gotta put in the "follow"
+		
 	}
 }

@@ -108,6 +108,10 @@ li.notifications-parent>a {
 	padding-top: 0;
 }
 
+li.notifications-parent:hover ul.notifications {
+	display:block;
+}
+
 ul.notifications {
 	position: absolute;
 	display:none;
@@ -130,7 +134,6 @@ ul.notifications>li {
 ul.notifications li span.show-people {
 	color:#ccc;
 	display:inline-block;
-	
 }
 
 ul.notifications li .show-people:hover ul{
@@ -145,16 +148,17 @@ ul.notifications li ul {
 	margin: 0;
 	padding: 0;
 	list-style:none;
+	background:#000;
 }
 
 ul.notifications li ul li {
 	margin: 0;
+	padding: 3px 4px;
 	display:inline-block;
 }
 
 ul.notifications li ul li a{
-	margin: 0;
-	padding: 3px 4px;
+	margin: 0;	
 }
 
 

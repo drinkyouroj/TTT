@@ -1,5 +1,5 @@
 $(function() {
-	$('.the-comment a').on('click', function(e) {
+	$('.the-comment a.reply').on('click', function(e) {
 		post = $(this).data('postid');
 		reply = $(this).data('replyid');
 		comment_container = $(this).siblings('.reply-box');

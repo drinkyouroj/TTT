@@ -20,19 +20,28 @@ class CategoryController extends BaseController {
 		if(strlen(Request::segment(3))) {
 			switch(Request::segment(3)) {
 				default:
+				case 'popular':
+					$posts = Category::find($cat->id)->postspopular;
+				break;
 				case 'viewed':
 					$posts = Category::find($cat->id)->postsviews;
 				break;
 				case 'favorited':
 					$posts = Category::find($cat->id)->postsfavorites;
 				break;
-				case 'fucked':
-					$posts = Category::find($cat->id)->postsfucks;
+				case 'discussed':
+					$posts = Category::find($cat->id)->postsdiscussed;
 				break;
+				case 'longest':
+					$posts = Category::find($cat->id)->longest;
+				break; 
+				case 'shortest':
+					$posts = Category::find($cat->id)->shortest;
+				break;  
 			}
 		} else {
 			//Grab the right posts.
-			$posts = Category::find($cat->id)->posts;
+			$posts = Category::find($cat->id)->postspopular;
 		}
 		
 		

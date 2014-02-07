@@ -34,22 +34,7 @@
 			@endforeach
 		</div>
 		
-		@if(count($past_featured))
-		<div class="row bottom-featured">
-			<div class="past_featured_box">
-				@foreach($past_featured as $k => $post)
-					<div class="col-md-2 {{$k ? '': 'col-md-offset1'}}">{{--This will have offset of 1 if $k = 0 --}}
-						
-						<div class="the-image">
-							{{ link_to('posts/'.$post->alias, 'read on.') }}
-						</div>
-						<h3>{{ link_to('posts/'.$post->alias, $post->title) }}</h3>
-						<h4>by {{$post->user->username}}</h4>
-					</div>
-				@endforeach
-			</div>
-		</div>
-		@endif
+		
 	</div>
 	
 @stop

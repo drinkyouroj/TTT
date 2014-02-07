@@ -16,10 +16,13 @@
 					<option selected="selected">sort by</option>
 					{{--This might need some weird switches and stuff for different scenarios--}}
 					{? $current_seg = Request::segment(1).'/'.Request::segment(2) ?}
-					<option value="{{Config::get('app.url')}}/{{$current_seg}}/favorited">Most Favorited</option>
+					<option value="{{Config::get('app.url')}}/{{$current_seg}}/popular">Most Popular</option>
 					<option value="{{Config::get('app.url')}}/{{$current_seg}}/viewed">Most Viewed</option>
-					<option value="{{Config::get('app.url')}}/{{$current_seg}}/fucked">Most Fucked Up</option>
-					<option value="{{Config::get('app.url')}}/{{$current_seg}}/advanced">Advanced</option>
+					<option value="{{Config::get('app.url')}}/{{$current_seg}}/favorited">Most Favorited</option>
+					<option value="{{Config::get('app.url')}}/{{$current_seg}}/discussed">Most Discussed</option>
+					<option value="{{Config::get('app.url')}}/{{$current_seg}}/longest">Longest</option>
+					<option value="{{Config::get('app.url')}}/{{$current_seg}}/shortest">Shortest</option>
+					
 				</select>
 			</div>
 		</div>

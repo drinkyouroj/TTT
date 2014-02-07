@@ -49,13 +49,9 @@
 			
 			@if($fav_count)
 				along with
-				<span class="show-people"> 
-				{{ $fav_count }}
+				<span class="show-people">
 				@if($fav_count >= 2)
-					other people
-				@else
-					other person
-				@endif
+					{{ $fav_count }} other people
 					<ul> 
 					@foreach($not['favorite'] as $k => $n)
 						{{--Have to skip the first person--}}
@@ -68,6 +64,10 @@
 						@endif
 					@endforeach
 					</ul>
+				@else
+					<a href="{{Config::get('app.url')}}/profile/{{$not['favorite'][1]->user->username}}">{{$not['favorite'][1]->user->username}}</a>
+				@endif
+
 				</span>
 			@endif
 		</span>
@@ -94,13 +94,9 @@
 			
 			@if($rep_count)
 				along with
-				<span class="show-people"> 
-				{{ $rep_count }}
+				<span class="show-people">
 				@if($rep_count >= 2)
-					other people
-				@else
-					other person
-				@endif
+					{{ $rep_count }} other people
 					<ul> 
 					@foreach($not['repost'] as $k => $n)
 						{{--Have to skip the first person--}}
@@ -113,10 +109,60 @@
 						@endif
 					@endforeach
 					</ul>
+				@else
+					<a href="{{Config::get('app.url')}}/profile/{{$not['repost'][1]->user->username}}">{{$not['repost'][1]->user->username}}</a>
+				@endif
+					
 				</span>
 			@endif
 		</span>
 	</li>
 	@endif
+	
+	@if(isset($not['comment']))
+	<li class="comment">
+		<span class="item">
+			<a href="{{Config::get('app.url')}}/profile/{{$not['comment'][0]->user->username}}">
+				{{$not['comment'][0]->user->username}}
+			</a>
+		</span>
+		
+		commented on your post
+		
+		<span>
+			<a href="{{Config::get('app.url')}}/posts/{{$not['comment'][0]->post->alias}}#comment-{{$not['comment'][0]->comment_id}}">
+				{{$not['comment'][0]->post->title}}
+			</a>
+		</span>
+		
+		{? $comment_count = count($not['comment'])-1 ?}
+		
+		@if($comment_count)
+			along with
+			<span class="show-people"> 
+				{{ $rep_count }}
+				@if($rep_count >= 2)
+					other people
+					<ul> 
+					@foreach($not['comment'] as $k => $n)
+						{{--Have to skip the first person--}}
+						@if($k)
+						<li>
+							<a href="{{Config::get('app.url')}}/profile/{{$n->user->username}}">
+								{{$n->user->username}}
+							</a>
+						</li>
+						@endif
+					@endforeach
+					</ul>
+				@else
+					<a href="{{Config::get('app.url')}}/profile/{{$not['comment'][1]->user->username}}">{{$not['comment'][1]->user->username}}</a>
+				@endif
+			</span>
+		@endif
+		
+	</li>
+	@endif
+	
 	
 @endforeach

@@ -111,6 +111,11 @@ class UserController extends BaseController {
 			Session::put('email', $user->email);
 			Session::put('user_id', $user->id);
 			Session::put('join_date', $user->created_at);
+			if($user->hasRole('Admin')) {
+				//this was more convienent in some places as pulling the user is a pain in the ass.
+				Session::put('admin', 1);
+			}
+			
 						
             // If the session 'loginRedirect' is set, then redirect
             // to that route. Otherwise redirect to '/'

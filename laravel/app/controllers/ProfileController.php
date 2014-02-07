@@ -135,7 +135,9 @@ class ProfileController extends BaseController {
 					->first();
 			
 			if(isset($post->id)) {
-				if(Session::get('username') != 'ryuhei'  && strtotime(date('Y-m-d H:i:s', strtotime('-5 minutes'))) <= strtotime($post->created_at)  ){
+				//not an admin and 10min has not passed since your last post.
+				if(!Session::get('admin') && strtotime(date('Y-m-d H:i:s', strtotime('-10 minutes'))) <= strtotime($post->created_at)  ){
+					//Gotta make a new view for that.
 					return View::make('generic/error')
 						->with('message', "Can't be spammin around!");
 				}
@@ -249,6 +251,24 @@ class ProfileController extends BaseController {
 		
 		if($validator->passes()) {
 			$comment->save();
+			
+			//Grab the post.
+			$post = Post::where('id', $post_id)->first();
+			
+			//Check to make sure that you don't own the post.
+			if($post->user_id != Auth::user()->id) {
+				//Place in the notification if you're posting on other people's posts.
+				$notification = new Notification;
+				$notification->post_id = $post_id;
+				$notification->user_id = $post->user->id;
+				$notification->action_id = Auth::user()->id;
+				$notification->notification_type = 'comment';
+				$notification->comment_id = $comment->id;
+				$notification->save();
+				
+				//Should the comment counter be incremented if you're the owner? no!
+				Post::where('id', $post_id)->increment('comment_count',1);
+			}
 			return Redirect::to('posts/'.$comment->post->alias.'#comment-'.$comment->id);
 		} else {
 			return Redirect::to('posts/'.$comment->post->alias)
@@ -263,6 +283,7 @@ class ProfileController extends BaseController {
 			$comment = new Comment;
 			$comment->user_id = Auth::user()->id;
 			$comment->post_id = Request::segment(3);
+			$comment->published = 1;//This sets the comment to be "deleted"  We did this so we don't lose the tree structure.
 			if(Request::get('reply_id')) {
 				$comment->parent_id = Request::get('reply_id');
 			}

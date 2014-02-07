@@ -21,15 +21,6 @@
  
 Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 {
-/*
-	//Meat of the Profile JS app when it is built....
-	Route::resource('posts', 'PostRestController');
-    Route::resource('categories', 'CategoryRestController');
-	Route::resource('profiles', 'ProfileRestController');//This controller happens to be called "ProfileController" since the "UserController" is used by Confide
-	Route::resource('comments', 'CommentRestController');
-	Route::resource('messages', 'MessageRestController', array('except'=>array('delete')));
-	Route::resource('sent', 'SentRestController', array('only'=>array('index','show')));//a controller for getting sent messages
-*/
 	
 	//Binary action controllers aka minimal information is passed (follow, fav, repost)  Index is used to list followers, etc.
 	$binary_limits = array('only'=>array('index','create','show','destroy'));
@@ -37,22 +28,26 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	//Followers, Followees  (FollowController's index shows the people you follow)
 	//let's limit the useable controller functions
 	
-	//FollowingController shows the people that follow you.
-	Route::resource('following', 'FollowingRestController',$binary_limits);
-	Route::resource('followers', 'FollowersRestController',$binary_limits);
 	
-	//Flickr!!!!!
-	Route::resource('flickr', 'FlickrRestController', array('only'=>array('index','show')));
-
+	/*Page Actions**********************************/
+	//FollowingController shows the people that follow you.
+	Route::resource('following', 'FollowingRestController',$binary_limits);//folks you're following.
+	Route::resource('followers', 'FollowersRestController',$binary_limits);//folks following you: your followers
+	
 	//Page Actions
 	Route::resource('likes', 'LikeRestController', array('only'=>array('index','show','store')));
 	Route::resource('favorites', 'FavoriteRestController', array('only'=>array('index','show','store')));
 	Route::resource('follows', 'FollowRestController', array('only'=>array('index','show','store')));
 	Route::resource('reposts', 'RepostRestController',$binary_limits);
+	Route::resource('comments', 'CommentRestController', $binary_limits);
 	
+	/**Post Input Systems***************************/
 	//Title CHKR
-	Route::resource('posttitle', 'PostTitleRestController', array('only'=>array('index')));
+	Route::resource('posttitle', 'PostTitleRestController', array('only'=>array('index')));//For Post input.
 	
+	//Flickr!!!!!
+	Route::resource('flickr', 'FlickrRestController', array('only'=>array('index','show')));//API wrapper
+
 	//Photo Processor
 	Route::resource('photo', 'PhotoRestController', array('only'=>array('index','store','show')) );
 	
@@ -85,11 +80,6 @@ Route::get( '/posts/{alias}', 'PostController@getPost');
 //Search routes
 Route::get('/search/{term}', 'SearchController@getResult');//Might turn into a rest system later
 Route::post('/search', 'SearchController@postResult');
-
-
-//Follow routes
-Route::get( '/follow/{alias}', 'FollowController@getFollow');
-Route::get( '/unfollow/{alias}', 'FollowController@getUnFollow');
 
 //Profile routes (handles 90% of text based inputs)
 //Posts

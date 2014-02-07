@@ -1,12 +1,13 @@
 <?php
 /**
- * Profile Post is the user's "My Posts" or "Other People's Activity" piece
+ * Post View stores who's viewed the post or not.
+ * 	(Good candidate for mongo)
  */
 
-class ProfilePost extends Eloquent {
+class PostView extends Eloquent {
 		
 	//Just to be sure!
-	protected $table = 'profile_posts';
+	protected $table = 'post_views';
 
 	public function user() {
 		return $this->belongsTo('User');
