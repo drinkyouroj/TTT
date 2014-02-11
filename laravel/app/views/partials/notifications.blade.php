@@ -1,5 +1,24 @@
 @foreach($notifications as $not)
 
+	@if(isset($not['new']))
+	<li class="new">
+		<span class="item">
+			<a href="{{Config::get('app.url')}}/profile/{{$not['new'][0]->user->username}}">
+				{{$not['new'][0]->user->username}}
+			</a>
+		</span>
+		
+		submitted a new post
+		
+		<span>
+			<a href="{{Config::get('app.url')}}/posts/{{$not['new'][0]->post->alias}}#new-{{$not['new'][0]->new_id}}">
+				{{$not['new'][0]->post->title}}
+			</a>
+		</span>		
+	</li>
+	@endif
+	
+
 	@if(isset($not['follow']))
 	<li class="follow">
 		<span class="item">
@@ -109,7 +128,7 @@
 						@endif
 					@endforeach
 					</ul>
-				@else
+				@elseif($rep_count == 1)
 					<a href="{{Config::get('app.url')}}/profile/{{$not['repost'][1]->user->username}}">{{$not['repost'][1]->user->username}}</a>
 				@endif
 					
@@ -135,28 +154,37 @@
 			</a>
 		</span>
 		
-		{? $comment_count = count($not['comment'])-1 ?}
+		{{-- I know its ugly to have so much stuff here, but we need it to count the unique usernames--}}
+		{? $unique = array(); ?}
+		{? foreach($not['comment'] as $k=> $com ){ $unique[$k] = $com->user->username; }?}
+		{? $unique = array_unique($unique)  ?}
+		{? $comment_count = count($unique)-1 ?}
 		
 		@if($comment_count)
 			along with
-			<span class="show-people"> 
-				{{ $rep_count }}
-				@if($rep_count >= 2)
-					other people
+			<span class="show-people">
+				@if($comment_count >= 2)
+					{{ $comment_count }} other people
 					<ul> 
-					@foreach($not['comment'] as $k => $n)
+					@foreach($unique as $k => $n)
 						{{--Have to skip the first person--}}
 						@if($k)
 						<li>
-							<a href="{{Config::get('app.url')}}/profile/{{$n->user->username}}">
-								{{$n->user->username}}
+							<a href="{{Config::get('app.url')}}/profile/{{$n}}">
+								{{$n}}
 							</a>
 						</li>
 						@endif
 					@endforeach
 					</ul>
-				@else
-					<a href="{{Config::get('app.url')}}/profile/{{$not['comment'][1]->user->username}}">{{$not['comment'][1]->user->username}}</a>
+				@elseif($comment_count == 1)
+					{{--This needs to have unique username.--}}
+					@foreach($unique as $n)
+						@if($n != $not['comment'][0]->user->username)
+							<a href="{{Config::get('app.url')}}/profile/{{$n}}">{{$n}}</a>
+						@endif
+					@endforeach
+					
 				@endif
 			</span>
 		@endif

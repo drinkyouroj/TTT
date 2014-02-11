@@ -73,4 +73,12 @@ class Post extends Eloquent {
 		return Validator::make($input, $rules);
 	}
 	
+	public function update_validate($input) {
+		$rules = array(
+				'body' => 'Twothousand'
+		);
+		return Validator::make($input, $rules);
+	}
+	
+	
 }

@@ -54,7 +54,7 @@ class RepostRestController extends \BaseController {
 					$notification->action_id = Auth::user()->id;
 					$notification->notification_type = 'repost';
 					$notification->save();
-					/*
+					
 					//Add to follower's notifications
 					Queue::push('UserAction@repost', 
 								array(
@@ -62,7 +62,6 @@ class RepostRestController extends \BaseController {
 									'user_id' => Auth::user()->id
 									)
 								);
-					*/
 				}
 				//This has to be outside 
 				return Response::json(

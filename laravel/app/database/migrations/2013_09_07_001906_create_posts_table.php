@@ -34,6 +34,7 @@ class CreatePostsTable extends Migration {
 			$table->boolean('featured');
 			$table->bigInteger('views');
 			$table->date('featured_date');
+			$table->boolean('published');
 			$table->softDeletes();
 			$table->timestamps();
 		});

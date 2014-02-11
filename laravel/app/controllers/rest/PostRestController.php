@@ -153,8 +153,35 @@ class PostRestController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//This should be reserved for users with admin roles.
+		//
+		$owns = Post::where('user_id', Auth::user()->id)
+					->where('id', $id)
+					->count();
 		
+		if($owns) {
+			Post::where('id', $id)
+				->update(array('published'=>'0'));
+			
+			//Take it out of the activities. (maybe queue this too?)
+			Activity::where('post_id', $id)
+					->where('user_id', Auth::user()->id)//This is based on who is affected.
+					->delete();
+			
+			//Gotta get rid of it from the MyPosts/External Profile View 
+			ProfilePost::where('post_id', $id)
+					->where('profile_id', Auth::user()->id)//This is based on who is affected.
+					->delete();
+			
+			return Response::json(
+					array('result' =>'unpublished'),
+					200//response is OK!
+				);
+		} else {
+			return Response::json(
+					array('result' =>'fail'),
+					200//response is OK!
+				);
+		}
 	}
 	
 		//Grabs the inputs and places them in the right place within the object.

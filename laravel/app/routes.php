@@ -40,6 +40,9 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	Route::resource('follows', 'FollowRestController', array('only'=>array('index','show','store')));
 	Route::resource('reposts', 'RepostRestController',$binary_limits);
 	Route::resource('comments', 'CommentRestController', $binary_limits);
+	Route::resource('posts', 'PostRestController', $binary_limits);
+	Route::resource('feature', 'FeatureRestController', $binary_limits);
+	
 	
 	/**Post Input Systems***************************/
 	//Title CHKR

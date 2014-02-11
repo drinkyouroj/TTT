@@ -12,11 +12,12 @@ class NotificationParser {
 		//Gotta parse the $notifications here:
 		$compiled = array();
 		//First push all the notificaiton IDs into the post array according to their post id.
-		foreach($notifications as $not) {
-			if(isset($compiled[$not->post_id][$not->notification_type])) {
-				array_push($compiled[$not->post_id][$not->notification_type], $not);
-			}else {
+		foreach($notifications as $k => $not) {
+			
+			if(!isset($compiled[$not->post_id][$not->notification_type])) {
 				$compiled[$not->post_id][$not->notification_type] = array($not);
+			}else {
+				array_push($compiled[$not->post_id][$not->notification_type], $not);
 			}
 		}
 		

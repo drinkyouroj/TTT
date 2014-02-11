@@ -111,10 +111,18 @@ class UserController extends BaseController {
 			Session::put('email', $user->email);
 			Session::put('user_id', $user->id);
 			Session::put('join_date', $user->created_at);
+			Session::put('featured', $user->featured);
+			
+			//Let's just grab the user's image.
+			$user_featured = Post::where('id', $user->featured)->first();
+			Session::put('image', $user_featured->image);
+			
 			if($user->hasRole('Admin')) {
 				//this was more convienent in some places as pulling the user is a pain in the ass.
 				Session::put('admin', 1);
-			}
+			} else {
+				Session::put('admin', 0);
+			} 
 			
 						
             // If the session 'loginRedirect' is set, then redirect

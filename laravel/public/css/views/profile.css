@@ -40,10 +40,10 @@ ul.profile-options {
 
 
 ul.profile-options li {
-	display:inline-block;
+	display:block;
 	margin:0;
 	padding: 0;
-vertical-align: middle;
+	vertical-align: middle;
 }
 
 ul.profile-options li a {
@@ -160,6 +160,57 @@ ul.profile-options li a.new-message {
 	background-position: left top;
 }
 
+/**Item Options************************************************/
+	
+.generic-item header {
+	position: relative;
+}	
+.activity-container ul, .activity-container li {
+	margin: 0;
+	padding: 0;	
+}
+
+.activity-container .user-menu {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	list-style:none;
+	text-align: left;
+	text-transform: uppercase;
+	font-family:'bebas';
+	padding: 1px 2px;
+	border: 1px solid #ccc;
+	border-radius: 2px;
+}
+
+.activity-container .user-menu li.options {
+		
+}
+
+.activity-container .user-menu li.options a {
+	font-size: 11px;
+}
+
+.activity-container .user-menu ul.menu-listing {
+	position: absolute;
+	display:none;
+	list-style:none;
+	background: #fff;
+	padding: 2px 3px;
+}
+
+.activity-container .user-menu li.options:hover ul.menu-listing {
+	display:block;	
+}
+
+.activity-container .user-menu ul.menu-listing li{
+	list-style:none;
+}
+
+.activity-container .user-menu ul.menu-listing li a:hover{
+	color: #428bca;
+}
+
 
 /*Forms*/
 
@@ -216,6 +267,10 @@ label.error {
 	background:#fff;
 	box-shadow: 0 0 5px #ccc;
 	border-radius: 3px;
+}
+
+.edit-form.form-container {
+	height: auto;
 }
 
 .form-container .page {

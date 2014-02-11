@@ -45,8 +45,13 @@
 				</a>
 			</li>
 			<li>
-				<a class="edit-profile" href="{{Config::get('app.url')}}/profile/notifications">
+				<a class="all-notification" href="{{Config::get('app.url')}}/profile/notifications">
 					<span>All Notifications</span>
+				</a>
+			</li>
+			<li>
+				<a class="profile-posts" href="{{Config::get('app.url')}}/profile/profileposts">
+					<span>My Posts</span>
 				</a>
 			</li>
 		@endif

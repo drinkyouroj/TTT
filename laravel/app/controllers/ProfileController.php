@@ -48,8 +48,11 @@ class ProfileController extends BaseController {
 		$follows = false;
 		$reposts = false;
 		$likes = false;
+		$myposts = false;
 		
-		if($alias && $alias != Session::get('username')) {//This is for other users. not yourself
+		
+		//This is for other users. not yourself
+		if($alias && $alias != Session::get('username')) {
 			$user = User::where('username', '=', $alias)->first();
 			$user_id = $user->id;//set the profile user id for rest of the session.
 			
@@ -68,11 +71,17 @@ class ProfileController extends BaseController {
 			
 			//Big col 12
 			$fullscreen = true;
+		
+			$activity = ProfilePost::where('profile_id','=', $user_id)
+							->orderBy('created_at', 'DESC')
+							->get();//get the activities 	
+			
 		} else {
+			
 			//We're doing the user info loading this way to keep the view clean.
 			$user_id = Session::get('user_id');
 			$user = User::where('id', '=', $user_id)->first();
-			
+			/*
 			//Recent Follows
 			$follows = Follow::where('follower_id','=', $user_id)->orderBy('created_at', 'DESC')->take(5)->get();
 			
@@ -81,22 +90,26 @@ class ProfileController extends BaseController {
 			
 			//Recent Likes
 			$likes = Like::where('user_id', '=', $user_id)->orderBy('created_at', 'DESC')->take(5)->get();
-			
+			*/
 			//Big col 9
 			$fullscreen = false;
+			
+			//Activity is pulled from the user (current user) activity instead of ProfilePost (what anyone can see)
+			$activity = Activity::where('user_id','=', $user_id)
+							->orderBy('created_at', 'DESC')
+							->get();//get the activities
+							
+			$myposts = ProfilePost::where('profile_id','=', $user_id)
+							->orderBy('created_at', 'DESC')
+							->get();//get the activities 	
 		}
-		
-		$activity = ProfilePost::where('profile_id','=', $user_id)
-						->orderBy('created_at', 'DESC')
-						->get();//get the activities 
-		
-		//$posts = Post::where('user_id', '=', $user_id)->orderBy('created_at', 'DESC')->get();
-		
+
 		return View::make('profile/index')
-				->with('likes', $likes)
-				->with('follows', $follows)
-				->with('reposts', $reposts)
+				//->with('likes', $likes)
+				//->with('follows', $follows)
+				//->with('reposts', $reposts)
 				->with('activity', $activity)
+				->with('myposts', $myposts)
 				->with('user', $user)
 				->with('is_following', $is_following)//you are following this profile
 				->with('is_follower', $is_follower)//This profile follows you.
@@ -118,18 +131,19 @@ class ProfileController extends BaseController {
 				->with('notifications', $compiled)
 				->with('fullscreen', true);
 	}
+	
 
 	/**
 	 * Post form
 	 */
 	public function getPostForm($id=false) {
 		if($id) {
-			$post = Post::where('id', '=', $id);
-			return View::make('posts/form')
+			$post = Post::where('id', '=', $id)->first();
+			return View::make('posts/edit_form')//Edit form only has to account for the text.  Not the entire listing.
 					->with('post', $post)
 					->with('fullscreen', true);
 		} else {
-			//Gotta put in a query here to see if the user submitted something in the last 5 minutes 
+			//Gotta put in a query here to see if the user submitted something in the last 10 minutes 
 			$post = Post::where('user_id','=', Session::get('user_id'))
 					->orderBy('created_at', 'DESC')//latest first
 					->first();
@@ -148,53 +162,106 @@ class ProfileController extends BaseController {
 		
 	}
 	
+	/**
+	 * Where the Posts are born! (and edited)
+	 */
 	public function postPostForm() {
-		//Detect if this is an update scenario or if its new
-		$new = true;
-		if(Input::get('id')) {
-			$new = false;
-		}
 		
-		$post = self::post_object_input_filter($new);//Post object creates objects.
-		$validator = $post->validate($post->toArray());//validation takes arrays
+		//Detect if this is an update scenario or if its new and prepare the data accordingly.
+		if(Input::get('id')) {
+			//THIS is the update scenario.
+			//let's double check that this ID exists and belongs to this user.
+			$check_post = Post::where('id', Input::get('id'))->first();
+			
+			if($check_post->id){
+				$new = false;
+				
+				//Now that we know this exists, let's check to see if its been more than 3 days since it was initially posted.
+				if(!Session::get('admin') &&
+				strtotime(date('Y-m-d H:i:s', strtotime('-72 hours'))) >= strtotime($check_post->created_at)) {
+					//more than 72 hours has passed since the post was created.
+					//Nice try punk.  Maybe I should have this go somewhere more descriptive.
+					return Redirect::to('profile');
+				}
+				
+				$post = $check_post;
+				$post->body = Input::get('body');
+				$validator = $post->update_validate($post->toArray());//validation takes arrays
+			}
+			
+		} else {
+			//New Post.
+			$new = true;
+			//Checking to see if this is an new post being applied by a punk
+			$last_post = Post::where('user_id','=', Session::get('user_id'))
+						->orderBy('created_at', 'DESC')//latest first
+						->first();
+			
+			if( $new && 
+				!Session::get('admin') &&
+				strtotime(date('Y-m-d H:i:s', strtotime('-10 minutes'))) <= strtotime($last_post->created_at))
+			{
+				//Nice try punk.  Maybe I should have this go somewhere more descriptive.
+				return Redirect::to('profile');
+			}
+			$post = self::post_object_input_filter($new);//Post object creates objects.
+			$validator = $post->validate($post->toArray());//validation takes arrays
+		} 
+		
 		
 		if($validator->passes()) {//Successful Validation
-		
-			$post->save();
-			
-			SolariumHelper::updatePost($post);//Let's add the data to solarium
-
-			//Gotta put in a thing here to get rid of all relations if this is an update.
-			$post->categories()->detach();//Pivot! Pivot! 
-
-			//Gotta save the categories pivot
-			foreach(Input::get('category') as $k => $category) {
-				if($k <= 2) {//This will ensure that no more than 3 are added at a time.
-					$post->categories()->attach($category);
-				} else {
-					break;//let's not waste processes
+			if($new) {
+				$post->save();
+				
+				$user = User::where('id', Auth::user()->id)->first();
+							
+				//is this your first post?
+				if(!$user->featured) {
+					User::where('id', Auth::user()->id)
+						->update(array('featured' => $post->id));
 				}
-			}
-		
-			//Put it into the profile post table 
-			$profile_post = new ProfilePost;
-			$profile_post->profile_id = Auth::user()->id;//post on your wall
-			$profile_post->user_id = Auth::user()->id;//post by me
-			$profile_post->post_id = $post->id;
-			$profile_post->post_type = 'post';
-			$profile_post->save();
+				
+				//Gotta put in a thing here to get rid of all relations if this is an update.
+				$post->categories()->detach();//Pivot! Pivot! 
+	
+				//Gotta save the categories pivot
+				foreach(Input::get('category') as $k => $category) {
+					if($k <= 2) {//This will ensure that no more than 3 are added at a time.
+						$post->categories()->attach($category);
+					} else {
+						break;//let's not waste processes
+					}
+				}
 			
-			
-			//Send it out to your followers (maybe this function should be queued)
-			$followers = Follow::where('user_id', Auth::user()->id);
-			foreach($followers as $follower){
-				$follower_post = new ProfilePost;
-				$profile_post->user_id = $follower->user_id;//set it to show on this follower's wall.
-				$profile_post->post_id = $post->id;//set the id of the post.
-				$profile_post->post_type = 'post';//new post by poster.
+				//Put it into the profile post table (my posts or what other people see as your activity)
+				$profile_post = new ProfilePost;
+				$profile_post->profile_id = Auth::user()->id;//post on your wall
+				$profile_post->user_id = Auth::user()->id;//post by me
+				$profile_post->post_id = $post->id;
+				$profile_post->post_type = 'post';
 				$profile_post->save();
-				//Gotta add notifications.
+				
+				//Also save this data to your own activity
+				$myactivity = new Activity;
+				$myactivity->user_id = Auth::user()->id;//who's profile is this going to?
+				$myactivity->action_id = Auth::user()->id;//Who's doing the action?
+				$myactivity->post_id = $post->id;
+				$myactivity->save();
+				
+				//QUEUE
+				//Add to follower's notifications.
+				Queue::push('UserAction@newpost', 
+							array(
+								'post_id' => $post->id,
+								'user_id' => Auth::user()->id
+								)
+							);
+
+			} else {
+				$post->update();
 			}
+				
+			SolariumHelper::updatePost($post);//Let's add the data to solarium (Apache Solr)
 			
 			return Redirect::to('profile');
 					
@@ -221,21 +288,25 @@ class ProfileController extends BaseController {
 		{
 			//Creates a new post
 			$post = new Post;
-			$post->user_id = Auth::user()->id;
-			$post->title = Request::get('title');
+			
 			if($new) {
+				$post->user_id = Auth::user()->id;
+				$post->title = Request::get('title');
+				
 				//Gotta make sure to make the alias only alunum
 				$post->alias = preg_replace('/[^A-Za-z0-9]/', '', Request::get('title')).'-'.date('m-d-Y');//makes alias.  Maybe it should exclude other bits too...
+				$post->story_type = Request::get('story_type');
+			
+				$post->tagline_1 = Request::get('tagline_1');
+				$post->tagline_2 = Request::get('tagline_2');
+				$post->tagline_3 = Request::get('tagline_3');
+				
+				$post->category = serialize(Request::get('category'));
+				$post->image = Request::get('image','0');//If 0, then it means no photo.
 			}
-			$post->story_type = Request::get('story_type');
 			
-			$post->tagline_1 = Request::get('tagline_1');
-			$post->tagline_2 = Request::get('tagline_2');
-			$post->tagline_3 = Request::get('tagline_3');
-			
-			$post->category = serialize(Request::get('category'));
-			$post->image = Request::get('image','0');//If 0, then it means no photo.
-			$post->body = Request::get('body');
+			$post->body = Request::get('body');//Body is the only updatable thing in an update scenario.
+			$post->published = 1;
 			
 			return $post;
 		}

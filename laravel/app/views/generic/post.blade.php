@@ -104,20 +104,28 @@
 	@endif
 	
 	<div class="the-content">
-		{? $total = count($bodyarray)?}
-		@foreach($bodyarray as $c => $body)
-			<div class="row">
-				<div class="col-md-10 col-md-offset-1">
-					<div class="row-content" id="{? echo $c ? '':'one' ?}">
-						{{$body}}
+		@if($post->published)
+			{? $total = count($bodyarray)?}
+			@foreach($bodyarray as $c => $body)
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1">
+						<div class="row-content" id="{? echo $c ? '':'one' ?}">
+							{{$body}}
+						</div>
+					</div>
+					<div class="col-md-10 col-md-offset-1 row-divider">
+						<span class="page-count">{? echo $c+1 ?}/{{$total}}</span>
+						<div class="clearfix"></div>
 					</div>
 				</div>
-				<div class="col-md-10 col-md-offset-1 row-divider">
-					<span class="page-count">{? echo $c+1 ?}/{{$total}}</span>
-					<div class="clearfix"></div>
+			@endforeach
+		@else
+			<div class="row">
+				<div class="col-md-10 col-md-offset-1">
+					<h3 class="unpublished">This one's been unpublished.</h3>
 				</div>
 			</div>
-		@endforeach
+		@endif
 	</div>
 	
 	
