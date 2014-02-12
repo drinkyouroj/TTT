@@ -35,7 +35,14 @@ class UserController extends BaseController {
         $user = new User;
 
         $user->username = Input::get( 'username' );
-        $user->email = Input::get( 'email' );
+		
+		//If the signup form has no input for the email, then make it up.
+		if(strlen(Input::get( 'email' )) == 0) {
+			$user->email = Input::get( 'username' ).'@twothousandtimes.com';
+		}else {
+			$user->email = Input::get( 'email' );
+		}
+        
         $user->password = Input::get( 'password' );
 
         // The password confirmation will be removed from model
@@ -45,11 +52,11 @@ class UserController extends BaseController {
 
         // Save if valid. Password field will be hashed before save
         $user->save();
-		
+		/*
 		$userRole = Role::where('name', '=', 'Nobody')->first();
 		
-		$user->attachRole($userRole);//Attach the user role to a user.
-
+		$user->roles()->attach(1);//Attach the user role to a user.
+	*/
         if ( $user->id )
         {
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
@@ -113,9 +120,11 @@ class UserController extends BaseController {
 			Session::put('join_date', $user->created_at);
 			Session::put('featured', $user->featured);
 			
-			//Let's just grab the user's image.
-			$user_featured = Post::where('id', $user->featured)->first();
-			Session::put('image', $user_featured->image);
+			if($user->featured != 0) {
+				//Let's just grab the user's image.
+				$user_featured = Post::where('id', $user->featured)->first();
+				Session::put('image', $user_featured->image);
+			}
 			
 			if($user->hasRole('Admin')) {
 				//this was more convienent in some places as pulling the user is a pain in the ass.

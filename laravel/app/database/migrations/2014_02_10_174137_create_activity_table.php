@@ -18,7 +18,7 @@ class CreateActivityTable extends Migration {
 			$table->integer('user_id');//Who owns this?
 			$table->integer('action_id');//Who did this?
 			$table->integer('post_id');//The post that's being placed in activity
-			$table->enum('type',array('new', 'repost'));//What kind of an activity is this (differentiate with user_id if its your post or following's new post)
+			$table->enum('post_type',array('post', 'repost'));//What kind of an activity is this (differentiate with user_id if its your post or following's new post)
 			$table->timestamps();
 		});
 	}

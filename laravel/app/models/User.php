@@ -10,6 +10,17 @@ class User extends ConfideUser {
 	
 	use HasRole;
 	
+	
+	/**
+     * Validation rules
+     */
+    public static $rules = array(
+        'username' => 'required|alpha_dash|unique:users',
+        'email' => 'required|email|unique:users',
+        'password' => 'required|between:4,11|confirmed',
+        'password_confirmation' => 'between:4,11',
+    );
+	
 	public function posts()
     {
         return $this->hasMany('Post', 'user_id');

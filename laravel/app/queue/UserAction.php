@@ -24,7 +24,7 @@ class UserAction {
 			$activity->action_id = $data['user_id'];//notification from user
 			$activity->user_id = $follower->follower_id; 
 			$activity->post_id = $data['post_id'];
-			$activity->type = 'repost';
+			$activity->post_type = 'repost';
 			$activity->save();
 			
 		}
@@ -46,14 +46,14 @@ class UserAction {
 			$noti->action_id = $data['user_id'];//notification from user
 			$noti->user_id = $follower->follower_id;
 			$noti->post_id = $data['post_id'];
-			$noti->notification_type = 'new';
+			$noti->notification_type = 'post';
 			$noti->save();
 			
 			$activity = new Activity;
 			$activity->action_id = $data['user_id'];//notification from user
 			$activity->user_id = $follower->follower_id; 
 			$activity->post_id = $data['post_id'];
-			$activity->type = 'new';
+			$activity->post_type = 'post';
 			$activity->save();
 		}					
 		

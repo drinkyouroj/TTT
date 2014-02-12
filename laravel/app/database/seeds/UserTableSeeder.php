@@ -6,8 +6,22 @@ class UserTableSeeder extends Seeder {
     {
         DB::table('users')->delete();
  
-        $user = new User;
+ 
+ 		$user = new User;
+				
+		//First user
+        $user->username = 'nobody';
+        $user->email = 'nobody@twothousandtimes.com';
+        $user->password = 'nobody';
+		$user->password_confirmation = 'nobody';
+        $user->confirmed = 1;
+		$user->save();
 		
+		unset($user);
+ 
+ 
+        $user = new User;
+				
 		//First user
         $user->username = 'ryuhei';
         $user->email = 'ryuhei@y-designs.com';

@@ -50,7 +50,7 @@
 				</a>
 			</li>
 			<li>
-				<a class="profile-posts" href="{{Config::get('app.url')}}/profile/profileposts">
+				<a class="my-posts" href="{{Config::get('app.url')}}/profile/myposts">
 					<span>My Posts</span>
 				</a>
 			</li>

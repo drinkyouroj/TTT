@@ -17,7 +17,8 @@ class ProfileController extends BaseController {
 						'comment',
 						'commentform',
 						'messages',
-						'notifications'
+						'notifications',
+						'myposts'
 						);
 			
 			if($alias && !in_array($alias, $not_segment) ) {//This is for other users. not yourself
@@ -129,6 +130,22 @@ class ProfileController extends BaseController {
 		
 		return View::make('profile/notifications')
 				->with('notifications', $compiled)
+				->with('fullscreen', true);
+	}
+	
+	/**
+	 * Gives you your posts and your favorites.
+	 */
+	public function getMyPosts() {
+		$myposts = ProfilePost::where('profile_id', '=', Session::get('user_id'))
+							->orderBy('created_at','DESC')
+							->get();
+		
+		$user = User::where('id', '=', Session::get('user_id'))->first();
+		
+		return View::make('profile/myposts')
+				->with('myposts', $myposts)
+				->with('user', $user)
 				->with('fullscreen', true);
 	}
 	
@@ -246,6 +263,7 @@ class ProfileController extends BaseController {
 				$myactivity->user_id = Auth::user()->id;//who's profile is this going to?
 				$myactivity->action_id = Auth::user()->id;//Who's doing the action?
 				$myactivity->post_id = $post->id;
+				$myactivity->post_type = 'post';//new post!
 				$myactivity->save();
 				
 				//QUEUE

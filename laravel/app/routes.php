@@ -93,6 +93,11 @@ Route::post( '/profile/submitpost', 'ProfileController@postPostForm');
 //Notifications
 Route::get( '/profile/notifications', 'ProfileController@getNotifications');
 
+//My Posts
+Route::get( '/profile/myposts', 'ProfileController@getMyPosts');
+
+
+
 //Comments
 Route::get( '/profile/commentform/{post_id}/{reply_id}', 'ProfileController@getCommentForm');//This is for getting the reply forms.
 Route::post( '/profile/comment/{post_id}', 'ProfileController@postCommentForm');

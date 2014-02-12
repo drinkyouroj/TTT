@@ -57,7 +57,7 @@
 				</a>
 			</span>
 		
-			favorited your post
+			favorited post
 		
 			<span>
 				<a href="{{Config::get('app.url')}}/posts/{{$not['favorite'][0]->post->alias}}">
@@ -102,7 +102,7 @@
 				</a>
 			</span>
 		
-			reposted your post
+			reposted post
 		
 			<span>
 				<a href="{{Config::get('app.url')}}/posts/{{$not['repost'][0]->post->alias}}">
