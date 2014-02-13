@@ -3,28 +3,41 @@ $(function() {
 		event.preventDefault();
 	});
 	
-	//Follow someone
+	//*Follow Actions*********************************************
 	$('.profile-options .follow, .follow-container .follow').on('click', function(event) {
 		event.preventDefault();
 		follow($(this).data('user'));
 	});
 		//See the followers list
-		$('.followers').on('click', function(event){
-			followers_box(event, $(this).data('user'));
+		$('.followers a').on('click', function(event){
+			followers_box($(this).data('user'));
 		});
 		
-		$('.following').on('click', function(event){
-			following_box(event, $(this).data('user'));
+		$('.following a').on('click', function(event){
+			following_box($(this).data('user'));
 		});
-	
+
+	//*Favorite***************************************************
 	$('.system-share a.fav').on('click', function() {
 		fav($(this).data('post'));
+		
 	});
-	
+
+		//unfavorite for 
+		$('.generic-item a.favorite').on('click', function() {
+			post_id = $(this).data('post');
+			
+			fav(post_id,true);//calling from a post.
+			console.log(result);
+			
+		});
+
+	//Repost******************************************************
 	$('.system-share a.repost').on('click', function() {
 		repost($(this).data('post'));
 	});
 	
+	//Like********************************************************
 	$('.system-share a.like').on('click', function() {
 		like($(this).data('post'));
 	});
@@ -70,12 +83,12 @@ function follow(id) {
 function followers_box(id) {
 	$.ajax({
 		url: window.site_url+'rest/followers/'+id,
-		//type:"POST",
+		type:"GET",
 		success: function(data) {
-			
 			$('#followbox .modal-body').empty();
+			var $follows;
 			$.each(data.followers, function(index, value) {
-				$('#followbox .modal-body').append('<a href="'+window.site_url+'profile/'+value.username+'">'+value.username+'</a>');
+				$('#followbox .modal-body').append('<a href="'+window.site_url+'profile/'+value.username+'"><img src="'+window.site_url+'rest/profileimage/'+value.id+'"/>'+value.username+'</a>');
 			});
 			
 			$('#followbox .modal-title').html('Your Followers');
@@ -87,12 +100,12 @@ function followers_box(id) {
 function following_box(id) {
 	$.ajax({
 		url: window.site_url+'rest/following/'+id,
-		//type:"POST",
+		type:"GET",
 		success: function(data) {
 			
 			$('#followbox .modal-body').empty();
 			$.each(data.following, function(index, value) {
-				$('#followbox .modal-body').append('<a href="'+window.site_url+'profile/'+value.username+'">'+value.username+'</a>');
+				$('#followbox .modal-body').append('<a href="'+window.site_url+'profile/'+value.username+'"><img src="'+window.site_url+'rest/profileimage/'+value.id+'"/>'+value.username+'</a>');
 			});
 			
 			$('#followbox .modal-title').html('People You Follow');
@@ -101,19 +114,29 @@ function following_box(id) {
 	});
 }
 
-
 /**
  * Post (as in the articles) based function 
  */
-function fav(id) {
+function fav(id,post) {
 	$.ajax({
 		url: window.site_url+'rest/favorites/'+id,
 		//type:"POST",
 		success: function(data) {
-			console.log('fav');
-			error_log(data.result,'fav');
+			console.log(data);
+			
+			//If this is called from the system share links
+			if(!post) {
+				error_log(data.result,'fav');
+			} else {
+				//sucks to have to do it this way.
+				if(data.result == 'deleted') {
+					$('.post-id-'+post_id).fadeOut().remove();
+				}
+			}
 		}
 	});
+	
+	
 }
 
 
@@ -135,6 +158,7 @@ function like(id) {
 		//type:"POST",
 		success: function(data) {
 			error_log(data.result,'like');
+			
 		}
 	});
 }
@@ -146,9 +170,7 @@ function comment_delete(id) {
 		type:"DELETE",//
 		success: function(data) {
 			if(data.result == 'deleted') {
-				$('#comment-'+id+' .comment-body').html('<span class="deleted">Comment was deleted</span>');
-			} else {
-				
+				$('#comment-'+id+'>.comment-body').html('<span class="deleted">Comment was deleted</span>');
 			}
 		}
 	});

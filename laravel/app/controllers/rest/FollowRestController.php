@@ -17,7 +17,7 @@ class FollowRestController extends \BaseController {
 	//not the best usage (using get), but this works
 	public function show()
 	{
-		if(!Request::segment(3) == 0) {
+		if(Request::segment(3) != 0) {
 		
 			$exists = Follow::where('user_id', '=', Request::segment(3))
 							->where('follower_id', '=', Auth::user()->id)
@@ -28,7 +28,14 @@ class FollowRestController extends \BaseController {
 				Follow::where('user_id', '=', Request::segment(3))
 						->where('follower_id', '=', Auth::user()->id)
 						->delete();
-			
+						
+				//Gotta delete the notifications so that it doesn't multiply.
+				Notification::where('user_id', Request::segment(3))
+							->where('action_id', Auth::user()->id)
+							->where('notification_type', 'follow')
+							->where('post_id', 0)
+							->delete();
+						
 				return Response::json(
 					array('result'=>'deleted'),
 					200//response is OK!

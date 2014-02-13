@@ -53,4 +53,12 @@ class Category extends Eloquent {
 					->where('published',1)
 					->orderBy(DB::raw('LENGTH(body)'),'ASC');	
 	}
+
+	public function validate($input) {
+		$rules = array(
+			'title' => 'Required|Unique:categories'
+		);
+		return Validator::make($input, $rules);
+	}
+
 }

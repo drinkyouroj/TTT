@@ -53,7 +53,7 @@ $(function(){
 	//Paginated 
 	window.photo_search_page = 1;
 	
-	$('.photo-results').on('click', 'a.more', function() {
+	$('.photo-results').on('click', 'a.pager', function() {
 		window.photo_search_page = $(this).data('page');
 		console.log(window.photo_search_page);
 		image_pull();
@@ -63,6 +63,7 @@ $(function(){
 	
 	//Click on the photo results to select the image.
 	$('.photo-results').on('click','img',function() {
+		$('.photo-system .reset-search').removeClass('hidden');//Show the reset button
 		img = $(this).data('image');//HTML5 rocks!
 		$('.photo-chosen').html('');//empty the image from the chosen pile.
 		$newImage = $('<img src="'+img+'">');
@@ -79,6 +80,7 @@ $(function(){
 		$('.photo-results').fadeIn();//Hide the photo options
 		$('.photo-processor').fadeOut();//fade in the photo process options
 		$('.post-form form input.processed-image').remove();//Get rid of the processed image.
+		$('.photo-system .reset-search').addClass('hidden');//Hide the reset button
 	});
 	
 	//Effects Processor: Instahamming it.
@@ -159,10 +161,20 @@ function image_pull() {
 					$('.photos .photo-results').append($newAppend);
 					image_counter = index;
 				});
+				
+				//number of images on this page.
 				console.log(image_counter);
+				
+				next_page = window.photo_search_page + 1;
+				
+				if(next_page > 2) {
+					prev_page = window.photo_search_page -1;
+					$previous = $('<a class="pager previous" data-page="'+prev_page+'">Prev</a>');
+					$('.photos .photo-results').append($previous);
+				}
+				
 				if(image_counter >= 29) {
-					next_page = window.photo_search_page + 1;
-					$more = $('<a class="more" data-page="'+next_page+'">more</a>');
+					$more = $('<a class="pager more" data-page="'+next_page+'">More</a>');
 					$('.photos .photo-results').append($more);
 				}
 				

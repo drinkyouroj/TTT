@@ -20,6 +20,8 @@ class ConfideSetupUsersTable extends Migration {
             $table->string('confirmation_code');
             $table->boolean('confirmed')->default(false);
 			$table->text('bio');
+			$table->integer('featured');
+			$table->boolean('banned')->default(false);
             $table->timestamps();
         });
 

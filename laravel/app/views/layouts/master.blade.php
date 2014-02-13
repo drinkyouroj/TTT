@@ -51,6 +51,13 @@
 							<li class="loggedin message">
 			  					<a href="{{Config::get('app.url')}}/profile/messages">Message</a>
 							</li>
+								@if(Session::get('admin'))
+								<li class="loggedin admin">
+									<a href="{{Config::get('app.url')}}/admin">Admin</a>
+								</li>
+								@else
+								
+								@endif
 							@endif
 			  			</ul>
 			  			

@@ -5,10 +5,11 @@
 @stop
 
 @section('js')
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/signup-form.js"></script>
 @stop
 
 @section('title')
-Login or Signup
+	Login or Signup
 @stop
 
 @section('content')

@@ -114,6 +114,13 @@ class UserController extends BaseController {
         	$user = User::where('email', '=', $input['email'])
         			->orwhere('username', '=', $input['email'])
         			->first();
+			
+			//If this user is banned.....
+			if($user->banned == 1) {
+				Confide::logout();
+				return Redirect::to('/banned');
+			}
+					
 			Session::put('username', $user->username);
 			Session::put('email', $user->email);
 			Session::put('user_id', $user->id);
@@ -126,14 +133,21 @@ class UserController extends BaseController {
 				Session::put('image', $user_featured->image);
 			}
 			
+			//Is this user an admin?
 			if($user->hasRole('Admin')) {
 				//this was more convienent in some places as pulling the user is a pain in the ass.
 				Session::put('admin', 1);
 			} else {
 				Session::put('admin', 0);
-			} 
+			}
 			
-						
+			//Is this user a moderator?
+			if($user->hasRole('Moderator')) {
+				Session::put('mod', 1);
+			} else {
+				Session::put('mod', 0);
+			}
+			
             // If the session 'loginRedirect' is set, then redirect
             // to that route. Otherwise redirect to '/'
             $r = Session::get('loginRedirect');
@@ -143,7 +157,7 @@ class UserController extends BaseController {
                 return Redirect::to($r);
             }
             
-            return Redirect::to('/'); // change it to '/admin', '/dashboard' or something
+            return Redirect::to('/profile'); // change it to '/admin', '/dashboard' or something
         }
         else
         {
@@ -270,5 +284,11 @@ class UserController extends BaseController {
         //Below view is to say "thank you"
         $this->layout->content = View::make('user.logout');
     }
+
+
+	public function getBanned()
+	{
+		return View::make('user.banned');
+	}
 
 }

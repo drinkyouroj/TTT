@@ -17,6 +17,7 @@
 			"app/helpers",
 			"app/controllers/rest",
 			"app/controllers/admin",
+			"app/controllers/moderator",
 			"app/controllers",
 			"app/models",
 			"app/queue",

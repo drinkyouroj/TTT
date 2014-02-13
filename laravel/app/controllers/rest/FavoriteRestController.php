@@ -17,7 +17,7 @@ class FavoriteRestController extends \BaseController {
 	//not the best usage (using get), but this works
 	public function show()
 	{
-		if(!Request::segment(3) == 0) {
+		if(Request::segment(3) != 0) {
 			$exists = Favorite::where('post_id', '=', Request::segment(3))
 							->where('user_id', '=', Auth::user()->id)
 							->count();
@@ -58,7 +58,7 @@ class FavoriteRestController extends \BaseController {
 					200//response is OK!
 				);
 			
-			} else {//Relationship already exists, should this be an unfavorite?
+			} elseif($exists) {//Relationship already exists, should this be an unfavorite?
 			
 				$post = Post::where('id','=', Request::segment(3))
 							->first();
@@ -68,13 +68,13 @@ class FavoriteRestController extends \BaseController {
 						->where('user_id', '=', Auth::user()->id)
 						->delete();
 				
-				//Delete from Activity
+				//Delete from My Posts
 				ProfilePost::where('profile_id', '=', Auth::user()->id)
 						->where('post_id', '=', Request::segment(3))
 						->where('user_id', '=', $post->user->id)
 						->delete();
 				
-				//Delete from notifications
+				//Delete from Notifications
 				Notification::where('post_id', '=', Request::segment(3))
 						->where('action_id', '=', Auth::user()->id)
 						->where('user_id', '=', $post->user->id)

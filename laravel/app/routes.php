@@ -54,18 +54,24 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	//Photo Processor
 	Route::resource('photo', 'PhotoRestController', array('only'=>array('index','store','show')) );
 	
+	//Profile Image
+	Route::resource('profileimage', 'ProfileImageRestController', $binary_limits);
+	
 });
 
-
-//This controller is a dev only test controller.
-Route::get('/donkeykong/hockey/is/the/best', 'ResetController@start');
 
 //Admin protection.
 Route::when('admin', 'admin');//Role based route filtering
 Route::when('admin/*', 'admin');//Role based route filtering
 Route::controller('/admin','AdminController');
-//Just a note, the filters for the admin controller is at filters.php
 
+//Mod protection
+Route::when('mod', 'mod');//Role based route filtering
+Route::when('mod/*', 'mod');//Role based route filtering
+Route::get('/mod/delpost','ModController@getDelPost');
+Route::get('/mod/delcomment','ModController@getDelComment');
+Route::get('/mod/ban','ModController@getBan');
+Route::get('/mod','ModController@getIndex');
 
 /********************The Authentication Routes  (Confide RESTful route)************************/
 Route::get('/user/confirm/{code}', 'UserController@getConfirm');
@@ -96,7 +102,7 @@ Route::get( '/profile/notifications', 'ProfileController@getNotifications');
 //My Posts
 Route::get( '/profile/myposts', 'ProfileController@getMyPosts');
 
-
+Route::get('/banned', 'UserController@getBanned');
 
 //Comments
 Route::get( '/profile/commentform/{post_id}/{reply_id}', 'ProfileController@getCommentForm');//This is for getting the reply forms.

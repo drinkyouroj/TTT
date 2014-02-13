@@ -21,7 +21,6 @@ class Post extends Eloquent {
 		    	return false;//no value
 		    }
 		});
-		
 	}
 	
 	//Just to be sure!
@@ -33,7 +32,7 @@ class Post extends Eloquent {
 	
 	public function comments()
     {
-        return $this->hasMany('Comment', 'post_id');
+        return $this->hasMany('Comment', 'post_id')->orderBy('created_at', 'DESC');//Gotta be in chronological order.
     }
 	
 	public function nochildcomments()
@@ -68,13 +67,6 @@ class Post extends Eloquent {
 				'tagline_1' => 'Required',
 				'tagline_2' => 'Required',
 				'tagline_3' => 'Required',
-				'body' => 'Twothousand'
-		);
-		return Validator::make($input, $rules);
-	}
-	
-	public function update_validate($input) {
-		$rules = array(
 				'body' => 'Twothousand'
 		);
 		return Validator::make($input, $rules);

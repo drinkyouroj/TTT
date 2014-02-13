@@ -27,6 +27,13 @@ class ProfileController extends BaseController {
 			} else {
 				//We're doing the user info loading this way to keep the view clean.
 				$user_id = Session::get('user_id');
+				
+				//This isn't most ideal, but let's just place the banned detector here
+				if(User::where('id', $user_id)->where('banned', true)->count()) {
+					//this guy's session will terminate right as he/she clicks on any profile action.
+					Confide::logout();
+					return Redirect::to('/banned');
+				}
 			}
 			
 			$followers = Follow::where('user_id', '=', $user_id)->count();
@@ -201,9 +208,7 @@ class ProfileController extends BaseController {
 					return Redirect::to('profile');
 				}
 				
-				$post = $check_post;
-				$post->body = Input::get('body');
-				$validator = $post->update_validate($post->toArray());//validation takes arrays
+				$post = self::post_object_input_filter($new,$check_post);//Post object filter gets the input and puts it into the post.
 			}
 			
 		} else {
@@ -222,9 +227,10 @@ class ProfileController extends BaseController {
 				return Redirect::to('profile');
 			}
 			$post = self::post_object_input_filter($new);//Post object creates objects.
-			$validator = $post->validate($post->toArray());//validation takes arrays
-		} 
+		}
 		
+		 
+		$validator = $post->validate($post->toArray());//validation takes arrays
 		
 		if($validator->passes()) {//Successful Validation
 			if($new) {
@@ -282,7 +288,7 @@ class ProfileController extends BaseController {
 			SolariumHelper::updatePost($post);//Let's add the data to solarium (Apache Solr)
 			
 			return Redirect::to('profile');
-					
+			
 		} else {//Failed Validation
 			if($new) {
 				return Redirect::to('profile/newpost')
@@ -302,26 +308,25 @@ class ProfileController extends BaseController {
 	/**
 	 * Input filtering.
 	 */
-		private function post_object_input_filter($new = false)
-		{
-			//Creates a new post
-			$post = new Post;
-			
+		private function post_object_input_filter($new = false,$post = false)
+		{	
 			if($new) {
+				//Creates a new post
+				$post = new Post;
 				$post->user_id = Auth::user()->id;
-				$post->title = Request::get('title');
 				
-				//Gotta make sure to make the alias only alunum
+				//Gotta make sure to make the alias only alunum.  Don't change alias on the update.  We don't want to have to track this change.
 				$post->alias = preg_replace('/[^A-Za-z0-9]/', '', Request::get('title')).'-'.date('m-d-Y');//makes alias.  Maybe it should exclude other bits too...
 				$post->story_type = Request::get('story_type');
-			
-				$post->tagline_1 = Request::get('tagline_1');
-				$post->tagline_2 = Request::get('tagline_2');
-				$post->tagline_3 = Request::get('tagline_3');
 				
 				$post->category = serialize(Request::get('category'));
 				$post->image = Request::get('image','0');//If 0, then it means no photo.
 			}
+			
+			$post->title = Request::get('title');
+			$post->tagline_1 = Request::get('tagline_1');
+			$post->tagline_2 = Request::get('tagline_2');
+			$post->tagline_3 = Request::get('tagline_3');
 			
 			$post->body = Request::get('body');//Body is the only updatable thing in an update scenario.
 			$post->published = 1;
@@ -358,6 +363,20 @@ class ProfileController extends BaseController {
 				//Should the comment counter be incremented if you're the owner? no!
 				Post::where('id', $post_id)->increment('comment_count',1);
 			}
+			
+			//Also notify the person that you replied to:
+			if($comment->reply_id != 0) {
+				$orig_comment = Comment::where('id', $comment->reply_id)->first();
+				
+				$reply = new Notification;
+				$reply->post_id = $post_id;
+				$reply->user_id = $orig_comment->user_id;
+				$reply->action_id = Auth::user()->id;
+				$reply->notification_type = 'reply';
+				$reply->comment_id = $comment->id;
+				$reply->save();
+			}
+			
 			return Redirect::to('posts/'.$comment->post->alias.'#comment-'.$comment->id);
 		} else {
 			return Redirect::to('posts/'.$comment->post->alias)

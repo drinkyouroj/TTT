@@ -1,6 +1,6 @@
 @foreach($notifications as $not)
 
-	@if(isset($not['new']))
+	@if(isset($not['post']))
 	<li class="new">
 		<span class="item">
 			<a href="{{Config::get('app.url')}}/profile/{{$not['new'][0]->user->username}}">
@@ -31,6 +31,7 @@
 			followed you
 			@if($not['follow'] > 1)
 			<span class="show-people">
+				along with
 				<ul>
 				@foreach($not['follow'] as $k => $follow)
 					@if($k)

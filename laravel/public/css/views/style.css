@@ -580,3 +580,8 @@ ul.notifications li ul li a{
 }
 
 
+/**SIGNUP*********************************************************/
+.signup-form .email-group {
+	display:none;
+}
+

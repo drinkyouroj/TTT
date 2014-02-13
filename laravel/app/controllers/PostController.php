@@ -2,7 +2,7 @@
 class PostController extends BaseController {
 
 	public function getIndex() {
-		return View::make('generic.post');
+		//maybe some function that takes you to a random post here?
 	}
 
     /**

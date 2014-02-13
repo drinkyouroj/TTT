@@ -73,12 +73,13 @@
 					<div class="input-append">
 						<input type="text" class="span2 search-query" placeholder="type in more than 3 characters!">
 						<a class="btn activate-search">Search</a>
-						<a class="btn reset-search">Reset</a>
+						<a class="btn reset-search hidden">Reset</a>
 					</div>
 					<div class="photo-results">
 						
 					</div>
 					<div class="photo-processor" style="display:none;">
+						<img src="{{Config::get('app.url')}}/img/photos/nofilter.png" data-process="nofilter"/>
 						<img src="{{Config::get('app.url')}}/img/photos/gotham.png" data-process="Gotham"/>
 						<img src="{{Config::get('app.url')}}/img/photos/toaster.png" data-process="Toaster"/>
 						<img src="{{Config::get('app.url')}}/img/photos/nashville.png" data-process="Nashville"/>
@@ -110,19 +111,19 @@
 						<div class="form-group {{$errors->first('tagline_1') ? 'has-error' : '' }}">
 							{{ Form::label('tagline_1','Tag Line 1', array('class'=>'control-label')) }}
 							<a href="#" data-toggle="tooltip" title="Taglines define what your story might be in less than 3 words per tag">?</a>
-							{{ Form::text('tagline_1', Input::old('tagline_1'), array('class'=>'form-control', 'required', 'minlength' =>'5') ) }}
+							{{ Form::text('tagline_1', Input::old('tagline_1'), array('class'=>'form-control', 'required') ) }}
 							<span class="error">{{ $errors->first('tagline_1') }}</span>
 						</div>
 						
 						<div class="form-group {{$errors->first('tagline_2') ? 'has-error' : '' }}">
 							{{ Form::label('tagline_2','Tag Line 2', array('class'=>'control-label')) }}
-							{{ Form::text('tagline_2', Input::old('tagline_2'), array('class'=>'form-control', 'required', 'minlength' =>'5')) }}
+							{{ Form::text('tagline_2', Input::old('tagline_2'), array('class'=>'form-control', 'required')) }}
 							<span class="error">{{ $errors->first('tagline_2') }}</span>
 						</div>
 						
 						<div class="form-group {{$errors->first('tagline_3') ? 'has-error' : '' }}">
 							{{ Form::label('tagline_3','Tag Line 3', array('class'=>'control-label')) }}
-							{{ Form::text('tagline_3', Input::old('tagline_3'), array('class'=>'form-control', 'required', 'minlength' =>'5')) }}
+							{{ Form::text('tagline_3', Input::old('tagline_3'), array('class'=>'form-control', 'required')) }}
 							<span class="error">{{ $errors->first('tagline_3') }}</span>
 						</div>
 						<div class="clearfix"></div>

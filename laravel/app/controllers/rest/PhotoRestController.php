@@ -28,7 +28,7 @@ class PhotoRestController extends \BaseController {
 			),
 			array(
 				'url' => 'required|url',
-				'process' => 'Processes:Gotham,Toaster,Nashville,Lomo,Kelvin,TiltShift'
+				'process' => 'Processes:Gotham,Toaster,Nashville,Lomo,Kelvin,TiltShift,nofilter'
 			)
 		);
 		
@@ -46,8 +46,20 @@ class PhotoRestController extends \BaseController {
 			//fuck using titles, let's just use the time stamp as the source of unique.
 			$md5_title = md5(date('Ymdhis').rand()); //Titles Must be unique at all times, but let's add the "rand" just to be sure.
 			
-			//Let's grab the image
-			file_put_contents(public_path().'/uploads/orig_images/'.$md5_title.'.jpg' , fopen($url, 'r'));
+			//Let's grab the images (if no filter, it'll just return after grabbing the file.)
+			if($process == 'nofilter'){
+				
+				file_put_contents(public_path().'/uploads/final_images/'.$md5_title.'.jpg' , fopen($url, 'r'));
+				
+				//just return the damn thing as no filter
+				return Response::json(
+					$md5_title.'.jpg',//will need to send back the image name for the image.
+					200
+				);
+				
+			} else {
+				file_put_contents(public_path().'/uploads/orig_images/'.$md5_title.'.jpg' , fopen($url, 'r'));
+			}
 			
 			$insta = new Instagraph;
 			

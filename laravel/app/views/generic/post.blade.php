@@ -8,8 +8,16 @@
 @section('js')
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/post.js"></script>
 	
-	@if( is_object($user) && $user->hasRole('Admin'))
+	@if( is_object($user))
+		
+		@if($user->hasRole('Admin'))
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/feature.js"></script>
+		@endif
+		
+		@if($user->hasRole('Moderator'))
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/feature.js"></script>
+		@endif
+		
 	@endif
 	
 @stop
@@ -40,17 +48,46 @@
 			</div>
 		@endif
 		
-		@if( is_object($user) && $user->hasRole('Admin'))
+		@if( is_object($user))
 			<div class="admin">
-			@if($post->featured)
-				<a class="feature action" data-id="{{$post->id}}">
-					Un-Feature this Article
-				</a>
-			@else
-				<a class="feature unfeatured action" data-id="{{$post->id}}">
-					Set Article as a Featured
-				</a>
-			@endif
+				@if($user->hasRole('Admin'))
+					{{--Featured--}}
+					@if($post->featured)
+						<a class="feature action" data-id="{{$post->id}}">
+							Un-Feature this Article
+						</a>
+					@else
+						<a class="feature unfeatured action" data-id="{{$post->id}}">
+							Set Article as a Featured
+						</a>
+					@endif
+				@endif
+				
+				@if($user->hasRole('Moderator'))
+					@if($post->published)
+						<a class="mod-delete" data-id="{{$post->id}}">
+							Moderator Delete
+						</a>
+					@else
+						<a class="mod-delete" data-id="{{$post->id}}">
+							Moderator UnDelete
+						</a>
+					@endif
+					
+					{{--It'd be really stupid if you banned yourself.--}}
+					@if($post->user->username != $user->username && (!$post->user->hasRole('Admin') || !$post->user->hasRole('Moderator') )) 
+						@if(!$post->user->banned)
+							<a class="mod-ban" data-id="{{$post->id}}">
+								Ban {{$post->user->username}}
+							</a>
+						@else
+							<a class="mod-ban" data-id="{{$post->id}}">
+								UnBan {{$post->user->username}}
+							</a>
+						@endif
+					@endif
+					
+				@endif
 			</div>
 		@endif
 		

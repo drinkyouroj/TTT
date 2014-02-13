@@ -17,7 +17,7 @@ class CreateNotificationsTable extends Migration {
 			$table->increments('id');
 			$table->boolean('noticed');
 			$table->enum('notification_type',array(
-						'new','repost','favorite','comment','follow','message'
+						'post','repost','favorite','comment','follow','message','reply'
 					));
 			$table->integer('post_id');//What was affected?
 			$table->integer('action_id');//Who did it?

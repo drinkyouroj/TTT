@@ -1,4 +1,4 @@
-{{--This is both the activity and mypost item.--}}
+{{--This is both the activity and my post item.--}}
 
 <div class="col-md-4 post-id-{{$act->post->id}}">
 	<div class="generic-item activity equal-height {{$act->post_type}}">
@@ -15,8 +15,10 @@
 				<span class="author">by {{ link_to('profile/'.$act->post->user->username, $act->post->user->username) }}</span>
 				<span class="repost">reposted by {{ link_to('profile/'.$act->user->username, $act->user->username) }}</span>
 			@else
+				<!--{{$act->post_type}}-->
 				<h3 class="favorite ">{{ link_to('posts/'.$act->post->alias, $act->post->title) }}</h3>
 				<span class="author">by {{ link_to('profile/'.$act->post->user->username, $act->post->user->username) }}</span>
+				<span><a class="favorite" data-post="{{$act->post->id}}">unfavorite</a></span>
 			@endif
 			
 			{{--If you are the owner of this post show menu options--}}
