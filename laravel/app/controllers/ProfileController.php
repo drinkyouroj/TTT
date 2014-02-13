@@ -122,7 +122,7 @@ class ProfileController extends BaseController {
 				->with('is_following', $is_following)//you are following this profile
 				->with('is_follower', $is_follower)//This profile follows you.
 				->with('mutual', $mutual)
-				->with('fullscreen', $fullscreen);;
+				->with('fullscreen', $fullscreen);
 	}
 
 	/*
@@ -219,7 +219,8 @@ class ProfileController extends BaseController {
 						->orderBy('created_at', 'DESC')//latest first
 						->first();
 			
-			if( $new && 
+			if( isset($last_post->id) && 
+				$new && 
 				!Session::get('admin') &&
 				strtotime(date('Y-m-d H:i:s', strtotime('-10 minutes'))) <= strtotime($last_post->created_at))
 			{
@@ -425,6 +426,7 @@ class ProfileController extends BaseController {
 	
 	public function getMessageInbox() {
 		$messages = Message::where('to_uid', Session::get('user_id'))
+						->orWhere('to_uid', 0)
 						->orderBy('id', 'DESC')
 						->get();
 		return View::make('messages/inbox')
@@ -437,7 +439,10 @@ class ProfileController extends BaseController {
 	public function getMessageForm($user_id=false, $reply_id = false) {
 		if($reply_id) {
 			//message you're replying to.
-			$message = Message::where('id', '=', $reply_id)->first();
+			$message = Message::where('id', '=', $reply_id)
+							->where('to_uid', Auth::user()->id)
+							->orWhere('to_uid', 0)
+							->first();
 			$user = User::where('id', '=', $message->from_uid)->first();
 			return View::make('messages/form')
 					->with('message', $message)

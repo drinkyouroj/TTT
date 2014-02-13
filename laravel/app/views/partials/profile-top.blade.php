@@ -55,6 +55,31 @@
 				</a>
 			</li>
 		@endif
+		
+		@if(Auth::user()->hasRole('Moderator'))
+			{{--It'd be really stupid if you banned yourself.--}}
+			@if(!Auth::user()->hasRole('Admin') || !Auth::user()->hasRole('Moderator') ) 
+				@if(!$user->banned)
+					<a class="mod-ban" data-id="{{$user->id}}">
+						Ban {{$user->username}}
+					</a>
+				@else
+					<a class="mod-ban" data-id="{{$user->id}}">
+						UnBan {{$user->username}}
+					</a>
+				@endif
+			@endif
+			
+		@endif
+		
+		@if(Auth::user()->hasRole('Admin') && !$user->hasRole('Admin') )
+			@if(!$user->hasRole('Moderator'))
+				<a class="admin-mod" data-id="{{$user->id}}">Assign {{$user->username}} as a Moderator</a>
+			@else
+				<a class="admin-mod" data-id="{{$user->id}}">Unassign {{$user->username}} as a Moderator</a>
+			@endif
+		@endif
+		
 	</ul>
 	
 	<div class="user">

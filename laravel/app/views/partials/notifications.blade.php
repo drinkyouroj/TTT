@@ -3,16 +3,16 @@
 	@if(isset($not['post']))
 	<li class="new">
 		<span class="item">
-			<a href="{{Config::get('app.url')}}/profile/{{$not['new'][0]->user->username}}">
-				{{$not['new'][0]->user->username}}
+			<a href="{{Config::get('app.url')}}/profile/{{$not['post'][0]->user->username}}">
+				{{$not['post'][0]->user->username}}
 			</a>
 		</span>
 		
 		submitted a new post
 		
 		<span>
-			<a href="{{Config::get('app.url')}}/posts/{{$not['new'][0]->post->alias}}#new-{{$not['new'][0]->new_id}}">
-				{{$not['new'][0]->post->title}}
+			<a href="{{Config::get('app.url')}}/posts/{{$not['post'][0]->post->alias}}#new-{{$not['post'][0]->new_id}}">
+				{{$not['post'][0]->post->title}}
 			</a>
 		</span>		
 	</li>

@@ -12,6 +12,8 @@
     
     <!--Application Shared CSS-->
     <link href="{{Config::get('app.url')}}/css/views/style.css" rel="stylesheet" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
 	
 	<!--Page Specific CSS-->
 	@yield('css')

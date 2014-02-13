@@ -127,7 +127,7 @@ class Instagraph
   public function filterGotham()
   {
     $this->execute("convert $this->_tmp -modulate 120,10,100 -fill #222b6d -colorize 20 -gamma 0.5 -contrast -contrast $this->_tmp");
-    $this->border($this->_tmp);
+    //$this->border($this->_tmp);
   }
 
   public function filterToaster()
@@ -143,7 +143,7 @@ class Instagraph
     $this->colortone('#222b6d', 100, 0);
     $this->colortone('#f7daae', 100, 1);
     $this->execute("convert $this->_tmp -contrast -modulate 100,150,100 -auto-gamma $this->_tmp");
-    $this->frame('Assets/Frames/Nashville');
+    //$this->frame('Assets/Frames/Nashville');
   }
 
   public function filterLomo()
@@ -160,7 +160,7 @@ class Instagraph
         ( -size {$this->_width}x{$this->_height} -fill rgba(255,153,0,0.5) -draw 'rectangle 0,0 {$this->_width},{$this->_height}' )
         -compose multiply
         $this->_tmp");
-    $this->frame('Assets/Frames/Kelvin');
+    //$this->frame('Assets/Frames/Kelvin');
   }
 
   public function filterTiltShift()

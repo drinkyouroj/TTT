@@ -68,10 +68,10 @@ Route::controller('/admin','AdminController');
 //Mod protection
 Route::when('mod', 'mod');//Role based route filtering
 Route::when('mod/*', 'mod');//Role based route filtering
-Route::get('/mod/delpost','ModController@getDelPost');
-Route::get('/mod/delcomment','ModController@getDelComment');
-Route::get('/mod/ban','ModController@getBan');
-Route::get('/mod','ModController@getIndex');
+Route::get('mod/delpost/{id}','ModController@getDelPost');
+Route::get('mod/delcomment/{id}','ModController@getDelComment');
+Route::get('mod/ban/{id}','ModController@getBan');
+Route::get('mod','ModController@getIndex');
 
 /********************The Authentication Routes  (Confide RESTful route)************************/
 Route::get('/user/confirm/{code}', 'UserController@getConfirm');
@@ -102,7 +102,6 @@ Route::get( '/profile/notifications', 'ProfileController@getNotifications');
 //My Posts
 Route::get( '/profile/myposts', 'ProfileController@getMyPosts');
 
-Route::get('/banned', 'UserController@getBanned');
 
 //Comments
 Route::get( '/profile/commentform/{post_id}/{reply_id}', 'ProfileController@getCommentForm');//This is for getting the reply forms.
@@ -119,6 +118,10 @@ Route::get( '/profile/messages', 'ProfileController@getMessageInbox');
 //General Posts
 Route::get( '/profile/{alias}', 'ProfileController@getProfile');
 Route::get( '/profile', 'ProfileController@getProfile');
+
+
+Route::get('/banned', 'UserController@getBanned');
+
 
 //
 Route::controller( '/', 'HomeController');

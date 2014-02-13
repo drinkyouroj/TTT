@@ -41,7 +41,7 @@
 	<h1>THE BEST ADMIN SYSTEM EVER!</h1>
 	<div class="col-md-12">
 		<h2>Send a Message to all the users</h2>
-		{{ Form::open(array('url' => 'admin/allmessage')) }}
+		{{ Form::open(array('url' => 'admin/messageall')) }}
 			{{ Form::textarea('body', Input::old('message'), array('class'=>'form-control', 'required', 'minlength' =>'5')) }}
 			{{ Form::submit('Send') }}
     	{{ Form::close() }}

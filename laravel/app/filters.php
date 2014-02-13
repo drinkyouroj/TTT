@@ -66,10 +66,17 @@ Route::filter('auth.basic', function()
 	return Auth::basic('username');
 });
 
-
 Route::filter('admin', function()
 {
     if (! Entrust::hasRole('Admin') ) // Checks the current user
+    {
+        return Redirect::to('/');
+    }
+});
+
+Route::filter('mod', function()
+{
+    if (! Entrust::hasRole('Moderator') ) // Checks the current user
     {
         return Redirect::to('/');
     }

@@ -211,6 +211,9 @@ ul.profile-options li a.new-message {
 	color: #428bca;
 }
 
+.activity-container.generic-listing .generic-item .the-image {
+	height:175px !important;
+}
 
 /*Forms*/
 
@@ -314,3 +317,39 @@ label.error {
 	border:none;
 }
 
+/***************************************
+	Media Queries
+*/
+/*Tiny*/
+@media (max-width: 479px) {
+	.activity-container.generic-listing .generic-item .the-image{
+		height: 195px;
+	}
+	
+}
+
+/*Small*/
+@media (min-width: 480px) and (max-width: 767px) {
+	.activity-container.generic-listing .generic-item .the-image{
+		height: 240px !important;
+	}
+}
+
+/*Normal*/
+@media (min-width: 768px) and (max-width: 991px) {
+	.activity-container.generic-listing .generic-item .the-image{
+		height: 240px !important;
+	}
+}
+
+/*Bigger*/
+@media (min-width: 992px) and (max-width: 1199px) {
+	.activity-container.generic-listing .generic-item .the-image{
+		height: 141px !important;
+	}
+}
+
+/*Huge*/
+@media (min-width: 1200px) {
+
+}  

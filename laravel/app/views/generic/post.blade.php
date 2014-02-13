@@ -11,11 +11,11 @@
 	@if( is_object($user))
 		
 		@if($user->hasRole('Admin'))
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/feature.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/admin.js"></script>
 		@endif
 		
 		@if($user->hasRole('Moderator'))
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/feature.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/mod.js"></script>
 		@endif
 		
 	@endif
@@ -77,11 +77,11 @@
 					{{--It'd be really stupid if you banned yourself.--}}
 					@if($post->user->username != $user->username && (!$post->user->hasRole('Admin') || !$post->user->hasRole('Moderator') )) 
 						@if(!$post->user->banned)
-							<a class="mod-ban" data-id="{{$post->id}}">
+							<a class="mod-ban" data-id="{{$post->user->id}}">
 								Ban {{$post->user->username}}
 							</a>
 						@else
-							<a class="mod-ban" data-id="{{$post->id}}">
+							<a class="mod-ban" data-id="{{$post->user->id}}">
 								UnBan {{$post->user->username}}
 							</a>
 						@endif
@@ -90,7 +90,6 @@
 				@endif
 			</div>
 		@endif
-		
 	</hgroup>
 	
 	

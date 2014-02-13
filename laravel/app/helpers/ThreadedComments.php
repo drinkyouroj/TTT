@@ -20,12 +20,24 @@ class ThreadedComments {
 				
 				$delete = '';
 				
-				//Either this person owns the comment, or you're a mod.
-				if( (Session::get('user_id') == $comment->user->id && $comment->published == 1) || 
-					(Auth::user()->hasRole('Moderator') )) 
+				//If you're a Mod, you can definitely do some stuff.
+				if(Auth::user()->hasRole('Moderator'))
 				{
+					if($comment->published == 1) {
+						$del_action = 'delete';
+					} else {
+						$del_action = 'undelete';
+					}
+					
+					$delete = ' <a title="Delete Comment" class="mod-del-comment" data-delid="'.$comment->id.'">Moderator '.$del_action.'</a>';
+				}
+				
+				//Either this person owns the comment, or you're a mod.
+				if( Session::get('user_id') == $comment->user->id && $comment->published == 1 )
+				{	
 					$delete = ' <a title="Delete Comment" class="delete" data-delid="'.$comment->id.'">Delete</a>';
 				}
+				
 				
 				if($comment->published) {
 					$comment_body = $comment->body;
@@ -33,7 +45,7 @@ class ThreadedComments {
 					$comment_body = '<span class="deleted">Comment was deleted</span>';
 				}
 				
-				echo '<li class="the-comment" id="comment-'.$comment->id.'">
+				echo '<li class="the-comment" id="comment-'.$comment->id.' published-'.$comment->published.'">
 					<span>by <a href="'.url('profile/'.$comment->user->username).'">'.$comment->user->username.'</a></span>
 					<p class="comment-body">'.$comment_body.'</p>
 					'.$vote.$reply.$delete.'

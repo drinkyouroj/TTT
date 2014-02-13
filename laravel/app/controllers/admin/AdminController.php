@@ -18,6 +18,31 @@ class AdminController extends Controller {
 		return View::make('admin.index')
 				->with('featured', $featured);
 	}
+	
+	/******************************************************************
+	 * Message Everyone system.
+	 */
+	
+	public function postMessageall() {
+		$message = self::message_object_input_filter();
+		$message->save();
+		
+		return Redirect::to('admin');
+	}
+	
+		private function message_object_input_filter() {
+			$message = new Message;
+			$message->from_uid = Auth::user()->id;
+			$message->to_uid = 0;
+			$message->body = Request::get('body');
+			return $message;
+		}
+	
+	
+
+	/******************************************************************
+	 * Category Systems
+	 */
 
 	//Add a new Category
 	public function postAddcategory() {
@@ -82,6 +107,33 @@ class AdminController extends Controller {
 			200//response is OK!
 		);
 		
-	} 
+	}
+	
+	public function getModassign() {
+		$id = Request::segment(3);
+		$user = User::where('id', $id)->first();
+		
+		$mod = Role::where('name', 'Moderator')->first();
+		
+		if($user->hasRole('Moderator')) {
+			$user->detachRole($mod);
+			return Response::json(
+				array(
+					'status' => 'detached'
+				),
+				200//response is OK!
+			);
+		} else {
+			$user->attachRole($mod);
+			return Response::json(
+				array(
+					'status' => 'attached'
+				),
+				200//response is OK!
+			);
+		}
+	}
+	
+	
 	
 }

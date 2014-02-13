@@ -27,6 +27,10 @@ body,html a:hover{
 	text-decoration:none;
 }
 
+body {
+	font-family: 'EB Garamond', serif;
+}
+
 .header-wrapper {
 	float: left;
 	width: 100%;
@@ -50,7 +54,8 @@ body,html a:hover{
 
 .menu-wrapper .navbar .container { 
 	height: 30px;
-	font-family: 'bebas'; 
+	font-family: 'EB Garamond', serif;
+	font-size:15px;
 }
 /*The normal Menu items (About, Signin profile, etc)*/
 .menu-wrapper .navbar .container ul.main-nav {
@@ -95,7 +100,9 @@ body,html a:hover{
 
 li.notifications-parent {
 	margin-top: 3px;
-	padding: 0 0 0 25px !important;
+	margin-right:5px;
+	border-right:1px solid #999;
+	padding: 0 10px 0 25px !important;
 	height: 22px;
 	line-height: 22px;
 	text-align: top;
@@ -122,12 +129,23 @@ ul.notifications {
 	font-size: 12px;
 	margin: 0 0 0 -10px;
 	padding: 10px;
+	border-left:3px solid #333;
+	border-bottom:3px solid #333;
+	border-right:3px solid #333;
+	background-color:#1a1a1a;
 }
 
 ul.notifications>li {
 	margin: 0;
-	padding: 2px 3px;
-	border-top: 1px solid #ccc;
+	padding: 5px 3px;
+	border-bottom: 1px solid #555;
+	
+	font-size:14px;
+}
+
+ul.notifications>li a {
+	font-family:bebas;
+	letter-spacing:1px;
 }
 
 
@@ -205,7 +223,7 @@ ul.notifications li ul li a{
 
 .header-wrapper .banner h1 {
 	width: 100%;
-	height: 150px;
+	height: 200px;
 	background-repeat: no-repeat;
 	background-position: center top;
 	background-size: fit;
@@ -351,7 +369,7 @@ ul.notifications li ul li a{
 }
 
 .generic-listing .generic-item {
-	padding: 0 15px;
+	padding: 0;
 	text-align: center;
 	border-bottom: 2px solid #000;
 }
@@ -362,15 +380,27 @@ ul.notifications li ul li a{
 }
 
 .generic-listing .generic-item h3{
-	padding: 20px 0 0 0;
-	margin: 20px 0 0 0;
+	height:42px;
+	padding: 17px 0 0 0;
+	margin: 20px 0 0px 0;
 	background: url('../../img/global/x-small.png') center top no-repeat;
 	word-break: break-all;
-	font-family: 'bebas';
+	font-family: 'Montserrat', sans-serif;
+	font-size:21px;
+	font-weight:700;
+	text-transform:uppercase;
+	overflow:hidden;
 }
 
 .generic-listing .generic-item span.author {
 	font-family: 'EB Garamond';
+	font-size:13px;
+	text-transform:uppercase;
+	letter-spacing:1px;
+}
+
+.generic-listing .generic-item span.author span {
+	text-transform:none;
 }
 
 .generic-listing .generic-item h4{
@@ -383,29 +413,34 @@ ul.notifications li ul li a{
 }
 
 .generic-listing .generic-item .the-image{
-	margin-top: 4px;
-	max-height: 150px;
-	height: auto;
+	width:100%;
+	height: 240px;
 	overflow:hidden;
+	margin-top: 4px;
 }
+
+.generic-listing .generic-item .the-image a{
+	display:block;
+	width:100%;
+	height:240px;
+	background-position:center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
 
 .generic-listing .generic-item.w2 .the-image{
 	max-height: 300px;	
 }
 
-.generic-listing .generic-item .the-image img{
-	width: 100%;
-}
-
-.generic-listing .generic-item .the-content{
-	height: 40px;
-}
-
 .generic-listing .generic-item .the-tags {
 	font-family:'bebas';
-	height: 40px;
+	font-size:18px;
+	height: 25px;
+	margin-top:10px;
 	margin-bottom: 10px;
 }
+
 
 /**Single Post*/
 
@@ -584,4 +619,38 @@ ul.notifications li ul li a{
 .signup-form .email-group {
 	display:none;
 }
+
+
+/***************************************
+	Media Queries
+*/
+/*Tiny*/
+@media (max-width: 479px) {
+	.generic-listing .generic-item .the-image{
+		height: 195px;
+	}
+	
+}
+
+/*Small*/
+@media (min-width: 480px) and (max-width: 767px) {
+	
+}
+
+/*Normal*/
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+/*Bigger*/
+@media (min-width: 992px) and (max-width: 1199px) {
+	.generic-listing .generic-item .the-image{
+		height: 195px;
+	}
+}
+
+/*Huge*/
+@media (min-width: 1200px) {
+
+}  
 

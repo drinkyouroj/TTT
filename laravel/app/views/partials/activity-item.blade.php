@@ -1,7 +1,7 @@
 {{--This is both the activity and my post item.--}}
 
 <div class="col-md-4 post-id-{{$act->post->id}}">
-	<div class="generic-item activity equal-height {{$act->post_type}}">
+	<div class="generic-item activity {{$act->post_type}}">
 		<header>
 			@if($act->post_type == 'post')
 				<h3 class="post">
@@ -50,8 +50,8 @@
 		</header>
 		<section>
 			<div class="the-image">
-				<a href="{{URL::to('posts/'.$act->post->alias)}}">
-					<img src="{{Config::get('app.url')}}/uploads/final_images/{{$act->post->image}}">
+				<a href="{{URL::to('posts/'.$act->post->alias)}}" style="background-image:url('{{Config::get('app.url')}}/uploads/final_images/{{$act->post->image}}');"> 
+				
 				</a>
 			</div>
 			<div class="the-tags">

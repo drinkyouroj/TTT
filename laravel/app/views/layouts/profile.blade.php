@@ -2,6 +2,18 @@
 
 @section('js')
 
+	
+	
+	@if(Auth::user()->hasRole('Admin'))
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/admin.js"></script>
+	@endif
+	
+	@if(Auth::user()->hasRole('Moderator'))
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/mod.js"></script>
+	@endif
+	
+
+
 @stop
 
 @section('css')

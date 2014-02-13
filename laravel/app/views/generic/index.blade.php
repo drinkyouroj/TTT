@@ -15,7 +15,7 @@
 	
 	@endif
 	
-	<div class="col-md-10 col-md-offset-1">
+	<div class="col-md-12">
 		<div class="generic-listing">
 			@if(!is_string($posts))
 				{?$c = 0?}
@@ -24,28 +24,7 @@
 					@if( $c == 0 )
 						<div class="row">
 					@endif
-						<div class="col-md-4">
-							<div class="generic-item equal-height">
-								<h3>{{ link_to('posts/'.$post->alias, $post->title) }}</h3>
-								<h4><span>by</span> {{link_to('profile/'.$post->user->username, $post->user->username)}}</h4>
-								@if($post->image)
-								<div class="the-image">
-									<a href="{{ URL::to('posts/'.$post->alias) }}">
-										<img src="{{Config::get('app.url')}}/uploads/final_images/{{$post->image}}">
-									</a>
-								</div>
-								@endif
-								<div class="the-content">
-									{{ substr($post->body, 0, 50) }}...
-									<!--{{ link_to('posts/'.$post->alias, 'read on.') }}-->
-								</div>
-								<div class="the-tags">
-									{{$post->tagline_1}} | 
-									{{$post->tagline_2}} | 
-									{{$post->tagline_3}}
-								</div>
-							</div>
-						</div>
+						@include('partials/generic-item')
 					{?$c++?}
 					@if($c == 3 || $k+1 == $total)
 						</div>
