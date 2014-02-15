@@ -7,8 +7,12 @@
 	width: 24.5%;
 }
 
-.top-featured .featured-item.w2{
+.top-featured .featured-item.w-2{
 	width: 49%;
+}
+
+.top-featured .featured-item.w-3{
+	width: 74%;
 }
 
 .top-featured .featured-item img{
@@ -17,4 +21,18 @@
 
 .top-featured .featured-item .the-content {
 	height: auto !important;
+}
+
+@media (max-width: 479px) {
+	.top-featured .featured-item{
+		width: 100%
+	}
+	
+	.top-featured .featured-item.w-2{
+		width: 100% 
+	}
+
+	.top-featured .featured-item.w-3{
+		width: 100%
+	}	
 }

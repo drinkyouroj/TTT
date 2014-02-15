@@ -1,6 +1,6 @@
 $(window).load(function() {
 	$('#top-featured').packery({
 	  itemSelector: '.featured-item',
-	  gutter: 4
+	  gutter: 10,
 	});
 });

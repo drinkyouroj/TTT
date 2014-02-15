@@ -1,4 +1,4 @@
-<div class="col-md-4 post-id-{{$post->id}}">
+<div class="@if(isset($featured_item) && $featured_item) col-md-8 profile-featured @else col-md-4 @endif post-id-{{$post->id}}">
 	<div class="generic-item">
 		<header>
 			<h3>{{ link_to('posts/'.$post->alias, $post->title) }}</h3> 

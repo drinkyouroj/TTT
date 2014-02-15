@@ -90,11 +90,13 @@ Route::get( '/posts/{alias}', 'PostController@getPost');
 Route::get('/search/{term}', 'SearchController@getResult');//Might turn into a rest system later
 Route::post('/search', 'SearchController@postResult');
 
+
 //Profile routes (handles 90% of text based inputs)
 //Posts
-Route::get( '/profile/editpost/{id}', 'ProfileController@getPostForm');
-Route::get( '/profile/newpost', 'ProfileController@getPostForm');
-Route::post( '/profile/submitpost', 'ProfileController@postPostForm');
+Route::get( '/profile/editpost/{id}', 'PostController@getPostForm');
+Route::get( '/profile/newpost', 'PostController@getPostForm');
+Route::post( '/profile/submitpost', 'PostController@postPostForm');
+
 
 //Notifications
 Route::get( '/profile/notifications', 'ProfileController@getNotifications');
@@ -104,21 +106,23 @@ Route::get( '/profile/myposts', 'ProfileController@getMyPosts');
 
 
 //Comments
-Route::get( '/profile/commentform/{post_id}/{reply_id}', 'ProfileController@getCommentForm');//This is for getting the reply forms.
-Route::post( '/profile/comment/{post_id}', 'ProfileController@postCommentForm');
+Route::get( '/profile/commentform/{post_id}/{reply_id}', 'CommentController@getCommentForm');//This is for getting the reply forms.
+Route::post( '/profile/comment/{post_id}', 'CommentController@postCommentForm');
 
 
 //Messages
-Route::get( '/profile/replymessage/{reply_id}', 'ProfileController@getMessageReplyForm');
-Route::get( '/profile/newmessage/{user_id}', 'ProfileController@getMessageForm');
+Route::get( '/profile/replymessage/{reply_id}', 'MessageController@getMessageReplyForm');
+Route::get( '/profile/newmessage/{user_id}', 'MessageController@getMessageForm');
 
-Route::post( '/profile/submitmessage', 'ProfileController@postMessageForm');
-Route::get( '/profile/messages', 'ProfileController@getMessageInbox');
+Route::post( '/profile/submitmessage', 'MessageController@postMessageForm');
+Route::get( '/profile/messages', 'MessageController@getMessageInbox');
 
 //General Posts
 Route::get( '/profile/{alias}', 'ProfileController@getProfile');
 Route::get( '/profile', 'ProfileController@getProfile');
 
+Route::when('profile', 'profile');
+Route::when('profile/*', 'profile');
 
 Route::get('/banned', 'UserController@getBanned');
 

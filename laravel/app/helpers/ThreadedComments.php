@@ -9,34 +9,35 @@ class ThreadedComments {
 	public static function echo_comments($comments) {
 		if(count($comments)) {
 			foreach($comments as $comment) {
+				
+				$delete = '';
+				
 				//Let's make sure you're logged in.
 				if(Auth::check()) {
 					$reply = '<a class="reply" data-replyid="'.$comment->id.'" data-postid="'.$comment->post->id.'">Reply to '.$comment->user->username.'</a>';
 					$vote = '<a title="Vote Up" class="vote up" data-upid="'.$comment->id.'"><span>Up Vote</span></a>';
+					//If you're a Mod, you can definitely do some stuff.
+					if(Auth::user()->hasRole('Moderator'))
+					{
+						if($comment->published == 1) {
+							$del_action = 'delete';
+						} else {
+							$del_action = 'undelete';
+						}
+						
+						$delete = ' <a title="Delete Comment" class="mod-del-comment" data-delid="'.$comment->id.'">Moderator '.$del_action.'</a>';
+					}
+					
+					//Either this person owns the comment, or you're a mod.
+					if( Session::get('user_id') == $comment->user->id && $comment->published == 1 )
+					{	
+						$delete = ' <a title="Delete Comment" class="delete" data-delid="'.$comment->id.'">Delete</a>';
+					}
 				} else  {
 					$reply = '';//maybe place a login pop up form?
 					$vote = '';
 				}
 				
-				$delete = '';
-				
-				//If you're a Mod, you can definitely do some stuff.
-				if(Auth::user()->hasRole('Moderator'))
-				{
-					if($comment->published == 1) {
-						$del_action = 'delete';
-					} else {
-						$del_action = 'undelete';
-					}
-					
-					$delete = ' <a title="Delete Comment" class="mod-del-comment" data-delid="'.$comment->id.'">Moderator '.$del_action.'</a>';
-				}
-				
-				//Either this person owns the comment, or you're a mod.
-				if( Session::get('user_id') == $comment->user->id && $comment->published == 1 )
-				{	
-					$delete = ' <a title="Delete Comment" class="delete" data-delid="'.$comment->id.'">Delete</a>';
-				}
 				
 				
 				if($comment->published) {

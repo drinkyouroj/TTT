@@ -38,10 +38,7 @@
 			  					<a href="{{Config::get('app.url')}}/about">About</a>
 							</li>
 			  				<li>
-			  					<a href="{{Config::get('app.url')}}/user/login">Sign in</a>
-							</li>
-							<li>
-								<a href="{{Config::get('app.url')}}/user/signup">Signup</a>
+			  					<a href="{{Config::get('app.url')}}/user/login">Sign in/Sign up</a>
 							</li>
 							@else
 							<li class="loggedin profile">

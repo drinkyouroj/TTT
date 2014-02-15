@@ -24,6 +24,7 @@
 			{{ Form::hidden('reply_id', 0 ) }}
 		@endif
 		
+		@if((isset($message) && $message->to_uid != 0) || Request::segment(2) == 'newmessage')
 		<div class="col-md-8 col-md-offset-1">
 			
 			@if(is_array($message_user))
@@ -51,6 +52,7 @@
 			@endif
 			</div>
 		</div>
+		@endif
 		
 	{{ Form::close() }}
 </div>

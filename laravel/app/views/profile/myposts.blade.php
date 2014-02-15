@@ -8,7 +8,7 @@
 
 @section('main')
 
-	<div class="row activity-container generic-listing">
+	<div class="row activity-container generic-listing myposts">
 			
 		@if(count($myposts))
 			{{--we're using part of the activity to render this so the foreach is set as $act--}}

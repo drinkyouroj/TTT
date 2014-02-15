@@ -459,12 +459,18 @@ ul.notifications li ul li a{
 
 .single-post hgroup h2{
 	text-transform: uppercase;
-	font-family: 'bebas';
+	font-family: 'Montserrat', sans-serif;
+	font-weight:700;
 }
 
 .single-post hgroup h4 {
 	font-family: 'EB Garamond';
 } 
+
+.single-post hgroup h4 a {
+	text-transform:uppercase;
+	letter-spacing:1px;
+}
 
 .single-post hgroup>div {
 	text-align: left;
@@ -541,13 +547,21 @@ ul.notifications li ul li a{
 }
 
 .single-post .the-content .row-content{
-	padding: 30px 0;
+	font-size:18px;
+	line-height:200%;
+	text-align:justify;
+	padding: 30px 0 10px 0;
 	-moz-column-gap:40px; /* Firefox */
 	-webkit-column-gap:40px; /* Safari and Chrome */
 	column-gap:40px;
 	-moz-column-count:2; /* Firefox */
 	-webkit-column-count:2; /* Safari and Chrome */
 	column-count:2;
+}
+
+.single-post .the-content .page-content{
+	padding-left:0px !important;
+	padding-right:0px !important;
 }
 
 .single-post .the-content #one:first-letter {
@@ -567,6 +581,7 @@ ul.notifications li ul li a{
 /*Comments*/
 .single-post .the-comment-container {
 	font-family: 'bebas';
+	letter-spacing:1px;
 	margin-bottom: 30px;	
 }
 
@@ -600,8 +615,37 @@ ul.notifications li ul li a{
 	display:none;
 }
 
-.single-post .the-comment-container .reply {
-	vertical-align: top;
+.single-post .the-comment-container .reply, .single-post .the-comment-container .delete, .single-post .the-comment-container .mod-del-comment {
+	font-family: 'Montserrat', sans-serif;
+	text-transform:uppercase;
+	font-size:11px;
+	letter-spacing:0px;
+	color:#999;
+	padding-right:10px;
+	padding-left:10px;
+	border-right:1px solid #999;
+}
+
+.single-post .the-comment-container span {
+	color:#999;
+}
+
+.single-post .the-comment-container .reply, .single-post .the-comment-container .mod-del-comment {
+	color:#999;
+}
+
+.single-post .the-comment-container .reply:hover, .single-post .the-comment-container .mod-del-comment:hover {
+	color:#000;
+	cursor:pointer;
+}
+
+.single-post .the-comment-container .delete {
+	color:#f94851;
+}
+
+.single-post .the-comment-container .delete:hover {
+	color:#df3b3c;
+	cursor:pointer;
 }
 
 .single-post .the-comment-container ul{
@@ -609,9 +653,16 @@ ul.notifications li ul li a{
 }
 
 .single-post .the-comment-container ul li {
-	margin: 10px 0;
-	padding: 10px 20px;
-	border: 3px solid #ccc;;
+	margin: 10px 0 20px 0;
+	padding: 10px 20px 10px 20px;
+	border-top: 3px solid #ccc;
+	background-color:#fff;
+}
+
+.single-post .the-comment-container ul li ul li {
+	border-top: 1px solid #ccc;
+	padding-top:20px;
+	padding-bottom:0px;
 }
 
 

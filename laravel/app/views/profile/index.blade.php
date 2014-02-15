@@ -9,7 +9,7 @@
 @section('left_sidebar')
 	<div class="the-content">
 		
-		
+		@if(Auth::check())
 		<div class="notifications-listing">
 		@if(count($notifications))
 			{{--Below file has the foreach routine for both the top section and the full listing --}}
@@ -21,6 +21,7 @@
 				<span>All Notifications</span>
 			</a>
 		</div>
+		@endif
 		
 		{{--
 		Below 3 are saved for now.
@@ -86,19 +87,21 @@
 		
 		<div class="row activity-container generic-listing">
 			
-				@if((Session::get('username') == Request::segment(2)) || (Request::segment(2) == '') )
-				{{--This is for the user's actual profile--}}
-				<div class="col-md-4">
-					<div class="generic-item equal-height add-new">
-						<header>
-							{{link_to('profile/newpost','Add New Post')}}
-						</header>
-						<section>
-							Add!
-						</section>
-					</div>
+			@if((Session::get('username') == Request::segment(2)) || (Request::segment(2) == '') )
+			{{--This is for the user's actual profile--}}
+			<div class="col-md-4">
+				<div class="generic-item equal-height add-new">
+					<header>
+						{{link_to('profile/newpost','')}}
+					</header>
 				</div>
-				@endif
+			</div>
+			@endif
+			
+			@if(isset($post) && $post )
+				{? $featured_item = 1 ?}
+				@include('partials/generic-item')
+			@endif
 				
 			@if(!empty($activity))
 				@foreach($activity as $act)

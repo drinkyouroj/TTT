@@ -7,6 +7,7 @@
 				<h3 class="post">
 					{{ link_to('posts/'.$act->post->alias, $act->post->title) }}
 				</h3>
+				<span class="story-type">{{$act->post->story_type}}</span>
 				<span class="author">by {{ link_to('profile/'.$act->post->user->username, $act->post->user->username) }}</span> 
 			@elseif($act->post_type == 'repost')
 				<h3 class="repost">
@@ -17,35 +18,38 @@
 			@else
 				<!--{{$act->post_type}}-->
 				<h3 class="favorite ">{{ link_to('posts/'.$act->post->alias, $act->post->title) }}</h3>
+				<span class="story-type">{{$act->post->story_type}}</span>
 				<span class="author">by {{ link_to('profile/'.$act->post->user->username, $act->post->user->username) }}</span>
 				<span><a class="favorite" data-post="{{$act->post->id}}">unfavorite</a></span>
 			@endif
 			
-			{{--If you are the owner of this post show menu options--}}
-			@if(Auth::user()->id == $act->post->user->id && 
-				strtotime(date('Y-m-d H:i:s', strtotime('-72 hours'))) <= strtotime($act->post->created_at) &&
-				$act->post_type == 'post'
-				)
-				<ul class="user-menu">
-					<li class="options">
-						<a href="#post-edit">
-							Options
-						</a>
-						<ul class="menu-listing">
-							<li class="edit">
-								<a href="{{Config::get('app.url')}}/profile/editpost/{{$act->post->id}}">Edit</a>
-							</li>
-							{{--Check out the fact that below has a hidden function --}}
-							<li class="feature @if($act->post->id != Session::get('featured')) @else hidden @endif">
-								<a href="#feature" data-id="{{$act->post->id}}">Feature</a>
-							</li>
-							
-							<li class="delete">
-								<a href="#delete" data-id="{{$act->post->id}}">Delete</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
+			@if(Auth::check())
+				{{--If you are the owner of this post show menu options--}}
+				@if(Auth::user()->id == $act->post->user->id && 
+					strtotime(date('Y-m-d H:i:s', strtotime('-72 hours'))) <= strtotime($act->post->created_at) &&
+					$act->post_type == 'post'
+					)
+					<ul class="user-menu">
+						<li class="options">
+							<a href="#post-edit">
+								Options
+							</a>
+							<ul class="menu-listing">
+								<li class="edit">
+									<a href="{{Config::get('app.url')}}/profile/editpost/{{$act->post->id}}">Edit</a>
+								</li>
+								{{--Check out the fact that below has a hidden function --}}
+								<li class="feature @if($act->post->id != Session::get('featured')) @else hidden @endif">
+									<a href="#feature" data-id="{{$act->post->id}}">Feature</a>
+								</li>
+								
+								<li class="delete">
+									<a href="#delete" data-id="{{$act->post->id}}">Delete</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				@endif
 			@endif
 		</header>
 		<section>

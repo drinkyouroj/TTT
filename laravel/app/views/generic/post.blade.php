@@ -144,7 +144,7 @@
 			{? $total = count($bodyarray)?}
 			@foreach($bodyarray as $c => $body)
 				<div class="row">
-					<div class="col-md-10 col-md-offset-1">
+					<div class="col-md-10 col-md-offset-1 page-content">
 						<div class="row-content" id="{? echo $c ? '':'one' ?}">
 							{{$body}}
 						</div>

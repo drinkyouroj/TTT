@@ -82,6 +82,52 @@ Route::filter('mod', function()
     }
 });
 
+
+Route::filter('profile', function() {
+	View::composer('*', function($view) {
+			$alias = Request::segment(2);
+			
+			//Unfortunately view composer currently sucks at things so this is a crappy work around.
+			$not_segment = array(
+						Session::get('username'),
+						'newpost',
+						'editpost',
+						'newmessage',
+						'replymessage',
+						'submitpost',
+						'comment',
+						'commentform',
+						'messages',
+						'submitmessage',
+						'notifications',
+						'myposts'
+						);
+			
+			if($alias && !in_array($alias, $not_segment) ) {//This is for other users. not yourself
+				$user = User::where('username', '=', $alias)->first();
+				$user_id = $user->id;//set the profile user id for rest of the session.
+			} else {
+				//We're doing the user info loading this way to keep the view clean.
+				$user_id = Session::get('user_id');
+				
+				//This isn't most ideal, but let's just place the banned detector here
+				if(User::where('id', $user_id)->where('banned', true)->count()) {
+					//this guy's session will terminate right as he/she clicks on any profile action.
+					Confide::logout();
+					return Redirect::to('/banned');
+				}
+			}
+			
+			$followers = Follow::where('user_id', '=', $user_id)->count();
+			$following = Follow::where('follower_id', '=', $user_id)->count();
+			
+			$view->with('followers', $followers)
+					->with('following', $following);
+		});
+	
+});
+
+
 /*
 |--------------------------------------------------------------------------
 | Guest Filter
