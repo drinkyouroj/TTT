@@ -8,8 +8,10 @@
 	{{--We'll implement the layout selector in the backend and we should use partials at that point to separate the layouts.--}}
 	<div class="col-md-12">
 		<div id="top-featured" class="top-featured generic-listing">
+			<div class="gutter-sizer"></div>
 			{{--This is temporary to get things working.--}}
-			@foreach($featured as $k=>$post)
+			@foreach($featured as $k=>$featured)
+				{? $post = $featured->post?}
 				@include('partials.featured-item')
 			@endforeach
 		</div>

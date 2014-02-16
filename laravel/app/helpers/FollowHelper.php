@@ -28,4 +28,27 @@ class FollowHelper {
 		}
 	}
 	
+	//Grabs all the users who are mutual.
+	public static function mutual_list() {
+		//Grab the user id of the people you're folowing
+		$following = Follow::where('follower_id', Session::get('user_id'))
+						->select('user_id')
+						->get();
+						
+		//Another one of those dumb things about laravel.  I wonder if there is a way around this out.
+		$fing = array();
+		foreach($following as $k => $f) {
+			$fing[$k] = $f->user_id;
+		}
+		
+		//dd($fing);
+		
+		$mutual = Follow::whereIn('follower_id', $fing)
+						->get();
+		
+		return $mutual;
+					
+	}
+	
+	
 }

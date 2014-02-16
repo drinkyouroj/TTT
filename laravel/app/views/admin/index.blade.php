@@ -51,7 +51,7 @@
 		<h2>Currently Featured Articles</h2>
 	@foreach($featured as $k=>$post)
 		<div class="col-md-4">
-			@include('partials.featured-item')
+			{{--@include('partials.featured-item')--}}
 		</div>
 	@endforeach
 	</div>

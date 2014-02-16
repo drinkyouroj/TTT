@@ -11,6 +11,7 @@
 		
 		@if(Auth::check())
 		<div class="notifications-listing">
+		<h3>Notifications</h3>
 		@if(count($notifications))
 			{{--Below file has the foreach routine for both the top section and the full listing --}}
 			@include('partials/notifications')
@@ -105,7 +106,9 @@
 				
 			@if(!empty($activity))
 				@foreach($activity as $act)
-					@include('partials/activity-item')
+					@if($act->post->id != $post->id)
+						@include('partials/activity-item')
+					@endif
 				@endforeach
 			@endif
 		</div>

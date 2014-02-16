@@ -48,16 +48,14 @@ class MessageController extends BaseController {
 			//Can't find that user?
 			if(is_null($user)) {
 				//Gotta find all the mutual follows!
-				$user = Follow::where('follower_id', '=', Session::get('user_id'))
-								->where('follower_id', '=', $user_id)
-								->where('user_id', '=', Session::get('user_id'))
-								->where('user_id', '=', $user_id)
-								->get();
-				$user = $user->toArray();//pass on only the user info
-				//This gets checked is_array on the otherside
-			}
-			return View::make('messages/form')
+				$mutuals = FollowHelper::mutual_list();
+				return View::make('messages/form')
+					->with('mutuals', $mutuals);
+			} else {
+				return View::make('messages/form')
 					->with('message_user', $user);
+			}
+			
 		}
 	}
 	
@@ -80,6 +78,7 @@ class MessageController extends BaseController {
 			$parent_check = Message::where('id', $message->reply_id)
 									->where('reply_id',0)//Gotta be a parent
 									->count();
+			//Should return a zero.
 			
 			//Gotta check to see if they are mutually following.
 			$is_following = FollowHelper::is_following($message->to_uid);
@@ -89,7 +88,7 @@ class MessageController extends BaseController {
 				$mutual = true;
 			}
 			
-			if($mutual && $parent_check) {
+			if($mutual && !$parent_check) {
 				$message->save();
 				return Redirect::to('profile');
 			} else {

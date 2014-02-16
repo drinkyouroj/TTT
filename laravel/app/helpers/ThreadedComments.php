@@ -46,7 +46,7 @@ class ThreadedComments {
 					$comment_body = '<span class="deleted">Comment was deleted</span>';
 				}
 				
-				echo '<li class="the-comment" id="comment-'.$comment->id.' published-'.$comment->published.'">
+				echo '<li class="the-comment published-'.$comment->published.'" id="comment-'.$comment->id.'">
 					<span>by <a href="'.url('profile/'.$comment->user->username).'">'.$comment->user->username.'</a></span>
 					<p class="comment-body">'.$comment_body.'</p>
 					'.$vote.$reply.$delete.'

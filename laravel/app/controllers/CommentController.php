@@ -33,9 +33,10 @@ class CommentController extends BaseController {
 				Post::where('id', $post_id)->increment('comment_count',1);
 			}
 			
+			
 			//Also notify the person that you replied to:
-			if($comment->reply_id != 0) {
-				$orig_comment = Comment::where('id', $comment->reply_id)->first();
+			if($comment->parent_id != 0) {
+				$orig_comment = Comment::where('id', $comment->parent_id)->first();
 				
 				$reply = new Notification;
 				$reply->post_id = $post_id;
@@ -78,7 +79,7 @@ class CommentController extends BaseController {
 		}
 		
 
-	public function getCommentForm($post_id, $reply_id) {
+	public function getCommentForm($post_id, $reply_id = false) {
 		$post = Post::find($post_id);
 		return View::make('generic/commentform')
 				->with('post', $post)

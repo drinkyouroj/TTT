@@ -1,6 +1,11 @@
 $(window).load(function() {
 	$('#top-featured').packery({
 	  itemSelector: '.featured-item',
-	  gutter: 10,
+	  "columnWidth": ".gutter-sizer",
 	});
+});
+
+
+$(function() {
+	
 });

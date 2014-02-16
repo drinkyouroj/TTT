@@ -21,6 +21,7 @@
 		<aside class="login-disclaimer">
 			Disclaimer here.	
 		</aside>
+	<div class="clearfix"></div>
 	</div>
 	<div class="col-md-4  signup-container">
 		<h2>Signup</h2>
@@ -30,5 +31,6 @@
 		<aside class="explanation">
 			<p>Explantion for the signup process.  Potentially put some disclaimer here or something.</p>
 		</aside>
+	<div class="clearfix"></div>
 	</div>
 @stop

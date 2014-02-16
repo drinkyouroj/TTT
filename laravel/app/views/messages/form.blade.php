@@ -27,11 +27,14 @@
 		@if((isset($message) && $message->to_uid != 0) || Request::segment(2) == 'newmessage')
 		<div class="col-md-8 col-md-offset-1">
 			
-			@if(is_array($message_user))
-				{? $to_user = ''?}
+			@if(!isset($message_user))
 				<div class="form-group">
 					{{ Form::label('to_uid','To User', array('class'=>'control-label'))}}
-					{{ Form::select('to_uid', $message_user)}}
+					<select name="to_uid">
+						@foreach($mutuals as $mutual)
+						<option value="{{$mutual->follower_id}}">{{$mutual->followers->username}}</option>
+						@endforeach
+					</select>
 				</div>	
 			@else
 				{? $to_user = ' to '.$message_user->username?}
@@ -39,7 +42,11 @@
 			@endif
 			
 			<div class="form-group">
+			@if(!isset($message_user))
+				{{ Form::label('body','Message', array('class'=>'control-label')) }}
+			@else	
 				{{ Form::label('body','Message'.$to_user, array('class'=>'control-label')) }}
+			@endif
 				{{ Form::textarea('body', null, array('class'=>'form-control')) }}
 				{{ $errors->first('body') }}
 			</div>

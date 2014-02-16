@@ -54,9 +54,12 @@ body {
 
 .menu-wrapper .navbar .container { 
 	height: 30px;
-	font-family: 'EB Garamond', serif;
+	font-family: 'bebas', serif;
+	letter-spacing:1px;
 	font-size:15px;
 }
+
+
 /*The normal Menu items (About, Signin profile, etc)*/
 .menu-wrapper .navbar .container ul.main-nav {
 	
@@ -124,15 +127,15 @@ ul.notifications {
 	display:none;
 	width: 300px;
 	color:#fff;
-	background:#000;
 	list-style:none;
 	font-size: 12px;
 	margin: 0 0 0 -10px;
 	padding: 10px;
-	border-left:3px solid #333;
-	border-bottom:3px solid #333;
-	border-right:3px solid #333;
-	background-color:#1a1a1a;
+	background-image: url('../../img/global/black-darker.png');
+	
+-moz-box-shadow:    0px 3px 3px 3px #222;
+  -webkit-box-shadow: 0px 3px 3px 3px #222;
+  box-shadow:         0px 3px 3px 3px #222;
 }
 
 ul.notifications>li {
@@ -144,8 +147,8 @@ ul.notifications>li {
 }
 
 ul.notifications>li a {
-	font-family:bebas;
-	letter-spacing:1px;
+	font-family: 'Montserrat', sans-serif;
+	font-size:12px;
 }
 
 
@@ -198,6 +201,7 @@ ul.notifications li ul li a{
 	height: 22px;
 	border: 1px solid #9F9F9F;
 	border-radius: 10px;
+	color:#fff;
 }
 
 /*Top Banner*/
@@ -239,6 +243,7 @@ ul.notifications li ul li a{
 	width: 20%;
 	float: right;
 	padding-right: 0;
+	font-family: 'Montserrat', sans-serif;
 }
 
 .header-wrapper form.navbar-form div.search {
@@ -256,7 +261,7 @@ ul.notifications li ul li a{
 }
 
 .header-wrapper form.search .result-box {
-	background: #333333;
+	background-image: url('../../img/global/black-darker.png');
 }
 
 .header-wrapper form.search .result-box ul {
@@ -266,10 +271,20 @@ ul.notifications li ul li a{
 }
 
 .header-wrapper form.search .result-box ul li {
+	padding-bottom:10px;
+	border-bottom:solid 1px #444;
+	line-height:100%;
 }
 
 .header-wrapper form.search .result-box ul li a{
+font-family:'bebas';
+	font-size:16px;
 	color:#fff;
+	letter-spacing:1px;
+}
+
+.header-wrapper form.search .result-box ul li a:hover {
+	color:#40B2FF;
 }
 
 .header-wrapper .navbar {
@@ -277,11 +292,73 @@ ul.notifications li ul li a{
 }
 
 .header-wrapper .navbar li {
-	margin-top: 3px;
+	margin-top: 5px;
 }
 
+/*Notifications custom*/
 .header-wrapper .navbar li a {
 	padding: 2px 0;
+}
+.header-wrapper .navbar li.notifications-parent li a:hover {
+color:#40B2FF !important;
+}
+
+.header-wrapper .navbar .notifications-parent ul li {
+	padding: 10px 0px 10px 27px;
+	line-height:100%;
+	letter-spacing:0px;
+	font-family: 'EB Garamond';
+}
+
+.header-wrapper .navbar li.repost {
+	background-image: url('../../img/icons/repost-notifications.png');
+	background-position: center left;
+	background-repeat: no-repeat;
+	
+}
+
+.header-wrapper .navbar li.repost a {
+	color:#32B1C6;
+}
+
+.header-wrapper .navbar li.favorite {
+	background-image: url('../../img/icons/favorite-notifications.png');
+	background-position: center left;
+	background-repeat: no-repeat;
+}
+
+.header-wrapper .navbar li.favorite a {
+	color:#968B22;
+}
+
+.header-wrapper .navbar li.new {
+	background-image: url('../../img/icons/post-notifications.png');
+	background-position: center left;
+	background-repeat: no-repeat;
+}
+
+.header-wrapper .navbar li.new a {
+	color:#DF3B3C;
+}
+
+.header-wrapper .navbar li.comment {
+	background-image: url('../../img/icons/comment-notifications.png');
+	background-position: center left;
+	background-repeat: no-repeat;
+}
+
+.header-wrapper .navbar li.comment a {
+	color:#F38630;
+}
+
+.header-wrapper .navbar li.follow {
+	background-image: url('../../img/icons/follow-notifications.png');
+	background-position: center left;
+	background-repeat: no-repeat;
+}
+
+.header-wrapper .navbar li.follow a {
+	color:#A156D1;
 }
 
 /*Bottom Exes*/

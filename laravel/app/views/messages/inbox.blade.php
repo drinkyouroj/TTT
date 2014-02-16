@@ -11,6 +11,7 @@
 <div class="row">
 	<div class="col-md-10 col-md-offset-1 inbox">
 		<h2>The Inbox</h2>
+		{{link_to('profile/newmessage/','New Message')}}
 		<div class="messages">
 		@foreach($messages as $message)
 			<div class="col-md-12 message">

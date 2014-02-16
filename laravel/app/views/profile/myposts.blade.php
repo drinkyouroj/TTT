@@ -13,7 +13,9 @@
 		@if(count($myposts))
 			{{--we're using part of the activity to render this so the foreach is set as $act--}}
 			@foreach($myposts as $act)
-				@include('partials/activity-item')
+				@if($act->post->id != $user->featured)
+					@include('partials/activity-item')
+				@endif
 			@endforeach
 		@endif
 	</div>

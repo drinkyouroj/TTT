@@ -22,5 +22,6 @@ Sign up!
 		<aside class="explanation">
 			<p>Explantion for the signup process.  Potentially put some disclaimer here or something.</p>
 		</aside>
+	<div class="clearfix"></div>
 	</div>
 @stop

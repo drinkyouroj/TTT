@@ -34,7 +34,7 @@
 
 	@if(!isset($fullscreen) || !$fullscreen)
 	
-	<div class="col-md-3">
+	<div class="col-md-3 sidebar-container">
 		<div class="left-sidebar">
 			@yield('left_sidebar')
 			<div class="clearfix"></div>

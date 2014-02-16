@@ -113,6 +113,7 @@ Route::post( '/profile/comment/{post_id}', 'CommentController@postCommentForm');
 //Messages
 Route::get( '/profile/replymessage/{reply_id}', 'MessageController@getMessageReplyForm');
 Route::get( '/profile/newmessage/{user_id}', 'MessageController@getMessageForm');
+Route::get( '/profile/newmessage', 'MessageController@getMessageForm');
 
 Route::post( '/profile/submitmessage', 'MessageController@postMessageForm');
 Route::get( '/profile/messages', 'MessageController@getMessageInbox');

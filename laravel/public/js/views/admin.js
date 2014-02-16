@@ -1,7 +1,12 @@
 //This function is for the admins to feature a post.
 $(function() {
 	$('.feature').on('click', function() {
-		feature($(this).data('id'));
+		
+		height = $('.feature-options #height option:selected').val();
+		width = $('.feature-options #width option:selected').val();
+		order = $('.feature-options #order option:selected').val();
+		
+		feature($(this).data('id'), height, width, order);
 	});
 	
 	$('.admin-mod').on('click', function() {
@@ -12,10 +17,16 @@ $(function() {
 
 
 
-function feature(id) {
+function feature(id,height, width, order) {
+		
 	$.ajax({
 		url: window.site_url+'admin/feature/'+id,
 		type:'GET',
+		data: {
+			height: height,
+			width: width,
+			order: order			
+		},
 		success: function(data) {
 			//Below is a pretty rudimentary setup for now, but it definitely works well.
 			if(data.status) {

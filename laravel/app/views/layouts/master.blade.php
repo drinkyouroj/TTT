@@ -9,9 +9,13 @@
     <!-- Bootstrap -->
     <link href="{{Config::get('app.url')}}/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="{{Config::get('app.url')}}/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
+    <link href="{{Config::get('app.url')}}/css/animate.css" rel="stylesheet" media="screen">
     
     <!--Application Shared CSS-->
     <link href="{{Config::get('app.url')}}/css/views/style.css" rel="stylesheet" media="screen">
+    
+    
+    <!--Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
 	
@@ -103,7 +107,7 @@
   		<div class="container">
   			<div class="row">
   				<div class="col-md-12">
-  					<div class="today row">{{date('l, F m, Y')}}</div>
+  					<div class="today row">{{date('l, F d, Y')}}</div>
   				</div>
   			</div>
   		</div>

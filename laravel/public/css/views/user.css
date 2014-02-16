@@ -1,18 +1,162 @@
 /**
  * 	These styles are for the user login, signup 
  */
+ 
+ /*Shared*/
+ .content {
+ 	margin-bottom:50px;
+ }
+ 
+.login-container h2, .signup-container h2 {
+	font-family:'bebas';
+	letter-spacing:2px;
+}
+
+fieldset {
+	width:100%;
+}
+
+label {
+	display:none;
+}
+
+label.checkbox {
+	padding-left:0px;
+}
+
+label.checkbox input {
+	margin-left:0px !important;
+}
+
+.login-container fieldset, .signup-container fieldset {
+	border-top:3px solid #000;
+}
+
+.login-container input, .signup-container input {
+	margin-top:10px;
+}
+
+.signup-container button, .signup-container aside, .login-container aside   {
+	margin-top:20px;
+}
+
+.login-container label, .signup-container label {
+	font-family: 'Montserrat', sans-serif;
+	text-transform:uppercase;
+	font-weight:400;
+}
+
+.alert, .alert-error {
+	color:#DF3B3C;
+	padding-left:0px;
+	webkit-box-shadow: none;
+	box-shadow: none;
+	margin-bottom:0px !important;
+}
 
 /*LOGIN*/
-.login-container {}
+.login-container label, .login-container input  , .login-container button, .login-container div, .login-container p, .login-container h2, .login-container aside {
+	float:left;
+	clear:both !important;
+}
+.login-form {
+	width:100%;
+}
+
+.login-container {
+	float:left;
+	background-color:#eeece6;
+	padding-bottom:100px;
+}
 
 .login-container .login-form {}
 
 .login-container .login-disclaimer {}
 
+.login-form input[type="text"], .login-form input[type="password"], .login-form input[type="search"], .login-form isindex {
+	-webkit-appearance: textfield;
+	padding: 1px;
+	background-color: white;
+	border: 0px;
+	height:40px;
+	border:solid 3px #ddd;
+	font-family: 'Montserrat', sans-serif;
+	text-transform:uppercase;
+	padding-left:5px;
+	padding-right:20px;
+}
 
 /*SIGN UP*/
-.signup-container {}
 
-.signup-container .signup-form {}
+.signup-container label , .signup-container input  , .signup-container button, .signup-container div, .signup-container p, .signup-container h2, .signup-container aside {
+	float:left;
+	clear:both !important;
+}
+
+.signup-container {
+	float:left;
+}
+
+.signup-container .signup-form {
+	width:100%;
+}
 
 .signup-container .explantion {}
+
+.email-please {
+	margin-top:20px;
+}
+
+.signup-container input, .signup-container input[type="password"], .signup-container input[type="search"], .signup-container isindex {
+	-webkit-appearance: textfield;
+	padding: 1px;
+	background-color: white;
+	border: 0px;
+	height:40px;
+	border:solid 3px #ddd;
+	font-family: 'Montserrat', sans-serif;
+	text-transform:uppercase;
+	padding-left:5px;
+	padding-right:20px;
+}
+
+
+/***************************************
+	Media Queries
+*/
+/*Tiny*/
+@media (max-width: 479px) {
+	.signup-container, .login-container {
+		width:100%;
+	}
+}
+
+/*Small*/
+@media (min-width: 480px) and (max-width: 767px) {
+	.signup-container, .login-container {
+		width:100%;
+	}
+	
+	fieldset {
+		padding-top:30px;
+	}
+	
+	fieldset, aside {
+		padding-left:32%;
+	}
+	
+}
+
+/*Normal*/
+@media (min-width: 768px) and (max-width: 991px) {
+}
+
+/*Bigger*/
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+/*Huge*/
+@media (min-width: 1200px) {
+
+}  

@@ -57,6 +57,27 @@
 							Un-Feature this Article
 						</a>
 					@else
+						<div class="feature-options">
+							Width:
+							<select name="width" id="width">
+								<option value="1" selected="selected">25%</option>
+								<option value="2">50%</option>
+								<option value="3">75%</option>
+							</select>
+							
+							With or Without Text:
+							<select name="height" id="height">
+								<option value="1" selected="selected">Without</option>
+								<option value="2">With</option>
+							</select>
+							
+							First or Last:
+							<select name="order" id="order">
+								<option value="first" selected="selected">First</option>
+								<option value="last">Last</option>
+							</select>
+							
+						</div>
 						<a class="feature unfeatured action" data-id="{{$post->id}}">
 							Set Article as a Featured
 						</a>

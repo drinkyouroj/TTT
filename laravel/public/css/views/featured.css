@@ -4,35 +4,74 @@
 
 
 .top-featured .featured-item{
-	width: 24.5%;
+	width: 21.25%;
 }
 
 .top-featured .featured-item.w-2{
-	width: 49%;
+	width: 46.5%;
 }
 
 .top-featured .featured-item.w-3{
-	width: 74%;
+	width: 71.5%;
 }
 
-.top-featured .featured-item img{
+.top-featured .featured-item .the-image {
+	position: relative;
 	width: 100%;
 }
 
-.top-featured .featured-item .the-content {
-	height: auto !important;
-}
-
-@media (max-width: 479px) {
-	.top-featured .featured-item{
-		width: 100%
-	}
+.top-featured .the-content {
+	font-size:16px;
+	margin-top:10px;
+	text-align:justify !important;
 	
-	.top-featured .featured-item.w-2{
-		width: 100% 
-	}
-
-	.top-featured .featured-item.w-3{
-		width: 100%
-	}	
 }
+
+.top-featured .the-content a {
+	font-family:'bebas';
+	letter-spacing:1px;
+}
+
+.top-featured .the-content a:hover {
+	color:#40B2FF
+}
+
+/*Featured content is for height 1 situations.*/
+.top-featured .featured-item .the-featured-content {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	padding: 10px 0;
+	background-image: url('../../img/global/black.png');
+}
+
+.top-featured .gutter-sizer { width: 5%; }
+
+/***************************************
+	Media Queries
+*/
+/*Tiny*/
+@media (max-width: 479px) {
+	
+}
+
+/*Small*/
+@media (min-width: 480px) and (max-width: 767px) {
+	
+}
+
+/*Normal*/
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+/*Bigger*/
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+/*Huge*/
+@media (min-width: 1200px) {
+
+}  

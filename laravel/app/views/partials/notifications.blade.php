@@ -29,20 +29,28 @@
 			</span>
 			
 			followed you
-			@if($not['follow'] > 1)
+			
+			{? $follow_count = count($not['follow'])-1 ?}
+			<!--{{$follow_count}}-->
+			@if( $follow_count >= 1)
 			<span class="show-people">
 				along with
-				<ul>
-				@foreach($not['follow'] as $k => $follow)
-					@if($k)
-					<li>
-						<a href="{{Config::get('app.url')}}/profile/{{$follow->user->username}}">
-							{{$follow->user->username}}
-						</a>
-					</li>	
-					@endif
-				@endforeach
-				</ul>
+				
+				@if($follow_count > 2)
+					<ul>
+					@foreach($not['follow'] as $k => $follow)
+						@if($k)
+						<li>
+							<a href="{{Config::get('app.url')}}/profile/{{$follow->user->username}}">
+								{{$follow->user->username}}
+							</a>
+						</li>	
+						@endif
+					@endforeach
+					</ul>
+				@else
+					<a href="{{Config::get('app.url')}}/profile/{{$not['follow'][1]->user->username}}">{{$not['follow'][1]->user->username}}</a>
+				@endif
 			</span>
 			@endif
 		</span>
@@ -193,5 +201,58 @@
 	</li>
 	@endif
 	
+	@if(isset($not['reply']))
+	<li class="reply">
+		<span class="item">
+			<a href="{{Config::get('app.url')}}/profile/{{$not['reply'][0]->user->username}}">
+				{{$not['reply'][0]->user->username}}
+			</a>
+		</span>
+		
+		replyed on your comment in post 
+		
+		<span>
+			<a href="{{Config::get('app.url')}}/posts/{{$not['reply'][0]->post->alias}}#comment-{{$not['reply'][0]->comment_id}}">
+				{{$not['reply'][0]->post->title}}
+			</a>
+		</span>
+		
+		{{-- I know its ugly to have so much stuff here, but we need it to count the unique usernames--}}
+		{? $unique = array(); ?}
+		{? foreach($not['reply'] as $k=> $com ){ $unique[$k] = $com->user->username; }?}
+		{? $unique = array_unique($unique)  ?}
+		{? $reply_count = count($unique)-1 ?}
+		
+		@if($reply_count)
+			along with
+			<span class="show-people">
+				@if($reply_count >= 2)
+					{{ $reply_count }} other people
+					<ul> 
+					@foreach($unique as $k => $n)
+						{{--Have to skip the first person--}}
+						@if($k)
+						<li>
+							<a href="{{Config::get('app.url')}}/profile/{{$n}}">
+								{{$n}}
+							</a>
+						</li>
+						@endif
+					@endforeach
+					</ul>
+				@elseif($reply_count == 1)
+					{{--This needs to have unique username.--}}
+					@foreach($unique as $n)
+						@if($n != $not['reply'][0]->user->username)
+							<a href="{{Config::get('app.url')}}/profile/{{$n}}">{{$n}}</a>
+						@endif
+					@endforeach
+					
+				@endif
+			</span>
+		@endif
+		
+	</li>
+	@endif
 	
 @endforeach

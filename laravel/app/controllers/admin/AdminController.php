@@ -88,15 +88,43 @@ class AdminController extends Controller {
 	//Below sets a certain 
 	public function getFeature() {
 		$feature_id = Request::segment(3);
+		
+		$width = Request::get('width',1);
+		$height = Request::get('height',1);
+		
+		$order = Request::get('order','last');//last
+		
 		$post = Post::where('id', '=', $feature_id)->first();
 		
 		//flip the featured
 		if($post->featured) {
 			$post->featured = false;
 			$post->featured_date = date('Y-m-d');
+			Featured::where('post_id', $post->id)->delete();
 		} else {
 			$post->featured = true;
 			$post->featured_date = date('Y-m-d');
+			
+			//lets just be sure we didn't miss this.
+			if(!Featured::where('post_id', $post->id)->count()) {
+				
+				if($order == 'last') {
+					$order_pos = Featured::count()+1;
+				} else {
+					$order_pos = 1;
+					//Now gotta reset the ordering for rest of the featured items.
+					Featured::increment('order',1);
+				}
+				
+				//newly featured.
+				$featured = new Featured;			
+				$featured->user_id = $post->user->id;
+				$featured->post_id = $post->id;
+				$featured->width = $width;
+				$featured->height = $height;
+				$featured->order = $order_pos;
+				$featured->save();
+			}
 		}
 		$post->save();
 		

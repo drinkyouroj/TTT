@@ -2,7 +2,7 @@
 
 	{{ Form::hidden('post_id', $post->id ) }}
 	@if(isset($reply_id))
-	{{ Form::hidden('reply_id', $reply_id ) }}
+		{{ Form::hidden('reply_id', $reply_id ) }}
 	@endif
 
 	<div class="form-group comment-form {{$errors->first('body') ? 'has-error' : '' }}">
