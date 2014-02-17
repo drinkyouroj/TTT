@@ -5,6 +5,7 @@
 @stop
 
 @section('js')
+<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/signup-form.js"></script>
 @stop
 

@@ -19,7 +19,9 @@ class ProfileController extends BaseController {
 		$reposts = false;
 		$likes = false;
 		$myposts = false;
+		
 		$post = false; //Featured Post for the user is stored as $post.
+		$featured = false;
 		
 		
 		//This is for other users. not yourself
@@ -44,11 +46,14 @@ class ProfileController extends BaseController {
 			$fullscreen = true;
 
 			//featured post.
-			$post = Post::where('id', $user->featured)->first();
-			$featured = new stdClass();
-			$featured->post = $post;
-			$featured->post_type = 'post';
-			
+			$post = Post::where('id', $user->featured);
+			if($post->count())
+			{
+				$post = $post->first();
+				$featured = new stdClass();
+				$featured->post = $post;
+				$featured->post_type = 'post';
+			}
 
 			$activity = ProfilePost::where('profile_id','=', $user_id)
 							->orderBy('created_at', 'DESC')
@@ -63,10 +68,14 @@ class ProfileController extends BaseController {
 			$fullscreen = false;
 			
 			//featured post.
-			$post = Post::where('id', $user->featured)->first();
-			$featured = new stdClass();
-			$featured->post = $post;
-			$featured->post_type = 'post';
+			$post = Post::where('id', $user->featured);
+			if($post->count())
+			{
+				$post = $post->first();
+				$featured = new stdClass();
+				$featured->post = $post;
+				$featured->post_type = 'post';
+			} 
 			
 			//Activity is pulled from the user (current user) activity instead of ProfilePost (what anyone can see)
 			$activity = Activity::where('user_id','=', $user_id)

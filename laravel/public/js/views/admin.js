@@ -13,9 +13,11 @@ $(function() {
 		admin_mod( $(this).data('id'));
 	});
 	
+	$('.hard-del').on('click', function() {
+		hard_delete_post( $(this).data('id'));
+	});
+	
 });
-
-
 
 function feature(id,height, width, order) {
 		
@@ -49,6 +51,21 @@ function admin_mod(id) {
 				alert('User is now a mod');
 			} else {
 				alert('User is nolonger a mod');
+			}
+		}
+	});
+}
+
+function hard_delete_post(id) {
+	$.ajax({
+		url: window.site_url+'admin/harddeletepost/'+id,
+		type:'GET',
+		success: function(data) {
+			//Below is a pretty rudimentary setup for now, but it definitely works well.
+			if(data.result == 'deleted') {
+				alert('Post is hard deleted');
+			} else {
+				alert('Post is restored');
 			}
 		}
 	});

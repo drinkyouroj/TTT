@@ -1,6 +1,8 @@
 <?php
 class PostController extends BaseController {
 
+	protected $softDelete = true;
+
 	public function getIndex() {
 		//maybe some function that takes you to a random post here?
 	}
@@ -10,40 +12,45 @@ class PostController extends BaseController {
      */
     public function getPost($alias)
     {	
-        $post = Post::where('alias', $alias)->first();
+        $post = Post::where('alias', $alias);
 		
-		//Do the post math here
-		$body_array = self::divide_text($post->body, 1500);//the length is currently set to 3000 chars
-		$user_id = $post->user->id;
-		
-		$is_following = Follow::where('follower_id', '=', Session::get('user_id'))
-							->where('user_id', '=', $user_id)
-							->count();
-		$is_follower = Follow::where('follower_id', '=', $user_id)
-							->where('user_id', '=', Session::get('user_id'))
-							->count();
-		
-		//Add the fact that the post has been viewed if you're not the owner and you're logged in.
-		if($user_id != Session::get('user_id') && Auth::check()) {
-			$postview = PostView::where('user_id', Session::get('user_id'))
-					->where('post_id', $post->id)
-					->count();
-			//If the record doesn't exist, increment on the post view count and also add to the "viewed" in PostView
-			if(!$postview) {
-				$pv = new PostView;
-				$pv->user_id = Session::get('user_id');
-				$pv->post_id = $post->id;
-				$pv->save();
-				Post::where('alias', $alias)->increment('views', 1);//increment on this post.
+		if($post->count()) {
+			$post = $post->first();
+			//Do the post math here
+			$body_array = self::divide_text($post->body, 1500);//the length is currently set to 3000 chars
+			$user_id = $post->user->id;
+			
+			$is_following = Follow::where('follower_id', '=', Session::get('user_id'))
+								->where('user_id', '=', $user_id)
+								->count();
+			$is_follower = Follow::where('follower_id', '=', $user_id)
+								->where('user_id', '=', Session::get('user_id'))
+								->count();
+			
+			//Add the fact that the post has been viewed if you're not the owner and you're logged in.
+			if($user_id != Session::get('user_id') && Auth::check()) {
+				$postview = PostView::where('user_id', Session::get('user_id'))
+						->where('post_id', $post->id)
+						->count();
+				//If the record doesn't exist, increment on the post view count and also add to the "viewed" in PostView
+				if(!$postview) {
+					$pv = new PostView;
+					$pv->user_id = Session::get('user_id');
+					$pv->post_id = $post->id;
+					$pv->save();
+					Post::where('alias', $alias)->increment('views', 1);//increment on this post.
+				}
 			}
+			
+	        return View::make('generic.post')
+						->with('post', $post)
+						->with('is_following', $is_following)//you are following this profile
+						->with('is_follower', $is_follower)//This profile follows you.
+						->with('bodyarray', $body_array)
+						;
+		} else {
+			return Redirect::to('/');
 		}
-		
-        return View::make('generic.post')
-					->with('post', $post)
-					->with('is_following', $is_following)//you are following this profile
-					->with('is_follower', $is_follower)//This profile follows you.
-					->with('bodyarray', $body_array)
-					;
     }
 	
 		//Straight out of compton (or stackoverflow)

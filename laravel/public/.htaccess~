@@ -1,4 +1,4 @@
-DirectoryIndex index.php invite.php
+DirectoryIndex index.php invite.html
 
 <Files "index.php">
 	AuthType Basic

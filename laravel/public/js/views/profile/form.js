@@ -17,8 +17,10 @@ $(function(){
 					contentType: "application/json"
 				}
 			},
-			category: {
-				maxthree: true
+			'category[]': {
+				required: true,
+				minlength: 1,
+				maxlength: 3
 			},
 			image: {
 				required: true
@@ -53,6 +55,7 @@ $(function(){
 			return false;
 		}
 	});
+	
 	
 	//The button for searching
 	$('.activate-search').on('click', function() {
@@ -123,6 +126,14 @@ $(function(){
 			console.log('error with image processor: missing var');
 		}
 	});//End of Photo Processor
+	
+	/**Category*/
+	$('.category label, .category input').on('click', function(event) {
+		if($('[name="category[]"]:checked').length > 3) {
+			event.preventDefault();
+			$('.category .warning').removeClass('hidden');
+		};
+	});
 	
 });
 

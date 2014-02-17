@@ -36,4 +36,6 @@
 	{{-- Include all the JS required for the situation--}}
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/profile.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/myposts.js"></script>
+		
+		@include('partials/generic-handlebar-item')
 @stop

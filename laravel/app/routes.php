@@ -139,7 +139,7 @@ Route::when('profile/*', 'profile');
 Route::get('/banned', 'UserController@getBanned');
 
 
-//
+Route::get( '/featured', 'HomeController@getIndex');
 Route::controller( '/', 'HomeController');
 
 

@@ -6,12 +6,12 @@ $(function() {
 	//*Follow Actions*********************************************
 	$('.profile-options .follow').on('click', function(event) {
 		event.preventDefault();
-		follow($(this).data('user'));
+		follow($(this).data('user'),'profile');
 	});
 	
 	$('.follow-container .follow').on('click', function(event) {
 		event.preventDefault();
-		follow($(this).data('user'));
+		follow($(this).data('user'),'post');
 		$(this).fadeOut();
 	});
 	
@@ -70,12 +70,23 @@ $(function() {
 /**
  * User based function 
  */
-function follow(id) {
+function follow(id,location) {
 	$.ajax({
 		url: window.site_url+'rest/follows/'+id,
 		//type:"POST",
 		success: function(data) {
 			error_log(data.result, 'follow');
+			if(location == 'profile') {
+				if(data.result == 'success') {
+					//follow
+					$('.profile-options a.follow span.follow-action').html('UnFollow');
+					$('.profile-options a.follow').addClass('unfollow');
+				}else {
+					//delete
+					$('.profile-options a.follow span.follow-action').html('Follow');
+					$('.profile-options a.follow').removeClass('unfollow');
+				}
+			}
 		}
 	});
 }

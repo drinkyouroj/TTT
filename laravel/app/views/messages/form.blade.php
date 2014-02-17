@@ -32,7 +32,7 @@
 					{{ Form::label('to_uid','To User', array('class'=>'control-label'))}}
 					<select name="to_uid">
 						@foreach($mutuals as $mutual)
-						<option value="{{$mutual->follower_id}}">{{$mutual->followers->username}}</option>
+						<option value="{{$mutual->user_id}}">{{$mutual->users->username}}</option>
 						@endforeach
 					</select>
 				</div>	

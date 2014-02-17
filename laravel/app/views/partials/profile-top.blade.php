@@ -19,13 +19,13 @@
 			@if(!$is_following)
 			<li>
 				<a class="follow" href="{{Config::get('app.url')}}/follow/{{$user->id}}" data-user="{{$user->id}}">
-					<span>Follow {{$user->username}}</span>
+					<span><span class="follow-action">Follow</span> {{$user->username}}</span>
 				</a>
 			</li>
 			@else
 			<li>
-				<a class="follow" href="{{Config::get('app.url')}}/follow/{{$user->id}}" data-user="{{$user->id}}">
-					<span>UnFollow {{$user->username}}</span>
+				<a class="follow unfollow" href="{{Config::get('app.url')}}/follow/{{$user->id}}" data-user="{{$user->id}}">
+					<span><span class="follow-action">UnFollow</span> {{$user->username}}</span>
 				</a>
 			</li>
 			@endif

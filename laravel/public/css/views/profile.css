@@ -73,7 +73,7 @@ ul.profile-options a {
 
 ul.profile-options li a:hover, 
 ul.profile-options a:hover {
-	color:#ccc;
+
 }
 
 ul.profile-options li:hover a {
@@ -85,11 +85,22 @@ ul.profile-options li a.new-post {
 	background-image: url('../../img/icons/post.png');
 }
 
+ul.profile-options li a.all-notification {
+	background-image: url('../../img/icons/notifications-color.png');
+}
+
 ul.profile-options li a.edit-profile {
 	
 }
 
 ul.profile-options li a.follow {
+	background-image: url('../../img/global/follow-colored.png');
+}
+
+ul.profile-options li a.follow.unfollow {
+	background-image: url('../../img/icons/unfollow.png') !important;
+}
+
 	
 }
 
@@ -364,6 +375,10 @@ ul.profile-options li a.new-message {
 	padding-left:20%;
 	padding-right:20%;
 	margin-bottom:50px;
+}
+
+.notifications-listing.full-list a {
+	font-family: 'Montserrat', sans-serif;
 }
 
 .notifications-listing.full-list li {

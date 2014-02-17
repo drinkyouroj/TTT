@@ -101,6 +101,14 @@ class AdminController extends Controller {
 			$post->featured_date = date('Y-m-d');
 			$order = $post->order;
 			Featured::where('post_id', $post->id)->delete();
+			
+			$reorders = Featured::orderBy('order', 'ASC');
+			$total = $reorders->count();
+			foreach($reorders->get() as $k => $reorder) {
+				Featured::where('id', $reorder->id)
+						->update(array('order'=>$k+1));
+			}
+			
 		} else {
 			$post->featured = true;
 			$post->featured_date = date('Y-m-d');
@@ -108,12 +116,12 @@ class AdminController extends Controller {
 			//lets just be sure we didnt' already post this as new.
 			if(!Featured::where('post_id', $post->id)->count()) {
 				
-				if($order == 'last') {
-					$order_pos = Featured::count()+1;
-				} else {
+				if($order == 'first') {
 					$order_pos = 1;
 					//Now gotta reset the ordering for rest of the featured items.
 					Featured::increment('order',1);
+				} else {
+					$order_pos = Featured::count()+1;
 				}
 				
 				//newly featured.
@@ -164,6 +172,34 @@ class AdminController extends Controller {
 		}
 	}
 	
+	//Danger Danger! NOPE! just another soft hard delete.
+	public function getHarddeletepost() {
+		$id = Request::segment(3);
+		if($id != 0) {
+			$post = Post::withTrashed()->where('id', $id)->first();
+			if($post->published == true) {
+				//Unpublish
+				Post::where('id', $id)->delete();
+				return Response::json(
+					array('result'=>'deleted'),
+					200//response is OK!
+				);
+			} else {
+				//Publish
+				Post::withTrashed()->where('id', $id)->restore();
+				//return the body so that we can display it.
+				return Response::json(
+					array('result'=>'restored'),
+					200//response is OK!
+				);
+			}
+		} else {
+			return Response::json(
+				array('result'=>'fail'),
+				200//response is OK!
+			);
+		}
+	}
 	
 	
 }

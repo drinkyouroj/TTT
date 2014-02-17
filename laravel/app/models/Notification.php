@@ -12,7 +12,7 @@ class Notification extends Eloquent {
 	
 	public function post()
 	{
-		return $this->belongsTo('Post');
+		return $this->belongsTo('Post', 'post_id');
 	}
 	
 

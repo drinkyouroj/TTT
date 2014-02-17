@@ -19,9 +19,6 @@
 		@else
 			No noficiations at thsi time.
 		@endif
-			<a class="all-notifications" href="{{Config::get('app.url')}}/profile/notifications">
-				<span>All Notifications</span>
-			</a>
 		</div>
 		@endif
 		
@@ -109,8 +106,10 @@
 			
 			@if(!empty($activity))
 				@foreach($activity as $act)
-					@if($act->post->id != $featured->post->id)
-						@include('partials/activity-item')
+					@if(isset($act->post->id))
+						@if($act->post->id != $featured->post->id  )
+							@include('partials/activity-item')
+						@endif
 					@endif
 				@endforeach
 			@endif
@@ -129,7 +128,6 @@
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/myposts.js"></script>
 	@endif
 	
-		
-	{{--Mothafucking handlebars--}}
-		@include('partials/generic-handlebar-item')
+	@include('partials/generic-handlebar-item')
+	
 @stop

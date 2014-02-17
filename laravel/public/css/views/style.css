@@ -228,6 +228,8 @@ ul.notifications li ul li a{
 	text-align: right;
 	width: 100%;
 	color: #9F9F9F;
+	padding-bottom:5px;
+	background-image:url('../../img/global/black-darker.png');
 	
 }
 
@@ -377,6 +379,11 @@ color:#40B2FF !important;
 	color:#A156D1 !important;
 }
 
+.header-wrapper .navbar .notifications-parent .all-notifications a {
+	font-family:'bebas';
+	font-size:16px;
+}
+
 /*Bottom Exes*/
 .footer-exes {
 	width: 100%;
@@ -398,6 +405,7 @@ color:#40B2FF !important;
 
 .footer-container .footer-nav ul{
 	list-style:none;
+	margin-bottom:0px;
 }
 
 .footer-container .footer-nav ul li {

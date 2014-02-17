@@ -1,6 +1,5 @@
 @extends('layouts.master')
 
-
 @section('css')
 	<link href="{{Config::get('app.url')}}/css/views/user.css" rel="stylesheet" media="screen">
 @stop
@@ -11,18 +10,19 @@
 @stop
 
 @section('title')
-Sign up!
+	Login or Signup
 @stop
 
-
 @section('content')
-	<div class="col-md-4 col-md-offset-4 signup-container">
-		<div class="signup-form">
-		{{ Confide::makeSignupForm()->render() }}
+	<div class="col-md-4 col-md-offset-4 login-container">
+		<div class="login-form">
+			<h2>Login</h2>
+			{{ Confide::makeLoginForm()->render() }}
 		</div>
-		<aside class="explanation">
-			<p>Explantion for the signup process.  Potentially put some disclaimer here or something.</p>
+		<aside class="login-disclaimer">
+			Disclaimer here.	
 		</aside>
-	<div class="clearfix"></div>
+		<div class="clearfix"></div>
 	</div>
+	
 @stop

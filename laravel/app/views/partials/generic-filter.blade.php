@@ -12,6 +12,7 @@
 			
 			{{--We need to figure out a way to do the redirect sort based on what controller you're coming from--}}
 			<div class="col-md-4 col-sm-4">
+				@if(Request::segment(1) == 'categories')
 				<select name="sort_by" class="sort_by_filter pull-right">
 					<option selected="selected">sort by</option>
 					{{--This might need some weird switches and stuff for different scenarios--}}
@@ -24,6 +25,7 @@
 					<option value="{{Config::get('app.url')}}/{{$current_seg}}/shortest">Shortest</option>
 					
 				</select>
+				@endif
 			</div>
 		</div>
 	</div>

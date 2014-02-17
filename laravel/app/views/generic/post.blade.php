@@ -82,6 +82,9 @@
 							Set Article as a Featured
 						</a>
 					@endif
+					<a class="hard-del" data-id="{{$post->id}}">
+						Hard Delete Post
+					</a>
 				@endif
 				
 				@if($user->hasRole('Moderator'))
@@ -94,6 +97,7 @@
 							Moderator UnDelete
 						</a>
 					@endif
+					
 					
 					{{--It'd be really stupid if you banned yourself.--}}
 					@if($post->user->username != $user->username && (!$post->user->hasRole('Admin') || !$post->user->hasRole('Moderator') )) 

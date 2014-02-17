@@ -56,11 +56,11 @@ class UserController extends BaseController {
 		$userRole = Role::where('name', '=', 'Nobody')->first();
 		
 		$user->roles()->attach(1);//Attach the user role to a user.
-	*/
+		*/
         if ( $user->id )
         {
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
-                        return Redirect::to('user/login')
+                        return Redirect::to('user/loginonly')
                             ->with( 'notice', Lang::get('confide::confide.alerts.account_created') );
         }
         else
@@ -91,6 +91,21 @@ class UserController extends BaseController {
             $this->layout->content = View::make('user.login');
         }
     }
+	
+	public function getLoginonly()
+    {
+        if( Confide::user() )
+        {
+            // If user is logged, redirect to internal 
+            // page, change it to '/admin', '/dashboard' or something
+            return Redirect::to('/');
+        }
+        else
+        {
+            $this->layout->content = View::make('user.loginonly');
+        }
+    }
+	
 
     /**
      * Attempt to do login

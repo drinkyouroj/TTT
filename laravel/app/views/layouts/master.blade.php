@@ -88,9 +88,6 @@
 				  					@endif
 			  					</ul>
 			  				</li>
-			  				<li>
-			  					|
-			  				</li>
 							<li>
 			  					<a href="{{Config::get('app.url')}}/user/logout">Sign out</a>
 							</li>
@@ -136,6 +133,10 @@
 				<ul>
 					<li>
 						<a href="{{Config::get('app.url')}}/about">About</a>
+					</li>
+					<li> x </li>
+					<li>
+						<a href="{{Config::get('app.url')}}/etiquette">etiquette</a>
 					</li>
 					<li> x </li>
 					<li>

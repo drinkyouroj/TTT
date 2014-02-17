@@ -6,4 +6,18 @@ $(function() {
 		});
 	});
 	
+	$('.signup-form form').validate({
+		ignore: [],
+		rules: {
+			password: {
+				required: true,
+				minlength: 6
+			},
+			password_confirmation: {
+				required: true,
+				minlength: 6
+			}
+		}
+	});
+	
 });

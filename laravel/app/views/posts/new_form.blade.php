@@ -48,7 +48,7 @@
 			<div class="title {{$errors->first('title') ? 'has-error' : '' }}">
 				{{ Form::label('title','Title') }}
 				<a href="#" data-toggle="tooltip" title="Need to pick a title!">?</a>
-				{{ Form::text('title', Input::old('title'), array('class'=>'form-control title', 'required', 'minlength' =>'5')) }}
+				{{ Form::text('title', Input::old('title'), array('class'=>'form-control title', 'required', 'minlength' =>'5', 'maxlength' => '30')) }}
 				<span class="error">{{ $errors->first('title') }}</span>
 			</div>
 		
@@ -117,19 +117,19 @@
 			<div class="{{$errors->first('tagline_1') ? 'has-error' : '' }}">
 				{{ Form::label('tagline_1','Tag Line 1', array('class'=>'control-label')) }}
 				<a href="#" data-toggle="tooltip" title="Taglines define what your story might be in less than 3 words per tag">?</a>
-				{{ Form::text('tagline_1', Input::old('tagline_1'), array('class'=>'form-control', 'required') ) }}
+				{{ Form::text('tagline_1', Input::old('tagline_1'), array('class'=>'form-control', 'required', 'maxlength' => '20') ) }}
 				<span class="error">{{ $errors->first('tagline_1') }}</span>
 			</div>
 			
 			<div class="{{$errors->first('tagline_2') ? 'has-error' : '' }}">
 				{{ Form::label('tagline_2','Tag Line 2', array('class'=>'control-label')) }}
-				{{ Form::text('tagline_2', Input::old('tagline_2'), array('class'=>'form-control', 'required')) }}
+				{{ Form::text('tagline_2', Input::old('tagline_2'), array('class'=>'form-control', 'required', 'maxlength' => '20')) }}
 				<span class="error">{{ $errors->first('tagline_2') }}</span>
 			</div>
 			
 			<div class="{{$errors->first('tagline_3') ? 'has-error' : '' }}">
 				{{ Form::label('tagline_3','Tag Line 3', array('class'=>'control-label')) }}
-				{{ Form::text('tagline_3', Input::old('tagline_3'), array('class'=>'form-control', 'required')) }}
+				{{ Form::text('tagline_3', Input::old('tagline_3'), array('class'=>'form-control', 'required', 'maxlength' => '20')) }}
 				<span class="error">{{ $errors->first('tagline_3') }}</span>
 			</div>
 			
@@ -143,7 +143,20 @@
 				
 				{{ Form::label('category','Story Category', array('class'=>'control-label')) }}
 				<a href="#" data-toggle="tooltip" title="Choose 3 categories that this story might fit in.">?</a>
+				<!--
 				{{ Form::select('category[]', $category_select , 1, array('class'=>'form-control', 'multiple'=>'multiple', 'required')  ) }}
+				-->
+				<br/>
+				<div class="warning hidden">You can't select more than 3 categories.</div>
+				<ul>
+				@foreach($categories as $category)
+					<li>
+						<label for="cat-{{$category->id}}">{{$category->title}}</label>
+						{{Form::checkbox('category[]', $category->id, 0, array('class'=>'category','id' => 'cat-'.$category->id) ) }}
+					</li>
+				@endforeach
+				</ul>				
+			 	
 				<span class="error">{{ $errors->first('category') }}</span>
 			</div>
 			

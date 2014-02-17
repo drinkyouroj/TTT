@@ -4,7 +4,7 @@ class HomeController extends BaseController {
 	//The slash!
 	public function getIndex()
 	{	
-		$featured = Featured::get();
+		$featured = Featured::orderBy('order', 'ASC')->get();
 		
 		return View::make('home.index')
 					->with('featured',$featured)
@@ -15,6 +15,11 @@ class HomeController extends BaseController {
 	public function getAbout()
 	{
 		return View::make('static.about');
+	}
+	
+	public function getEtiquette()
+	{
+		return View::make('static.etiquette');
 	}
 	
 	public function getPrivacy()
