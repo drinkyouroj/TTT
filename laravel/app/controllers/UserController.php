@@ -281,8 +281,9 @@ class UserController extends BaseController {
     public function getLogout()
     {
         Confide::logout();
-        //Below view is to say "thank you"
-        $this->layout->content = View::make('user.logout');
+		Session::flush();
+		Session::regenerate();
+        return Redirect::to('/');
     }
 
 

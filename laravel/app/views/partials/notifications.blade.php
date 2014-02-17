@@ -1,4 +1,4 @@
-@foreach($notifications as $not)
+@foreach($notifications as $k => $not)
 
 	@if(isset($not['post']))
 	<li class="new">
@@ -253,6 +253,17 @@
 		@endif
 		
 	</li>
+	@endif
+	
+	@if($k > $break && $all == false)
+		<li class="all-notifications">
+			<span>
+				<a href="{{Config::get('app.url')}}/profile/notifications">
+					All Notifications
+				</a>
+			</span>
+		</li>
+		{? break; ?}	
 	@endif
 	
 @endforeach

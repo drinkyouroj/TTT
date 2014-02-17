@@ -10,6 +10,7 @@ class UserAction {
 		//Grab all the followers for this user
 		$followers = Follow::where('user_id','=', $data['user_id'])
 						->get();
+		$post = Post::where('id', $data['post_id'])->first();
 		
 		//process notification for each follower
 		foreach($followers as $follower) {
@@ -20,12 +21,15 @@ class UserAction {
 			$noti->notification_type = 'repost';
 			$noti->save();
 			
-			$activity = new Activity;
-			$activity->action_id = $data['user_id'];//notification from user
-			$activity->user_id = $follower->follower_id; 
-			$activity->post_id = $data['post_id'];
-			$activity->post_type = 'repost';
-			$activity->save();
+			//below statement is to ensure that the user who owns the content doesn't get the repost.
+			if($follower->follower_id != $post->user->id) {
+				$activity = new Activity;
+				$activity->action_id = $data['user_id'];//notification from user
+				$activity->user_id = $follower->follower_id; 
+				$activity->post_id = $data['post_id'];
+				$activity->post_type = 'repost';
+				$activity->save();
+			}
 			
 		}
 		

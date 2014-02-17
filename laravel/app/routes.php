@@ -93,30 +93,41 @@ Route::post('/search', 'SearchController@postResult');
 
 //Profile routes (handles 90% of text based inputs)
 //Posts
-Route::get( '/profile/editpost/{id}', 'PostController@getPostForm');
-Route::get( '/profile/newpost', 'PostController@getPostForm');
-Route::post( '/profile/submitpost', 'PostController@postPostForm');
+Route::get( '/profile/editpost/{id}', array('before' => 'auth',
+            							'uses' => 'PostController@getPostForm'));
+Route::get( '/profile/newpost', array('before' => 'auth',
+            							'uses' => 'PostController@getPostForm'));
+Route::post( '/profile/submitpost', array('before' => 'auth',
+            							'uses' => 'PostController@postPostForm'));
 
 
 //Notifications
-Route::get( '/profile/notifications', 'ProfileController@getNotifications');
+Route::get( '/profile/notifications', array('before' => 'auth',
+            							'uses' => 'ProfileController@getNotifications'));
 
 //My Posts
-Route::get( '/profile/myposts', 'ProfileController@getMyPosts');
+Route::get( '/profile/myposts', array('before' => 'auth',
+            							'uses' => 'ProfileController@getMyPosts'));
 
 
 //Comments
-Route::get( '/profile/commentform/{post_id}/{reply_id}', 'CommentController@getCommentForm');//This is for getting the reply forms.
-Route::post( '/profile/comment/{post_id}', 'CommentController@postCommentForm');
-
+Route::get( '/profile/commentform/{post_id}/{reply_id}', array('before' => 'auth',
+            							'uses' => 'CommentController@getCommentForm'));//This is for getting the reply forms.
+Route::post( '/profile/comment/{post_id}', array('before' => 'auth',
+            							'uses' => 'CommentController@postCommentForm'));
 
 //Messages
-Route::get( '/profile/replymessage/{reply_id}', 'MessageController@getMessageReplyForm');
-Route::get( '/profile/newmessage/{user_id}', 'MessageController@getMessageForm');
-Route::get( '/profile/newmessage', 'MessageController@getMessageForm');
+Route::get( '/profile/replymessage/{reply_id}', array('before' => 'auth',
+            							'uses' => 'MessageController@getMessageReplyForm'));
+Route::get( '/profile/newmessage/{user_id}', array('before' => 'auth',
+            							'uses' => 'MessageController@getMessageForm'));
+Route::get( '/profile/newmessage', array('before' => 'auth',
+            							'uses' => 'MessageController@getMessageForm'));
 
-Route::post( '/profile/submitmessage', 'MessageController@postMessageForm');
-Route::get( '/profile/messages', 'MessageController@getMessageInbox');
+Route::post( '/profile/submitmessage', array('before' => 'auth',
+            							'uses' => 'MessageController@postMessageForm'));
+Route::get( '/profile/messages', array('before' => 'auth',
+            							'uses' => 'MessageController@getMessageInbox'));
 
 //General Posts
 Route::get( '/profile/{alias}', 'ProfileController@getProfile');

@@ -87,9 +87,33 @@ class PostRestController extends \BaseController {
 	public function show($id)
 	{
 		//Gets one with the right id.
-		$post = Post::where('id', $id)->take(1)->get();
-		$post = $post->toArray();
+		$post = Post::where('id', $id)
+					->where('published',1)->first();
+		if(is_object($post)) {
+			
+			$user = User::where('id', $post->user_id)
+						->select('username')
+						->first();
+			
+			//Sends back a response of the post.
+			return Response::json(
+				array(
+					'post' => $post->toArray(),
+					'user' => $user->toArray(),
+					'url' => Config::get('app.url')
+				),
+				200//response is OK!
+			);
+		} else {
+			return Response::json(
+				array(
+					'post' => array()
+				),
+				200//response is OK!
+			);
+		}
 		
+		/*
 		//grab any of the comments which are also included.
 		$comments = Comment::where('post_id', $id)->get();
 		$comments = $comments->toArray();
@@ -100,15 +124,8 @@ class PostRestController extends \BaseController {
 		}
 		
 		$post[0]['comments'] = $comments_id;
+		*/
 		
-		//Sends back a response of the post.
-		return Response::json(
-			array(
-				'post' => $post[0],//this is to pass back an object instead of an array.
-				'comments' => $comments
-			),
-			200//response is OK!
-		);
 	}
 
 	/**
@@ -159,6 +176,14 @@ class PostRestController extends \BaseController {
 					->count();
 		
 		if($owns) {
+			
+			$post = Post::where('id', $id)->first();
+			
+			//if the post was featured set it back to nothing.
+			if($post->featured) {
+				User::where('id', Auth::user()->id)->update(array('featured'=>0));
+			}
+			
 			Post::where('id', $id)
 				->update(array('published'=>'0'));
 			

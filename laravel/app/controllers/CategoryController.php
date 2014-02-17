@@ -26,8 +26,8 @@ class CategoryController extends BaseController {
 				case 'viewed':
 					$posts = Category::find($cat->id)->postsviews;
 				break;
-				case 'favorited':
-					$posts = Category::find($cat->id)->postsfavorites;
+				case 'recent':
+					$posts = Category::find($cat->id)->recent;
 				break;
 				case 'discussed':
 					$posts = Category::find($cat->id)->postsdiscussed;

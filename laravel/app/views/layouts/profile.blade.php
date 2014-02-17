@@ -23,7 +23,9 @@
 
 @section('filters')
 	{{--Let's just include the Category filters by default--}}
-	@include('partials/generic-filter')
+	@if(Request::segment(2) != 'newpost')
+		@include('partials/generic-filter')
+	@endif
 @stop
 
 {{--This is the general structure for most profile situations--}}

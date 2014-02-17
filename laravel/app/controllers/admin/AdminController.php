@@ -84,7 +84,6 @@ class AdminController extends Controller {
 	 * RESTFUL stuff
 	 */
 
-
 	//Below sets a certain 
 	public function getFeature() {
 		$feature_id = Request::segment(3);
@@ -100,12 +99,13 @@ class AdminController extends Controller {
 		if($post->featured) {
 			$post->featured = false;
 			$post->featured_date = date('Y-m-d');
+			$order = $post->order;
 			Featured::where('post_id', $post->id)->delete();
 		} else {
 			$post->featured = true;
 			$post->featured_date = date('Y-m-d');
 			
-			//lets just be sure we didn't miss this.
+			//lets just be sure we didnt' already post this as new.
 			if(!Featured::where('post_id', $post->id)->count()) {
 				
 				if($order == 'last') {
@@ -126,6 +126,8 @@ class AdminController extends Controller {
 				$featured->save();
 			}
 		}
+		
+		
 		$post->save();
 		
 		return Response::json(

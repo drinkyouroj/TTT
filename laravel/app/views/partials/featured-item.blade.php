@@ -34,9 +34,9 @@
 
 			{{--The below function --}}
 			@if($w == 1)
-				{? $limit = 610 ?}
+				{? $limit = 510 ?}
 			@elseif($w == 2)
-				{? $limit = 1000 ?}
+				{? $limit = 1150 ?}
 			@elseif($w == 3)
 				{? $limit = 2200 ?}
 			@endif

@@ -56,7 +56,7 @@ Route::filter('auth', function()
         Session::put( 'loginRedirect', Request::url() );
 
         // Redirect back to user login
-        return Redirect::to( 'user/login' );
+        return Redirect::to( '/' );
     }
 });
 

@@ -1,7 +1,11 @@
 {{--This is both the activity and my post item.--}}
 
-<div class="col-md-4 post-id-{{$act->post->id}}">
-	<div class="generic-item activity {{$act->post_type}}">
+<div class="animated fadeIn 
+@if(isset($featured_item) && $featured_item) col-md-8 profile-featured 
+@else col-md-4 
+@endif post-id-{{$act->post->id}} 
+{{$act->post_type}}">
+	<div class="generic-item activity">
 		<header>
 			@if($act->post_type == 'post')
 				<h3 class="post">
@@ -25,19 +29,18 @@
 			
 			@if(Auth::check())
 				{{--If you are the owner of this post show menu options--}}
-				@if(Auth::user()->id == $act->post->user->id && 
-					strtotime(date('Y-m-d H:i:s', strtotime('-72 hours'))) <= strtotime($act->post->created_at) &&
-					$act->post_type == 'post'
-					)
+				@if(Auth::user()->id == $act->post->user->id && $act->post_type == 'post')
 					<ul class="user-menu">
 						<li class="options">
 							<a href="#post-edit">
 								Options
 							</a>
 							<ul class="menu-listing">
+								@if(strtotime(date('Y-m-d H:i:s', strtotime('-72 hours'))) <= strtotime($act->post->created_at) )
 								<li class="edit">
 									<a href="{{Config::get('app.url')}}/profile/editpost/{{$act->post->id}}">Edit</a>
 								</li>
+								@endif
 								{{--Check out the fact that below has a hidden function --}}
 								<li class="feature @if($act->post->id != Session::get('featured')) @else hidden @endif">
 									<a href="#feature" data-id="{{$act->post->id}}">Feature</a>
@@ -58,7 +61,7 @@
 				
 				</a>
 			</div>
-			<div class="the-tags">
+			<div class="the-tags @if(strlen($act->post->tagline_1.$act->post->tagline_2.$act->post->tagline_3) >= 35) long @endif">
 				{{$act->post->tagline_1}} |
 				{{$act->post->tagline_2}} |
 				{{$act->post->tagline_3}}

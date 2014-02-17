@@ -4,18 +4,10 @@ class HomeController extends BaseController {
 	//The slash!
 	public function getIndex()
 	{	
-		/*
-		$featured = Post::where('featured', '=', 1)
-					->where('published',1)
-					->orderby('featured_date','desc')
-					->take(10)
-					->get();
-		*/
 		$featured = Featured::get();
 		
 		return View::make('home.index')
-					->with('featured',$featured)	//Featured Posts
-					//->with('past_featured',$past_featured)//Past Featured
+					->with('featured',$featured)
 					;
 	}
 
@@ -24,4 +16,20 @@ class HomeController extends BaseController {
 	{
 		return View::make('static.about');
 	}
+	
+	public function getPrivacy()
+	{
+		return View::make('static.privacy');
+	}
+	
+	public function getContact()
+	{
+		return View::make('static.contact');
+	}
+	
+	public function getTerms()
+	{
+		return View::make('static.terms');
+	}
+	
 }

@@ -121,10 +121,10 @@
 			<div class="system-share">
 				<span class="fav-container share-action">
 					<a class="fav"
-						
 						data-post="{{$post->id}}">
 						Favorite
 						{{$post->favorites->count() ? '<span class="brackets">(<span class="numbers">'.$post->favorites->count().'</span>)</span>' : ''}}
+						<div class="description fav-description">Save this to your profile.</div>
 					</a>
 				</span>
 				
@@ -134,6 +134,7 @@
 						data-post="{{$post->id}}">
 						Repost
 						{{$post->reposts->count() ? '<span class="brackets">(<span class="numbers">'.$post->reposts->count().'</span>)</span>' : ''}}
+						<div class="description repost-description">Share this with your followers.</div>
 					</a>
 				</span>
 				
@@ -143,6 +144,7 @@
 						data-post="{{$post->id}}">
 						Like
 						{{$post->likes->count() ? '<span class="brackets">(<span class="numbers">'.$post->likes->count().'</span>)</span>' : ''}}
+						<div class="description like-description">Give this more visibility to the community.</div>
 					</a>
 				</span> 
 			</div>

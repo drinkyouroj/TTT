@@ -4,10 +4,17 @@ $(function() {
 	});
 	
 	//*Follow Actions*********************************************
-	$('.profile-options .follow, .follow-container .follow').on('click', function(event) {
+	$('.profile-options .follow').on('click', function(event) {
 		event.preventDefault();
 		follow($(this).data('user'));
 	});
+	
+	$('.follow-container .follow').on('click', function(event) {
+		event.preventDefault();
+		follow($(this).data('user'));
+		$(this).fadeOut();
+	});
+	
 		//See the followers list
 		$('.followers a').on('click', function(event){
 			followers_box($(this).data('user'));
@@ -41,15 +48,8 @@ $(function() {
 	$('.system-share a.like').on('click', function() {
 		like($(this).data('post'));
 	});
-/*
-	$('.navbar-right .notifications-parent')
-		.mouseenter(function() {
-			$('ul.notifications',this).slideDown();
-		})
-		.mouseleave(function() {
-			$('ul.notifications',this).slideUp();
-		});	
-*/
+	
+	//Delete Comment**********************************************
 	$('.comments-listing a.delete').on('click', function(event) {
 		event.preventDefault();
 		comment_delete($(this).data('delid'));
@@ -88,7 +88,7 @@ function followers_box(id) {
 			$('#followbox .modal-body').empty();
 			var $follows;
 			$.each(data.followers, function(index, value) {
-				$('#followbox .modal-body').append('<a href="'+window.site_url+'profile/'+value.username+'"><img src="'+window.site_url+'rest/profileimage/'+value.id+'"/>'+value.username+'</a>');
+				$('#followbox .modal-body').append('<a href="'+window.site_url+'profile/'+value.username+'"><div class="profile-container"><div class="profile-img-container" style="background-image: url('+window.site_url+'rest/profileimage/'+value.id+');"></div><h5>'+value.username+'</h5><div class="clearfix"></div></div></a>');
 			});
 			
 			$('#followbox .modal-title').html('Your Followers');
@@ -105,7 +105,7 @@ function following_box(id) {
 			
 			$('#followbox .modal-body').empty();
 			$.each(data.following, function(index, value) {
-				$('#followbox .modal-body').append('<a href="'+window.site_url+'profile/'+value.username+'"><img src="'+window.site_url+'rest/profileimage/'+value.id+'"/>'+value.username+'</a>');
+				$('#followbox .modal-body').append('<a href="'+window.site_url+'profile/'+value.username+'"><div class="profile-container"><div class="profile-img-container" style="background-image: url('+window.site_url+'rest/profileimage/'+value.id+');"></div><h5>'+value.username+'</h5><div class="clearfix"></div></div></a>');
 			});
 			
 			$('#followbox .modal-title').html('People You Follow');

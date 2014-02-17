@@ -29,7 +29,6 @@
     <![endif]-->
   </head>
 <body>
-
 <div class="header-wrapper">
 	<div class="menu-wrapper">
 	  	<header class="container menu">
@@ -78,7 +77,7 @@
 			  					<a href="#notifications">Notifications</a>
 			  					<ul class="notifications">
 			  						@if(count($notifications))
-			  						
+			  							{? $break = 4; $all = false; ?}
 			  							{{--Below file has the foreach routine for both the top section and the full listing --}}
 				  						@include('partials/notifications')
 				  						
@@ -155,7 +154,24 @@
 		</div>
 	</div>
 </div>
-	
+
+	@if(Auth::guest())
+		<div class="modal fade" id="guestSignup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" id="myModalLabel">Signup and join the fun!</h4>
+		      </div>
+		      <div class="modal-body">
+		        <div class="signup-form">
+				{{ Confide::makeSignupForm()->render() }}
+				</div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	@endif
     
     
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/jquery-1.9.1.js"></script>

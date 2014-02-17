@@ -1,3 +1,9 @@
+AuthType Basic
+AuthName "Website Site with Restriced Access"
+AuthUserFile /var/www/html/2000/laravel/public/.htpasswd
+AuthGroupFile /dev/null
+require valid-user
+
 
 <IfModule mod_rewrite.c>
     Options -MultiViews

@@ -25,7 +25,7 @@ function feature(id,height, width, order) {
 		data: {
 			height: height,
 			width: width,
-			order: order			
+			order: order
 		},
 		success: function(data) {
 			//Below is a pretty rudimentary setup for now, but it definitely works well.

@@ -4,11 +4,17 @@
 */
 class MessageController extends BaseController {
 
+	public function __construct() {
+	}
+
 	/**
 	 * Messages inbox
 	 */
 	
 	public function getMessageInbox() {
+		if(!Auth::check()) {
+			return Redirect::to('/');
+		}
 		$messages = Message::where('to_uid', Session::get('user_id'))
 						->where('reply_id', 0)
 						->orWhere('to_uid', 0)
@@ -25,6 +31,9 @@ class MessageController extends BaseController {
 	 * Message form 
 	 */
 	public function getMessageForm($user_id=false, $reply_id = false) {
+		if(!Auth::check()) {
+			return Redirect::to('/');
+		}
 		if($reply_id) {
 			//message you're replying to.
 			$message = Message::where('id', '=', $reply_id)

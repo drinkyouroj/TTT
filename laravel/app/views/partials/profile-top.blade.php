@@ -91,12 +91,16 @@
 	
 	<div class="follow-container">
 		<div class="following">
+			<a href="#following" class="following-link" data-user="{{$user_id}}">
 			<div class="numbers">{{$following}}</div>
-			<a href="#following" class="following-link" data-user="{{$user_id}}">Following</a>
+			Following
+			</a>
 		</div>
 		<div class="followers">
+			<a href="#followers" class="followers-link" data-user="{{$user_id}}">
 			<div class="numbers">{{$followers}}</div>
-			<a href="#followers" class="followers-link" data-user="{{$user_id}}">Followers</a>
+			Followers
+			</a>
 		</div>
 	</div>
 	

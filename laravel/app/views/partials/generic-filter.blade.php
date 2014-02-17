@@ -18,7 +18,7 @@
 					{? $current_seg = Request::segment(1).'/'.Request::segment(2) ?}
 					<option value="{{Config::get('app.url')}}/{{$current_seg}}/popular">Most Popular</option>
 					<option value="{{Config::get('app.url')}}/{{$current_seg}}/viewed">Most Viewed</option>
-					<option value="{{Config::get('app.url')}}/{{$current_seg}}/favorited">Most Favorited</option>
+					<option value="{{Config::get('app.url')}}/{{$current_seg}}/recent">Most Recent</option>
 					<option value="{{Config::get('app.url')}}/{{$current_seg}}/discussed">Most Discussed</option>
 					<option value="{{Config::get('app.url')}}/{{$current_seg}}/longest">Longest</option>
 					<option value="{{Config::get('app.url')}}/{{$current_seg}}/shortest">Shortest</option>

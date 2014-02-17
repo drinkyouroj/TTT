@@ -6,6 +6,7 @@ $(function(){
 	
 	//Form Validation***********************************************************
 	$('.post-form form').validate({
+		ignore: [],
 		rules: {
 			title: {
 				required: true,
@@ -18,11 +19,17 @@ $(function(){
 			},
 			category: {
 				maxthree: true
+			},
+			image: {
+				required: true
 			}
 		},
 		messages: {
 			title: {
 				remote: 'The title is already in use'
+			},
+			image: {
+				required: 'You need to select an image.'
 			}
 		}
 		
@@ -40,14 +47,18 @@ $(function(){
 		var code = e.keyCode || e.which; 
 		if (code  == 13) {               
 			e.preventDefault();
+			window.photo_search_page = 1;
 			image_pull();//Pulls in images from Flickr
+			$('.photo-results').fadeIn();
 			return false;
 		}
 	});
 	
 	//The button for searching
 	$('.activate-search').on('click', function() {
+		window.photo_search_page = 1;
 		image_pull();//Pulls in images from Flickr
+		$('.photo-results').fadeIn();
 	});//The Search button alias of the above.
 	
 	//Paginated 
@@ -60,6 +71,7 @@ $(function(){
 	});
 	
 	window.selected_image = 0;
+	$('.chosen-label, .processed-label').hide();
 	
 	//Click on the photo results to select the image.
 	$('.photo-results').on('click','img',function() {
@@ -71,6 +83,9 @@ $(function(){
 		window.selected_image = img;//attach the source to a global variable
 		$('.photo-results').fadeOut();//Hide the photo options
 		$('.photo-processor').fadeIn();//fade in the photo process options
+		$('.chosen-label, .processed-label').fadeIn();
+		$('.banner').css('background-image', 'url('+img+')').addClass('fun-bg');
+		
 	});//Loads in the chosen photos
 	
 	//Let's reset the photo input system.
@@ -98,43 +113,16 @@ $(function(){
 					process: process
 				},
 				success: function(data) {
-					$('.post-form form input.processed-image').remove();//Let's remove this just incase
+					$('input.processed-image').val('');//Let's remove this just incase
 					$('.photo-processed').html('');
 					$('.photo-processed').append('<img src="'+window.site_url+'uploads/final_images/'+data+'">');
-					$('.post-form form').append($('<input class="processed-image" type="hidden" name="image" value="'+data+'" >'));
+					$('input.processed-image').val(data);
 				}
 			});
 		} else {
 			console.log('error with image processor: missing var');
 		}
 	});//End of Photo Processor
-	
-	
-	//The Carousel Like effect on the Form********************************************************
-	
-	/**
-	 * NOTE: I use $.localScroll instead of $('#navigation').localScroll() so I
-	 * also affect the >> and << links. I want every link in the page to scroll.
-	 */
-	$('.form-nav').localScroll({
-		target: '.form-container', // could be a selector or a jQuery object too.
-		queue:true,
-		duration:1000,
-		hash:false,
-		onBefore:function( e, anchor, $target ){
-			// The 'this' is the settings object, can be modified
-			
-		},
-		onAfter:function( anchor, settings ){
-			// The 'this' contains the scrolled element (#content)
-		}
-	});
-	
-	$('.form-nav a').click(function() {
-		$('.form-nav a').removeClass('active');
-		$(this).addClass('active');
-	});
-	
 	
 });
 
@@ -158,6 +146,7 @@ function image_pull() {
 					image_url_orig = 'http://farm'+value.farm+'.static.flickr.com/'+value.server+'/'+value.id+'_'+value.secret+'.jpg';
 					
 					var $newAppend = $('<img class="result-image '+value.id+'" src="'+image_url+'" data-image="'+image_url_orig+'">');
+					
 					$('.photos .photo-results').append($newAppend);
 					image_counter = index;
 				});

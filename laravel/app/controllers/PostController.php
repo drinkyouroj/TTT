@@ -102,7 +102,7 @@ class PostController extends BaseController {
 				}
 			}
 					
-			return View::make('posts/form')->with('fullscreen', true);
+			return View::make('posts/new_form')->with('fullscreen', true);
 		}
 		
 	}
@@ -111,7 +111,6 @@ class PostController extends BaseController {
 	 * Where the Posts are born! (and edited)
 	 */
 	public function postPostForm() {
-		
 		//Detect if this is an update scenario or if its new and prepare the data accordingly.
 		if(Input::get('id')) {
 			//THIS is the update scenario.
@@ -160,8 +159,8 @@ class PostController extends BaseController {
 				
 				$user = User::where('id', Auth::user()->id)->first();
 							
-				//is this your first post?
-				if(!$user->featured) {
+				//no featured for this user? set this new post as featured.
+				if($user->featured == false) {
 					User::where('id', Auth::user()->id)
 						->update(array('featured' => $post->id));
 				}
@@ -254,7 +253,5 @@ class PostController extends BaseController {
 			$post->published = 1;
 			
 			return $post;
-		}	
-
-
+		}
 }

@@ -54,6 +54,13 @@ class Category extends Eloquent {
 					->orderBy(DB::raw('LENGTH(body)'),'ASC');	
 	}
 
+	public function recent()
+	{
+		return $this->belongsToMany('Post', 'category_post')
+					->where('published',1)
+					->orderBy('created_at','DESC');
+	}
+
 	public function validate($input) {
 		$rules = array(
 			'title' => 'Required|Unique:categories'

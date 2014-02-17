@@ -81,7 +81,7 @@ label.checkbox input {
 	height:40px;
 	border:solid 3px #ddd;
 	font-family: 'Montserrat', sans-serif;
-	text-transform:uppercase;
+	text-transform:none;
 	padding-left:5px;
 	padding-right:20px;
 }
@@ -115,7 +115,6 @@ label.checkbox input {
 	height:40px;
 	border:solid 3px #ddd;
 	font-family: 'Montserrat', sans-serif;
-	text-transform:uppercase;
 	padding-left:5px;
 	padding-right:20px;
 }

@@ -45,13 +45,16 @@ class ProfileController extends BaseController {
 
 			//featured post.
 			$post = Post::where('id', $user->featured)->first();
+			$featured = new stdClass();
+			$featured->post = $post;
+			$featured->post_type = 'post';
+			
 
 			$activity = ProfilePost::where('profile_id','=', $user_id)
 							->orderBy('created_at', 'DESC')
 							->get();//get the activities 	
 			
 		} else {
-			
 			//We're doing the user info loading this way to keep the view clean.
 			$user_id = Auth::user()->id;
 			$user = Auth::user();
@@ -61,6 +64,9 @@ class ProfileController extends BaseController {
 			
 			//featured post.
 			$post = Post::where('id', $user->featured)->first();
+			$featured = new stdClass();
+			$featured->post = $post;
+			$featured->post_type = 'post';
 			
 			//Activity is pulled from the user (current user) activity instead of ProfilePost (what anyone can see)
 			$activity = Activity::where('user_id','=', $user_id)
@@ -73,13 +79,10 @@ class ProfileController extends BaseController {
 		}
 
 		return View::make('profile/index')
-				//->with('likes', $likes)
-				//->with('follows', $follows)
-				//->with('reposts', $reposts)
 				->with('activity', $activity)
 				->with('myposts', $myposts)
 				->with('user', $user)
-				->with('post', $post)
+				->with('featured', $featured)
 				->with('is_following', $is_following)//you are following this profile
 				->with('is_follower', $is_follower)//This profile follows you.
 				->with('mutual', $mutual)
@@ -111,9 +114,20 @@ class ProfileController extends BaseController {
 		
 		$user = User::where('id', '=', Session::get('user_id'))->first();
 		
+		if($user->featured != 0) {
+			$post = Post::where('id', $user->featured)->first();
+			$featured = new stdClass();
+			$featured->post = $post;
+			$featured->post_type = 'post';
+		} else {
+			$featured = false;
+		}
+		
+		
 		return View::make('profile/myposts')
 				->with('myposts', $myposts)
 				->with('user', $user)
+				->with('featured', $featured)
 				->with('fullscreen', true);
 	}
 	

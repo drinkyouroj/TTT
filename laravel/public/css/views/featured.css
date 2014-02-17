@@ -15,6 +15,17 @@
 	width: 71.5%;
 }
 
+.top-featured .featured-item.h-1{
+	height:326px;
+	overflow:hidden;
+	border-bottom:0px;
+}
+
+.top-featured .featured-item.h-2{
+	height:652px;
+	overflow:hidden;
+}
+
 .top-featured .featured-item .the-image {
 	position: relative;
 	width: 100%;
@@ -38,12 +49,23 @@
 
 /*Featured content is for height 1 situations.*/
 .top-featured .featured-item .the-featured-content {
+	display:none;
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	width: 100%;
 	padding: 10px 0;
 	background-image: url('../../img/global/black.png');
+	color:#ccc;
+	font-family: 'Montserrat', sans-serif;
+	font-size:12px;
+	font-weight:400;
+	text-align:left;
+	padding:5px 10px;
+}
+
+.top-featured .featured-item:hover .the-featured-content {
+	display:block;
 }
 
 .top-featured .gutter-sizer { width: 5%; }

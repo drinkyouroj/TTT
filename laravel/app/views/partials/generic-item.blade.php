@@ -13,7 +13,8 @@
 				</a>
 			</div>
 			@endif
-			<div class="the-tags">
+			{{--You can adjust the length detection below--}}
+			<div class="the-tags @if(strlen($post->tagline_1.$post->tagline_2.$post->tagline_3) >= 35) long @endif ">
 				{{$post->tagline_1}} | 
 				{{$post->tagline_2}} | 
 				{{$post->tagline_3}}

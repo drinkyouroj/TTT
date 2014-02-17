@@ -13,6 +13,7 @@
 		<div class="notifications-listing">
 		<h3>Notifications</h3>
 		@if(count($notifications))
+			{? $break = 10; $all = false; ?}
 			{{--Below file has the foreach routine for both the top section and the full listing --}}
 			@include('partials/notifications')
 		@else
@@ -70,25 +71,24 @@
 @stop
 
 @section('main')
-	
-	@if(Auth::check())
-		{{--
-			This is a logged in scenario.  This will display if the user is LOGGED IN.
-				Below is escaping the Ember.js handlebars layout by using an include.
-			--}}
-		
-	@else
-		{{--
-			This is a not logged in scenario.  This will display if the user is not logged in.
-			--}}
-		
-	@endif
 
 	{{--Gotta check to see if this is you or other people.--}}
-		
-		<div class="row activity-container generic-listing">
+		@if((Session::get('username') == Request::segment(2)) || (Request::segment(2) == '') )
+			{? $me = true; ?}
+		@else 
+			{? $me = false; ?}
 			
-			@if((Session::get('username') == Request::segment(2)) || (Request::segment(2) == '') )
+			<div class="row activity-nav">
+				<a class="all">Show All</a>
+				<a class="myposts">Show {{Request::segment(2)}}'s Posts</a>
+				<a class="myfavorites">Show {{Request::segment(2)}}'s Favorites</a>
+			</div>
+			
+		@endif
+		
+		<div class="row activity-container generic-listing {{ $me ? '': 'myposts' }}">
+			
+			@if($me)
 			{{--This is for the user's actual profile--}}
 			<div class="col-md-4">
 				<div class="generic-item equal-height add-new">
@@ -99,14 +99,17 @@
 			</div>
 			@endif
 			
-			@if(isset($post) && $post )
+			@if(isset($featured) && $featured )
 				{? $featured_item = 1 ?}
-				@include('partials/generic-item')
+				{? $act = $featured ?}
+				@include('partials/activity-item')
 			@endif
-				
+			
+			{? $featured_item = 0 ?}
+			
 			@if(!empty($activity))
 				@foreach($activity as $act)
-					@if($act->post->id != $post->id)
+					@if($act->post->id != $featured->post->id)
 						@include('partials/activity-item')
 					@endif
 				@endforeach
@@ -119,5 +122,14 @@
 @section('js')
 	@parent
 	{{-- Include all the JS required for the situation--}}
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/profile.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/handlebars-v1.3.0.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/profile.js"></script>
+	
+	@if(!$me)
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/myposts.js"></script>
+	@endif
+	
+		
+	{{--Mothafucking handlebars--}}
+		@include('partials/generic-handlebar-item')
 @stop
