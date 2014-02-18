@@ -619,6 +619,13 @@ label.error {
 */
 /*Tiny*/
 @media (max-width: 479px) {
+	.user {
+		width:100%;
+	}
+	
+	.user h2 {
+		font-size:24px;
+	}
 	
 	.activity-container.generic-listing .generic-item .the-image{
 		height: 195px;
