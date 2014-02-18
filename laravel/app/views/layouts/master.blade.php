@@ -18,7 +18,14 @@
     <!--Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
-	
+	<script>
+		@if(App::environment('local'))
+		window.site_url = '/tt/';//has trailing slash
+		@else
+		window.site_url = '/';//has trailing slash
+		@endif
+		
+	</script>
 	<!--Page Specific CSS-->
 	@yield('css')
 	

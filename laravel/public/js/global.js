@@ -1,4 +1,3 @@
-window.site_url = '/tt/';//has trailing slash
 window.error = 'You done messed up A-A-Ron....'; //default error for the JS side of the app.
 
 $(function() {

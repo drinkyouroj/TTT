@@ -76,9 +76,9 @@
 			{? $me = false; ?}
 			
 			<div class="row activity-nav">
-				<a class="all">Show All</a>
-				<a class="myposts">{{Request::segment(2)}}'s Posts</a>
-				<a class="myfavorites">{{Request::segment(2)}}'s Favorites</a>
+				<li class="left"><a class="all">Show All</a></li>
+				<li><a class="myposts">{{Request::segment(2)}}'s Posts</a></li>
+				<li><a class="myfavorites">{{Request::segment(2)}}'s Favorites</a></li>
 			</div>
 			
 		@endif
