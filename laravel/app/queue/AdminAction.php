@@ -1,5 +1,5 @@
 <?php
-class UserAction {
+class AdminAction {
 	
 	function messageAll($job, $data) {
 		
