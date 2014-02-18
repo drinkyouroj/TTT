@@ -86,9 +86,8 @@ $(function(){
 		window.selected_image = img;//attach the source to a global variable
 		$('.photo-results').fadeOut();//Hide the photo options
 		$('.photo-processor').fadeIn();//fade in the photo process options
-		$('.chosen-label, .processed-label').fadeIn();
+		$('.chosen-label').fadeIn();
 		$('.banner').css('background-image', 'url('+img+')').addClass('fun-bg');
-		
 	});//Loads in the chosen photos
 	
 	//Let's reset the photo input system.
@@ -97,7 +96,7 @@ $(function(){
 		$('.photo-processed').html('');
 		$('.photo-results').fadeIn();//Hide the photo options
 		$('.photo-processor').fadeOut();//fade in the photo process options
-		$('.post-form form input.processed-image').remove();//Get rid of the processed image.
+		$('.post-form form input.processed-image').val('');//Get rid of the processed image.
 		$('.photo-system .reset-search').addClass('hidden');//Hide the reset button
 	});
 	
@@ -117,8 +116,10 @@ $(function(){
 				},
 				success: function(data) {
 					$('input.processed-image').val('');//Let's remove this just incase
-					$('.photo-processed').html('');
-					$('.photo-processed').append('<img src="'+window.site_url+'uploads/final_images/'+data+'">');
+					$('.chosen-label').fadeOut();
+					$('.processed-label').fadeIn();
+					$('.photo-chosen').html('');
+					$('.photo-chosen').append('<img src="'+window.site_url+'uploads/final_images/'+data+'">');
 					$('input.processed-image').val(data);
 				}
 			});

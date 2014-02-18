@@ -116,7 +116,7 @@ label.error {
 
 .chosen-label, .processed-label,.photo-chosen, .photo-processed {
 	float:left;
-	width: 50%;
+	width: 100%;
 }
 
 .photo-chosen img, .photo-processed img {

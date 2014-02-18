@@ -21,8 +21,9 @@ Sign up!
 		{{ Confide::makeSignupForm()->render() }}
 		</div>
 		<aside class="explanation">
-			<p>Explantion for the signup process.  Potentially put some disclaimer here or something.</p>
+			<p>Read our <a href="{{Config::get('app.url')}}/privacy">Privacy Policy</a> and <a href="{{Config::get('app.url')}}/terms">Terms of Use</a>.</p>
 		</aside>
+		
 	<div class="clearfix"></div>
 	</div>
 @stop

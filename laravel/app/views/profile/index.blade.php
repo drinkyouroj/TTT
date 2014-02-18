@@ -17,7 +17,7 @@
 			{{--Below file has the foreach routine for both the top section and the full listing --}}
 			@include('partials/notifications')
 		@else
-			No noficiations at thsi time.
+			No notificiations at this time.
 		@endif
 		</div>
 		@endif
@@ -77,8 +77,8 @@
 			
 			<div class="row activity-nav">
 				<a class="all">Show All</a>
-				<a class="myposts">Show {{Request::segment(2)}}'s Posts</a>
-				<a class="myfavorites">Show {{Request::segment(2)}}'s Favorites</a>
+				<a class="myposts">{{Request::segment(2)}}'s Posts</a>
+				<a class="myfavorites">{{Request::segment(2)}}'s Favorites</a>
 			</div>
 			
 		@endif

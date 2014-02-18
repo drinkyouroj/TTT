@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('css')
+	<link href="{{Config::get('app.url')}}/css/views/user.css" rel="stylesheet" media="screen">
 @stop
 
 @section('js')
@@ -11,5 +12,8 @@ Forgot Password
 @stop
 
 @section('content')
-	{{ Confide::makeForgotPasswordForm()->render() }}
+	<div class="forgot-container">
+		<h2>forgot your password?</h2>
+		{{ Confide::makeForgotPasswordForm()->render() }}
+	</div>
 @stop

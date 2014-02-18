@@ -19,6 +19,8 @@ class CreateMessagesTable extends Migration {
 			$table->integer('to_uid');
 			$table->integer('reply_id');
 			$table->text('body');
+			$table->dateTime('last_mod');//This stores the last date that the message was replied to.
+			$table->integer('last_id');//Stores the latest message id.
 			$table->timestamps();
 		});
 	}

@@ -12,98 +12,137 @@ class MessageController extends BaseController {
 	 */
 	
 	public function getMessageInbox() {
-		if(!Auth::check()) {
-			return Redirect::to('/');
-		}
-		$messages = Message::where('to_uid', Session::get('user_id'))
-						->where('reply_id', 0)
-						->orWhere('to_uid', 0)
-						->orderBy('id', 'DESC')
-						->get();
-						
+		
+		//Let's first grab the threads you own.
+		$threads = Message::orWhere('from_uid', Auth::user()->id)
+							->orWhere('to_uid', Auth::user()->id)
+							->orWhere('to_uid', 0)
+							->where('reply_id', 0)
+							->orderBy('last_mod', 'DESC')//last modified date.
+							->get();
+		
 						
 		return View::make('messages/inbox')
 					->with('fullscreen', true)
-					->with('messages', $messages);
+		//			->with('messages', $messages)
+					->with('threads', $threads);
 	}
 	
 	/**
-	 * Message form 
+	 * Message and Message Form.
 	 */
-	public function getMessageForm($user_id=false, $reply_id = false) {
-		if(!Auth::check()) {
-			return Redirect::to('/');
-		}
-		if($reply_id) {
-			//message you're replying to.
-			$message = Message::where('id', '=', $reply_id)
-							->where('to_uid', Auth::user()->id)
-							->orWhere('to_uid', 0)
-							->first();
-			if($message->to_uid != 0) {
-				//let's grab the thread parent's id.
-				$thread =  Message::where('id', '=', $reply_id)
-								->where('reply_id',0)
-								->where('to_uid', Auth::user()->id)
-								->first();
-			}
-							
-			$user = User::where('id', '=', $message->from_uid)->first();
-			return View::make('messages/form')
-					->with('message', $message)
-					->with('message_user', $user);
-		} else {
-			$user = User::where('id', '=', $user_id)->first();
-			//Can't find that user?
-			if(is_null($user)) {
-				//Gotta find all the mutual follows!
-				$mutuals = FollowHelper::mutual_list();
-				return View::make('messages/form')
-					->with('mutuals', $mutuals);
+	public function getMessageForm($user_id = false) {
+		
+		if(!$user_id) {
+			$to = Message::where('from_uid', $user_id)->where('to_uid', Auth::user()->id);
+			$from = Message::where('to_uid', $user_id)->where('from_uid', Auth::user()->id);
+			
+			if($to->count()) {
+				$reply_id = $to->first()->reply_id;
+				$user = User::where('id', '=', $reply_id);
+			} elseif($from->count()) {
+				$reply_id = $from->first()->reply_id;
+				$user = User::where('id', '=', $reply_id);			
 			} else {
-				return View::make('messages/form')
-					->with('message_user', $user);
+				self::getMessageReplyForm();
 			}
 			
+		} else {
+			$user = User::where('id', '=', $user_id);
 		}
+		
+		if(isset($user) && $user->count()) {
+			//user actually exists.
+			return View::make('messages/form')
+				->with('message_user', $user->first());
+		} else {
+			//This is truly a new situation and the user id didnt' exist.
+			$mutuals = FollowHelper::mutual_list();
+			return View::make('messages/form')
+				->with('mutuals', $mutuals);
+		}
+		
+		
 	}
 	
+	/**
+	 * Message reply situation.
+	 */
 	public function getMessageReplyForm($reply_id=false) {
-		if($reply_id) {
-			return self::getMessageForm(false, $reply_id);
+		
+		//Grab the parent message.
+		$message = Message::where('id',$reply_id)
+							->orWhere('to_uid', 0);
+		
+		if($message->count()) {
+			//Grab the rest of the thread
+			$thread =  Message::where('reply_id',$message->first()->reply_id)//grab all the related messages.
+								->where('to_uid', Auth::user()->id)
+								->orderBy('created_at','DESC')
+								->get();
+			$message = $message->first();
+			$user = User::where('id', '=', $message->from_uid)->first();
 		} else {
-			return Redirect::to('profile');
+			$user = false;
+			$thread = false;
 		}
+		
+		return View::make('messages/form')
+				->with('message', $message)
+				->with('thread', $thread)
+				->with('message_user', $user);
 	}
 	
 	
 	public function postMessageForm() {
-		
+		//Let's first make sure the data is good.
 		$message = self::message_object_input_filter();//Post object takes objects.
 		$validator = $message->validate($message->toArray());//validation takes arrays
 		
 		if($validator->passes()) {//Successful Validation
-			//Gotta check to make sure that the user isn't messing with the reply id threading.
-			$parent_check = Message::where('id', $message->reply_id)
-									->where('reply_id',0)//Gotta be a parent
-									->count();
-			//Should return a zero.
-			
 			//Gotta check to see if they are mutually following.
 			$is_following = FollowHelper::is_following($message->to_uid);
 			$is_follower = FollowHelper::is_follower($message->to_uid);
 			
 			if($is_follower && $is_following) {
 				$mutual = true;
-			}
-			
-			if($mutual && !$parent_check) {
-				$message->save();
-				return Redirect::to('profile');
 			} else {
+				dd('test');
 				return View::make('generic/error')
 						->with('message', "Done messed up A-A-RON");
 			}
+			
+			//Let's check to see if the users have a thread running already if there is no reply id.
+			if($message->reply_id == 0) {
+				$to = Message::where('from_uid', $message->to_uid)->where('to_uid', Auth::user()->id);
+				$from = Message::where('to_uid', $message->to_uid)->where('from_uid', Auth::user()->id);
+				
+				//Let's set the thread reply id so that we can get that over with.
+				if($to->count()) {
+					$message->reply_id = $to->first()->reply_id;
+				} elseif($from->count()) {
+					$message->reply_id = $from->first()->reply_id;
+				} else {
+					//Actually a new message!
+					$message->reply_id = 0;
+				}
+			}
+			 
+			
+			if($mutual) {
+				$message->save();
+				
+				//Let's update the parent thread's last mod and last ids so that the thread knows to order it.
+				Message::where('id', $message->reply_id)
+						->update(array(
+								'last_mod'=> date('Y-m-d H:i:s'),
+								'last_id'=> $message->id)
+								);
+				
+				
+				
+				return Redirect::to('profile');
+			} 
 		} else {
 			if($message->reply_id != 0 || !empty($message->reply_id)) {
 				//this is a reply situation
@@ -126,10 +165,6 @@ class MessageController extends BaseController {
 			$message->body = Request::get('body');
 			
 			return $message;
-		}
-		
-		private function mutual_follow_check($uid1, $uid2) {
-			
 		}
 }
 ?>

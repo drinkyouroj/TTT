@@ -20,7 +20,7 @@
 			{{ Confide::makeLoginForm()->render() }}
 		</div>
 		<aside class="login-disclaimer">
-			Disclaimer here.	
+			Read our <a href="{{Config::get('app.url')}}/etiquette">Community Etiquette</a> page.	
 		</aside>
 		<div class="clearfix"></div>
 	</div>

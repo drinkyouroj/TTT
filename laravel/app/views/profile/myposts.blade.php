@@ -8,9 +8,9 @@
 
 @section('main')
 	<div class="row activity-nav">
-		<a class="all">Show All of My Posts</a>
-		<a class="myposts">Show My Posts</a>
-		<a class="myfavorites">Show My Favorites</a>
+		<a class="all">Show All</a>
+		<a class="myposts">My Posts</a>
+		<a class="myfavorites">My Favorites</a>
 	</div>
 	<div class="row activity-container generic-listing myposts">
 		@if(count($myposts))
@@ -24,7 +24,9 @@
 			
 			{? $featured_item = 0 ?}
 			@foreach($myposts as $act)
-				@include('partials/activity-item')
+				@if(isset($act->post))
+					@include('partials/activity-item')
+				@endif
 			@endforeach
 		@endif
 	</div>

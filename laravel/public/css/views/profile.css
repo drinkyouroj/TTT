@@ -1,7 +1,6 @@
 .profile-top {
 	border-bottom: 2px solid #000;
 	padding-bottom: 10px;
-	margin-bottom: 10px;
 }
 
 .profile-top:after {
@@ -20,6 +19,10 @@
 
 .profile-top h2 a{
 	color:#000;
+}
+
+.profile-top h2 a:hover{
+	color:#aaa;
 }
 
 .profile-top h3 {
@@ -82,11 +85,15 @@ ul.profile-options li:hover a {
 
 
 ul.profile-options li a.new-post {
-	background-image: url('../../img/icons/post.png');
+	background-image: url('../../img/icons/write.png');
 }
 
 ul.profile-options li a.all-notification {
 	background-image: url('../../img/icons/notifications-color.png');
+}
+
+ul.profile-options li a.my-posts {
+	background-image: url('../../img/icons/posts2.png');
 }
 
 ul.profile-options li a.edit-profile {
@@ -101,11 +108,8 @@ ul.profile-options li a.follow.unfollow {
 	background-image: url('../../img/icons/unfollow.png') !important;
 }
 
-	
-}
-
 ul.profile-options li a.new-message {
-	background-image: url('../../img/icons/post.png');
+	background-image: url('../../img/icons/message-colored.png');
 }
 
 .follow-container {
@@ -119,6 +123,10 @@ ul.profile-options li a.new-message {
 .follow-container>div{
 	display:inline-block;
 	margin-left:10px;
+}
+
+.follow-container>div:hover a{
+	color:#aaa;
 }
 
 .follow-container .numbers{
@@ -172,14 +180,25 @@ ul.profile-options li a.new-message {
 /*activity nav (filters)*/
 .activity-nav a {
 	font-family:'bebas';
-	padding-right:20px;
+	padding:2px 20px 5px 20px;
 	letter-spacing:1px;
-	color:#000;
+	background-color:#292929;
+	color:#fff;
 	cursor:pointer;
+	
+	border-radius: 0px;
+}
+
+.activity-nav a.all {
+border-radius: 0px 0px 0px 20px;
+}
+
+.activity-nav a.myfavorites {
+
 }
 
 .activity-nav a:hover {
-	color:#aaa;
+	background-color:#000;
 }
 
 /*Left Sidebar*/
@@ -192,6 +211,9 @@ ul.profile-options li a.new-message {
 	font-family: 'EB Garamond';
 }
 
+.left-sidebar .notifications-listing a:hover {
+	color:#aaa !important;
+}
 
 .left-sidebar .notifications-listing h3 {
 	font-family: 'bebas';
@@ -312,13 +334,9 @@ ul.profile-options li a.new-message {
 	color:#A156D1;
 }
 
-.all-notifications {
-
-}
-
-.all-notifications span {
-	font-family:'bebas';
-	font-size:13px;
+.all-notifications span a {
+	font-family:'bebas' !important;
+	font-size:16px !important;
 	letter-spacing:2px;
 	color:#000;
 }

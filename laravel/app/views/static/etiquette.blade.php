@@ -42,7 +42,6 @@
 		<li><span>Submit list based posts.</span> Eg. “Top Ten Reason 90’s Kids Rule.”</li>
 		<li><span>Report submissions purely on personal opinion.</span> Submissions are to be reported if they break community guidelines, not because you disagree with their content.</li>
 		<li><span>Shamelessly self promote.</span> Mentioning, “Reposting this would really mean a lot to me” at the end of your submission is a sure fire way to lose potential likes and follows. Titles, taglines, and submissions featuring "#TeamFollowback," “Like if you’ve done the same,” etc. are prohibited. This also includes messaging others, offering gifts, and creating mass campaigns for likes, reposts, and favorites.</li>
-		<li><span>Obnoxiously type in ALL CAPS.</span> This applies to titles, taglines, submissions, and comments.</li>
 		<li><span>Include hyperlinks.</span> Hyperlinks won’t function within submissions. Do not enter a url and tell others to copy and paste it into their address bar.</li>
 		<li><span>Make nothing comments.</span> Stating that you’re “first” on a submission’s comments adds no value to the conversation.</li>
 		<p><span>Protest the lack of attention your submission received.</span> Please do not make additional submissions voicing your complaints. They will be poorly received. Consistent, quality submissions will eventually gain the attention they deserve.</p>

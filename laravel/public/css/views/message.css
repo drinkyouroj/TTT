@@ -1,0 +1,29 @@
+.inbox-container {
+	background:#fff;
+	border-radius: 3px;
+}
+
+.inbox {
+	padding: 20px 0;
+	margin: 20px 0;
+}
+
+.inbox .new-message {
+	
+}
+
+.messages {
+	
+}
+
+.messages .message {
+	padding: 10px 0;
+}
+
+.messages .message:nth-child(even) {
+	background:#ccc;
+}
+
+.messages .message .the-excerpt{
+	background:#ccc
+}

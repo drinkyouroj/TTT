@@ -120,7 +120,7 @@
 	
 	<div class="the-share">
 		@if(Auth::check() && $post->user->id != Session::get('user_id'))
-		href="{{Config::get('app.url')}}/favorite/{{$post->id}}" 
+		
 		@endif
 			<div class="system-share">
 				<span class="fav-container share-action">
@@ -154,7 +154,7 @@
 			</div>
 		
 		<div class="external-share">
-			//Addthis will go here.
+			
 		</div>
 	</div>
 	
@@ -173,7 +173,7 @@
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1 page-content">
 						<div class="row-content" id="{? echo $c ? '':'one' ?}">
-							{{$body}}
+							{{{$body}}}
 						</div>
 					</div>
 					<div class="col-md-10 col-md-offset-1 row-divider">

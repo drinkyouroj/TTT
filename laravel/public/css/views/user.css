@@ -3,11 +3,15 @@
  */
  
  /*Shared*/
+ a {
+ 	cursor:pointer;
+ }
+ 
  .content {
  	margin-bottom:50px;
  }
  
-.login-container h2, .signup-container h2 {
+.login-container h2, .signup-container h2, .forgot-container h2 {
 	font-family:'bebas';
 	letter-spacing:2px;
 }
@@ -46,12 +50,38 @@ label.checkbox input {
 	font-weight:400;
 }
 
-.alert, .alert-error {
+.alert-error {
 	color:#DF3B3C;
 	padding-left:0px;
 	webkit-box-shadow: none;
 	box-shadow: none;
 	margin-bottom:0px !important;
+}
+
+.alert-yes {
+	color:#22b274;
+	padding-left:0px;
+	webkit-box-shadow: none;
+	box-shadow: none;
+	margin-bottom:0px !important;
+}
+
+button {
+	height:45px;
+	background:#ddd;
+	border-radius: 5px;
+  	-webkit-border-radius: 5px;
+  	-moz-border-radius: 5px;
+  	border-radius: 5px;
+  	border-bottom:3px solid #bbb !important;
+  	border-right:3px solid #bbb; 
+  	border-left:0px;
+  	border-top:0px;
+  	
+  	font-family: 'Montserrat', sans-serif;
+  	font-size:16px;
+  	text-transform:uppercase;
+  	clear:both;
 }
 
 /*LOGIN*/
@@ -119,6 +149,41 @@ label.checkbox input {
 	padding-right:20px;
 }
 
+/*FORGOT*/
+.forgot-container {
+	text-align:center;
+}
+
+.forgot-container input[type="text"]{
+	-webkit-appearance: textfield;
+	padding: 1px;
+	background-color: white;
+	border: 0px;
+	height:45px;
+	margin-right:10px;
+	border:solid 3px #ddd;
+	font-family: 'Montserrat', sans-serif;
+	padding-left:5px;
+	padding-right:20px;
+}
+
+.forgot-container .btn{
+	height:45px;
+	background:#ddd;
+	border-radius: 5px;
+  	-webkit-border-radius: 5px;
+  	-moz-border-radius: 5px;
+  	border-radius: 5px;
+  	border-bottom:3px solid #bbb;
+  	border-right:0px; 
+  	border-left:0px;
+  	border-top:0px;
+  	
+  	font-family: 'Montserrat', sans-serif;
+  	font-size:16px;
+  	text-transform:uppercase;
+  	clear:both;
+}
 
 /***************************************
 	Media Queries

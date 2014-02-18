@@ -31,7 +31,7 @@
 <body>
 <div class="header-wrapper">
 	<div class="menu-wrapper">
-	  	<header class="container menu">
+	  	<header class="visible-md visible-lg container menu">
 	  		<div class="row">
 		  		<nav class="col-md-12 navbar navbar-inverse nav-conatiner" role="navigation">
 		  			<div class="container">
@@ -98,6 +98,61 @@
 	  		</div>
 	  	</header>
   	</div>
+  
+  	
+  	<header id="mobile-header" class="hidden-md hidden-lg navbar-fixed-top">
+		<div class="row">
+			<nav role="navigation" class="mobile-menu nav navbar navbar-default">
+				<div class="mobile-logo hidden-md hidden-lg">
+					<a href="{{Config::get('app.url')}}"><img src="img/global/logo-mobile.png"></a>
+				</div>
+		
+				<button type="button" class="hidden-md hidden-lg navbar-toggle glyphicon glyphicon-th-large" data-toggle="collapse" data-target="#mobile-menu"></button>
+				<div id="mobile-menu" class="collapse">
+					<ul class="nav navbar-nav main-nav">
+						@if(Auth::guest())
+						<li>
+							<a href="{{Config::get('app.url')}}/about">About</a>
+						</li>
+						<li>
+							<a href="{{Config::get('app.url')}}/user/login">Sign in/Sign up</a>
+						</li>
+						@else
+						<li class="loggedin profile">
+							<a href="{{Config::get('app.url')}}/profile">{{Session::get('username')}}</a>
+						</li>
+						<li class="loggedin post">
+							<a href="{{Config::get('app.url')}}/profile/newpost">Post</a>
+						</li>
+						<li class="loggedin message">
+							<a href="{{Config::get('app.url')}}/profile/messages">Message</a>
+						</li>
+						<li class="loggedin notifications">
+							<a href="{{Config::get('app.url')}}/profile/notifications">Notifications</a>
+						</li>
+							@if(Session::get('admin'))
+							<li class="loggedin admin">
+								<a href="{{Config::get('app.url')}}/admin">Admin</a>
+							</li>
+							@else
+						
+							@endif
+						@endif
+					
+					</ul>
+				
+					{{--Remember that float: right is inverse visually.--}}
+					{{ Form::open(array('url'=> 'search', 'class' => 'navbar-form search', 'role'=>'search' )) }}
+						<div class="form-group search">
+							<input autocomplete="off" name="term" type="text" class="form-control" placeholder="Search">
+							<input type="submit" value="Search" class="hidden" >
+							<div class="result-box"></div>
+						</div>
+					{{ Form::close() }}
+				</div>
+			</nav>
+		</div>
+  	</header>
   	
   	<div class="banner">
   		<div class="container">

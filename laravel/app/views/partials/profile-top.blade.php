@@ -41,7 +41,7 @@
 		@else
 			<li>
 				<a class="new-post" href="{{Config::get('app.url')}}/profile/newpost">
-					<span>Post</span>
+					<span>Write</span>
 				</a>
 			</li>
 			<li>
@@ -51,7 +51,7 @@
 			</li>
 			<li>
 				<a class="my-posts" href="{{Config::get('app.url')}}/profile/myposts">
-					<span>My Posts</span>
+					<span>Post View</span>
 				</a>
 			</li>
 		@endif
