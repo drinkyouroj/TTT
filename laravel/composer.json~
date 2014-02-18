@@ -2,15 +2,8 @@
 	"name": "laravel/laravel",
 	"description": "The Laravel Framework.",
 	"keywords": ["framework", "laravel"],
-	"repositories": [
-	    {
-		"type": "vcs",
-		"url": "https://github.com/Zizaco/ardent.git"
-	    }
-	],
 	"require": {
-		"patchwork/utf8": "1.1.*",
-		"laravel/framework": "4.1.x",
+		"laravel/framework": "4.0.*",
 		"zizaco/entrust": "dev-master",
 		"zizaco/confide": "1.0.x",
 		"way/guard-laravel": "dev-master",

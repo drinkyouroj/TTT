@@ -6,7 +6,7 @@
 				{? $nofilter = true ?}
 			@endif
 			
-			<div class="@if(!$nofilter) visible-md visible-lg col-md-12 no-bar  @else col-md-8 col-sm-8 @endif">
+			<div class="visible-md visible-lg @if(!$nofilter) col-md-12 no-bar  @else col-md-8 col-sm-8 @endif">
 				<ul class="category-filter">
 					<li>{{ link_to('', 'Featured') }}</li><!--Featured = Home-->
 				@foreach($categories as $k => $category)
@@ -15,7 +15,7 @@
 				</ul>
 			</div>
 			
-			<div class="@if(!$nofilter) hidden-md hidden-lg mobile-filters col-md-12 no-bar  @else col-md-8 col-sm-8 @endif">
+			<div class="hidden-md hidden-lg mobile-filters @if(!$nofilter) mobile-filters col-xs-12 no-bar  @else col-md-8 col-sm-8 no-bar @endif">
 			<button type="button" class="categories-button navbar-toggle" data-toggle="collapse" data-target="#filter-dropdown">Categories</button>
 				<div id="filter-dropdown" class="navbar-collapse collapse">
 				<ul class="category-filter">
@@ -29,7 +29,7 @@
 			
 			{{--We need to figure out a way to do the redirect sort based on what controller you're coming from--}}
 			@if($nofilter)
-			<div class="col-md-4 col-sm-4">
+			<div class="col-md-4 col-sm-4 sort_by_container">
 				<select name="sort_by" class="sort_by_filter pull-right">
 					<option selected="selected">sort by</option>
 					{{--This might need some weird switches and stuff for different scenarios--}}
@@ -41,6 +41,7 @@
 					<option value="{{Config::get('app.url')}}/{{$current_seg}}/longest">Longest</option>
 					<option value="{{Config::get('app.url')}}/{{$current_seg}}/shortest">Shortest</option>
 				</select>
+			<div class="clearfix"></div>
 			</div>
 			@endif
 		</div>

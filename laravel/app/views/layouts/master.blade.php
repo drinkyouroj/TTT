@@ -104,7 +104,7 @@
 		<div class="row">
 			<nav role="navigation" class="mobile-menu nav navbar navbar-default">
 				<div class="mobile-logo hidden-md hidden-lg">
-					<a href="{{Config::get('app.url')}}"><img src="img/global/logo-mobile.png"></a>
+					<a href="{{Config::get('app.url')}}"><img src="{{Config::get('app.url')}}/img/global/logo-mobile.png"></a>
 				</div>
 		
 				<button type="button" class="hidden-md hidden-lg navbar-toggle glyphicon glyphicon-th-large" data-toggle="collapse" data-target="#mobile-menu"></button>

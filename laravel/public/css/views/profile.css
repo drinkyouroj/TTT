@@ -33,9 +33,9 @@
 
 
 .user {
+	width:30%;
 	position: relative;
 	text-align: center;
-	width: 30%;
 	margin: 0 auto;
 }
 
@@ -199,6 +199,31 @@ border-radius: 0px 0px 0px 20px;
 
 .activity-nav a:hover {
 	background-color:#000;
+}
+
+/*Mobile Header*/
+.mobile-profile-options {
+width:inherit;
+	position:relative;
+	display:block;
+	margin-top:30px;
+	text-align:center;
+}
+
+.mobile-profile-options .profile-options {
+	position:relative;
+	display:block;
+	margin:0px auto;
+	text-align:center;
+}
+
+.mobile-profile-options .profile-options li {
+	display:inline-block;
+}
+
+.mobile-profile-options .mobile-follow-container {
+	position:relative;
+	margin:0px auto;
 }
 
 /*Left Sidebar*/
@@ -594,6 +619,7 @@ label.error {
 */
 /*Tiny*/
 @media (max-width: 479px) {
+	
 	.activity-container.generic-listing .generic-item .the-image{
 		height: 195px;
 	}
@@ -621,6 +647,15 @@ label.error {
 
 /*Small*/
 @media (min-width: 480px) and (max-width: 767px) {
+	
+	.user {
+		width:100%;
+	}
+	
+	.user h2 {
+		font-size:24px;
+	}
+	
 	.activity-container.generic-listing .generic-item .the-image{
 		height: 240px !important;
 	}
@@ -633,6 +668,15 @@ label.error {
 
 /*Normal*/
 @media (min-width: 768px) and (max-width: 991px) {
+	.user {
+		width:100%;
+	}
+	
+	.user h2 {
+		font-size:24px;
+	}
+	
+	
 	.activity-container.generic-listing .generic-item .the-image{
 		height: 240px !important;
 	}
@@ -640,6 +684,9 @@ label.error {
 
 /*Bigger*/
 @media (min-width: 992px) and (max-width: 1199px) {
+	ul.profile-options li a {
+	margin-right:5px !important;
+	}
 	.activity-container.generic-listing .generic-item .the-image{
 		height: 141px !important;
 	}
