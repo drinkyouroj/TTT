@@ -25,7 +25,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://twothousandtimes.com/',
+	'url' => 'http://twothousandtimes.com',
 
 	/*
 	|--------------------------------------------------------------------------
