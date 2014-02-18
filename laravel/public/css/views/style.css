@@ -1037,6 +1037,20 @@ margin-top:20px;
 		height: 290px !important;
 	}
 	
+	.filters-container .mobile-filters button.categories-button {
+		margin-right:0px;
+	}
+	
+	.single-post .the-content .row-content {
+	padding-left:15px;
+	padding-right:15px;
+		-webkit-column-gap: 0px;
+	column-gap: 0px;
+	-moz-column-count: 1;
+	-webkit-column-count: 1;
+	column-count: 1;
+	}
+	
 }
 
 /*Small*/
@@ -1069,6 +1083,10 @@ margin-top:20px;
 	.generic-item {
 		width:100% !important;
 	}
+	
+	.filters-container .mobile-filters button.categories-button {
+		margin-right:0px;
+	}
 
 }
 
@@ -1090,6 +1108,7 @@ margin-top:20px;
 	.single-post .the-share .share-action .fav-description{
 		left:23%;
 	}
+
 }
 
 /*Bigger*/

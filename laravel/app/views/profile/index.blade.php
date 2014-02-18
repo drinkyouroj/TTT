@@ -88,7 +88,7 @@
 			@if($me)
 			{{--This is for the user's actual profile--}}
 			<div class="col-md-4">
-				<div class="generic-item equal-height add-new">
+				<div class="generic-item add-new">
 					<header>
 						{{link_to('profile/newpost','')}}
 					</header>

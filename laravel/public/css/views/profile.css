@@ -398,18 +398,18 @@ width:inherit;
 	background-image: url('../../img/profile/add-post2.jpg');
 	background-position: top center;
 	border:0px;
+	overflow:hidden;
 	
 	cursor:pointer;
 }
 
 .activity-container .add-new:hover {
-	background-position: bottom center;
+	opacity:0.4;
+	filter:alpha(opacity=40); /* For IE8 and earlier */
 }
 
-.activity-container .add-new a{
-	display:block;
+.activity-container .add-new a {
 	width: 100%;
-	height: 220px;
 }
 
 
@@ -639,6 +639,10 @@ label.error {
 		display:none;
 	}
 	
+	.activity-container .add-new {
+		display:none;
+	}
+	
 	.activity-nav li {
 		list-style:none;
 		float:none;
@@ -690,6 +694,10 @@ label.error {
 		display:none;
 	}
 	
+	.activity-container .add-new {
+		display:none;
+	}
+	
 	.activity-container.generic-listing .generic-item .the-image{
 		height: 240px !important;
 	}
@@ -711,6 +719,10 @@ label.error {
 	}
 	
 	.sidebar-container {
+		display:none;
+	}
+	
+	.activity-container .add-new {
 		display:none;
 	}
 	
@@ -741,5 +753,5 @@ label.error {
 
 /*Huge*/
 @media (min-width: 1200px) {
-
+	
 }  

@@ -25,8 +25,8 @@ class UserTableSeeder extends Seeder {
 		//First user
         $user->username = 'ryuhei';
         $user->email = 'ryuhei@y-designs.com';
-        $user->password = 'ryuhei';
-		$user->password_confirmation = 'ryuhei';
+        $user->password = 'Abba666!!!';
+		$user->password_confirmation = 'Abba666!!!';
         $user->confirmed = 1;
 		$user->save();
 		
@@ -37,12 +37,37 @@ class UserTableSeeder extends Seeder {
 		//First user
         $user->username = 'max';
         $user->email = 'max@y-designs.com';
-        $user->password = 'maximus';
-		$user->password_confirmation = 'maximus';
+        $user->password = 'Abba666!!!';
+		$user->password_confirmation = 'Abba666!!!';
         $user->confirmed = 1;
 		$user->save();
 		
 		unset($user);
+		
+		$user = new User;
+		
+		//First user
+        $user->username = 'Eells';
+        $user->email = 'eells@y-designs.com';
+        $user->password = 'eik5gsih';
+		$user->password_confirmation = 'eik5gsih';
+        $user->confirmed = 1;
+		$user->save();
+		
+		unset($user);
+		
+		$user = new User;
+		
+		//First user
+        $user->username = 'Seabass';
+        $user->email = 'seabass@y-designs.com';
+        $user->password = '1ualhy4n';
+		$user->password_confirmation = '1ualhy4n';
+        $user->confirmed = 1;
+		$user->save();
+		
+		unset($user);
+		
 		
 		//Below are the 3 user Roles for now.
 		$nobody = new Role;
@@ -63,6 +88,17 @@ class UserTableSeeder extends Seeder {
 		
 		$max = User::where('username', 'max')
 				->first();
+		
+		$eells = User::where('username', 'Eells')
+				->first();
+		$seabass = User::where('username', 'Seabass')
+				->first();
+		
+		$eells->attachRole( $admin );
+		$eells->attachRole( $mod );
+		
+		$seabass->attachRole( $admin );
+		$seabass->attachRole( $mod );
 		
 		$ryuhei->attachRole( $admin );
 		$ryuhei->attachRole( $mod );
