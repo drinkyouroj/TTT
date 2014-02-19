@@ -70,6 +70,7 @@ class FollowRestController extends \BaseController {
 		
 	}
 
+/*
 	public function missingMethod($parameters)
 	{
 	    return Response::json(
@@ -77,5 +78,5 @@ class FollowRestController extends \BaseController {
 			200//response is OK!
 		);
 	}
-
+*/
 }

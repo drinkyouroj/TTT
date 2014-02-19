@@ -16,22 +16,34 @@
 			
 		{{--Old Messages/The Thread/Reply--}}
 		@if(isset($thread) && Request::segment(2) == 'replymessage')
-			<div class="message">
+			<div class="message original-message">
 				<div class="the-content">
 					{{$message->body}}
 				</div>
-				<span>{{$message->created_at->format('d-m-y H:i:s')}}</span>
+				<span class="date">{{$message->created_at->format('d-m-y H:i:s')}}</span>
+				<span> from {{$message->from->username}}</span>
 			</div>
 			
-				{? if($message->to_uid == Auth::user()->id) { $to_uid = $message->from_uid; $from_uid = $message->to_uid; } ?}
-				{? if($message->from_uid == Auth::user()->id) { $to_uid = $message->to_uid; $to_uid = $message->from_uid; } ?}
-			
+				@if($message->to_uid == Auth::user()->id)
+					{{--You're replying to the other person--}} 
+					{? $to_uid = $message->from_uid;  ?}
+				@else
+					{{--You're sending another message annoyingly to the same person before they reply--}}
+					{? $to_uid = $message->to_uid; ?}
+				@endif
+				
+				{{--Either way its from you--}}
+				{? $from_uid = Auth::user()->id; ?}
+				
 			@foreach($thread as $item)
 				<div class="message">
 					<div class="the-content">
 						{{$item->body}}
 					</div>
-					<span>{{$item->created_at->format('d-m-y H:i:s')}}</span>
+					<span class="date">
+						{{$item->created_at->format('d-m-y H:i:s')}}
+					</span>
+					<span> from {{$item->from->username}}</span>
 				</div>
 			@endforeach
 			

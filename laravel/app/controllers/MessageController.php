@@ -14,11 +14,11 @@ class MessageController extends BaseController {
 	public function getMessageInbox() {
 		
 		//Let's first grab the threads you own.
-		$threads = Message::orWhere('from_uid', Auth::user()->id)
-							->orWhere('to_uid', Auth::user()->id)
-							->orWhere('to_uid', 0)
-							->where('reply_id', 0)
-							->orderBy('last_mod', 'DESC')//last modified date.
+		$threads = Message::where('reply_id', 0)
+							->where(function($query) {
+								$query->where('from_uid', Auth::user()->id)
+										->orWhere('to_uid', Auth::user()->id);
+							})->orderBy('last_mod', 'DESC')//last modified date.
 							->get();
 		
 						
@@ -76,9 +76,12 @@ class MessageController extends BaseController {
 		
 		if($message->count()) {
 			//Grab the rest of the thread
-			$thread =  Message::where('reply_id',$message->first()->reply_id)//grab all the related messages.
-								->where('to_uid', Auth::user()->id)
-								->orderBy('created_at','DESC')
+			$thread =  Message::where('reply_id',$message->first()->id)
+								->where(function($query) {
+									$query->where('to_uid', Auth::user()->id)
+										  ->orWhere('from_uid', Auth::user()->id);
+								})//grab all the related messages.
+								->orderBy('created_at','ASC')
 								->get();
 			$message = $message->first();
 			$user = User::where('id', '=', $message->from_uid)->first();
@@ -107,26 +110,24 @@ class MessageController extends BaseController {
 			if($is_follower && $is_following) {
 				$mutual = true;
 			} else {
-				dd('test');
 				return View::make('generic/error')
 						->with('message', "Done messed up A-A-RON");
 			}
 			
 			//Let's check to see if the users have a thread running already if there is no reply id.
-			if($message->reply_id == 0) {
-				$to = Message::where('from_uid', $message->to_uid)->where('to_uid', Auth::user()->id);
-				$from = Message::where('to_uid', $message->to_uid)->where('from_uid', Auth::user()->id);
-				
-				//Let's set the thread reply id so that we can get that over with.
-				if($to->count()) {
-					$message->reply_id = $to->first()->reply_id;
-				} elseif($from->count()) {
-					$message->reply_id = $from->first()->reply_id;
-				} else {
-					//Actually a new message!
-					$message->reply_id = 0;
-				}
+			$to = Message::where('from_uid', $message->to_uid)->where('to_uid', Auth::user()->id)->where('reply_id', 0);
+			$from = Message::where('to_uid', $message->to_uid)->where('from_uid', Auth::user()->id)->where('reply_id', 0);
+			
+			//Let's set the thread reply id so that we can get that over with.
+			if($to->count()) {
+				$message->reply_id = $to->first()->id;
+			} elseif($from->count()) {
+				$message->reply_id = $from->first()->id;
+			} else {
+				//Actually a new message!
+				$message->reply_id = 0;
 			}
+
 			 
 			
 			if($mutual) {
@@ -141,7 +142,7 @@ class MessageController extends BaseController {
 				
 				
 				
-				return Redirect::to('profile');
+				return Redirect::to('profile/messages');
 			} 
 		} else {
 			if($message->reply_id != 0 || !empty($message->reply_id)) {
