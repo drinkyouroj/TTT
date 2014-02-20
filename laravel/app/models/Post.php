@@ -60,15 +60,31 @@ class Post extends Eloquent {
 		return $this->belongsToMany('Category', 'category_post');
 	}
 	
-	public function validate($input)
+	/**
+	 * Now with existing id checker
+	 */
+	public function validate($input, $id = false)
 	{
-		$rules = array(
-				'title' => 'Required|Unique:posts',
+		//If id is false its a new situation.
+		if($id == false) {
+			$rules = array(
+				'title' => 'Required',
+				'tagline_1' => 'Required',
+				'tagline_2' => 'Required',
+				'tagline_3' => 'Required',
+				'body' => 'Twothousand',
+				'image' => 'required'
+			);
+		} else {
+			$rules = array(
+				'title' => 'Required',
 				'tagline_1' => 'Required',
 				'tagline_2' => 'Required',
 				'tagline_3' => 'Required',
 				'body' => 'Twothousand'
 		);
+		}
+		
 		return Validator::make($input, $rules);
 	}
 	

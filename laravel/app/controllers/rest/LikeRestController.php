@@ -62,13 +62,5 @@ class LikeRestController extends \BaseController {
 			200//response is OK!
 		);
 	}
-
-	public function missingMethod($parameters)
-	{
-	    return Response::json(
-			array('result'=>'fail'),
-			200//response is OK!
-		);
-	}
-
+	
 }

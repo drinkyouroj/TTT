@@ -10,12 +10,12 @@ $(function(){
 		rules: {
 			title: {
 				required: true,
-				minlength: 5,
+				minlength: 5,/*
 				remote: {
 					url: window.site_url+'rest/posttitle',//Gotta make sure the title doesn't exist already...
 					type: 'GET',
 					contentType: "application/json"
-				}
+				}*/
 			},
 			'category[]': {
 				required: true,
@@ -28,7 +28,7 @@ $(function(){
 		},
 		messages: {
 			title: {
-				remote: 'The title is already in use'
+				//remote: 'The title is already in use'
 			},
 			image: {
 				required: 'You need to select an image.'

@@ -18,9 +18,13 @@
 
 @section('js')
 	@parent
+	<script type="text/javascript">
+		window.edit_id = {{$post->id}};
+	</script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/additional-methods.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/profile/form.js"></script>
+	
 @stop
 
 {{--The main content area--}}

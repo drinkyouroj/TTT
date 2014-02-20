@@ -94,12 +94,4 @@ class FavoriteRestController extends \BaseController {
 		);
 	}
 
-	public function missingMethod($parameters)
-	{
-	    return Response::json(
-			array('result'=>'fail'),
-			200//response is OK!
-		);
-	}
-
 }

@@ -17,4 +17,19 @@ class PostTitleRestController extends \BaseController {
 		}
 	}
 	
+	
+	public function show($id) {
+		if(Post::where('title', '=', Input::get("title"))->count() != 0){
+			return Response::json(
+				false,
+				200//response is OK!
+			);
+		} else {
+			return Response::json(
+				true,
+				200//response is OK!
+			);
+		}
+	}
+	
 }

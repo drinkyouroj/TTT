@@ -18,6 +18,7 @@ class PostController extends BaseController {
 			$post = $post->first();
 			//Do the post math here
 			$body_array = self::divide_text($post->body, 1500);//the length is currently set to 3000 chars
+			//$body_array = explode( "\n", wordwrap( $post->body, 1500));
 			$user_id = $post->user->id;
 			
 			$is_following = Follow::where('follower_id', '=', Session::get('user_id'))
@@ -63,7 +64,7 @@ class PostController extends BaseController {
 			$index = 0;
 			$arrayOutput = array();
 			$arrayOutput[0]= '';
-			foreach($arrayWords as $word)
+			foreach($arrayWords as $k => $word)
 			{
 			    // +1 because the word will receive back the space in the end that it loses in explode()
 				$wordLength = strlen($word) + 1;
@@ -76,9 +77,17 @@ class PostController extends BaseController {
 			    } else {
 			    	
 			        $index += 1;
-			        $currentLength = $wordLength;
-			        $arrayOutput[$index] = $word;
+					$c = false;
 					
+			        $currentLength = $wordLength;
+					
+					//Below is to counter this weird thing where it gets rid of a space.
+					if($c) {
+						$arrayOutput[$index] = $word;
+					} else {
+						$arrayOutput[$index] = $word.' ';
+					}
+					$c++;
 			    }
 			}
 			return $arrayOutput;
@@ -136,6 +145,7 @@ class PostController extends BaseController {
 				}
 				
 				$post = self::post_object_input_filter($new,$check_post);//Post object filter gets the input and puts it into the post.
+				$validator = $post->validate($post->toArray(),$check_post->id);//validation takes arrays.  Also if this is an update, it needs an id.
 			}
 			
 		} else {
@@ -155,10 +165,10 @@ class PostController extends BaseController {
 				return Redirect::to('profile');
 			}
 			$post = self::post_object_input_filter($new);//Post object creates objects.
+			$validator = $post->validate($post->toArray(),false);//no
 		}
 		
-		 
-		$validator = $post->validate($post->toArray());//validation takes arrays
+		
 		
 		if($validator->passes()) {//Successful Validation
 			if($new) {
@@ -244,7 +254,7 @@ class PostController extends BaseController {
 				$post->user_id = Auth::user()->id;
 				
 				//Gotta make sure to make the alias only alunum.  Don't change alias on the update.  We don't want to have to track this change.
-				$post->alias = preg_replace('/[^A-Za-z0-9]/', '', Request::get('title')).'-'.date('m-d-Y');//makes alias.  Maybe it should exclude other bits too...
+				$post->alias = preg_replace('/[^A-Za-z0-9]/', '', Request::get('title')).'-'.str_random(5).'-'.date('m-d-Y');//makes alias.  Maybe it should exclude other bits too...
 				$post->story_type = Request::get('story_type');
 				
 				$post->category = serialize(Request::get('category'));
