@@ -31,6 +31,21 @@ body {
 	font-family: 'EB Garamond', serif;
 }
 
+button.btn {
+	background-color:#333 !important;
+	border-bottom:solid 4px #000 !important;
+	font-family:'bebas';
+	color:#fff;
+	font-weight:100;
+	letter-spacing:1px;
+}
+
+button.btn:hover {
+	background-color:#000 !important;
+	color:#eee !important;
+	
+}
+
 .header-wrapper {
 	float: left;
 	width: 100%;
@@ -569,6 +584,55 @@ margin-top:20px;
 	color: #9f9f9f;
 	border: 2px solid #9f9f9f;
 	font-family: 'EB Garamond';
+}
+
+/**Guest Signup Modal Window*/
+#guestSignup .signup-container {
+	border-bottom:1px solid #ccc;
+}
+
+#guestSignup h2 {
+	font-family:'bebas';
+}
+
+#guestSignup .signup-container h2 {
+	margin-top:0px;
+}
+
+#guestSignup h4.modal-title {
+	font-family:'bebas';
+}
+
+#guestSignup label {
+	display:none;
+}
+
+#guestSignup input {
+	font-family: 'Montserrat', sans-serif;
+	padding: 1px;
+	background-color: white;
+	border: 0px;
+	height: 40px;
+	margin-bottom:5px;
+	padding-left: 5px;
+	border: solid 3px #ddd;
+}
+
+#guestSignup a {
+	cursor:pointer;
+}
+
+#guestSignup .email-please {
+	margin:5px 0px 10px 0px;
+}
+
+#guestSignup .form-actions {
+	margin:10px 0px;
+}
+
+#guestSignup button.btn {
+	height:40px;
+	margin-bottom:6px;
 }
 
 /**Generic Listing*/

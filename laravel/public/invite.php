@@ -25,7 +25,8 @@ body {
 
 .logo-landing {
 	text-align:center;
-	margin-top:200px;
+	margin:0px;
+	padding-top:200px;
 }
 
 .logo-landing img {
@@ -53,6 +54,7 @@ form.password input.password-field {
   	border-radius: 20px; 
   	
   	text-align:center;
+  	outline: none !important;
 }
 
 form.password input.submit-btn{
