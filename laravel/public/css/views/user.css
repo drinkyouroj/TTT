@@ -40,6 +40,11 @@ label.checkbox input {
 	margin-top:10px;
 }
 
+.login-container input[type=checkbox], .signup-container input[type=checkbox] {
+	margin-top:4px !important;
+	margin-right:5px;
+}
+
 .signup-container button, .signup-container aside, .login-container aside   {
 	margin-top:20px;
 }
@@ -82,7 +87,6 @@ button {
 
 /*LOGIN*/
 .login-container label, .login-container input  , .login-container button, .login-container div, .login-container p, .login-container h2, .login-container aside {
-	float:left;
 	clear:both !important;
 }
 .login-form {
@@ -92,12 +96,17 @@ button {
 .login-container {
 	float:left;
 	background-color:#eeece6;
-	padding-bottom:100px;
+	padding-bottom:65px;
 }
 
 .login-container .login-form {}
 
-.login-container .login-disclaimer {}
+.login-container .login-disclaimer {
+	font-family:'bebas', sans-serif;
+	letter-spacing:1px;
+	padding-top:10px;
+	border-top:1px solid #ddd;
+}
 
 .login-form input[type="text"], .login-form input[type="password"], .login-form input[type="search"], .login-form isindex {
 	-webkit-appearance: textfield;
@@ -115,22 +124,27 @@ button {
 /*SIGN UP*/
 
 .signup-container label , .signup-container input  , .signup-container button, .signup-container div, .signup-container p, .signup-container h2, .signup-container aside {
-	float:left;
 	clear:both !important;
 }
 
 .signup-container {
 	float:left;
+	background-color:#fff;
 }
 
 .signup-container .signup-form {
 	width:100%;
 }
 
-.signup-container .explantion {}
+.signup-container .explanation {
+	font-family:'bebas', sans-serif;
+	letter-spacing:1px;
+	padding-top:10px;
+	border-top:1px solid #ddd;
+}
 
 .email-please {
-	margin-top:20px;
+	margin-top:5px;
 }
 
 .signup-container input, .signup-container input[type="password"], .signup-container input[type="search"], .signup-container isindex {
@@ -180,6 +194,7 @@ button {
   	text-transform:uppercase;
   	clear:both;
 }
+
 
 /***************************************
 	Media Queries

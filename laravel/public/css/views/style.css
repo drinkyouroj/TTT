@@ -599,8 +599,16 @@ margin-top:20px;
 	margin-top:0px;
 }
 
-#guestSignup h4.modal-title {
-	font-family:'bebas';
+#guestSignup h4 {
+	font-family: 'bebas', sans-serif;
+	text-transform:uppercase;
+	letter-spacing:1px;
+}
+
+#guestSignup .login-form {
+	padding-top:20px;
+	padding-bottom:30px;
+	border-top:solid 1px #ddd;
 }
 
 #guestSignup label {

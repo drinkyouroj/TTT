@@ -224,12 +224,22 @@
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" id="myModalLabel">Signup and join the fun!</h4>
+		        <h4 class="modal-title" id="myModalLabel"></h4>
 		      </div>
 		      <div class="modal-body">
 		        <div class="signup-form">
+		        <h4>Signup</h4>
 				{{ Confide::makeSignupForm()->render() }}
 				</div>
+				
+				<div class="login-form">
+					<h4>Login</h4>
+					{{ Confide::makeLoginForm()->render() }}
+					<a href="{{Config::get('app.url')}}/user/forgot">forget your password?</a>
+				</div>
+				<aside class="login-disclaimer">
+					Read our guidelines on <a href="{{Config::get('app.url')}}/etiquette">Community Etiquette</a>.
+				</aside>
 		      </div>
 		    </div>
 		  </div>
