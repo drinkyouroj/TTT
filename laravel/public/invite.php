@@ -85,7 +85,7 @@ form.password input.submit-btn{
 	
     <form class="password" action="<?php echo 'http://'.$url ?>" method="POST"> 
         <input type="hidden" name="user" value="twothousand"><br> 
-        <input type="password" class="password-field" name="pass"><br> 
+        <input type="password" class="password-field" name="pass" placeholder="Enter Password Here"><br> 
         <input type="submit" class="submit-btn" name="done"> 
     </form> 
 </html>
