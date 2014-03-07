@@ -18,7 +18,9 @@
 		<div class="login-form">
 			<h2>Login</h2>
 			{{ Confide::makeLoginForm()->render() }}
-			<a href="{{Config::get('app.url')}}/user/forgot">forget your password?</a>
+			<div class="forgot-pw">
+				<a href="{{Config::get('app.url')}}/user/forgot">forget your password?</a>
+			</div>
 		</div>
 		<aside class="login-disclaimer">
 			Read our guidelines on <a href="{{Config::get('app.url')}}/etiquette">Community Etiquette</a>.

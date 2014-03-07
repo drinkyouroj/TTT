@@ -3,7 +3,6 @@
 
 @section('title')
 {{$user->username }}'s Profile
-
 @stop
 
 @section('left_sidebar')
@@ -105,9 +104,15 @@
 			{? $featured_item = 0 ?}
 			
 			@if(!empty($activity))
+				@if($featured == false) 
+					{? $featured_id = 0;?}
+				@else
+					{? $featured_id = $featured->post->id ?} 
+				@endif
+			
 				@foreach($activity as $act)
 					@if(isset($act->post->id))
-						@if($act->post->id != $featured->post->id  )
+						@if($act->post->id != $featured_id  )
 							@include('partials/activity-item')
 						@endif
 					@endif

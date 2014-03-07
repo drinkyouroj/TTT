@@ -187,7 +187,7 @@ class PostController extends BaseController {
 	
 				//Gotta save the categories pivot
 				foreach(Input::get('category') as $k => $category) {
-					if($k <= 2) {//This will ensure that no more than 3 are added at a time.
+					if($k <= 1) {//This will ensure that no more than 2 are added at a time.
 						$post->categories()->attach($category);
 					} else {
 						break;//let's not waste processes

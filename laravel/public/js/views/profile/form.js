@@ -20,7 +20,7 @@ $(function(){
 			'category[]': {
 				required: true,
 				minlength: 1,
-				maxlength: 3
+				maxlength: 2
 			},
 			image: {
 				required: true
@@ -130,7 +130,7 @@ $(function(){
 	
 	/**Category*/
 	$('.category label, .category input').on('click', function(event) {
-		if($('[name="category[]"]:checked').length > 3) {
+		if($('[name="category[]"]:checked').length > 2) {
 			event.preventDefault();
 			$('.category .warning').removeClass('hidden');
 		};
@@ -170,12 +170,12 @@ function image_pull() {
 				
 				if(next_page > 2) {
 					prev_page = window.photo_search_page -1;
-					$previous = $('<a class="pager previous" data-page="'+prev_page+'">Prev</a>');
+					$previous = $('<a class="pager previous" data-page="'+prev_page+'">&#60 Prev</a>');
 					$('.photos .photo-results').append($previous);
 				}
 				
 				if(image_counter >= 29) {
-					$more = $('<a class="pager more" data-page="'+next_page+'">More</a>');
+					$more = $('<a class="pager more" data-page="'+next_page+'">More &#62</a>');
 					$('.photos .photo-results').append($more);
 				}
 				

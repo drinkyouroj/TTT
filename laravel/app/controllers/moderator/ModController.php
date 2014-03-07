@@ -16,13 +16,21 @@ class ModController extends Controller {
 			if($post->published == true) {
 				//Unpublish
 				Post::where('id', $id)->update(array('published'=>false));
+				
+				SolariumHelper::deletePost($id);//Gotta get rid of it from the search system.
+				
+				//Not sure how else to do this.
+				//Notification::where('post_id', $id)->delete();
+				
 				return Response::json(
 					array('result'=>'deleted'),
 					200//response is OK!
 				);
 			} else {
-				//Publish
+				//RePublish
 				Post::where('id', $id)->update(array('published'=>true));
+				
+				SolariumHelper::updatePost($post);//Gotta add back the post.
 				//return the body so that we can display it.
 				return Response::json(
 					array('result'=>$post->body),

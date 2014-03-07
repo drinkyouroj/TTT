@@ -73,7 +73,7 @@
 			  			{{--Remember that float: right is inverse visually.--}}
 			  			{{ Form::open(array('url'=> 'search', 'class' => 'navbar-form navbar-right search', 'role'=>'search' )) }}
 							<div class="form-group search">
-								<input autocomplete="off" name="term" type="text" class="form-control" placeholder="Search">
+								<input autocomplete="off" name="term" type="text" class="form-control" placeholder="Search" onfocus="this.placeholder = ''" onblur="this.placeholder = 'enter your text'">
 								<input type="submit" value="Search" class="hidden" >
 								<div class="result-box"></div>
 							</div>
@@ -258,6 +258,18 @@
 	
 	<!--Extra Javascript-->
 	@yield('js')
+    
+    
+    <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	
+	  ga('create', 'UA-15172874-37', 'twothousandtimes.com');
+	  ga('send', 'pageview');
+	
+	</script>
     
   </body>
 </html>

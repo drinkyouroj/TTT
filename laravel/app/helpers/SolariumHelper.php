@@ -89,6 +89,19 @@ class SolariumHelper {
 		$client->update($update);
 	}
 	
+	/**
+	 * Delete the post.
+	 */
+	public static function deletePost($id) {
+		$client = new Solarium\Client(static::$sconfig);
+		$update = $client->createUpdate();
+		
+		$update->addDeleteById($id);
+		$update->addCommit();
+		
+		$result = $client->update($update);
+		return $result->getStatus();
+	}
 	
 	/**
 	 * Update/Create User details within Solr

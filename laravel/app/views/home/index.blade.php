@@ -4,6 +4,10 @@
 	@include('partials/generic-filter')
 @stop
 
+@section('title')
+	The Two Thousand Times
+@stop
+
 @section('content')
 	{{--We'll implement the layout selector in the backend and we should use partials at that point to separate the layouts.--}}
 	<div class="col-md-12">

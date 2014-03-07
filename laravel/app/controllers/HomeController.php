@@ -10,6 +10,11 @@ class HomeController extends BaseController {
 					->with('featured',$featured)
 					;
 	}
+	
+	//This is a little weird fix to the invitation system.
+	public function postIndex() {
+		return Redirect::to('featured');
+	}
 
 	//Our Story Type Page
 	public function getAbout()

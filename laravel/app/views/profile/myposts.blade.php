@@ -2,8 +2,7 @@
 
 
 @section('title')
-{{$user->username }}'s Profile
-
+{{$user->username }}'s Posts
 @stop
 
 @section('main')

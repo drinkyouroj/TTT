@@ -211,7 +211,7 @@ ul.notifications li ul li a{
 }
 
 .header-wrapper form.search {
-	margin-top: 5px;
+	margin-top: 1px;
 }
 
 .header-wrapper .search input {
@@ -288,7 +288,7 @@ ul.notifications li ul li a{
 
 .header-wrapper form.search .result-box ul {
 	margin: 0;
-	padding: 10px 5px;
+	padding: 10px 5px 0 5px;
 	list-style:none;
 }
 
@@ -299,7 +299,7 @@ ul.notifications li ul li a{
 }
 
 .header-wrapper form.search .result-box ul li a{
-font-family:'bebas';
+	font-family:'bebas';
 	font-size:16px;
 	color:#fff;
 	letter-spacing:1px;
@@ -675,10 +675,12 @@ margin-top:20px;
 }
 
 .generic-listing .generic-item span.author a {
-	font-family: 'EB Garamond';
-	font-size:13px;
+	font-family: 'bebas';
+	font-size:15px;
 	text-transform:uppercase;
 	letter-spacing:1px;
+	color: #f94851;
+	text-decoration:overline underline;
 }
 
 .generic-listing .generic-item span.author a:hover {
@@ -740,6 +742,7 @@ margin-top:20px;
 }
 
 .single-post hgroup {
+	position:relative;
 	text-align: center;
 	border-bottom: 2px solid #000;
 }
@@ -759,17 +762,22 @@ margin-top:20px;
 }
 
 .single-post hgroup h4 {
-	font-family: 'EB Garamond';
+	font-family: 'EB Garamond', serif;
 } 
 
 .single-post hgroup h4 a {
+	font-family: 'bebas';
+	font-size:21px;
 	text-transform:uppercase;
-	letter-spacing:1px;
+	letter-spacing:2px;
+	color: #f94851;
+	text-decoration:overline underline;
 }
 
 .single-post hgroup>div {
-	text-align: center;
-	padding-bottom: 10px;
+	position:absolute;
+	bottom:10px;
+	text-align: left;
 	font-family:'bebas';
 }
 
@@ -784,13 +792,14 @@ margin-top:20px;
 	margin-bottom:5px;
 }
 
-.single-post hgroup .admin {
-	padding-top:10px;
+.single-post .admin {
 	background-color:#ddd;
+	margin-top:15px;
 }
 
-.single-post hgroup .admin a {
-	padding-right:20px;
+.single-post .admin a {
+	font-family:'bebas';
+	padding:0px 20px;
 	cursor:pointer;
 }
 

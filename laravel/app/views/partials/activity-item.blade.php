@@ -1,5 +1,5 @@
 {{--This is both the activity and my post item.--}}
-
+@if($act->post->published)
 <div class="animated fadeIn 
 @if(isset($featured_item) && $featured_item) col-md-8 profile-featured 
 @else col-md-4 
@@ -69,3 +69,4 @@
 		</section>
 	</div>
 </div>
+@endif

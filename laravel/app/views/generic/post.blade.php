@@ -22,6 +22,10 @@
 	
 @stop
 
+@section('title')
+	{{$post->title}}
+@stop
+
 @section('content')	
 <div class="col-md-10 col-md-offset-1 single-post">
 	<hgroup>
@@ -47,76 +51,75 @@
 				</a>
 			</div>
 		@endif
-		
-		@if( is_object($user))
-			<div class="admin">
-				@if($user->hasRole('Admin'))
-					{{--Featured--}}
-					@if($post->featured)
-						<a class="feature action" data-id="{{$post->id}}">
-							Un-Feature this Article
-						</a>
-					@else
-						<div class="feature-options">
-							Width:
-							<select name="width" id="width">
-								<option value="1" selected="selected">25%</option>
-								<option value="2">50%</option>
-								<option value="3">75%</option>
-							</select>
-							
-							With or Without Text:
-							<select name="height" id="height">
-								<option value="1" selected="selected">Without</option>
-								<option value="2">With</option>
-							</select>
-							
-							First or Last:
-							<select name="order" id="order">
-								<option value="first" selected="selected">First</option>
-								<option value="last">Last</option>
-							</select>
-							
-						</div>
-						<a class="feature unfeatured action" data-id="{{$post->id}}">
-							Set Article as a Featured
-						</a>
-					@endif
-					<a class="hard-del" data-id="{{$post->id}}">
-						Hard Delete Post
-					</a>
-				@endif
-				
-				@if($user->hasRole('Moderator'))
-					@if($post->published)
-						<a class="mod-delete" data-id="{{$post->id}}">
-							Moderator Delete
-						</a>
-					@else
-						<a class="mod-delete" data-id="{{$post->id}}">
-							Moderator UnDelete
-						</a>
-					@endif
-					
-					
-					{{--It'd be really stupid if you banned yourself.--}}
-					@if($post->user->username != $user->username && (!$post->user->hasRole('Admin') || !$post->user->hasRole('Moderator') )) 
-						@if(!$post->user->banned)
-							<a class="mod-ban" data-id="{{$post->user->id}}">
-								Ban {{$post->user->username}}
-							</a>
-						@else
-							<a class="mod-ban" data-id="{{$post->user->id}}">
-								UnBan {{$post->user->username}}
-							</a>
-						@endif
-					@endif
-					
-				@endif
-			</div>
-		@endif
 	</hgroup>
 	
+	@if( is_object($user))
+		<div class="admin">
+			@if($user->hasRole('Admin'))
+				{{--Featured--}}
+				@if($post->featured)
+					<a class="feature action" data-id="{{$post->id}}">
+						Un-Feature this Article
+					</a>
+				@else
+					<div class="feature-options">
+						Width:
+						<select name="width" id="width">
+							<option value="1" selected="selected">25%</option>
+							<option value="2">50%</option>
+							<option value="3">75%</option>
+						</select>
+					
+						With or Without Text:
+						<select name="height" id="height">
+							<option value="1" selected="selected">Without</option>
+							<option value="2">With</option>
+						</select>
+					
+						First or Last:
+						<select name="order" id="order">
+							<option value="first" selected="selected">First</option>
+							<option value="last">Last</option>
+						</select>
+					
+					</div>
+					<a class="feature unfeatured action" data-id="{{$post->id}}">
+						Set Article as a Featured
+					</a>
+				@endif
+				<a class="hard-del" data-id="{{$post->id}}">
+					Hard Delete Post
+				</a>
+			@endif
+		
+			@if($user->hasRole('Moderator'))
+				@if($post->published)
+					<a class="mod-delete" data-id="{{$post->id}}">
+						Moderator Delete
+					</a>
+				@else
+					<a class="mod-delete" data-id="{{$post->id}}">
+						Moderator UnDelete
+					</a>
+				@endif
+			
+			
+				{{--It'd be really stupid if you banned yourself.--}}
+				@if($post->user->username != $user->username && (!$post->user->hasRole('Admin') || !$post->user->hasRole('Moderator') )) 
+					@if(!$post->user->banned)
+						<a class="mod-ban" data-id="{{$post->user->id}}">
+							Ban {{$post->user->username}}
+						</a>
+					@else
+						<a class="mod-ban" data-id="{{$post->user->id}}">
+							UnBan {{$post->user->username}}
+						</a>
+					@endif
+				@endif
+			
+			@endif
+		</div>
+	@endif
 	
 	<div class="the-share">
 		@if(Auth::check() && $post->user->id != Session::get('user_id'))

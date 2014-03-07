@@ -192,7 +192,7 @@ class UserController extends BaseController {
                 $err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
             }
 
-                        return Redirect::to('user/login')
+                        return Redirect::to('user/loginonly')
                             ->withInput(Input::except('password'))
                 ->with( 'error', $err_msg );
         }

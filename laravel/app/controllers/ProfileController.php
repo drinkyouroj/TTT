@@ -46,7 +46,7 @@ class ProfileController extends BaseController {
 			$fullscreen = true;
 
 			//featured post.
-			$post = Post::where('id', $user->featured);
+			$post = Post::where('id', $user->featured)->where('published', 1);
 			if($post->count())
 			{
 				$post = $post->first();

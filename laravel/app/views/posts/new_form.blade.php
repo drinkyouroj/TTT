@@ -55,13 +55,13 @@
 				<div class="col-md-10 content">
 					<div class="title {{$errors->first('title') ? 'has-error' : '' }}">
 						{{ Form::label('title','Title') }}
-						<a href="#" data-toggle="tooltip" title="Need to pick a title!">?</a>
+						<a href="#" data-toggle="tooltip" title="Need to pick a title!"></a>
 						{{ Form::text('title', Input::old('title'), array('class'=>'form-control title', 'required', 'minlength' =>'5', 'maxlength' => '30')) }}
 						<span class="error">{{ $errors->first('title') }}</span>
 					</div>
 					
 					<div class="story {{$errors->first('body') ? 'has-error' : '' }}">
-						{{ Form::label('body','Your Story', array('class'=>'control-label')) }}
+						{{ Form::label('body','Your Post', array('class'=>'control-label')) }}
 						{{ Form::textarea('body', Input::old('body'), array('class'=>'form-control', 'required', 'minlength' =>'5')) }}
 						<span class="error">{{ $errors->first('body') }}</span>
 					</div>
@@ -88,7 +88,7 @@
 						
 						<div class="chosen">
 							<div class="row">
-								<div class="col-md-3 processor-container">
+								<div class="col-md-3 col-sm-3 processor-container">
 									<div class="photo-processor" style="display:none;">
 										<h4>Filters:</h4>
 										<img src="{{Config::get('app.url')}}/img/photos/nofilter.png" data-process="nofilter"/>
@@ -101,7 +101,7 @@
 									<div class="clearfix"></div>
 									</div>
 								</div>
-								<div class="col-md-8">
+								<div class="col-md-8 col-sm-8">
 									<div class="chosen-label"></div>
 									<div class="processed-label"></div>
 									<div class="photo-chosen">
@@ -127,7 +127,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="{{$errors->first('story_type') ? 'has-error' : '' }}">
-								{{ Form::label('story_type','Story Type', array('class'=>'control-label', 'required')) }}
+								{{ Form::label('story_type','Post Type', array('class'=>'control-label', 'required')) }}
 								<a href="#" data-toggle="tooltip" title="Choose the type of story">?</a>
 								{{ Form::select('story_type', array( 'story'=>'Story',
 																'advice'=>'Advice',
@@ -137,7 +137,7 @@
 				
 					
 							<div class="{{$errors->first('tagline_1') ? 'has-error' : '' }}">
-								{{ Form::label('tagline_1','Tag Lines', array('class'=>'control-label')) }}
+								{{ Form::label('tagline_1','Taglines', array('class'=>'control-label')) }}
 								<a href="#" data-toggle="tooltip" title="Taglines define what your story might be in less than 3 words per tag">?</a>
 								{{ Form::text('tagline_1', Input::old('tagline_1'), array('class'=>'form-control', 'required', 'maxlength' => '20') ) }}
 								<span class="error">{{ $errors->first('tagline_1') }}</span>
@@ -162,7 +162,7 @@
 								{? $category_select[$category->id] = $category->title ?}
 							@endforeach
 						
-							{{ Form::label('category','Story Category', array('class'=>'control-label')) }}
+							{{ Form::label('category','Post Category', array('class'=>'control-label')) }}
 							<a href="#" data-toggle="tooltip" title="Choose 3 categories that this story might fit in.">?</a>
 							<br/>
 							<div class="warning hidden">You can't select more than 3 categories.</div>

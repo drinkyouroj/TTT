@@ -60,6 +60,11 @@
 	
 }
 
+.post-form textarea {
+	font-family: 'EB Garamond';
+	font-size:16px;
+}
+
 .post-form input:focus, .post-form textarea:focus, .post-form select:focus {
 	border:none;
 }
@@ -139,14 +144,24 @@ label.error {
 }
 
 .photo-results a.pager{
+	width:75px;
+	height:75px;
 	font-family:'bebas';
+	font-size:18px;
+	font-weight:normal;
 	letter-spacing:1px;
 	display:inline-block;
-	padding: 0 10px;
-	margin:5px 2px 0px 0px;
 	background-color:#000;
 	color:#fff;
 	cursor:pointer;
+	margin:0px !important;
+	padding-top:25px;
+	vertical-align:top;
+
+}
+
+.photo-results a.pager.previous{
+	border-right:1px solid #ddd;
 }
 
 .photo-processor {
@@ -155,10 +170,6 @@ label.error {
 
 .chosen-label, .processed-label {
 	font-size:18px;
-}
-
-.processor-container {
-	padding-right:0px;
 }
 
 .photo-processor h4 {
@@ -261,5 +272,74 @@ margin-bottom:0px;
 .navigation ol a {
 	list-style:none;
 	font-family: 'Montserrat', sans-serif;
+	color:#f94851;
 }
+
+
+/***************************************
+	Media Queries
+*/
+/*Tiny*/
+@media (max-width: 479px) {
+	.photo-processor img {
+		width: 20%;
+	}
+	
+	.step-title:after {
+		content:none !important;
+	}
+	
+	.navigation {
+		display:none;
+	}
+	
+}
+
+/*Small*/
+@media (min-width: 480px) and (max-width: 767px) {
+	.photo-processor img {
+		width: 14.28%;
+	}
+	
+	.step-title:after {
+		content:none !important;
+	}
+	
+	.navigation {
+		display:none;
+	}
+}
+
+/*Normal*/
+@media (min-width: 768px) and (max-width: 991px) {
+	.processor-container {
+		padding-right:0px;
+	}
+	
+	.step-title:after {
+		content:none !important;
+	}
+	
+	.navigation {
+		display:none;
+	}
+}
+
+/*Bigger*/
+@media (min-width: 992px) and (max-width: 1199px) {
+	.processor-container {
+		padding-right:0px;
+	}
+}
+
+/*Huge*/
+@media (min-width: 1200px) {
+	.processor-container {
+		padding-right:0px;
+	}
+}
+
+
+
+
 
