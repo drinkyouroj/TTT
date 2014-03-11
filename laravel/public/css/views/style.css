@@ -31,19 +31,26 @@ body {
 	font-family: 'EB Garamond', serif;
 }
 
-button.btn {
+button.btn, .comments input[type='submit'] {
 	background-color:#333 !important;
+	background-image:none !important;
 	border-bottom:solid 4px #000 !important;
+	border-top: 0px !important;
+	border-right: 0px !important;
+	border-left: 0px !important;
 	font-family:'bebas';
 	color:#fff;
 	font-weight:100;
 	letter-spacing:1px;
+	
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px; 
+	border-radius: 4px; 
 }
 
 button.btn:hover {
 	background-color:#000 !important;
 	color:#eee !important;
-	
 }
 
 .header-wrapper {
@@ -662,13 +669,13 @@ margin-top:20px;
 }
 
 .generic-listing .generic-item h3{
-	height:40px;
+	height:38px;
 	padding: 17px 0 0 0;
 	margin: 0;
 	background: url('../../img/global/x-small.png') center top no-repeat;
 	word-break: break-all;
 	font-family: 'Montserrat', sans-serif;
-	font-size:21px;
+	font-size:18px;
 	font-weight:700;
 	text-transform:uppercase;
 	overflow:hidden;
@@ -679,12 +686,12 @@ margin-top:20px;
 	font-size:15px;
 	text-transform:uppercase;
 	letter-spacing:1px;
-	color: #f94851;
+	color: #32b1c6;
 	text-decoration:overline underline;
 }
 
 .generic-listing .generic-item span.author a:hover {
-	color:#aaa;
+color: #2c97a3;
 }
 
 .generic-listing .generic-item span.author span {
@@ -770,8 +777,12 @@ margin-top:20px;
 	font-size:21px;
 	text-transform:uppercase;
 	letter-spacing:2px;
-	color: #f94851;
+	color: #32b1c6;
 	text-decoration:overline underline;
+}
+
+.single-post hgroup h4 a:hover {
+	color: #2c97a3;
 }
 
 .single-post hgroup>div {
@@ -886,6 +897,10 @@ margin-top:20px;
 	background-position: bottom left;
 }
 
+.single-post .the-share .share-action.done a{
+	background-position: bottom left;
+}
+
 .single-post .the-share .share-action a:hover .description{
 	display:block;
 }
@@ -893,11 +908,20 @@ margin-top:20px;
 .single-post .the-share .share-action a.fav:hover{
 	color:#968b22;
 }
+.single-post .the-share .share-action.done a.fav{
+	color:#968b22;
+}
 
 .single-post .the-share .share-action a.repost:hover{
 	color:#32b1c6;
 }
+.single-post .the-share .share-action.done a.repost{
+	color:#32b1c6;
+}
 
+.single-post .the-share .share-action.done a.like{
+	color:#22b274;
+}
 .single-post .the-share .share-action a.like:hover{
 	color:#22b274;
 }
@@ -994,11 +1018,11 @@ margin-top:20px;
 }
 
 .single-post .the-comment-container .vote.up {
-	background-image: url('../../img/icons/like.png');
+	
 }
 
 .single-post .the-comment-container .vote.down {
-	background-image: url('../../img/icons/like.png');
+	
 }
 
 .single-post .the-comment-container .vote span{
@@ -1022,6 +1046,7 @@ margin-top:20px;
 
 .single-post .the-comment-container .reply, .single-post .the-comment-container .mod-del-comment {
 	color:#999;
+	padding-left:0px !important;
 }
 
 .single-post .the-comment-container .reply:hover, .single-post .the-comment-container .mod-del-comment:hover {

@@ -73,7 +73,7 @@
 			  			{{--Remember that float: right is inverse visually.--}}
 			  			{{ Form::open(array('url'=> 'search', 'class' => 'navbar-form navbar-right search', 'role'=>'search' )) }}
 							<div class="form-group search">
-								<input autocomplete="off" name="term" type="text" class="form-control" placeholder="Search" onfocus="this.placeholder = ''" onblur="this.placeholder = 'enter your text'">
+								<input autocomplete="off" name="term" type="text" class="form-control" placeholder="Search" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search'">
 								<input type="submit" value="Search" class="hidden" >
 								<div class="result-box"></div>
 							</div>

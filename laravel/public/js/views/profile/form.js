@@ -44,6 +44,8 @@ $(function(){
 	
 	//Photo Processing Systems**************************************************
 	
+	$('.photo-chosen').hide();
+	
 	//Search catch on enter keydown (prevents the form from being submitted)
 	$('.photos input.search-query').bind('keyup keypress', function(e) {
 		var code = e.keyCode || e.which; 
@@ -55,7 +57,6 @@ $(function(){
 			return false;
 		}
 	});
-	
 	
 	//The button for searching
 	$('.activate-search').on('click', function() {
@@ -81,18 +82,21 @@ $(function(){
 		$('.photo-system .reset-search').removeClass('hidden');//Show the reset button
 		img = $(this).data('image');//HTML5 rocks!
 		$('.photo-chosen').html('');//empty the image from the chosen pile.
-		$newImage = $('<img src="'+img+'">');
-		$('.photo-chosen').append($newImage);
+		
 		window.selected_image = img;//attach the source to a global variable
 		$('.photo-results').fadeOut();//Hide the photo options
 		$('.photo-processor').fadeIn();//fade in the photo process options
 		$('.chosen-label').fadeIn();
-		$('.banner').css('background-image', 'url('+img+')').addClass('fun-bg');
+		
+		//Lets grab a no filter version.
+		image_grab(img, 'nofilter');
+		
 	});//Loads in the chosen photos
 	
 	//Let's reset the photo input system.
 	$('.photo-system .reset-search').on('click', function() {
-		$('.photo-chosen').html('');
+		$('.photo-chosen').css('background-image','');
+		$('.photo-chosen').fadeOut();
 		$('.photo-processed').html('');
 		$('.photo-results').fadeIn();//Hide the photo options
 		$('.photo-processor').fadeOut();//fade in the photo process options
@@ -103,26 +107,11 @@ $(function(){
 	//Effects Processor: Instahamming it.
 	$('.photo-processor').on('click', 'img', function() {
 		url = window.selected_image;
-		process = $(this).data('process');//pick up the process type
+		process = $(this).data('process');
 		
 		//make sure we have all 3 values.
 		if(url.length && process.length) {
-			$.ajax({
-				type: "GET",
-				url: window.site_url+'rest/photo/',
-				data: {
-					url: encodeURIComponent(url),//Gotta encode that url
-					process: process
-				},
-				success: function(data) {
-					$('input.processed-image').val('');//Let's remove this just incase
-					$('.chosen-label').fadeOut();
-					$('.processed-label').fadeIn();
-					$('.photo-chosen').html('');
-					$('.photo-chosen').append('<img src="'+window.site_url+'uploads/final_images/'+data+'">');
-					$('input.processed-image').val(data);
-				}
-			});
+			image_grab(url, process);
 		} else {
 			console.log('error with image processor: missing var');
 		}
@@ -138,7 +127,28 @@ $(function(){
 	
 });
 
+//This grabs an individual image
+function image_grab(url, process) {
+	$.ajax({
+		type: "GET",
+		url: window.site_url+'rest/photo/',
+		data: {
+			url: encodeURIComponent(url),//Gotta encode that url
+			process: process
+		},
+		success: function(data) {
+			$('input.processed-image').val('');//Let's remove this just incase
+			$('.chosen-label').fadeOut();
+			$('.processed-label').fadeIn();
+			$('.photo-chosen').fadeIn();
+			$('.photo-chosen').css('background-image','');
+			$('.photo-chosen').css('background-image','url('+window.site_url+'uploads/final_images/'+data+')' );
+			$('input.processed-image').val(data);
+		}
+	});
+}
 
+//Function is used to pull images via the server from flickr.  This is for the Image Listing.
 function image_pull() {
 	if($('.photos input.search-query').val().length >= 3) {
 		

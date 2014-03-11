@@ -33,7 +33,14 @@
 		<h4>
 			by {{link_to('profile/'.$post->user->username, $post->user->username)}}			
 		</h4>
-		@if(!$is_following && $post->user->id != Session::get('user_id'))
+		
+		@if(Auth::check())
+			{? $my_id = Auth::user()->id ?}
+		@else
+			{? $my_id = 0 ?}
+		@endif
+		
+		@if(!$is_following && $post->user->id != $my_id)
 			<div class="follow-container">
 				<a class="follow action" 
 					href="{{Config::get('app.url')}}/follow/{{$post->user->id}}"
@@ -122,11 +129,11 @@
 	@endif
 	
 	<div class="the-share">
-		@if(Auth::check() && $post->user->id != Session::get('user_id'))
+		@if(Auth::check() && $post->user->id != Auth::user()->id)
 		
 		@endif
 			<div class="system-share">
-				<span class="fav-container share-action">
+				<span class="fav-container share-action {{ $favorited ? 'done': '' }}">
 					<a class="fav"
 						data-post="{{$post->id}}">
 						Favorite
@@ -135,7 +142,7 @@
 					</a>
 				</span>
 				
-				<span class="repost-container share-action">
+				<span class="repost-container share-action {{ $reposted ? 'done': '' }}">
 					<a class="repost"
 						href="{{Config::get('app.url')}}/repost/{{$post->id}}" 
 						data-post="{{$post->id}}">
@@ -145,7 +152,7 @@
 					</a>
 				</span>
 				
-				<span class="like-container share-action">
+				<span class="like-container share-action {{ $liked ? 'done': '' }}">
 					<a class="like"
 						href="{{Config::get('app.url')}}/like/{{$post->id}}" 
 						data-post="{{$post->id}}">

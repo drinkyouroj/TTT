@@ -10,10 +10,8 @@
 	text-transform: uppercase;
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 700;
-	margin-bottom:50px;
+	margin-bottom: 50px;
 }
-
-
 
 /*Plain jane*/
 .main-inputs {
@@ -57,12 +55,14 @@
 .post-form input, .post-form textarea, .post-form select {
 	background: #fff;
 	border: solid 3px #ddd;
-	
 }
 
 .post-form textarea {
 	font-family: 'EB Garamond';
 	font-size:16px;
+	width: 100%;
+	height: 400px;
+	resize:vertical;
 }
 
 .post-form input:focus, .post-form textarea:focus, .post-form select:focus {
@@ -180,12 +180,20 @@ margin-bottom:0px;
 .photo-processor img {
 	float:left;
 	display:inline;
-	width: 50%;
+	width: 14%;
 }
 
 .chosen-label, .processed-label,.photo-chosen, .photo-processed {
 	float:left;
 	width: 100%;
+}
+
+.photo-chosen {
+	height: 400px;
+	overflow: hidden;
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
 }
 
 .photo-chosen img, .photo-processed img {
@@ -272,7 +280,11 @@ margin-bottom:0px;
 .navigation ol a {
 	list-style:none;
 	font-family: 'Montserrat', sans-serif;
-	color:#f94851;
+	color:#32b1c6;
+}
+
+.navigation ol a:hover {
+	color:#2c97a3;
 }
 
 

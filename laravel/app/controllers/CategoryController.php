@@ -51,6 +51,7 @@ class CategoryController extends BaseController {
 		}
 
         return View::make('generic.index')
+						->with('cat_title', $cat->title)
 						->with('posts', $posts);
     }
 

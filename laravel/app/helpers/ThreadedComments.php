@@ -15,7 +15,8 @@ class ThreadedComments {
 				//Let's make sure you're logged in.
 				if(Auth::check()) {
 					$reply = '<a class="reply" data-replyid="'.$comment->id.'" data-postid="'.$comment->post->id.'">Reply to '.$comment->user->username.'</a>';
-					$vote = '<a title="Vote Up" class="vote up" data-upid="'.$comment->id.'"><span>Up Vote</span></a>';
+					//$vote = '<a title="Vote Up" class="vote up" data-upid="'.$comment->id.'"><span>Up Vote</span></a>';//saved incase we want to use it again
+					$vote = '';
 					//If you're a Mod, you can definitely do some stuff.
 					if(Auth::user()->hasRole('Moderator'))
 					{
@@ -37,7 +38,6 @@ class ThreadedComments {
 					$reply = '';//maybe place a login pop up form?
 					$vote = '';
 				}
-				
 				
 				
 				if($comment->published) {

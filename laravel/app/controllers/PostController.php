@@ -21,22 +21,48 @@ class PostController extends BaseController {
 			//$body_array = explode( "\n", wordwrap( $post->body, 1500));
 			$user_id = $post->user->id;
 			
-			$is_following = Follow::where('follower_id', '=', Session::get('user_id'))
-								->where('user_id', '=', $user_id)
-								->count();
-			$is_follower = Follow::where('follower_id', '=', $user_id)
-								->where('user_id', '=', Session::get('user_id'))
-								->count();
+			//DEFAULTS for not logged in
+			$my_id = false;
+			$is_follower = false;
+			$is_following = false;
+			$liked = false;
+			$favorited = false;
+			$reposted = false;
+			
+			//Logged in.
+			if(Auth::check()) {
+				$my_id = Auth::user()->id;//My user ID
+				
+				$is_following = Follow::where('follower_id', '=', $my_id)
+									->where('user_id', '=', $user_id)
+									->count();
+									
+				$is_follower = Follow::where('follower_id', '=', $user_id)
+									->where('user_id', '=', $my_id)
+									->count();
+									
+				$liked = Like::where('user_id', $my_id)
+							->where('post_id', $post->id)
+							->count();
+						
+				$favorited = Favorite::where('user_id', $my_id)
+							->where('post_id', $post->id)
+							->count(); 
+				$reposted = Repost::where('user_id', $my_id)
+							->where('post_id', $post->id)
+							->count();
+						  
+			}
 			
 			//Add the fact that the post has been viewed if you're not the owner and you're logged in.
-			if($user_id != Session::get('user_id') && Auth::check()) {
-				$postview = PostView::where('user_id', Session::get('user_id'))
+			if($user_id != $my_id && Auth::check()) {
+				$postview = PostView::where('user_id', $my_id)
 						->where('post_id', $post->id)
 						->count();
 				//If the record doesn't exist, increment on the post view count and also add to the "viewed" in PostView
 				if(!$postview) {
 					$pv = new PostView;
-					$pv->user_id = Session::get('user_id');
+					$pv->user_id = $my_id;
 					$pv->post_id = $post->id;
 					$pv->save();
 					Post::where('alias', $alias)->increment('views', 1);//increment on this post.
@@ -48,6 +74,9 @@ class PostController extends BaseController {
 						->with('is_following', $is_following)//you are following this profile
 						->with('is_follower', $is_follower)//This profile follows you.
 						->with('bodyarray', $body_array)
+						->with('liked', $liked)
+						->with('favorited', $favorited)
+						->with('reposted', $reposted)
 						;
 		} else {
 			return Redirect::to('/');
@@ -105,7 +134,7 @@ class PostController extends BaseController {
 					->with('fullscreen', true);
 		} else {
 			//Gotta put in a query here to see if the user submitted something in the last 10 minutes 
-			$post = Post::where('user_id','=', Session::get('user_id'))
+			$post = Post::where('user_id','=', Auth::user()->id)
 					->orderBy('created_at', 'DESC')//latest first
 					->first();
 			
@@ -152,7 +181,7 @@ class PostController extends BaseController {
 			//New Post.
 			$new = true;
 			//Checking to see if this is an new post being applied by a punk
-			$last_post = Post::where('user_id','=', Session::get('user_id'))
+			$last_post = Post::where('user_id','=', Auth::user()->id)
 						->orderBy('created_at', 'DESC')//latest first
 						->first();
 			

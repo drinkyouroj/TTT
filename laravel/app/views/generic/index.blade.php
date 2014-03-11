@@ -8,6 +8,11 @@
 	@include('partials/generic-filter')
 @stop
 
+
+@section('title')
+	{{$cat_title}} | The Twothousand Times 
+@stop
+
 @section('content')
 	
 	@if(Auth::check())

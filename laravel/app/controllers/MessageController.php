@@ -54,11 +54,13 @@ class MessageController extends BaseController {
 		if(isset($user) && $user->count()) {
 			//user actually exists.
 			return View::make('messages/form')
+				->with('fullscreen', true)
 				->with('message_user', $user->first());
 		} else {
 			//This is truly a new situation and the user id didnt' exist.
 			$mutuals = FollowHelper::mutual_list();
 			return View::make('messages/form')
+				->with('fullscreen', true)
 				->with('mutuals', $mutuals);
 		}
 		
@@ -81,7 +83,7 @@ class MessageController extends BaseController {
 									$query->where('to_uid', Auth::user()->id)
 										  ->orWhere('from_uid', Auth::user()->id);
 								})//grab all the related messages.
-								->orderBy('created_at','ASC')
+								->orderBy('created_at','DESC')
 								->get();
 			$message = $message->first();
 			$user = User::where('id', '=', $message->from_uid)->first();
@@ -91,6 +93,7 @@ class MessageController extends BaseController {
 		}
 		
 		return View::make('messages/form')
+				->with('fullscreen', true)
 				->with('message', $message)
 				->with('thread', $thread)
 				->with('message_user', $user);

@@ -88,7 +88,7 @@
 						
 						<div class="chosen">
 							<div class="row">
-								<div class="col-md-3 col-sm-3 processor-container">
+								<div class="col-md-12 col-sm-12 processor-container">
 									<div class="photo-processor" style="display:none;">
 										<h4>Filters:</h4>
 										<img src="{{Config::get('app.url')}}/img/photos/nofilter.png" data-process="nofilter"/>
@@ -101,7 +101,7 @@
 									<div class="clearfix"></div>
 									</div>
 								</div>
-								<div class="col-md-8 col-sm-8">
+								<div class="col-md-12 col-sm-12">
 									<div class="chosen-label"></div>
 									<div class="processed-label"></div>
 									<div class="photo-chosen">

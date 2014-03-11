@@ -18,10 +18,16 @@ App::missing(function($exception) {
 
 App::before(function($request)
 {
-	//
+	//The best piece of code for Blade ever.  Lets us break all kinds of rules!
 	Blade::extend(function($value) {
     	return preg_replace('/\{\?(.+)\?\}/', '<?php ${1} ?>', $value);
 	});
+	
+	
+	if (Auth::check() && !Session::has('user_id'))
+	{
+	   return Redirect::to('user/logout');
+	}
 	
 });
 

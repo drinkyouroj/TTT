@@ -1,5 +1,10 @@
 @extends('layouts.profile')
 
+@section('css')
+	@parent
+	<link href="{{Config::get('app.url')}}/css/views/message.css" rel="stylesheet" media="screen">
+@stop
+
 {{--Left Sidebar--}}
 @section('left_sidebar')
 
@@ -12,17 +17,9 @@
 @section('main')
 <div class="row">
 	{{ Form::open(array('url'=>'profile/submitmessage', 'method'=>'post','class'=>'form-horizontal','role'=>'form'))}}
-		<div class="col-md-8 col-md-offset-1">
-			
+		<div class="col-md-12 write-message">	
 		{{--Old Messages/The Thread/Reply--}}
 		@if(isset($thread) && Request::segment(2) == 'replymessage')
-			<div class="message original-message">
-				<div class="the-content">
-					{{$message->body}}
-				</div>
-				<span class="date">{{$message->created_at->format('d-m-y H:i:s')}}</span>
-				<span> from {{$message->from->username}}</span>
-			</div>
 			
 				@if($message->to_uid == Auth::user()->id)
 					{{--You're replying to the other person--}} 
@@ -36,16 +33,38 @@
 				{? $from_uid = Auth::user()->id; ?}
 				
 			@foreach($thread as $item)
-				<div class="message">
-					<div class="the-content">
-						{{$item->body}}
+				<div class="message-container {{$item->from_uid == Auth::user()->id ? 'me': 'other' }}">
+					<div class="message-from">
+						{{$item->from->username}}
 					</div>
-					<span class="date">
-						{{$item->created_at->format('d-m-y H:i:s')}}
-					</span>
-					<span> from {{$item->from->username}}</span>
+					<div class="message">
+						<div class="the-content">
+							{{$item->body}}
+						</div>
+						<span class="date">
+							{{$item->created_at->format('d.m.y')}}
+						</span>
+					</div>
+				<div class="clearfix"> </div>
 				</div>
 			@endforeach
+			
+			<div class="message-container {{$message->from_uid == Auth::user()->id ? 'me': 'other' }}">
+				<div class="original-message">
+					<div class="message-from">
+						{{$message->from->username}}
+					</div>
+					<div class="message">
+						<div class="the-content">
+							{{$message->body}}
+						</div>
+						<span class="date">
+							{{$message->created_at->format('d.m.y')}}
+						</span>
+					</div>
+				</div>
+			<div class="clearfix"> </div>
+			</div>
 			
 			<input type="hidden" name="to_uid" value="{{$to_uid}}">
 		@endif

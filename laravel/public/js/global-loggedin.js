@@ -156,7 +156,6 @@ function repost(id) {
 		url: window.site_url+'rest/reposts/'+id,
 		//type:"POST",
 		success: function(data) {
-			console.log('repost');
 			error_log(data.result,'repost');
 		}
 	});
@@ -169,7 +168,6 @@ function like(id) {
 		//type:"POST",
 		success: function(data) {
 			error_log(data.result,'like');
-			
 		}
 	});
 }
@@ -208,13 +206,16 @@ function error_log(result, action) {
 			console.log(window.error);
 		break;
 	}
-	console.log(result);
 }
 
 //This function controls the live adding of numbers to the existing likes, etc
 function add_result(action) {
 	if(action != 'follow') {
 		val = parseInt($('.system-share a.'+action+' span.numbers').html());
+		
+		//place done
+		$('.'+action+'-container').addClass('done');
+		
 		//if the value isn't false
 		if(val) {
 			$('.system-share a.'+action+' span.numbers').html(val+1);
@@ -237,6 +238,9 @@ function add_result(action) {
 function del_result(action) {
 	if(action != 'follow') {
 		val = parseInt($('.system-share a.'+action+' span.numbers').html());
+		
+		$('.'+action+'-container').removeClass('done');
+		
 		if(val) {
 			if(val-1 >= 1) {
 				$('.system-share a.'+action+' span.numbers').html(val-1);

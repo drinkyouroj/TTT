@@ -480,7 +480,7 @@ width:inherit;
 	min-width:42px;
 	position: absolute;
 	left:-1px;
-	top:-1px;
+	top:21px;
 	display:none;
 	list-style:none;
 	background: #fff;

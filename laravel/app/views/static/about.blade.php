@@ -4,6 +4,10 @@
 	<link href="{{Config::get('app.url')}}/css/views/info-pages.css" rel="stylesheet" media="screen">
 @stop
 
+@section('title')
+	About | The Twothousand Times
+@stop
+
 @section('content')
 
 <div class="col-md-8 col-md-offset-2 info-container">
