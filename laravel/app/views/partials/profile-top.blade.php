@@ -41,7 +41,7 @@
 		@else
 			<li>
 				<a class="new-post" href="{{Config::get('app.url')}}/profile/newpost">
-					<span>Write</span>
+					<span>Post</span>
 				</a>
 			</li>
 			<li>
@@ -51,7 +51,7 @@
 			</li>
 			<li>
 				<a class="my-posts" href="{{Config::get('app.url')}}/profile/myposts">
-					<span>Post View</span>
+					<span>Profile View</span>
 				</a>
 			</li>
 		@endif
@@ -134,7 +134,7 @@
 		@else
 			<li>
 				<a class="new-post" href="{{Config::get('app.url')}}/profile/newpost">
-					<span>Write</span>
+					<span>Post</span>
 				</a>
 			</li>
 			<li>
@@ -144,7 +144,7 @@
 			</li>
 			<li>
 				<a class="my-posts" href="{{Config::get('app.url')}}/profile/myposts">
-					<span>Post View</span>
+					<span>Profile View</span>
 				</a>
 			</li>
 		@endif
@@ -206,11 +206,13 @@
         <h4 class="modal-title" id="myModalLabel"></h4>
       </div>
       <div class="modal-body">
-        
+      
+      <div class="clearfix"></div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
       </div>
+    <div class="clearfix"></div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

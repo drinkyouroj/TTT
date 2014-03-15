@@ -83,7 +83,7 @@ class MessageController extends BaseController {
 									$query->where('to_uid', Auth::user()->id)
 										  ->orWhere('from_uid', Auth::user()->id);
 								})//grab all the related messages.
-								->orderBy('created_at','DESC')
+								->orderBy('created_at','ASC')
 								->get();
 			$message = $message->first();
 			$user = User::where('id', '=', $message->from_uid)->first();

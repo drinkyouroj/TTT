@@ -18,7 +18,7 @@ if (isset($_POST['done']))
 <style type="text/css">
 html{color:#000;background:#000}
 
-body {
+body,html {
 	background:url('img/landing/skyline-bg.jpg');
 	background-size:cover;
 }
@@ -87,6 +87,6 @@ form.password input.submit-btn{
     <form class="password" action="<?php echo 'http://'.$url ?>" method="POST"> 
         <input type="hidden" name="user" value="twothousand"><br> 
         <input type="password" class="password-field" name="pass" placeholder="enter password here" onfocus="this.placeholder = ''" onblur="this.placeholder = 'enter password here'"><br> 
-        <input type="submit" class="submit-btn" name="done"> 
+        <input type="submit" class="submit-btn" name="done" value="SUBMIT"> 
     </form> 
 </html>

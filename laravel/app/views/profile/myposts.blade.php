@@ -7,9 +7,9 @@
 
 @section('main')
 	<div class="row activity-nav">
-		<a class="all">Show All</a>
-		<a class="myposts">My Posts</a>
-		<a class="myfavorites">My Favorites</a>
+		<li class="left"><a class="all">Show All</a></li>
+		<li><a class="myposts">My Posts</a></li>
+		<li><a class="myfavorites">My Favorites</a></li>
 	</div>
 	<div class="row activity-container generic-listing myposts">
 		@if(count($myposts))
@@ -34,6 +34,11 @@
 
 @section('js')
 	@parent
+	
+	<script>
+		window.cur_user = '{{$user->username}}';
+	</script>
+	
 	{{-- Include all the JS required for the situation--}}
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/profile.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/myposts.js"></script>

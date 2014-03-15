@@ -6,7 +6,7 @@
 
 @section('content')
 
-<div class="col-md-8 col-md-offset-2 info-container">
+<div class="col-md-10 col-md-offset-1 info-container">
 <h2>Contact</h2>
 	<p>If you have any questions, feedback, or concerns please don’t hesitate to reach out to us at contact@twothousandtimes.com. Interaction with you is, and always will be a primary focus. </p>
 	<p>The Two Thousand Times would love to hear directly from you. Here are some options to get in touch with us: </p>

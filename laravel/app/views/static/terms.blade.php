@@ -7,7 +7,7 @@
 @section('content')
 
 
-<div class="col-md-8 col-md-offset-2 info-container">
+<div class="col-md-10 col-md-offset-1 info-container">
 	<h2>Terms and Conditions of Use</h2>
 	<h3>1. Terms</h3>
 	<p>By accessing this web site, you are agreeing to be bound by these web site Terms and Conditions of Use, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws. If you do not agree with any of these terms, you are prohibited from using or accessing this site. The materials contained in this web site are protected by applicable copyright and trade mark law.</p>

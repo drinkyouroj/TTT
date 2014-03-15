@@ -10,7 +10,7 @@
 
 @section('content')
 
-<div class="col-md-8 col-md-offset-2 info-container">
+<div class="col-md-10 col-md-offset-1 info-container">
 <h2>About</h2>
 	<p>A couple years ago, we got fed up with the daily grind of social media and “went off the grid,” so to speak. After leaving these networks of instant accessibility behind, we found ourselves more comfortable talking openly with strangers. They were willing to share and we were ready to listen.</p>
 	<p>These revealing and genuine conversations garnered retellable stories, introspective thoughts, and life-guiding advice from individuals we’d likely never hear from again. The only trouble: we wanted to hear more, but had no control over when these exchanges would occur.</p>

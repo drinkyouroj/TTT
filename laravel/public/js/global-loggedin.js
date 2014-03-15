@@ -3,6 +3,11 @@ $(function() {
 		event.preventDefault();
 	});
 	
+	//*Mark as Read  *********************************************
+	$('.mark-read').on('click',function(event) {
+		
+	});
+	
 	//*Follow Actions*********************************************
 	$('.profile-options .follow').on('click', function(event) {
 		event.preventDefault();
@@ -102,7 +107,7 @@ function followers_box(id) {
 				$('#followbox .modal-body').append('<a href="'+window.site_url+'profile/'+value.username+'"><div class="profile-container"><div class="profile-img-container" style="background-image: url('+window.site_url+'rest/profileimage/'+value.id+');"></div><h5>'+value.username+'</h5><div class="clearfix"></div></div></a>');
 			});
 			
-			$('#followbox .modal-title').html('Your Followers');
+			$('#followbox .modal-title').html(window.cur_user+"'s Followers");
 			$('#followbox').modal('show');
 		}
 	});
@@ -119,7 +124,7 @@ function following_box(id) {
 				$('#followbox .modal-body').append('<a href="'+window.site_url+'profile/'+value.username+'"><div class="profile-container"><div class="profile-img-container" style="background-image: url('+window.site_url+'rest/profileimage/'+value.id+');"></div><h5>'+value.username+'</h5><div class="clearfix"></div></div></a>');
 			});
 			
-			$('#followbox .modal-title').html('People You Follow');
+			$('#followbox .modal-title').html('People '+window.cur_user+' Follows');
 			$('#followbox').modal('show');
 		}
 	});

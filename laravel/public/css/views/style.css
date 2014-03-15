@@ -520,7 +520,6 @@ margin-top:20px;
 .footer-container {
 	float: left;
 	width: 100%;
-	height: 30px;
 	color: #fff;
 	background:#000;
 	text-align: center;
@@ -528,7 +527,7 @@ margin-top:20px;
 
 .footer-container .footer-nav ul{
 	list-style:none;
-	margin-bottom:0px;
+	padding:10px 0;
 }
 
 .footer-container .footer-nav ul li {
@@ -551,10 +550,14 @@ margin-top:20px;
 
 .filters-container ul.category-filter {
 	padding: 10px 10px 0 0;
-	margin: 0 0 10px 0;
+	margin: 0;
 	list-style:none;
 	border-right: 1px solid #000;
 	letter-spacing:1px;
+}
+
+.filters-container .filters {
+	margin-bottom:10px;
 }
 
 .filters-container .no-bar .category-filter {
@@ -586,7 +589,7 @@ margin-top:20px;
 
 .filters-container .sort_by_filter {
 	padding: 5px;
-	margin-top:15px;
+	margin-top:10px;
 	background-color: #fff;
 	color: #9f9f9f;
 	border: 2px solid #9f9f9f;
@@ -691,7 +694,7 @@ margin-top:20px;
 }
 
 .generic-listing .generic-item span.author a:hover {
-color: #2c97a3;
+	color: #2c97a3;
 }
 
 .generic-listing .generic-item span.author span {
@@ -737,8 +740,8 @@ color: #2c97a3;
 }
 
 .generic-listing .generic-item .the-tags.long {
-	margin-top: 0;
-	height: 35px;
+	height: 25px;
+	line-height:17px;
 }
 
 
@@ -1140,7 +1143,6 @@ color: #2c97a3;
 	
 	.generic-item {
 		width:100% !important;
-		height: 290px !important;
 	}
 	
 	.filters-container .mobile-filters button.categories-button {
@@ -1156,7 +1158,6 @@ color: #2c97a3;
 	-webkit-column-count: 1;
 	column-count: 1;
 	}
-	
 }
 
 /*Small*/
@@ -1184,6 +1185,11 @@ color: #2c97a3;
 
 	.single-post .the-share .share-action .repost-description{
 		left:35%;
+	}
+	
+	.generic-listing .generic-item .the-tags.long {
+		height: 25px;
+		line-height:1.428571429;
 	}
 	
 	.generic-item {

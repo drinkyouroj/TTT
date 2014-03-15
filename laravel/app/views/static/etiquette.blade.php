@@ -6,7 +6,7 @@
 
 @section('content')
 
-<div class="col-md-8 col-md-offset-2 info-container etiquette">
+<div class="col-md-10 col-md-offset-1 info-container etiquette">
 <h2>Community Etiquette</h2>
 	<p>The Two Thousand Times community guidelines detail the values desired by its users. Please respect them and remember that others read what you share.</p>
 	<h3>Do</h3>

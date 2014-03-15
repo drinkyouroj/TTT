@@ -5,11 +5,19 @@
 	<link href="{{Config::get('app.url')}}/css/views/message.css" rel="stylesheet" media="screen">
 @stop
 
+@section('js')
+	@parent
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/messages.js"></script>
+@stop
+
 {{--Left Sidebar--}}
 @section('left_sidebar')
 
-
 	
+@stop
+
+@section('title')
+	Messaging | The Two Thousand Times
 @stop
 
 
@@ -17,7 +25,7 @@
 @section('main')
 <div class="row">
 	{{ Form::open(array('url'=>'profile/submitmessage', 'method'=>'post','class'=>'form-horizontal','role'=>'form'))}}
-		<div class="col-md-12 write-message">	
+		<div class="col-md-8 col-md-offset-2 write-message">
 		{{--Old Messages/The Thread/Reply--}}
 		@if(isset($thread) && Request::segment(2) == 'replymessage')
 			
@@ -31,40 +39,59 @@
 				
 				{{--Either way its from you--}}
 				{? $from_uid = Auth::user()->id; ?}
-				
-			@foreach($thread as $item)
-				<div class="message-container {{$item->from_uid == Auth::user()->id ? 'me': 'other' }}">
-					<div class="message-from">
-						{{$item->from->username}}
-					</div>
-					<div class="message">
-						<div class="the-content">
-							{{$item->body}}
-						</div>
-						<span class="date">
-							{{$item->created_at->format('d.m.y')}}
-						</span>
-					</div>
-				<div class="clearfix"> </div>
-				</div>
-			@endforeach
+				{? $thread_count = count($thread) ?}
 			
-			<div class="message-container {{$message->from_uid == Auth::user()->id ? 'me': 'other' }}">
-				<div class="original-message">
-					<div class="message-from">
-						{{$message->from->username}}
-					</div>
-					<div class="message">
-						<div class="the-content">
-							{{$message->body}}
-						</div>
-						<span class="date">
-							{{$message->created_at->format('d.m.y')}}
-						</span>
-					</div>
-				</div>
-			<div class="clearfix"> </div>
+			@if($thread_count)
+			<div class="show-condensed">
+				{{--Note, the below is set to 2 since we've not included the orignal message--}}
+				Show {{$thread_count-2}} More Messages
 			</div>
+			<div class="condensed-section">
+			@endif
+				<!--Original Message-->
+				<div class="message-container {{$message->from_uid == Auth::user()->id ? 'me': 'other' }} original">
+					<div class="original-message">
+						<div class="message-from">
+							{{$message->from->username}}
+						</div>
+						<div class="message">
+							<div class="the-content">
+								{{$message->body}}
+							</div>
+							<span class="date">
+								{{$message->created_at->format('d.m.y h:i:s')}}
+							</span>
+						</div>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+			
+			
+			@if($thread_count)
+				@foreach($thread as $k => $item)
+					<div class="message-container {{$item->from_uid == Auth::user()->id ? 'me': 'other' }}">
+						<div class="message-from">
+							{{$item->from->username}}
+						</div>
+						<div class="message">
+							<div class="the-content">
+								{{$item->body}}
+							</div>
+							<span class="date">
+								{{$item->created_at->format('d.m.y h:i:s')}}
+							</span>
+						</div>
+					<div class="clearfix"> </div>
+					</div>
+					
+					{{--Closing the condensed section--}}
+					@if($thread_count-3 == $k+1)
+				</div>
+					@endif
+					
+				@endforeach
+			@endif
+			
 			
 			<input type="hidden" name="to_uid" value="{{$to_uid}}">
 		@endif

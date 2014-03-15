@@ -1,5 +1,9 @@
 @extends('layouts.profile')
 
+@section('title')
+Notifications | The Two Thousand Times
+@stop
+
 @section('main')
 
 	<div class="row notifications-listing full-list">

@@ -72,7 +72,7 @@
 			  			
 			  			{{--Remember that float: right is inverse visually.--}}
 			  			{{ Form::open(array('url'=> 'search', 'class' => 'navbar-form navbar-right search', 'role'=>'search' )) }}
-							<div class="form-group search">
+							<div class="form-group search" id="search-box">
 								<input autocomplete="off" name="term" type="text" class="form-control" placeholder="Search" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search'">
 								<input type="submit" value="Search" class="hidden" >
 								<div class="result-box"></div>
@@ -84,6 +84,7 @@
 			  					<a href="#notifications">Notifications</a>
 			  					<ul class="notifications">
 			  						@if(count($notifications))
+			  							<a class="mark-read">Mark as Read</a>
 			  							{? $break = 4; $all = false; ?}
 			  							{{--Below file has the foreach routine for both the top section and the full listing --}}
 				  						@include('partials/notifications')

@@ -22,6 +22,7 @@ class ConfideSetupUsersTable extends Migration {
 			$table->text('bio');
 			$table->integer('featured');
 			$table->boolean('banned')->default(false);
+			$table->boolean('first')->default(true);
             $table->timestamps();
         });
 

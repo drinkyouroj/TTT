@@ -130,6 +130,38 @@ h2.write-title {
 	color:#eee !important;
 }
 
+.write-message .show-condensed {
+	width: 100%;
+	cursor:pointer;
+	text-align: center;
+	background-color:#333 !important;
+	background-image:none !important;
+	margin-top:20px;
+	margin-bottom:20px;
+	padding:10px 20px;
+	border-bottom:solid 5px #000 !important;
+	border-top: 0px !important;
+	border-right: 0px !important;
+	border-left: 0px !important;
+	font-family:'bebas';
+	color:#fff;
+	font-size:16px;
+	letter-spacing:2px;
+	font-weight:100;
+	
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px; 
+	border-radius: 4px; 
+}
+.write-message .show-condensed:hover {
+	color: #eee;
+	background-color:#000 !important;
+}
+.write-message .condensed-section {
+	display:none;
+	margin-top:20px;
+}
+
 .write-message .message-container {
 	width:100%;
 	margin-bottom:10px;
@@ -147,7 +179,6 @@ h2.write-title {
 	text-transform:uppercase;
 	font-size:13px;
 	padding-bottom:10px;
-	background-image: url('../../img/global/point-down.png');
 	background-repeat:no-repeat;
 	background-position:left bottom;
 }
@@ -161,6 +192,14 @@ h2.write-title {
 	color:#aaa;
 }
 
+.write-message .message-container.other .message {
+	background-color:#eeece6;
+}
+
+.write-message .message-container.other .message-from {
+	background-image: url('../../img/global/point-down-beige.png');
+}
+
 .write-message .message-container.me .message {
 	float:right;
 }
@@ -169,4 +208,38 @@ h2.write-title {
 	text-align:right;
 	background-image: url('../../img/global/point-down-r.png') !important;
 	background-position:right bottom;
+}
+
+.write-message .form-group label.control-label {
+	font-family:'bebas';
+	font-size:14px;
+	letter-spacing:2px;
+}
+
+.write-message .form-group textarea.form-control {
+	font-family: 'EB Garamond';
+	padding: 5px;
+	background: #eeece6;
+	color: #333;
+	border: 2px solid #000;
+	border-radius: 0;
+}
+
+.write-message .form-group input[type="submit"] {
+	float:right;
+	background-color:#333 !important;
+	background-image:none !important;
+	border-bottom:solid 4px #000 !important;
+	border-top: 0px !important;
+	border-right: 0px !important;
+	border-left: 0px !important;
+	font-family:'bebas';
+	color:#fff;
+	font-weight:100;
+	letter-spacing:1px;
+	padding:5px 10px;
+	
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px; 
+	border-radius: 4px; 
 }

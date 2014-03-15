@@ -12,8 +12,6 @@
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/mod.js"></script>
 		@endif
 	@endif
-
-
 @stop
 
 @section('css')

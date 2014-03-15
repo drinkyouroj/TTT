@@ -135,12 +135,19 @@ class UserController extends BaseController {
 				Confide::logout();
 				return Redirect::to('/banned');
 			}
-					
+
 			Session::put('username', $user->username);
 			Session::put('email', $user->email);
 			Session::put('user_id', $user->id);
 			Session::put('join_date', $user->created_at);
 			Session::put('featured', $user->featured);
+			Session::put('first', $user->first);
+			
+			//This sets the Session first to false.  
+			if($user->first) {
+				User::where('id', $user->id)
+					->update(array('first'=>false));
+			}
 			
 			if($user->featured != 0) {
 				//Let's just grab the user's image.

@@ -85,7 +85,7 @@ ul.profile-options li:hover a {
 
 
 ul.profile-options li a.new-post {
-	background-image: url('../../img/icons/write.png');
+	background-image: url('../../img/icons/posts2-red.png');
 }
 
 ul.profile-options li a.all-notification {
@@ -93,7 +93,7 @@ ul.profile-options li a.all-notification {
 }
 
 ul.profile-options li a.my-posts {
-	background-image: url('../../img/icons/posts2.png');
+	background-image: url('../../img/icons/profile2.png');
 }
 
 ul.profile-options li a.edit-profile {
@@ -147,35 +147,84 @@ ul.profile-options li a.new-message {
 	font-family: 'EB Garamond';
 }
 
+/*Follow Modal*/
+ #followbox .modal-backdrop.fade {
+    opacity: 0;
+ }
+ #followbox .modal-backdrop, .modal-backdrop.fade.in {
+    filter: alpha(opacity=85);
+    -khtml-opacity: 0.85;
+    -moz-opacity: 0.85;
+    opacity: 0.85;
+ }
+
+#followbox .modal-dialog {
+	width:100%;
+}
+
+#followbox .modal-content {
+	background-color:transparent !important;
+	border: 0px !important;
+	box-shadow:none !important;
+}
+
 #followbox .modal-body .profile-container {
-	padding:0 0 0 25%;
+	float:left;
+	width:200px;
+	padding:0;
+	margin:0 10px;
 }
 
 #followbox .modal-header .modal-title {
 	font-family:'bebas';
+	font-size:24px;
+	color:#fff;
+	letter-spacing:2px;
+}
+
+#followbox .modal-header button.close {
+	font-size:32px;
+	color:#fff !important;
+	
+	filter: alpha(opacity=1);
+    -khtml-opacity: 1;
+    -moz-opacity: 1;
+    opacity: 1;
+}
+
+#followbox .modal-header button.close:hover {
+	color:#ddd !important;
 }
 
 #followbox .modal-body .profile-container .profile-img-container {
 	float:left;
-	width:150px;
-	height:150px;
+	width:200px;
+	height:133px;
 	margin-top:20px;
 	margin-right:20px;
 	overflow:hidden;
-	background-position: top left;
+	background-position: center center;
 	background-repeat: no-repeat;
 	background-size:cover;
 }
 
 #followbox .modal-body .profile-container h5 {
+	width:100%;
 	float:left;
 	font-family: 'Montserrat', sans-serif;
-	font-size:24px;
+	font-size:18px;
 	text-transform:uppercase;
-	color:#000;
+	color:#fff;
 	letter-spacing:2px;
+	text-align:center;
+	border-bottom:solid 3px #ddd;
 	
-	margin-top:50px;
+	margin-top:0px;
+	padding:5px 0px;
+}
+
+#followbox .modal-footer {
+	border-top:0px;
 }
 /*activity nav (filters)*/
 
@@ -371,11 +420,11 @@ width:inherit;
 	font-family:'bebas' !important;
 	font-size:16px !important;
 	letter-spacing:2px;
-	color:#000;
+	color:#32b1c6;
 }
 
-.all-notifications span:hover {
-	color:#888;
+.all-notifications span a:hover {
+	color: #2c97a3 !important;
 }
 
 /*Profile Listing*/
@@ -391,7 +440,7 @@ width:inherit;
 }
 
 .activity-container .add-new {
-	margin-top:66px;
+	margin-top:63px;
 	height: 220px;
 	background-repeat: no-repeat;
 	background-color:#fff;
@@ -425,9 +474,12 @@ width:inherit;
 
 /**Full Notifications List**/
 .notifications-listing.full-list {
+	padding-top:20px;
 	padding-left:20%;
 	padding-right:20%;
+	padding-bottom:75px;
 	margin-bottom:50px;
+	background-color:#fff;
 }
 
 .notifications-listing.full-list a {
@@ -519,6 +571,46 @@ width:inherit;
 
 .activity-container.generic-listing .profile-featured .generic-item  .the-image {
 	height:220px;
+}
+
+/*Walkthrough*/
+.walk-generic {
+	margin-top:15px;
+}
+
+.walk-posts {
+	margin-top:25px;
+}
+
+.walk-notifications {
+	margin-top:30px;
+	border:solid 1px #525252;
+}
+
+.walk-generic .joyride-content-wrapper {
+	font-family: 'Montserrat', sans-serif;
+	color:#41d1e0;
+}
+
+.walk-generic .joyride-content-wrapper a.joyride-next-tip {
+	background-color:#fff !important;
+	background-image:none !important;
+	border-bottom:solid 4px #ccc !important;
+	border-top: 0px !important;
+	border-right: 0px !important;
+	border-left: 0px !important;
+	font-family:'bebas';
+	color:#000;
+	font-weight:100;
+	letter-spacing:1px;
+	
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px; 
+	border-radius: 4px; 
+}
+
+.walk-generic .joyride-content-wrapper a.joyride-next-tip:hover {
+	color:#525252 !important;
 }
 
 /*Forms*/
@@ -641,6 +733,10 @@ label.error {
 		display:none;
 	}
 	
+	.activity-container {
+		border-left:0px;
+	}
+	
 	.activity-container .add-new {
 		display:none;
 	}
@@ -665,12 +761,7 @@ label.error {
 	}
 	
 	#followbox .modal-body .profile-container {
-			padding:0 0 0 10%;
-	}
-	
-	#followbox .modal-body .profile-container h5 {
-		clear:both;
-		margin-top:10px;
+		
 	}
 	
 	.notifications-listing.full-list {
@@ -696,17 +787,16 @@ label.error {
 		display:none;
 	}
 	
+	.activity-container {
+		border-left:0px;
+	}
+	
 	.activity-container .add-new {
 		display:none;
 	}
 	
 	.activity-container.generic-listing .generic-item .the-image{
 		height: 240px !important;
-	}
-	
-	#followbox .modal-body .profile-container h5 {
-	clear:both;
-	margin-top:20px;
 	}
 }
 
@@ -724,6 +814,10 @@ label.error {
 		display:none;
 	}
 	
+	.activity-container {
+		border-left:0px;
+	}
+	
 	.activity-container .add-new {
 		display:none;
 	}
@@ -731,6 +825,7 @@ label.error {
 	.activity-container.generic-listing .generic-item .the-image{
 		height: 240px !important;
 	}
+	
 }
 
 /*Bigger*/

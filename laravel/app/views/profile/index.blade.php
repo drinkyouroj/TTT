@@ -1,8 +1,24 @@
 @extends('layouts.profile')
 
+{{--Gotta check to see if this is you or other people.--}}
+@if((Session::get('username') == Request::segment(2)) || (Request::segment(2) == '') )
+	{? $me = true; ?}
+@else 
+	{? $me = false; ?}
+@endif
+
 
 @section('title')
 {{$user->username }}'s Profile
+@stop
+
+@section('css')
+	@parent
+	
+	@if($me && Session::get('first'))
+	<link href="{{Config::get('app.url')}}/css/joyride-2.1.css" rel="stylesheet" media="screen">
+	@endif
+	
 @stop
 
 @section('left_sidebar')
@@ -10,14 +26,14 @@
 		
 		@if(Auth::check())
 		<div class="notifications-listing">
-		<h3>Notifications</h3>
-		@if(count($notifications))
-			{? $break = 10; $all = false; ?}
-			{{--Below file has the foreach routine for both the top section and the full listing --}}
-			@include('partials/notifications')
-		@else
-			No notificiations at this time.
-		@endif
+			<h3>Notifications</h3>
+			@if(count($notifications))
+				{? $break = 10; $all = false; ?}
+				{{--Below file has the foreach routine for both the top section and the full listing --}}
+				@include('partials/notifications')
+			@else
+				No notificiations at this time.
+			@endif
 		</div>
 		@endif
 		
@@ -66,21 +82,15 @@
 	</div>
 @stop
 
-@section('main')
-
-	{{--Gotta check to see if this is you or other people.--}}
-		@if((Session::get('username') == Request::segment(2)) || (Request::segment(2) == '') )
-			{? $me = true; ?}
-		@else 
-			{? $me = false; ?}
-			
+@section('main')		
+		@if(!$me)	
 			<div class="row activity-nav">
 				<li class="left"><a class="all">Show All</a></li>
 				<li><a class="myposts">{{Request::segment(2)}}'s Posts</a></li>
 				<li><a class="myfavorites">{{Request::segment(2)}}'s Favorites</a></li>
 			</div>
-			
 		@endif
+		
 		
 		<div class="row activity-container generic-listing {{ $me ? '': 'myposts' }}">
 			
@@ -119,12 +129,40 @@
 				@endforeach
 			@endif
 		</div>
-	
+
+	<ol id="WalkThrough" style="display:none;">
+		<li class="walk-write walk-generic" data-class="new-post" data-button="Next">
+			<br/>
+			You Can Submit Content through this!<br/><br/>
+		</li>
+		<li class="walk-posts walk-generic" data-class="category-filter" data-button="Next">
+			<br/>
+			To check out other people's posts, you can click on any of the categories.<br/><br/>
+		</li>
+		<li class="walk-notifications walk-generic" data-class="notifications-parent" data-button="Next">
+			<br/>
+			All of your notifications are here!<br/><br/>
+		</li>
+		<li class="walk-search walk-generic" data-id="search-box" data-button="Next">
+			<br/>
+			You can run searches here if you're looking for something specific<br/><br/>
+		</li>
+		<li class="walk-follow walk-generic" data-class="follow-container" data-button="Done">
+			<br/>
+			You can check on your friends/foe here!<br/><br/>
+		</li>
+	</ol>
+
 @stop
 
 
 @section('js')
 	@parent
+	
+	<script>
+		window.cur_user = '{{$user->username}}';
+	</script>
+
 	{{-- Include all the JS required for the situation--}}
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/handlebars-v1.3.0.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/profile.js"></script>
@@ -132,6 +170,17 @@
 	@if(!$me)
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/myposts.js"></script>
 	@endif
+	
+	
+	@if(Auth::check() && $me && Session::get('first'))
+		{{--If this is the user's first time logging into the system.--}}
+			<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/jquery.joyride-2.1.js"></script>
+			<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/profile/first.js"></script>
+			
+		{{--This is where we disable the session "first".--}}
+		{? Session::put('first', false); ?}
+	@endif
+	
 	
 	@include('partials/generic-handlebar-item')
 	

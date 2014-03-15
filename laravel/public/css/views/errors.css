@@ -1,0 +1,9 @@
+/**Post Error**/
+.post-error {
+	margin-top:30px;
+	margin-bottom:100px;
+}
+.post-error h2 {
+	text-align:center;
+	font-family:'bebas';
+}

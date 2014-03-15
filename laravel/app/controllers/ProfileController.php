@@ -72,7 +72,7 @@ class ProfileController extends BaseController {
 			if($post->count())
 			{
 				$post = $post->first();
-				$featured = new stdClass();
+				$featured = new stdClass();//gotta fake a class sometimes.
 				$featured->post = $post;
 				$featured->post_type = 'post';
 			} 
@@ -117,11 +117,11 @@ class ProfileController extends BaseController {
 	 * Gives you your posts and your favorites.
 	 */
 	public function getMyPosts() {
-		$myposts = ProfilePost::where('profile_id', '=', Session::get('user_id'))
+		$myposts = ProfilePost::where('profile_id', Auth::user()->id)
 							->orderBy('created_at','DESC')
 							->get();
 		
-		$user = User::where('id', '=', Session::get('user_id'))->first();
+		$user = User::where('id', Auth::user()->id)->first();
 		
 		if($user->featured != 0) {
 			$post = Post::where('id', $user->featured)->first();

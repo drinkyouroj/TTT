@@ -7,7 +7,7 @@
 @section('content')
 
 
-<div class="col-md-8 col-md-offset-2 info-container">
+<div class="col-md-10 col-md-offset-1 info-container">
 	<h2>Privacy Policy</h2>
 	<p>Your privacy is very important to us. Accordingly, we have developed this Policy in order for you to understand how we collect, use, communicate and disclose and make use of personal information. The following outlines our privacy policy.</p>
 	<ul>
