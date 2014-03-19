@@ -5,7 +5,7 @@ $(function() {
 	
 	//*Mark as Read  *********************************************
 	$('.mark-read').on('click',function(event) {
-		
+		mark_read();//function defined below
 	});
 	
 	//*Follow Actions*********************************************
@@ -63,6 +63,20 @@ $(function() {
 });
 
 
+/**
+ * Mark as Read function
+ */
+
+function mark_read() {
+	$.ajax({
+		url: window.site_url+'rest/notification/',
+		type: "POST",
+		data: {"notification_ids": window.cur_notifications},
+		success: function(data) {
+			console.log(data);
+		}
+	});
+}
 
 /**
  * Global functions for the 4 major ajax based actions

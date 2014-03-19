@@ -178,12 +178,18 @@ View::composer('*', function($view) {
 										->orderBy('created_at', 'DESC')
 										->get();
 		
+		$notification_ids = array();
+		foreach($notifications as $k => $nots) {
+			$notification_ids[$k] = $nots->id;
+		}
+		
 		//Shared function for re-ordering the notifications per initial ID and per type.
 		$compiled = NotificationParser::parse($notifications);
 		
 		$view->with('categories', Category::all())
 			 //->with('notifications', $notifications)
-			 ->with('notifications', $compiled);
+			 ->with('notifications', $compiled)
+			 ->with('notifications_ids', $notification_ids);
 			 
 	} else {
 		$view->with('categories', Category::all());

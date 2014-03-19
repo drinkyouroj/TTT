@@ -13,10 +13,16 @@ class AdminController extends Controller {
 					->where('published', 1)
 					->orderBy('created_at', 'DESC')
 					->get();
-					
+		$post_count = Post::where('published', 1)
+					->count();
+		
+		$user_count = User::where('banned', false)
+					->count();
 		
 		return View::make('admin.index')
-				->with('featured', $featured);
+				->with('featured', $featured)
+				->with('post_count', $post_count)
+				->with('user_count', $user_count);
 	}
 	
 	/******************************************************************

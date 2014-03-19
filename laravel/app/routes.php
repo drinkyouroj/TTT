@@ -35,13 +35,16 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	Route::resource('followers', 'FollowersRestController',$binary_limits);//folks following you: your followers
 	
 	//Page Actions
-	Route::resource('likes', 'LikeRestController', array('only'=>array('index','show','store')));
+	Route::resource('likes', 'LikeRestController', array('only'=>array('index','show','store')) );
 	Route::resource('favorites', 'FavoriteRestController', array('only'=>array('index','show','store')));
 	Route::resource('follows', 'FollowRestController', array('only'=>array('index','show','store')));
 	Route::resource('reposts', 'RepostRestController',$binary_limits);
 	Route::resource('comments', 'CommentRestController', $binary_limits);
 	Route::resource('posts', 'PostRestController', $binary_limits);
 	Route::resource('feature', 'FeatureRestController', $binary_limits);
+	
+	//Notification Action
+	Route::resource('notification', 'NotificationsRestController', array('only'=>array('index','show','store')) );
 	
 	
 	/**Post Input Systems***************************/

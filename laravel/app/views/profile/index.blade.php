@@ -105,11 +105,13 @@
 			</div>
 			@endif
 			
+			{{--
 			@if(isset($featured) && $featured )
 				{? $featured_item = 1 ?}
 				{? $act = $featured ?}
 				@include('partials/activity-item')
 			@endif
+			--}}
 			
 			{? $featured_item = 0 ?}
 			
@@ -121,10 +123,8 @@
 				@endif
 			
 				@foreach($activity as $act)
-					@if(isset($act->post->id))
-						@if($act->post->id != $featured_id  )
-							@include('partials/activity-item')
-						@endif
+					@if(isset($act->post->id) && $act->post->published)
+						@include('partials/activity-item')
 					@endif
 				@endforeach
 			@endif

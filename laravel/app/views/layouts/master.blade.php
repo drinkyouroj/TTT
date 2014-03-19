@@ -26,6 +26,13 @@
 		@endif
 		
 	</script>
+	
+	@if(Auth::check())
+	<script>
+		window.cur_notifications = {{ json_encode($notifications_ids) }};
+	</script>
+	@endif
+	
 	<!--Page Specific CSS-->
 	@yield('css')
 	
@@ -81,7 +88,8 @@
 					    @if(!Auth::guest())
 			  			<ul class="nav navbar-nav navbar-right">
 			  				<li class="notifications-parent">
-			  					<a href="#notifications">Notifications</a>
+			  					
+			  					<a href="#notifications" class="@if(count($notifications)) active @endif">Notifications</a>
 			  					<ul class="notifications">
 			  						@if(count($notifications))
 			  							<a class="mark-read">Mark as Read</a>

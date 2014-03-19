@@ -1,5 +1,9 @@
 @extends('layouts.profile')
 
+@section('css')
+	@parent
+	<link href="{{Config::get('app.url')}}/css/views/myposts.css" rel="stylesheet" media="screen">
+@stop
 
 @section('title')
 {{$user->username }}'s Posts
@@ -21,9 +25,9 @@
 				@include('partials/activity-item')
 			@endif
 			
-			{? $featured_item = 0 ?}
+			{? $featured_item = 0; ?}
 			@foreach($myposts as $act)
-				@if(isset($act->post))
+				@if(is_string($act->post_type))
 					@include('partials/activity-item')
 				@endif
 			@endforeach

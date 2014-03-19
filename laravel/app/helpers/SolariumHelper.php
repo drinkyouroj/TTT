@@ -39,13 +39,14 @@ class SolariumHelper {
 			$query = '(';
 			foreach($multi as $k => $item) {
 				if($k != 0) {
-					$query .= 'AND *'.$item.'*';
+					$query .= ' AND *'.$item.'*';
 				}else {
 					$query .= '*'.$item.'*';
 				}
 			}
 			$query .= ')';
 		}
+		//error_log($query);
 		
 		
 		if($ajax) {

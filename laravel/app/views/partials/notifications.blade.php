@@ -1,3 +1,9 @@
+
+@if(isset($notification_list) && count($notification_list))
+{? $notifications = $notification_list; ?}
+@endif
+
+
 @foreach($notifications as $k => $not)
 
 	@if(isset($not['post']))
@@ -14,7 +20,7 @@
 			<a href="{{Config::get('app.url')}}/posts/{{$not['post'][0]->post->alias}}#new-{{$not['post'][0]->new_id}}">
 				{{$not['post'][0]->post->title}}
 			</a>
-		</span>		
+		</span>
 	</li>
 	@endif
 	

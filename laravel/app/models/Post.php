@@ -25,6 +25,7 @@ class Post extends Eloquent {
 	
 	//Just to be sure!
 	protected $table = 'posts';
+	protected $softDelete = true;
 	
 	public function user() {
 		return $this->belongsTo('User');

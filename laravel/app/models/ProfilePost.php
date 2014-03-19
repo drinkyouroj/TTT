@@ -7,6 +7,7 @@ class ProfilePost extends Eloquent {
 		
 	//Just to be sure!
 	protected $table = 'profile_posts';
+	protected $softDelete = true;
 
 	public function user() {
 		return $this->belongsTo('User');

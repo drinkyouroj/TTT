@@ -102,14 +102,14 @@ class ProfileController extends BaseController {
 	 * Gives you the full notification history 
  	*/
 	public function getNotifications() {
-		$notifications = Notification::where('user_id', '=', Session::get('user_id'))
-										->where('noticed', '=', 0)
-										->get();
-										
+		$notifications = Notification::where('user_id', Session::get('user_id'))
+									->take(20)//limit at 20 for now.  We'll AJAX in the rest.
+									->get();
+		
 		$compiled = NotificationParser::parse($notifications);
 		
 		return View::make('profile/notifications')
-				->with('notifications', $compiled)
+				->with('notification_list', $compiled)
 				->with('fullscreen', true);
 	}
 	
@@ -117,7 +117,8 @@ class ProfileController extends BaseController {
 	 * Gives you your posts and your favorites.
 	 */
 	public function getMyPosts() {
-		$myposts = ProfilePost::where('profile_id', Auth::user()->id)
+		$myposts = ProfilePost::withTrashed()
+							->where('profile_id', Auth::user()->id)
 							->orderBy('created_at','DESC')
 							->get();
 		

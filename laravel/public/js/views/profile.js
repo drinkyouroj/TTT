@@ -2,15 +2,19 @@ $(function() {
 	
 	$('.options .delete').on('click', 'a', function() {
 		id = $(this).data('id');
+		deleted = false;
+		$that = $(this);
 		$.ajax({
 			url: window.site_url+'rest/posts/'+id,
 			type:"DELETE",//
 			success: function(data) {
 				console.log(data.result);
 				if(data.result == 'unpublished') {
-					$('.activity-container .post-id-'+id).fadeOut().remove();
+					$('.activity-container .post-id-'+id).addClass('deleted');
+					$that.html('undelete');
 				} else {
-					console.log(data);
+					$('.activity-container .post-id-'+id).removeClass('deleted');
+					$that.html('delete');
 				}
 			}
 		});

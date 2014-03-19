@@ -9,8 +9,13 @@
 			<div class="visible-md visible-lg @if(!$nofilter) col-md-12 no-bar  @else col-md-8 col-sm-8 @endif">
 				<ul class="category-filter">
 					<li>{{ link_to('', 'Featured') }}</li><!--Featured = Home-->
+				{? $active = '';?}
 				@foreach($categories as $k => $category)
-					<li><span class="ex">x</span> {{ link_to('categories/'.$category->alias, $category->title) }}</li>
+					@if($category->alias == Request::segment(2))
+						{? $active = 'active';?}
+					@endif 
+					<li><span class="ex">x</span> {{ link_to('categories/'.$category->alias, $category->title, array('class' => $active)) }}</li>
+					{? $active = '';?}
 				@endforeach
 				</ul>
 			</div>
@@ -20,8 +25,14 @@
 				<div id="filter-dropdown" class="navbar-collapse collapse">
 				<ul class="category-filter">
 					<li>{{ link_to('', 'Featured') }}</li><!--Featured = Home-->
+					
+				{? $active = '';?}
 				@foreach($categories as $k => $category)
-					<li><span class="ex">x</span> {{ link_to('categories/'.$category->alias, $category->title) }}</li>
+					@if($category->alias == Request::segment(2))
+						{? $active = 'active';?}
+					@endif
+					<li><span class="ex">x</span> {{ link_to('categories/'.$category->alias, $category->title, array('class' => $active) ) }}</li>
+					{? $active = '';?}
 				@endforeach
 				</ul>
 				</div>

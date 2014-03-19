@@ -2,7 +2,10 @@
 
 
 @section('left_sidebar')
-
+	<div class="counts">
+		<h2>Users: {{$user_count}}</h2>
+		<h2>Posts: {{$post_count}}</h2>
+	</div>
 
 	<div class="add-category">
 		<h2>Add New Category</h2>

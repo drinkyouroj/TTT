@@ -8,17 +8,18 @@
 	@include('partials/generic-filter')
 @stop
 
+@if(isset($cat_title))
+	{? $title =  $cat_title ?}
+@else
+	{? $title =  'Search'; ?}
+@endif
+
 
 @section('title')
-	{{$cat_title}} | The Twothousand Times 
+	{{$title}} | The Twothousand Times 
 @stop
 
 @section('content')
-	
-	@if(Auth::check())
-		
-	
-	@endif
 	
 	<div class="col-md-12">
 		<div class="generic-listing">

@@ -179,28 +179,45 @@ class PostRestController extends \BaseController {
 			
 			$post = Post::where('id', $id)->first();
 			
-			//if the post was featured set it back to nothing.
-			if($post->featured) {
-				User::where('id', Auth::user()->id)->update(array('featured'=>0));
+			//Delete Scenario
+			if($post->published) {
+				//if the post was featured set it back to nothing.
+				if($post->featured) {
+					User::where('id', Auth::user()->id)->update(array('featured'=>0));
+				}
+				
+				Post::where('id', $id)
+					->update(array('published'=>0));
+				
+				//Take it out of the activities. (maybe queue this too?)
+				Activity::where('post_id', $id)
+						->where('user_id', Auth::user()->id)//This is based on who is affected.
+						->delete();
+				
+				//Gotta get rid of it from the MyPosts/External Profile View 
+				ProfilePost::where('post_id', $id)
+						->where('profile_id', Auth::user()->id)//This is based on who is affected.
+						->delete();
+				
+				return Response::json(
+						array('result' =>'unpublished'),
+						200//response is OK!
+					);
+			} else {
+				//UnDelete Scenario
+				Post::where('id', $id)
+					->update(array('published'=>1));
+				
+				ProfilePost::onlyTrashed()
+						->where('post_id', $id)
+						->where('profile_id', Auth::user()->id)//This is based on who is affected.
+						->restore();
+						
+				return Response::json(
+						array('result' =>'republished'),
+						200//response is OK!
+					);
 			}
-			
-			Post::where('id', $id)
-				->update(array('published'=>'0'));
-			
-			//Take it out of the activities. (maybe queue this too?)
-			Activity::where('post_id', $id)
-					->where('user_id', Auth::user()->id)//This is based on who is affected.
-					->delete();
-			
-			//Gotta get rid of it from the MyPosts/External Profile View 
-			ProfilePost::where('post_id', $id)
-					->where('profile_id', Auth::user()->id)//This is based on who is affected.
-					->delete();
-			
-			return Response::json(
-					array('result' =>'unpublished'),
-					200//response is OK!
-				);
 		} else {
 			return Response::json(
 					array('result' =>'fail'),

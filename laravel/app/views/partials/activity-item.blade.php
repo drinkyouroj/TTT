@@ -1,10 +1,15 @@
 {{--This is both the activity and my post item.--}}
-@if($act->post->published)
 <div class="animated fadeIn 
-@if(isset($featured_item) && $featured_item) col-md-8 profile-featured 
-@else col-md-4 
-@endif post-id-{{$act->post->id}} 
-{{$act->post_type}}">
+	@if(isset($featured_item) && $featured_item) 
+		col-md-8 profile-featured 
+	@else 
+		col-md-4 
+	@endif
+	@if(!$act->post->published)
+		deleted
+	@endif
+	post-id-{{$act->post->id}} 
+	{{$act->post_type}}">
 	<div class="generic-item activity">
 		<header>
 			@if($act->post_type == 'post')
@@ -24,7 +29,6 @@
 				<h3 class="favorite ">{{ link_to('posts/'.$act->post->alias, $act->post->title) }}</h3>
 				<span class="story-type">{{$act->post->story_type}}</span>
 				<span class="author">by {{ link_to('profile/'.$act->post->user->username, $act->post->user->username) }}</span>
-				<span><a class="favorite" data-post="{{$act->post->id}}">unfavorite</a></span>
 			@endif
 			
 			@if(Auth::check())
@@ -47,7 +51,13 @@
 								</li>
 								
 								<li class="delete">
-									<a href="#delete" data-id="{{$act->post->id}}">Delete</a>
+									<a href="#delete" data-id="{{$act->post->id}}">
+										@if($act->post->published)
+											Delete
+										@else
+											UnDelete
+										@endif
+									</a>
 								</li>
 							</ul>
 						</li>
@@ -69,4 +79,3 @@
 		</section>
 	</div>
 </div>
-@endif

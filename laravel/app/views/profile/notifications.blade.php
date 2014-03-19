@@ -5,13 +5,11 @@ Notifications | The Two Thousand Times
 @stop
 
 @section('main')
-
 	<div class="row notifications-listing full-list">
-		@if(count($notifications))
+		@if(count($notification_list))
 			{{--Below file has the foreach routine for both the top section and the full listing --}}
 			{? $break = 100; $all = true; ?}
 			@include('partials/notifications')
 		@endif
 	</div>
-
 @stop
