@@ -61,6 +61,8 @@ button.btn:hover {
 }
 
 .menu-wrapper {
+	position:fixed;
+	z-index:1000;
 	width: 100%;
 	height: 30px;
 	background:#000;
@@ -72,6 +74,9 @@ button.btn:hover {
 
 .menu-wrapper .navbar.nav-conatiner{
 	border:none;
+	-moz-box-shadow: none !important;
+  	-webkit-box-shadow: none !important;
+  	box-shadow: none !important;
 }
 
 .menu-wrapper .navbar .container { 
@@ -106,7 +111,7 @@ button.btn:hover {
 	cursor:pointer;
 }
 
-.menu-wrapper .navbar .container ul.main-nav li.loggedin:hover, .menu-wrapper .navbar .container ul.navbar-right li.notifications-parent:hover {
+.menu-wrapper .navbar .container ul.main-nav li.loggedin:hover {
 	background-position: bottom left;
 }
 
@@ -139,7 +144,21 @@ li.notifications-parent {
 	text-align: top;
 	background-repeat: no-repeat;
 	background-position: top left;
-	background-image: url('../../img/icons/notifications.png');
+	background-image: url('../../img/icons/notifications3.png');
+}
+
+.menu-wrapper .navbar .container ul.navbar-right li.notifications-parent:hover {
+	background-position: center left;
+}
+
+li.notifications-parent.active-notifications {
+	background-position: bottom left !important;
+}
+
+li.notifications-parent.active-notifications a {
+	color:#32b1c6 !important;
+}
+	
 }
 
 li.notifications-parent>a {
@@ -209,7 +228,6 @@ ul.notifications li ul li {
 ul.notifications li ul li a{
 	margin: 0;	
 }
-
 
 
 /*Top Menu*/
@@ -325,6 +343,13 @@ ul.notifications li ul li a{
 }
 
 /*Notifications custom*/
+.header-wrapper .navbar .notifications-parent ul li {
+	padding: 10px 0px 10px 27px;
+	line-height:100%;
+	letter-spacing:0px;
+	font-family: 'EB Garamond';
+}
+
 .header-wrapper .navbar li a {
 	padding: 2px 0;
 }
@@ -332,11 +357,12 @@ ul.notifications li ul li a{
 color:#aaa !important;
 }
 
-.header-wrapper .navbar .notifications-parent ul li {
-	padding: 10px 0px 10px 27px;
-	line-height:100%;
-	letter-spacing:0px;
-	font-family: 'EB Garamond';
+li.notifications-parent ul a.mark-read:hover {
+	color:#aaa !important;
+}
+
+.header-wrapper .navbar .notifications-parent ul li.all-notifications {
+	padding-left:0px;
 }
 
 .header-wrapper .navbar li.repost {
@@ -583,6 +609,10 @@ margin-top:20px;
 	text-transform: uppercase;
 }
 
+.filters-container ul.category-filter li a.active {
+	color:#32b1c6;
+}
+
 .filters-container ul.category-filter li a:hover {
 	color: #9f9f9f;
 }
@@ -701,6 +731,54 @@ margin-top:20px;
 	text-transform:none;
 }
 
+.generic-listing .generic-item ul.repost  {
+	position:absolute;
+	bottom:-5px;
+	right:10px;
+	display:block;
+	float:left;
+	width:40px;
+	height:25px;
+	background-image: url('../../img/icons/repost-single.png');
+	background-position:top right;
+	background-repeat:no-repeat;
+}
+
+.generic-listing .generic-item ul.repost ul {
+	width:150px;
+	position:absolute;
+	display:none;
+	list-style:none;
+	top:24px;
+	right:-10px;
+	background-image: url('../../img/global/black-darker.png');
+	padding:5px 10px;
+	color:#fff !important;
+	text-align:left;
+}
+
+.generic-listing .generic-item ul.repost ul:before{
+	content: url('../../img/global/black-pointer.png');
+	position:absolute;
+	width:5px;
+	height:5px;
+	top:-15px;
+	right:17px;
+}
+
+.generic-listing .generic-item ul.repost ul li a  {
+	font-family: 'bebas';
+	color:#32b1c6 !important;
+}
+
+.generic-listing .generic-item ul.repost ul li a:hover {
+	color:#aaa !important;
+}
+
+.generic-listing .generic-item ul.repost:hover ul {
+	display:block;
+}
+
 .generic-listing .generic-item h4{
 	margin: 0;
 	font-size: 15px;
@@ -742,6 +820,10 @@ margin-top:20px;
 .generic-listing .generic-item .the-tags.long {
 	height: 25px;
 	line-height:17px;
+}
+
+.generic-listing .generic-item.activity .the-tags {
+	font-size:15px;
 }
 
 
@@ -952,6 +1034,14 @@ margin-top:20px;
 	background-size: cover;
 	background-position: center center;
 	background-repeat: no-repeat; 
+}
+
+.single-post .the-tags {
+	text-align: center;
+	font-family:'bebas';
+	font-size:21px;
+	padding-top:3px;
+	border-bottom:solid 2px #000;
 }
 
 .single-post .the-content {
@@ -1227,6 +1317,13 @@ margin-top:20px;
 @media (min-width: 992px) and (max-width: 1199px) {
 	.generic-listing .generic-item .the-image{
 		height: 195px;
+	}
+	
+	.generic-listing .generic-item.activity .the-tags.long {
+	margin-top:5px;
+	margin-bottom:5px;
+	height:35px;
+	overflow:hidden;
 	}
 }
 

@@ -44,7 +44,7 @@ class MessageController extends BaseController {
 				$reply_id = $from->first()->reply_id;
 				$user = User::where('id', '=', $reply_id);			
 			} else {
-				self::getMessageReplyForm();
+				return self::getMessageReplyForm();
 			}
 			
 		} else {

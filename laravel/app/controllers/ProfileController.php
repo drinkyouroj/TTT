@@ -141,4 +141,15 @@ class ProfileController extends BaseController {
 				->with('fullscreen', true);
 	}
 	
+	/**
+	 * Place to have settings, etc.
+	 */
+	public function getSettings() {
+		$user = User::where('id', Auth::user()->id)->first();
+		
+		return View::make('profile/settings')
+				->with('fullscreen', true)
+				->with('user', $user);
+	}
+	
 }

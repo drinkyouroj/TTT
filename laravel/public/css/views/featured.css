@@ -75,12 +75,18 @@
 */
 /*Tiny*/
 @media (max-width: 479px) {
-	
+	.top-featured .featured-item.h-1, .top-featured .featured-item.h-2{
+		height:auto;
+		border-bottom:2px solid #000;
+	}
 }
 
 /*Small*/
 @media (min-width: 480px) and (max-width: 767px) {
-	
+	.top-featured .featured-item.h-1, .top-featured .featured-item.h-2{
+		height:auto;
+		border-bottom:2px solid #000;
+	}
 }
 
 /*Normal*/

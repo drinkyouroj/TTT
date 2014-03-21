@@ -29,6 +29,7 @@
 	margin: 0;
 	font-size: 14px;
 	font-family: 'EB Garamond';
+	width: auto;
 }
 
 
@@ -95,6 +96,11 @@ ul.profile-options li a.all-notification {
 ul.profile-options li a.my-posts {
 	background-image: url('../../img/icons/profile2.png');
 }
+
+ul.profile-options li a.settings {
+	background-image: url('../../img/icons/settings-icon.png');
+}
+
 
 ul.profile-options li a.edit-profile {
 	
@@ -212,12 +218,12 @@ ul.profile-options li a.new-message {
 	width:100%;
 	float:left;
 	font-family: 'Montserrat', sans-serif;
-	font-size:18px;
+	font-size:14px;
 	text-transform:uppercase;
 	color:#fff;
-	letter-spacing:2px;
+	letter-spacing:0px;
 	text-align:center;
-	border-bottom:solid 3px #ddd;
+	border-bottom:solid 2px #ddd;
 	
 	margin-top:0px;
 	padding:5px 0px;
@@ -258,9 +264,43 @@ ul.profile-options li a.new-message {
 
 }
 
+/*Settings*/
+.settings-content {
+	text-align:center;
+	margin-top:20px;
+	margin-bottom:140px;
+}
+
+.settings-content h2 {
+	text-align:center;
+	font-family:'bebas';
+}
+
+.settings-content p {
+	text-align:center;
+	font-size:16px;
+}
+
+.settings-content button.btn {
+	margin-top:25px;
+}
+
+#deleteModal .modal-title {
+	font-family:'bebas';
+}
+
+#deleteModal .modal-body {
+	font-size:16px;
+}
+
+#deleteModal .delete-account {
+	background-color:#df3b3c !important;
+	border-bottom: solid 4px #9b2c31 !important;
+}
+
 /*Mobile Header*/
 .mobile-profile-options {
-width:inherit;
+	width:inherit;
 	position:relative;
 	display:block;
 	margin-top:30px;

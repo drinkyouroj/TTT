@@ -9,12 +9,17 @@
 |
 */
 
+
 class UserController extends BaseController {
 
 	protected $layout = 'layouts.master';
+	
 
+	/**Signup*/
 	public function getSignup(){
+		
 		$this->getCreate();
+		
 	}
 
     /**
@@ -22,16 +27,29 @@ class UserController extends BaseController {
      *
      */
     public function getCreate()
-    {
-        $this->layout->content = View::make('user.signup');
+    {	
+        return View::make('user/signup');
     }
 
     /**
-     * Stores new account
-     *
+     * Stores new account and also validates the captcha
      */
     public function postIndex()
     {
+    	//Captcha
+		$rules = array(
+	        'recaptcha_response_field' => 'required|recaptcha'
+	    );
+		
+		$validation = Validator::make(Input::all(), $rules);
+		
+        if ($validation->fails())
+        {	
+        	return Redirect::to('user/create')
+                ->withInput(Input::except('password'))
+				->withErrors($validation);
+        }
+		
         $user = new User;
 
         $user->username = Input::get( 'username' );
@@ -52,24 +70,20 @@ class UserController extends BaseController {
 
         // Save if valid. Password field will be hashed before save
         $user->save();
-		/*
-		$userRole = Role::where('name', '=', 'Nobody')->first();
 		
-		$user->roles()->attach(1);//Attach the user role to a user.
-		*/
         if ( $user->id )
         {
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
-                        return Redirect::to('user/loginonly')
-                            ->with( 'notice', Lang::get('confide::confide.alerts.account_created') );
+	        return Redirect::to('user/loginonly')
+	            ->with( 'notice', Lang::get('confide::confide.alerts.account_created') );
         }
         else
         {
             // Get validation errors (see Ardent package)
             $error = $user->errors()->all(':message');
 
-                        return Redirect::to('user/create')
-                            ->withInput(Input::except('password'))
+            return Redirect::to('user/create')
+                ->withInput(Input::except('password'))
                 ->with( 'error', $error );
         }
     }
@@ -170,6 +184,15 @@ class UserController extends BaseController {
 				Session::put('mod', 0);
 			}
 			
+			//Gotta redirect to an acknowledge page if the user happens to have softDeleted their account
+			if(!is_null($user->deleted_at)) {
+				$rando_string = str_random(40);
+				Session::put('restore_string', $rando_string);
+				return View::make('user/undelete')
+					->with('restore_string', $rando_string)
+					->with('user',$user);
+			}
+			
             // If the session 'loginRedirect' is set, then redirect
             // to that route. Otherwise redirect to '/'
             $r = Session::get('loginRedirect');
@@ -199,11 +222,29 @@ class UserController extends BaseController {
                 $err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
             }
 
-                        return Redirect::to('user/loginonly')
-                            ->withInput(Input::except('password'))
+            return Redirect::to('user/loginonly')
+                ->withInput(Input::except('password'))
                 ->with( 'error', $err_msg );
         }
     }
+		/**
+		 * This has to do with undeleting the user.
+		 * User has to acknowledge that the person will be 
+		 */
+		public function getRestore() {
+			$id = Request::segment(3);
+			$rando_string = Request::segment(4);
+			if($rando_string == Session::get('restore_string')) {
+				$user = User::onlyTrashed()->where('id', $id)->restore();
+				//Might want to think about the below a bit more.
+				Post::where('user_id', $id)->update(array('published'=>1));
+				return Redirect::to('user/loginonly');
+			} else {
+				return Redirect::to('featured');
+			}
+			
+		}
+
 
     /**
      * Attempt to confirm account with code
@@ -253,7 +294,7 @@ class UserController extends BaseController {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_forgot');
                         return Redirect::to('user/forgot')
                             ->withInput()
-                ->with( 'error', $error_msg );
+                			->with( 'error', $error_msg );
         }
     }
 

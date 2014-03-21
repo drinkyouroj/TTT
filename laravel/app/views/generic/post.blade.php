@@ -173,6 +173,11 @@
 		<div class="col-md-10 col-md-offset-1 the-image" style="background-image: url('{{Config::get('app.url')}}/uploads/final_images/{{$post->image}}');">
 			
 		</div>
+		<div class="col-md-10 col-md-offset-1 the-tags @if(strlen($post->tagline_1.$post->tagline_2.$post->tagline_3) >= 35) long @endif ">
+				{{$post->tagline_1}} | 
+				{{$post->tagline_2}} | 
+				{{$post->tagline_3}}
+		</div>
 	</div>
 	@endif
 	

@@ -23,7 +23,12 @@
 					{{ link_to('posts/'.$act->post->alias, $act->post->title) }}
 				</h3>
 				<span class="author">by {{ link_to('profile/'.$act->post->user->username, $act->post->user->username) }}</span>
-				<span class="repost">reposted by {{ link_to('profile/'.$act->user->username, $act->user->username) }}</span>
+				<ul class="repost">
+					<ul>
+						<li>reposted by</li>
+						<li>{{ link_to('profile/'.$act->user->username, $act->user->username) }}</li>
+					</ul>
+				</ul>
 			@else
 				<!--{{$act->post_type}}-->
 				<h3 class="favorite ">{{ link_to('posts/'.$act->post->alias, $act->post->title) }}</h3>

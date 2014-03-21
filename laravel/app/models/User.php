@@ -10,6 +10,7 @@ class User extends ConfideUser {
 	
 	use HasRole;
 	
+	protected $softDelete = true;
 	
 	/**
      * Validation rules

@@ -106,7 +106,8 @@ Route::filter('profile', function() {
 						'messages',
 						'submitmessage',
 						'notifications',
-						'myposts'
+						'myposts',
+						'settings'
 						);
 			
 			if($alias && !in_array($alias, $not_segment) ) {//This is for other users. not yourself

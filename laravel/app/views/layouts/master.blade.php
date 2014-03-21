@@ -44,7 +44,7 @@
   </head>
 <body>
 <div class="header-wrapper">
-	<div class="menu-wrapper">
+	<div class="menu-wrapper visible-md visible-lg">
 	  	<header class="visible-md visible-lg container menu">
 	  		<div class="row">
 		  		<nav class="col-md-12 navbar navbar-inverse nav-conatiner" role="navigation">
@@ -87,9 +87,9 @@
 						{{ Form::close() }}
 					    @if(!Auth::guest())
 			  			<ul class="nav navbar-nav navbar-right">
-			  				<li class="notifications-parent">
+			  				<li class="notifications-parent @if(count($notifications)) active-notifications @endif">
 			  					
-			  					<a href="#notifications" class="@if(count($notifications)) active @endif">Notifications</a>
+			  					<a href="#notifications">Notifications</a>
 			  					<ul class="notifications">
 			  						@if(count($notifications))
 			  							<a class="mark-read">Mark as Read</a>

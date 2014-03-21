@@ -5,6 +5,10 @@
 @stop
 
 @section('title')
+	About
+@stop
+
+@section('title')
 	About | The Twothousand Times
 @stop
 

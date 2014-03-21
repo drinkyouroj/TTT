@@ -46,6 +46,9 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	//Notification Action
 	Route::resource('notification', 'NotificationsRestController', array('only'=>array('index','show','store')) );
 	
+	//Settings Page Action
+	Route::resource('user', 'UserRestController', $binary_limits);
+	
 	
 	/**Post Input Systems***************************/
 	//Title CHKR
@@ -79,6 +82,7 @@ Route::get('mod','ModController@getIndex');
 /********************The Authentication Routes  (Confide RESTful route)************************/
 Route::get('/user/confirm/{code}', 'UserController@getConfirm');
 Route::get('/user/reset/{token}', 'UserController@getReset');
+Route::get('/user/restore/{id}', 'UserController@getRestore');
 Route::controller( '/user', 'UserController');
 
 /********************Normal non rest controllers********************************************/
@@ -112,6 +116,9 @@ Route::get( '/profile/notifications', array('before' => 'auth',
 Route::get( '/profile/myposts', array('before' => 'auth',
             							'uses' => 'ProfileController@getMyPosts'));
 
+//My Settings
+Route::get( '/profile/settings', array('before' => 'auth',
+            							'uses' => 'ProfileController@getSettings'));
 
 //Comments
 Route::get( '/profile/commentform/{post_id}/{reply_id}', array('before' => 'auth',

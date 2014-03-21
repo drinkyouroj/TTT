@@ -22,7 +22,9 @@
 					<h2>The Inbox</h2>
 				</div>
 				<div class="col-md-6">
+					@if($following+$followers)
 					<h3>{{link_to('profile/newmessage/','New Message',array('class'=>'new-message') )}}</h3>
+					@endif
 				</div>
 			</div>
 			

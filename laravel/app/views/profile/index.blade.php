@@ -93,7 +93,6 @@
 		
 		
 		<div class="row activity-container generic-listing {{ $me ? '': 'myposts' }}">
-			
 			@if($me)
 			{{--This is for the user's actual profile--}}
 			<div class="col-md-4">

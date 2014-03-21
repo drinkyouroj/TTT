@@ -29,6 +29,7 @@ $app = new Illuminate\Foundation\Application;
 $env = $app->detectEnvironment(array(
 
 	'prod' => array('twothousand14'),
+	'prod' => array('ttt8gb'),
 	'vagrant' => array('localhost:4567'),
 	'local' => array('localhost.localdomain'),
 
