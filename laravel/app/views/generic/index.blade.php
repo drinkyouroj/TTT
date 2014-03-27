@@ -35,7 +35,7 @@
 			@if(!is_string($posts))
 				<div class="row">
 				@foreach($posts as $k => $post)
-					@if(isset($post->id))
+					@if(isset($post->id) && isset($post->user->username))
 						@include('partials/generic-item')
 					@endif
 				@endforeach
