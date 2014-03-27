@@ -11,7 +11,7 @@
 
 @section('main')
 	<div class="row activity-nav">
-		<li class="left"><a class="all">Show All</a></li>
+		<li class="left"><a class="all active">Show All</a></li>
 		<li><a class="myposts">My Posts</a></li>
 		<li><a class="myfavorites">My Favorites</a></li>
 	</div>
@@ -28,7 +28,9 @@
 			{? $featured_item = 0; ?}
 			@foreach($myposts as $act)
 				@if(is_string($act->post_type))
-					@include('partials/activity-item')
+					@if($act->post->published)
+						@include('partials/activity-item')
+					@endif
 				@endif
 			@endforeach
 		@endif
@@ -44,6 +46,7 @@
 	</script>
 	
 	{{-- Include all the JS required for the situation--}}
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/handlebars-v1.3.0.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/profile.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/myposts.js"></script>
 		

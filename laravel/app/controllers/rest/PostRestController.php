@@ -88,19 +88,18 @@ class PostRestController extends \BaseController {
 	{
 		//Gets one with the right id.
 		$post = Post::where('id', $id)
-					->where('published',1)->first();
+					->where('published',1)->with('user')->first();
 		if(is_object($post)) {
-			
+			/*
 			$user = User::where('id', $post->user_id)
 						->select('username')
 						->first();
-			
+			*/
 			//Sends back a response of the post.
 			return Response::json(
 				array(
-					'post' => $post->toArray(),
-					'user' => $user->toArray(),
-					'url' => Config::get('app.url')
+					$post->toArray(),
+					//'user' => $user->toArray()
 				),
 				200//response is OK!
 			);

@@ -41,7 +41,9 @@ $(function() {
 						url:window.site_url+'rest/posts/'+id,
 						type: "GET",
 						success: function(data) {
-							new_featured = data;
+							new_featured = data[0];
+							console.log(data);
+							new_featured['url'] = window.site_url;
 							var source = $('#featured-template').html();
 							var template = Handlebars.compile(source);
 							var html = template(new_featured);

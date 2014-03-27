@@ -1,10 +1,14 @@
 <?php
+/*
+ * 
+ */
 class SearchController extends BaseController {
 	
 	function __constructor() {
 		
 	}
 	
+	//Physical Listing of Search in new page.
 	public function postResult() {
 		$term = Input::get('term');
 		
@@ -12,7 +16,7 @@ class SearchController extends BaseController {
 		$results = SolariumHelper::searchSolr($term, false);//false = not for AJAX
 		
 		$ids = array();
-		foreach($results as $result ) {
+		foreach($results['posts'] as $result ) {
 			array_push($ids, $result->id);
 		}
 		
@@ -28,15 +32,20 @@ class SearchController extends BaseController {
 		
 	}
 	
+	//Ajax listing
 	public function getResult($term) {
-		//$term = Request::segment(2);
 		$results = SolariumHelper::searchSolr($term, true);//returns title and taglines
 		
-		$result_array = $results->getData();
-		//dd($result_array['response']['docs']);
-		if(count($result_array)){
+		//Below kind of blows, but the data structure is as such.
+		$result_array = array();
+		$posts = $results['posts']->getData();
+		$users = $results['users']->getData();
+		$result_array['posts'] = $posts['response']['docs'];
+		$result_array['users'] = $users['response']['docs']; 
+		
+		if(count($result_array['posts']) || count($result_array['users'])){
 			return Response::json(
-					$result_array['response']['docs'],
+					$result_array,
 					200//response is OK!
 				);
 		} else {

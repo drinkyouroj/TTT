@@ -13,7 +13,13 @@
 	<header>
 		<h3>{{ link_to('posts/'.$post->alias, $post->title) }}</h3>
 		<span class="story-type">{{$post->story_type}}</span>
-		<span class="author"><span class="by">by</span> {{link_to('profile/'.$post->user->username, $post->user->username)}}</span>
+		<span class="author"><span class="by">by</span> 
+		@if(isset($post->user->username))
+			{{link_to('profile/'.$post->user->username, $post->user->username)}}
+		@else
+			{{link_to('profile/nobody', 'Nobody')}}
+		@endif
+		</span>
 	</header>
 	<section>
 		@if($post->image)

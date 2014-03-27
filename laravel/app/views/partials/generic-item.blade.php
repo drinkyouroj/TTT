@@ -4,6 +4,7 @@
 			<h3>{{ link_to('posts/'.$post->alias, $post->title) }}</h3> 
 			<span class="story-type">{{$post->story_type}}</span>
 			<span class="author"><span>by</span> {{link_to('profile/'.$post->user->username, $post->user->username)}}</span>
+			
 		</header>
 		<section>
 			@if($post->image)

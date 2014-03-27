@@ -6,9 +6,10 @@
 				{? $nofilter = true ?}
 			@endif
 			
-			<div class="visible-md visible-lg @if(!$nofilter) col-md-12 no-bar  @else col-md-8 col-sm-8 @endif">
+			<div class="visible-sm visible-md visible-lg col-md-12 no-bar">
 				<ul class="category-filter">
 					<li>{{ link_to('', 'Featured') }}</li><!--Featured = Home-->
+					<li><span class="ex">x</span> {{ link_to('categories/all', 'All') }}</li><!--Featured = Home-->
 				{? $active = '';?}
 				@foreach($categories as $k => $category)
 					@if($category->alias == Request::segment(2))
@@ -20,11 +21,12 @@
 				</ul>
 			</div>
 			
-			<div class="hidden-md hidden-lg mobile-filters @if(!$nofilter) mobile-filters col-xs-12 no-bar  @else col-md-8 col-sm-8 no-bar @endif">
-			<button type="button" class="categories-button navbar-toggle" data-toggle="collapse" data-target="#filter-dropdown">Categories</button>
+			<div class=" hidden-sm hidden-md hidden-lg mobile-filters @if(!$nofilter) mobile-filters col-xs-12 no-bar  @else col-md-8 col-sm-8 no-bar @endif">
+				<button type="button" class="categories-button navbar-toggle" data-toggle="collapse" data-target="#filter-dropdown">Categories</button>
 				<div id="filter-dropdown" class="navbar-collapse collapse">
 				<ul class="category-filter">
 					<li>{{ link_to('', 'Featured') }}</li><!--Featured = Home-->
+					<li><span class="ex">x</span> {{ link_to('all', 'All') }}</li><!--Featured = Home-->
 					
 				{? $active = '';?}
 				@foreach($categories as $k => $category)
@@ -37,24 +39,48 @@
 				</ul>
 				</div>
 			</div>
-			
-			{{--We need to figure out a way to do the redirect sort based on what controller you're coming from--}}
 			@if($nofilter)
-			<div class="col-md-4 col-sm-4 sort_by_container">
-				<select name="sort_by" class="sort_by_filter pull-right">
-					<option selected="selected">sort by</option>
-					{{--This might need some weird switches and stuff for different scenarios--}}
-					{? $current_seg = Request::segment(1).'/'.Request::segment(2) ?}
-					<option value="{{Config::get('app.url')}}/{{$current_seg}}/popular">Most Popular</option>
-					<option value="{{Config::get('app.url')}}/{{$current_seg}}/viewed">Most Viewed</option>
-					<option value="{{Config::get('app.url')}}/{{$current_seg}}/recent">Most Recent</option>
-					<option value="{{Config::get('app.url')}}/{{$current_seg}}/discussed">Most Discussed</option>
-					<option value="{{Config::get('app.url')}}/{{$current_seg}}/longest">Longest</option>
-					<option value="{{Config::get('app.url')}}/{{$current_seg}}/shortest">Shortest</option>
-				</select>
+			<div class="hidden-sm hidden-md hidden-lg mobile-sortby">
+				<button type="button" class="sortby-btn navbar-toggle" data-toggle="collapse" data-target="#sortby-dropdown">Sort by <span class="caret"></button>
+				<div id="sortby-dropdown" class="navbar-collapse collapse">
+					<ul name="sort_by" class="sort_by_filter">
+						{{--This might need some weird switches and stuff for different scenarios--}}
+						{? $current_seg = Request::segment(1).'/'.Request::segment(2) ?}
+						<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/popular">Most Popular</a></li>
+						<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/viewed">Most Viewed</a></li>
+						<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/recent">Most Recent</a></li>
+						<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/discussed">Most Discussed</a></li>
+						<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/longest">Longest</a></li>
+						<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/shortest">Shortest</a></li>
+					</ul>
+				</div>
 			<div class="clearfix"></div>
 			</div>
 			@endif
 		</div>
 	</div>
 </aside>
+
+@if($nofilter)
+<aside class="sortby-container">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10 col-sm-12 visible-sm visible-md visible-lg sort_by_container">
+				<ul name="sort_by" class="sort_by_filter">
+					{{--This might need some weird switches and stuff for different scenarios--}}
+					{? $current_seg = Request::segment(1).'/'.Request::segment(2) ?}
+					<li class="sortby-label">Sort by:</li>
+					<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/popular">Most Popular</a></li>
+					<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/viewed">Most Viewed</a></li>
+					<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/recent">Most Recent</a></li>
+					<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/discussed">Most Discussed</a></li>
+					<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/longest">Longest</a></li>
+					<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/shortest">Shortest</a></li>
+				</ul>
+			<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+<div class="clearfix"></div>
+</aside>
+@endif

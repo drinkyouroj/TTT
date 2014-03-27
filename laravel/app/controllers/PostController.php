@@ -18,8 +18,13 @@ class PostController extends BaseController {
 			$post = $post->first();
 			//Do the post math here
 			$body_array = self::divide_text($post->body, 1500);//the length is currently set to 3000 chars
-			//$body_array = explode( "\n", wordwrap( $post->body, 1500));
-			$user_id = $post->user->id;
+			
+			if(!isset($post->user->username)) {
+				$user_id = 1;//nobody
+				$post->user = User::find(1);
+			} else {
+				$user_id = $post->user->id;
+			}
 			
 			//DEFAULTS for not logged in
 			$my_id = false;

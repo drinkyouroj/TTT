@@ -23,41 +23,18 @@
 	</div>
 	
 	<div class="visible-md visible-lg follow-container">
-		<div class="following">
-			<a href="#following" class="following-link" data-user="{{$user_id}}">
-			<div class="numbers">{{$following}}</div>
-			Following
-			</a>
-		</div>
-		<div class="followers">
-			<a href="#followers" class="followers-link" data-user="{{$user_id}}">
-			<div class="numbers">{{$followers}}</div>
-			Followers
-			</a>
-		</div>
+		@include('partials/follow-following')
 	</div>
-	
 	
 	<div class="mobile-profile-options hidden-md hidden-lg">
-	<ul class="profile-options">
-		@include('partials/profile-ul-content')
-	</ul>
-	
-	<div class="follow-container mobile-follow-container">
-		<div class="following">
-			<a href="#following" class="following-link" data-user="{{$user_id}}">
-			<div class="numbers">{{$following}}</div>
-			Following
-			</a>
+		<ul class="profile-options">
+			@include('partials/profile-ul-content')
+		</ul>
+		
+		<div class="follow-container mobile-follow-container">
+			@include('partials/follow-following')
 		</div>
-		<div class="followers">
-			<a href="#followers" class="followers-link" data-user="{{$user_id}}">
-			<div class="numbers">{{$followers}}</div>
-			Followers
-			</a>
-		</div>
-	</div>
-	<div class="clearfix"></div>
+		<div class="clearfix"></div>
 	</div>
 	
 	

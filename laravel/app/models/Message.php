@@ -14,6 +14,13 @@ class Message extends Eloquent {
 		return $this->belongsTo('User', 'from_uid');
 	}
 	
+	public function last()
+	{
+		return $this->where('reply_id', $this->id)
+			->orderby('created_at', 'DESC')//Ascending 
+			->first();//first of acending = last message
+	}
+	
 	
 	public function validate($input) {
 		$rules = array(

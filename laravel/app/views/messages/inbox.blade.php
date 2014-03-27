@@ -36,7 +36,13 @@
 					<div class="row">
 						<div class="col-md-10 message-content">
 							<span class="sent-to">Sent to {{link_to('profile/'.$thread->to->username, $thread->to->username, array('class'=>'')) }}</span>
-							<br/><span class="the-excerpt">{{substr($thread->body, 0, 100)}}</span>
+							<br/><span class="the-excerpt">
+								@if(is_null( $thread->last() ))
+									{{substr($thread->body, 0, 100)}}
+								@else
+									{{substr($thread->last()->body, 0,100)}}
+								@endif
+								</span>
 						</div>
 						<div class="col-md-2 message-button">
 							{{link_to('profile/replymessage/'.$thread->id, 'View', array('class'=>'btn btn-primary btn-sm','type'=>'button')) }}

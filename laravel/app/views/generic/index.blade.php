@@ -1,7 +1,16 @@
 @extends('layouts.master')
 
 @section('js')
+	<script type="text/javascript">
+		window.category = '{{Request::segment(2)}}';
+		window.filter = '{{Request::segment(3)}}';
+	</script>
+	
+	
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/handlebars-v1.3.0.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/generic-listing.js"></script>
+	
+	@include('partials/generic-handlebar-item')
 @stop
 
 @section('filters')
@@ -24,21 +33,13 @@
 	<div class="col-md-12">
 		<div class="generic-listing">
 			@if(!is_string($posts))
-				{?$c = 0?}
-				{?$total = count($posts)?}
+				<div class="row">
 				@foreach($posts as $k => $post)
-					@if( $c == 0 )
-						<div class="row">
-					@endif
-						@if(isset($post->id))
-							@include('partials/generic-item')
-						@endif
-					{?$c++?}
-					@if($c == 3 || $k+1 == $total)
-						</div>
-						{?$c = 0 ?}
+					@if(isset($post->id))
+						@include('partials/generic-item')
 					@endif
 				@endforeach
+				</div>
 			@else
 				<div class="col-md-12">
 					{{$posts}}

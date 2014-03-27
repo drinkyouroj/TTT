@@ -12,6 +12,7 @@ class User extends ConfideUser {
 	
 	protected $softDelete = true;
 	
+//	protected $guarded = array('password','email','confirmation_code');
 	/**
      * Validation rules
      */

@@ -2,20 +2,33 @@
 
 /**
  * This Helper is intended to make things easy with solarium 
+ * Keep in mind that this is the posts solarium helper, not the users one.
  */
 
 class SolariumHelper {
 	
-	static protected $sconfig = array(
+	//Post Cores are separate from the user cores.
+	static protected $postconfig = array(
 							'endpoint' => array(
 						        'localhost' => array(
 						            'host' => '127.0.0.1',
 						            'port' => 8080,
 						            'path' => '/solr/',
+						            'core' => 'collection1'
 						        )
 						    )
 						);
-	
+
+	static protected $userconfig = array(
+							'endpoint' => array(
+						        'localhost' => array(
+						            'host' => '127.0.0.1',
+						            'port' => 8080,
+						            'path' => '/solr/',
+						            'core' => 'users'
+						        )
+						    )
+						);
 	
 	function __constructor() {
 		
@@ -25,35 +38,17 @@ class SolariumHelper {
 	 * This is the general select from Solr
 	 */
 	public static function searchSolr($string, $ajax = false) {
-		$client = new Solarium\Client(static::$sconfig);
+		//First, let's process the query.
+		$query = self::queryBuilder($string);
 		
-		//lets split this fool via alunum
-		$string_space = preg_replace('/[^A-Za-z0-9]/', ' ', $string);//gotta make this a safe search
-		
-		$multi = explode(" ", $string_space);
-		
-		//Does this have multiple words?
-		if(count($multi) == 1) {
-			$query = '*'.$string_space.'*';
-		} else {
-			$query = '(';
-			foreach($multi as $k => $item) {
-				if($k != 0) {
-					$query .= ' AND *'.$item.'*';
-				}else {
-					$query .= '*'.$item.'*';
-				}
-			}
-			$query .= ')';
-		}
-		//error_log($query);
-		
+		//Posts Search.
+		$post_client = new Solarium\Client(static::$postconfig);
 		
 		if($ajax) {
-			$fields = array('id','title','taglines','alias');
+			$post_fields = array('id','title','taglines','alias');
 			$rows = 30;
 		} else {
-			$fields = array('id');
+			$post_fields = array('id');
 			$rows = 10;
 		}
 		
@@ -61,20 +56,68 @@ class SolariumHelper {
 			'query'         => $query,
 		    'start'         => 0,
 		    'rows'          => $rows,
-		    'fields'        => $fields, 
+		    'fields'        => $post_fields, 
 		    'sort'          => array('id' => 'asc'),
 		);
 		
-		$query = $client->createSelect($select);
+		$post_query = $post_client->createSelect($select);
+		$posts = $post_client->select($post_query);//result set returned!
 		
-		return $client->select($query);//result set returned!
+		
+		//User Search
+		$user_client = new Solarium\Client(static::$userconfig);
+		
+		if($ajax) {
+			$user_fields = array('id','username','bio');
+			$rows = 30;
+		} else {
+			$user_fields = array('id');
+			$rows = 10;
+		}
+		
+		$select = array(
+			'query'         => $query,//query is still the same
+		    'start'         => 0,
+		    'rows'          => $rows,
+		    'fields'        => $user_fields, 
+		    'sort'          => array('id' => 'asc'),
+		);
+		
+		$user_query = $user_client->createSelect($select);
+		$users = $user_client->select($user_query);//result set returned!
+		
+		return array('posts' => $posts,
+					 'users' => $users);
 	}
+	
+		private static function queryBuilder($string) {
+			//lets split this fool via alunum
+			$string_space = preg_replace('/[^A-Za-z0-9]/', ' ', $string);//gotta make this a safe search
+			
+			$multi = explode(" ", $string_space);
+			//Does this have multiple words?
+			if(count($multi) == 1) {
+				$query = '*'.$string_space.'*';
+			} else {
+				$query = '(';
+				foreach($multi as $k => $item) {
+					if($k != 0) {
+						$query .= ' AND *'.$item.'*';//The space before the AND is very important.
+					}else {
+						$query .= '*'.$item.'*';
+					}
+				}
+				$query .= ')';
+			}
+			return $query;
+		}
+	
 	
 	/**
 	 * In Solr, update is create and create is update
 	 */
 	public static function updatePost($post) {
-		$client = new Solarium\Client(static::$sconfig);
+		$client = new Solarium\Client(static::$postconfig);
 		$update = $client->createUpdate();
 		
 		$new_post = $update->createDocument();
@@ -94,7 +137,7 @@ class SolariumHelper {
 	 * Delete the post.
 	 */
 	public static function deletePost($id) {
-		$client = new Solarium\Client(static::$sconfig);
+		$client = new Solarium\Client(static::$postconfig);
 		$update = $client->createUpdate();
 		
 		$update->addDeleteById($id);
@@ -108,13 +151,14 @@ class SolariumHelper {
 	 * Update/Create User details within Solr
 	 */
 	public static function updateUser($user) {
-		$client = new Solarium\Client(static::$sconfig);
+		$client = new Solarium\Client(static::$userconfig);
 		$update = $client->createUpdate();
 		
 		$new_user = $update->createDocument();
 		
 		$new_user->id = $user->id;
 		$new_user->username = $user->username;
+		$new_user->bio = $user->bio;
 		
 		$update->addDocuments(array($new_user));
 		$update->addCommit();

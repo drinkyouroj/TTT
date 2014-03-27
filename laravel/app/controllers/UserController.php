@@ -38,7 +38,8 @@ class UserController extends BaseController {
     {
     	//Captcha
 		$rules = array(
-	        'recaptcha_response_field' => 'required|recaptcha'
+	        'recaptcha_response_field' => 'required|recaptcha',
+	        'username' => 'required|max:15'
 	    );
 		
 		$validation = Validator::make(Input::all(), $rules);
@@ -73,6 +74,9 @@ class UserController extends BaseController {
 		
         if ( $user->id )
         {
+        	//Gotta add the new user to SOLR
+        	SolariumHelper::updateUser($user);
+        	
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
 	        return Redirect::to('user/loginonly')
 	            ->with( 'notice', Lang::get('confide::confide.alerts.account_created') );
@@ -120,6 +124,9 @@ class UserController extends BaseController {
         }
     }
 	
+		public function getUserCheck() {
+			
+		}
 
     /**
      * Attempt to do login

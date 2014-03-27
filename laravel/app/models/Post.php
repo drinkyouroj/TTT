@@ -26,9 +26,10 @@ class Post extends Eloquent {
 	//Just to be sure!
 	protected $table = 'posts';
 	protected $softDelete = true;
+	protected $with = array('user');
 	
 	public function user() {
-		return $this->belongsTo('User');
+		return $this->belongsTo('User')->select('id','username');//maybe take out the id later.
 	}
 	
 	public function comments()
@@ -60,6 +61,7 @@ class Post extends Eloquent {
 	{
 		return $this->belongsToMany('Category', 'category_post');
 	}
+
 	
 	/**
 	 * Now with existing id checker
