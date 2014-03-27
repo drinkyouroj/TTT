@@ -122,7 +122,7 @@
 				@endif
 			
 				@foreach($activity as $act)
-					@if(isset($act->post->id) && $act->post->published)
+					@if(isset($act->post->id) && $act->post->published && isset($act->user->usename))
 						@include('partials/activity-item')
 					@endif
 				@endforeach
