@@ -13,7 +13,8 @@ Forgot Password
 
 @section('content')
 	<div class="forgot-container">
-		<h2>forgot your password?</h2>
+		<h2>Forgot your password?</h2>
+		<p>Note, if you didn't input an e-mail address during signup</br> there is not a way to reset your password.</p>
 		{{ Confide::makeForgotPasswordForm()->render() }}
 	</div>
 @stop

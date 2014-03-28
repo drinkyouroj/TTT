@@ -11,7 +11,27 @@
 
 @section('main')
 	<div class="row settings-content">
-		<div class="col-md-10 col-md-offset-1">
+	
+		<div class="col-md-5 col-md-offset-1">
+			<h2>Change Your Password</h2>
+			<div class="reset_message">
+				{{ Session::get('reset_message') }}
+			</div>
+		
+			<div class="success_message">
+				{{ Session::get('success_message') }}
+			</div>
+			<div class="reset-pass">
+				{{ Form::open(array('url'=>'user/newpass')) }}
+					Current Password: {{ Form::password('current_password') }}<br/>
+					New Password: {{ Form::password('password') }}<br/>
+					New Password Again: {{ Form::password('password_confirmation') }}<br/>
+					{{ Form::submit('Reset Password', array('class'=>'btn btn-warning')) }}
+				{{ Form::close() }}
+			</div>
+		</div>
+		
+		<div class="col-md-5">
 			<h2>Delete Your Account</h2>
 			<p>This will delete your account from the system.  All of your content will be unpublished (but they'll remain in place)</p>
 			<p>Should you decide to come back, all of your content will be republished and your user will re-appear.</p>

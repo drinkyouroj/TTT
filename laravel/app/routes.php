@@ -83,6 +83,8 @@ Route::get('mod','ModController@getIndex');
 Route::get('/user/confirm/{code}', 'UserController@getConfirm');
 Route::get('/user/reset/{token}', 'UserController@getReset');
 Route::get('/user/restore/{id}', 'UserController@getRestore');
+Route::get('/user/check', 'UserController@getUserCheck');
+Route::get('/user/forgot', 'UserController@getForgot');
 Route::controller( '/user', 'UserController');
 
 /********************Normal non rest controllers********************************************/
@@ -103,6 +105,8 @@ Route::post('/search', 'SearchController@postResult');
 
 //Profile routes (handles 90% of text based inputs)
 //Posts
+Route::get( 'rest/profile/{alias}', 'ProfileController@getRestProfile');
+Route::get( 'rest/profile', 'ProfileController@getRestProfile');
 Route::get( '/profile/editpost/{id}', array('before' => 'auth',
             							'uses' => 'PostController@getPostForm'));
 Route::get( '/profile/newpost', array('before' => 'auth',

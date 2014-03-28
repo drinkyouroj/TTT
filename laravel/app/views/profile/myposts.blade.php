@@ -27,6 +27,8 @@
 			
 			{? $featured_item = 0; ?}
 			@foreach($myposts as $act)
+			
+				{{--Maybe in the future, we need to make the if statements part of the partial?--}}
 				@if(is_string($act->post_type))
 					@if($act->post->published)
 						@include('partials/activity-item')

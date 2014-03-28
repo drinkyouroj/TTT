@@ -9,6 +9,20 @@ $(function() {
 	$('.signup-form form').validate({
 		ignore: [],
 		rules: {
+			username: {
+				required: true,
+				minlength: 3,
+				maxlength: 15,
+				remote: {
+					url: window.site_url+'user/check',
+					type: "GET",
+					data: {
+						username: function() {
+							return $( "#username" ).val();
+						}
+					}
+				}
+			},
 			password: {
 				required: true,
 				minlength: 6
@@ -16,6 +30,11 @@ $(function() {
 			password_confirmation: {
 				required: true,
 				minlength: 6
+			}
+		},
+		messages: {
+			username: {
+				remote: "This username is already taken"
 			}
 		}
 	});

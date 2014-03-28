@@ -45,13 +45,15 @@
 				<div id="sortby-dropdown" class="navbar-collapse collapse">
 					<ul name="sort_by" class="sort_by_filter">
 						{{--This might need some weird switches and stuff for different scenarios--}}
-						{? $current_seg = Request::segment(1).'/'.Request::segment(2) ?}
-						<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/popular">Most Popular</a></li>
-						<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/viewed">Most Viewed</a></li>
-						<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/recent">Most Recent</a></li>
-						<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/discussed">Most Discussed</a></li>
-						<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/longest">Longest</a></li>
-						<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/shortest">Shortest</a></li>
+						{? $current_seg = Request::segment(1).'/'.Request::segment(2); ?}
+						
+						{{--Note that the system stores the $filters in filters.php file--}}
+						@foreach($filters as $key => $value)
+							<li class="{{ $key == Request::segment(3) ? 'active': '' }}">
+								<a href="{{Config::get('app.url')}}/{{$current_seg}}/{{$key}}">{{$value}}</a>
+							</li>
+						@endforeach
+						
 					</ul>
 				</div>
 			<div class="clearfix"></div>
@@ -70,12 +72,13 @@
 					{{--This might need some weird switches and stuff for different scenarios--}}
 					{? $current_seg = Request::segment(1).'/'.Request::segment(2) ?}
 					<li class="sortby-label">Sort by:</li>
-					<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/popular">Most Popular</a></li>
-					<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/viewed">Most Viewed</a></li>
-					<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/recent">Most Recent</a></li>
-					<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/discussed">Most Discussed</a></li>
-					<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/longest">Longest</a></li>
-					<li><a href="{{Config::get('app.url')}}/{{$current_seg}}/shortest">Shortest</a></li>
+					
+					@foreach($filters as $key => $value)
+						<li class="{{ $key == Request::segment(3) ? 'active': '' }}">
+							<a href="{{Config::get('app.url')}}/{{$current_seg}}/{{$key}}">{{$value}}</a>
+						</li>
+					@endforeach
+					
 				</ul>
 			<div class="clearfix"></div>
 			</div>

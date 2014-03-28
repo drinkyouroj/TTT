@@ -181,6 +181,6 @@
 	@endif
 	
 	
-	@include('partials/generic-handlebar-item')
+	@include('partials/activity-handlebar-item')
 	
 @stop

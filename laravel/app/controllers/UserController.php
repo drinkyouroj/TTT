@@ -39,7 +39,7 @@ class UserController extends BaseController {
     	//Captcha
 		$rules = array(
 	        'recaptcha_response_field' => 'required|recaptcha',
-	        'username' => 'required|max:15'
+	        'username' => 'required|min:3|max:15|unique:users'
 	    );
 		
 		$validation = Validator::make(Input::all(), $rules);
@@ -123,9 +123,18 @@ class UserController extends BaseController {
             $this->layout->content = View::make('user.loginonly');
         }
     }
-	
+		
+		//Checks to see if a user exists and returns a true or false.
 		public function getUserCheck() {
-			
+			if(User::where('username', Request::get('username'))->count()) {
+				$val = false;
+			} else {
+				$val = true;
+			}
+			return Response::json(
+				$val,
+				200//response is OK!
+			);
 		}
 
     /**
@@ -280,7 +289,7 @@ class UserController extends BaseController {
      */
     public function getForgot()
     {
-    	$this->layout->content = View::make('user.forgot');
+    	return View::make('user.forgot');
         //return View::make(Config::get('confide::forgot_password_form'));
     }
 
@@ -313,8 +322,68 @@ class UserController extends BaseController {
     {
         //return View::make(Config::get('confide::reset_password_form'))
         //        ->with('token', $token);
-        $this->layout->content = View::make('user.reset')->with('token', $token);
+        return View::make('user.reset')->with('token', $token);
     }
+
+
+	/**
+	 * Password reset from the backend while you're logged in.
+	 * This function kind of sucks (had to mix confide and our own wants)
+	 */
+	public function postNewpass() {
+		$input = array(
+            'email' => Auth::user()->username, // so we have to pass both
+            'username' => Auth::user()->username,
+            'password' => Input::get( 'current_password' )
+        );
+		$failed = false;
+		
+        if ( Confide::logAttempt( $input ) ) 
+        {
+        	$new_input = array(
+        			'password' => Input::get( 'password' ),
+        			'password_confirmation' => Input::get( 'password_confirmation' )
+				);
+			
+        	//Check to make sure that the new passwords match.
+        	$rules = array(
+        			'password' => 'required',
+        			'password_confirmation' => 'required|same:password'
+				);
+				
+			//make the validator	
+        	$validator = Validator::make($new_input, $rules);
+			
+			if($validator->fails()) {
+				//No good.  the passwords do not match
+				$failed = true;
+				$message = "The two passwords don't match!";
+				
+			} else {
+				//Actually update the damn passwords
+				$user = Auth::user();
+				$user->password = $new_input['password'];	        
+		        $user->password_confirmation = $new_input['password_confirmation'];
+		        $user->updateUniques();
+			}
+			
+        } else {
+        	//need to return that auth failed.
+        	$failed = true;
+			$message = 'Wrong current password';
+        }
+		
+		if($failed) {
+			return Redirect::to('profile/settings')
+				->with('reset_message', $message);//On redirect, with stores the data in Session::get();
+		} else {
+			return Redirect::to('profile/settings')
+				->with('success_message','Successfully reset password');
+		}
+		
+	}
+	 
+	 
 
     /**
      * Attempt change password of the user

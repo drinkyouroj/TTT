@@ -2,10 +2,12 @@
 class ProfileController extends BaseController {
 
 	public function __construct() {
-
 		
 	}
 
+	private $paginate = 12;
+	
+	
 	/**
 	 * Gets the profile (including your own)
 	 */
@@ -57,7 +59,8 @@ class ProfileController extends BaseController {
 
 			$activity = ProfilePost::where('profile_id','=', $user_id)
 							->orderBy('created_at', 'DESC')
-							->get();//get the activities 	
+							->take($this->paginate)
+							->get();//get the activities
 			
 		} else {
 			//We're doing the user info loading this way to keep the view clean.
@@ -80,6 +83,7 @@ class ProfileController extends BaseController {
 			//Activity is pulled from the user (current user) activity instead of ProfilePost (what anyone can see)
 			$activity = Activity::where('user_id','=', $user_id)
 							->orderBy('created_at', 'DESC')
+							->take($this->paginate)
 							->get();//get the activities
 							
 			$myposts = ProfilePost::where('profile_id','=', $user_id)
@@ -97,6 +101,47 @@ class ProfileController extends BaseController {
 				->with('mutual', $mutual)
 				->with('fullscreen', $fullscreen);
 	}
+
+		//Pagination in Profile
+		public function getRestProfile($alias = false) {
+			
+			if(Request::get('page')) {
+				$page = abs(Request::get('page'));//just to be sure.
+			} else {
+				$page = 1;
+			}
+			
+			if($alias && $alias != Session::get('username')) {
+				$user = User::where('username', '=', $alias)->first();
+				
+				$activity = ProfilePost::where('profile_id','=', $user->id)
+							->orderBy('created_at', 'DESC')
+							->skip(($page-1)*$this->paginate)
+							->take($this->paginate)
+							->with('post.user')
+							->get();//get the activities
+			} else {
+				$activity = Activity::where('user_id','=', Auth::user()->id)
+							->orderBy('created_at', 'DESC')
+							->skip(($page-1)*$this->paginate)
+							->take($this->paginate)
+							->with('post.user')
+							->get();//get the activities
+			}
+			
+			if(!count($activity)) {
+				return Response::json(
+					array('error' => true),
+					200
+				);
+			} else {
+				return Response::json(
+					$activity->toArray(),
+					200
+				);
+			}
+		}
+
 
 	/*
 	 * Gives you the full notification history 

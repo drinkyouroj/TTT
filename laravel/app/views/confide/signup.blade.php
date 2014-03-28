@@ -17,7 +17,7 @@
     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
     <fieldset>
         <label for="username">{{{ Lang::get('confide::confide.username') }}}</label>
-        <input placeholder="{{{ Lang::get('confide::confide.username') }}}" type="text" name="username" id="username" value="{{{ Input::old('username') }}}" maxlength="15" minlength="3" required>
+        <input id="username" placeholder="{{{ Lang::get('confide::confide.username') }}}" type="text" name="username" id="username" value="{{{ Input::old('username') }}}" maxlength="15" minlength="3" required>
 		
 		<div class="email-please">
 			<a class="email-show">Verify account with your email?</a><span class="recommended"> You'll need to if you forget your password.</span>

@@ -106,7 +106,7 @@ class CategoryController extends BaseController {
 				if(!strlen($request)) {
 					$request = 'popular';
 				}
-				$model = Post::where('published', true)->skip(($page-1)*12);
+				$model = Post::where('published', true);
 				
 				switch($request) {
 					default:

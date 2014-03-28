@@ -58,4 +58,44 @@ $(function() {
 			}
 		});
 	});
+	
+	
 });
+
+window.profile_page = 1;
+
+$(window).scroll(function() {
+	//If 100px near the bottom load more stuff.
+	if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+		window.profile_page++;
+		load_more();
+	}
+});
+
+function load_more() {
+	$.ajax({
+		url: window.site_url+'rest/profile/'+window.cur_user,
+		data: {"page": window.profile_page},
+		type:"GET",
+		success:function(data) {
+			if(data.error) {
+				console.log(data);
+			} else {
+				$.each(data,function(index, item) {
+					item['url'] = window.site_url;
+					var source = $('#activity-template').html();
+					var template = Handlebars.compile(source);
+					var html = template(item);
+					
+					$('.generic-listing').append(
+						'<div class="animated fadeIn col-md-4 post-id-'+item.id+' '+ item.post_type +'">' +
+						html +
+						'</div>'
+					);
+				});
+			}
+		}
+	});
+}
+
+
