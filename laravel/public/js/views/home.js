@@ -81,17 +81,13 @@ function load_more() {
 					var source = $('#home-featured-template').html();
 					var template = Handlebars.compile(source);
 					var html = template(featured).trim();
-					if(index) {
-						$view_data.append(html);
-					} else {
-						$view_data = $(html);
-					}
-				});
-				
-				$('#top-featured')
+					
+					$view_data = $(html);
+					
+					$('#top-featured')
 					.append($view_data)
 					.packery('appended',$view_data);
-				
+				});
 				
 				
 			}
