@@ -12,6 +12,13 @@ class ThreadedComments {
 				
 				$delete = '';
 				
+				//Temporary Fix for users who do not exist.
+                if(!isset($comment->user->username)) {
+                        $comment->user = new stdClass();
+                        $comment->user->username = 'nobody';
+                        $comment->user->id = 1;
+                }
+				
 				//Let's make sure you're logged in.
 				if(Auth::check()) {
 					$reply = '<a class="reply" data-replyid="'.$comment->id.'" data-postid="'.$comment->post->id.'">Reply to '.$comment->user->username.'</a>';

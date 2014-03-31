@@ -7,7 +7,6 @@ class ProfileController extends BaseController {
 
 	private $paginate = 12;
 	
-	
 	/**
 	 * Gets the profile (including your own)
 	 */
