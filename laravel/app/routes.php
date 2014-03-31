@@ -155,7 +155,7 @@ Route::when('profile/*', 'profile');
 
 Route::get('/banned', 'UserController@getBanned');
 
-
+Route::get( 'rest/featured', 'HomeController@getRestFeatured');
 Route::get( '/featured', 'HomeController@getIndex');
 Route::controller( '/', 'HomeController');
 
