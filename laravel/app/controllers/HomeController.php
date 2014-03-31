@@ -37,9 +37,14 @@ class HomeController extends BaseController {
 			);
 		} else {
 			//We'll do the below for now so that the app runs faster at this point.  We'll re-do the client side rendering when time allows.
-			return View::make('partials.feature-render')
+			/*return View::make('partials.feature-render')
 					->with('featured',$featured);
-			
+			 * 
+			 */
+			return Response::json(
+				$featured->toArray(),
+				200
+			);
 		}
 	}
 	
