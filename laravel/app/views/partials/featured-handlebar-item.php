@@ -33,7 +33,7 @@
 			</div>
 			{{/ifTopText}}
 		</div>
-		{{#ifBottomText height 2 }}
+		{{#ifBottomText height post.body }}
 			<div class="the-content">
 				{{#limitbody post.body height }}{{/limitbody}}...
 				<a href="{{#url}}{{/url}}posts/{{post.alias}}">

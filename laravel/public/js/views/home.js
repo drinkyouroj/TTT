@@ -51,7 +51,7 @@ Handlebars.registerHelper("limitbody", function(body, width) {
 	if(width == 1 || body.length < 700) {
 		return body.trunc(510);
 	} else if(width == 2) {
-		return body.trunc(510);
+		return body.trunc(1150);
 	} else if(width == 3) {
 		return body.trunc(2200);
 	} else if(!width) {
