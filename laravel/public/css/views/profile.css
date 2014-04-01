@@ -295,6 +295,10 @@ ul.profile-options li a.new-message {
 	text-align:left;
 	font-size:16px;
 }
+.settings-content .change-password .reset_message {
+	color:#df3b3c;
+	padding-bottom:5px;
+}
 
 .settings-content input[type="password"] {
 	-webkit-appearance: textfield;

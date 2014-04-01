@@ -48,7 +48,7 @@ Handlebars.registerHelper('realheight', function(width, height, body) {
 });
 
 Handlebars.registerHelper("limitbody", function(body, width) {
-	if(width == 1) {
+	if(width == 1 || body.length < 700) {
 		return body.trunc(510);
 	} else if(width == 2) {
 		return body.trunc(1150);

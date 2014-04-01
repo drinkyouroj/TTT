@@ -30,8 +30,8 @@
 	background-repeat: no-repeat;
 }
 
-.search-results .users-listing {
-	border-left:solid 1px #ddd;
+.search-results .posts-listing {
+	border-right:solid 1px #ddd;
 }
 
 .search-results .generic-listing .generic-item .the-image {
