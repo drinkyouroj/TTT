@@ -2,7 +2,7 @@
 
 class HomeController extends BaseController {
 	
-	private $paginate = 12;
+	private $paginate = 8;
 	
 	//The slash!
 	public function getIndex()
@@ -36,13 +36,8 @@ class HomeController extends BaseController {
 				200
 			);
 		} else {
-			//We'll do the below for now so that the app runs faster at this point.  We'll re-do the client side rendering when time allows.
-			/*return View::make('partials.feature-render')
-					->with('featured',$featured);
-			 * 
-			 */
 			return Response::json(
-				$featured->toArray(),
+				array('featured'=>$featured->toArray()),
 				200
 			);
 		}

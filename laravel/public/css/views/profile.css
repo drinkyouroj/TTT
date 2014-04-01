@@ -255,8 +255,12 @@ ul.profile-options li a.new-message {
 	margin-right:2px;
 	background-color:#292929;
 }
+.activity-nav li.active {
+	background-color: #32b1c6;
+}
+
 .activity-nav li:hover {
-	background-color:#000;
+	background-color: #32b1c6;
 }
 
 .activity-nav li.left {
@@ -269,9 +273,17 @@ ul.profile-options li a.new-message {
 
 /*Settings*/
 .settings-content {
-	text-align:center;
 	margin-top:20px;
 	margin-bottom:140px;
+}
+
+.settings-content .change-password {
+	text-align:center;
+	border-right: solid 1px #ddd;
+}
+
+.settings-content .del-acc {
+	text-align:center;
 }
 
 .settings-content h2 {
@@ -280,12 +292,45 @@ ul.profile-options li a.new-message {
 }
 
 .settings-content p {
-	text-align:center;
+	text-align:left;
 	font-size:16px;
 }
 
-.settings-content button.btn {
+.settings-content input[type="password"] {
+	-webkit-appearance: textfield;
+	padding: 1px;
+	background-color: white;
+	border: 0px;
+	height: 40px;
+	border: solid 3px #ddd;
+	font-family: 'Montserrat', sans-serif;
+	text-transform: none;
+	margin-bottom:5px;
+	padding-left: 5px;
+	padding-right: 20px;
+}
+
+.settings-content input.btn[value="Reset Password"] {
+	text-align:center;
+	background-color: #333 !important;
+	background-image: none !important;
+	border-bottom: solid 4px #000 !important;
+	border-top: 0px !important;
+	border-right: 0px !important;
+	border-left: 0px !important;
+	font-family: 'bebas';
+	color: #fff;
+	font-weight: 100;
+	letter-spacing: 1px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+.settings-content button.delete-button {
 	margin-top:25px;
+	background-color: #df3b3c !important;
+	border-bottom: solid 4px #9b2c31 !important;
 }
 
 #deleteModal .modal-title {
@@ -347,7 +392,7 @@ ul.profile-options li a.new-message {
 	letter-spacing:4px;
 	color:#000;
 	border-bottom:solid 1px #000;
-	padding:0 0 25px 35px;
+	padding:0 0 15px 35px;
 	background-image: url('../../img/icons/notifications-lg.png');
 	background-position: top left;
 	background-repeat: no-repeat;
@@ -478,6 +523,20 @@ ul.profile-options li a.new-message {
 	
 }
 
+.activity-container .my-feed-title h3 {
+	font-family: 'bebas';
+	font-size: 21px;
+	text-align: left;
+	letter-spacing: 4px;
+	color: #000;
+	margin-top:0px;
+	padding:0 0 15px 35px;
+	border-bottom:solid 1px #ddd;
+	background-image: url('../../img/icons/feed.png');
+	background-position: top left;
+	background-repeat: no-repeat;
+}
+
 .activity-container.myposts {
 	border-left:0px;
 }
@@ -550,16 +609,17 @@ ul.profile-options li a.new-message {
 .activity-container .user-menu {
 	position: absolute;
 	left: 0;
-	bottom: -4px;
+	bottom: -25px;
 	list-style:none;
 	text-align: left;
 	text-transform: uppercase;
 	font-family:'bebas';
-	padding: 1px 2px;
+	padding: 0px 2px 1px 2px;
+	background-color:#fff;
 	border-top: 1px solid #ccc;
 	border-left: 1px solid #ccc;
 	border-right: 1px solid #ccc;
-	border-radius: 2px;
+	
 }
 
 .activity-container .user-menu li.options {
@@ -575,10 +635,10 @@ ul.profile-options li a.new-message {
 	min-width:42px;
 	position: absolute;
 	left:-1px;
-	top:21px;
+	top:18px;
 	display:none;
 	list-style:none;
-	background: #fff;
+	background: #eee;
 	padding: 2px 3px;
 }
 
@@ -595,7 +655,16 @@ ul.profile-options li a.new-message {
 }
 
 .activity-container .user-menu ul.menu-listing li a:hover{
-	color: #428bca;
+	color: #32b1c6;
+}
+
+.activity-container.generic-listing .generic-item {
+	margin-bottom:50px;
+}
+
+.activity-container.generic-listing .generic-item h3{
+	height:50px;
+	font-size:16px;
 }
 
 .activity-container.generic-listing .generic-item .the-image {
@@ -813,6 +882,11 @@ label.error {
 		margin-bottom:50px;
 	}
 	
+	.settings-content .change-password {
+		border-right: 0px;
+		margin-bottom:50px;
+	}
+	
 }
 
 /*Small*/
@@ -841,6 +915,11 @@ label.error {
 	.activity-container.generic-listing .generic-item .the-image{
 		height: 240px !important;
 	}
+	
+	.settings-content .change-password {
+		border-right: 0px;
+		margin-bottom:50px;
+	}
 }
 
 /*Normal*/
@@ -867,6 +946,11 @@ label.error {
 	
 	.activity-container.generic-listing .generic-item .the-image{
 		height: 240px !important;
+	}
+	
+	.settings-content .change-password {
+		border-right: 0px;
+		margin-bottom:50px;
 	}
 	
 }

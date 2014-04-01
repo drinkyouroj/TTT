@@ -33,6 +33,12 @@ class User extends ConfideUser {
 		return $this->hasMany('Comment', 'user_id');
 	}
 	
+	public function featured()
+	{
+		return $this->belongsTo('Post', 'featured');
+	}
+	
+	
 	public function inbox()
 	{
 		return $this->hasMany('Message', 'to_uid');

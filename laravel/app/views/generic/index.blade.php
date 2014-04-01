@@ -20,7 +20,7 @@
 @if(isset($cat_title))
 	{? $title =  $cat_title ?}
 @else
-	{? $title =  'Search'; ?}
+	{? $title =  'Search' ?}
 @endif
 
 
@@ -29,7 +29,6 @@
 @stop
 
 @section('content')
-	
 	<div class="col-md-12">
 		<div class="generic-listing">
 			@if(!is_string($posts))

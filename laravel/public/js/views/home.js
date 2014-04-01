@@ -12,6 +12,32 @@ Handlebars.registerHelper('ifCond', function(v1, v2, options) {
   return options.inverse(this);
 });
 
+Handlebars.registerHelper('ifTopText', function(height, body, options) {
+  if(height == 1) {
+  	//if height is really 1
+    return options.fn(this);//true
+  } else if(height >= 2 && body.length < 700 ) {
+  	//if this is 
+  	return options.fn(this);//true
+  }
+  
+  return options.inverse(this);//false
+});
+
+Handlebars.registerHelper('ifBottomText', function(height, body, options) {
+	if(height >= 2) {
+	  if(body.length < 700 ) {
+	  	return options.inverse(this);//false
+	  } else if(body.length < 700) {
+	  	return options.fn(this);//true
+	  }
+	}
+  return options.inverse(this);//false
+});
+
+
+
+
 Handlebars.registerHelper('realheight', function(width, height, body) {
 	if(height >= 2 && body.length < 700 ) {
 		return 1;
@@ -68,27 +94,14 @@ function load_more() {
 			if(data.error) {
 				console.log(data);
 			} else {
-				/*
-				$data = $(data);//if straight processed on serverside.
+				//Compile the Handlebars into something.
+				var source = $('#home-featured-template').html();
+				var template = Handlebars.compile(source);
+				var html = template(data).trim();
+				$view_data = $(html);
 				$('#top-featured')
-						.append($(view_data))
-						.packery('appended',$(view_data))
-						;
-				*/
-				var $view_data;
-				$.each(data,function(index, featured) {
-					featured['url'] = window.site_url;
-					var source = $('#home-featured-template').html();
-					var template = Handlebars.compile(source);
-					var html = template(featured).trim();
-					
-					$view_data = $(html);
-					
-					$('#top-featured')
 					.append($view_data)
 					.packery('appended',$view_data);
-				});
-				
 				
 			}
 		}

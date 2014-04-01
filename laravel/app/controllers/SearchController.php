@@ -20,11 +20,31 @@ class SearchController extends BaseController {
 			array_push($ids, $result->id);
 		}
 		
-		if(count($ids)) {
+		$user_ids = array();
+		foreach($results['users'] as $result ) {
+			array_push($user_ids, $result->id);
+		}
+		
+		if(count($ids) || count($user_ids)) {
+			
+			$users = $posts = 'No Match Found';
+			
 			//get from the result set.
-			$posts = Post::whereIn('id', $ids)->get();
-			return View::make('generic.index')
-					->with('posts',$posts);
+			if(count($ids)) {
+				$posts = Post::whereIn('id', $ids)
+					->where('published', 1)
+					->get();
+			}
+			if(count($user_ids)) {
+				$users = User::whereIn('id', $user_ids)
+					->where('banned', 0)
+					->get();
+			}
+			
+			return View::make('generic.search')
+					->with('posts',$posts)
+					->with('users',$users)
+					->with('term', $term);
 		} else {
 			return View::make('generic.error')
 					->with('message', 'No Match Found');

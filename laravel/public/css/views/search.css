@@ -1,0 +1,33 @@
+.search-results h2.search-term {
+	font-family: 'Montserrat', sans-serif;
+	text-transform:uppercase;
+	font-size:18px;
+	padding-bottom:5px;
+	border-bottom:solid 3px #ddd;
+}
+
+.search-results h2.search-term span {
+	font-size:32px;
+}
+
+.search-results h3.search-type {
+	font-family:'bebas';
+}
+
+.search-results .posts-listing h3.search-type {
+	padding: 0 0 15px 35px;
+	background-image: url('../../img/icons/search-post.png');
+	background-position: top left;
+	background-repeat: no-repeat;
+}
+
+.search-results .users-listing h3.search-type {
+	padding: 0 0 15px 35px;
+	background-image: url('../../img/icons/search-profile.png');
+	background-position: top left;
+	background-repeat: no-repeat;
+}
+
+.search-results .users-listing {
+	border-left:solid 1px #ddd;
+}

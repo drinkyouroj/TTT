@@ -42,6 +42,7 @@
 				{? $thread_count = count($thread) ?}
 			
 			@if($thread_count)
+			<h2 class="message-title">message with <a href="{{Config::get('app.url')}}/profile/{{$message->from->username}}">{{$message->from->username}}</a></h2>
 			<div class="show-condensed">
 				{{--Note, the below is set to 2 since we've not included the orignal message--}}
 				Show {{$thread_count-2}} More Messages

@@ -12,7 +12,7 @@
 @section('main')
 	<div class="row settings-content">
 	
-		<div class="col-md-5 col-md-offset-1">
+		<div class="col-md-5 col-md-offset-1 change-password">
 			<h2>Change Your Password</h2>
 			<div class="reset_message">
 				{{ Session::get('reset_message') }}
@@ -23,19 +23,19 @@
 			</div>
 			<div class="reset-pass">
 				{{ Form::open(array('url'=>'user/newpass')) }}
-					Current Password: {{ Form::password('current_password') }}<br/>
-					New Password: {{ Form::password('password') }}<br/>
-					New Password Again: {{ Form::password('password_confirmation') }}<br/>
+					{{ Form::password('current_password', array('placeholder'=>'Current Password') ) }}<br/>
+					{{ Form::password('password', array('placeholder'=>'New Password')) }}<br/>
+					{{ Form::password('password_confirmation', array('placeholder'=>'New Password Again')) }}<br/>
 					{{ Form::submit('Reset Password', array('class'=>'btn btn-warning')) }}
 				{{ Form::close() }}
 			</div>
 		</div>
 		
-		<div class="col-md-5">
+		<div class="col-md-5 del-acc">
 			<h2>Delete Your Account</h2>
 			<p>This will delete your account from the system.  All of your content will be unpublished (but they'll remain in place)</p>
 			<p>Should you decide to come back, all of your content will be republished and your user will re-appear.</p>
-			<button class="btn btn-warning" data-toggle="modal" data-target="#deleteModal">Yes! Delete this Account!</button>
+			<button class="btn btn-warning delete-button" data-toggle="modal" data-target="#deleteModal">Yes! Delete this Account!</button>
 		</div>
 		
 	</div>

@@ -11,7 +11,7 @@
 
 @section('main')
 	<div class="row activity-nav">
-		<li class="left"><a class="all active">Show All</a></li>
+		<li class="left active"><a class="all">Show All</a></li>
 		<li><a class="myposts">My Posts</a></li>
 		<li><a class="myfavorites">My Favorites</a></li>
 	</div>

@@ -89,6 +89,21 @@ font-size:13px;
 
 /*Send Message*/
 
+h2.message-title {
+font-family:'bebas';
+text-align:center;
+margin-bottom:0px;
+font-size:24px;
+}
+h2.message-title a {
+color:#32b1c6;
+font-size:30px;
+text-decoration:underline overline;
+}
+h2.message-title a:hover {
+color:#aaa;
+}
+
 .message-field {
 	margin-top:50px;
 }

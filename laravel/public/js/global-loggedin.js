@@ -74,6 +74,9 @@ function mark_read() {
 		data: {"notification_ids": window.cur_notifications},
 		success: function(data) {
 			console.log(data);
+			$('.notifications-parent').removeClass('active-notifications');
+			$('.notifications-parent ul.notifications').children().remove();
+			$('.notifications-parent ul.notifications').append('<li class="no-notifications"><span>You have no notifications!</span></li>');
 		}
 	});
 }

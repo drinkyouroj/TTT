@@ -208,4 +208,13 @@ class AdminController extends Controller {
 	}
 	
 	
+	public function getResetSolr() {
+		$users = User::get();
+		foreach($users as $user) {
+			SolariumHelper::updateUser($user);
+		}
+		return'Good'; 
+	}
+	
+	
 }

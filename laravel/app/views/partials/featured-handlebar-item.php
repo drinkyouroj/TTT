@@ -1,4 +1,5 @@
 <script id="home-featured-template" type="text/x-handlebars-template">
+{{#each featured}}
 <div class="animated fadeIn featured-item generic-item w-{{width}} h-{{#realheight width height post.body}}{{/realheight}}">
 	<header>
 		<h3>
@@ -24,15 +25,15 @@
 			<a href="{{#url}}{{/url}}posts/{{post.alias}}" 
 				style="background-image: url('{{#url}}{{/url}}uploads/final_images/{{post.image}}')">
 			</a>
-			{{#ifCond height 1 }}
+			{{#ifTopText height post.body }}
 			<div class="the-featured-content">
 				
 				{{#limitbody post.body 0 }}{{/limitbody}}...
 				<div class="clearfix"></div>
 			</div>
-			{{/ifCond}}
+			{{/ifTopText}}
 		</div>
-		{{#ifCond height 2 }}
+		{{#ifBottomText height 2 }}
 			<div class="the-content">
 				{{#limitbody post.body height }}{{/limitbody}}...
 				<a href="{{#url}}{{/url}}posts/{{post.alias}}">
@@ -40,8 +41,9 @@
 				</a>
 				<div class="clearfix"></div>
 			</div>
-		{{/ifCond}}
+		{{/ifBottomText}}
 	</section>
 	<div class="clearfix"></div>
 </div>
+{{/each}}
 </script>

@@ -95,6 +95,9 @@
 		<div class="row activity-container generic-listing {{ $me ? '': 'myposts' }}">
 			@if($me)
 			{{--This is for the user's actual profile--}}
+			<div class="col-md-12 my-feed-title">
+				<h3>My Feed</h3>
+			</div>
 			<div class="col-md-4">
 				<div class="generic-item add-new">
 					<header>

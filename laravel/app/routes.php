@@ -69,6 +69,7 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 //Admin protection.
 Route::when('admin', 'admin');//Role based route filtering
 Route::when('admin/*', 'admin');//Role based route filtering
+Route::get('admin/solr', 'AdminController@getResetSolr');//this updates the users on solr
 Route::controller('/admin','AdminController');
 
 //Mod protection

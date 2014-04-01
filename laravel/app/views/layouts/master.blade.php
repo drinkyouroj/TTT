@@ -98,7 +98,7 @@
 				  						@include('partials/notifications')
 				  						
 				  					@else
-				  					<li>
+				  					<li class="no-notifications">
 				  						<span>You have no notifications!</span>
 				  					</li>
 				  					@endif

@@ -191,7 +191,7 @@
 			</div>
 		</div>
 		
-		<div class="col-md-2 navigation-container"> 
+		<!--Delete this code if not necessary <div class="col-md-2 navigation-container"> 
 			<div class="navigation">
 				<ol>
 					<li>
@@ -205,7 +205,7 @@
 					</li>
 				</ol>
 			</div>
-		</div>
+		</div> -->
 		
 	{{ Form::close() }}
 </div>

@@ -1,4 +1,5 @@
 <script id="activity-template" type="text/x-handlebars-template">
+	
 	<div class="generic-item ">
 		<header>
 			<h3><a href="{{url}}posts/{{alias}}">{{post.title}}</a></h3> 
@@ -18,4 +19,5 @@
 			</div>
 		</section>
 	</div>
+	
 </script>

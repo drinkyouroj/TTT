@@ -37,7 +37,7 @@ class SolariumHelper {
 	/**
 	 * This is the general select from Solr
 	 */
-	public static function searchSolr($string, $ajax = false) {
+	public static function searchSolr($string, $ajax = false, $page = 1) {
 		//First, let's process the query.
 		$query = self::queryBuilder($string);
 		
@@ -46,10 +46,10 @@ class SolariumHelper {
 		
 		if($ajax) {
 			$post_fields = array('id','title','taglines','alias');
-			$rows = 30;
+			$rows = 5;
 		} else {
 			$post_fields = array('id');
-			$rows = 10;
+			$rows = 30;
 		}
 		
 		$select = array(
@@ -69,10 +69,10 @@ class SolariumHelper {
 		
 		if($ajax) {
 			$user_fields = array('id','username','bio');
-			$rows = 30;
+			$rows = 5;
 		} else {
 			$user_fields = array('id');
-			$rows = 10;
+			$rows = 30;
 		}
 		
 		$select = array(
