@@ -37,3 +37,34 @@
 .search-results .generic-listing .generic-item .the-image {
 	height:175px;
 }
+
+/***************************************
+	Media Queries
+*/
+/*Tiny*/
+@media (max-width: 479px) {
+
+}
+
+/*Small*/
+@media (min-width: 480px) and (max-width: 767px) {
+
+}
+
+/*Normal*/
+@media (min-width: 768px) and (max-width: 991px) {
+
+
+}
+
+/*Bigger*/
+@media (min-width: 992px) and (max-width: 1199px) {
+	.search-results .generic-listing .generic-item .the-image {
+		141px !important
+	}
+}
+
+/*Huge*/
+@media (min-width: 1200px) {
+
+}  
