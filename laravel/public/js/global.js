@@ -51,6 +51,14 @@ $(function() {
 	
 });
 
+$(window).on('scroll', function() {
+	if($(window).scrollTop() >= 230) {
+		$('.desktop-filters-container').css({position: 'fixed', marginTop: 30});
+	} else {
+		$('.desktop-filters-container').css({position: 'static', marginTop: 0});
+	}
+});
+
 //Equal Heights
 $(window).on('load',function() {
 	var blocks = $('.equal-height');

@@ -26,7 +26,6 @@
 @section('js')
 	{{-- Include all the JS required for the situation--}}
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/handlebars-v1.3.0.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/packery.min.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/home.js"></script>	
 	@if(Auth::check())

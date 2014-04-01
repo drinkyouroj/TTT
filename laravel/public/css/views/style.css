@@ -550,6 +550,12 @@ margin-top:20px;
 	margin:0px auto;
 }
 
+/*********Desktop Filters********/
+.desktop-filters-container {
+	width:100%;
+	z-index:999;
+}
+
 /*********Mobile Filters*********/
 .filters-container .mobile-filters {
 	padding-top:50px;

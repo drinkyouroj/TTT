@@ -1,4 +1,4 @@
-<aside class="filters-container">
+<nav class="filters-container desktop-filters-container">
 	<div class="container">
 		<div class="row filters">
 			{? $nofilter = false ?}
@@ -6,7 +6,8 @@
 				{? $nofilter = true ?}
 			@endif
 			
-			<div class="visible-sm visible-md visible-lg col-md-12 no-bar">
+			<!--Desktop Categories-->
+			<div class="visible-sm visible-md visible-lg col-md-12 no-bar desktop-categories">
 				<ul class="category-filter">
 					<li>{{ link_to('', 'Featured') }}</li><!--Featured = Home-->
 					<li><span class="ex">x</span> {{ link_to('categories/all', 'All') }}</li><!--Featured = Home-->
@@ -20,8 +21,56 @@
 				@endforeach
 				</ul>
 			</div>
-			
-			<div class=" hidden-sm hidden-md hidden-lg mobile-filters @if(!$nofilter) mobile-filters col-xs-12 no-bar  @else col-md-8 col-sm-8 no-bar @endif">
+		</div>
+	</div>
+</nav>
+
+@if($nofilter)
+<nav class="sortby-container visible-sm visible-md visible-lg">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10 col-sm-12 sort_by_container">
+				<ul name="sort_by" class="sort_by_filter">
+					{{--This might need some weird switches and stuff for different scenarios--}}
+					{? $current_seg = Request::segment(1).'/'.Request::segment(2) ?}
+					<li class="sortby-label">Sort by:</li>
+					
+					{? $category = Request::segment(2,0) ?}
+					{? $segment = Request::segment(3,0) ?}
+					@foreach($filters as $key => $value)
+						{? $active = false?}
+						@if($segment)
+							@if($segment == $key)
+								{? $active = true?}
+							@endif
+						@else
+							@if($category == 'all' && $key == 'popular')
+								{? $active = true?}
+							@elseif($category != 'all' && $key == 'recent')
+								{? $active = true?}
+							@endif
+						@endif
+						<li class="{{ $active ? 'active': '' }}">
+							<a href="{{Config::get('app.url')}}/{{$current_seg}}/{{$key}}">{{$value}}</a>
+						</li>
+					@endforeach
+					
+				</ul>
+			<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+<div class="clearfix"></div>
+</nav>
+@endif
+
+
+<nav class="filters-container mobile-filters-container hidden-sm hidden-md hidden-lg">
+	<div class="container">
+		<div class="row filters">
+
+			<!--Mobile Categories-->
+			<div class="mobile-filters @if(!$nofilter) mobile-filters col-xs-12 no-bar  @else col-md-8 col-sm-8 no-bar @endif">
 				<button type="button" class="categories-button navbar-toggle" data-toggle="collapse" data-target="#filter-dropdown">Categories</button>
 				<div id="filter-dropdown" class="navbar-collapse collapse">
 				<ul class="category-filter">
@@ -40,7 +89,7 @@
 				</div>
 			</div>
 			@if($nofilter)
-			<div class="hidden-sm hidden-md hidden-lg mobile-sortby">
+			<div class="mobile-sortby">
 				<button type="button" class="sortby-btn navbar-toggle" data-toggle="collapse" data-target="#sortby-dropdown">Sort by <span class="caret"></button>
 				<div id="sortby-dropdown" class="navbar-collapse collapse">
 					<ul name="sort_by" class="sort_by_filter">
@@ -48,7 +97,21 @@
 						{? $current_seg = Request::segment(1).'/'.Request::segment(2); ?}
 						
 						{{--Note that the system stores the $filters in filters.php file--}}
+						{? $category = Request::segment(2,0) ?}
+						{? $segment = Request::segment(3,0) ?}
 						@foreach($filters as $key => $value)
+							{? $active = false?}
+							@if($segment)
+								@if($segment == $key)
+									{? $active = true?}
+								@endif
+							@else
+								@if($category == 'all' && $key == 'popular')
+									{? $active = true?}
+								@elseif($category != 'all' && $key == 'recent')
+									{? $active = true?}
+								@endif
+							@endif
 							<li class="{{ $key == Request::segment(3) ? 'active': '' }}">
 								<a href="{{Config::get('app.url')}}/{{$current_seg}}/{{$key}}">{{$value}}</a>
 							</li>
@@ -61,29 +124,4 @@
 			@endif
 		</div>
 	</div>
-</aside>
-
-@if($nofilter)
-<aside class="sortby-container">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-10 col-sm-12 visible-sm visible-md visible-lg sort_by_container">
-				<ul name="sort_by" class="sort_by_filter">
-					{{--This might need some weird switches and stuff for different scenarios--}}
-					{? $current_seg = Request::segment(1).'/'.Request::segment(2) ?}
-					<li class="sortby-label">Sort by:</li>
-					
-					@foreach($filters as $key => $value)
-						<li class="{{ $key == Request::segment(3) ? 'active': '' }}">
-							<a href="{{Config::get('app.url')}}/{{$current_seg}}/{{$key}}">{{$value}}</a>
-						</li>
-					@endforeach
-					
-				</ul>
-			<div class="clearfix"></div>
-			</div>
-		</div>
-	</div>
-<div class="clearfix"></div>
-</aside>
-@endif
+</nav>
