@@ -53,14 +53,16 @@
 
 /*Normal*/
 @media (min-width: 768px) and (max-width: 991px) {
-
+	.search-results .generic-listing .generic-item .the-image {
+		height:240px !important;
+	}
 
 }
 
 /*Bigger*/
 @media (min-width: 992px) and (max-width: 1199px) {
 	.search-results .generic-listing .generic-item .the-image {
-		141px !important
+		height:141px !important;
 	}
 }
 
