@@ -28,7 +28,7 @@ Handlebars.registerHelper('ifBottomText', function(height, body, options) {
 	if(height >= 2) {
 	  if(body.length < 700 ) {
 	  	return options.inverse(this);//false
-	  } else if(body.length < 700) {
+	  } else if(body.length > 700) {
 	  	return options.fn(this);//true
 	  }
 	}

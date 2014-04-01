@@ -12,6 +12,8 @@
 
 .search-results h3.search-type {
 	font-family:'bebas';
+	margin-top:10px;
+	border-bottom:solid 1px #ddd;
 }
 
 .search-results .posts-listing h3.search-type {
