@@ -35,7 +35,7 @@
 		</div>
 		{{#ifBottomText height post.body }}
 			<div class="the-content">
-				{{#limitbody post.body height }}{{/limitbody}}...
+				{{#limitbody post.body width }}{{/limitbody}}...
 				<a href="{{#url}}{{/url}}posts/{{post.alias}}">
 					Read On.
 				</a>

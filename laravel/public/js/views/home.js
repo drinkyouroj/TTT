@@ -51,7 +51,7 @@ Handlebars.registerHelper("limitbody", function(body, width) {
 	switch(width) {
 		default:
 		case 0:
-		return body.trunc(120);
+			return body.trunc(120);
 		break;
 		case 1:
 			return body.trunc(510);
