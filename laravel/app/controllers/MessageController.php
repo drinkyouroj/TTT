@@ -32,39 +32,28 @@ class MessageController extends BaseController {
 	 * Message and Message Form.
 	 */
 	public function getMessageForm($user_id = false) {
-		
-		if(!$user_id) {
+		if($user_id) {
+			//Has segment 3, therefore this must be to a specific person.
 			$to = Message::where('from_uid', $user_id)->where('to_uid', Auth::user()->id);
 			$from = Message::where('to_uid', $user_id)->where('from_uid', Auth::user()->id);
 			
 			if($to->count()) {
+				//we've either talked to them
 				$reply_id = $to->first()->reply_id;
-				$user = User::where('id', '=', $reply_id);
 			} elseif($from->count()) {
+				//or they've talked to us
 				$reply_id = $from->first()->reply_id;
-				$user = User::where('id', '=', $reply_id);			
-			} else {
-				return self::getMessageReplyForm();
 			}
+			return Redirect::to('profile/replymessage/'.$reply_id);
 			
 		} else {
-			$user = User::where('id', '=', $user_id);
-		}
-		
-		if(isset($user) && $user->count()) {
-			//user actually exists.
-			return View::make('messages/form')
-				->with('fullscreen', true)
-				->with('message_user', $user->first());
-		} else {
-			//This is truly a new situation and the user id didnt' exist.
 			$mutuals = FollowHelper::mutual_list();
 			return View::make('messages/form')
 				->with('fullscreen', true)
+				->with('message_user', false)
+				->with('newmessage',true)
 				->with('mutuals', $mutuals);
 		}
-		
-		
 	}
 	
 	/**
