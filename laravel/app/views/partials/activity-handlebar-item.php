@@ -12,10 +12,12 @@
 				
 				</a>
 			</div>
-			<div class="the-tags">
-				{{post.tagline_1}} | 
-				{{post.tagline_2}} | 
-				{{post.tagline_3}}
+			<div class="the-outer">
+				<div class="the-tags">
+					{{post.tagline_1}} | 
+					{{post.tagline_2}} | 
+					{{post.tagline_3}}
+				</div>
 			</div>
 		</section>
 	</div>

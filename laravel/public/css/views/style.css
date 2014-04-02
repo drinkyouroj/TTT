@@ -928,23 +928,26 @@ margin-top:20px;
 	max-height: 300px;	
 }
 
-.generic-listing .generic-item .the-tags {
-	font-family:'bebas';
-	font-size:18px;
-	height: 25px;
-	margin-top:10px;
-	margin-bottom: 10px;
+.generic-listing .generic-item .the-outer {
+	display: table;
+	width: 100%;
 }
 
-.generic-listing .generic-item .the-tags.long {
-	height: 25px;
-	line-height:17px;
+.generic-listing .generic-item .the-tags {
+	width: 100%;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	font-family:'bebas';
+	font-size:18px;
+	line-height: 17px;
+	height: 51px;
+	
 }
 
 .generic-listing .generic-item.activity .the-tags {
 	font-size:15px;
 }
-
 
 /**Single Post*/
 

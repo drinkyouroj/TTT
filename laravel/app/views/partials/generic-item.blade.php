@@ -15,10 +15,12 @@
 			</div>
 			@endif
 			{{--You can adjust the length detection below--}}
-			<div class="the-tags @if(strlen($post->tagline_1.$post->tagline_2.$post->tagline_3) >= 35) long @endif ">
-				{{$post->tagline_1}} | 
-				{{$post->tagline_2}} | 
-				{{$post->tagline_3}}
+			<div class="the-outer">
+				<div class="the-tags">
+					{{$post->tagline_1}} | 
+					{{$post->tagline_2}} | 
+					{{$post->tagline_3}}
+				</div>
 			</div>
 		</section>
 	</div>

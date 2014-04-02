@@ -76,10 +76,12 @@
 				
 				</a>
 			</div>
-			<div class="the-tags @if(strlen($act->post->tagline_1.$act->post->tagline_2.$act->post->tagline_3) >= 35) long @endif">
-				{{$act->post->tagline_1}} |
-				{{$act->post->tagline_2}} |
-				{{$act->post->tagline_3}}
+			<div class="the-outer">
+				<div class="the-tags">
+					{{$act->post->tagline_1}} |
+					{{$act->post->tagline_2}} |
+					{{$act->post->tagline_3}}
+				</div>
 			</div>
 		</section>
 	</div>
