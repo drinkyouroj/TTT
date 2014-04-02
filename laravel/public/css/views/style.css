@@ -69,7 +69,9 @@ button.btn:hover {
 }
 
 .menu-wrapper .navbar {
-	height:30px;
+	min-height:30px !important;
+	height:30px !important;
+	margin-bottom: 0;
 }
 
 .menu-wrapper .navbar.nav-conatiner{
