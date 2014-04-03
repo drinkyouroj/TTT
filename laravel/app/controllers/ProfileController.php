@@ -147,6 +147,7 @@ class ProfileController extends BaseController {
  	*/
 	public function getNotifications() {
 		$notifications = Notification::where('user_id', Session::get('user_id'))
+									->orderBy('created_at','DESC')
 									->take(20)//limit at 20 for now.  We'll AJAX in the rest.
 									->get();
 		

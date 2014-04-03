@@ -1,5 +1,9 @@
 @extends('layouts.profile')
 
+@section('title')
+Messaging | Two Thousand Times
+@stop
+
 @section('css')
 	@parent
 	<link href="{{Config::get('app.url')}}/css/views/message.css" rel="stylesheet" media="screen">

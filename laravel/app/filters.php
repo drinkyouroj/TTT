@@ -173,14 +173,17 @@ Route::filter('csrf', function()
 //This will need to be figured out later as the view composer is unable to figure out how to reach the layouts.master.blade.php file
 View::composer('*', function($view) {
 	
+	//Below is the filters for the Categories.
 	$filters = array(
-							'popular'=> 'Most Popular',
-							'viewed' => 'Most Viewed',
-							'recent' => 'Most Recent',
-							'discussed' => 'Most Discussed',
-							'longest' => 'Longest',
-							'shortest' => 'Shortest'
-							);
+					'popular'=> 'Most Popular',
+					'recent' => 'Most Recent',
+					'viewed' => 'Most Viewed',
+					'discussed' => 'Most Discussed',
+					/*
+					'longest' => 'Longest',
+					'shortest' => 'Shortest'
+					 */ 
+					);
 	
 	if(!Auth::guest()) {
 		$notifications = Notification::where('user_id', '=', Session::get('user_id'))

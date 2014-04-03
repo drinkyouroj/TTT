@@ -21,6 +21,6 @@ return array(
 	| Set a template to use if you don't want to use the standard one.
 	|
 	*/
-	'template'		=> '',
+	'template'		=> '',	
 	
 );

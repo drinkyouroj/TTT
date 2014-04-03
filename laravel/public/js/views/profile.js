@@ -63,6 +63,7 @@ $(function() {
 });
 
 window.profile_page = 1;
+window.busy = false;
 
 $(window).scroll(function() {
 	//If 100px near the bottom load more stuff.
@@ -73,6 +74,7 @@ $(window).scroll(function() {
 });
 
 function load_more() {
+	window.busy = true;
 	$.ajax({
 		url: window.site_url+'rest/profile/'+window.cur_user,
 		data: {"page": window.profile_page},
@@ -94,6 +96,9 @@ function load_more() {
 					);
 				});
 			}
+		},
+		complete:function() {
+			window.busy = false;
 		}
 	});
 }

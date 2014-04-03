@@ -15,8 +15,8 @@
     <link href="{{Config::get('app.url')}}/css/views/style.css" rel="stylesheet" media="screen">
     
     <!--Favicon-->
-    <link href="favicon.ico" rel="icon" type="image/x-icon" />
-	<link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="/favicon.ico" rel="icon" type="image/x-icon" />
+	<link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     
     <!--Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>

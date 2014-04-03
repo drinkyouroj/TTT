@@ -10,22 +10,27 @@ $(function() {
 	
 });
 
+window.busy = false;
+
 $(window).scroll(function() {
 	//If 100px near the bottom load more stuff.
 	if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-		window.category_page++;
-		load_more();
+		if(!window.busy) {
+			window.category_page++;
+			load_more();
+		}	
 	}
 });
 
 function load_more() {
+	window.busy = true;
 	$.ajax({
 		url: window.site_url+'rest/categories/'+window.category+'/'+window.filter,
 		data: {"page": window.category_page},
 		type:"GET",
 		success:function(data) {
 			if(data.error) {
-				console.log(data);
+				
 			} else {
 				$.each(data,function(index, item) {
 					item['url'] = window.site_url;
@@ -40,6 +45,9 @@ function load_more() {
 					);
 				});
 			}
+		},
+		complete:function() {
+			window.busy = false;
 		}
 	});
 }

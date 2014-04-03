@@ -83,16 +83,20 @@ $(function() {
 });
 
 window.featured_page = 1;
+window.busy = false;
 
 $(window).scroll(function() {
 	//If 100px near the bottom load more stuff.
 	if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-		window.featured_page++;
-		load_more();
+		if(!window.busy) {
+			window.featured_page++;
+			load_more();
+		}
 	}
 });
 
 function load_more() {
+	window.busy = true;
 	$.ajax({
 		url: window.site_url+'rest/featured/',
 		data: {"page": window.featured_page},
@@ -111,6 +115,9 @@ function load_more() {
 					.packery('appended',$view_data);
 				
 			}
+		},
+		complete:function() {
+			window.busy = false;
 		}
 	});
 }

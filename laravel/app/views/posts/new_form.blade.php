@@ -1,5 +1,9 @@
 @extends('layouts.profile')
 
+@section('title')
+New Post | Two Thousand Times
+@stop
+
 {{--Left Sidebar--}}
 @section('left_sidebar')
 
@@ -170,11 +174,11 @@
 							@foreach($categories as $category)
 								<li class="col-md-6">
 									{{Form::checkbox('category[]', $category->id, 0, array('class'=>'category','id' => 'cat-'.$category->id) ) }}
-									<label for="cat-{{$category->id}}">{{$category->title}}</label>
+									<label for="cat-{{$category->id}}" data-toggle="tooltip" data-placement="top" title="{{$category->description}}">{{$category->title}}</label>
 								</li>
 							@endforeach
-							</ul>				
-						
+							</ul>
+							
 							<span class="error">{{ $errors->first('category') }}</span>
 						</div>
 					</div>

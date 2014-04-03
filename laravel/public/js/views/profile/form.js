@@ -42,6 +42,10 @@ $(function(){
 		placement: 'top'
 	});
 	
+	$('.category li label').tooltip({
+		placement: 'top'
+	});
+	
 	//Photo Processing Systems**************************************************
 	
 	$('.photo-chosen').hide();
