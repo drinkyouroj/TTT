@@ -216,10 +216,10 @@ class AdminController extends Controller {
 		return'Good'; 
 	}
 	
-	public function getResetNotifications() {
+	public function getResetNotifications($page = 0) {
+		$amount = 100;
 		//rather not do this, but gotta do it.
-		ini_set('memory_limit', '-1');
-		$notifications = Notification::get();//gets the entire stack
+		$notifications = Notification::skip($page*100)->take(100)->get();//gets the entire stack
 		echo $notifications->count() . '<br>';
 		$c = 1;
 		foreach($notifications as $key=> $notification) {

@@ -70,7 +70,7 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 Route::when('admin', 'admin');//Role based route filtering
 Route::when('admin/*', 'admin');//Role based route filtering
 Route::get('admin/solr', 'AdminController@getResetSolr');//this updates the users on solr
-Route::get('admin/resetnot', 'AdminController@getResetNotifications');//this updates the users on solr
+Route::get('admin/resetnot/{page}', 'AdminController@getResetNotifications');//this updates the users on solr
 Route::controller('/admin','AdminController');
 
 //Mod protection
