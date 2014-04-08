@@ -217,6 +217,8 @@ class AdminController extends Controller {
 	}
 	
 	public function getResetNotifications() {
+		//rather not do this, but gotta do it.
+		ini_set('memory_limit', '-1');
 		$notifications = Notification::get();//gets the entire stack
 		echo $notifications->count() . '<br>';
 		$c = 1;
