@@ -219,7 +219,8 @@ class AdminController extends Controller {
 	public function getResetNotifications() {
 		$notifications = Notification::get();//gets the entire stack
 		$c = 1;
-		foreach($notifications as $notification) {
+		foreach($notifications as $key=> $notification) {
+			echo 'Notification: '. $key+1 .'<br>';
 			unset($motification);
 			if($notification->notification_type == 'follow') {
 				$post_id = 0;
