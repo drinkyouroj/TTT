@@ -222,7 +222,7 @@ class AdminController extends Controller {
 		$c = 1;
 		foreach($notifications as $key=> $notification) {
 			echo 'Notification: '. $key .'<br>';
-			unset($motification);
+			
 			if($notification->notification_type == 'follow') {
 				$post_id = 0;
 			} else {
