@@ -26,7 +26,7 @@ class LikeRestController extends \BaseController {
 						->count();
 			
 			if(!$exists && !$owns) {//Doesn't exists
-				//Crete a new follow
+				//Crete a new Like
 				$like = new Like;
 				$like->post_id = Request::segment(3);
 				$like->user_id = Auth::user()->id;//Gotta be from you.

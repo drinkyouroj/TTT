@@ -1,6 +1,6 @@
 {{--This is both the activity and my post item.--}}
 <div class="animated fadeIn 
-	@if(isset($featured_item) && $featured_item) 
+	@if(isset($featured_item) && $featured_item)
 		col-md-8 profile-featured 
 	@else 
 		col-md-4 

@@ -30,8 +30,8 @@ class RepostRestController extends \BaseController {
 					->where('user_id', '=', Auth::user()->id)
 					->count();
 			
-			if(!$exists && !$owns) {//Doesn't exists
-				//Crete a new follow
+			if(!$exists && !$owns) {//Doesn't exists and you don't own it.
+				//Crete a new repost
 				$repost = new Repost;
 				$repost->post_id = Request::segment(3);
 				$repost->user_id = Auth::user()->id;//Gotta be from you.
@@ -41,12 +41,11 @@ class RepostRestController extends \BaseController {
 				$notification_exists = Notification::where('post_id', '=', Request::segment(3))
 									->where('action_id', '=', Auth::user()->id)
 									->count();
+									
+				$post = Post::where('id','=', Request::segment(3))
+							->first();
 				
-				if(!$notification_exists){
-				
-					$post = Post::where('id','=', Request::segment(3))
-								->first();
-					
+				if(!$notification_exists){	
 					//Add to the OP's notification
 					$notification = new Notification;
 					$notification->post_id = Request::segment(3);
@@ -54,15 +53,34 @@ class RepostRestController extends \BaseController {
 					$notification->action_id = Auth::user()->id;
 					$notification->notification_type = 'repost';
 					$notification->save();
-					
-					//Add to follower's notifications
-					Queue::push('UserAction@repost', 
-								array(
-									'post_id' => Request::segment(3),
-									'user_id' => Auth::user()->id
-									)
-								);
 				}
+				
+				$mot = Motification::where('post_id', Request::segment(3))//Post id									
+									->where('user_id', $post->user->id)//person getting notified
+									->where('notification_type', 'repost');
+				
+				if(!$mot->count()) {
+					$mot = new Motification;
+					$mot->post_id = Request::segment(3);
+					$mot->post_title = $post->title;
+					$mot->post_alias = $post->alias;
+					$mot->user_id = $post->user->id;//Who this notification si going to.
+					$mot->noticed = 0;
+					$mot->notification_type = 'repost';
+					$mot->save();
+				}
+				$mot->push('users', Auth::user()->username,true);
+
+				
+				//Add to follower's notifications
+				Queue::push('UserAction@repost', 
+							array(
+								'post_id' => Request::segment(3),
+								'user_id' => Auth::user()->id,
+								'username' => Auth::user()->username,
+								)
+							);
+				
 				//This has to be outside 
 				return Response::json(
 					array('result'=>'success'),
@@ -73,6 +91,16 @@ class RepostRestController extends \BaseController {
 				Repost::where('post_id', '=', Request::segment(3))
 					->where('user_id', '=', Auth::user()->id)
 					->delete();
+				
+				//Delrepost handles the rest of it.
+								
+				Queue::push('UserAction@delrepost', 
+							array(
+								'post_id' => Request::segment(3),
+								'user_id' => Auth::user()->id,
+								'username' => Auth::user()->username,
+								)
+							);
 				
 				return Response::json(
 					array('result'=>'deleted'),

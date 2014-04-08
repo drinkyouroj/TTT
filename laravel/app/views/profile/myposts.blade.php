@@ -18,8 +18,7 @@
 	<div class="row activity-container generic-listing myposts">
 		@if(count($myposts))
 			{{--we're using part of the activity to render this so the foreach is set as $act--}}
-			
-			@if($featured)
+			@if(isset($featured))
 				{? $act = $featured ?}
 				{? $featured_item = 1 ?}
 				@include('partials/activity-item')

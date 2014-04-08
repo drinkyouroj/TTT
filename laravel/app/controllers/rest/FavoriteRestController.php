@@ -53,6 +53,23 @@ class FavoriteRestController extends \BaseController {
 				$notification->notification_type = 'favorite';
 				$notification->save();
 				
+				
+				$mot = Motification::where('post_id', Request::segment(3))//Post id									
+									->where('user_id', $post->user->id)//person getting notified
+									->where('notification_type', 'favorite');
+				
+				if(!$mot->count()) {
+					$mot = new Motification;
+					$mot->post_id = Request::segment(3);
+					$mot->post_title = $post->title;
+					$mot->post_alias = $post->alias;
+					$mot->user_id = $post->user->id;//Who this notification si going to.
+					$mot->noticed = 0;
+					$mot->notification_type = 'favorite';
+					$mot->save();
+				}
+				$mot->push('users', Auth::user()->username,true);
+				
 				return Response::json(
 					array('result'=>'success'),
 					200//response is OK!
@@ -81,6 +98,15 @@ class FavoriteRestController extends \BaseController {
 						->where('notification_type', '=', 'favorite')
 						->delete();
 				
+				$mot = Motification::where('post_id', Request::segment(3))
+						->where('notification_type', 'favorite')
+						->where('user_id',$post->user->id);
+				if($mot->count() >= 1) {
+					$mot->pull('users', Auth::user()->username);
+					if(count($mot->first()->users) == 0) {
+						$mot->delete();
+					}
+				}
 	
 				return Response::json(
 					array('result'=>'deleted'),

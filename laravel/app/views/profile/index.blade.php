@@ -25,12 +25,17 @@
 	<div class="the-content">
 		
 		@if(Auth::check())
-		<div class="notifications-listing">
+		<div class="notifications-listing ">
 			<h3>Notifications</h3>
 			@if(count($notifications))
-				{? $break = 10; $all = false; ?}
-				{{--Below file has the foreach routine for both the top section and the full listing --}}
-				@include('partials/notifications')
+				<ul class="notifications-parent">
+					@foreach($notifications as $not)
+						@include('partials/notifications')
+					@endforeach
+					<li class="all-notifications">
+						<a href="{{ Config::get('app.url')}}/profile/notifications">See all notifications</a>
+					</li>
+				</ul>
 			@else
 				No notificiations at this time.
 			@endif
@@ -107,13 +112,13 @@
 			</div>
 			@endif
 			
-			{{--
-			@if(isset($featured) && $featured )
+			{{--Not me, featured is set and is featured--}}
+			@if(!$me && isset($featured) && $featured )
 				{? $featured_item = 1 ?}
 				{? $act = $featured ?}
 				@include('partials/activity-item')
 			@endif
-			--}}
+			
 			
 			{? $featured_item = 0 ?}
 			

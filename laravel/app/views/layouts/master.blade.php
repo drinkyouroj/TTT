@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app>
   <head>
     <title>@yield('title','Title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -96,10 +96,9 @@
 			  					<ul class="notifications">
 			  						@if(count($notifications))
 			  							<a class="mark-read">Mark as Read</a>
-			  							{? $break = 4; $all = false; ?}
-			  							{{--Below file has the foreach routine for both the top section and the full listing --}}
-				  						@include('partials/notifications')
-				  						
+			  							@foreach($notifications as $not)
+				  							@include('partials/notifications')
+				  						@endforeach
 				  					@else
 				  					<li class="no-notifications">
 				  						<span>You have no notifications!</span>

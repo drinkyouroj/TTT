@@ -109,7 +109,8 @@ return array(
 		'Zizaco\Entrust\EntrustServiceProvider',
 		'Way\Console\GuardLaravelServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
-		'Greggilbert\Recaptcha\RecaptchaServiceProvider'
+		'Greggilbert\Recaptcha\RecaptchaServiceProvider',
+		'Jenssegers\Mongodb\MongodbServiceProvider',
 		
 	),
 
@@ -177,6 +178,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Confide'    => 'Zizaco\Confide\ConfideFacade',
 		'Entrust'    => 'Zizaco\Entrust\EntrustFacade',
+		'Moloquent'       => 'Jenssegers\Mongodb\Model',
 	),
 
 );

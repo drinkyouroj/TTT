@@ -2,7 +2,7 @@
 {{--This is the top portion (username and stuff)--}}
 
 {{--Let's determine if this is you or someone else we're looking at--}}
-@if(isset($user))
+@if(isset($user->username))
 	{? $username = $user->username; ?}
 	{? $user_id = $user->id; ?}
 	{? $date = $user->created_at; ?}

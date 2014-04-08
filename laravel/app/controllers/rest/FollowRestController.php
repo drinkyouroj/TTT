@@ -35,7 +35,13 @@ class FollowRestController extends \BaseController {
 							->where('notification_type', 'follow')
 							->where('post_id', 0)
 							->delete();
-						
+				
+				Motification::where('user_id', intval(Request::segment(3)))
+							->where('user', Auth::user()->username)
+							->where('notification_type', 'follow')
+							->delete();
+				
+				
 				return Response::json(
 					array('result'=>'deleted'),
 					200//response is OK!
@@ -55,6 +61,15 @@ class FollowRestController extends \BaseController {
 				$notification->notification_type = 'follow';
 				$notification->save();
 				
+				//Below is an upsert function, so it'll create a 
+				$motification = new Motification;
+				$motification->post_id = 0;
+				$motification->noticed = 0;
+				$motification->user_id = intval(Request::segment(3));//the person being notified.
+				$motification->notification_type = 'follow';
+				$motification->user = Auth::user()->username;//The follower's name
+				$motification->users = array(Auth::user()->username);
+				$motification->save();
 				
 				return Response::json(
 					array('result'=>'success'),

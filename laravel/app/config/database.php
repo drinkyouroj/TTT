@@ -82,7 +82,16 @@ return array(
 			'password' => '',
 			'prefix'   => '',
 		),
-
+		
+		//setup : db.addUser({user: "twothousand", pwd: "TT99!!!", roles: ["userAdminAnyDatabase"]})
+		'mongodb' => array(
+		    'driver'   => 'mongodb',
+		    'host'     => 'localhost',
+		    'port'     => 27017, 
+		    'username' => 'twothousand',
+		    'password' => 'TT99!!!',
+		    'database' => 'database'
+		),
 	),
 
 	/*

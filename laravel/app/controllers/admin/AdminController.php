@@ -207,7 +207,7 @@ class AdminController extends Controller {
 		}
 	}
 	
-	
+	//Resets the solr users database from the SQL database.
 	public function getResetSolr() {
 		$users = User::get();
 		foreach($users as $user) {
@@ -215,6 +215,71 @@ class AdminController extends Controller {
 		}
 		return'Good'; 
 	}
+	
+	public function getResetNotifications() {
+		$notifications = Notification::get();//gets the entire stack
+		$c = 1;
+		foreach($notifications as $notification) {
+			unset($motification);
+			if($notification->notification_type == 'follow') {
+				$post_id = 0;
+			} else {
+				$post_id = $notification->post_id;
+			}
+			
+			$motification = Motification::where('post_id', $post_id)
+										->where('user_id', $notification->user_id)
+										->where('notification_type', $notification->notification_type);
+			
+			$user_name = User::find($notification->action_id)->username;
+			
+			//If we can't find it, we need to make it.
+			if($motification->count() == 0) {
+				unset($motification);
+				
+				//Default values
+				$post_id = 0;
+				$post_alias = $post_title = '';
+				$post_user_id = 1;
+				
+				if($notification->notification_type != 'follow') {
+					$post_id = $notification->post_id;
+					$post_id = $notification->post_id;
+					$post = Post::where('id', $notification->post_id)->first();
+					if(isset($post->title)) {
+						$post_title = $post->title;
+						$post_alias = $post->alias;
+					}
+					if(isset($post->user)) {
+						$post_user_id = $post->user->id;
+					}
+				}
+				
+				$motification = new Motification;
+				$motification->post_id = $post_id;
+				$motification->post_title = $post_title;
+				$motification->post_alias = $post_alias;
+				$motification->user_id = $post_user_id;
+				$motification->noticed = $notification->noticed;
+				$motification->notification_type = $notification->notification_type;
+				$motification->save();
+				//This can add since its 
+				$motification->push('users', $user_name, true);
+			} else {
+				//Otherwise, we just need to add to it.
+				if($motification->count() == 1) {
+					echo 'only 1'.'<br/>';
+				} elseif($motification->count() > 1) {
+					echo $motification->count().'<br/>';
+				}
+				$motification->push('users', $user_name,true);
+			}
+			
+		}
+
+		
+	}
+	
 	
 	
 }

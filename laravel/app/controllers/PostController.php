@@ -248,7 +248,8 @@ class PostController extends BaseController {
 				Queue::push('UserAction@newpost', 
 							array(
 								'post_id' => $post->id,
-								'user_id' => Auth::user()->id
+								'user_id' => Auth::user()->id,
+								'username' => Auth::user()->username,
 								)
 							);
 

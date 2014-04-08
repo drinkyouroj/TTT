@@ -380,76 +380,75 @@ ul.notifications li ul li a{
 	padding: 2px 0;
 }
 .header-wrapper .navbar li.notifications-parent li a:hover {
-color:#aaa !important;
-}
-
-li.notifications-parent ul a.mark-read:hover {
 	color:#aaa !important;
 }
 
-.header-wrapper .navbar .notifications-parent ul li.all-notifications {
-	padding-left:0px;
-}
 
-.header-wrapper .navbar li.repost {
+.notifications-parent li.repost {
 	background-image: url('../../img/icons/repost-notifications.png');
 	background-position: center left;
 	background-repeat: no-repeat;
 	
 }
 
-.header-wrapper .navbar li.repost a {
+.notifications-parent li.repost a {
 	color:#32B1C6 !important;
 }
 
-.header-wrapper .navbar li.favorite {
+.notifications-parent li.favorite {
 	background-image: url('../../img/icons/favorite-notifications.png');
 	background-position: center left;
 	background-repeat: no-repeat;
 }
 
-.header-wrapper .navbar li.favorite a {
+.notifications-parent li.favorite a {
 	color:#968B22 !important;
 }
 
-.header-wrapper .navbar li.new {
+.notifications-parent li.post {
 	background-image: url('../../img/icons/post-notifications.png');
 	background-position: center left;
 	background-repeat: no-repeat;
 }
 
-.header-wrapper .navbar li.new a {
+.notifications-parent li.post a {
 	color:#DF3B3C !important;
 }
 
-.header-wrapper .navbar li.comment {
+.notifications-parent li.comment {
 	background-image: url('../../img/icons/comment-notifications.png');
 	background-position: center left;
 	background-repeat: no-repeat;
 }
 
-.header-wrapper .navbar li.comment a {
+.notifications-parent li.comment a {
 	color:#F38630 !important;
 }
 
-.header-wrapper .navbar li.reply {
+.notifications-parent li.reply {
 	background-image: url('../../img/icons/reply-notifications.png');
 	background-position: center left;
 	background-repeat: no-repeat;
 }
 
-.header-wrapper .navbar li.reply a {
+.notifications-parent li.reply a {
 	color:#F38630 !important;
 }
 
-.header-wrapper .navbar li.follow {
+.notifications-parent li.follow {
 	background-image: url('../../img/icons/follow-notifications.png');
 	background-position: center left;
 	background-repeat: no-repeat;
 }
 
-.header-wrapper .navbar li.follow a {
+.notifications-parent li.follow a {
 	color:#A156D1 !important;
+}
+
+
+
+.header-wrapper .navbar .notifications-parent ul li.all-notifications {
+	padding-left:0px;
 }
 
 .header-wrapper .navbar .notifications-parent .all-notifications a {

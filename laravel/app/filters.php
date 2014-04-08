@@ -186,19 +186,19 @@ View::composer('*', function($view) {
 					);
 	
 	if(!Auth::guest()) {
-		$notifications = Notification::where('user_id', '=', Session::get('user_id'))
-										->where('noticed', '=', 0)
-										->take(30)//This is an artificial limit. I think the limit should be set by a 5 day limit instead.
-										->orderBy('created_at', 'DESC')
-										->get();
-		
+		//The new Mongo notifications
+		$compiled = Motification::where('user_id','=',Auth::user()->id)
+								->where('noticed',0)
+								->take(7)
+								->orderBy('updated_at', 'DESC')
+								->get();
+			
+		//unfortunately, we'll have to do this for now.
+		//Maybe we should have this collect from the dom on the client side though that's never really been ideal...
 		$notification_ids = array();
-		foreach($notifications as $k => $nots) {
-			$notification_ids[$k] = $nots->id;
+		foreach($compiled as $k => $nots) {
+			$notification_ids[$k] = $nots->_id;
 		}
-		
-		//Shared function for re-ordering the notifications per initial ID and per type.
-		$compiled = NotificationParser::parse($notifications);
 		
 		$view->with('categories', Category::all())
 			 ->with('filters', $filters)

@@ -5,11 +5,21 @@ Notifications | The Two Thousand Times
 @stop
 
 @section('main')
-	<div class="row notifications-listing full-list">
+	{{-- 	@include('angular_views/notifcation') --}}
+	<div class="row notifications-parent full-list">
 		@if(count($notification_list))
-			{{--Below file has the foreach routine for both the top section and the full listing --}}
-			{? $break = 100; $all = true; ?}
-			@include('partials/notifications')
+			@foreach($notification_list as $not)
+					@include('partials/notifications')
+			@endforeach
 		@endif
 	</div>
+@stop
+
+
+@section('js')
+	@parent
+	
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/angular.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/app/app.js"></script>
+	
 @stop

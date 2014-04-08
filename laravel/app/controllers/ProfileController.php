@@ -146,12 +146,17 @@ class ProfileController extends BaseController {
 	 * Gives you the full notification history 
  	*/
 	public function getNotifications() {
+		/*
 		$notifications = Notification::where('user_id', Session::get('user_id'))
 									->orderBy('created_at','DESC')
 									->take(20)//limit at 20 for now.  We'll AJAX in the rest.
 									->get();
 		
 		$compiled = NotificationParser::parse($notifications);
+		*/
+		$compiled = Motification::where('user_id', Auth::user()->id)
+									->orderBy('created_at','DESC')
+									->get();
 		
 		return View::make('profile/notifications')
 				->with('notification_list', $compiled)

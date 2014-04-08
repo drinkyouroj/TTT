@@ -441,73 +441,6 @@ ul.profile-options li a.new-message {
 	padding: 2px 0;
 }
 
-.notifications-listing li.repost {
-	background-image: url('../../img/icons/repost-notifications.png');
-	background-position: center left;
-	background-repeat: no-repeat;
-	
-}
-
-.notifications-listing li.repost a {
-	color:#32B1C6;
-}
-
-.notifications-listing li.favorite {
-	background-image: url('../../img/icons/favorite-notifications.png');
-	background-position: center left;
-	background-repeat: no-repeat;
-}
-
-.notifications-listing li.favorite a {
-	color:#968B22;
-}
-
-.notifications-listing li.new {
-	background-image: url('../../img/icons/post-notifications2.png');
-	background-position: center left;
-	background-repeat: no-repeat;
-}
-
-.notifications-listing li.new a {
-	color:#DF3B3C;
-}
-
-.notifications-listing li.comment {
-	background-image: url('../../img/icons/comment-notifications.png');
-	background-position: center left;
-	background-repeat: no-repeat;
-}
-
-.notifications-listing li.comment a {
-	color:#F38630;
-}
-
-.notifications-listing li.reply {
-	background-image: url('../../img/icons/reply-notifications.png');
-	background-position: center left;
-	background-repeat: no-repeat;
-}
-
-.notifications-listing li.reply a {
-	color:#F38630;
-}
-
-.notifications-listing li.follow {
-	background-image: url('../../img/icons/follow-notifications.png');
-	background-position: center left;
-	background-repeat: no-repeat;
-}
-
-.notifications-listing li.follow ul li {
-	display:inline;
-	border-bottom:0px;
-	padding:0px;
-}
-
-.notifications-listing li.follow a {
-	color:#A156D1;
-}
-
 .all-notifications span a {
 	font-family:'bebas' !important;
 	font-size:16px !important;
@@ -579,7 +512,7 @@ ul.profile-options li a.new-message {
 }
 
 /**Full Notifications List**/
-.notifications-listing.full-list {
+.notifications-parent.full-list {
 	padding-top:20px;
 	padding-left:20%;
 	padding-right:20%;
@@ -588,11 +521,11 @@ ul.profile-options li a.new-message {
 	background-color:#fff;
 }
 
-.notifications-listing.full-list a {
+.notifications-parent.full-list a {
 	font-family: 'Montserrat', sans-serif;
 }
 
-.notifications-listing.full-list li {
+.notifications-parent.full-list li {
 	list-style:none;
 	padding-left:30px;
 	padding-top:20px;
@@ -728,109 +661,6 @@ ul.profile-options li a.new-message {
 .walk-generic .joyride-content-wrapper a.joyride-next-tip:hover {
 	color:#525252 !important;
 }
-
-/*Forms*/
-/*
-.post-form .form-nav {
-	text-align: center;
-}
-
-.post-form .form-nav ul{
-	margin: 0;
-	padding: 0;
-	list-style:none;
-}
-
-.post-form .form-nav ul li{
-	font-family: 'bebas';
-	font-size: 30px;
-	display:block;
-	margin: 0 20px 40px 20px;
-	padding: 20px 0;
-	background:#fff;
-	box-shadow: 0 0 5px #ccc;
-	border-radius: 3px;
-}
-
-.post-form .form-nav ul li a {
-	color:#333333;
-}
-
-.post-form .form-nav ul li a.active{
-	color:#428bca;;
-} 
-
-.post-form input[type=text], .post-form textarea, .post-form select {
-	padding: 5px;
-	background: #eeece6;
-	color: #333;
-	border: 2px solid #9f9f9f;
-	border-radius:0;
-}
-
-.post-form textarea {
-	height: 470px;
-	resize: none;
-}
-
-label.error {
-	color: red;
-}
-
-.form-container {
-	height: 600px;
-	padding: 30px;
-	overflow:hidden;
-	background:#fff;
-	box-shadow: 0 0 5px #ccc;
-	border-radius: 3px;
-}
-
-.edit-form.form-container {
-	height: auto;
-}
-
-.form-container .page {
-	display:inline-block;
-	height: 600px;
-	width: 100%;
-}
-
-.post-form  .photo-system {
-	width: 100%;
-}
-
-.post-form  .photo-system .photo-chosen, .post-form  .photo-system .photo-processed {
-	position: relative;
-	float: left;
-	width: 45%;
-}
-.post-form .photo-system .photo-processor {
-	position: relative;
-	float: left;
-	width: 10%;
-}
-.post-form .photo-system .photo-processor img, 
-.post-form .photo-system .photo-processed img, 
-.post-form  .photo-system .photo-chosen img{
-	width: 100%;	
-}
-
-
-.post-form .submit {
-	margin: 20px 0;
-	text-align: center;
-}
-.post-form .submit input {
-	font-family: 'bebas';
-	font-size: 30px;
-	
-	background:#428bca;
-	padding: 20px 40px;
-	margin-bottom: 20px;
-	border:none;
-}
-*/
 
 /***************************************
 	Media Queries

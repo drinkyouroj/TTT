@@ -17,7 +17,8 @@
 		"way/generators": "dev-master",
 		"solarium/solarium": "dev-develop",
 		"pda/pheanstalk": "dev-master",
-		"greggilbert/recaptcha": "dev-master"
+		"greggilbert/recaptcha": "dev-master",
+		"jenssegers/mongodb": "*"
 	},
 	"autoload": {
 		"classmap": [
