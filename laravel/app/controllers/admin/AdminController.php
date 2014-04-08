@@ -219,7 +219,8 @@ class AdminController extends Controller {
 	public function getResetNotifications($page = 0) {
 		$amount = 100;
 		//rather not do this, but gotta do it.
-		$notifications = Notification::skip($page*$amount)->take($amount)->get();//gets the entire stack
+		//$notifications = Notification::skip($page*$amount)->take($amount)->get();//gets the entire stack
+		$notifications = Notification::get();
 		echo $notifications->count() . '<br>';
 		$c = 1;
 		foreach($notifications as $key=> $notification) {
