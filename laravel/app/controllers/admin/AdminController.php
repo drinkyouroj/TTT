@@ -219,7 +219,7 @@ class AdminController extends Controller {
 	public function getResetNotifications($page = 0) {
 		$amount = 100;
 		//rather not do this, but gotta do it.
-		$notifications = Notification::skip($page*100)->take(100)->get();//gets the entire stack
+		$notifications = Notification::skip($page*$amount)->take($amount)->get();//gets the entire stack
 		echo $notifications->count() . '<br>';
 		$c = 1;
 		foreach($notifications as $key=> $notification) {
@@ -235,8 +235,9 @@ class AdminController extends Controller {
 										->where('user_id', $notification->user_id)
 										->where('notification_type', $notification->notification_type);
 			
-			$user_name = User::find($notification->action_id)->username;
-			
+			$user = User::where('id', $notification->action_id)->first();
+			$user_name = $user->username;
+			unset($user);
 			//If we can't find it, we need to make it.
 			if($motification->count() == 0) {
 				unset($motification);
