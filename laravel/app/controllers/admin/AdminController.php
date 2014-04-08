@@ -217,6 +217,7 @@ class AdminController extends Controller {
 	}
 	
 	public function getResetNotifications() {
+		echo 'test';
 		$notifications = Notification::get();//gets the entire stack
 		$c = 1;
 		foreach($notifications as $key=> $notification) {
@@ -271,7 +272,7 @@ class AdminController extends Controller {
 				if($motification->count() == 1) {
 					echo 'only 1'.'<br/>';
 				} elseif($motification->count() > 1) {
-					echo $motification->count().'<br/>';
+					echo $motification->count().' motifications <br/> ';
 				}
 				$motification->push('users', $user_name,true);
 			}
