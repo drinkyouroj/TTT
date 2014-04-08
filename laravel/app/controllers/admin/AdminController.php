@@ -238,7 +238,7 @@ class AdminController extends Controller {
 			
 			$user = User::where('id', $notification->action_id)->first();
 			$user_name = $user->username;
-			unset($user);
+			unset($user);//saving memory
 			//If we can't find it, we need to make it.
 			if($motification->count() == 0) {
 				unset($motification);
@@ -259,6 +259,7 @@ class AdminController extends Controller {
 					if(isset($post->user)) {
 						$post_user_id = $post->user->id;
 					}
+					unset($post);//gotta save memory
 				}
 				
 				$motification = new Motification;
@@ -267,6 +268,7 @@ class AdminController extends Controller {
 				$motification->post_alias = $post_alias;
 				$motification->user_id = $post_user_id;
 				$motification->noticed = $notification->noticed;
+				$motification->comment_id = $notification->comment_id;
 				$motification->notification_type = $notification->notification_type;
 				$motification->save();
 				//This can add since its 
@@ -280,7 +282,7 @@ class AdminController extends Controller {
 				}
 				$motification->push('users', $user_name,true);
 			}
-			
+			unset($motification);
 		}
 
 		
