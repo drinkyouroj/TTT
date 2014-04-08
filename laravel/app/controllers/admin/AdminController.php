@@ -218,7 +218,7 @@ class AdminController extends Controller {
 	
 	public function getResetNotifications() {
 		$notifications = Notification::get();//gets the entire stack
-		echo $notifications->count();
+		echo $notifications->count() . '<br>';
 		$c = 1;
 		foreach($notifications as $key=> $notification) {
 			echo 'Notification: '. $key .'<br>';
