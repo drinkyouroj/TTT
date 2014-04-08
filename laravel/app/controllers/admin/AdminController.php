@@ -249,21 +249,19 @@ class AdminController extends Controller {
 				$post_user_id = 1;
 				
 				if($notification->notification_type != 'follow') {
-					if($notification->notification_type != 'reply' ) {
-						$post_id = $notification->post_id;
-						$post = Post::where('id', $notification->post_id)->first();
-						if(isset($post->title)) {
-							$post_title = $post->title;
-							$post_alias = $post->alias;
-						}
-						if(isset($post->user)) {
-							$post_user_id = $post->user->id;
-						}
-						unset($post);//gotta save memory
-					} else {
-						$post_id = $notification->post_id;
-						$user_id = $notification->user_id;
+					$post_id = $notification->post_id;
+					$post = Post::where('id', $notification->post_id)->first();
+					if(isset($post->title)) {
+						$post_title = $post->title;
+						$post_alias = $post->alias;
 					}
+					if(isset($post->user)) {
+						$post_user_id = $post->user->id;
+					}
+					if($notification->notification_type == 'reply' ) {
+						$post_user_id = $notification->user_id;
+					}
+					unset($post);//gotta save memory
 				} 
 				
 				
