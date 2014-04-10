@@ -117,7 +117,7 @@ Messaging | Two Thousand Times
 		{{--New Message--}}
 		@if(isset($newmessage))
 			{{--To one of your mutuals?--}}
-			@if($mutuals)
+			@if(isset($mutuals))
 				<div class="form-group">
 					{{ Form::label('to_uid','To User', array('class'=>'control-label'))}}
 					<select name="to_uid">
@@ -128,6 +128,9 @@ Messaging | Two Thousand Times
 				</div>
 			@elseif(isset($message_user->id))
 				{{--To a specific user?--}}
+				<div class="">
+					<h3>Message to <a href="{{Config::get('app.url')}}/profile/{{$message_user->username}}">{{$message_user->username}}</a></h3>
+				</div>
 				{{ Form::hidden('to_uid', $message_user->id ) }}
 			@endif
 		@endif

@@ -88,7 +88,7 @@ Route::filter('mod', function()
     }
 });
 
-
+//we're using the route filter to make sure that the View compser only addes the needed profile information to the "profile" views
 Route::filter('profile', function() {
 	View::composer('*', function($view) {
 			$alias = Request::segment(2);
@@ -170,10 +170,18 @@ Route::filter('csrf', function()
 	}
 });
 
-//This will need to be figured out later as the view composer is unable to figure out how to reach the layouts.master.blade.php file
+
+
+/** 
+ * View Composer
+ * 
+ * This is called everytime any view is rendered.  Most of the views in our site require the below right now.
+ * This will need to be figured out later as the view composer is unable to figure out how to reach the layouts.master.blade.php file 
+ */
 View::composer('*', function($view) {
 	
-	//Below is the filters for the Categories.
+	//Below is the filters for the Categories.  Its stored here since we needed to iterate through to see what is or is not active.
+	//We can probably make this an admin function later.
 	$filters = array(
 					'popular'=> 'Most Popular',
 					'recent' => 'Most Recent',
@@ -186,15 +194,19 @@ View::composer('*', function($view) {
 					);
 	
 	if(!Auth::guest()) {
+		//A logged in user
+		
 		//The new Mongo notifications
 		$compiled = Motification::where('user_id','=',Auth::user()->id)
+								->where('notification_type', '!=', 'message')//message notification is different.
 								->where('noticed',0)
-								->take(7)
+								->take(7)//taking 7 for now.  We'll change this up when we do a full rest interfaced situation.
 								->orderBy('updated_at', 'DESC')
 								->get();
-			
-		//unfortunately, we'll have to do this for now.
-		//Maybe we should have this collect from the dom on the client side though that's never really been ideal...
+		
+		//Unfortunately, we'll have to do this for now.
+		//Maybe we should have this collect from the dom on the client side though that's never really been ideal...  
+		//We'll be able to get rid of this the moment we do rest.
 		$notification_ids = array();
 		foreach($compiled as $k => $nots) {
 			$notification_ids[$k] = $nots->_id;

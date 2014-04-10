@@ -3,10 +3,7 @@ class FavoriteRestController extends \BaseController {
 
 	public function index()
 	{
-		return Response::json(
-			array('result'=>'success'),
-			200//response is OK!
-		);
+		
 	}
 
 	public function store()
@@ -45,7 +42,7 @@ class FavoriteRestController extends \BaseController {
 				$profilepost->save();
 				
 				
-				//Add to OP's notification
+				//TODO get rid of the original notifcation code soon.
 				$notification = new Notification;
 				$notification->post_id = Request::segment(3);
 				$notification->user_id = $post->user->id;
@@ -92,6 +89,7 @@ class FavoriteRestController extends \BaseController {
 						->delete();
 				
 				//Delete from Notifications
+				//TODO get rid of the original notifcation code soon.
 				Notification::where('post_id', '=', Request::segment(3))
 						->where('action_id', '=', Auth::user()->id)
 						->where('user_id', '=', $post->user->id)

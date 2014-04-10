@@ -12,22 +12,7 @@ class PostRestController extends \BaseController {
 	 */
 	public function index()
 	{
-		$posts = Post::with('comments')->get();
-		$posts = $posts->toArray();
 		
-		//Below is something ember requires its kind of not efficient at this moment, but we'll deal with it for now.
-		foreach($posts as $key => $post) {
-			$post_comments = array();
-			foreach($post['comments'] as $comment) {
-				array_push($post_comments,$comment['id']);
-			}
-			$posts[$key]['comments'] = $post_comments;
-		}
-		
-		return Response::json(
-			array('posts' => $posts),
-			200//response is OK!
-		);
 	}
 
 	
@@ -38,44 +23,7 @@ class PostRestController extends \BaseController {
 	 */
 	public function store()
 	{
-		//Let's get that filtering done with in one place.
-		$post =　self::input_filter(true);//true = new
-		
-		//Needs filtering and validation.
-		$validator = Post::validate($post);
-		
-		if($validtor->passes()) {
-			$post->save();
-			//Put it into the profile post table 
-			$profile_post = new ProfilePost;
-			$profile_post->user_id = Auth::user()->id;//post as new to yourself
-			$profile_post->post_id = $post->id;
-			$profile_post->post_type = 'post';
-			$profile_post->save();
-			
-			//Send it out to your followers
-			$followers = Follow::where('user_id', Auth::user()->id);
-			foreach($followers as $follower){
-				$follower_post = new ProfilePost;
-				$profile_post->user_id = $follower->user_id;//set it to show on this follower's wall.
-				$profile_post->post_id = $post->id;//set the id of the post.
-				$profile_post->post_type = 'post';//new post by poster.
-				$profile_post->save();
-			}
-			
-			//send an ok response
-			return Response::json(
-				'Post Stored',
-				200//response is OK!
-			);			
-		} else {
-			//send an ok response
-			return Response::json(
-				'Not Good',
-				500//response is OK!
-			);
-		}
-		
+				
 	}
 
 	/**

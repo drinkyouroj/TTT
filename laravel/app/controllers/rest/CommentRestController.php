@@ -8,20 +8,7 @@ class CommentRestController extends \BaseController {
 	 */
 	public function index()
 	{
-		//This if statement is to figure out if the request is for "ids" //something ember does to get multiple elements
-		if($ids = Input::get('ids')) {
-			$comments = Comment::with('votes', 'users')->whereIn('id', $ids)->get();
-		} else {
-			$comments = Comment::with('votes', 'users')->get();//returns all the damn comments
-		}
-		$comments = $comments->toArray();
 		
-		return Response::json(
-			array(
-				'comments' => $comments
-			),
-			200//response is OK!
-		);
 	}
 
 	/**
@@ -32,16 +19,7 @@ class CommentRestController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
-		$comment = Comment::where('id', $id)->first();
-		$comment = $comment->toArray();
 		
-		return Response::json(
-			array(
-				'comments' => $comment
-			),
-			200//response is OK!
-		);
 	}
 
 	/**

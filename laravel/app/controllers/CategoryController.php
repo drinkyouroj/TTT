@@ -6,6 +6,8 @@ class CategoryController extends BaseController {
 		
 	}
 
+	private $paginate = 1;
+
     /**
      * Get Category
 	 * 	I wished this function was a bit less complex.
@@ -51,8 +53,6 @@ class CategoryController extends BaseController {
 		//Both functions above are ways to access this same data set.
 		private function categoryData($alias, $request,$page = 1) {
 			
-			$paginate = 12;//number of items to load at a time.
-			
 			if(Request::get('page')) {
 				$page = abs(Request::get('page'));//just to be sure.
 			} else {
@@ -94,7 +94,7 @@ class CategoryController extends BaseController {
 					break;  
 				}
 				
-				$posts = $posts->skip(($page-1)*$paginate)->take($paginate)->get();
+				$posts = $posts->skip(($page-1)*$this->paginate)->take($this->paginate)->get();
 				/*
 				$queries = DB::getQueryLog();
 				$last_query = end($queries);
@@ -130,7 +130,7 @@ class CategoryController extends BaseController {
 					break;  
 				}
 				
-				$posts = $posts->skip(($page-1)*$paginate)->take($paginate)->get();
+				$posts = $posts->skip(($page-1)*$this->paginate)->take($this->paginate)->get();
 				
 			}
 			

@@ -12,9 +12,6 @@
 
 class UserController extends BaseController {
 
-	protected $layout = 'layouts.master';
-	
-
 	/**Signup*/
 	public function getSignup(){
 		
@@ -106,7 +103,7 @@ class UserController extends BaseController {
         }
         else
         {
-            $this->layout->content = View::make('user.login');
+            return View::make('user.login');
         }
     }
 	
@@ -120,7 +117,7 @@ class UserController extends BaseController {
         }
         else
         {
-            $this->layout->content = View::make('user.loginonly');
+            return View::make('user.loginonly');
         }
     }
 		

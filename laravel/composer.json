@@ -28,6 +28,7 @@
 			"app/controllers/admin",
 			"app/controllers/moderator",
 			"app/controllers",
+			"app/lib",
 			"app/models",
 			"app/queue",
 			"app/database/migrations",
