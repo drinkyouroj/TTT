@@ -6,7 +6,7 @@ class CategoryController extends BaseController {
 		
 	}
 
-	private $paginate = 1;
+	private $paginate = 12;
 
     /**
      * Get Category
