@@ -155,6 +155,7 @@ class UserController extends BaseController {
         // logAttempt will check if the 'email' perhaps is the username.
         if ( Confide::logAttempt( $input ) ) 
         {
+        	dd('test');
         	//YD change here: Let's store the UN and stuff.
         	$user = User::where('email', '=', $input['email'])
         			->orwhere('username', '=', $input['email'])

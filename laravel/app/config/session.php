@@ -29,7 +29,7 @@ return array(
 	|
 	*/
 
-	'lifetime' => 0,
+	'lifetime' => 1440,
 
 
 
