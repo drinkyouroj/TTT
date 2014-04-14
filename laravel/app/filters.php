@@ -91,6 +91,7 @@ Route::filter('mod', function()
 
 //we're using the route filter to make sure that the View compser only addes the needed profile information to the "profile" views
 Route::filter('profile', function() {
+	
 	View::composer('*', function($view) {
 			$alias = Request::segment(2);
 			
