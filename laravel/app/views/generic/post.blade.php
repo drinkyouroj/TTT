@@ -60,7 +60,7 @@
 		@endif
 	</hgroup>
 	
-	@if( is_object($user))
+	@if( isset($user))
 		<div class="admin">
 			@if($user->hasRole('Admin'))
 				{{--Featured--}}
