@@ -29,7 +29,7 @@ $app = new Illuminate\Foundation\Application;
 $env = $app->detectEnvironment(array(
 
 	'dev' => array('twothousand14','ttt4gb'),
-	'testing' => array('hhvm'),
+	'testing' => array('HHVMtest', 'rescue-hhvmtest'),
 	'prod' => array('ttt8gb'),
 	'vagrant' => array('localhost:4567'),
 	'local' => array('localhost.localdomain'),
