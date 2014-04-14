@@ -1,6 +1,6 @@
 <?php
-	//Below is temporary for now.
-        $url = '192.168.9.149/tt/'; 
+$url = $_SERVER[HTTP_HOST].$_SERVER[REQUEST_URI]; 
+		
 if (isset($_POST['done'])) 
     { 
 

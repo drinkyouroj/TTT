@@ -1,6 +1,11 @@
 <?php 
 class Post extends Eloquent {
 	
+	//Just to be sure!
+	protected $table = 'posts';
+	protected $softDelete = true;
+	protected $with = array('user');
+	
 	public function __construct() {
 		Validator::extend('Twothousand', function($attribute, $value, $parameters)
 		{		
@@ -22,11 +27,6 @@ class Post extends Eloquent {
 		    }
 		});
 	}
-	
-	//Just to be sure!
-	protected $table = 'posts';
-	protected $softDelete = true;
-	protected $with = array('user');
 	
 	public function user() {
 		return $this->belongsTo('User')->select('id','username');//maybe take out the id later.
@@ -60,6 +60,40 @@ class Post extends Eloquent {
 	public function categories()
 	{
 		return $this->belongsToMany('Category', 'category_post');
+	}
+	
+	/**
+	 * Filters for ALL Category (This is matched against Category Model's relationship names)
+	 */
+	
+	public function scopePostspopular() 
+	{
+		return $this->where('published', true)->orderBy('like_count','DESC');
+	}
+	
+	public function scopePostsviews()
+	{
+		return $this->where('published', true)->orderBy('views', 'DESC');
+	}
+
+	public function scopeRecent()
+	{
+		return $this->where('published', true)->orderBy('created_at','DESC');
+	}
+	
+	public function scopePostsdiscussed()
+	{
+		return $this->where('published', true)->orderBy('comment_count','DESC');
+	}
+	
+	public function scopeLongest()
+	{
+		return $this->where('published', true)->orderBy(DB::raw('LENGTH(body)'),'DESC');
+	}
+
+	public function scopeShortest()
+	{
+		return $this->where('published', true)->orderBy(DB::raw('LENGTH(body)'),'ASC');
 	}
 
 	

@@ -2,9 +2,11 @@
 
 class HomeController extends BaseController {
 	
-	private $paginate = 8;
+	private $paginate = 8;//pagination for the front page is set to 8 since it worked out better with the packery blocks.
 	
-	//The slash!
+	/**
+	 * The featured page.
+	 */
 	public function getIndex()
 	{	
 		$featured = Featured::orderBy('order', 'ASC')
@@ -12,12 +14,15 @@ class HomeController extends BaseController {
 							->get();
 		
 		return View::make('home.index')
-					->with('featured',$featured)
-					;
+					->with('featured',$featured);
 	}
 	
+	/**
+	 * The featured page autoload. 
+	 */
 	public function getRestFeatured() {
 		
+		//set the default if page is not passed to you.
 		if(Request::get('page')) {
 			$page = abs(Request::get('page'));//just to be sure.
 		} else {
@@ -43,12 +48,15 @@ class HomeController extends BaseController {
 		}
 	}
 	
-	//This is a little weird fix to the invitation system.
+	//This is a little weird fix to the invitation system since it posts to the Index and needs to be redirected.
 	public function postIndex() {
 		return Redirect::to('featured');
 	}
 
-	//Our Story Type Page
+	/**
+	 * Static Pages below
+	 */
+	
 	public function getAbout()
 	{
 		return View::make('static.about');

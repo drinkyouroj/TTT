@@ -1,11 +1,12 @@
 <?php
-
+/**
+ * Comments Class handles all comment related issues.
+ */
 class CommentController extends BaseController {
-	
-/********************************************************************
- * Comments
-*/
 
+	/**
+	 * The Post Comment Form
+	 */
 	public function postCommentForm()
 	{
 		$post_id = Request::segment(3);
@@ -20,7 +21,8 @@ class CommentController extends BaseController {
 			
 			//Check to make sure that you don't own the post.
 			if($post->user_id != Auth::user()->id) {
-				//Place in the notification if you're posting on other people's posts.
+				
+				//TODO Get rid of this once we're done testing the new mongo notifications.
 				$notification = new Notification;
 				$notification->post_id = $post_id;
 				$notification->user_id = $post->user->id;
@@ -29,7 +31,7 @@ class CommentController extends BaseController {
 				$notification->comment_id = $comment->id;
 				$notification->save();
 				
-				$mot = Motification::where('post_id', $post_id)//Post id									
+				$mot = Motification::where('post_id', $post_id)//Post id
 									->where('user_id', $post->user->id)//person getting notified
 									->where('notification_type', 'comment');
 				
@@ -114,14 +116,16 @@ class CommentController extends BaseController {
 		
 		/****
 		 * Below function is a future function for filtering the body
-		 * so that we can define links within the comments to profiles.
+		 * so that we can define links within the comments to profiles. (think of the @ on FB or Instagram)
 		 */ 
 		private function comment_body_filter($body)
 		{
 			
 		}
 		
-
+	/**
+	 * Creates a form to be injected as a reply.  Not the best method, but we'll improve on this once we go full app for users.
+	 */
 	public function getCommentForm($post_id, $reply_id = false) {
 		$post = Post::find($post_id);
 		return View::make('generic/commentform')

@@ -38,6 +38,7 @@ class PostController extends BaseController {
 			if(Auth::check()) {
 				$my_id = Auth::user()->id;//My user ID
 				
+				//TODO replace with the Follow helpers?
 				$is_following = Follow::where('follower_id', '=', $my_id)
 									->where('user_id', '=', $user_id)
 									->count();
@@ -88,7 +89,12 @@ class PostController extends BaseController {
 		}
     }
 	
-		//Straight out of compton (or stackoverflow)
+		/**
+		 * Divide the body text for display
+		 * @param int $longString The body text
+		 * @param int $maxLineLength The max length of each portion
+		 * @return array $arrayOutput The output is the divided text. 
+		 */
 		private function divide_text($longString, $maxLineLength)
 		{		
 			$arrayWords = explode(' ', $longString);
@@ -157,7 +163,9 @@ class PostController extends BaseController {
 	}
 	
 	/**
-	 * Where the Posts are born! (and edited)
+	 * Save the Post Form
+	 * 	Where the Posts are born! (and edited)
+	 * 
 	 */
 	public function postPostForm() {
 		//Detect if this is an update scenario or if its new and prepare the data accordingly.
@@ -173,7 +181,7 @@ class PostController extends BaseController {
 				if(!Session::get('admin') &&
 				strtotime(date('Y-m-d H:i:s', strtotime('-72 hours'))) >= strtotime($check_post->created_at)) {
 					//more than 72 hours has passed since the post was created.
-					//Nice try punk.  Maybe I should have this go somewhere more descriptive.
+					//TODO Maybe I should have this go somewhere more descriptive??
 					return Redirect::to('profile');
 				}
 				
@@ -271,15 +279,13 @@ class PostController extends BaseController {
 							->withErrors($validator)
 							->withInput();
 			}
-			
 		}
-		
 	}
 
 
-	/**
-	 * Input filtering.
-	 */
+		/**
+		 * Input filtering.
+		 */
 		private function post_object_input_filter($new = false,$post = false)
 		{	
 			if($new) {

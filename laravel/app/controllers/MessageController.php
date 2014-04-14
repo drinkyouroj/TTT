@@ -14,7 +14,6 @@ class MessageController extends BaseController {
 
 	/**
 	 * Messages inbox
-	 * 
 	 */
 	public function getMessageInbox() {
 		

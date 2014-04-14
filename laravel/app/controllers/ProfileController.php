@@ -9,6 +9,8 @@ class ProfileController extends BaseController {
 	
 	/**
 	 * Gets the profile (including your own)
+	 * 	This function is a bit more complex than I would like right now.
+	 * 	TODO Refactor into 2 different controller functions (something like UserProfile??)
 	 */
 	public function getProfile($alias=false) {
 		
@@ -101,7 +103,9 @@ class ProfileController extends BaseController {
 				->with('fullscreen', $fullscreen);
 	}
 
-		//Pagination in Profile
+		/**
+		 * Profile Posts Autoloading.
+		 */
 		public function getRestProfile($alias = false) {
 			
 			if(Request::get('page')) {
@@ -146,7 +150,6 @@ class ProfileController extends BaseController {
 	 * Gives you the full notification history 
  	*/
 	public function getNotifications() {
-		
 		$compiled = Motification::where('user_id', Auth::user()->id)
 								//->where('notification_type', '!=', 'message')  //I actually think this could be a good thing to show this too.
 								->orderBy('created_at','DESC')

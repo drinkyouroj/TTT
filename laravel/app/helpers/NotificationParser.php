@@ -1,6 +1,9 @@
 <?php
 /**
+ * THIS FUNCTION IS DEFUNCT.  Not in use anymore
+ * TODO Delete
  * This class is here so that we can use it to parse the notification data.
+ * 
  */
 class NotificationParser {
 	

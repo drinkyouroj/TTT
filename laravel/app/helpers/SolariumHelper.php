@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This Helper is intended to make things easy with solarium 
  * Keep in mind that this is the posts solarium helper, not the users one.

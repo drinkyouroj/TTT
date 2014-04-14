@@ -8,7 +8,10 @@ class SearchController extends BaseController {
 		
 	}
 	
-	//Physical Listing of Search in new page.
+	/**
+	 * Grabs Results in a page for both Posts and Users
+	 * 
+	 */
 	public function postResult() {
 		$term = Input::get('term');
 		
@@ -25,9 +28,11 @@ class SearchController extends BaseController {
 			array_push($user_ids, $result->id);
 		}
 		
+		$message = 'No Match Found';
+		
 		if(count($ids) || count($user_ids)) {
 			
-			$users = $posts = 'No Match Found';
+			$users = $posts = $message;
 			
 			//get from the result set.
 			if(count($ids)) {
@@ -47,12 +52,15 @@ class SearchController extends BaseController {
 					->with('term', $term);
 		} else {
 			return View::make('generic.error')
-					->with('message', 'No Match Found');
+					->with('message', $message);
 		}
-		
 	}
 	
-	//Ajax listing
+	
+	/**
+	 * Async listing for the top search bar
+	 * @param string $term String that you're searching for.
+	 */
 	public function getResult($term) {
 		$results = SolariumHelper::searchSolr($term, true);//returns title and taglines
 		
@@ -65,14 +73,14 @@ class SearchController extends BaseController {
 		
 		if(count($result_array['posts']) || count($result_array['users'])){
 			return Response::json(
-					$result_array,
-					200//response is OK!
-				);
+				$result_array,
+				200//response is OK!
+			);
 		} else {
 			return Response::json(
-					0,
-					200
-				);
+				0,
+				200
+			);
 		}
 	}
 	

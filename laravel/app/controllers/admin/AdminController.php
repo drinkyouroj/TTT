@@ -5,7 +5,9 @@ class AdminController extends Controller {
 		
 	}
 
-	//Landing page for admin.	
+	/**
+	 * Landing Page for Admin.  Needs tons of work.
+	 */
 	public function getIndex() {
 		
 		//provide currently featured articles.
@@ -26,9 +28,8 @@ class AdminController extends Controller {
 	}
 	
 	/******************************************************************
-	 * Message Everyone system.
+	 * Message Everyone system. 
 	 */
-	
 	public function postMessageall() {
 		$message = self::message_object_input_filter();
 		$message->save();

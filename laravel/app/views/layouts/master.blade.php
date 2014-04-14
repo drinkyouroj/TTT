@@ -70,13 +70,13 @@
 							<li class="loggedin message">
 			  					<a href="{{Config::get('app.url')}}/profile/messages">Message</a>
 							</li>
-								@if(Session::get('admin'))
-								<li class="loggedin admin">
-									<a href="{{Config::get('app.url')}}/admin">Admin</a>
-								</li>
-								@else
-								
-								@endif
+							
+							@if(Session::get('admin'))
+							<li class="loggedin admin">
+								<a href="{{Config::get('app.url')}}/admin">Admin</a>
+							</li>
+							@endif
+							
 							@endif
 			  			</ul>
 			  			
@@ -92,7 +92,7 @@
 			  			<ul class="nav navbar-nav navbar-right">
 			  				<li class="notifications-parent @if(count($notifications)) active-notifications @endif">
 			  					
-			  					<a href="#notifications">Notifications</a>
+			  					<a href="{{Config::get('app.url')}}/profile/notifications">Notifications</a>
 			  					<ul class="notifications">
 			  						@if(count($notifications))
 			  							<a class="mark-read">Mark as Read</a>

@@ -1,12 +1,6 @@
-guard :coffeescript, :input => "app/assets/coffee", :output => "public/js"
+guard :concat, :type => "css", :files => %w[animate views/message views/profile views/post_form views/user views/search views/myposts views/errors views/style views/featured views/info-pages joyride-2.1], :input_dir => "public/css", :output => "public/css/styles.min"
 
-guard :concat, :type => "css", :files => %w[], :input_dir => "public/css", :output => "public/css/styles.min"
-
-guard :concat, :type => "js", :files => %w[], :input_dir => "public/js", :output => "public/js/scripts.min"
-
-guard :less, :all_on_start => true, :all_on_start => false, :output => 'public/css' do
-	watch(%r[^app/assets/less/(.+\.less)$])
-end
+guard :concat, :type => "js", :files => %w[app/app libs/localscrollto libs/scrollto libs/handlebars-v1.3.0 libs/jquery-1.9.1 libs/jquery.joyride-2.1 libs/jquery.cookie global-loggedin global-nologin views/mod views/generic-listing views/profile/first views/profile/form_edit views/profile/form views/post views/home views/profile views/messages views/admin views/myposts views/new-post views/signup-form views/settings global], :input_dir => "public/js", :output => "public/js/scripts.min"
 
 # Refresh the browser on save
 guard 'livereload' do
@@ -64,3 +58,5 @@ guard :refresher do
     File.open(m[0], 'w') { |file| file.write(JSMin.minify(js)) }
   end
 end
+
+guard :sass, :input => 'app/assets/sass', :output => 'public/css'

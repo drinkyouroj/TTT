@@ -1,10 +1,14 @@
 <?php
+/**
+ * User Queue Actions
+ */
 class UserAction {
-	
 	
 	/**
 	 * Notify all followers that you reposted
-	 */ 
+	 * @param object $job the queue job object.
+	 * @param array $data Data that's needed for the job.
+	 */
 	function repost($job, $data) {
 		
 		//Grab all the followers for this user
@@ -23,13 +27,21 @@ class UserAction {
 			$noti->notification_type = 'repost';
 			$noti->save();
 			
-			$motdata = array(
-					'post_id' => $data['post_id'],
-					'notification_type' => 'repost',
-					'user_id' => $follower->follower_id,
-					'user' => $data['username']
-					);				
-			MotificationHelper::newMotification($motdata);
+			$mot = Motification::where('post_id', $data['post_id'])//Post id									
+									->where('user_id', $follower->follower_id)//person getting notified
+									->where('notification_type', 'repost');
+				
+				if(!$mot->count()) {
+					$mot = new Motification;
+					$mot->post_id = Request::segment(3);
+					$mot->post_title = $post->title;
+					$mot->post_alias = $post->alias;
+					$mot->user_id = $follower->follower_id;//Who this notification si going to.
+					$mot->noticed = 0;
+					$mot->notification_type = 'repost';
+					$mot->save();
+				}
+			$mot->push('users', $data['username'],true);
 			
 			//below statement is to ensure that the user who owns the content doesn't get the repost.
 			if($follower->follower_id != $post->user->id) {
@@ -40,12 +52,16 @@ class UserAction {
 				$activity->post_type = 'repost';
 				$activity->save();
 			}
-			
 		}
 		
 		$job->delete();
 	}
 
+	/**
+	 * Deletes reposts
+	 * @param object $job the queue job object.
+	 * @param array $data Data that's needed for the job.
+	 */
 	function delrepost($job, $data) {
 		
 		//Grab all the followers for this user
@@ -88,7 +104,9 @@ class UserAction {
 
 	
 	/**
-	 * Let everyone know you posted something new
+	 * Let's everyone know you posted something new to your followers
+	 * @param object $job the queue job object.
+	 * @param array $data Data that's needed for the job.
 	 */
 	function newpost($job, $data) {
 		//Grab all the followers for this user

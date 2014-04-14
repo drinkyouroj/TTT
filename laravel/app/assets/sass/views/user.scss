@@ -1,0 +1,256 @@
+/**
+ * 	These styles are for the user login, signup 
+ */
+ 
+ /*Shared*/
+ a {
+ 	cursor:pointer;
+ }
+ 
+ .content {
+ 	margin-bottom:50px;
+ }
+ 
+.login-container h2, .signup-container h2, .forgot-container h2 {
+	font-family:'bebas';
+	letter-spacing:2px;
+}
+
+fieldset {
+	width:100%;
+}
+
+label {
+	display:none;
+}
+
+label.checkbox {
+	padding-left:0px;
+}
+
+label.checkbox input {
+	margin-left:0px !important;
+}
+
+.login-container fieldset, .signup-container fieldset {
+	border-top:3px solid #000;
+}
+
+.login-container input, .signup-container input {
+	margin-top:10px;
+}
+
+.login-container input[type=checkbox], .signup-container input[type=checkbox] {
+	margin-top:4px !important;
+	margin-right:5px;
+}
+
+.signup-container button, .signup-container aside, .login-container aside   {
+	margin-top:20px;
+}
+
+.login-container label, .signup-container label {
+	font-family: 'Montserrat', sans-serif;
+	text-transform:uppercase;
+	font-weight:400;
+}
+
+.alert-error {
+	color:#DF3B3C;
+	padding-left:0px;
+	webkit-box-shadow: none;
+	box-shadow: none;
+	margin-bottom:0px !important;
+}
+
+.alert-yes {
+	color:#22b274;
+	padding-left:0px;
+	webkit-box-shadow: none;
+	box-shadow: none;
+	margin-bottom:0px !important;
+}
+
+button {
+	height:45px;
+	background:#ddd;
+	border-radius: 5px;
+  	-webkit-border-radius: 5px;
+  	-moz-border-radius: 5px;
+  	border-radius: 5px;
+  	
+  	font-family: 'Montserrat', sans-serif;
+  	font-size:16px;
+  	text-transform:uppercase;
+  	clear:both;
+}
+
+/*LOGIN*/
+.login-container label, .login-container input  , .login-container button, .login-container div, .login-container p, .login-container h2, .login-container aside {
+	clear:both !important;
+}
+.login-form {
+	width:100%;
+}
+
+.login-container {
+	float:left;
+	background-color:#eeece6;
+	padding-bottom:70px;
+}
+
+.login-container .login-form {}
+
+.login-container .login-disclaimer {
+	font-family:'bebas', sans-serif;
+	letter-spacing:1px;
+	padding-top:10px;
+	border-top:1px solid #ddd;
+}
+
+.login-form input[type="text"], .login-form input[type="password"], .login-form input[type="search"], .login-form isindex {
+	-webkit-appearance: textfield;
+	padding: 1px;
+	background-color: white;
+	border: 0px;
+	height:40px;
+	border:solid 3px #ddd;
+	font-family: 'Montserrat', sans-serif;
+	text-transform:none;
+	padding-left:5px;
+	padding-right:20px;
+}
+
+.login-form .forgot-pw {
+	margin-top:10px;
+}
+
+.login-form .forgot-pw a {
+	font-family: 'Montserrat', sans-serif;
+	text-transform:uppercase;
+	font-size:12px;
+}
+
+/*SIGN UP*/
+
+.signup-container label , .signup-container input  , .signup-container button, .signup-container div, .signup-container p, .signup-container h2, .signup-container aside {
+	clear:both !important;
+}
+
+.signup-container {
+	float:left;
+	background-color:#fff;
+}
+
+.signup-container .signup-form {
+	width:100%;
+}
+
+.signup-container .explanation {
+	font-family:'bebas', sans-serif;
+	letter-spacing:1px;
+	padding-top:10px;
+	border-top:1px solid #ddd;
+}
+
+.email-please {
+	margin-top:5px;
+	background-color:#f1f1f1;
+	padding:10px 0px 10px 10px;
+}
+
+.email-please a.email-show {
+	font-family: 'Montserrat', sans-serif;
+	text-transform:uppercase;
+	font-size:12px;
+	display:block;
+}
+
+.signup-container input, .signup-container input[type="password"], .signup-container input[type="search"], .signup-container isindex {
+	-webkit-appearance: textfield;
+	padding: 1px;
+	background-color: white;
+	border: 0px;
+	height:40px;
+	border:solid 3px #ddd;
+	font-family: 'Montserrat', sans-serif;
+	padding-left:5px;
+	padding-right:20px;
+}
+
+/*FORGOT*/
+.forgot-container {
+	text-align:center;
+}
+
+.forgot-container input[type="text"]{
+	-webkit-appearance: textfield;
+	padding: 1px;
+	background-color: white;
+	border: 0px;
+	height:45px;
+	margin-right:10px;
+	border:solid 3px #ddd;
+	font-family: 'Montserrat', sans-serif;
+	padding-left:5px;
+	padding-right:20px;
+}
+
+.forgot-container .btn{
+	height:45px;
+	background:#ddd;
+	border-radius: 5px;
+  	-webkit-border-radius: 5px;
+  	-moz-border-radius: 5px;
+  	border-radius: 5px;
+  	border-bottom:3px solid #bbb;
+  	border-right:0px; 
+  	border-left:0px;
+  	border-top:0px;
+  	
+  	font-family: 'Montserrat', sans-serif;
+  	font-size:16px;
+  	text-transform:uppercase;
+  	clear:both;
+}
+
+
+/***************************************
+	Media Queries
+*/
+/*Tiny*/
+@media (max-width: 479px) {
+	.signup-container, .login-container {
+		width:100%;
+	}
+}
+
+/*Small*/
+@media (min-width: 480px) and (max-width: 767px) {
+	.signup-container, .login-container {
+		width:100%;
+	}
+	
+	fieldset {
+		padding-top:30px;
+	}
+	
+	fieldset, aside {
+		padding-left:32%;
+	}
+	
+}
+
+/*Normal*/
+@media (min-width: 768px) and (max-width: 991px) {
+}
+
+/*Bigger*/
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+/*Huge*/
+@media (min-width: 1200px) {
+
+}  

@@ -1,13 +1,15 @@
 <?php
+/**
+ * Moderator Controller
+ * This Class holds functions for moderators.  It currently has only the Async functions.
+ * Note that this function is protected via a router based filter.
+ */
 class ModController extends Controller {
 	
 	public function __construct() {
 		
 	}
 	
-	public function getIndex() {
-		
-	}
 	
 	public function getDelPost() {
 		$id = Request::segment(3);

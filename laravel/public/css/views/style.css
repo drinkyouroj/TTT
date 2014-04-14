@@ -94,7 +94,7 @@ button.btn:hover {
 	
 }
 .menu-wrapper .navbar .container ul.main-nav li {
-	text-align: middle;
+	vertical-align: middle;
 	height: 22px;
 }
 .menu-wrapper .navbar .container ul.main-nav li a{
@@ -109,7 +109,7 @@ button.btn:hover {
 	line-height: 22px;
 	background-repeat: no-repeat;
 	background-position: top left;
-	text-align: top;
+	vertical-align: top;
 	cursor:pointer;
 }
 
@@ -143,7 +143,6 @@ li.notifications-parent {
 	padding: 0 10px 0 25px !important;
 	height: 22px;
 	line-height: 22px;
-	text-align: top;
 	background-repeat: no-repeat;
 	background-position: top left;
 	background-image: url('../../img/icons/notifications3.png');
@@ -159,8 +158,6 @@ li.notifications-parent.active-notifications {
 
 li.notifications-parent.active-notifications a {
 	color:#32b1c6 !important;
-}
-	
 }
 
 li.notifications-parent>a {
@@ -279,9 +276,7 @@ ul.notifications li ul li a{
 	height: 200px;
 	background-repeat: no-repeat;
 	background-position: center top;
-	background-size: fit;
 	background-image: url('../../img/global/logo-main.png');
-	/*Switch out this image with another one once we reach a breakpoint*/
 }
 
 .header-wrapper .banner h1 span{
@@ -495,9 +490,8 @@ margin-top:20px;
 	line-height: 22px;
 	background-repeat: no-repeat;
 	background-position: bottom left;
-	text-align: top;
+	vertical-align: top;
 	cursor:pointer;
-	
 	color:#fff;
 }
 

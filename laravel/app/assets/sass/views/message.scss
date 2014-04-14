@@ -1,0 +1,260 @@
+.inbox-container {
+	background:#fff;
+	border-radius: 3px;
+	margin-top:20px;
+	margin-bottom:50px;
+}
+
+.inbox {
+	padding: 20px 0;
+	margin: 00px 0 50px 0;
+}
+
+.inbox h2 {
+	font-family: Montserrat, sans-serif;
+	text-transform:uppercase;
+}
+
+.inbox h2.newest-threads {
+	font-family: bebas, sans-serif;
+	font-size:18px;
+	text-transform:uppercase;
+	border-bottom:solid 2px #333;
+}
+
+.inbox .new-message {
+	height: 28px;
+	float:right;
+	font-family: 'bebas', sans-serif;
+	font-size:18px;
+	padding-top: 5px;
+	padding-left: 35px;
+	color:#000;
+	
+	background-image: url('../../img/icons/message-colored.png');
+	background-position: top left;
+	background-repeat: no-repeat;
+}
+
+.inbox .new-message:hover {
+	background-position: bottom left;
+	color:#444;
+}
+
+.messages {
+	list-style:none;
+	padding:0px;
+}
+
+.messages .message {
+	padding: 10px 10px;
+}
+
+.messages .message:nth-child(even) {
+	background:#f9f9f9;
+}
+
+.messages .message .the-excerpt{
+	font-size:16px;
+}
+
+.messages .message .sent-to, .messages .message .sent-from {
+	font-family: Montserrat, sans-serif;
+	font-size:11px;
+	color:#aaa;
+}  
+
+.messages .message .sent-to a, .messages .message .sent-from a {
+font-size:13px;
+}
+
+.messages .message .btn-primary {
+	float:right;
+	width:50px;
+	background-color:#000 !important;
+	background-image:none !important;
+	border-bottom:0px !important;
+	border-top: 0px !important;
+	border-right: 0px !important;
+	border-left: 0px !important;
+	font-family:'bebas';
+	color:#fff;
+	font-weight:100;
+	letter-spacing:1px;
+	
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px; 
+	border-radius: 4px; 
+}
+
+/*Send Message*/
+
+h2.message-title {
+font-family:'bebas';
+text-align:center;
+margin-bottom:0px;
+font-size:24px;
+}
+h2.message-title a {
+color:#32b1c6;
+font-size:30px;
+text-decoration:underline overline;
+}
+h2.message-title a:hover {
+color:#aaa;
+}
+
+.message-field {
+	margin-top:50px;
+}
+
+.message-list {
+	padding-top:50px;
+	padding-bottom:50px;
+	background-color:#eee;
+}
+
+
+
+h2.write-title {
+	font-family: Montserrat, sans-serif;
+	text-transform:uppercase;
+}
+
+.message-field .form-group input[type='submit'] {
+	float:right;
+	background-color:#333 !important;
+	background-image:none !important;
+	padding:10px 20px;
+	border-bottom:solid 4px #000 !important;
+	border-top: 0px !important;
+	border-right: 0px !important;
+	border-left: 0px !important;
+	font-family:'bebas';
+	color:#fff;
+	font-weight:100;
+	letter-spacing:1px;
+	
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px; 
+	border-radius: 4px; 
+}
+
+.write-message .form-group input[type='submit']:hover {
+	background-color:#000 !important;
+	color:#eee !important;
+}
+
+.write-message .show-condensed {
+	width: 100%;
+	cursor:pointer;
+	text-align: center;
+	background-color:#333 !important;
+	background-image:none !important;
+	margin-top:20px;
+	margin-bottom:20px;
+	padding:10px 20px;
+	border-bottom:solid 5px #000 !important;
+	border-top: 0px !important;
+	border-right: 0px !important;
+	border-left: 0px !important;
+	font-family:'bebas';
+	color:#fff;
+	font-size:16px;
+	letter-spacing:2px;
+	font-weight:100;
+	
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px; 
+	border-radius: 4px; 
+}
+.write-message .show-condensed:hover {
+	color: #eee;
+	background-color:#000 !important;
+}
+.write-message .condensed-section {
+	display:none;
+	margin-top:20px;
+}
+
+.write-message .message-container {
+	width:100%;
+	margin-bottom:10px;
+}
+
+.write-message .message {
+	width:70%;
+	clear:both;
+	padding:10px 10px;
+	background-color:#fff;
+}
+
+.write-message .message-from {
+	font-family: Montserrat, sans-serif;
+	text-transform:uppercase;
+	font-size:13px;
+	padding-bottom:10px;
+	background-repeat:no-repeat;
+	background-position:left bottom;
+}
+
+.write-message .the-content {
+	font-size:16px;
+}
+
+.write-message span.date {
+	font-size:13px;
+	color:#aaa;
+}
+
+.write-message .message-container.other .message {
+	background-color:#eeece6;
+}
+
+.write-message .message-container.other .message-from {
+	background-image: url('../../img/global/point-down-beige.png');
+}
+
+.write-message .message-container.me .message {
+	float:right;
+}
+
+.write-message .message-container.me .message-from {
+	text-align:right;
+	background-image: url('../../img/global/point-down-r.png') !important;
+	background-position:right bottom;
+}
+
+.write-message .form-group label.control-label {
+	font-family:'bebas';
+	font-size:14px;
+	letter-spacing:2px;
+}
+
+.write-message .form-group textarea.form-control {
+	font-family: 'EB Garamond';
+	padding: 5px;
+	background: #eeece6;
+	color: #333;
+	border: 2px solid #000;
+	border-radius: 0;
+}
+
+.write-message .form-group input[type="submit"] {
+	float:right;
+	background-color:#333 !important;
+	background-image:none !important;
+	border-bottom:solid 4px #000 !important;
+	border-top: 0px !important;
+	border-right: 0px !important;
+	border-left: 0px !important;
+	font-family:'bebas';
+	color:#fff;
+	font-weight:100;
+	letter-spacing:1px;
+	padding:5px 10px;
+	
+	-webkit-border-radius: 4px; 
+	-moz-border-radius: 4px; 
+	border-radius: 4px; 
+}

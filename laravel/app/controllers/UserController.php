@@ -12,11 +12,11 @@
 
 class UserController extends BaseController {
 
-	/**Signup*/
+	/**
+	 * Signup
+	 */
 	public function getSignup(){
-		
-		$this->getCreate();
-		
+		return View::make('user/signup');
 	}
 
     /**
@@ -121,18 +121,21 @@ class UserController extends BaseController {
         }
     }
 		
-		//Checks to see if a user exists and returns a true or false.
-		public function getUserCheck() {
-			if(User::where('username', Request::get('username'))->count()) {
-				$val = false;
-			} else {
-				$val = true;
-			}
-			return Response::json(
-				$val,
-				200//response is OK!
-			);
+	/**
+	 * Async Username checker
+	 * 	This is used forthe signup process. 
+	 */
+	public function getUserCheck() {
+		if(User::where('username', Request::get('username'))->count()) {
+			$val = false;
+		} else {
+			$val = true;
 		}
+		return Response::json(
+			$val,
+			200//response is OK!
+		);
+	}
 
     /**
      * Attempt to do login
@@ -422,7 +425,9 @@ class UserController extends BaseController {
         return Redirect::to('/');
     }
 
-
+	/**
+	 * This is the route for banned users trying to login.  They're given an email address where they can explain themselves.
+	 */
 	public function getBanned()
 	{
 		return View::make('user.banned');
