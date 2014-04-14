@@ -35,9 +35,9 @@
 		</h4>
 		
 		@if(Auth::check())
-			{? $my_id = Auth::user()->id ?}
+			{? $my_id = Auth::user()->id; ?}
 		@else
-			{? $my_id = 0 ?}
+			{? $my_id = false; ?}
 		@endif
 		
 		@if(!$is_following && $post->user->id != $my_id)
