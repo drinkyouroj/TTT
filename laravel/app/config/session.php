@@ -29,7 +29,9 @@ return array(
 	|
 	*/
 
-	'lifetime' => 1440,
+	'lifetime' => 0,
+
+
 
 	/*
 	|--------------------------------------------------------------------------
@@ -122,6 +124,6 @@ return array(
 
 	'domain' => null,
 	
-	'expire_on_close'=>false,
+	'expire_on_close'=>true,
 
 );

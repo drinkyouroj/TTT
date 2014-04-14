@@ -105,7 +105,7 @@ Route::post('search', 'SearchController@postResult');
 
 
 //Protected Profile routes
-Route::group(array('prefix'=> 'profile', 'before'=> 'auth|profile'), function() 
+Route::group(array('prefix'=> 'profile', 'before'=> 'profile|auth'), function() 
 {
 	Route::get( 'editpost/{id}', 'PostController@getPostForm');
 	Route::get( 'newpost', 'PostController@getPostForm');
@@ -136,10 +136,10 @@ Route::group(array('prefix'=> 'profile', 'before'=> 'auth|profile'), function()
 });
 
 //Not protected profile routes
-Route::group(array('prefix'=> 'profile', 'before'=>'profile'), function() {
+Route::group(array('before'=>'profile'), function() {
 	//General Posts
-	Route::get( '/{alias}', 'ProfileController@getProfile');
-	Route::get( '/', 'ProfileController@getProfile');
+	Route::get( 'profile/{alias}', 'ProfileController@getProfile');
+	Route::get( 'profile', 'ProfileController@getProfile');
 	
 });
 
