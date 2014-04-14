@@ -8,7 +8,7 @@
 @section('js')
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/post.js"></script>
 	
-	@if( is_object($user))
+	@if( isset($user) && is_object($user))
 		
 		@if($user->hasRole('Admin'))
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/admin.js"></script>
@@ -60,7 +60,7 @@
 		@endif
 	</hgroup>
 	
-	@if( isset($user))
+	@if( isset($user)&& is_object($user))
 		<div class="admin">
 			@if($user->hasRole('Admin'))
 				{{--Featured--}}
