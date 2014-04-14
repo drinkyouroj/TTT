@@ -91,48 +91,6 @@ Route::filter('mod', function()
 
 //we're using the route filter to make sure that the View compser only addes the needed profile information to the "profile" views
 Route::filter('profile', function() {
-	View::composer('*', function($view) {
-		dd('test2');
-			$alias = Request::segment(2);
-			
-			//Unfortunately view composer currently sucks at things so this is a crappy work around.
-			$not_segment = array(
-						Session::get('username'),
-						'newpost',
-						'editpost',
-						'newmessage',
-						'replymessage',
-						'submitpost',
-						'comment',
-						'commentform',
-						'messages',
-						'submitmessage',
-						'notifications',
-						'myposts',
-						'settings'
-						);
-			
-			if($alias && !in_array($alias, $not_segment) ) {//This is for other users. not yourself
-				$user = User::where('username', '=', $alias)->first();
-				$user_id = $user->id;//set the profile user id for rest of the session.
-			} else {
-				//We're doing the user info loading this way to keep the view clean.
-				$user_id = Session::get('user_id');
-				
-				//This isn't most ideal, but let's just place the banned detector here
-				if(User::where('id', $user_id)->where('banned', true)->count()) {
-					//this guy's session will terminate right as he/she clicks on any profile action.
-					Confide::logout();
-					return Redirect::to('/banned');
-				}
-			}
-			
-			$followers = Follow::where('user_id', '=', $user_id)->count();
-			$following = Follow::where('follower_id', '=', $user_id)->count();
-			
-			$view->with('followers', $followers)
-					->with('following', $following);
-		});
 	
 });
 
@@ -181,7 +139,6 @@ Route::filter('csrf', function()
  * This will need to be figured out later as the view composer is unable to figure out how to reach the layouts.master.blade.php file 
  */
 View::composer('*', function($view) {
-	dd('test');
 	//Below is the filters for the Categories.  Its stored here since we needed to iterate through to see what is or is not active.
 	//We can probably make this an admin function later.
 	$filters = array(
@@ -224,6 +181,52 @@ View::composer('*', function($view) {
 			 ->with('filters', $filters);
 		
 	}
+	
+	if(Request::segment(1) == 'profile') {
+		$alias = Request::segment(2);
+		
+		//Unfortunately view composer currently sucks at things so this is a crappy work around.
+		$not_segment = array(
+					Session::get('username'),
+					'newpost',
+					'editpost',
+					'newmessage',
+					'replymessage',
+					'submitpost',
+					'comment',
+					'commentform',
+					'messages',
+					'submitmessage',
+					'notifications',
+					'myposts',
+					'settings'
+					);
+		
+		if($alias && !in_array($alias, $not_segment) ) {//This is for other users. not yourself
+			$user = User::where('username', '=', $alias)->first();
+			$user_id = $user->id;//set the profile user id for rest of the session.
+		} else {
+			//We're doing the user info loading this way to keep the view clean.
+			$user_id = Session::get('user_id');
+			
+			//This isn't most ideal, but let's just place the banned detector here
+			if(User::where('id', $user_id)->where('banned', true)->count()) {
+				//this guy's session will terminate right as he/she clicks on any profile action.
+				Confide::logout();
+				return Redirect::to('/banned');
+			}
+		}
+		
+		$followers = Follow::where('user_id', '=', $user_id)->count();
+		$following = Follow::where('follower_id', '=', $user_id)->count();
+		
+		$view->with('followers', $followers)
+				->with('following', $following);
+		
+	}
+	
+	
+	
 });
 
 
