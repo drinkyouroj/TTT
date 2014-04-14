@@ -91,7 +91,6 @@ Route::filter('mod', function()
 
 //we're using the route filter to make sure that the View compser only addes the needed profile information to the "profile" views
 Route::filter('profile', function() {
-	dd('test');
 	View::composer('*', function($view) {
 		dd('test2');
 			$alias = Request::segment(2);
@@ -182,7 +181,7 @@ Route::filter('csrf', function()
  * This will need to be figured out later as the view composer is unable to figure out how to reach the layouts.master.blade.php file 
  */
 View::composer('*', function($view) {
-	
+	dd('test');
 	//Below is the filters for the Categories.  Its stored here since we needed to iterate through to see what is or is not active.
 	//We can probably make this an admin function later.
 	$filters = array(
