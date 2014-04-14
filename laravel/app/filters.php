@@ -1,6 +1,5 @@
 <?php
 
-
 App::missing(function($exception) {
 	return Response::view('missing',array(), 404);
 });
@@ -15,13 +14,15 @@ App::missing(function($exception) {
 | application. Here you may also register your custom route filters.
 |
 */
+Blade::extend(function($value) {
+	return preg_replace('/\{\?(.+)\?\}/', '<?php ${1} ?>', $value);
+});
+
 
 App::before(function($request)
 {
 	//The best piece of code for Blade ever.  Lets us break all kinds of rules!
-	Blade::extend(function($value) {
-    	return preg_replace('/\{\?(.+)\?\}/', '<?php ${1} ?>', $value);
-	});
+	
 	
 	
 	if (Auth::check() && !Session::has('user_id'))
