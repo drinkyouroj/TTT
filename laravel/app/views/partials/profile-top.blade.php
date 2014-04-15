@@ -9,7 +9,7 @@
 @else
 	{? $username = Session::get('username'); ?}
 	{? $user_id = Auth::user()->id; ?}
-	{? $date =  Session::get('join_date'); ?}
+	{? $date =  Auth::user()->created_at; ?}
 @endif
 
 <div class="col-md-12 profile-top">
