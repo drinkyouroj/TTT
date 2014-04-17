@@ -5,30 +5,7 @@
  */
 
 class SolariumHelper {
-	
-	//Post Cores are separate from the user cores.
-	static protected $postconfig = array(
-							'endpoint' => array(
-						        'localhost' => array(
-						            'host' => '127.0.0.1',
-						            'port' => 8080,
-						            'path' => '/solr/',
-						            'core' => 'collection1'
-						        )
-						    )
-						);
-
-	static protected $userconfig = array(
-							'endpoint' => array(
-						        'localhost' => array(
-						            'host' => '127.0.0.1',
-						            'port' => 8080,
-						            'path' => '/solr/',
-						            'core' => 'users'
-						        )
-						    )
-						);
-	
+		
 	function __constructor() {
 		
 	}
@@ -41,7 +18,7 @@ class SolariumHelper {
 		$query = self::queryBuilder($string);
 		
 		//Posts Search.
-		$post_client = new Solarium\Client(static::$postconfig);
+		$post_client = new Solarium\Client(Config::get('solr.post'));
 		
 		if($ajax) {
 			$post_fields = array('id','title','taglines','alias');
@@ -64,7 +41,7 @@ class SolariumHelper {
 		
 		
 		//User Search
-		$user_client = new Solarium\Client(static::$userconfig);
+		$user_client = new Solarium\Client(Config::get('solr.user'));
 		
 		if($ajax) {
 			$user_fields = array('id','username','bio');
@@ -116,7 +93,7 @@ class SolariumHelper {
 	 * In Solr, update is create and create is update
 	 */
 	public static function updatePost($post) {
-		$client = new Solarium\Client(static::$postconfig);
+		$client = new Solarium\Client(Config::get('solr.post'));
 		$update = $client->createUpdate();
 		
 		$new_post = $update->createDocument();
@@ -136,7 +113,7 @@ class SolariumHelper {
 	 * Delete the post.
 	 */
 	public static function deletePost($id) {
-		$client = new Solarium\Client(static::$postconfig);
+		$client = new Solarium\Client(Config::get('solr.post'));
 		$update = $client->createUpdate();
 		
 		$update->addDeleteById($id);
@@ -150,7 +127,7 @@ class SolariumHelper {
 	 * Update/Create User details within Solr
 	 */
 	public static function updateUser($user) {
-		$client = new Solarium\Client(static::$userconfig);
+		$client = new Solarium\Client(Config::get('solr.user'));
 		$update = $client->createUpdate();
 		
 		$new_user = $update->createDocument();

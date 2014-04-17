@@ -27,10 +27,18 @@ $app = new Illuminate\Foundation\Application;
 */
 
 $env = $app->detectEnvironment(array(
-
+	
+	//All them Rackspace servers
 	'dev' => array('twothousand14','ttt4gb'),
-	'testing' => array('rescue-hhvmtest','RESCUE-hhvmtest'),
+	//'testing' => array('rescue-hhvmtest','RESCUE-hhvmtest'),
+	
+	//Single server production
 	'prod' => array('ttt8gb'),
+	
+	//Multi server production. Note: You need Redis, Memcached, Mongo, Solr and SQL in a separate server.  Note, HHVMtest is a prototyping server for HHVM.
+	'web' => array('web*','rescue-hhvmtest','RESCUE-hhvmtest'),
+	
+	
 	'vagrant' => array('localhost:4567'),
 	'local' => array('localhost.localdomain'),
 
