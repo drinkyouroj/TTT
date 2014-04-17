@@ -36,8 +36,7 @@ $env = $app->detectEnvironment(array(
 	'prod' => array('ttt8gb'),
 	
 	//Multi server production. Note: You need Redis, Memcached, Mongo, Solr and SQL in a separate server.  Note, HHVMtest is a prototyping server for HHVM.
-	'web' => array('web*','rescue-hhvmtest','RESCUE-hhvmtest'),
-	
+	'web' => array('web*','hhvmtest'),
 	
 	'vagrant' => array('localhost:4567'),
 	'local' => array('localhost.localdomain'),
