@@ -12,6 +12,43 @@
 
 }
 
+/* global variables */
+
+// colors
+$bg-gray: #f4f4f6;
+$head-gray: #eeece6;
+$blue: #32b1c6;
+$black: #000;
+$dark-gray: #292929;
+$white: #fff;
+
+// fonts
+$bebas: 'bebas', sans-serif;
+$montserrat: 'Montserrat', sans-serif;
+$garamond: 'EB Garamond', serif;
+
+/* global @extend */
+
+// text properties
+.main-title {
+	font-family: $montserrat;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.body-text {
+	font-family: $garamond;
+	font-size: 18px;
+	line-height: 150%;
+}
+
+.d-title {
+	word-break: break-all;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+	font-weight: 700;
+	text-transform: uppercase;
+}
 
 
 /*Main Styles*/

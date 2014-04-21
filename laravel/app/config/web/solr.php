@@ -6,7 +6,7 @@ return array(
 		            'host' => '192.168.3.1',
 		            'port' => 8080,
 		            'path' => '/solr/',
-		            'core' => 'collection1'
+		            'core' => 'posts'
 		        )
 		    )
 		),
