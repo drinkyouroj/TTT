@@ -93,6 +93,7 @@ class SolrReindexCommand extends Command {
 			$update = $client->createUpdate();//recreate update.
 			$users = User::where('banned', 0)->get();
 			$i = 0;
+			$updateArray = array(); 
 			
 			foreach($users as $user) {
 				$new_user = $update->createDocument();
@@ -101,12 +102,13 @@ class SolrReindexCommand extends Command {
 				$new_user->username = $user->username;
 				$new_user->bio = $user->bio;
 				
-				$update->addDocuments(array($new_user));
-				$update->addCommit();
-				$client->update($update);
+				array_push($updateArray, $new_user);
 				$i++;
 				
 			}
+			$update->addDocuments($updateArray);
+			$update->addCommit();
+			$client->update($update);
 			$update->addOptimize(true, false, 5);
 			$client->update($update);
 			

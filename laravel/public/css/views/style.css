@@ -62,11 +62,11 @@ $garamond: 'EB Garamond', serif;
 	.tabs-a {
 		display: block;
 		width: 100% !important;
-		font-family: 'bebas';
+		font-family: $bebas;
 		letter-spacing: 1px;
 		color: $white;
-		cursor: pointer;
 		border-radius: 0px;
+		cursor: pointer;
 	}
 	.tabs-a-hover {
 		background-color:$blue;
