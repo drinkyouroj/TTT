@@ -44,6 +44,34 @@ $garamond: 'EB Garamond', serif;
 	color: $black;
 }
 
+.user-link {
+	font-family: $bebas;
+	letter-spacing: 1px;
+	text-decoration: overline underline;
+	color: $blue;
+}
+
+// ui elements
+.tabs-li {
+	list-style: none;
+	float: left;
+	padding: 0px 20px 2px 20px;
+	margin-right: 2px;
+	background-color: $dark-gray;
+}
+	.tabs-a {
+		display: block;
+		width: 100% !important;
+		font-family: 'bebas';
+		letter-spacing: 1px;
+		color: $white;
+		cursor: pointer;
+		border-radius: 0px;
+	}
+	.tabs-a-hover {
+		background-color:$blue;
+	}
+
 
 /*Main Styles*/
 body,html {

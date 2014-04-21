@@ -57,6 +57,7 @@ class SolrReindexCommand extends Command {
 			$update = $client->createUpdate();
 			$posts = Post::where('published', 1)->get();
 			$i = 0;
+			$updateArray = array(); 
 			foreach($posts as $post) {
 				$new_post = $update->createDocument();
 				$new_post->id = $post->id;
@@ -65,12 +66,14 @@ class SolrReindexCommand extends Command {
 				$new_post->taglines = array($post->tagline_1,$post->tagline_2,$post->tagline_3);
 				
 				$new_post->body = $post->body;
-				$update->addDocuments(array($new_post));
-				$update->addCommit();
-				$client->update($update);
+				array_push($updateArray, $new_post);
 				$i++;
 				$this->line($i .' posts have been reindexed');
 			}
+			
+			$update->addDocuments($updateArray);
+			$update->addCommit();
+			$client->update($update);
 			
 			$update->addOptimize(true, false, 5);
 			$client->update($update);
