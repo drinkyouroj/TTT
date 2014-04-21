@@ -1,7 +1,7 @@
 <?php
  
 use Illuminate\Console\Command;
-//use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 /**
  * This is used to reindex solr.
@@ -14,7 +14,8 @@ class SolrReindexCommand extends Command {
      * @var string
      */
     protected $name = 'solr:reindex';
- 
+
+	protected $timeout = null; 
     /**
      * The console command description.
      *
@@ -68,12 +69,13 @@ class SolrReindexCommand extends Command {
 				$update->addCommit();
 				$client->update($update);
 				$i++;
+				$this->line($i .' posts have been reindexed');
 			}
 			
 			$update->addOptimize(true, false, 5);
 			$client->update($update);
 			
-			$this->line($i .' posts have been reindexed');
+			
 	 	}
  
  		private function rebuildUser() {
@@ -100,6 +102,7 @@ class SolrReindexCommand extends Command {
 				$update->addCommit();
 				$client->update($update);
 				$i++;
+				
 			}
 			$update->addOptimize(true, false, 5);
 			$client->update($update);

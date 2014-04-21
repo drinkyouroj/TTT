@@ -34,20 +34,14 @@ $garamond: 'EB Garamond', serif;
 	font-family: $montserrat;
 	font-weight: 700;
 	text-transform: uppercase;
+	color: $black;
 }
 
 .body-text {
 	font-family: $garamond;
 	font-size: 18px;
 	line-height: 150%;
-}
-
-.d-title {
-	word-break: break-all;
-	font-family: 'Montserrat', sans-serif;
-	font-size: 18px;
-	font-weight: 700;
-	text-transform: uppercase;
+	color: $black;
 }
 
 
