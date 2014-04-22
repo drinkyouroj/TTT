@@ -5,7 +5,6 @@
 		@if ( is_array(Session::get('error')) )
 			{{ head(Session::get('error')) }}
 		@endif
-		
 	</div>
 	@endif
 	
@@ -34,7 +33,10 @@
         <label for="password_confirmation">{{{ Lang::get('confide::confide.password_confirmation') }}}</label>
         <input placeholder="{{{ Lang::get('confide::confide.password_confirmation') }}}" type="password" name="password_confirmation" id="password_confirmation" minlength="6" >
 		
-		{{Form::captcha()}}
+		<br/>
+		<input type="text" name="captcha" value="">
+		
+		<img src="{{Captcha::img()}}"/>
 		
         <div class="form-actions">
           <button type="submit" class="btn">{{{ Lang::get('confide::confide.signup.submit') }}}</button>

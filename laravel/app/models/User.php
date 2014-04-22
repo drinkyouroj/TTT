@@ -5,8 +5,9 @@
  
 use Zizaco\Confide\ConfideUser;
 use Zizaco\Entrust\HasRole;
- 	
-class User extends ConfideUser {
+use Illuminate\Auth\UserInterface;
+
+class User extends ConfideUser implements UserInterface {
 	
 	use HasRole;
 	

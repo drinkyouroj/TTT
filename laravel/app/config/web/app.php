@@ -144,6 +144,7 @@ return array(
 		'Zizaco\Entrust\EntrustServiceProvider',
 		'Way\Console\GuardLaravelServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider'
+		
 	),
 
 	/*

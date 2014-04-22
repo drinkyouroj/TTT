@@ -1,16 +1,14 @@
 <?php
-/*
-|--------------------------------------------------------------------------
-| Confide Controller Template
-|--------------------------------------------------------------------------
-|
-| This is the default Confide controller template for controlling user
-| authentication. Feel free to change to your needs.
-|
-*/
-
-
 class UserController extends BaseController {
+
+	public function __construct() {
+		
+	}
+
+	public function getPhrase() {
+		Log::info(Session::get('actual'));
+		return Session::get('actual');
+	}
 
 	/**
 	 * Signup
@@ -32,16 +30,16 @@ class UserController extends BaseController {
      * Stores new account and also validates the captcha
      */
     public function postIndex()
-    {
+    {	
     	//Captcha
 		$rules = array(
-	        'recaptcha_response_field' => 'required|recaptcha',
+	        'captcha' => 'required|captcha',
 	        'username' => 'required|min:3|max:15|unique:users'
 	    );
 		
 		$validation = Validator::make(Input::all(), $rules);
 		
-        if ($validation->fails())
+        if ($validation->fails() )
         {	
         	return Redirect::to('user/create')
                 ->withInput(Input::except('password'))

@@ -1,11 +1,15 @@
 <form method="POST" action="{{{ Confide::checkAction('UserController@do_login') ?: URL::to('/user/login') }}}" accept-charset="UTF-8">
 	
 	    @if ( Session::get('error') )
-            <div class="alert alert-error">{{{ Session::get('error') }}}</div>
+            <div class="alert alert-error">
+            	@foreach(Session::get('error') as $error)
+            		{{ $error }}
+            	@endforeach
+        	</div>
         @endif
 
         @if ( Session::get('notice') )
-            <div class="alert alert-yes">{{{ Session::get('notice') }}}</div>
+            <div class="alert alert-yes">{{ Session::get('notice') }}</div>
         @endif
         
     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">

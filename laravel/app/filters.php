@@ -15,21 +15,17 @@ App::missing(function($exception) {
 |
 */
 Blade::extend(function($value) {
+	//The best piece of code for Blade ever.  Lets us break all kinds of rules!
 	return preg_replace('/\{\?(.+)\?\}/', '<?php ${1} ?>', $value);
 });
 
 
 App::before(function($request)
-{
-	//The best piece of code for Blade ever.  Lets us break all kinds of rules!
-	
-	
-	
+{	
 	if (Auth::check() && !Session::has('user_id'))
 	{
 	   return Redirect::to('user/logout');
 	}
-	
 });
 
 
@@ -87,11 +83,6 @@ Route::filter('mod', function()
     {
         return Redirect::to('/');
     }
-});
-
-//we're using the route filter to make sure that the View compser only addes the needed profile information to the "profile" views
-Route::filter('profile', function() {
-	
 });
 
 
@@ -177,9 +168,10 @@ View::composer('*', function($view) {
 			 ->with('notifications_ids', $notification_ids);
 			 
 	} else {
+		//Guests
+		
 		$view->with('categories', Category::all())
 			 ->with('filters', $filters);
-		
 	}
 	
 	if(Request::segment(1) == 'profile') {
@@ -222,10 +214,7 @@ View::composer('*', function($view) {
 		
 		$view->with('followers', $followers)
 				->with('following', $following);
-		
 	}
-	
-	
 	
 });
 

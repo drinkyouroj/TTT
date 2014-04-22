@@ -229,7 +229,7 @@
 	</div>
 </div>
 
-	@if(Auth::guest())
+	@if(Auth::guest() && Request::segment(1) != 'user')
 		<div class="modal fade" id="guestSignup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">

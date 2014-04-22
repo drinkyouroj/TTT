@@ -16,9 +16,9 @@
 		"way/guard-laravel": "dev-master",
 		"way/generators": "dev-master",
 		"solarium/solarium": "dev-develop",
-		"pda/pheanstalk": "dev-master",
-		"greggilbert/recaptcha": "dev-master",
-		"jenssegers/mongodb": "*"
+		"pda/pheanstalk": "dev-master",		
+		"jenssegers/mongodb": "*",
+		"mews/captcha": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

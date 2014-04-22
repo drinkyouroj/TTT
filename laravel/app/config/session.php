@@ -16,7 +16,7 @@ return array(
 	|
 	*/
 
-	'driver' => 'native',
+	'driver' => 'redis',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -124,6 +124,6 @@ return array(
 
 	'domain' => null,
 	
-	'expire_on_close'=>true,
+	'expire_on_close'=>false,
 
 );
