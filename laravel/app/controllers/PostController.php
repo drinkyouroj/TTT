@@ -57,7 +57,6 @@ class PostController extends BaseController {
 				$reposted = Repost::where('user_id', $my_id)
 							->where('post_id', $post->id)
 							->count();
-						  
 			}
 			
 			//Add the fact that the post has been viewed if you're not the owner and you're logged in.
@@ -251,13 +250,18 @@ class PostController extends BaseController {
 				$myactivity->post_type = 'post';//new post!
 				$myactivity->save();
 				
+				//If this is the web server upload this content to the cdn.
+				if(App::environment() == 'web') {
+					$file = OpenCloud::upload('Images', public_path().'/uploads/final_images/'.$post->image, $post->image);
+				}
+				
 				//QUEUE
 				//Add to follower's notifications.
 				Queue::push('UserAction@newpost', 
 							array(
 								'post_id' => $post->id,
 								'user_id' => Auth::user()->id,
-								'username' => Auth::user()->username,
+								'username' => Auth::user()->username
 								)
 							);
 

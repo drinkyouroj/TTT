@@ -116,8 +116,10 @@ class UserAction {
 		
 		$post = Post::where('id', $data['post_id'])->first();
 		
+		
 		//process notification for each follower
 		foreach($followers as $follower) {
+			//TODO Get rid of the original notification code soon.
 			$noti = new Notification;
 			$noti->action_id = $data['user_id'];//notification from user
 			$noti->user_id = $follower->follower_id;
@@ -141,7 +143,6 @@ class UserAction {
 				$mot->save();
 			}
 			$mot->push('users', $data['username'],true);
-			
 			
 			
 			$activity = new Activity;
