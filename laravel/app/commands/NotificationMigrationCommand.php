@@ -48,8 +48,12 @@ class NotificationMigrationCommand extends Command {
 										->where('user_id', $notification->user_id)
 										->where('notification_type', $notification->notification_type);
 			
-			$user = User::where('id', $notification->action_id)->first();
-			$user_name = $user->username;
+			$user = User::where('id', $notification->action_id);
+			if($user->count()) {
+				$user_name = $user->first()->username;
+			} else {
+				$user_name = 'nobody';
+			}
 			unset($user);//saving memory
 			//If we can't find it, we need to make it.
 			if($motification->count() == 0) {
