@@ -48,8 +48,8 @@ class NotificationMigrationCommand extends Command {
 										->where('user_id', $notification->user_id)
 										->where('notification_type', $notification->notification_type);
 			
-			$user = User::where('id', $notification->action_id);
-			if($user->count()) {
+			$user = User::withTrashed()->where('id', $notification->action_id)->first();
+			if(is_object($user)) {
 				$user_name = $user->first()->username;
 			} else {
 				$user_name = 'nobody';

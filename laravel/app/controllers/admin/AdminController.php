@@ -238,11 +238,10 @@ class AdminController extends Controller {
 										->where('user_id', $notification->user_id)
 										->where('notification_type', $notification->notification_type);
 			
-			$user = User::where('id', $notification->action_id)->first();
+			$user = User::withTrashed()->where('id', $notification->action_id)->first();
 			if(is_object($user)) {
 				$user_name = $user->first()->username;
 			} else {
-				dd($notification->id);
 				$user_name = 'nobody';
 			}
 			unset($user);//saving memory
