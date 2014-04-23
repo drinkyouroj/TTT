@@ -2,7 +2,7 @@
 	
 	    @if( isset($error) )
             <div class="alert alert-error">
-            		{{ $error }}
+            		{? var_dump($error)  ?}
         	</div>
         @endif
 
