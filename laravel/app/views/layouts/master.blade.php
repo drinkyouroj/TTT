@@ -27,7 +27,7 @@
 			window.image_url = '/tt/uploads/final_images';//no trailing on the image url
 		@elseif(App::environment('web'))
 			window.site_url = '/';//has trailing slash
-			window.image_url = 'http://cdn.twothousandtimes.com';//no trailing on the image url
+			window.image_url = '{{ Config::get('app.imageurl') }}';//no trailing on the image url
 		@else
 			window.site_url = '/';//has trailing slash
 			window.image_url = '/uploads/final_images';//no trailing on the image url

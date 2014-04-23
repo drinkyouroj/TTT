@@ -26,7 +26,7 @@ return array(
 	*/
 
 	'url' => 'http://testing.twothousandtimes.com',//For now, we've taken over testing.
-	'imageurl' => 'http://cdn.twothousandtimes.com',
+	'imageurl' => 'http://image.twothousandtimes.com',
 	/*
 	|--------------------------------------------------------------------------
 	| Application Timezone
