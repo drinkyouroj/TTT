@@ -239,7 +239,11 @@ class AdminController extends Controller {
 										->where('notification_type', $notification->notification_type);
 			
 			$user = User::where('id', $notification->action_id)->first();
-			$user_name = $user->username;
+			if($user->count()) {
+				$user_name = $user->first()->username;
+			} else {
+				$user_name = 'nobody';
+			}
 			unset($user);//saving memory
 			//If we can't find it, we need to make it.
 			if($motification->count() == 0) {
