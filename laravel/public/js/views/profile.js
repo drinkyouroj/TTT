@@ -43,7 +43,7 @@ $(function() {
 						success: function(data) {
 							new_featured = data[0];
 							console.log(data);
-							new_featured['url'] = window.site_url;
+							new_featured['url'] = window.image_url;
 							var source = $('#featured-template').html();
 							var template = Handlebars.compile(source);
 							var html = template(new_featured);
@@ -84,7 +84,7 @@ function load_more() {
 				console.log(data);
 			} else {
 				$.each(data,function(index, item) {
-					item['url'] = window.site_url;
+					item['url'] = window.image_url;
 					var source = $('#activity-template').html();
 					var template = Handlebars.compile(source);
 					var html = template(item);

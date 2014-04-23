@@ -33,7 +33,7 @@ function load_more() {
 				
 			} else {
 				$.each(data,function(index, item) {
-					item['url'] = window.site_url;
+					item['url'] = window.image_url;
 					var source = $('#featured-template').html();
 					var template = Handlebars.compile(source);
 					var html = template(item);

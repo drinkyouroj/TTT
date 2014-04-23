@@ -23,7 +23,7 @@
 	<section>
 		<div class="the-image">
 			<a href="{{#url}}{{/url}}posts/{{post.alias}}" 
-				style="background-image: url('{{#url}}{{/url}}uploads/final_images/{{post.image}}')">
+				style="background-image: url('{{#url}}{{/url}}/{{post.image}}')">
 			</a>
 			{{#ifTopText height post.body }}
 			<div class="the-featured-content">

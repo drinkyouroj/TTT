@@ -23,11 +23,15 @@
     <link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
 	<script>
 		@if(App::environment('local'))
-		window.site_url = '/tt/';//has trailing slash
+			window.site_url = '/tt/';//has trailing slash
+			window.image_url = '/tt/uploads/final_images';//no trailing on the image url
+		@elseif(App::environment('web'))
+			window.site_url = '/';//has trailing slash
+			window.image_url = 'http://cdn.twothousandtimes.com';//no trailing on the image url
 		@else
-		window.site_url = '/';//has trailing slash
+			window.site_url = '/';//has trailing slash
+			window.image_url = '/uploads/final_images';//no trailing on the image url
 		@endif
-		
 	</script>
 	
 	@if(Auth::check())

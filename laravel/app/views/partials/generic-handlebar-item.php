@@ -7,7 +7,7 @@
 		</header>
 		<section>
 			<div class="the-image">
-				<a href="{{url}}posts/{{alias}}" style="background-image: url('{{url}}uploads/final_images/{{image}}');">
+				<a href="{{url}}posts/{{alias}}" style="background-image: url('{{url}}/{{image}}');">
 				
 				</a>
 			</div>

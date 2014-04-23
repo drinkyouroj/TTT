@@ -27,13 +27,6 @@ Handlebars.registerHelper('ifTopText', function(height, body, options) {
 Handlebars.registerHelper('ifBottomText', function(height, body, options) {
 	if(height >= 2) {
 		return options.fn(this);//true
-	/*
-	  if(body.length < 500 ) {
-	  	return options.inverse(this);//false
-	  } else if(body.length >= 500) {
-	  	return options.fn(this);//true
-	  }
-  */
 	}
   return options.inverse(this);//false
 });
@@ -66,7 +59,7 @@ Handlebars.registerHelper("limitbody", function(body, width) {
 });
 
 Handlebars.registerHelper('url', function() {
-  return window.site_url;
+  return window.image_url;
 });
 
 
