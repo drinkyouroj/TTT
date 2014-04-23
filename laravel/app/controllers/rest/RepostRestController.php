@@ -36,15 +36,15 @@ class RepostRestController extends \BaseController {
 				$repost->post_id = Request::segment(3);
 				$repost->user_id = Auth::user()->id;//Gotta be from you.
 				$repost->save();
-				
-				
-				$notification_exists = Notification::where('post_id', '=', Request::segment(3))
-									->where('action_id', '=', Auth::user()->id)
-									->count();
 									
 				$post = Post::where('id','=', Request::segment(3))
 							->first();
 				
+				//TODO get rid of the original notifcation code soon.
+				$notification_exists = Notification::where('post_id', '=', Request::segment(3))
+									->where('action_id', '=', Auth::user()->id)
+									->count();
+								
 				if(!$notification_exists){	
 					//Add to the OP's notification
 					$notification = new Notification;

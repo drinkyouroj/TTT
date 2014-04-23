@@ -20,6 +20,7 @@ class UserAction {
 		
 		//process notification for each follower
 		foreach($followers as $follower) {
+			//TODO get rid of the original notifcation code soon.
 			$noti = new Notification;
 			$noti->action_id = $data['user_id'];//notification from user
 			$noti->user_id = $follower->follower_id;

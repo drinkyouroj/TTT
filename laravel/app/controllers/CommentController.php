@@ -61,6 +61,7 @@ class CommentController extends BaseController {
 				$orig_comment = Comment::where('id', $comment->parent_id)->first();
 				//Gotta make sure to not notify you replying to you.
 				if($orig_comment->user_id != Auth::user()->id) {
+					//TODO get rid of the original notifcation code soon.
 					$reply = new Notification;
 					$reply->post_id = $post_id;
 					$reply->user_id = $orig_comment->user_id;

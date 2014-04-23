@@ -53,7 +53,7 @@ class FollowRestController extends \BaseController {
 				$follow->follower_id = Auth::user()->id;//Gotta be from you.
 				$follow->save();
 				
-				//Place a notification to someone
+				//TODO get rid of the original notifcation code soon.
 				$notification = new Notification;
 				$notification->post_id = 0;//zero means that this is a system level notification
 				$notification->user_id = Request::segment(3);
@@ -61,7 +61,7 @@ class FollowRestController extends \BaseController {
 				$notification->notification_type = 'follow';
 				$notification->save();
 				
-				//Below is an upsert function, so it'll create a 
+				//Below is an insert function.  Follows require a new row regardless 
 				$motification = new Motification;
 				$motification->post_id = 0;
 				$motification->noticed = 0;
