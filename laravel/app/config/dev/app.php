@@ -26,7 +26,7 @@ return array(
 	*/
 
 	'url' => 'http://dev.twothousandtimes.com',
-
+	'imageurl' => 'http://dev.twothousandtimes.com/uploads/final_images',
 	/*
 	|--------------------------------------------------------------------------
 	| Application Timezone

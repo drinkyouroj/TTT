@@ -72,7 +72,7 @@
 		</header>
 		<section>
 			<div class="the-image">
-				<a href="{{URL::to('posts/'.$act->post->alias)}}" style="background-image:url('{{Config::get('app.url')}}/uploads/final_images/{{$act->post->image}}');"> 
+				<a href="{{URL::to('posts/'.$act->post->alias)}}" style="background-image:url('{{Config::get('app.imageurl')}}/{{$act->post->image}}');"> 
 				
 				</a>
 			</div>

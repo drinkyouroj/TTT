@@ -9,7 +9,7 @@
 		<section>
 			@if($post->image)
 			<div class="the-image">
-				<a href="{{ URL::to('posts/'.$post->alias) }}" style="background-image: url('{{Config::get('app.url')}}/uploads/final_images/{{$post->image}}');">
+				<a href="{{ URL::to('posts/'.$post->alias) }}" style="background-image: url('{{Config::get('app.imageurl')}}/{{$post->image}}');">
 				
 				</a>
 			</div>
