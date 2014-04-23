@@ -12,3 +12,4 @@
 */
 
 Artisan::add(new SolrReindexCommand);
+Artisan::add(new NotificationMigrationCommand);

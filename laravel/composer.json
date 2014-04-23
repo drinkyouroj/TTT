@@ -18,7 +18,8 @@
 		"solarium/solarium": "dev-develop",
 		"pda/pheanstalk": "dev-master",		
 		"jenssegers/mongodb": "*",
-		"mews/captcha": "dev-master"
+		"mews/captcha": "dev-master",
+		"thomaswelton/laravel-rackspace-opencloud": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

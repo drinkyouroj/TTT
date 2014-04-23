@@ -110,7 +110,7 @@ class CommentController extends BaseController {
 			if(Request::get('reply_id')) {
 				$comment->parent_id = Request::get('reply_id');
 			}
-			$comment->body = Request::get('body');
+			$comment->body = strip_tags(Request::get('body'));
 			return $comment;
 		}
 		

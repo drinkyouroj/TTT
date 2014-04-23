@@ -217,6 +217,7 @@ class AdminController extends Controller {
 		return'Good'; 
 	}
 	
+	//Below exists, but has been made into an artisan command.
 	public function getResetNotifications($page = 0) {
 		$amount = 100;
 		//rather not do this, but gotta do it.
@@ -247,7 +248,6 @@ class AdminController extends Controller {
 				//Default values
 				$post_id = 0;
 				$post_alias = $post_title = '';
-				$post_user_id = 1;
 				
 				if($notification->notification_type != 'follow') {
 					$post_id = $notification->post_id;
@@ -256,21 +256,14 @@ class AdminController extends Controller {
 						$post_title = $post->title;
 						$post_alias = $post->alias;
 					}
-					if(isset($post->user)) {
-						$post_user_id = $post->user->id;
-					}
-					if($notification->notification_type == 'reply' ) {
-						$post_user_id = $notification->user_id;
-					}
 					unset($post);//gotta save memory
-				} 
-				
+				}
 				
 				$motification = new Motification;
 				$motification->post_id = $post_id;
 				$motification->post_title = $post_title;
 				$motification->post_alias = $post_alias;
-				$motification->user_id = $post_user_id;
+				$motification->user_id = $notification->user_id;//person receiving the comment
 				$motification->noticed = $notification->noticed;
 				$motification->comment_id = $notification->comment_id;
 				$motification->notification_type = $notification->notification_type;
@@ -280,11 +273,11 @@ class AdminController extends Controller {
 			} else {
 				//Otherwise, we just need to add to it.
 				if($motification->count() == 1) {
-					echo 'only 1'.'<br/>';
+					echo 'Adding to Existing Motification'.'<br/>';
 				} elseif($motification->count() > 1) {
-					echo $motification->count().' motifications <br/> ';
+					echo $motification->count().' motifications exists.  Error <br/> ';
 				}
-				$motification->push('users', $user_name,true);
+				$motification->push('users', $user_name, true);
 			}
 			unset($motification);
 		}

@@ -111,6 +111,7 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
 		'Jenssegers\Mongodb\MongodbServiceProvider',
 		'Mews\Captcha\CaptchaServiceProvider',
+		'Thomaswelton\LaravelRackspaceOpencloud\LaravelRackspaceOpencloudServiceProvider',
 	),
 
 	/*
@@ -179,6 +180,7 @@ return array(
 		'Entrust'    => 'Zizaco\Entrust\EntrustFacade',
 		'Moloquent'       => 'Jenssegers\Mongodb\Model',
 		'Captcha' => 'Mews\Captcha\Facades\Captcha',
+		'OpenCloud' => 'Thomaswelton\LaravelRackspaceOpencloud\Facades\OpenCloud',
 	),
 
 );

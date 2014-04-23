@@ -34,9 +34,9 @@
         <input placeholder="{{{ Lang::get('confide::confide.password_confirmation') }}}" type="password" name="password_confirmation" id="password_confirmation" minlength="6" >
 		
 		<br/>
-		<input type="text" name="captcha" value="">
-		
-		<img src="{{Captcha::img()}}"/>
+		<br/>
+		<img src="{{Captcha::img()}}"/><br/>
+		<input type="text" name="captcha" placeholder="Captcha">
 		
         <div class="form-actions">
           <button type="submit" class="btn">{{{ Lang::get('confide::confide.signup.submit') }}}</button>

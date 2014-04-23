@@ -48,8 +48,15 @@ class PhotoRestController extends \BaseController {
 			
 			//Let's grab the images (if no filter, it'll just return after grabbing the file.)
 			if($process == 'nofilter'){
+					
+				$file_path = public_path().'/uploads/final_images/'.$md5_title.'.jpg';
 				
-				file_put_contents(public_path().'/uploads/final_images/'.$md5_title.'.jpg' , fopen($url, 'r'));
+				file_put_contents($file_path , fopen($url, 'r'));
+				
+				//If this is the web server upload this content to the cdn.
+				if(App::environment() == 'web') {
+					$file = OpenCloud::upload('Images', $file_path, $md5_title.'.jpg');
+				}
 				
 				//just return the damn thing as no filter
 				return Response::json(
@@ -77,6 +84,10 @@ class PhotoRestController extends \BaseController {
 			
 			$insta->setOutput(public_path().'/uploads/final_images/'.$md5_title.'_'.$process.'.jpg');
 			$insta->process($process);
+			
+			if( App::environment() == 'web') {
+				$file = OpenCloud::upload('Images', public_path().'/uploads/final_images/'.$md5_title.'_'.$process.'.jpg', $md5_title.'_'.$process.'.jpg');
+			}
 			
 			return Response::json(
 				$md5_title.'_'.$process.'.jpg',//will need to send back the image name for the image.
