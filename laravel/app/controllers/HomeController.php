@@ -17,10 +17,17 @@ class HomeController extends BaseController {
 					->with('featured',$featured);
 	}
 	
+	//This is a little weird fix to the invitation system since it posts to the Index and needs to be redirected.
+	public function postIndex() 
+	{
+		return Redirect::to('featured');
+	}
+	
 	/**
 	 * The featured page autoload. 
 	 */
-	public function getRestFeatured() {
+	public function getRestFeatured() 
+	{
 		
 		//set the default if page is not passed to you.
 		if(Request::get('page')) {
@@ -48,10 +55,6 @@ class HomeController extends BaseController {
 		}
 	}
 	
-	//This is a little weird fix to the invitation system since it posts to the Index and needs to be redirected.
-	public function postIndex() {
-		return Redirect::to('featured');
-	}
 
 	/**
 	 * Static Pages below

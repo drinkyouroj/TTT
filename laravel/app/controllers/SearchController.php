@@ -1,6 +1,6 @@
 <?php
 /*
- * 
+ * The Search Controller!
  */
 class SearchController extends BaseController {
 	
@@ -18,21 +18,16 @@ class SearchController extends BaseController {
 		//Grab results from Solr
 		$results = SolariumHelper::searchSolr($term, false);//false = not for AJAX
 		
-		$ids = array();
-		foreach($results['posts'] as $result ) {
-			array_push($ids, $result->id);
-		}
+		$posts = $results['posts']->getData();
+		$users = $results['users']->getData();
 		
-		$user_ids = array();
-		foreach($results['users'] as $result ) {
-			array_push($user_ids, $result->id);
-		}
-		
-		$message = 'No Match Found';
+		$ids = self::flatten($posts['response']['docs']);
+		$user_ids = self::flatten($users['response']['docs']);
 		
 		if(count($ids) || count($user_ids)) {
 			
-			$users = $posts = $message;
+			//This is out here incase we don't get the right stuff.
+			$users = $posts = $message = 'No Match Found';
 			
 			//get from the result set.
 			if(count($ids)) {
@@ -56,6 +51,14 @@ class SearchController extends BaseController {
 		}
 	}
 	
+		/**
+		 * This will need to be placed in a more generalized location.
+		 */
+		private function flatten(array $array) {
+		    $return = array();
+		    array_walk_recursive($array, function($a) use (&$return) { $return[] = $a; });
+		    return $return;
+		}
 	
 	/**
 	 * Async listing for the top search bar
@@ -64,14 +67,12 @@ class SearchController extends BaseController {
 	public function getResult($term) {
 		$results = SolariumHelper::searchSolr($term, true);//returns title and taglines
 		
-		//Below kind of blows, but the data structure is as such.
-		$result_array = array();
+		//Below couple of lines kind of blows, but the data structure is as such.
 		$posts = $results['posts']->getData();
 		$users = $results['users']->getData();
-		$result_array['posts'] = $posts['response']['docs'];
-		$result_array['users'] = $users['response']['docs']; 
 		
-		if(count($result_array['posts']) || count($result_array['users'])){
+		if(count($posts['response']['docs']) || 
+		   count($users['response']['docs'])){
 			return Response::json(
 				$result_array,
 				200//response is OK!

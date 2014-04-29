@@ -104,7 +104,7 @@ class ProfileController extends BaseController {
 	}
 
 		/**
-		 * Profile Posts Autoloading.
+		 * Profile Posts Autoloading.  This might move elsewhere.
 		 */
 		public function getRestProfile($alias = false) {
 			

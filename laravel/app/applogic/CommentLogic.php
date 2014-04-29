@@ -1,12 +1,45 @@
-<?php
+<?php namespace AppLogic\CommentLogic;
+
+//Below will be replaced with Repositories when we have the chance.
+use Comment, Auth, Request, Session;
+
+
 /**
- * This had to be written as blade templates can't really render threaded shit very well.
- * since its a recursive.
+ * This class holds all the business logic for the Comment Controller
  */
-
-class ThreadedComments {
-
-	public static function echo_comments($comments) {
+class CommentLogic {
+	
+	/**
+	 * Fetches the inputs for the Comment object and preps it for saving.
+	 */
+	public function comment_object_input_filter()
+	{
+		$comment = new Comment;
+		$comment->user_id = Auth::user()->id;
+		$comment->post_id = Request::segment(3);
+		$comment->published = 1;//This sets the comment to be "deleted"  We did this so we don't lose the tree structure.
+		if(Request::get('reply_id')) {
+			$comment->parent_id = Request::get('reply_id');
+		}
+		$comment->body = strip_tags(Request::get('body'));
+		return $comment;
+	}
+	
+	/****
+	 * Below function is a future function for filtering the body
+	 * so that we can define links within the comments to profiles. (think of the @ on FB or Instagram)
+	 */ 
+	public function comment_body_filter($body)
+	{
+		
+	}
+	
+	/**
+	 * Echos out the comments in a threaded fashion.
+	 * @param object $comment Comment object attached to a post.
+	 * @return HTML returns a rendered view.  This needs to be separated at some point.
+	 */
+	public function echo_comments($comments) {
 		if(count($comments)) {
 			foreach($comments as $comment) {
 				
@@ -70,7 +103,5 @@ class ThreadedComments {
 			}
 		}
 	}
-
+	
 }
-
-?>

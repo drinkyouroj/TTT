@@ -3,7 +3,8 @@ class CategoryController extends BaseController {
 
 	private $paginate = 12;//Default Pagination amount for Category pulls.  Maybe make this as part of config later.
 
-	public function __construct() {
+	public function __construct() 
+	{
 		
 	}
 

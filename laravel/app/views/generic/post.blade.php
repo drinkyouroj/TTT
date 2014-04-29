@@ -216,7 +216,7 @@
 				
 				<ul class="comments-listing">
 					{{--This below is a helper function--}}
-					{? ThreadedComments::echo_comments($post->nochildcomments);?}
+					{? CommentLogic::echo_comments($post->nochildcomments);?}
 					{{--If you want to edit the formatting, go to: 'helpers/ThreadedComments.php'--}}
 				</ul>
 			</div>
