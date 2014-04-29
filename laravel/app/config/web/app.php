@@ -112,6 +112,16 @@ return array(
 		'Jenssegers\Mongodb\MongodbServiceProvider',
 		'Mews\Captcha\CaptchaServiceProvider',
 		'Thomaswelton\LaravelRackspaceOpencloud\LaravelRackspaceOpencloudServiceProvider',
+		
+		//Below are service providers for the business logic that's been separated for ease of use.
+		'AppLogic\CategoryLogic\CategoryLogicServiceProvider',
+		'AppLogic\FollowLogic\FollowLogicServiceProvider',
+		'AppLogic\NotificationLogic\NotificationLogicServiceProvider',
+		'AppLogic\PostLogic\PostLogicServiceProvider',
+		'AppLogic\CommentLogic\CommentLogicServiceProvider',
+		
+		//Helpers provide non-core services to the system (Solr, Instaham filters)
+		'Helper\SolariumHelper\SolariumHelperServiceProvider',
 	),
 
 	/*
