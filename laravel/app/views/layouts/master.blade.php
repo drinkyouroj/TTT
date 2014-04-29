@@ -21,6 +21,9 @@
     <!--Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
+    
+    
+    <!--{{App::environment()}}-->
 	<script>
 		@if(App::environment('local'))
 			window.site_url = '/tt/';//has trailing slash
