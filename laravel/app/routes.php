@@ -98,6 +98,7 @@ Route::group(array('prefix'=>'categories'),function() {
 
 //Posts routes
 Route::get( 'posts/{alias}', 'PostController@getPost');
+Route::get( 'posts', 'PostController@getIndex');//grabs a random post
 
 //Search routes
 Route::get('search/{term}', 'SearchController@getResult');//Might turn into a rest system later

@@ -112,6 +112,15 @@ return array(
 		'Jenssegers\Mongodb\MongodbServiceProvider',
 		'Mews\Captcha\CaptchaServiceProvider',
 		'Thomaswelton\LaravelRackspaceOpencloud\LaravelRackspaceOpencloudServiceProvider',
+		
+		//Below are service providers for the business logic that's been separated for ease of use.
+		'AppLogic\CategoryLogic\CategoryLogicServiceProvider',
+		'AppLogic\FollowLogic\FollowLogicServiceProvider',
+		'AppLogic\NotificationLogic\NotificationLogicServiceProvider',
+		'AppLogic\PostLogic\PostLogicServiceProvider',
+		
+		//Helpers
+		'Helper\SolariumHelper\SolariumHelperServiceProvider',
 	),
 
 	/*
@@ -130,7 +139,7 @@ return array(
 	/*
 	|--------------------------------------------------------------------------
 	| Class Aliases
-	|--------------------------------------------------------------------------
+	|-------------------------------------------------------------------------- 
 	|
 	| This array of class aliases will be registered when this application
 	| is started. However, feel free to register as many as you wish as

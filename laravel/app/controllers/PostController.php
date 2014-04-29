@@ -4,9 +4,10 @@ class PostController extends BaseController {
 	protected $softDelete = true;
 
 	public function getIndex() {
-		//maybe some function that takes you to a random post here?
+		$post = Post::orderBy(DB::raw('RAND()'))->first();
+		return self::getPost($post->alias);
 	}
-
+	
     /**
      * Get Post
      */
@@ -16,36 +17,21 @@ class PostController extends BaseController {
 		
 		if($post->count()) {
 			$post = $post->first();
-			//Do the post math here
-			$body_array = self::divide_text($post->body, 1500);//the length is currently set to 3000 chars
-			
+						
 			if(!isset($post->user->username)) {
-				$user_id = 1;//nobody
+				$user_id = 1;//1 is the loneliest number! (aka user nobody)
 				$post->user = User::find(1);
 			} else {
 				$user_id = $post->user->id;
 			}
 			
-			//DEFAULTS for not logged in
-			$my_id = false;
-			$is_follower = false;
-			$is_following = false;
-			$liked = false;
-			$favorited = false;
-			$reposted = false;
-			
 			//Logged in.
 			if(Auth::check()) {
 				$my_id = Auth::user()->id;//My user ID
 				
-				//TODO replace with the Follow helpers?
-				$is_following = Follow::where('follower_id', '=', $my_id)
-									->where('user_id', '=', $user_id)
-									->count();
-									
-				$is_follower = Follow::where('follower_id', '=', $user_id)
-									->where('user_id', '=', $my_id)
-									->count();
+				$is_following = FollowLogic::is_following($user_id);
+								
+				$is_follower = FollowLogic::is_follower($user_id);
 									
 				$liked = Like::where('user_id', $my_id)
 							->where('post_id', $post->id)
@@ -53,10 +39,19 @@ class PostController extends BaseController {
 						
 				$favorited = Favorite::where('user_id', $my_id)
 							->where('post_id', $post->id)
-							->count(); 
+							->count();
+
 				$reposted = Repost::where('user_id', $my_id)
 							->where('post_id', $post->id)
 							->count();
+			} else {
+				//DEFAULTS for not logged in users
+				$my_id = false;
+				$is_follower = false;
+				$is_following = false;
+				$liked = false;
+				$favorited = false;
+				$reposted = false;
 			}
 			
 			//Add the fact that the post has been viewed if you're not the owner and you're logged in.
@@ -78,7 +73,7 @@ class PostController extends BaseController {
 						->with('post', $post)
 						->with('is_following', $is_following)//you are following this profile
 						->with('is_follower', $is_follower)//This profile follows you.
-						->with('bodyarray', $body_array)
+						->with('bodyarray', PostLogic::divide_text($post->body, 1500))//This divides the body text into parts so that we can display them in multiple steps.
 						->with('liked', $liked)
 						->with('favorited', $favorited)
 						->with('reposted', $reposted)
@@ -88,63 +83,19 @@ class PostController extends BaseController {
 		}
     }
 	
-		/**
-		 * Divide the body text for display
-		 * @param int $longString The body text
-		 * @param int $maxLineLength The max length of each portion
-		 * @return array $arrayOutput The output is the divided text. 
-		 */
-		private function divide_text($longString, $maxLineLength)
-		{		
-			$arrayWords = explode(' ', $longString);
-			
-			// Auxiliar counters, foreach will use them
-			$currentLength = 0;
-			$index = 0;
-			$arrayOutput = array();
-			$arrayOutput[0]= '';
-			foreach($arrayWords as $k => $word)
-			{
-			    // +1 because the word will receive back the space in the end that it loses in explode()
-				$wordLength = strlen($word) + 1;
-			
-				if( ( $currentLength + $wordLength ) <= $maxLineLength ) {
-					
-				    $arrayOutput[$index] .= $word . ' ';
-		        	$currentLength += $wordLength;
-					
-			    } else {
-			    	
-			        $index += 1;
-					$c = false;
-					
-			        $currentLength = $wordLength;
-					
-					//Below is to counter this weird thing where it gets rid of a space.
-					if($c) {
-						$arrayOutput[$index] = $word;
-					} else {
-						$arrayOutput[$index] = $word.' ';
-					}
-					$c++;
-			    }
-			}
-			return $arrayOutput;
-		}
-
 
 	/**
 	 * Post form
 	 */
 	public function getPostForm($id=false) {
 		if($id) {
-			$post = Post::where('id', '=', $id)->first();
+			$post = Post::where('id',$id)->first();
 			return View::make('posts/edit_form')//Edit form only has to account for the text.  Not the entire listing.
 					->with('post', $post)
 					->with('fullscreen', true);
 		} else {
 			//Gotta put in a query here to see if the user submitted something in the last 10 minutes 
-			$post = Post::where('user_id','=', Auth::user()->id)
+			$post = Post::where('user_id', Auth::user()->id)
 					->orderBy('created_at', 'DESC')//latest first
 					->first();
 			
@@ -184,7 +135,7 @@ class PostController extends BaseController {
 					return Redirect::to('profile');
 				}
 				
-				$post = self::post_object_input_filter($new,$check_post);//Post object filter gets the input and puts it into the post.
+				$post = PostLogic::post_object_input_filter($new,$check_post);//Post object filter gets the input and puts it into the post.
 				$validator = $post->validate($post->toArray(),$check_post->id);//validation takes arrays.  Also if this is an update, it needs an id.
 			}
 			
@@ -192,7 +143,7 @@ class PostController extends BaseController {
 			//New Post.
 			$new = true;
 			//Checking to see if this is an new post being applied by a punk
-			$last_post = Post::where('user_id','=', Auth::user()->id)
+			$last_post = Post::where('user_id', Auth::user()->id)
 						->orderBy('created_at', 'DESC')//latest first
 						->first();
 			
@@ -204,7 +155,7 @@ class PostController extends BaseController {
 				//Nice try punk.  Maybe I should have this go somewhere more descriptive.
 				return Redirect::to('profile');
 			}
-			$post = self::post_object_input_filter($new);//Post object creates objects.
+			$post = PostLogic::post_object_input_filter($new);//Post object creates objects.
 			$validator = $post->validate($post->toArray(),false);//no
 		}
 		
@@ -214,7 +165,7 @@ class PostController extends BaseController {
 			if($new) {
 				$post->save();
 				
-				$user = User::where('id', Auth::user()->id)->first();
+				$user = Auth::user();
 							
 				//no featured for this user? set this new post as featured.
 				if($user->featured == false) {
@@ -236,16 +187,16 @@ class PostController extends BaseController {
 			
 				//Put it into the profile post table (my posts or what other people see as your activity)
 				$profile_post = new ProfilePost;
-				$profile_post->profile_id = Auth::user()->id;//post on your wall
-				$profile_post->user_id = Auth::user()->id;//post by me
+				$profile_post->profile_id = $user->id;//post on your wall
+				$profile_post->user_id = $user->id;//post by me
 				$profile_post->post_id = $post->id;
 				$profile_post->post_type = 'post';
 				$profile_post->save();
 				
 				//Also save this data to your own activity
 				$myactivity = new Activity;
-				$myactivity->user_id = Auth::user()->id;//who's profile is this going to?
-				$myactivity->action_id = Auth::user()->id;//Who's doing the action?
+				$myactivity->user_id = $user->id;//who's profile is this going to?
+				$myactivity->action_id = $user->id;//Who's doing the action?
 				$myactivity->post_id = $post->id;
 				$myactivity->post_type = 'post';//new post!
 				$myactivity->save();
@@ -260,8 +211,8 @@ class PostController extends BaseController {
 				Queue::push('UserAction@newpost', 
 							array(
 								'post_id' => $post->id,
-								'user_id' => Auth::user()->id,
-								'username' => Auth::user()->username
+								'user_id' => $user->id,
+								'username' => $user->username
 								)
 							);
 
@@ -287,32 +238,5 @@ class PostController extends BaseController {
 	}
 
 
-		/**
-		 * Input filtering.
-		 */
-		private function post_object_input_filter($new = false,$post = false)
-		{	
-			if($new) {
-				//Creates a new post
-				$post = new Post;
-				$post->user_id = Auth::user()->id;
-				
-				//Gotta make sure to make the alias only alunum.  Don't change alias on the update.  We don't want to have to track this change.
-				$post->alias = preg_replace('/[^A-Za-z0-9]/', '', Request::get('title')).'-'.str_random(5).'-'.date('m-d-Y');//makes alias.  Maybe it should exclude other bits too...
-				$post->story_type = Request::get('story_type');
-				
-				$post->category = serialize(Request::get('category'));
-				$post->image = Request::get('image','0');//If 0, then it means no photo.
-			}
-			
-			$post->title = Request::get('title');
-			$post->tagline_1 = Request::get('tagline_1');
-			$post->tagline_2 = Request::get('tagline_2');
-			$post->tagline_3 = Request::get('tagline_3');
-			
-			$post->body = Request::get('body');//Body is the only updatable thing in an update scenario.
-			$post->published = 1;
-			
-			return $post;
-		}
+		
 }

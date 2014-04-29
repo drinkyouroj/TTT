@@ -64,7 +64,7 @@ class MessageController extends BaseController {
 			}
 			
 		} else {
-			$mutuals = FollowHelper::mutual_list();//gets the mutual users.
+			$mutuals = FollowLogic::mutual_list();//gets the mutual users.
 			return View::make('messages/form')
 				->with('fullscreen', true)
 				->with('message_user', false)
@@ -121,10 +121,10 @@ class MessageController extends BaseController {
 		if($validator->passes()) {
 			//Successful Validation
 			
-			$is_following = FollowHelper::is_following($message->to_uid);
-			$is_follower = FollowHelper::is_follower($message->to_uid);
+			$is_following = FollowLogic::is_following($message->to_uid);
+			$is_follower = FollowLogic::is_follower($message->to_uid);
 			
-			if(FollowHelper::mutual($message->to_uid)) {
+			if(FollowLogic::mutual($message->to_uid)) {
 				$mutual = true;
 			} else {
 				return View::make('generic/error')

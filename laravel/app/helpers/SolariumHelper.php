@@ -1,19 +1,16 @@
-<?php
+<?php namespace Helper\SolariumHelper;
 /**
  * This Helper is intended to make things easy with solarium 
  * Keep in mind that this is the posts solarium helper, not the users one.
  */
-
+use Solarium, Config;
+ 
 class SolariumHelper {
 		
-	function __constructor() {
-		
-	}
-	
 	/**
 	 * This is the general select from Solr
 	 */
-	public static function searchSolr($string, $ajax = false, $page = 1) {
+	public function searchSolr($string, $ajax = false, $page = 1) {
 		//First, let's process the query.
 		$query = self::queryBuilder($string);
 		
@@ -66,7 +63,7 @@ class SolariumHelper {
 					 'users' => $users);
 	}
 	
-		private static function queryBuilder($string) {
+		private function queryBuilder($string) {
 			//lets split this fool via alunum
 			$string_space = preg_replace('/[^A-Za-z0-9]/', ' ', $string);//gotta make this a safe search
 			
@@ -92,7 +89,7 @@ class SolariumHelper {
 	/**
 	 * In Solr, update is create and create is update
 	 */
-	public static function updatePost($post) {
+	public function updatePost($post) {
 		$client = new Solarium\Client(Config::get('solr.post'));
 		$update = $client->createUpdate();
 		
@@ -112,7 +109,7 @@ class SolariumHelper {
 	/**
 	 * Delete the post.
 	 */
-	public static function deletePost($id) {
+	public function deletePost($id) {
 		$client = new Solarium\Client(Config::get('solr.post'));
 		$update = $client->createUpdate();
 		
@@ -126,7 +123,7 @@ class SolariumHelper {
 	/**
 	 * Update/Create User details within Solr
 	 */
-	public static function updateUser($user) {
+	public function updateUser($user) {
 		$client = new Solarium\Client(Config::get('solr.user'));
 		$update = $client->createUpdate();
 		
