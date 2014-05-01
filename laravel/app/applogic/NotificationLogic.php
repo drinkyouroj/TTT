@@ -1,9 +1,19 @@
 <?php namespace AppLogic\NotificationLogic;
 
 //Replace with repositories when we can... 
-use Notification, Motification, Auth, Post, Comment;
+use App,
+	Auth,
+	Notification, 
+	Motification, 
+	Comment,
+	Post, 
+	AppStorage\Post\PostRepository;
 
 class NotificationLogic {
+	
+	public function __construct() {
+		$this->post = App::make('AppStorage\Post\PostRepository');
+	}
 	
 	/**
 	 * New Post Notification for followers.
@@ -53,9 +63,7 @@ class NotificationLogic {
 				//if it exists, just update.
 				$mot->update(array('noticed' => 0));
 			}
-			$mot->push('users', Auth::user()->username,true);
-			//Should the comment counter be incremented if you're the owner? no!
-			Post::where('id', $post->id)->increment('comment_count',1);
+			$mot->push('users', Auth::user()->username,true);			
 		}
 
 		//If reply

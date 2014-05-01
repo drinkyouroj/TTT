@@ -1,10 +1,18 @@
 <?php
+
+//PostRepository is just an interface!  Change it in the service provider if we ever need to.
+//use AppStorage\Post\PostRepository;
+
 class PostController extends BaseController {
 
 	protected $softDelete = true;
 
+	public function __construct(PostRepository $post) {
+		$this->post = $post;
+	}
+
 	public function getIndex() {
-		$post = Post::orderBy(DB::raw('RAND()'))->first();
+		$post = $this->post->random();
 		return self::getPost($post->alias);
 	}
 	
@@ -13,10 +21,9 @@ class PostController extends BaseController {
      */
     public function getPost($alias)
     {	
-        $post = Post::where('alias', $alias);
+        $post = $this->post->findByAlias($alias);
 		
-		if($post->count()) {
-			$post = $post->first();
+		if($post != false) {//Post exists.
 						
 			if(!isset($post->user->username)) {
 				$user_id = 1;//1 is the loneliest number! (aka user nobody)
@@ -65,7 +72,8 @@ class PostController extends BaseController {
 					$pv->user_id = $my_id;
 					$pv->post_id = $post->id;
 					$pv->save();
-					Post::where('alias', $alias)->increment('views', 1);//increment on this post.
+					
+					$this->post->incrementView($post->id);//increment on this post.
 				}
 			}
 			
@@ -89,15 +97,13 @@ class PostController extends BaseController {
 	 */
 	public function getPostForm($id=false) {
 		if($id) {
-			$post = Post::where('id',$id)->first();
+			$post = $this->post->findById($id);
 			return View::make('posts/edit_form')//Edit form only has to account for the text.  Not the entire listing.
 					->with('post', $post)
 					->with('fullscreen', true);
 		} else {
-			//Gotta put in a query here to see if the user submitted something in the last 10 minutes 
-			$post = Post::where('user_id', Auth::user()->id)
-					->orderBy('created_at', 'DESC')//latest first
-					->first();
+			//Gotta put in a query here to see if the user submitted something in the last 10 minutes
+			$post = $this->post->lastPostUserId(Auth::user()->id);
 			
 			if(isset($post->id)) {
 				//not an admin and 10min has not passed since your last post.
@@ -122,9 +128,9 @@ class PostController extends BaseController {
 		if(Input::get('id')) {
 			//THIS is the update scenario.
 			//let's double check that this ID exists and belongs to this user.
-			$check_post = Post::where('id', Input::get('id'))->first();
+			$check_post = $this->post->findById(Input::get('id'));
 			
-			if($check_post->id){
+			if($check_post){
 				$new = false;
 				
 				//Now that we know this exists, let's check to see if its been more than 3 days since it was initially posted.
@@ -143,9 +149,7 @@ class PostController extends BaseController {
 			//New Post.
 			$new = true;
 			//Checking to see if this is an new post being applied by a punk
-			$last_post = Post::where('user_id', Auth::user()->id)
-						->orderBy('created_at', 'DESC')//latest first
-						->first();
+			$last_post = $this->post->lastPostUserId(Auth::user()->id);
 			
 			if( isset($last_post->id) && 
 				$new && 

@@ -1,13 +1,9 @@
 <?php
 class UserRestController extends \BaseController {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{}
+	public function __construct(PostRepository $post) {
+		$this->post = $post;
+	}
 	
 	/**
 	 * Delete this user.
@@ -18,10 +14,9 @@ class UserRestController extends \BaseController {
 			User::where('id', $id)
 				->delete();
 			
-			Post::where('user_id', $id)
-				->update(
-					array('published'=>0)
-					);
+			//archive all posts by user
+			$this->post->archive($id);
+			
 			return Response::json(
 				array('result'=>'success'),
 				200//response is OK!

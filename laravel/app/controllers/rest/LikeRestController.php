@@ -1,6 +1,10 @@
 <?php
 class LikeRestController extends \BaseController {
 
+	public function __construct(PostRepository $post) {
+		$this->post = $post;
+	}
+
 	public function index()
 	{
 		return Response::json(
@@ -21,9 +25,8 @@ class LikeRestController extends \BaseController {
 			$exists = Like::where('post_id', '=', Request::segment(3))
 							->where('user_id', '=', Auth::user()->id)
 							->count();
-			$owns = Post::where('id', '=', Request::segment(3))
-						->where('user_id', '=', Auth::user()->id)
-						->count();
+							
+			$owns = $this->post->owns(Request::segment(3), Auth::user()->id);
 			
 			if(!$exists && !$owns) {//Doesn't exists
 				//Crete a new Like
@@ -32,11 +35,9 @@ class LikeRestController extends \BaseController {
 				$like->user_id = Auth::user()->id;//Gotta be from you.
 				$like->save();
 				
-				Post::where('id', '=', Request::segment(3))
-					->increment('like_count',1);
+				$this->post->incrementLike(Request::segment(3));
 				
 				if($like->id) {
-					
 					return Response::json(
 						array('result'=>'success'),
 						200//response is OK!
@@ -48,8 +49,7 @@ class LikeRestController extends \BaseController {
 					->where('user_id', '=', Auth::user()->id)
 					->delete();
 				
-				Post::where('id', '=', Request::segment(3))
-					->decrement('like_count',1);
+				$this->post->decrementLike(Request::segment(3));
 				
 				return Response::json(
 					array('result'=>'deleted'),

@@ -1,17 +1,8 @@
 <?php
 class RepostRestController extends \BaseController {
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//First, place this in the profile posts table for the user.
-			
-		//Gotta look up the current user's follower IDs
-		
-		//Go through each follower and add it to their profile posts table also.
+	
+	public function __construct(PostRepository $post) {
+		$this->post = $post;
 	}
 
 	/**
@@ -26,9 +17,7 @@ class RepostRestController extends \BaseController {
 			$exists = Repost::where('post_id', '=', Request::segment(3))
 							->where('user_id', '=', Auth::user()->id)
 							->count();
-			$owns = Post::where('id', '=', Request::segment(3))
-					->where('user_id', '=', Auth::user()->id)
-					->count();
+			$owns = $this->post->owns(Request::segment(3), Auth::user()->id);
 			
 			if(!$exists && !$owns) {//Doesn't exists and you don't own it.
 				//Crete a new repost
@@ -37,8 +26,7 @@ class RepostRestController extends \BaseController {
 				$repost->user_id = Auth::user()->id;//Gotta be from you.
 				$repost->save();
 									
-				$post = Post::where('id','=', Request::segment(3))
-							->first();
+				$post = $this->post->findById(Request::segment(3));
 				
 				//TODO get rid of the original notifcation code soon.
 				$notification_exists = Notification::where('post_id', '=', Request::segment(3))

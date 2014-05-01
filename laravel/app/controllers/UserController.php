@@ -1,13 +1,8 @@
 <?php
 class UserController extends BaseController {
 
-	public function __construct() {
-		
-	}
-
-	public function getPhrase() {
-		Log::info(Session::get('actual'));
-		return Session::get('actual');
+	public function __construct(PostRepository $post) {
+		$this->post = $post;
 	}
 
 	/**
@@ -180,7 +175,7 @@ class UserController extends BaseController {
 			
 			if($user->featured != 0) {
 				//Let's just grab the user's image.
-				$user_featured = Post::where('id', $user->featured)->first();
+				$user_featured = $this->post->findById($user->featured);
 				Session::put('image', $user_featured->image);
 			}
 			
@@ -252,7 +247,7 @@ class UserController extends BaseController {
 			if($rando_string == Session::get('restore_string')) {
 				$user = User::onlyTrashed()->where('id', $id)->restore();
 				//Might want to think about the below a bit more.
-				Post::where('user_id', $id)->update(array('published'=>1));
+				$this->post->restore($id);
 				return Redirect::to('user/loginonly');
 			} else {
 				return Redirect::to('featured');

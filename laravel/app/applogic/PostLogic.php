@@ -1,12 +1,17 @@
 <?php namespace AppLogic\PostLogic;
 
 //Below will be replaced with Repositories when we have the chance.
-use Post, Auth, Request;
+use App, Auth, Request, AppStorage\Post\PostRepository;
 
 /**
  * This class holds many of the business logic for the Post Controller
  */
 class PostLogic {
+
+	public function __construct() {
+		//Below sucks compared to how the interface is usually implemented, but its having issues so we're doing it this way.
+		$this->post = App::make('AppStorage\Post\PostRepository');
+	}
 	
 	/**
 	 * Divide the body text for display
@@ -53,7 +58,7 @@ class PostLogic {
 	}
 	
 	/**
-	 * Input filtering.
+	 * Input filtering.  (Probably move this piece to the repository)
 	 * @param boolean $new Is this a new post?
 	 * @param object $post Post object (for updates)
 	 */
@@ -61,7 +66,7 @@ class PostLogic {
 	{	
 		if($new) {
 			//Creates a new post
-			$post = new Post;
+			$post = $this->post->instance();
 			$post->user_id = Auth::user()->id;
 			
 			//Gotta make sure to make the alias only alunum.  Don't change alias on the update.  We don't want to have to track this change.

@@ -1,5 +1,6 @@
 <?php
 
+
 Blade::setEscapedContentTags('{{{','}}}');
 
 /*

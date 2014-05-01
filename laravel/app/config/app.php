@@ -122,6 +122,9 @@ return array(
 		
 		//Helpers provide non-core services to the system (Solr, Instaham filters)
 		'Helper\SolariumHelper\SolariumHelperServiceProvider',
+		
+		//Repository for model abstrations.
+		'AppStorage\PostStorageServiceProvider',
 	),
 
 	/*

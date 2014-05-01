@@ -4,6 +4,10 @@
  */
 class CommentController extends BaseController {
 
+	public function __construct(PostRepository $post) {
+		$this->post = $post;
+	}
+
 	/**
 	 * The Post Comment Form
 	 */
@@ -14,7 +18,13 @@ class CommentController extends BaseController {
 		
 		if($validator->passes()) {
 			$comment->save();
-			$post = Post::find(Request::segment(3));			
+			$post = $this->post->findById(Request::segment(3));
+			
+			if($post->user_id != Auth::user()->id) {
+				//Should the comment counter be incremented if you're the owner? no!
+				$this->post->incrementComment($post->id);
+			}
+			
 			//Notification code for new comments
 			NotificationLogic::comment($post, $comment);
 			
@@ -31,7 +41,7 @@ class CommentController extends BaseController {
 	 */
 	public function getCommentForm($post_id, $reply_id = false) 
 	{
-		$post = Post::find($post_id);
+		$post = $this->post->findById($post_id);
 		return View::make('generic/commentform')
 				->with('post', $post)
 				->with('reply_id', $reply_id);

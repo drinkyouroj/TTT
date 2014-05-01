@@ -1,8 +1,8 @@
 <?php
 class ProfileController extends BaseController {
 
-	public function __construct() {
-		
+	public function __construct(PostRepository $post) {
+		$this->post = $post;
 	}
 
 	private $paginate = 12;
@@ -49,10 +49,9 @@ class ProfileController extends BaseController {
 			$fullscreen = true;
 
 			//featured post.
-			$post = Post::where('id', $user->featured)->where('published', 1);
-			if($post->count())
-			{
-				$post = $post->first();
+			$post = $this->post->findById($user->featured);
+			if($post != false)
+			{	
 				$featured = new stdClass();
 				$featured->post = $post;
 				$featured->post_type = 'post';
@@ -72,10 +71,9 @@ class ProfileController extends BaseController {
 			$fullscreen = false;
 			
 			//featured post.
-			$post = Post::where('id', $user->featured);
-			if($post->count())
+			$post = $this->post->findById($user->featured);
+			if($post != false)
 			{
-				$post = $post->first();
 				$featured = new stdClass();//gotta fake a class sometimes.
 				$featured->post = $post;
 				$featured->post_type = 'post';
@@ -172,7 +170,7 @@ class ProfileController extends BaseController {
 		$user = User::where('id', Auth::user()->id)->first();
 		
 		if($user->featured != 0) {
-			$post = Post::where('id', $user->featured)->first();
+			$post = $this->post->findById($user->featured);
 			$featured = new stdClass();
 			$featured->post = $post;
 			$featured->post_type = 'post';

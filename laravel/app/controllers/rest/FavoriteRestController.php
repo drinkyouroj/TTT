@@ -1,6 +1,10 @@
 <?php
 class FavoriteRestController extends \BaseController {
 
+	public function __construct(PostRepository $post) {
+		$this->post = $post;
+	}
+
 	public function index()
 	{
 		
@@ -19,10 +23,8 @@ class FavoriteRestController extends \BaseController {
 							->where('user_id', '=', Auth::user()->id)
 							->count();
 							
-			$owns = Post::where('id', '=', Request::segment(3))
-						->where('user_id', '=', Auth::user()->id)
-						->count();
-						
+			$owns = $this->post->owns(Request::segment(3), Auth::user()->id);
+			
 			if(!$exists && !$owns) {//Relationship doesn't exist and the user doesn't own this.
 				//Crete a new follow
 				$favorite = new Favorite;
@@ -30,8 +32,7 @@ class FavoriteRestController extends \BaseController {
 				$favorite->user_id = Auth::user()->id;//Gotta be from you.
 				$favorite->save();
 				
-				$post = Post::where('id','=', Request::segment(3))
-							->first();
+				$post = $this->post->findById(Request::segment(3));
 				
 				//Add to activity
 				$profilepost = new ProfilePost;
@@ -74,8 +75,7 @@ class FavoriteRestController extends \BaseController {
 			
 			} elseif($exists) {//Relationship already exists, should this be an unfavorite?
 			
-				$post = Post::where('id','=', Request::segment(3))
-							->first();
+				$post = $this->post->findById(Request::segment(3));
 			
 				//Delete from Favorites
 				Favorite::where('post_id', '=', Request::segment(3))

@@ -1,5 +1,5 @@
 <?php
-namespace TTT\Storage\User;
+namespace AppStorage\User;
 
 interface UserRepository {
 

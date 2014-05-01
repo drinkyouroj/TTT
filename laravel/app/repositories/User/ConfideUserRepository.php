@@ -1,5 +1,5 @@
 <?php
-namespace TTT\Storage;
+namespace AppStorage\User;
 
 use User;
  
@@ -17,12 +17,12 @@ class ConfideUserRepository implements UserRepository {
 		return User::find($id);
 	}
 
-//Update
+	//Update
 	public function update($input) {
 		return User::update($input);
 	}
 	
-//Delete
+	//Delete
 	public function delete($id) {
 		return User::delete($id);
 	}

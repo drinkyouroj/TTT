@@ -4,13 +4,13 @@
  */
 class SearchController extends BaseController {
 	
-	function __constructor() {
-		
+	public function __construct(PostRepository $post) {
+		$this->post = $post;
 	}
 	
 	/**
 	 * Grabs Results in a page for both Posts and Users
-	 * 
+	 * @param string $term String that you're searching for.
 	 */
 	public function postResult() {
 		$term = Input::get('term');
@@ -21,20 +21,19 @@ class SearchController extends BaseController {
 		$posts = $results['posts']->getData();
 		$users = $results['users']->getData();
 		
-		$ids = self::flatten($posts['response']['docs']);
+		$post_ids = self::flatten($posts['response']['docs']);
 		$user_ids = self::flatten($users['response']['docs']);
 		
-		if(count($ids) || count($user_ids)) {
+		if(count($post_ids) || count($user_ids)) {
 			
 			//This is out here incase we don't get the right stuff.
 			$users = $posts = $message = 'No Match Found';
 			
 			//get from the result set.
-			if(count($ids)) {
-				$posts = Post::whereIn('id', $ids)
-					->where('published', 1)
-					->get();
+			if(count($post_ids)) {
+				$posts = $this->post->allByUserIds($post_ids);
 			}
+			
 			if(count($user_ids)) {
 				$users = User::whereIn('id', $user_ids)
 					->where('banned', 0)
@@ -70,6 +69,10 @@ class SearchController extends BaseController {
 		//Below couple of lines kind of blows, but the data structure is as such.
 		$posts = $results['posts']->getData();
 		$users = $results['users']->getData();
+		
+		$result_array = array();
+		$result_array['posts'] = $posts['response']['docs'];
+		$result_array['users'] = $users['response']['docs'];
 		
 		if(count($posts['response']['docs']) || 
 		   count($users['response']['docs'])){

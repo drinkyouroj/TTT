@@ -1,10 +1,9 @@
 <?php
+use AppStorage\Post\PostRepository;
 class ProfileImageRestController extends \BaseController {
 
-	public function index()
-	{
-
-		
+	public function __construct(PostRepository $post) {
+		$this->post = $post;
 	}
 	
 	public function show($id)
@@ -16,7 +15,7 @@ class ProfileImageRestController extends \BaseController {
 				return Response::download(public_path().'/img/profile/default-profile.jpg');
 			}
 			
-			$post = Post::where('id', $user_featured)->select('image')->first();
+			$post = $this->post->findById($user_featured);
 			
 			if($post->image) {
 				return Response::download(public_path().'/uploads/final_images/'.$post->image);
