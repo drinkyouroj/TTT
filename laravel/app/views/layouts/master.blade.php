@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app>
   <head>
-    <title>@yield('title','Title')</title>
+    <title>@yield('title','Two Thousand Times')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
        
 	<link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>

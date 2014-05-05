@@ -20,7 +20,7 @@ class PostController extends BaseController {
      * Get Post
      */
     public function getPost($alias)
-    {	
+    {
         $post = $this->post->findByAlias($alias);
 		
 		if($post != false) {//Post exists.
@@ -141,7 +141,7 @@ class PostController extends BaseController {
 					return Redirect::to('profile');
 				}
 				
-				$post = PostLogic::post_object_input_filter($new,$check_post);//Post object filter gets the input and puts it into the post.
+				$post = $this->post->input($new,$check_post);//Post object filter gets the input and puts it into the post.
 				$validator = $post->validate($post->toArray(),$check_post->id);//validation takes arrays.  Also if this is an update, it needs an id.
 			}
 			
@@ -159,7 +159,7 @@ class PostController extends BaseController {
 				//Nice try punk.  Maybe I should have this go somewhere more descriptive.
 				return Redirect::to('profile');
 			}
-			$post = PostLogic::post_object_input_filter($new);//Post object creates objects.
+			$post = $this->post->input($new);//Post object creates objects.
 			$validator = $post->validate($post->toArray(),false);//no
 		}
 		

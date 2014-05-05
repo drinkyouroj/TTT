@@ -1,8 +1,8 @@
 <?php
 class AdminController extends Controller {
 	
-	public function __construct() {
-		
+	public function __construct(PostRepository $post) {
+		$this->post = $post;
 	}
 
 	/**
@@ -11,12 +11,8 @@ class AdminController extends Controller {
 	public function getIndex() {
 		
 		//provide currently featured articles.
-		$featured = Post::where('featured',1)
-					->where('published', 1)
-					->orderBy('created_at', 'DESC')
-					->get();
-		$post_count = Post::where('published', 1)
-					->count();
+		$featured = $this->post->allFeatured();
+		$post_count = $this->post->countPublished();//All published posts.
 		
 		$user_count = User::where('banned', false)
 					->count();
@@ -100,7 +96,7 @@ class AdminController extends Controller {
 		
 		$order = Request::get('order','last');//last
 		
-		$post = Post::where('id', '=', $feature_id)->first();
+		$post = $this->post->findById($feature_id);
 		
 		//flip the featured
 		if($post->featured) {
@@ -183,17 +179,19 @@ class AdminController extends Controller {
 	public function getHarddeletepost() {
 		$id = Request::segment(3);
 		if($id != 0) {
-			$post = Post::withTrashed()->where('id', $id)->first();
+			$post = $this->post->findById($id,'trashed');//gets trashed too.
 			if($post->published == true) {
-				//Unpublish
-				Post::where('id', $id)->delete();
+				//Unpublish				
+				$this->post->delete($id);
+				
 				return Response::json(
 					array('result'=>'deleted'),
 					200//response is OK!
 				);
 			} else {
 				//Publish
-				Post::withTrashed()->where('id', $id)->restore();
+				$this->post->undelete($id);
+				
 				//return the body so that we can display it.
 				return Response::json(
 					array('result'=>'restored'),
@@ -255,7 +253,7 @@ class AdminController extends Controller {
 				
 				if($notification->notification_type != 'follow') {
 					$post_id = $notification->post_id;
-					$post = Post::where('id', $notification->post_id)->first();
+					$post = $this->post->findById($notification->post_id);
 					if(isset($post->title)) {
 						$post_title = $post->title;
 						$post_alias = $post->alias;

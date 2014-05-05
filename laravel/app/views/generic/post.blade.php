@@ -215,9 +215,9 @@
 				@endif
 				
 				<ul class="comments-listing">
-					{{--This below is a helper function--}}
-					{? CommentLogic::echo_comments($post->nochildcomments);?}
-					{{--If you want to edit the formatting, go to: 'helpers/ThreadedComments.php'--}}
+					@if(count($post->nochildcomments))
+						{{View::make('generic/comment')->with('comments', $post->nochildcomments)}}
+					@endif
 				</ul>
 			</div>
 		@else

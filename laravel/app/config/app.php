@@ -125,6 +125,8 @@ return array(
 		
 		//Repository for model abstrations.
 		'AppStorage\PostStorageServiceProvider',
+		'AppStorage\CommentStorageServiceProvider',
+		'AppStorage\NotificationStorageServiceProvider',
 	),
 
 	/*

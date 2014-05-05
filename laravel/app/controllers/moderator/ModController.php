@@ -6,23 +6,24 @@
  */
 class ModController extends Controller {
 	
-	public function __construct() {
-		
+	public function __construct(
+								PostRepository $post,
+								CommentRepository $comment
+								) {
+		$this->post = $post;
+		$this->comment = $comment;
 	}
 	
 	
 	public function getDelPost() {
 		$id = Request::segment(3);
 		if($id != 0) {
-			$post = Post::where('id', $id)->first();
+			$post = $this->post->findById($id, 'any');
 			if($post->published == true) {
 				//Unpublish
-				Post::where('id', $id)->update(array('published'=>false));
+				$this->post->unpublish($id);
 				
 				SolariumHelper::deletePost($id);//Gotta get rid of it from the search system.
-				
-				//Not sure how else to do this.
-				//Notification::where('post_id', $id)->delete();
 				
 				return Response::json(
 					array('result'=>'deleted'),
@@ -30,12 +31,12 @@ class ModController extends Controller {
 				);
 			} else {
 				//RePublish
-				Post::where('id', $id)->update(array('published'=>true));
+				$this->post->publish($id);
 				
 				SolariumHelper::updatePost($post);//Gotta add back the post.
-				//return the body so that we can display it.
+				
 				return Response::json(
-					array('result'=>$post->body),
+					array('result'=>$post->body),//return the body so that we can display it.
 					200//response is OK!
 				);
 			}
@@ -50,17 +51,18 @@ class ModController extends Controller {
 	public function getDelComment() {
 		$id = Request::segment(3);
 		if($id != 0) {
-			$comment = Comment::where('id', $id)->first();
+			$comment = $this->comment->findById($id);
 			if($comment->published == true) {
 				//Unpublish
-				Comment::where('id', $id)->update(array('published'=>false));
+				$this->comment->unpublish($id, $comment->user_id);
+				
 				return Response::json(
 					array('result'=>'deleted'),
 					200//response is OK!
 				);
 			} else {
 				//Publish
-				Comment::where('id', $id)->update(array('published'=>true));
+				$this->comment->publish($id, $comment->user_id);
 				//return the body so that we can display it.
 				return Response::json(
 					array('result'=>$comment->body),

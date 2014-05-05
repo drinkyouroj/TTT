@@ -1,7 +1,7 @@
 <?php namespace AppLogic\PostLogic;
 
 //Below will be replaced with Repositories when we have the chance.
-use App, Auth, Request, AppStorage\Post\PostRepository;
+use App, AppStorage\Post\PostRepository;
 
 /**
  * This class holds many of the business logic for the Post Controller
@@ -56,37 +56,5 @@ class PostLogic {
 		}
 		return $arrayOutput;
 	}
-	
-	/**
-	 * Input filtering.  (Probably move this piece to the repository)
-	 * @param boolean $new Is this a new post?
-	 * @param object $post Post object (for updates)
-	 */
-	public function post_object_input_filter($new = false,$post = false)
-	{	
-		if($new) {
-			//Creates a new post
-			$post = $this->post->instance();
-			$post->user_id = Auth::user()->id;
-			
-			//Gotta make sure to make the alias only alunum.  Don't change alias on the update.  We don't want to have to track this change.
-			$post->alias = preg_replace('/[^A-Za-z0-9]/', '', Request::get('title')).'-'.str_random(5).'-'.date('m-d-Y');//makes alias.  Maybe it should exclude other bits too...
-			$post->story_type = Request::get('story_type');
-			
-			$post->category = serialize(Request::get('category'));
-			$post->image = Request::get('image','0');//If 0, then it means no photo.
-		}
-		
-		$post->title = Request::get('title');
-		$post->tagline_1 = Request::get('tagline_1');
-		$post->tagline_2 = Request::get('tagline_2');
-		$post->tagline_3 = Request::get('tagline_3');
-		
-		$post->body = Request::get('body');//Body is the only updatable thing in an update scenario.
-		$post->published = 1;
-		
-		return $post;
-	}
-	
 
 }

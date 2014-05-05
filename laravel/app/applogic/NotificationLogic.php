@@ -3,16 +3,17 @@
 //Replace with repositories when we can... 
 use App,
 	Auth,
-	Notification, 
-	Motification, 
-	Comment,
-	Post, 
-	AppStorage\Post\PostRepository;
+	AppStorage\Post\PostRepository,
+	AppStorage\Comment\CommentRepository,
+	AppStorage\Notification\NotificationRepository
+	;
 
 class NotificationLogic {
 	
 	public function __construct() {
 		$this->post = App::make('AppStorage\Post\PostRepository');
+		$this->comment = App::make('AppStorage\Comment\CommentRepository');
+		$this->not = App::make('AppStorage\Notification\NotificationRepository');
 	}
 	
 	/**
@@ -22,8 +23,43 @@ class NotificationLogic {
 	{
 		
 	}
+	
+	/**
+	 * Favorites Notifications.
+	 */
+	public function favorite($post_id) 
+	{
+		$post = $this->post->findById($post_id);
 		
-	public function favorite() {}
+		$not = $this->not->find($post->id, $post->user->id, 'favorite');
+		
+		if(!$not) {
+			$not = $this->not->instance();
+			$not->post_id = $post->id;
+			$not->post_title = $post->title;
+			$not->post_alias = $post->alias;
+			$not->user_id = $post->user->id;//Who this notification si going to.
+			$not->noticed = 0;
+			$not->notification_type = 'favorite';
+			$not->save();
+		}
+		
+		$not->push('users', Auth::user()->username,true);
+	}
+	
+	public function unfavorite($post_id) {
+		$user_id = Auth::user()->id;
+		$post = $this->post->findById($post_id);
+		
+		$not = $this->not->find($post->id, $post->user->id, 'favorite'); 
+
+		if($not->count() >= 1) {
+			$not->pull('users', Auth::user()->username);
+			if(count($not->first()->users) == 0) {
+				$not->delete();
+			}
+		}
+	}
 	
 	public function repost() {}
 		
@@ -33,78 +69,57 @@ class NotificationLogic {
 	 * @param object $comment The Comment Object
 	 */
 	public function comment($post, $comment) 
-	{	
+	{
+		$user_id = Auth::user()->id;	
+		$username = Auth::user()->username;
 		//Check to make sure that you don't own the post.
-		if($post->user_id != Auth::user()->id) {
-			//TODO Get rid of this once we're done testing the new mongo notifications.
-			$notification = new Notification;
-			$notification->post_id = $post->id;
-			$notification->user_id = $post->user->id;
-			$notification->action_id = Auth::user()->id;
-			$notification->notification_type = 'comment';
-			$notification->comment_id = $comment->id;
-			$notification->save();
+		if($post->user_id != $user_id) {
 			
-			$mot = Motification::where('post_id', $post->id)//Post id
-								->where('user_id', $post->user->id)//person getting notified
-								->where('notification_type', 'comment');
+			$not = $this->not->find($post->id, $post->user->id, 'comment');
 			
-			if(!$mot->count()) {
-				$mot = new Motification;
-				$mot->post_id = $post->id;
-				$mot->post_title = $post->title;
-				$mot->post_alias = $post->alias;
-				$mot->user_id = $post->user->id;//Who this notification si going to.
-				$mot->noticed = 0;
-				$mot->comment_id = $comment->id;
-				$mot->notification_type = 'comment';
-				$mot->save();
+			if(!$not) {
+				$not = $this->not->instance();
+				$not->post_id = $post->id;
+				$not->post_title = $post->title;
+				$not->post_alias = $post->alias;
+				$not->user_id = $post->user->id;//Who this notification si going to.
+				$not->noticed = 0;
+				$not->comment_id = $comment->id;
+				$not->notification_type = 'comment';
+				$not->save();
 			} else {
 				//if it exists, just update.
-				$mot->update(array('noticed' => 0));
+				$not->update(array('noticed' => 0));
 			}
-			$mot->push('users', Auth::user()->username,true);			
+			$not->push('users', $username,true);
 		}
 
 		//If reply
 		if($comment->parent_id != 0 ) {
-			$orig_comment = Comment::where('id', $comment->parent_id)->first();
+			$orig_comment = $this->comment->findById($comment->parent_id);
 			//Gotta make sure to not notify you replying to you.
-			if($orig_comment->user_id != Auth::user()->id) {
-				//TODO get rid of the original notifcation code soon.
-				$reply = new Notification;
-				$reply->post_id = $post->id;
-				$reply->user_id = $orig_comment->user_id;
-				$reply->action_id = Auth::user()->id;
-				$reply->notification_type = 'reply';
-				$reply->comment_id = $comment->id;
-				$reply->save();
+			if($orig_comment->user_id != $user_id) {
 				
-				$mot = Motification::where('post_id', $post->id)//Post id									
-									->where('user_id', $orig_comment->user_id)//person getting notified
-									->where('notification_type', 'reply');
+				$not = $this->not->find($post->id, $orig_comment->user_id, 'reply');
 				
-				if(!$mot->count()) {
-					$mot = new Motification;
-					$mot->post_id = $post->id;
-					$mot->post_title = $post->title;
-					$mot->post_alias = $post->alias;
-					$mot->user_id = $orig_comment->user_id;//Who this notification si going to.
-					$mot->noticed = 0;
-					$mot->comment_id = $comment->id;
-					$mot->notification_type = 'reply';
-					$mot->save();
+				if(!$not) {
+					$not = $this->not->instance();
+					$not->post_id = $post->id;
+					$not->post_title = $post->title;
+					$not->post_alias = $post->alias;
+					$not->user_id = $orig_comment->user_id;//Who this notification si going to.
+					$not->noticed = 0;
+					$not->comment_id = $comment->id;
+					$not->notification_type = 'reply';
+					$not->save();
 				} else {
 					//if it exists, just update.
-					$mot->update(array('noticed' => 0));
+					$not->update(array('noticed' => 0));
 				}
-				$mot->push('users', Auth::user()->username,true);
+				$not->push('users', $username, true);
 				
 			}
 		}
 	}
-	
-	//Maybe below is not required?? we'll see
-	public function message() {}
 	
 }

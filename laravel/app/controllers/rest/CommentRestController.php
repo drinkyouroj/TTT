@@ -1,48 +1,11 @@
 <?php
 class CommentRestController extends \BaseController {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		
+	public function __construct(CommentRepository $comment) {
+		$this->comment = $comment;
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
+	public function show() {}
 
 	/**
 	 * Remove the specified resource from storage.
@@ -51,17 +14,14 @@ class CommentRestController extends \BaseController {
 	 * @return Response
 	 */
 	public function destroy($id)
-	{	
-		$owns = Comment::where('user_id', '=', Auth::user()->id)
-						->where('id', '=', $id)
-						->count();
+	{
+		$user_id = Auth::user()->id;	
+		$owns = $this->comment->owns($id, $user_id);
 		
 		if($owns) {
-			$owns = Comment::where('user_id', '=', Auth::user()->id)
-							->where('id', '=', $id)
-							->update(array('published' => 0));
-							//unpublished = deleted.	
-			
+				
+			$this->comment->unpublish($id, $user_id);//unpublished = deleted.
+						
 			return Response::json(
 				array(
 					'result' => 'deleted'
@@ -76,9 +36,6 @@ class CommentRestController extends \BaseController {
 				200//response is OK!
 			);
 		}
-		
-		
-
 	}
 
 }

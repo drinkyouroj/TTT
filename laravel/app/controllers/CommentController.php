@@ -4,8 +4,12 @@
  */
 class CommentController extends BaseController {
 
-	public function __construct(PostRepository $post) {
+	public function __construct(
+								PostRepository $post, 
+								CommentRepository $comment
+								) {
 		$this->post = $post;
+		$this->comment = $comment;
 	}
 
 	/**
@@ -13,14 +17,16 @@ class CommentController extends BaseController {
 	 */
 	public function postCommentForm()
 	{
-		$comment = CommentLogic::comment_object_input_filter();
+		$user_id = Auth::user()->id;
+		//$comment = CommentLogic::comment_object_input_filter();
+		$comment = $this->comment->input($user_id);
 		$validator = $comment->validate($comment->toArray());//validation happens as an array
 		
 		if($validator->passes()) {
 			$comment->save();
 			$post = $this->post->findById(Request::segment(3));
 			
-			if($post->user_id != Auth::user()->id) {
+			if($post->user_id != $user_id) {
 				//Should the comment counter be incremented if you're the owner? no!
 				$this->post->incrementComment($post->id);
 			}

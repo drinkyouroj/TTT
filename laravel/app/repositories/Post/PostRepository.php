@@ -9,6 +9,8 @@ interface PostRepository {
 	//Create
 	public function create($input);
 
+	public function input();
+
 	//Read
 	public function findById($id, $published = true, $replationships = array());
 	
@@ -25,9 +27,14 @@ interface PostRepository {
 	//Read Multi
 	public function all();
 	
+	public function allFeatured();
+	
 	public function allByUserId($user_id, $published = true);
 	
 	public function allByUserIds($user_ids, $published = true);
+	
+	//Count
+	public function countPublished();
 	
 	//Check
 	public function owns($post_id, $user_id);
@@ -50,5 +57,6 @@ interface PostRepository {
 	
 	//Delete
 	public function delete($id);
+	public function undelete($id);
 	
 }
