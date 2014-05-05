@@ -28,6 +28,7 @@ class FavoriteRestController extends \BaseController {
 							->count();
 							
 			$owns = $this->post->owns($post_id, $user_id);
+			$post = $this->post->findById($post_id);
 			
 			if(!$exists && !$owns) {//Relationship doesn't exist and the user doesn't own this.
 				

@@ -1,8 +1,12 @@
 <?php
 class ProfileController extends BaseController {
 
-	public function __construct(PostRepository $post) {
+	public function __construct(
+							PostRepository $post, 
+							NotificationRepository $not 
+							) {
 		$this->post = $post;
+		$this->not = $not;
 	}
 
 	private $paginate = 12;
@@ -148,10 +152,7 @@ class ProfileController extends BaseController {
 	 * Gives you the full notification history 
  	*/
 	public function getNotifications() {
-		$compiled = Motification::where('user_id', Auth::user()->id)
-								//->where('notification_type', '!=', 'message')  //I actually think this could be a good thing to show this too.
-								->orderBy('created_at','DESC')
-								->get();
+		$compiled = $this->not->allDesc(Auth::user()->id);
 		
 		return View::make('profile/notifications')
 				->with('notification_list', $compiled)

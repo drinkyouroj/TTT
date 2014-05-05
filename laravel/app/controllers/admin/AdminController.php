@@ -216,6 +216,7 @@ class AdminController extends Controller {
 	}
 	
 	//Below exists, but has been made into an artisan command.
+	/*
 	public function getResetNotifications($page = 0) {
 		$amount = 100;
 		//rather not do this, but gotta do it.
@@ -282,11 +283,8 @@ class AdminController extends Controller {
 				$motification->push('users', $user_name, true);
 			}
 			unset($motification);
-		}
-
-		
+		}		
 	}
-	
-	
+	*/
 	
 }

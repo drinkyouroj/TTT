@@ -3,6 +3,8 @@
 //Replace with repositories when we can... 
 use App,
 	Auth,
+	Queue,
+	Motification,
 	AppStorage\Post\PostRepository,
 	AppStorage\Comment\CommentRepository,
 	AppStorage\Notification\NotificationRepository
@@ -14,6 +16,11 @@ class NotificationLogic {
 		$this->post = App::make('AppStorage\Post\PostRepository');
 		$this->comment = App::make('AppStorage\Comment\CommentRepository');
 		$this->not = App::make('AppStorage\Notification\NotificationRepository');
+	}
+	
+	//Temporary notification getter for the top bar
+	public function top($user_id) {
+		return $this->not->limited($user_id);
 	}
 	
 	/**
@@ -33,6 +40,7 @@ class NotificationLogic {
 		
 		$not = $this->not->find($post->id, $post->user->id, 'favorite');
 		
+		//Lot of this stuff still needs to be put in the repositories, but 1 step at a time!
 		if(!$not) {
 			$not = $this->not->instance();
 			$not->post_id = $post->id;
@@ -53,15 +61,72 @@ class NotificationLogic {
 		
 		$not = $this->not->find($post->id, $post->user->id, 'favorite'); 
 
-		if($not->count() >= 1) {
+		if($not != false) {
 			$not->pull('users', Auth::user()->username);
 			if(count($not->first()->users) == 0) {
 				$not->delete();
 			}
 		}
 	}
+
+	public function follow($following) {
+		//Below is an insert function.  Follows require a new row regardless 
+		$not = $this->not->instance();
+		$not->post_id = 0;
+		$not->noticed = 0;
+		$not->user_id = intval($other_user_id);//the person being notified.
+		$not->notification_type = 'follow';
+		$not->user = Auth::user()->username;//The follower's name
+		$not->users = array(Auth::user()->username);
+		$not->save();
+	}
+
+	public function unfollow($user_id) {
+		$this->not->delete(
+				$user_id, 
+				null, 
+				Auth::user()->username, 
+				'follow'
+				);
+	}
+
 	
-	public function repost() {}
+	public function repost($post) {
+		$not = $this->not->find($post->id, $post->user->id, 'repost');
+				
+		if(!$not) {
+			$not = $this->not->instance();
+			$not->post_id = $post->id;
+			$not->post_title = $post->title;
+			$not->post_alias = $post->alias;
+			$not->user_id = $post->user->id;//Who this notification si going to.
+			$not->noticed = 0;
+			$not->notification_type = 'repost';
+			$not->save();
+		}
+		$not->push('users', Auth::user()->username,true);
+		
+		//Add to follower's notifications
+		Queue::push('UserAction@repost', 
+					array(
+						'post_id' => $post->id,
+						'user_id' => Auth::user()->id,
+						'username' => Auth::user()->username,
+						)
+					);
+	}
+	
+	public function unrepost($post_id) {
+		//Should we get rid fo the notification to the original?
+		
+		Queue::push('UserAction@delrepost', //maybe we need to rename one those these 2 methods to keep it consistent.
+							array(
+								'post_id' => $post_id,
+								'user_id' => Auth::user()->id,
+								'username' => Auth::user()->username,
+								)
+							);
+	}
 		
 	/**
 	 * Comment Notifications  (Replies too)

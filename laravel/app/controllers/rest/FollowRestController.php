@@ -1,46 +1,27 @@
 <?php
 class FollowRestController extends \BaseController {
-
-	public function index()
-	{
-		return Response::json(
-			array('result'=>'success'),
-			200//response is OK!
-		);
-	}
-
-	public function store()
-	{
-		
-	}
 	
 	//not the best usage (using get), but this works
 	public function show()
 	{
-		if(Request::segment(3) != 0) {
+		//request sometimes comes in as a value
+		$other_user_id = intval(Request::segment(3));
+		$my_user_id = Auth::user()->id;
+		$my_username = Auth::user()->username;
 		
-			$exists = Follow::where('user_id', '=', Request::segment(3))
-							->where('follower_id', '=', Auth::user()->id)
+		if($other_user_id && !empty($other_user_id)) {
+		
+			$exists = Follow::where('user_id', $other_user_id)
+							->where('follower_id', $my_user_id)
 							->count();
 			
 			if($exists) {//Relationship already exists
 				
-				Follow::where('user_id', '=', Request::segment(3))
-						->where('follower_id', '=', Auth::user()->id)
+				Follow::where('user_id', $other_user_id)
+						->where('follower_id', $my_user_id)
 						->delete();
-						
-				//Gotta delete the notifications so that it doesn't multiply.
-				Notification::where('user_id', Request::segment(3))
-							->where('action_id', Auth::user()->id)
-							->where('notification_type', 'follow')
-							->where('post_id', 0)
-							->delete();
 				
-				Motification::where('user_id', intval(Request::segment(3)))
-							->where('user', Auth::user()->username)
-							->where('notification_type', 'follow')
-							->delete();
-				
+				NotificationLogic::unfollow($other_user_id);
 				
 				return Response::json(
 					array('result'=>'deleted'),
@@ -49,27 +30,11 @@ class FollowRestController extends \BaseController {
 			} else {//Doesn't exists
 				//Crete a new follow
 				$follow = new Follow;
-				$follow->user_id = Request::segment(3);
-				$follow->follower_id = Auth::user()->id;//Gotta be from you.
+				$follow->user_id = $other_user_id;
+				$follow->follower_id = $my_user_id;//Gotta be from you.
 				$follow->save();
 				
-				//TODO get rid of the original notifcation code soon.
-				$notification = new Notification;
-				$notification->post_id = 0;//zero means that this is a system level notification
-				$notification->user_id = Request::segment(3);
-				$notification->action_id = Auth::user()->id;
-				$notification->notification_type = 'follow';
-				$notification->save();
-				
-				//Below is an insert function.  Follows require a new row regardless 
-				$motification = new Motification;
-				$motification->post_id = 0;
-				$motification->noticed = 0;
-				$motification->user_id = intval(Request::segment(3));//the person being notified.
-				$motification->notification_type = 'follow';
-				$motification->user = Auth::user()->username;//The follower's name
-				$motification->users = array(Auth::user()->username);
-				$motification->save();
+				NotificationLogic::follow($other_user_id);
 				
 				return Response::json(
 					array('result'=>'success'),

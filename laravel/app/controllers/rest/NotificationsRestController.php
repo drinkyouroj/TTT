@@ -1,7 +1,11 @@
 <?php
-//This is for your Inbox
 class NotificationsRestController extends \BaseController {
 	
+	public function __construct(NotificationRepository $not) {
+		$this->not = $not;
+	}
+	
+	/*
 	//Gets a collection of notification for the current user.
 	public function index() {
 		//Grab the entire unnoticed stack
@@ -21,7 +25,7 @@ class NotificationsRestController extends \BaseController {
 		}
 		
 	}
-	
+	*/
 	//Gets a specific notification
 	public function show() {
 		
@@ -29,11 +33,10 @@ class NotificationsRestController extends \BaseController {
 	
 	//Marks notifications as read 
 	public function store() {
-		$notification_ids = Input::get('notification_ids');
+		$notification_ids = Input::get('notification_ids');//Its a GET situation on AJAX
 		if(is_array($notification_ids)) {
-			Motification::where('user_id', Auth::user()->id)
-						->whereIn('_id', $notification_ids)
-						->update(array('noticed'=>1));
+			
+			$this->not->noticed($notification_ids, Auth::user()->id);
 						
 			return Response::json(
 				array('result'=>'success'),

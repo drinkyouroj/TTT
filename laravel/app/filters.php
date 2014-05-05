@@ -144,19 +144,10 @@ View::composer('*', function($view) {
 					);
 	
 	if(!Auth::guest()) {
-		//A logged in user
-		
 		//The new Mongo notifications
-		$compiled = Motification::where('user_id','=',Auth::user()->id)
-								->where('notification_type', '!=', 'message')//message notification is different.
-								->where('noticed',0)
-								->take(7)//taking 7 for now.  We'll change this up when we do a full rest interfaced situation.
-								->orderBy('updated_at', 'DESC')
-								->get();
+		$compiled = NotificationLogic::top(Auth::user()->id);
 		
 		//Unfortunately, we'll have to do this for now.
-		//Maybe we should have this collect from the dom on the client side though that's never really been ideal...  
-		//We'll be able to get rid of this the moment we do rest.
 		$notification_ids = array();
 		foreach($compiled as $k => $nots) {
 			$notification_ids[$k] = $nots->_id;
@@ -169,7 +160,6 @@ View::composer('*', function($view) {
 			 
 	} else {
 		//Guests
-		
 		$view->with('categories', Category::all())
 			 ->with('filters', $filters);
 	}
