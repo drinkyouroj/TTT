@@ -1,7 +1,8 @@
 <?php namespace AppLogic\PostLogic;
 
-//Below will be replaced with Repositories when we have the chance.
-use App, AppStorage\Post\PostRepository;
+use App, 
+	AppStorage\Post\PostRepository
+	;
 
 /**
  * This class holds many of the business logic for the Post Controller

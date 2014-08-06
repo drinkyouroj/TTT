@@ -14,28 +14,28 @@
 Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 {
 	
-	//Binary action controllers aka minimal information is passed (follow, fav, repost)  Index is used to list followers, etc.
-	$binary_limits = array('only'=>array('index','create','show','destroy'));
+	//Action Limited (no update)
+	$action_limits = array('only'=>array('index','create','show','destroy'));
 		
 	/*Page Actions**********************************/
 	//FollowingController shows the people that follow you.
-	Route::resource('following', 'FollowingRestController',$binary_limits);//folks you're following.
-	Route::resource('followers', 'FollowersRestController',$binary_limits);//folks following you: your followers
+	Route::resource('following', 'FollowingRestController',$action_limits);//folks you're following.
+	Route::resource('followers', 'FollowersRestController',$action_limits);//folks following you: your followers
 	
 	//Page Actions
 	Route::resource('likes', 'LikeRestController', array('only'=>array('index','show','store')) );
 	Route::resource('favorites', 'FavoriteRestController', array('only'=>array('index','show','store')));
 	Route::resource('follows', 'FollowRestController', array('only'=>array('index','show','store')));
-	Route::resource('reposts', 'RepostRestController',$binary_limits);
-	Route::resource('comments', 'CommentRestController', $binary_limits);
-	Route::resource('posts', 'PostRestController', $binary_limits);
-	Route::resource('feature', 'FeatureRestController', $binary_limits);
+	Route::resource('reposts', 'RepostRestController',$action_limits);
+	Route::resource('comments', 'CommentRestController', $action_limits);
+	Route::resource('posts', 'PostRestController', $action_limits);
+	Route::resource('feature', 'FeatureRestController', $action_limits);
 	
 	//Notification Action
 	Route::resource('notification', 'NotificationsRestController', array('only'=>array('index','show','store')) );
 		
 	//Profile Image for the Follower/Following buttons. TODO This will go away soon after we create a more robust system
-	Route::resource('profileimage', 'ProfileImageRestController', $binary_limits);
+	Route::resource('profileimage', 'ProfileImageRestController', $action_limits);
 	
 	/**Post Input Systems***************************/
 	//Title Checker
@@ -77,7 +77,7 @@ Route::group(array('prefix'=> 'mod', 'before'=> 'mod'), function() {
 	Route::get('/','ModController@getIndex');
 });
 
-/********************The Authentication Routes  (Confide RESTful route)************************/
+/********************The Authentication Routes  (Confide routes)************************/
 Route::group(array('prefix'=> 'user'), function() {
 	Route::get('confirm/{code}', 'UserController@getConfirm');
 	Route::get('reset/{token}', 'UserController@getReset');

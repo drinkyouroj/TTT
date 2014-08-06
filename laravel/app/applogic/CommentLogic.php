@@ -1,7 +1,9 @@
 <?php namespace AppLogic\CommentLogic;
 
 //Below will be replaced with Repositories when we have the chance.
-use App, AppStorage\Comment\CommentRepository;
+use App, 
+	AppStorage\Comment\CommentRepository
+	;
 
 
 /**

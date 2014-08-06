@@ -41,9 +41,9 @@ class EloquentCommentRepository implements CommentRepository {
 	//Check
 	public function owns($comment_id, $user_id) {
 		return $this->comment
-						->where('id', '=', $comment_id)
-						->where('user_id', '=', $user_id)
-						->count();
+					->where('id', '=', $comment_id)
+					->where('user_id', '=', $user_id)
+					->count();
 	}
 
 	//Update

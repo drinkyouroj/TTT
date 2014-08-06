@@ -3,20 +3,21 @@
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
 
-class CommentStorageServiceProvider extends ServiceProvider {
+
+class CategoryStorageServiceProvider extends ServiceProvider {
  
 	public function register()
 	{
 		$this->app->bind(
-		'AppStorage\Comment\CommentRepository',
-		'AppStorage\Comment\EloquentCommentRepository'
+		'AppStorage\Category\CategoryRepository',
+		'AppStorage\Category\EloquentCategoryRepository'
 		);
 		
 		$this->app->booting(function()
         {
             $loader = AliasLoader::getInstance();
-            $loader->alias('CommentRepository',
-            		'AppStorage\Comment\CommentRepository');
+            $loader->alias('CategoryRepository',
+            		'AppStorage\Category\CategoryRepository');
         });
 	}
 }

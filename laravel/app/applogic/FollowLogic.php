@@ -1,6 +1,8 @@
 <?php namespace AppLogic\FollowLogic;
 
-use Follow, Session;
+use Session,
+	Follow
+	;
 
 class FollowLogic {
 	

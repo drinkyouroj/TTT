@@ -1,7 +1,10 @@
 <?php namespace AppLogic\CategoryLogic;
 
-//Below will be replaced with Repositories when we have the chance.
-use Category, Post;
+//All models will be replaced with Repositories when we have the chance.
+use App,
+	AppStorage\Category\CategoryRepository,
+	AppStorage\Post\PostRepository
+	;
 
 
 /**
@@ -9,6 +12,12 @@ use Category, Post;
  */
 class CategoryLogic {
 	
+	public function __construct() {
+		$this->post = App::make('AppStorage\Post\PostRepository');
+		$this->category = App::make('AppStorage\Category\CategoryRepository');
+		
+	}
+
 	/**
 	 * Gets paginated data for Category filtered posts
 	 * @param string $alias The Category Alias
@@ -17,19 +26,16 @@ class CategoryLogic {
 	 * @param integer $paginate How much to paginate by
 	 * @return array $data Title and Post data.
 	 */
-	public function data($alias, $request, $page = 0, $paginate) {
-			
-		//Figure out if the page is being passed correctly
-		if($page == false) {
-			$page = 1;
-		}
+	public function data($alias, $request, $page = 1, $paginate) {
 		
 		/**
 		 * The way the filters work we've unfortunately implemented the system this way.
 		 */
 		if($alias != 'all') {
 	    	//figure out the category id from alias	
-	    	$cat = Category::where('alias', $alias)->first();
+	    	//(note, we're using the instance for now, but we'll move this to the repository in the future)
+	    	$cat_instance = $this->category->instance();
+	    	$cat = $cat_instance->where('alias', $alias)->first();
 			$cat_title = $cat->title;
 			
 			if(!strlen($request)) {
@@ -37,7 +43,7 @@ class CategoryLogic {
 			}
 			
 			//set the model against the right category.
-			$model = Category::find($cat->id);
+			$model = $cat_instance->find($cat->id);
 			
 			
 		} else {
@@ -49,7 +55,7 @@ class CategoryLogic {
 			}
 			
 			//set the model
-			$model = new Post;
+			$model = $this->post->instance();
 		}
 		
 		switch($request) {

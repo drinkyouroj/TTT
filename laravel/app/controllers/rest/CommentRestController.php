@@ -1,4 +1,7 @@
 <?php
+/*
+	Allows users to Remove comments.  Other functions may be added later
+*/
 class CommentRestController extends \BaseController {
 
 	public function __construct(CommentRepository $comment) {
@@ -8,7 +11,7 @@ class CommentRestController extends \BaseController {
 	public function show() {}
 
 	/**
-	 * Remove the specified resource from storage.
+	 * Remove Comments
 	 *
 	 * @param  int  $id
 	 * @return Response

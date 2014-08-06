@@ -5,17 +5,10 @@ class FavoriteRestController extends \BaseController {
 		$this->post = $post;
 	}
 
-	public function index()
-	{
-		
-	}
-
-	public function store()
-	{
-		
-	}
-	
 	//not the best usage (using get), but this works
+	/**
+		Marks or un-marks a post as a favorite.
+	*/
 	public function show()
 	{
 		if(Request::segment(3) != 0) {
@@ -32,7 +25,7 @@ class FavoriteRestController extends \BaseController {
 			
 			if(!$exists && !$owns) {//Relationship doesn't exist and the user doesn't own this.
 				
-				//Crete a new follow
+				//Crete a new Favorite
 				$favorite = new Favorite;
 				$favorite->post_id = $post->id;
 				$favorite->user_id = $user_id;//Gotta be from you.

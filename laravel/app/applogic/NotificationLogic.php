@@ -4,7 +4,6 @@
 use App,
 	Auth,
 	Queue,
-	Motification,
 	AppStorage\Post\PostRepository,
 	AppStorage\Comment\CommentRepository,
 	AppStorage\Notification\NotificationRepository

@@ -35,6 +35,7 @@
 			"app/lib",
 			"app/repositories",
 			"app/repositories/Post",
+			"app/repositories/Category",
 			"app/models",
 			"app/queue",
 			"app/database/migrations",
