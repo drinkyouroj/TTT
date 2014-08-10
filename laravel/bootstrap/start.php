@@ -38,7 +38,7 @@ $env = $app->detectEnvironment(array(
 	//Multi server production. Note: You need Redis, Memcached, Mongo, Solr and SQL in a separate server.  Note, HHVMtest is a prototyping server for HHVM.
 	'web' => array('web*','hhvmtest','RESCUE-hhvmtest','rescue-hhvmtest'),//sometimes the hhvm server sucks and goes into stupid mode.
 	
-	'vagrant' => array('localhost:4567'),
+	'vagrant' => array('localhost:4567', 'vagrant-fedora-19*'),
 	'local' => array('localhost.localdomain'),
 
 ));
