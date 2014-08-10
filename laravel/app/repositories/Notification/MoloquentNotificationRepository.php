@@ -66,7 +66,7 @@ class MoloquentNotificationRepository implements NotificationRepository {
 	public function check() {}
 
 	//Update
-	public function noticed($array, $user_id) {
+	public function noticed($notification_ids, $user_id) {
 		$this->not->where('user_id', $user_id)
 					->whereIn('_id', $notification_ids)
 					->update(array('noticed'=>1));
