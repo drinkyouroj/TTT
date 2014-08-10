@@ -2,7 +2,7 @@
 class PostRestController extends \BaseController {
 
 	public function __construct(PostRepository $post) {
-		$this->beforeFilter('auth');
+		$this->beforeFilter('auth');//This is probably not required as its filtered at another stage.
 		$this->post = $post;
 	}
 
