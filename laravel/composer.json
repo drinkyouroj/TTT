@@ -16,7 +16,7 @@
 		"way/guard-laravel": "dev-master",
 		"way/generators": "dev-master",
 		"solarium/solarium": "dev-develop",
-		"pda/pheanstalk": "dev-master",		
+		"pda/pheanstalk": "2.0.*",
 		"jenssegers/mongodb": "*",
 		"mews/captcha": "dev-master",
 		"thomaswelton/laravel-rackspace-opencloud": "dev-master"

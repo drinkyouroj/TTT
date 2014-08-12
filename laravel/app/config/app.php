@@ -129,6 +129,7 @@ return array(
 		'AppStorage\NotificationStorageServiceProvider',
 		'AppStorage\CategoryStorageServiceProvider',
 		'AppStorage\FollowStorageServiceProvider',
+		'AppStorage\RepostStorageServiceProvider',
 	),
 
 	/*

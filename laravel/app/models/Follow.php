@@ -11,7 +11,16 @@ class Follow extends Eloquent {
 	
 	public function followers()
 	{
-		return $this->belongsTo('User','follower_id');
+		return $this->belongsTo('User','follower_id')
+					->where('banned', 0)
+					->select('id', 'username');
+	}
+
+	public function following()
+	{
+		return $this->belongsTo('User','user_id')
+					->where('banned', 0)
+					->select('id', 'username');
 	}
 	
 }

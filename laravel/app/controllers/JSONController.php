@@ -4,15 +4,17 @@ class JSONController extends BaseController {
 
 	public function __construct(
 						PostRepository $post,
-						// CommentRespository $comment,
+						CommentRepository $comment,
 						NotificationRepository $not,
-						FollowRepository $follow
+						FollowRepository $follow,
+						RepostRepository $repost
 
 						) {
 		$this->post = $post;
 		$this->not = $not;
-		//$this->comment = $comment;
+		$this->comment = $comment;
 		$this->follow = $follow;
+		$this->repost = $repost;
 
 		//Below are for Repos that do not yet exist
 		//$this->like = $like
@@ -172,10 +174,7 @@ class JSONController extends BaseController {
 				);
 			} else {//Doesn't exists
 				//Crete a new follow
-				$follow = $this->follow->instance();
-				$follow->user_id = $other_user_id;
-				$follow->follower_id = $my_user_id;//Gotta be from you.
-				$follow->save();
+				$this->follow->create($other_user_id, $my_user_id);
 				
 				NotificationLogic::follow($other_user_id);
 				
@@ -195,30 +194,13 @@ class JSONController extends BaseController {
 	//Gets followers for a given user id.
 	public function getFollowers($id) {
 		if($id) {
-			$followers_id = Follow::where('user_id', '=', $id)
-						->select('follower_id')
-						->get();
-			
-			//Laravel, you suck.  Your stupid 'with' doesn't work.
-			$ids = array();
-			
-			foreach($followers_id as $k => $follower) {
-				$ids[$k] = $follower->follower_id;
-			}
-			
-			//If there are no followers, then we don't grab the SQL.
-			if(count($ids)) {
-				$followers = User::whereIn('id', $ids)
-							->select('id','username')
-							->get()->toArray();
-			} else {
-				$followers = array();
-			}
-			
 			return Response::json(
-				array('followers'=> $followers),
+				array(
+					'followers'=> $this->follow->followers($id)
+					),
 				200//response is OK!
 			);
+			
 		} else {
 			return Response::json(
 				array('followers'=>'fail'),
@@ -229,29 +211,11 @@ class JSONController extends BaseController {
 
 	//Gets following for a given user id
 	public function getFollowing($id) {
-		if($id != 0) {
-			$following_id = Follow::where('follower_id', '=', $id)
-						->select('user_id')
-						->get();
-						
-			//Laravel, you fucking suck.  Your stupid 'with' doesn't work.
-			$ids = array();
-			
-			foreach($following_id as $k => $follower) {
-				$ids[$k] = $follower->user_id;
-			}
-			
-			//If there are no people you're following, then we don't grab the SQL.
-			if(count($ids)) {
-				$following = User::whereIn('id', $ids)
-							->select('id','username')
-							->get()->toArray();
-			} else {
-				$following = array();
-			}
-			
+		if($id) {
 			return Response::json(
-				array('following'=>$following),
+				array(
+					'following'=> $this->follow->following($id)
+					),
 				200//response is OK!
 			);
 		} else {
@@ -265,19 +229,21 @@ class JSONController extends BaseController {
 	//Reposts a certain post.
 	public function getReposts() {
 		if(Request::segment(3) != 0) {
-			$exists = Repost::where('post_id', '=', Request::segment(3))
-							->where('user_id', '=', Auth::user()->id)
-							->count();
-			$owns = $this->post->owns(Request::segment(3), Auth::user()->id);
+
+			$user_id = Auth::user()->id;
+			$post_id = Request::segment(3);
+
+			//Does this relationship already exist?
+			$exists = $this->repost->exists($user_id, $post_id);
+
+			//You can't repost your own stuff.
+			$owns = $this->post->owns($post_id, $user_id);
 			
 			if(!$exists && !$owns) {//Doesn't exists and you don't own it.
 				//Crete a new repost
-				$repost = new Repost;
-				$repost->post_id = Request::segment(3);
-				$repost->user_id = Auth::user()->id;//Gotta be from you.
-				$repost->save();
+				$this->repost->create($user_id, $post_id);
 									
-				$post = $this->post->findById(Request::segment(3));
+				$post = $this->post->findById($post_id);
 				
 				NotificationLogic::repost($post);
 				
@@ -288,11 +254,9 @@ class JSONController extends BaseController {
 				);
 			} elseif($exists) {//Relationship already exists
 				
-				Repost::where('post_id', '=', Request::segment(3))
-					->where('user_id', '=', Auth::user()->id)
-					->delete();
+				$this->repost->delete($user_id, $post_id);
 												
-				NotificationLogic::unrepost(Request::segment(3));
+				NotificationLogic::unrepost($post_id);
 				
 				return Response::json(
 					array('result'=>'deleted'),

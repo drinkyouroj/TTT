@@ -39,7 +39,6 @@ class User extends ConfideUser implements UserInterface {
 		return $this->belongsTo('Post', 'featured');
 	}
 	
-	
 	public function inbox()
 	{
 		return $this->hasMany('Message', 'to_uid');
@@ -53,7 +52,8 @@ class User extends ConfideUser implements UserInterface {
 	//users who follow this user.
 	public function followers()
 	{
-		return $this->hasMany('Follow', 'user_id');
+		return $this->hasMany('Follow', 'user_id')
+					->select('user_id','follower_id');
 	}
 	
 	public function following()

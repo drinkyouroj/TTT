@@ -7,8 +7,12 @@ class PostController extends BaseController {
 
 	protected $softDelete = true;
 
-	public function __construct(PostRepository $post) {
+	public function __construct(
+							PostRepository $post,
+							RepostRepository $repost
+							) {
 		$this->post = $post;
+		$this->repost = $repost;
 	}
 
 	public function getIndex() {
@@ -48,9 +52,7 @@ class PostController extends BaseController {
 							->where('post_id', $post->id)
 							->count();
 
-				$reposted = Repost::where('user_id', $my_id)
-							->where('post_id', $post->id)
-							->count();
+				$reposted = $this->repost->has_reposted($my_id, $post->id);
 			} else {
 				//DEFAULTS for not logged in users
 				$my_id = false;
