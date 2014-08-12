@@ -68,7 +68,7 @@ class NotificationLogic {
 		}
 	}
 
-	public function follow($following) {
+	public function follow($other_user_id) {
 		//Below is an insert function.  Follows require a new row regardless 
 		$not = $this->not->instance();
 		$not->post_id = 0;

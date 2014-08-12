@@ -1,17 +1,17 @@
 <?php
 //Combines a lot of the older rest controller functions which did not require the entire REST Put and DEL stuff.
-class RestController extends BaseController {
+class JSONController extends BaseController {
 
-	public function __constructor(
+	public function __construct(
 						PostRepository $post,
-						CommentRespository $comment,
+						// CommentRespository $comment,
 						NotificationRepository $not,
 						FollowRepository $follow
 
 						) {
 		$this->post = $post;
 		$this->not = $not;
-		$this->comment = $comment;
+		//$this->comment = $comment;
 		$this->follow = $follow;
 
 		//Below are for Repos that do not yet exist
@@ -22,7 +22,7 @@ class RestController extends BaseController {
 	}
 
 	//Like or Unlike a Post
-	public function getLike() {
+	public function getLikes() {
 		if(Request::segment(3) != 0) {
 			$exists = Like::where('post_id', '=', Request::segment(3))
 							->where('user_id', '=', Auth::user()->id)
@@ -66,7 +66,7 @@ class RestController extends BaseController {
 	}
 
 	//Mark as Read
-	public function postNoticed() {
+	public function postNotification() {
 		$notification_ids = Input::get('notification_ids');//Its a GET situation on AJAX
 		if(is_array($notification_ids)) {
 			
@@ -85,7 +85,7 @@ class RestController extends BaseController {
 	}
 
 	//Mark a post as a Favorite
-	public function getFavorite() {
+	public function getFavorites() {
 		if(Request::segment(3) != 0) {
 			
 			$user_id = Auth::user()->id;
@@ -150,31 +150,19 @@ class RestController extends BaseController {
 	}
 
 	//Let's you follow someone
-	public function getFollow() {
+	public function getFollows() {
 		//request sometimes comes in as a string
 		$other_user_id = intval(Request::segment(3));
 		$my_user_id = Auth::user()->id;
 		$my_username = Auth::user()->username;
 		
 		if($other_user_id && !empty($other_user_id)) {
-		
-			/*
-			$exists = Follow::where('user_id', $other_user_id)
-							->where('follower_id', $my_user_id)
-							->count();
-			*/
-
-			$exists = FollowRepository::exists($other_user_id, $my_user_id);
+			
+			$exists = $this->follow->exists($other_user_id, $my_user_id);
 			
 			if($exists) {//Relationship already exists
-				
-				/*
-				Follow::where('user_id', $other_user_id)
-						->where('follower_id', $my_user_id)
-						->delete();
-				*/
 
-				FollowRepository::delete($other_user_id, $my_user_id);
+				$this->follow->delete($other_user_id, $my_user_id);
 				
 				NotificationLogic::unfollow($other_user_id);
 				
@@ -184,7 +172,7 @@ class RestController extends BaseController {
 				);
 			} else {//Doesn't exists
 				//Crete a new follow
-				$follow = FollowRepository::instance();
+				$follow = $this->follow->instance();
 				$follow->user_id = $other_user_id;
 				$follow->follower_id = $my_user_id;//Gotta be from you.
 				$follow->save();
@@ -275,7 +263,7 @@ class RestController extends BaseController {
 	}
 
 	//Reposts a certain post.
-	public function getRepost() {
+	public function getReposts() {
 		if(Request::segment(3) != 0) {
 			$exists = Repost::where('post_id', '=', Request::segment(3))
 							->where('user_id', '=', Auth::user()->id)

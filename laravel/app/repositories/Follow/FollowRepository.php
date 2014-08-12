@@ -7,9 +7,9 @@ interface FollowRepository {
 	public function instance();
 
 	//Check
-	public function exists($follow_id, $user_id);
+	public function exists($user_id, $follower_id);
 	
 	//Delete
-	public function delete($id);
+	public function delete($user_id, $follower_id);
 	
 }

@@ -18,6 +18,7 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	$action_limits = array('only'=>array('index','create','show','destroy'));
 		
 	/*Page Actions**********************************/
+	/*
 	//FollowingController shows the people that follow you.
 	Route::resource('following', 'FollowingRestController',$action_limits);//folks you're following.
 	Route::resource('followers', 'FollowersRestController',$action_limits);//folks following you: your followers
@@ -25,12 +26,15 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	//Page Actions
 	Route::resource('likes', 'LikeRestController', array('only'=>array('index','show','store')) );
 	Route::resource('favorites', 'FavoriteRestController', array('only'=>array('index','show','store')));
-	Route::resource('follows', 'FollowRestController', array('only'=>array('index','show','store')));
+	
 	Route::resource('reposts', 'RepostRestController',$action_limits);
 	Route::resource('comments', 'CommentRestController', $action_limits);
 	Route::resource('posts', 'PostRestController', $action_limits);
 	Route::resource('feature', 'FeatureRestController', $action_limits);
-	
+	*/
+
+	Route::controller('/','JSONController');
+
 	//Notification Action
 	Route::resource('notification', 'NotificationsRestController', array('only'=>array('index','show','store')) );
 		
