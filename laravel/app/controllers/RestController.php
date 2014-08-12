@@ -5,15 +5,16 @@ class RestController extends BaseController {
 	public function __constructor(
 						PostRepository $post,
 						CommentRespository $comment,
-						NotificationRepository $not
+						NotificationRepository $not,
+						FollowRepository $follow
 
 						) {
 		$this->post = $post;
 		$this->not = $not;
 		$this->comment = $comment;
+		$this->follow = $follow;
 
 		//Below are for Repos that do not yet exist
-		//$this->follow = $follow
 		//$this->like = $like
 		//$this->favorite = $favorite
 		//$this->profilepost = $profilepost //This might change its name to feed or something.
@@ -89,7 +90,7 @@ class RestController extends BaseController {
 			
 			$user_id = Auth::user()->id;
 			$post_id = Request::segment(3);
-			
+
 			$exists = Favorite::where('post_id', $post_id)
 							->where('user_id', $user_id)
 							->count();
@@ -157,15 +158,23 @@ class RestController extends BaseController {
 		
 		if($other_user_id && !empty($other_user_id)) {
 		
+			/*
 			$exists = Follow::where('user_id', $other_user_id)
 							->where('follower_id', $my_user_id)
 							->count();
+			*/
+
+			$exists = FollowRepository::exists($other_user_id, $my_user_id);
 			
 			if($exists) {//Relationship already exists
 				
+				/*
 				Follow::where('user_id', $other_user_id)
 						->where('follower_id', $my_user_id)
 						->delete();
+				*/
+
+				FollowRepository::delete($other_user_id, $my_user_id);
 				
 				NotificationLogic::unfollow($other_user_id);
 				
@@ -175,7 +184,7 @@ class RestController extends BaseController {
 				);
 			} else {//Doesn't exists
 				//Crete a new follow
-				$follow = new Follow;
+				$follow = FollowRepository::instance();
 				$follow->user_id = $other_user_id;
 				$follow->follower_id = $my_user_id;//Gotta be from you.
 				$follow->save();
@@ -196,7 +205,7 @@ class RestController extends BaseController {
 	}
 
 	//Gets followers for a given user id.
-	public function getFollowers() {
+	public function getFollowers($id) {
 		if($id) {
 			$followers_id = Follow::where('user_id', '=', $id)
 						->select('follower_id')
@@ -211,7 +220,9 @@ class RestController extends BaseController {
 			
 			//If there are no followers, then we don't grab the SQL.
 			if(count($ids)) {
-				$followers = User::whereIn('id', $ids)->select('id','username')->get()->toArray();
+				$followers = User::whereIn('id', $ids)
+							->select('id','username')
+							->get()->toArray();
 			} else {
 				$followers = array();
 			}
@@ -229,7 +240,7 @@ class RestController extends BaseController {
 	}
 
 	//Gets following for a given user id
-	public function getFollowing() {
+	public function getFollowing($id) {
 		if($id != 0) {
 			$following_id = Follow::where('follower_id', '=', $id)
 						->select('user_id')
@@ -244,7 +255,9 @@ class RestController extends BaseController {
 			
 			//If there are no people you're following, then we don't grab the SQL.
 			if(count($ids)) {
-				$following = User::whereIn('id', $ids)->select('id','username')->get()->toArray();
+				$following = User::whereIn('id', $ids)
+							->select('id','username')
+							->get()->toArray();
 			} else {
 				$following = array();
 			}
