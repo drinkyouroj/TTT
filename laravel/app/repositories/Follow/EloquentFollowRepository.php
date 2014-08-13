@@ -28,16 +28,23 @@ class EloquentFollowRepository implements FollowRepository {
 
 	//See if a Follow relationship exists
 	public function exists($user_id, $follower_id) {
-		return Follow::where('user_id', $user_id)
+		return $this->follow->where('user_id', $user_id)
 					 ->where('follower_id', $follower_id)
 					 ->count();
 	}
 
+	public function followersByUserId($user_id) {
+		return $this->follow->where('user_id', $user_id)->get();
+	}
+
+	public function followingByUserId($user_id) {
+		return $this->follow->where('follower_id', $user_id)->get();
+	}
 
 	//Move below code to User Repository later.
 	//Below code will need to have autoload attached to it later.
 	//Grabs people who are following a user id 
-	public function followers($user_id) {
+	public function jsonFollowers($user_id) {
 		$followers = User::where('id',$user_id)
 					->where('banned',0)
 					->select('id', 'username')
@@ -55,7 +62,7 @@ class EloquentFollowRepository implements FollowRepository {
 		return $data;
 	}
 
-	public function following($user_id) {
+	public function jsonFollowing($user_id) {
 		$following = User::where('id', $user_id)
 					->where('banned',0)
 					->select('id', 'username')
@@ -73,10 +80,54 @@ class EloquentFollowRepository implements FollowRepository {
 		return $data;
 	}
 
+	public function follower_count($user_id) {
+		return $this->follow->where('user_id', $user_id)->count();
+	}
+
+	public function following_count($user_id) {
+		return $this->follow->where('follower_id', $user_id)->count();
+	}
+
+	public function is_follower($my_id, $other_id) {
+		return $this->follow->where('follower_id', $other_id )
+								->where('user_id', $my_id )
+								->count();
+	}
+
+	public function is_following($my_id, $other_id) {
+		return $this->follow->where('follower_id', $my_id)
+								->where('user_id', $other_id)
+								->count();
+	}
+
+	public function mutual($my_id, $other_id) {
+		if( self::is_follower($my_id, $other_id) && self::is_following($my_id, $other_id) ) 
+		{
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	//Grabs all the users who are mutual.  Hopefully we can replace this with Neo4J query in the future
+	public function mutual_list($my_id) {
+		//folks  following you.
+		$following = $this->follow
+						->where('user_id', $my_id)
+						->select('follower_id')
+						->lists('follower_id');						
+		
+		//Mutual folks
+		$mutual = $this->follow
+						->whereIn('user_id', array_values($following))
+						->where('follower_id', $my_id)
+						->get();
+		return $mutual;
+	}
 	
 	//Delete
 	public function delete($user_id, $follower_id) {
-		Follow::where('user_id', $user_id)
+		$this->follow->where('user_id', $user_id)
 			  ->where('follower_id', $follower_id)
 			  ->delete();
 	}

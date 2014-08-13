@@ -6,7 +6,7 @@
 
 
 /**
- *	Rest API 
+ *	JSON API 
  * 	This thing is kind of a bastard of a REST API.
  */
 
@@ -16,35 +16,12 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	
 	//Action Limited (no update)
 	$action_limits = array('only'=>array('index','create','show','destroy'));
-		
-	/*Page Actions**********************************/
-	/*
-	//FollowingController shows the people that follow you.
-	Route::resource('following', 'FollowingRestController',$action_limits);//folks you're following.
-	Route::resource('followers', 'FollowersRestController',$action_limits);//folks following you: your followers
-	
-	//Page Actions
-	Route::resource('likes', 'LikeRestController', array('only'=>array('index','show','store')) );
-	Route::resource('favorites', 'FavoriteRestController', array('only'=>array('index','show','store')));
-	
-	Route::resource('reposts', 'RepostRestController',$action_limits);
-	Route::resource('comments', 'CommentRestController', $action_limits);
-	Route::resource('posts', 'PostRestController', $action_limits);
-	Route::resource('feature', 'FeatureRestController', $action_limits);
-	*/
 
-	Route::controller('/','JSONController');
-
-	//Notification Action
-	Route::resource('notification', 'NotificationsRestController', array('only'=>array('index','show','store')) );
 		
 	//Profile Image for the Follower/Following buttons. TODO This will go away soon after we create a more robust system
 	Route::resource('profileimage', 'ProfileImageRestController', $action_limits);
 	
-	/**Post Input Systems***************************/
-	//Title Checker
-	Route::resource('posttitle', 'PostTitleRestController', array('only'=>array('index')));//For Post input.
-	
+	/**Post Input Systems***************************/	
 	//Flickr!!!!!
 	Route::resource('flickr', 'FlickrRestController', array('only'=>array('index','show')));//API wrapper
 
@@ -65,6 +42,10 @@ Route::group(array('prefix'=>'rest'), function() {
 	Route::get( 'featured', 'HomeController@getRestFeatured');
 });
 
+//Note, below JSONController route has to be below the abouve REST route Group.
+Route::group(array('before' => 'auth'), function() {
+	Route::controller('rest','JSONController');
+});
 
 //Admin area
 Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
@@ -151,13 +132,8 @@ Route::group(array('before'=>'profile'), function() {
 //For banned users to see when try try to log in.
 Route::get('banned', 'UserController@getBanned');
 
-
-
 //The featured page (since it wasn't part of the categories)
 Route::get( 'featured', 'HomeController@getIndex');
 
 //The front page.
 Route::controller( '/', 'HomeController');
-
-
-

@@ -15,6 +15,7 @@ class UserAction {
 	public function __construct() {
 		$this->post = App::make('AppStorage\Post\PostRepository');
 		$this->not = App::make('AppStorage\Notification\NotificationRepository');
+		$this->follow = App::make('AppStorage\Follow\FollowRepository');
 	}
 	
 	/**
@@ -25,8 +26,8 @@ class UserAction {
 	function repost($job, $data) {
 		
 		//Grab all the followers for this user
-		$followers = Follow::where('user_id','=', $data['user_id'])
-						->get();
+		$followers = $this->follow->followersByUserId($data['user_id']);
+
 		$post = $this->post->findById($data['post_id']);
 		
 		$action_user = User::where('id', $data['user_id'])->first();
@@ -74,8 +75,7 @@ class UserAction {
 	function delrepost($job, $data) {
 		
 		//Grab all the followers for this user
-		$followers = Follow::where('user_id', $data['user_id'])
-						->get();
+		$followers = $this->follow->followersByUserId($data['user_id']);
 		
 		$post = $this->post->findById($data['post_id']);
 		
@@ -117,8 +117,7 @@ class UserAction {
 	 */
 	function newpost($job, $data) {
 		//Grab all the followers for this user
-		$followers = Follow::where('user_id', $data['user_id'])
-						->get();
+		$followers = $this->follow->followersByUserId($data['user_id']);
 		
 		$post = $this->post->findById($data['post_id']);
 		

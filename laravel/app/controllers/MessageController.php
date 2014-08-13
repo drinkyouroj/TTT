@@ -8,8 +8,10 @@
 class MessageController extends BaseController {
 
 	//Not a lot in the constructor for now!
-	public function __construct() {
-		
+	public function __construct(
+								FollowRepository $follow
+								) {
+		$this->follow = $follow;
 	}
 
 	/**
@@ -64,7 +66,7 @@ class MessageController extends BaseController {
 			}
 			
 		} else {
-			$mutuals = FollowLogic::mutual_list();//gets the mutual users.
+			$mutuals = $this->follow->mutual_list(Auth::user()->id);//gets the mutual users.
 			return View::make('messages/form')
 				->with('fullscreen', true)
 				->with('message_user', false)
@@ -120,11 +122,11 @@ class MessageController extends BaseController {
 		
 		if($validator->passes()) {
 			//Successful Validation
+			$user_id = Auth::user()->id;
+			$is_following = $this->follow->is_following($user_id, $message->to_uid);
+			$is_follower = $this->follow->is_follower($user_id, $message->to_uid);
 			
-			$is_following = FollowLogic::is_following($message->to_uid);
-			$is_follower = FollowLogic::is_follower($message->to_uid);
-			
-			if(FollowLogic::mutual($message->to_uid)) {
+			if($this->follow->mutual($user_id, $message->to_uid)) {
 				$mutual = true;
 			} else {
 				return View::make('generic/error')

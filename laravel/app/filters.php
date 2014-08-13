@@ -142,7 +142,11 @@ View::composer('*', function($view) {
 					'shortest' => 'Shortest'
 					 */ 
 					);
-	
+
+	//Grab all the categories
+	$category = App::make('AppStorage\Category\CategoryRepository');
+	$categories = $category->all();
+
 	if(!Auth::guest()) {
 		//The new Mongo notifications
 		$compiled = NotificationLogic::top(Auth::user()->id);
@@ -152,15 +156,15 @@ View::composer('*', function($view) {
 		foreach($compiled as $k => $nots) {
 			$notification_ids[$k] = $nots->_id;
 		}
-		
-		$view->with('categories', Category::all())
+
+		$view->with('categories',$categories)
 			 ->with('filters', $filters)
 			 ->with('notifications', $compiled)
 			 ->with('notifications_ids', $notification_ids);
 			 
 	} else {
 		//Guests
-		$view->with('categories', Category::all())
+		$view->with('categories', $categories )
 			 ->with('filters', $filters);
 	}
 	
@@ -199,11 +203,14 @@ View::composer('*', function($view) {
 			}
 		}
 		
-		$followers = Follow::where('user_id', '=', $user_id)->count();
-		$following = Follow::where('follower_id', '=', $user_id)->count();
+
+		$follow = App::make('AppStorage\Follow\FollowRepository');
+
+		$followers = $follow->follower_count($user_id);
+		$following = $follow->following_count($user_id);
 		
 		$view->with('followers', $followers)
-				->with('following', $following);
+			 ->with('following', $following);
 	}
 	
 });

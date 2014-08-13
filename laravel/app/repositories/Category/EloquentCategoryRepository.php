@@ -4,6 +4,12 @@ use Category,DB, Request;
 
 class EloquentCategoryRepository implements CategoryRepository {
 
+	public function __construct(
+							Category $category
+							) {
+		$this->category = $category;
+	}
+
 	//Instance
 	public function instance() {
 		return new Category;
@@ -22,7 +28,7 @@ class EloquentCategoryRepository implements CategoryRepository {
 	
 	//Read Multi
 	public function all() {
-
+		return $this->category->all();
 	}
 	
 

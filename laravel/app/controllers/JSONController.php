@@ -25,7 +25,7 @@ class JSONController extends BaseController {
 
 	//Like or Unlike a Post
 	public function getLikes() {
-		if(Request::segment(3) != 0) {
+		if(Request::segment(3)) {
 
 			$post_id = Request::segment(3);
 			$user_id = Auth::user()->id;
@@ -181,7 +181,7 @@ class JSONController extends BaseController {
 		if($id) {
 			return Response::json(
 				array(
-					'followers'=> $this->follow->followers($id)
+					'followers'=> $this->follow->jsonFollowers($id)
 					),
 				200//response is OK!
 			);
@@ -199,7 +199,7 @@ class JSONController extends BaseController {
 		if($id) {
 			return Response::json(
 				array(
-					'following'=> $this->follow->following($id)
+					'following'=> $this->follow->jsonFollowing($id)
 					),
 				200//response is OK!
 			);

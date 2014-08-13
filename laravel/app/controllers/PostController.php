@@ -11,12 +11,14 @@ class PostController extends BaseController {
 							PostRepository $post,
 							RepostRepository $repost,
 							FavoriteRepository $favorite,
-							LikeRepository $like
+							LikeRepository $like,
+							FollowRepository $follow
 							) {
 		$this->post = $post;
 		$this->repost = $repost;
 		$this->favorite = $favorite;
 		$this->like = $like;
+		$this->follow = $follow;
 	}
 
 	public function getIndex() {
@@ -44,9 +46,9 @@ class PostController extends BaseController {
 			if(Auth::check()) {
 				$my_id = Auth::user()->id;//My user ID
 				
-				$is_following = FollowLogic::is_following($user_id);
+				$is_following = $this->follow->is_following($my_id,$user_id);
 								
-				$is_follower = FollowLogic::is_follower($user_id);
+				$is_follower = $this->follow->is_follower($my_id,$user_id);
 									
 				$liked = $this->like->has_liked($my_id, $post->id);
 				

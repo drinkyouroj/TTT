@@ -11,7 +11,7 @@ class FlickrRestController extends \BaseController {
 	 */
 	private static $api_key = "199d51aaaeb7c32a953f13ec958358c9";
 	private static $secret = "d35085a81eb05474";
-	private static $url = "http://api.flickr.com/services/rest/?";
+	private static $url = "https://api.flickr.com/services/rest/?";
 
 	/**
 	 * Display a listing of pictures based on a tag based search.

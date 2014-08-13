@@ -3,10 +3,14 @@ class ProfileController extends BaseController {
 
 	public function __construct(
 							PostRepository $post, 
-							NotificationRepository $not 
+							NotificationRepository $not,
+							ProfilePostRepository $postprofile,
+							FollowRepository $follow
 							) {
 		$this->post = $post;
 		$this->not = $not;
+		$this->postprofile = $postprofile;
+		$this->follow = $follow;
 	}
 
 	private $paginate = 12;
@@ -38,12 +42,10 @@ class ProfileController extends BaseController {
 			
 			//if the viewer is logged in.
 			if(Session::get('user_id')) {
-				$is_following = Follow::where('follower_id', '=', Session::get('user_id'))
-								->where('user_id', '=', $user_id)
-								->count();
-				$is_follower = Follow::where('follower_id', '=', $user_id)
-								->where('user_id', '=', Session::get('user_id'))
-								->count();
+				$is_following = $this->follow->is_following(Session::get('user_id'), $user_id);
+								
+				$is_follower = $this->follow->is_follower(Session::get('user_id'), $user_id);
+				
 				if($is_follower && $is_following) {
 					$mutual = true;
 				}
@@ -54,34 +56,21 @@ class ProfileController extends BaseController {
 
 			//featured post.
 			$post = $this->post->findById($user->featured);
-			if($post != false)
-			{	
-				$featured = new stdClass();
-				$featured->post = $post;
-				$featured->post_type = 'post';
-			}
+			
 
-			$activity = ProfilePost::where('profile_id','=', $user_id)
-							->orderBy('created_at', 'DESC')
-							->take($this->paginate)
-							->get();//get the activities
+			$activity = $this->postprofile
+							 ->findByUserId($user->id, $this->paginate);
 			
 		} else {
 			//We're doing the user info loading this way to keep the view clean.
-			$user_id = Auth::user()->id;
 			$user = Auth::user();
-			
+			$user_id = $user->id;
+
 			//Big col 9
 			$fullscreen = false;
 			
 			//featured post.
 			$post = $this->post->findById($user->featured);
-			if($post != false)
-			{
-				$featured = new stdClass();//gotta fake a class sometimes.
-				$featured->post = $post;
-				$featured->post_type = 'post';
-			} 
 			
 			//Activity is pulled from the user (current user) activity instead of ProfilePost (what anyone can see)
 			$activity = Activity::where('user_id','=', $user_id)
@@ -89,9 +78,17 @@ class ProfileController extends BaseController {
 							->take($this->paginate)
 							->get();//get the activities
 							
-			$myposts = ProfilePost::where('profile_id','=', $user_id)
-							->orderBy('created_at', 'DESC')
-							->get();//get the activities 	
+			$myposts = $this->postprofile
+							 ->findByUserId($user->id, $this->paginate);	
+		}
+
+		if($post != false)
+		{	
+			//This pretty much sets up an empty fake featured so we don't have an issue on thei view.
+			//its definitely a hack-around
+			$featured = new stdClass();
+			$featured->post = $post;
+			$featured->post_type = 'post';
 		}
 
 		return View::make('profile/index')

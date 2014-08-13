@@ -25,13 +25,40 @@ class EloquentProfilePostRepository implements ProfilePostRepository {
 		return $profilepost;
 	}
 
-	//Delete
+	public function findByUserId(	
+									$user_id,
+									$paginate = 12, 
+									$page = 1, 
+									$rest = false
+								) {
+
+		$query = $this->profilepost->where('profile_id', $user_id)
+									->orderBy('created_at', 'DESC')
+									->skip(($page-1)*$paginate)
+									->take($paginate);
+		if($rest) {
+			return $query->with('post.user')->get();
+		} else {
+			return $query->get();
+		}
+	}
+
+
+	//Delete (this is a soft delete)
 	public function delete($user_id, $post, $type) {
 		$this->profilepost->where('profile_id', $user_id)
 						->where('post_id', $post->id)
 						->where('user_id', $post->user->id)
 						->where('post_type', $type)
 						->delete();
+	}
+
+	//This correspondes to teh post unpublish scenario .
+	public function publish($user_id, $post_id) {
+		$this->profilepost->onlyTrashed()
+						->where('post_id', $post_id)
+						->where('profile_id', $user_id)//This is based on who is affected.
+						->restore();
 	}
 	
 }

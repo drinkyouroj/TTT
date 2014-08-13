@@ -1,9 +1,13 @@
 <?php
 class PostRestController extends \BaseController {
 
-	public function __construct(PostRepository $post) {
+	public function __construct(
+							PostRepository $post,
+							ProfilePostRepository $profilepost
+							) {
 		$this->beforeFilter('auth');//This is probably not required as its filtered at another stage.
 		$this->post = $post;
+		$this->profilepost = $profilepost;
 	}
 
 	/**
@@ -107,17 +111,20 @@ class PostRestController extends \BaseController {
 	 */
 	public function destroy($id)
 	{	
-		$owns = $this->post->owns($id, Auth::user()->id);
+		$user_id = Auth::user()->id;
+		$owns = $this->post->owns($id, $user_id);
 		
 		if($owns) {
 			
+			//Grab the post for rest of this.
 			$post = $this->post->findById($id);
 			
 			//Delete Scenario
 			if($post->published) {
+
 				//if the post was featured set it back to nothing.
 				if($post->featured) {
-					User::where('id', Auth::user()->id)->update(array('featured'=>0));
+					User::where('id', $user_id)->update(array('featured'=>0));
 				}
 				
 				//unpublish the post.
@@ -125,13 +132,11 @@ class PostRestController extends \BaseController {
 				
 				//Take it out of the activities. (maybe queue this too?)
 				Activity::where('post_id', $id)
-						->where('user_id', Auth::user()->id)//This is based on who is affected.
+						->where('user_id', $user_id)//This is based on who is affected.
 						->delete();
 				
 				//Gotta get rid of it from the MyPosts/External Profile View 
-				ProfilePost::where('post_id', $id)
-						->where('profile_id', Auth::user()->id)//This is based on who is affected.
-						->delete();
+				$this->profilepost->delete($user_id,$post, 'post');
 				
 				return Response::json(
 						array('result' =>'unpublished'),
@@ -140,12 +145,9 @@ class PostRestController extends \BaseController {
 			} else {
 				//UnDelete Scenario
 				$this->post->publish($id);
-				
-				ProfilePost::onlyTrashed()
-						->where('post_id', $id)
-						->where('profile_id', Auth::user()->id)//This is based on who is affected.
-						->restore();
-						
+
+				$this->profilepost->publish($user_id, $post->id);
+		
 				return Response::json(
 						array('result' =>'republished'),
 						200//response is OK!
