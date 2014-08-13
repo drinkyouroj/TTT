@@ -9,10 +9,14 @@ class PostController extends BaseController {
 
 	public function __construct(
 							PostRepository $post,
-							RepostRepository $repost
+							RepostRepository $repost,
+							FavoriteRepository $favorite,
+							LikeRepository $like
 							) {
 		$this->post = $post;
 		$this->repost = $repost;
+		$this->favorite = $favorite;
+		$this->like = $like;
 	}
 
 	public function getIndex() {
@@ -44,13 +48,9 @@ class PostController extends BaseController {
 								
 				$is_follower = FollowLogic::is_follower($user_id);
 									
-				$liked = Like::where('user_id', $my_id)
-							->where('post_id', $post->id)
-							->count();
-						
-				$favorited = Favorite::where('user_id', $my_id)
-							->where('post_id', $post->id)
-							->count();
+				$liked = $this->like->has_liked($my_id, $post->id);
+				
+				$favorited = $this->favorite->has_favorited($my_id, $post->id);
 
 				$reposted = $this->repost->has_reposted($my_id, $post->id);
 			} else {

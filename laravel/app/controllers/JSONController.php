@@ -7,7 +7,10 @@ class JSONController extends BaseController {
 						CommentRepository $comment,
 						NotificationRepository $not,
 						FollowRepository $follow,
-						RepostRepository $repost
+						RepostRepository $repost,
+						LikeRepository $like,
+						FavoriteRepository $favorite,
+						ProfilePostRepository $profilepost
 
 						) {
 		$this->post = $post;
@@ -15,30 +18,26 @@ class JSONController extends BaseController {
 		$this->comment = $comment;
 		$this->follow = $follow;
 		$this->repost = $repost;
-
-		//Below are for Repos that do not yet exist
-		//$this->like = $like
-		//$this->favorite = $favorite
-		//$this->profilepost = $profilepost //This might change its name to feed or something.
-
+		$this->like = $like;
+		$this->favorite = $favorite;
+		$this->profilepost = $profilepost; //This might change its name to feed or something.
 	}
 
 	//Like or Unlike a Post
 	public function getLikes() {
 		if(Request::segment(3) != 0) {
-			$exists = Like::where('post_id', '=', Request::segment(3))
-							->where('user_id', '=', Auth::user()->id)
-							->count();
+
+			$post_id = Request::segment(3);
+			$user_id = Auth::user()->id;
+
+			$exists = $this->like->exists($user_id, $post_id);
 							
-			$owns = $this->post->owns(Request::segment(3), Auth::user()->id);
+			$owns = $this->post->owns($post_id, $user_id);
 			
 			if(!$exists && !$owns) {//Doesn't exists
 				//Crete a new Like
-				$like = new Like;
-				$like->post_id = Request::segment(3);
-				$like->user_id = Auth::user()->id;//Gotta be from you.
-				$like->save();
-				
+				$like = $this->like->create($user_id, $post_id);
+
 				$this->post->incrementLike(Request::segment(3));
 				
 				if($like->id) {
@@ -49,9 +48,7 @@ class JSONController extends BaseController {
 				}
 			} elseif($exists) {//Relationship already exists
 			
-				Like::where('post_id', '=', Request::segment(3))
-					->where('user_id', '=', Auth::user()->id)
-					->delete();
+				$this->like->delete($user_id, $post_id);
 				
 				$this->post->decrementLike(Request::segment(3));
 				
@@ -93,28 +90,21 @@ class JSONController extends BaseController {
 			$user_id = Auth::user()->id;
 			$post_id = Request::segment(3);
 
-			$exists = Favorite::where('post_id', $post_id)
-							->where('user_id', $user_id)
-							->count();
+			$exists = $this->favorite->exists($user_id, $post_id);
 							
 			$owns = $this->post->owns($post_id, $user_id);
 			$post = $this->post->findById($post_id);
 			
 			if(!$exists && !$owns) {//Relationship doesn't exist and the user doesn't own this.
 				
-				//Crete a new Favorite
-				$favorite = new Favorite;
-				$favorite->post_id = $post->id;
-				$favorite->user_id = $user_id;//Gotta be from you.
-				$favorite->save();
-				
-				//Add to activity
-				$profilepost = new ProfilePost;
-				$profilepost->post_id = $post->id;
-				$profilepost->profile_id = $user_id;
-				$profilepost->user_id = $post->user->id;
-				$profilepost->post_type = 'favorite';
-				$profilepost->save();
+				$this->favorite->create($user_id, $post_id);
+
+				//Add to Feed
+				$this->profilepost->create(
+						$user_id,
+						$post,
+						'favorite'
+					);
 				
 				NotificationLogic::favorite($post_id);
 				
@@ -126,16 +116,11 @@ class JSONController extends BaseController {
 			} elseif($exists) {//Relationship already exists, should this be an unfavorite?
 				
 				//Delete from Favorites
-				Favorite::where('post_id', $post_id)
-						->where('user_id', $user_id)
-						->delete();
+				$this->favorite->delete($user_id, $post_id);
 				
-				//Delete from My Posts
-				ProfilePost::where('profile_id', $user_id)
-						->where('post_id', $post_id)
-						->where('user_id', $post->user->id)
-						->delete();
-				
+				//Delete from the Feed
+				$this->profilepost->delete($user_id, $post, 'favorite');
+
 				//Delete from Notifications
 				NotificationLogic::unfavorite($post_id);
 	

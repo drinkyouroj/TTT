@@ -130,6 +130,9 @@ return array(
 		'AppStorage\CategoryStorageServiceProvider',
 		'AppStorage\FollowStorageServiceProvider',
 		'AppStorage\RepostStorageServiceProvider',
+		'AppStorage\LikeStorageServiceProvider',
+		'AppStorage\FavoriteStorageServiceProvider',
+		'AppStorage\ProfilePostStorageServiceProvider',
 	),
 
 	/*
