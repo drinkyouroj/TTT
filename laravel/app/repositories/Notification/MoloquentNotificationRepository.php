@@ -1,6 +1,6 @@
 <?php namespace AppStorage\Notification;
 
-use Motification ,DB, Request;
+use Motification ,DB;
 
 class MoloquentNotificationRepository implements NotificationRepository {
 

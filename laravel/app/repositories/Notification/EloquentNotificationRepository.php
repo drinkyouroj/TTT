@@ -6,7 +6,7 @@ class EloquentNotificationRepository implements NotificationRepository {
 
 	public function __construct(Notification $notification)
 	{
-		$this->comment = $notification;
+		$this->notification = $notification;
 	}
 	
 }

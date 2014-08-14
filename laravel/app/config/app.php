@@ -25,8 +25,8 @@ return array(
 	|
 	*/
 
-	'url' => 'http://192.168.9.149/tt',
-	'imageurl' => 'http://192.168.9.149/tt/uploads/final_images',
+	'url' => 'http://localhost/tt',
+	'imageurl' => 'http://localhost/tt/uploads/final_images',
 	/*
 	|--------------------------------------------------------------------------
 	| Application Timezone
