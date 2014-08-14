@@ -29,13 +29,19 @@ class EloquentProfilePostRepository implements ProfilePostRepository {
 									$user_id,
 									$paginate = 12, 
 									$page = 1, 
-									$rest = false
+									$rest = false,
+									$trashed = false
 								) {
 
 		$query = $this->profilepost->where('profile_id', $user_id)
 									->orderBy('created_at', 'DESC')
 									->skip(($page-1)*$paginate)
 									->take($paginate);
+
+		if($trashed) {
+			return $query->withTrashed()->get();
+		}
+
 		if($rest) {
 			return $query->with('post.user')->get();
 		} else {

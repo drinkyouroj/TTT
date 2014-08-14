@@ -15,7 +15,6 @@ class CategoryLogic {
 	public function __construct() {
 		$this->post = App::make('AppStorage\Post\PostRepository');
 		$this->category = App::make('AppStorage\Category\CategoryRepository');
-		
 	}
 
 	/**

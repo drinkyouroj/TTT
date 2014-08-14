@@ -68,39 +68,7 @@ class PostRestController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		/*  Currently not used.
-		//Needs to be limited to the user since this is an update scenario
-		$post = $this->post->findById($id);
 		
-		if($post->user_id == Auth::user()->id) {
-		
-			//We'll have ways to stop this on the front end, but in case someone really wants to update something that's been published for more than a day.
-			if((time()-(60*60*24))< strtotime($post->created_at)) {
-				$post = self::input_filter(false);//Not a new entry.  Don't want the alias changing
-				$validate = Post::validate($post);
-				
-				if($validate->passes()) 
-				{
-					$post->save();
-				}
-				
-				return Response::json(
-					'Post Updated',
-					200//response is OK!
-				);
-			} else {
-				return Response::json(
-					"Can't update this one.  Too late!",
-					200//response is OK!
-				);
-			}
-		} else {
-			return Response::json(
-				"Not your post",
-				200//response is OK!
-			);
-		}
-		*/
 	}
 
 	/**

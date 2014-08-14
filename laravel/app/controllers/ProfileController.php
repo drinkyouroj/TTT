@@ -4,12 +4,12 @@ class ProfileController extends BaseController {
 	public function __construct(
 							PostRepository $post, 
 							NotificationRepository $not,
-							ProfilePostRepository $postprofile,
+							ProfilePostRepository $profilepost,
 							FollowRepository $follow
 							) {
 		$this->post = $post;
 		$this->not = $not;
-		$this->postprofile = $postprofile;
+		$this->profilepost = $profilepost;
 		$this->follow = $follow;
 	}
 
@@ -56,9 +56,8 @@ class ProfileController extends BaseController {
 
 			//featured post.
 			$post = $this->post->findById($user->featured);
-			
 
-			$activity = $this->postprofile
+			$activity = $this->profilepost
 							 ->findByUserId($user->id, $this->paginate);
 			
 		} else {
@@ -78,7 +77,7 @@ class ProfileController extends BaseController {
 							->take($this->paginate)
 							->get();//get the activities
 							
-			$myposts = $this->postprofile
+			$myposts = $this->profilepost
 							 ->findByUserId($user->id, $this->paginate);	
 		}
 
@@ -116,12 +115,15 @@ class ProfileController extends BaseController {
 			if($alias && $alias != Session::get('username')) {
 				$user = User::where('username', '=', $alias)->first();
 				
-				$activity = ProfilePost::where('profile_id','=', $user->id)
-							->orderBy('created_at', 'DESC')
-							->skip(($page-1)*$this->paginate)
-							->take($this->paginate)
-							->with('post.user')
-							->get();//get the activities
+				$activity = $this->profilepost
+								->findByUserId(
+									$user->id,
+									$this->paginate,
+									$page,
+									true//REST
+									);
+
+				
 			} else {
 				$activity = Activity::where('user_id','=', Auth::user()->id)
 							->orderBy('created_at', 'DESC')
@@ -160,10 +162,12 @@ class ProfileController extends BaseController {
 	 * Gives you your posts and your favorites.
 	 */
 	public function getMyPosts() {
-		$myposts = ProfilePost::withTrashed()
-							->where('profile_id', Auth::user()->id)
-							->orderBy('created_at','DESC')
-							->get();
+		$myposts = $this->profilepost->findByUserId(
+										Auth::user()->id,
+										$this->paginate,
+										false,
+										true//trashed
+									);
 		
 		$user = User::where('id', Auth::user()->id)->first();
 		
