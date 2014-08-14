@@ -5,12 +5,14 @@ class ProfileController extends BaseController {
 							PostRepository $post, 
 							NotificationRepository $not,
 							ProfilePostRepository $profilepost,
-							FollowRepository $follow
+							FollowRepository $follow,
+							ActivityRepository $activity
 							) {
 		$this->post = $post;
 		$this->not = $not;
 		$this->profilepost = $profilepost;
 		$this->follow = $follow;
+		$this->activity = $activity;
 	}
 
 	private $paginate = 12;
@@ -72,10 +74,8 @@ class ProfileController extends BaseController {
 			$post = $this->post->findById($user->featured);
 			
 			//Activity is pulled from the user (current user) activity instead of ProfilePost (what anyone can see)
-			$activity = Activity::where('user_id','=', $user_id)
-							->orderBy('created_at', 'DESC')
-							->take($this->paginate)
-							->get();//get the activities
+			$activity = $this->activity
+							->findByUserId($user->id, $this->paginate);
 							
 			$myposts = $this->profilepost
 							 ->findByUserId($user->id, $this->paginate);	
@@ -125,12 +125,13 @@ class ProfileController extends BaseController {
 
 				
 			} else {
-				$activity = Activity::where('user_id','=', Auth::user()->id)
-							->orderBy('created_at', 'DESC')
-							->skip(($page-1)*$this->paginate)
-							->take($this->paginate)
-							->with('post.user')
-							->get();//get the activities
+				$activity = $this->activity
+								->findByUserId(
+									$user->id,
+									$this->paginate,
+									$page,
+									true//REST
+									);
 			}
 			
 			if(!count($activity)) {

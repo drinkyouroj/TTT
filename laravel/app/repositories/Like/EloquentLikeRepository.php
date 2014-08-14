@@ -36,8 +36,7 @@ class EloquentLikeRepository implements LikeRepository {
 	public function delete($user_id, $post_id) {
 		$this->like->where('post_id', $post_id )
 					->where('user_id', $user_id )
-					->delete();	
+					->delete();
 	}
-
 
 }

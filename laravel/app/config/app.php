@@ -133,6 +133,9 @@ return array(
 		'AppStorage\LikeStorageServiceProvider',
 		'AppStorage\FavoriteStorageServiceProvider',
 		'AppStorage\ProfilePostStorageServiceProvider',
+		'AppStorage\ActivityStorageServiceProvider',
+		'AppStorage\FeaturedStorageServiceProvider',
+		'AppStorage\MessageStorageServiceProvider',
 	),
 
 	/*

@@ -16,6 +16,8 @@ class UserRestController extends \BaseController {
 			
 			//archive all posts by user
 			$this->post->archive($id);
+
+			//Add Comment Delete Here also.
 			
 			return Response::json(
 				array('result'=>'success'),

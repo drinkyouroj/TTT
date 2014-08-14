@@ -16,6 +16,7 @@ class UserAction {
 		$this->post = App::make('AppStorage\Post\PostRepository');
 		$this->not = App::make('AppStorage\Notification\NotificationRepository');
 		$this->follow = App::make('AppStorage\Follow\FollowRepository');
+		$this->activity = App::make('AppStorage\Activity\ActivityRepository');
 	}
 	
 	/**
@@ -41,7 +42,7 @@ class UserAction {
 									'repost'
 									);
 									
-				//below still needs development.
+				//If the Notifiation does not exist, 
 				if(!$not) {
 					$not = $this->not->instance();
 					$not->post_id = $data['post_id'];
@@ -56,12 +57,13 @@ class UserAction {
 				
 				//below statement is to ensure that the user who owns the content doesn't get the repost.
 				if($follower->follower_id != $post->user->id) {
-					$activity = new Activity;
-					$activity->action_id = $data['user_id'];//notification from user
-					$activity->user_id = $follower->follower_id; 
-					$activity->post_id = $data['post_id'];
-					$activity->post_type = 'repost';
-					$activity->save();
+					$activity = array(
+							'action_id' => $data['user_id'],
+							'user_id' => $follower->follower_id,
+							'post_id' => $data['post_id'],
+							'post_type' => 'repost'
+							);					
+					$this->activity->create($activity);
 				}
 			}
 		$job->delete();
@@ -98,12 +100,13 @@ class UserAction {
 			
 			//below statement is to ensure that the user who owns the content doesn't get the repost.
 			if($follower->follower_id != $post->user->id) {
-				
-				Activity::where('action_id', $data['user_id'])
-						->where('user_id', $follower->follower_id)
-						->where('post_id', $data['post_id'])
-						->where('post_type', 'repost')
-						->delete();
+				$activity = array(
+						'action_id' => $data['user_id'],
+						'user_id' => $follower->follower_id,
+						'post_id' => $data['post_id'],
+						'post_type' => 'repost'
+					);
+				$this->activity->delete($activity);
 			}
 		}
 		$job->delete();
@@ -141,14 +144,16 @@ class UserAction {
 				$not->save();
 			}
 			$not->push('users', $data['username'], true);
-			
-			
-			$activity = new Activity;
-			$activity->action_id = $data['user_id'];//notification from user
-			$activity->user_id = $follower->follower_id; 
-			$activity->post_id = $data['post_id'];
-			$activity->post_type = 'post';
-			$activity->save();
+
+			$activity = array(
+						'action_id' => $data['user_id'],
+						'user_id' => $follower->follower_id,
+						'post_id' => $data['post_id'],
+						'post_type' => 'post'
+						);					
+			$this->activity->create($activity);
+
+
 		}					
 		
 		$job->delete();

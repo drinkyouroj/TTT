@@ -21,19 +21,19 @@ class EloquentRepostRepository implements RepostRepository {
 	}
 
 	public function exists($user_id, $post_id) {
-		return Repost::where('post_id', $post_id)
+		return $this->repost->where('post_id', $post_id)
 			->where('user_id', $user_id)
 			->count();
 	}
 
 	public function has_reposted($user_id, $post_id) {
-		return Repost::where('user_id', $user_id)
+		return $this->repost->where('user_id', $user_id)
 					->where('post_id', $post_id)
 					->count();
 	}
 
 	public function delete($user_id, $post_id) {
-		Repost::where('post_id', $post_id)
+		$this->repost->where('post_id', $post_id)
 			->where('user_id', $user_id)
 			->delete();
 	}

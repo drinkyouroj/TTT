@@ -4,14 +4,19 @@ class HomeController extends BaseController {
 	
 	private $paginate = 8;//pagination for the front page is set to 8 since it worked out better with the packery blocks.
 	
+	public function __construct(
+							FeaturedRepository $featured
+							){
+		$this->featured = $featured;
+	}
+
+
 	/**
 	 * The featured page.
 	 */
 	public function getIndex()
 	{	
-		$featured = Featured::orderBy('order', 'ASC')
-							->take($this->paginate)
-							->get();
+		$featured = $featured = $this->featured->find($this->paginate, 1, false);
 		
 		return View::make('home.index')
 					->with('featured',$featured);
@@ -36,11 +41,8 @@ class HomeController extends BaseController {
 			$page = 1;
 		}
 		
-		$featured = Featured::orderBy('order', 'ASC')
-							->with('post.user')
-							->skip(($page-1)*$this->paginate)
-							->take($this->paginate)
-							->get();
+		$featured = $this->featured->find($this->paginate, $page, true);
+		
 		
 		if(!count($featured)) {
 			return Response::json(

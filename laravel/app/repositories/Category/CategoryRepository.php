@@ -19,8 +19,8 @@ interface CategoryRepository {
 	//Update
 	public function update($input);
 	
-	public function publish($comment_id, $user_id);
-	public function unpublish($comment_id, $user_id);
+	public function publish($category_id, $user_id);
+	public function unpublish($category_id, $user_id);
 	
 	//Delete
 	public function delete($id);

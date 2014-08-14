@@ -3,11 +3,13 @@ class PostRestController extends \BaseController {
 
 	public function __construct(
 							PostRepository $post,
-							ProfilePostRepository $profilepost
+							ProfilePostRepository $profilepost,
+							ActivityRepository $activity
 							) {
 		$this->beforeFilter('auth');//This is probably not required as its filtered at another stage.
 		$this->post = $post;
 		$this->profilepost = $profilepost;
+		$this->activity = $activity;
 	}
 
 	/**
@@ -99,10 +101,8 @@ class PostRestController extends \BaseController {
 				$this->post->unpublish($id);
 				
 				//Take it out of the activities. (maybe queue this too?)
-				Activity::where('post_id', $id)
-						->where('user_id', $user_id)//This is based on who is affected.
-						->delete();
-				
+				$this->activity->deleteAll($user_id, $id);
+								
 				//Gotta get rid of it from the MyPosts/External Profile View 
 				$this->profilepost->delete($user_id,$post, 'post');
 				

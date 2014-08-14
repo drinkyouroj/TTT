@@ -9,9 +9,11 @@ class MessageController extends BaseController {
 
 	//Not a lot in the constructor for now!
 	public function __construct(
-								FollowRepository $follow
+								FollowRepository $follow,
+								MessageRepository $message
 								) {
 		$this->follow = $follow;
+		$this->message = $message;
 	}
 
 	/**
@@ -20,12 +22,7 @@ class MessageController extends BaseController {
 	public function getMessageInbox() {
 		
 		//Let's first grab the threads you own.
-		$threads = Message::where('reply_id', 0)
-							->where(function($query) {
-								$query->where('from_uid', Auth::user()->id)
-										->orWhere('to_uid', Auth::user()->id);
-							})->orderBy('last_mod', 'DESC')//last modified date.
-							->get();
+		$threads = $this->message->findThreads(Auth::user()->id);
 						
 		return View::make('messages/inbox')
 					->with('fullscreen', true)
@@ -40,20 +37,7 @@ class MessageController extends BaseController {
 		//If there is a user id that's defined, we check to make sure that it 
 		if($user_id) {
 			//See if the user has previous messages with this user.
-			$to = Message::where('from_uid', $user_id)->where('to_uid', Auth::user()->id);
-			$from = Message::where('to_uid', $user_id)->where('from_uid', Auth::user()->id);
-			
-			$reply_id = false;
-			
-			if($to->count()) {
-				//we've either talked to them
-				$reply_id = $to->first()->reply_id;
-			} elseif($from->count()) {
-				//or they've talked to us
-				$reply_id = $from->first()->reply_id;
-			}
-			
-			if($reply_id) {
+			if($this->message->findPrevious(Auth::user()->id, $user_id)) {
 				//Redirect to the replymessage if the user already has a thread going.
 				return Redirect::to('profile/replymessage/'.$reply_id);
 			} else {
@@ -96,7 +80,8 @@ class MessageController extends BaseController {
 								
 			$message = $message->first();
 			
-			$user = User::where('id', '=', $message->from_uid)->first();
+			$user = User::where('id', $message->from_uid)
+						->first();
 			
 		} else {
 			$user = false;
