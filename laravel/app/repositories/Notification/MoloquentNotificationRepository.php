@@ -20,10 +20,11 @@ class MoloquentNotificationRepository implements NotificationRepository {
 		$not->post_id = $data['post_id'];
 		$not->noticed = $data['noticed'];
 		$not->user_id = $data['user_id'];
-		$not->user = $data['user'];
-		$not->users = $data['users'];
-		$not->comment_id = $data['comment_id'] ? $data['comment_id'] : 0;
+		$not->user = (!empty($data['user'])) ? $data['user'] : '' ;
+		$not->users = (!empty($data['users'])) ? $data['users'] : array() ;
+		$not->comment_id = (!empty($data['comment_id'])) ? $data['comment_id'] : '' ;
 		$not->save();
+		return $not;
 	}
 
 	/**
@@ -78,6 +79,10 @@ class MoloquentNotificationRepository implements NotificationRepository {
 		$this->not->where('user_id', $user_id)
 					->whereIn('_id', $notification_ids)
 					->update(array('noticed'=>1));
+	}
+
+	public function pushUsers($not, $username) {
+		$not->push('users', $username, true);
 	}
 	
 	/**

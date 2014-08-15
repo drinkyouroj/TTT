@@ -41,17 +41,19 @@ class NotificationLogic {
 		
 		//Lot of this stuff still needs to be put in the repositories, but 1 step at a time!
 		if(!$not) {
-			$not = $this->not->instance();
-			$not->post_id = $post->id;
-			$not->post_title = $post->title;
-			$not->post_alias = $post->alias;
-			$not->user_id = $post->user->id;//Who this notification si going to.
-			$not->noticed = 0;
-			$not->notification_type = 'favorite';
-			$not->save();
+			$not_data = array(
+				'post_id' => $post->id,
+				'post_title' => $post->title,
+				'post_alias' => $post->alias,
+				'user_id' => $post->user->id,
+				'noticed' => 0,
+				'notification_type' => 'favorite'
+				);
+			$not = $this->not->create($not_data);
 		}
 		
-		$not->push('users', Auth::user()->username,true);
+		$this->not->pushUsers($not, Auth::user()->username);
+		
 	}
 	
 	public function unfavorite($post_id) {
