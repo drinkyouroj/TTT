@@ -12,13 +12,16 @@ class PostController extends BaseController {
 							RepostRepository $repost,
 							FavoriteRepository $favorite,
 							LikeRepository $like,
-							FollowRepository $follow
+							FollowRepository $follow,
+							PostViewRepository $postview
+
 							) {
 		$this->post = $post;
 		$this->repost = $repost;
 		$this->favorite = $favorite;
 		$this->like = $like;
 		$this->follow = $follow;
+		$this->postview = $postview;
 	}
 
 	public function getIndex() {
@@ -67,15 +70,15 @@ class PostController extends BaseController {
 			
 			//Add the fact that the post has been viewed if you're not the owner and you're logged in.
 			if($user_id != $my_id && Auth::check()) {
-				$postview = PostView::where('user_id', $my_id)
-						->where('post_id', $post->id)
-						->count();
+				$exists = $this->postview->exists($my_id, $post->id);
+
 				//If the record doesn't exist, increment on the post view count and also add to the "viewed" in PostView
-				if(!$postview) {
-					$pv = new PostView;
-					$pv->user_id = $my_id;
-					$pv->post_id = $post->id;
-					$pv->save();
+				if(!$exists) {
+					$view = array(
+						'user_id' => $my_id,
+						'post_id' => $post->id
+						);
+					$this->postview->create($view);
 					
 					$this->post->incrementView($post->id);//increment on this post.
 				}

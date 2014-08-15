@@ -5,8 +5,8 @@ $(function() {
 		deleted = false;
 		$that = $(this);
 		$.ajax({
-			url: window.site_url+'rest/posts/'+id,
-			type:"DELETE",//
+			url: window.site_url+'rest/postdelete/'+id,
+			type:"GET",//
 			success: function(data) {
 				console.log(data.result);
 				if(data.result == 'unpublished') {

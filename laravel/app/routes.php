@@ -12,12 +12,10 @@
 
 //Protected rest controllers
 Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
-{
-	
+{	
 	//Action Limited (no update)
 	$action_limits = array('only'=>array('index','create','show','destroy'));
 
-		
 	//Profile Image for the Follower/Following buttons. TODO This will go away soon after we create a more robust system
 	Route::resource('profileimage', 'ProfileImageRestController', $action_limits);
 	

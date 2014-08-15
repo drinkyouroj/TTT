@@ -10,7 +10,8 @@ class JSONController extends BaseController {
 						RepostRepository $repost,
 						LikeRepository $like,
 						FavoriteRepository $favorite,
-						ProfilePostRepository $profilepost
+						ProfilePostRepository $profilepost,
+						ActivityRepository $activity
 
 						) {
 		$this->post = $post;
@@ -21,6 +22,7 @@ class JSONController extends BaseController {
 		$this->like = $like;
 		$this->favorite = $favorite;
 		$this->profilepost = $profilepost; //This might change its name to feed or something.
+		$this->activity = $activity;
 	}
 
 	//Like or Unlike a Post
@@ -278,5 +280,99 @@ class JSONController extends BaseController {
 		}
 	}
 
+	//Delete a Comment
+	public function getComments($id) {
+		$user_id = Auth::user()->id;	
+		$owns = $this->comment->owns($id, $user_id);
+		
+		if($owns) {
+			$this->comment->unpublish($id, $user_id);//unpublished = deleted.
+			return Response::json(
+				array(
+					'result' => 'deleted'
+				),
+				200//response is OK!
+			);
+		} else {
+			return Response::json(
+				array(
+					'result' => 'failed'
+				),
+				200//response is OK!
+			);
+		}
+	}
+
+	public function getUserdelete($id) {
+		//Was the ID passed and is it the Authenticated user?
+		if($id && Auth::user()->id == $id) {
+			User::where('id', $id)
+				->delete();
+			
+			//archive all posts by user
+			$this->post->archive($id);
+
+			//Add All comment Delete Here also.
+			
+			return Response::json(
+				array('result'=>'success'),
+				200//response is OK!
+			);
+		} else {
+			return Response::json(
+				array('result'=>'failed'),
+				200//response is OK!
+			);
+		}
+	}
+
+	public function getPostdelete($id) {
+		$user_id = Auth::user()->id;
+		$owns = $this->post->owns($id, $user_id);
+		
+		if($owns) {
+			
+			//Grab the post for rest of this.
+			$post = $this->post->findById($id);
+			
+			//Delete Scenario
+			if($post->published) {
+
+				//if the post was featured set it back to nothing.
+				if($post->featured) {
+					User::where('id', $user_id)->update(array('featured'=>0));
+				}
+				
+				//unpublish the post.
+				$this->post->unpublish($id);
+				
+				//Take it out of the activities. (maybe queue this too?)
+				$this->activity->deleteAll($user_id, $id);
+								
+				//Gotta get rid of it from the MyPosts/External Profile View 
+				$this->profilepost->delete($user_id,$post, 'post');
+				
+				return Response::json(
+						array('result' =>'unpublished'),
+						200//response is OK!
+					);
+			} else {
+				//UnDelete Scenario
+				$this->post->publish($id);
+
+				$this->profilepost->publish($user_id, $post->id);
+		
+				return Response::json(
+						array('result' =>'republished'),
+						200//response is OK!
+					);
+			}
+		} else {
+			return Response::json(
+					array('result' =>'fail'),
+					200//response is OK!
+				);
+		}
+	}
 
 }

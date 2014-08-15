@@ -110,16 +110,21 @@ class MessageController extends BaseController {
 
 			$message = $this->message->create($data);//creates a 
 			
+			//If the message is saved, it'll return an object, if not, it'll return false.
 			if($message) {
-				//Let's check to see if the users have a thread running already if there is no reply id.
-				$mot = $this->not->instance();
-				$mot->notification_type = 'message';
-				$mot->post_id = 0;
-				$mot->noticed = 0;
-				$mot->user_id = $message->to_uid;
-				$mot->user = User::find($message->from_uid)->username;
-				$mot->users = array(User::find($message->from_uid)->username);
-				$mot->save();
+				//generate a notification everytime a new message is sent out from one user to another.
+				$not_data = array(
+					'post_id' => 0,
+					'post_title' => 0,
+					'post_alias' => 0,
+					'user_id' => $message->to_uid,
+					'user' => User::find($message->from_uid)->username,
+					'users' => array(User::find($message->from_uid)->username),
+					'noticed' => 0,
+					'notification_type' => 'message'
+					);
+
+				$not = $this->not->create($not_data);
 				
 				//Let's update the parent thread's last mod and last ids so that the thread knows to order it.
 				$this->message->updateLast($message->reply_id, $message->id);

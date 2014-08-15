@@ -198,7 +198,7 @@ function like(id) {
 function comment_delete(id) {
 	$.ajax({
 		url: window.site_url+'rest/comments/'+id,
-		type:"DELETE",//
+		type:"GET",//This used to be delete, but not anymore.
 		success: function(data) {
 			if(data.result == 'deleted') {
 				$('#comment-'+id+'>.comment-body').html('<span class="deleted">Comment was deleted</span>');

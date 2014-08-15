@@ -136,6 +136,7 @@ return array(
 		'AppStorage\ActivityStorageServiceProvider',
 		'AppStorage\FeaturedStorageServiceProvider',
 		'AppStorage\MessageStorageServiceProvider',
+		'AppStorage\PostViewStorageServiceProvider',
 	),
 
 	/*
