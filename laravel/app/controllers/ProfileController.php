@@ -36,9 +36,15 @@ class ProfileController extends BaseController {
 		$post = false; //Featured Post for the user is stored as $post.
 		$featured = false;
 		
+		$guest = Auth::guest();
+
+		//Below ensures that if the $alias is empty it will just redirect on not logged-in users
+		if(Auth::guest() && !$alias ) {
+			return Redirect::to('/');
+		}
 		
 		//This is for other users. not yourself
-		if($alias && $alias != Session::get('username')) {
+		if( ($alias && $alias != Auth::user()->username) || Auth::guest() ) {
 			$user = User::where('username', '=', $alias)->first();
 			$user_id = $user->id;//set the profile user id for rest of the session.
 			

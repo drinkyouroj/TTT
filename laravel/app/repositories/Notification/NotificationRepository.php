@@ -6,10 +6,8 @@ interface NotificationRepository {
 	//Instance
 	public function instance();
 
-	public function input($user_id);
-
 	//Create
-	public function create($input);
+	public function create($data);
 
 	//Read
 	public function find($post_id, $user_id, $type);

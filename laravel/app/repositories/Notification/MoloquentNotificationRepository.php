@@ -13,10 +13,18 @@ class MoloquentNotificationRepository implements NotificationRepository {
 		return new Motification;
 	}
 	
-	public function input($user_id) {}
-
 	//Create
-	public function create($input) {}
+	public function create($data) {
+		$not = self::instance();
+		$not->notification_type = $data['notification_type'];
+		$not->post_id = $data['post_id'];
+		$not->noticed = $data['noticed'];
+		$not->user_id = $data['user_id'];
+		$not->user = $data['user'];
+		$not->users = $data['users'];
+		$not->comment_id = $data['comment_id'] ? $data['comment_id'] : 0;
+		$not->save();
+	}
 
 	/**
 	 * Returns a notification object if it exists
