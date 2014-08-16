@@ -25,6 +25,9 @@ interface NotificationRepository {
 	//Update
 	public function noticed($array,$user_id);
 
+	public function pushUsers($not, $username);
+	public function pullUsers($not, $username);
+
 	//Delete
 	public function delete($user_id, $username, $post_id, $type);
 	

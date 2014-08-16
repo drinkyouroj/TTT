@@ -16,13 +16,13 @@ class MoloquentNotificationRepository implements NotificationRepository {
 	//Create
 	public function create($data) {
 		$not = self::instance();
-		$not->notification_type = $data['notification_type'];
-		$not->post_id = $data['post_id'];
-		$not->noticed = $data['noticed'];
-		$not->user_id = $data['user_id'];
+		$not->notification_type = (!empty($data['notification_type'])) ? $data['notification_type'] : 'none';
+		$not->post_id = (!empty($data['post_id'])) ? $data['post_id'] : 0;
+		$not->noticed = (!empty($data['noticed'])) ? $data['noticed'] : 0;
+		$not->user_id = (!empty($data['user_id'])) ? $data['user_id'] : 0;
 		$not->user = (!empty($data['user'])) ? $data['user'] : '' ;
 		$not->users = (!empty($data['users'])) ? $data['users'] : array() ;
-		$not->comment_id = (!empty($data['comment_id'])) ? $data['comment_id'] : '' ;
+		$not->comment_id = (!empty($data['comment_id'])) ? $data['comment_id'] : 0 ;
 		$not->save();
 		return $not;
 	}
@@ -85,6 +85,16 @@ class MoloquentNotificationRepository implements NotificationRepository {
 		$not->push('users', $username, true);
 	}
 	
+	public function pullUsers($not, $username) {
+		if($not) {
+			$not->pull('users', $action_user->username);
+			//delete the notification all together if there are no other users left.
+			if(count($not->first()->users) == 0) {
+				$not->delete();
+			}
+		}
+	}
+
 	/**
 	 * Delete a Notification
 	 * @param integer $user_id User id for the receiving end

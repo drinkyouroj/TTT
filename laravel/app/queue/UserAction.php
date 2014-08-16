@@ -44,16 +44,17 @@ class UserAction {
 									
 				//If the Notifiation does not exist, 
 				if(!$not) {
-					$not = $this->not->instance();
-					$not->post_id = $data['post_id'];
-					$not->post_title = $post->title;
-					$not->post_alias = $post->alias;
-					$not->user_id = $follower->follower_id;//Who this notification si going to.
-					$not->noticed = 0;
-					$not->notification_type = 'repost';
-					$not->save();
+					$not_data = array(
+						'post_id' => $data['post_id'],
+						'post_title' => $post->title,
+						'post_alias' => $post->alias,
+						'user_id'    => $follower->follower_id,
+						'noticed'    => 0,
+						'notification_type' => 'repost'
+						);
+					$not = $this->not->create($not_data);
 				}
-				$not->push('users', $data['username'],true);
+				$this->not->pushUsers($not, $data['username']);
 				
 				//below statement is to ensure that the user who owns the content doesn't get the repost.
 				if($follower->follower_id != $post->user->id) {
@@ -90,13 +91,9 @@ class UserAction {
 							$follower->follower_id, 
 							'repost'
 							);
-			
-			if($not != false) {
-				$not->pull('users', $action_user->username);
-				if(count($not->first()->users) == 0) {
-					$not->delete();
-				}
-			}
+
+			//pull the user out of notifications.
+			$this->not->pullUsers($not, $action_user->username);
 			
 			//below statement is to ensure that the user who owns the content doesn't get the repost.
 			if($follower->follower_id != $post->user->id) {
@@ -134,16 +131,18 @@ class UserAction {
 								);
 				
 			if($not != false) {
-				$not = $this->not->instance();
-				$not->post_id = $data['post_id'];
-				$not->post_title = $post->title;
-				$not->post_alias = $post->alias;
-				$not->user_id = $follower->follower_id;//Who this notification si going to.
-				$not->noticed = 0;
-				$not->notification_type = 'post';
-				$not->save();
+				$not_data = array(
+					'post_id' => $data['post_id'],
+					'post_title' => $post->title,
+					'post_alias' => $post->alias,
+					'user_id'    => $follower->follower_id,
+					'noticed'    => 0,
+					'notification_type' => 'post'
+					);
+				$not = $this->not->create($not_data);
 			}
-			$not->push('users', $data['username'], true);
+
+			$this->not->pushUsers($not, $data['username']);
 
 			$activity = array(
 						'action_id' => $data['user_id'],
@@ -153,8 +152,7 @@ class UserAction {
 						);					
 			$this->activity->create($activity);
 
-
-		}					
+		}
 		
 		$job->delete();
 		
