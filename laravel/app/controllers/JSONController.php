@@ -11,7 +11,8 @@ class JSONController extends BaseController {
 						LikeRepository $like,
 						FavoriteRepository $favorite,
 						ProfilePostRepository $profilepost,
-						ActivityRepository $activity
+						ActivityRepository $activity,
+						FeedRepository $feed
 
 						) {
 		$this->post = $post;
@@ -23,6 +24,7 @@ class JSONController extends BaseController {
 		$this->favorite = $favorite;
 		$this->profilepost = $profilepost; //This might change its name to feed or something.
 		$this->activity = $activity;
+		$this->feed = $feed;
 	}
 
 	//Like or Unlike a Post
@@ -371,6 +373,19 @@ class JSONController extends BaseController {
 			return Response::json(
 					array('result' =>'fail'),
 					200//response is OK!
+				);
+		}
+	}
+
+	//Test function to list the Feed.
+	public function getFeed() {
+		$user = Auth::user();
+
+		$feed = $this->feed->find($user->id, 12, 1, true);
+
+		if($feed) {
+			return Response::json(
+					array('feed' => $feed->toArray())
 				);
 		}
 	}

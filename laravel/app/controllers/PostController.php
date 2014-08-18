@@ -13,7 +13,8 @@ class PostController extends BaseController {
 							FavoriteRepository $favorite,
 							LikeRepository $like,
 							FollowRepository $follow,
-							PostViewRepository $postview
+							PostViewRepository $postview,
+							FeedRepository $feed
 
 							) {
 		$this->post = $post;
@@ -22,6 +23,7 @@ class PostController extends BaseController {
 		$this->like = $like;
 		$this->follow = $follow;
 		$this->postview = $postview;
+		$this->feed = $feed;
 	}
 
 	public function getIndex() {
@@ -197,22 +199,24 @@ class PostController extends BaseController {
 				}
 			
 				//Put it into the profile post table (my posts or what other people see as your activity)
-				$profile_post = new ProfilePost;
-				$profile_post->profile_id = $user->id;//post on your wall
-				$profile_post->user_id = $user->id;//post by me
-				$profile_post->post_id = $post->id;
-				$profile_post->post_type = 'post';
-				$profile_post->save();
+				$new_profilepost = array(
+					'profile_id' => $user->id,
+					'user_id' => $user->id,
+					'post_id' => $post->id,
+					'post_type' => 'post'
+					);
+				$this->profilepost->create($new_profilepost);
 				
 				//Also save this data to your own activity
-				$myactivity = new Activity;
-				$myactivity->user_id = $user->id;//who's profile is this going to?
-				$myactivity->action_id = $user->id;//Who's doing the action?
-				$myactivity->post_id = $post->id;
-				$myactivity->post_type = 'post';//new post!
-				$myactivity->save();
-				
-				//If this is the web server upload this content to the cdn.
+				$new_activity = array(
+					'user_id' => $user->id,//who's profile is this going to?
+					'action_id' => $user->id,//Who's doing the action?
+					'post_id' => $post->id,
+					'post_type' => 'post'//new post!
+					);
+				$this->activity->create($new_activity);
+
+				//If this is the web server upload this content to the CDN.
 				if(App::environment() == 'web') {
 					$file = OpenCloud::upload('Images', public_path().'/uploads/final_images/'.$post->image, $post->image);
 				}

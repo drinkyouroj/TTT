@@ -65,6 +65,16 @@ class UserAction {
 							'post_type' => 'repost'
 							);					
 					$this->activity->create($activity);
+
+					//New Feed System replaces the old activity;
+					$new_feed = array(
+							'user_id' => $follower->follower_id,
+							'post_title' => $post->title,
+							'post_id' => $data['post_id'],
+							'feed_type' => 'repost',
+							'users' => $action_user->username
+							);
+					$this->feed->create($new_feed);
 				}
 			}
 		$job->delete();
@@ -104,6 +114,14 @@ class UserAction {
 						'post_type' => 'repost'
 					);
 				$this->activity->delete($activity);
+
+				$del_feed = array(
+						'user_id' => $follower->follower_id,
+						'post_id' => $data['post_id'],
+						'feed_type' => 'repost',
+						'users' => ''
+						);
+				$this->feed->delete($del_feed);
 			}
 		}
 		$job->delete();

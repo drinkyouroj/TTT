@@ -1,6 +1,8 @@
 <?php 
-class Motification extends Moloquent {
+use Jenssegers\Mongodb\Model as Eloquent;
+
+class Motification extends Eloquent {
 		
 	protected $connection = 'mongodb';
-	protected $collection = 'notifications';	
+	protected $collection = 'notifications';
 }
