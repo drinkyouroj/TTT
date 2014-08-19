@@ -1,8 +1,6 @@
 <?php
 
-use \App, 
-	AppStorage\Post\PostRepository,
-	AppStorage\Notification\NotificationRepository;
+use \App;
 
 /**
  * User Queue Actions
@@ -17,6 +15,7 @@ class UserAction {
 		$this->not = App::make('AppStorage\Notification\NotificationRepository');
 		$this->follow = App::make('AppStorage\Follow\FollowRepository');
 		$this->activity = App::make('AppStorage\Activity\ActivityRepository');
+		$this->feed = App::make('AppStorage\Feed\FeedRepository');
 	}
 	
 	/**

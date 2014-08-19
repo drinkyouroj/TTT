@@ -386,17 +386,4 @@ class JSONController extends BaseController {
 		}
 	}
 
-	//Test function to list the Feed.
-	public function getFeed() {
-		$user = Auth::user();
-
-		$feed = $this->feed->find($user->id, 12, 1, true);
-
-		if($feed) {
-			return Response::json(
-					array('feed' => $feed->toArray())
-				);
-		}
-	}
-
 }

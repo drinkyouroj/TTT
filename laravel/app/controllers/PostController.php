@@ -14,7 +14,8 @@ class PostController extends BaseController {
 							LikeRepository $like,
 							FollowRepository $follow,
 							PostViewRepository $postview,
-							ProfilePost $profilepost,
+							ProfilePostRepository $profilepost,
+							ActivityRepository $activity,
 							FeedRepository $feed
 
 							) {
@@ -25,6 +26,7 @@ class PostController extends BaseController {
 		$this->follow = $follow;
 		$this->postview = $postview;
 		$this->profilepost = $profilepost;
+		$this->activity = $activity;
 		$this->feed = $feed;
 	}
 

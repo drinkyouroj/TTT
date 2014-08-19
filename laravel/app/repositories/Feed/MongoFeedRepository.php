@@ -16,6 +16,7 @@ class MongoFeedRepository implements FeedRepository {
 
 	//below is more of an upsert function.
 	public function create($data) {
+		//Figure out if the data exists.
 		$exists = self::exists(
 						$data['user_id'],
 						$data['post_id'],
@@ -30,13 +31,14 @@ class MongoFeedRepository implements FeedRepository {
 			$feed->post_title = $data['post_title'];
 			$feed->post_id = $data['post_id'];
 			$feed->feed_type = $data['feed_type'];
-			$feed->updated_at = $data['updated_at']; //we should just do a ternary and assign today's date here.
 			$feed->user = (!empty($data['user'])) ? $data['user'] : '' ; //We have a single user since its easier to access if its a new post.
 			$feed->users = (!empty($data['users'])) ? array($data['users']) : array() ;//Stores the users who are involved in the reposting action.
 			$feed->save();
 		} else {
 			$feed = $exists->first();
-			$feed->push('users', $data['users'], true);
+			if($feed) {
+				$feed->push('users', $data['users'], true);
+			}
 		}
 
 		return $feed;
@@ -85,10 +87,12 @@ class MongoFeedRepository implements FeedRepository {
 			$feed = $exists->first();
 
 			//gotta see if below works
-			if(count($feed->users) <= 1 ) {
-				$exists->delete();
-			} else {
-				$feed->pull('users', $data['users']);//just delete that one user.
+			if($feed) {
+				if(count($feed->users) <= 1 ) {
+					$exists->delete();
+				} else {
+					$feed->pull('users', $data['users']);//just delete that one user.
+				}
 			}
 			
 		} elseif($data['feed_type'] == 'post') {
