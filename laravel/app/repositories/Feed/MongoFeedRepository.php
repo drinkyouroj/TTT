@@ -92,7 +92,7 @@ class MongoFeedRepository implements FeedRepository {
 			}
 			
 		} elseif($data['feed_type'] == 'post') {
-			//only 1 user per
+			//only 1 user per post
 			$this->feed
 				->where('user_id', $data['user_id'])
 				->where('post_id', $data['post_id'])

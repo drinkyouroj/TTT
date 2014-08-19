@@ -15,12 +15,12 @@ class EloquentProfilePostRepository implements ProfilePostRepository {
 	}
 
 	//Create
-	public function create($user_id, $post, $type) {
+	public function create($data) {
 		$profilepost = self::instance();
-		$profilepost->post_id = $post->id;
-		$profilepost->profile_id = $user_id;
-		$profilepost->user_id = $post->user->id;
-		$profilepost->post_type = $type;
+		$profilepost->post_id = $data['post_id'];
+		$profilepost->profile_id = $data['profile_id'];
+		$profilepost->user_id = $data['user_id'];
+		$profilepost->post_type = $data['post_type'];
 		$profilepost->save();
 		return $profilepost;
 	}
@@ -51,11 +51,11 @@ class EloquentProfilePostRepository implements ProfilePostRepository {
 
 
 	//Delete (this is a soft delete)
-	public function delete($user_id, $post, $type) {
-		$this->profilepost->where('profile_id', $user_id)
-						->where('post_id', $post->id)
-						->where('user_id', $post->user->id)
-						->where('post_type', $type)
+	public function delete($data) {
+		$this->profilepost->where('profile_id', $data['user_id'])
+						->where('post_id', $data['post_id'])
+						->where('user_id', $data['user_id'])
+						->where('post_type', $data['post_type'])
 						->delete();
 	}
 

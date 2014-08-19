@@ -103,12 +103,15 @@ class JSONController extends BaseController {
 				
 				$this->favorite->create($user_id, $post_id);
 
-				//Add to Feed
-				$this->profilepost->create(
-						$user_id,
-						$post,
-						'favorite'
+				$new_profilepost = array(
+						'post_id' => $post->id,
+						'profile_id' => $user_id,
+						'user_id' => $post->user->id,
+						'post_type' => 'favorite'
 					);
+
+				//Add to Feed
+				$this->profilepost->create($new_profilepost);
 				
 				NotificationLogic::favorite($post_id);
 				
@@ -123,7 +126,13 @@ class JSONController extends BaseController {
 				$this->favorite->delete($user_id, $post_id);
 				
 				//Delete from the Feed
-				$this->profilepost->delete($user_id, $post, 'favorite');
+				$del_profilepost = array(
+						'post_id' => $post->id,
+						'profile_id' => $user_id,
+						'user_id' => $post->user->id,
+						'post_type' => 'favorite'
+					);
+				$this->profilepost->delete($del_profilepost);
 
 				//Delete from Notifications
 				NotificationLogic::unfavorite($post_id);
