@@ -81,16 +81,24 @@ class MongoFeedRepository implements FeedRepository {
 						$data['feed_type'],
 						false//We want the query and not the final count.
 						);
-			if($exists->count() === 1) {
-				$this->feed
-					->where('user_id', $data['user_id'])
-					->where('post_id', $data['post_id'])
-					->where('feed_type', $data['feed_type'])
-					->delete();
+
+			$feed = $exists->first();
+
+			//gotta see if below works
+			if(count($feed->users) === 1 ) {
+				$exists->delete();
 			} else {
-				
+				$feed->pull->('users', $data['users']);//just delete that one user.
 			}
 			
+		} elseif($data['feed_type'] == 'post') {
+			//only 1 user per
+			$this->feed
+				->where('user_id', $data['user_id'])
+				->where('post_id', $data['post_id'])
+				->where('feed_type', $data['feed_type'])
+				->where('user', $data['user'])
+				->delete();
 		}
 	}
 

@@ -119,7 +119,7 @@ class UserAction {
 						'user_id' => $follower->follower_id,
 						'post_id' => $data['post_id'],
 						'feed_type' => 'repost',
-						'users' => ''
+						'users' => $action_user->username
 						);
 				$this->feed->delete($del_feed);
 			}
@@ -169,6 +169,15 @@ class UserAction {
 						'post_type' => 'post'
 						);					
 			$this->activity->create($activity);
+
+			$new_feed = array(
+					'user_id' => $follower->follower_id,
+					'post_title' => $post->title,
+					'post_id' => $data['post_id'],
+					'feed_type' => 'post',
+					'users' => $data['username']
+					);
+			$this->feed->create($new_feed);
 
 		}
 		
