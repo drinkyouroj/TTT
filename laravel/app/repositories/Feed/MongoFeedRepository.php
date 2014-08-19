@@ -85,10 +85,10 @@ class MongoFeedRepository implements FeedRepository {
 			$feed = $exists->first();
 
 			//gotta see if below works
-			if(count($feed->users) === 1 ) {
+			if(count($feed->users) <= 1 ) {
 				$exists->delete();
 			} else {
-				$feed->pull->('users', $data['users']);//just delete that one user.
+				$feed->pull('users', $data['users']);//just delete that one user.
 			}
 			
 		} elseif($data['feed_type'] == 'post') {
