@@ -35,25 +35,18 @@ class UserAction {
 			//process notification for each follower
 			foreach($followers as $follower) {
 				
-				$not = $this->not->find(
-									$data['post_id'], //Post id	
-									$follower->follower_id, //person getting notified
-									'repost'
-									);
-									
-				//If the Notifiation does not exist, 
-				if(!$not) {
-					$not_data = array(
-						'post_id' => $data['post_id'],
-						'post_title' => $post->title,
-						'post_alias' => $post->alias,
-						'user_id'    => $follower->follower_id,
-						'noticed'    => 0,
-						'notification_type' => 'repost'
-						);
-					$not = $this->not->create($not_data);
-				}
-				$this->not->pushUsers($not, $data['username']);
+				// Create the notification
+				$not_data = array(
+					'post_id' => $data['post_id'],
+					'post_title' => $post->title,
+					'post_alias' => $post->alias,
+					'user_id'    => $follower->follower_id,
+					'noticed'    => 0,
+					'notification_type' => 'repost'
+					);
+				$not = $this->not->create($not_data, $action_user->username);
+				
+				
 				
 				//below statement is to ensure that the user who owns the content doesn't get the repost.
 				if($follower->follower_id != $post->user->id) {
@@ -140,26 +133,16 @@ class UserAction {
 		
 		//process notification for each follower
 		foreach($followers as $follower) {
-			
-			$not = $this->not->find(
-								$data['post_id'],
-								$follower->follower_id,
-								'post'
-								);
 				
-			if($not != false) {
-				$not_data = array(
-					'post_id' => $data['post_id'],
-					'post_title' => $post->title,
-					'post_alias' => $post->alias,
-					'user_id'    => $follower->follower_id,
-					'noticed'    => 0,
-					'notification_type' => 'post'
-					);
-				$not = $this->not->create($not_data);
-			}
-
-			$this->not->pushUsers($not, $data['username']);
+			$not_data = array(
+				'post_id' => $data['post_id'],
+				'post_title' => $post->title,
+				'post_alias' => $post->alias,
+				'user_id'    => $follower->follower_id,
+				'noticed'    => 0,
+				'notification_type' => 'post'
+				);
+			$not = $this->not->create($not_data, $data['username']);
 
 			$activity = array(
 						'action_id' => $data['user_id'],
