@@ -126,7 +126,7 @@ class PostController extends BaseController {
 				}
 			}
 					
-			return View::make('posts/new_form')->with('fullscreen', true);
+			return View::make('v2/posts/new_post_form');
 		}
 		
 	}
