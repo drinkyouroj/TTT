@@ -35,33 +35,30 @@ class NotificationLogic {
 	 */
 	public function favorite($post_id) 
 	{
-		$post = $this->post->findById($post_id);
+		$post = $this->post->findById( $post_id );
 		
-		$not = $this->not->find($post->id, $post->user->id, 'favorite');
-		
-		//Lot of this stuff still needs to be put in the repositories, but 1 step at a time!
-		if(!$not) {
-			$not_data = array(
-				'post_id' => $post->id,
-				'post_title' => $post->title,
-				'post_alias' => $post->alias,
-				'user_id' => $post->user->id,
-				'noticed' => 0,
-				'notification_type' => 'favorite'
-				);
-			$not = $this->not->create($not_data);
-		}
-		
-		$this->not->pushUsers($not, Auth::user()->username);
-		
+		$not_data = array(
+			'post_id' => $post->id,
+			'post_title' => $post->title,
+			'post_alias' => $post->alias,
+			'user_id' => $post->user->id,
+			'noticed' => 0,
+			'notification_type' => 'favorite'
+		);
+
+		$this->not->create( $not_data, Auth::user()->username );
+
 	}
 	
+	/**
+	 *	Unfavorite a Notification.
+	 */
 	public function unfavorite($post_id) {
-		$user_id = Auth::user()->id;
 		$post = $this->post->findById($post_id);
-		
-		$not = $this->not->find($post->id, $post->user->id, 'favorite'); 
-
+		// Find the notification
+		$not = $this->not->find($post->id, $post->user->id, 'favorite');
+		// Pull the user from the array of users attached to this notification
+		// TODO: use pullUsers method, it already has the delete logic!
 		if($not != false) {
 			$not->pull('users', Auth::user()->username);
 			if(count($not->first()->users) == 0) {

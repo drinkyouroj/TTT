@@ -13,19 +13,33 @@ class MoloquentNotificationRepository implements NotificationRepository {
 		return new Motification;
 	}
 	
-	//Create
-	public function create($data) {
-		$not = self::instance();
-		$not->notification_type = (!empty($data['notification_type'])) ? $data['notification_type'] : 'none';
-		$not->post_id = (!empty($data['post_id'])) ? $data['post_id'] : 0;
-		$not->noticed = (!empty($data['noticed'])) ? $data['noticed'] : 0;
-		$not->user_id = (!empty($data['user_id'])) ? $data['user_id'] : 0;
-		$not->user = (!empty($data['user'])) ? $data['user'] : '' ;
-		$not->users = (!empty($data['users'])) ? $data['users'] : array() ;
-		$not->comment_id = (!empty($data['comment_id'])) ? $data['comment_id'] : 0 ;
-		$not->save();
+	// Creates a new notification accordingly. If the notification exists, push the action_user to the
+	// array of users associated with this notification (ie: multiple users favoriting the same post).
+	//
+	// returns: the notification object.
+	public function create($data, $action_user) {
+
+		$not = self::find($data['post_id'], $data['user_id'], $data['notification_type']);
+
+		// If the notification does not already exist, create one.
+		if ( !$not ) {
+			$not = self::instance();
+			$not->notification_type = (!empty($data['notification_type'])) ? $data['notification_type'] : 'none';
+			$not->post_id = (!empty($data['post_id'])) ? $data['post_id'] : 0;
+			$not->noticed = (!empty($data['noticed'])) ? $data['noticed'] : 0;
+			$not->user_id = (!empty($data['user_id'])) ? $data['user_id'] : 0;
+			$not->user = (!empty($data['user'])) ? $data['user'] : '' ;
+			$not->users = (!empty($data['users'])) ? $data['users'] : array() ;
+			$not->comment_id = (!empty($data['comment_id'])) ? $data['comment_id'] : 0 ;
+			$not->save();
+		}
+
+		// Push the action_user to the notification object
+		self::pushUsers( $not, $action_user );
+
 		return $not;
 	}
+
 
 	/**
 	 * Returns a notification object if it exists
@@ -72,7 +86,9 @@ class MoloquentNotificationRepository implements NotificationRepository {
 	}
 	
 	//Check
-	public function check() {}
+	public function check() {
+		
+	}
 
 	//Update
 	public function noticed($notification_ids, $user_id) {
