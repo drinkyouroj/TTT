@@ -13,11 +13,20 @@
 	@stop
 
 	@section('content')
+
+	<div class="controls-wrapper">
+
+	</div>
+
+	<div class="fixed">
+	</div>
+
 	{{--Wrapper is to be set as 100% and background black--}}
-	<div class="submit-wrapper">
+	<div class="top-submit-wrapper">
 		{{--The big container so that we can assign the images to it. max-width 1440 or something like that--}}
-		<div class="submit-container">
+		<div class="top-submit-container">
 
 		</div>
-	</div>	
+	</div>
+
 	@stop
