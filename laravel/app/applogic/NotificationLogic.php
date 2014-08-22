@@ -100,6 +100,7 @@ class NotificationLogic {
 	public function repost ( $post_id ) {
 		// Find the post
 		$post = $this->post->findById( $post_id );
+		
 		// Construct the notification params
 		$not_params = array(
 			'post_id' => $post->id,

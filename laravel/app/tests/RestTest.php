@@ -29,20 +29,65 @@ class RestTest extends TestCase {
 		}
 	}
 
-	/**
-	 *	Test GET:rest/categories/all/viewed
-	 *
-	 *	@todo Check that the response is in sorted order based on view count.
-	 *	@todo Also add the remaining category sorting methods: recent, popular(default), discussed, longest, shortest.
-	 */
-	public function testGetCategoriesAllViewed () {
-		try {
-			$response = $this->call('GET', 'rest/categories/all/viewed');
-			// TODO: make sure sorted by views...
-		} catch ( Exception $e ) {
-			$this->fail( 'Failed to load resource at Get:rest/categories/all/viewed\n'.$e );
-		}
-	}
+			/**
+			 *	Test GET:rest/categories/all/viewed
+			 *
+			 *	@todo Check that the response is in sorted order based on view count.
+			 */
+			public function testGetCategoriesAllViewed () {		
+				try {
+					$response = $this->call('GET', 'rest/categories/all/viewed');
+					// TODO: make sure sorted by views...
+				} catch ( Exception $e ) {
+					$this->fail( 'Failed to load resource at Get:rest/categories/all/viewed\n'.$e );
+				}
+			}
+			/**
+			 *	Test GET:rest/categories/all/recent
+			 */
+			public function testGetCategoriesAllRecent () {		
+				try {
+					$response = $this->call('GET', 'rest/categories/all/recent');
+					// TODO: make sure sorted by views...
+				} catch ( Exception $e ) {
+					$this->fail( 'Failed to load resource at Get:rest/categories/all/recent\n'.$e );
+				}
+			}
+			/**
+			 *	Test GET:rest/categories/all/discussed
+			 */
+			public function testGetCategoriesAllDiscussed () {		
+				try {
+					$response = $this->call('GET', 'rest/categories/all/discussed');
+					// TODO: make sure sorted by views...
+				} catch ( Exception $e ) {
+					$this->fail( 'Failed to load resource at Get:rest/categories/all/discussed\n'.$e );
+				}
+			}
+			/**
+			 *	Test GET:rest/categories/all/longest
+			 */
+			public function testGetCategoriesAllLongest () {		
+				try {
+					$response = $this->call('GET', 'rest/categories/all/longest');
+					// TODO: make sure sorted by views...
+				} catch ( Exception $e ) {
+					$this->fail( 'Failed to load resource at Get:rest/categories/all/longest\n'.$e );
+				}
+			}
+			/**
+			 *	Test GET:rest/categories/all/shortest
+			 */
+			public function testGetCategoriesAllShortest () {		
+				try {
+					$response = $this->call('GET', 'rest/categories/all/shortest');
+					// TODO: make sure sorted by views...
+				} catch ( Exception $e ) {
+					$this->fail( 'Failed to load resource at Get:rest/categories/all/shortest\n'.$e );
+				}
+			}
+
+			
 
 	/**
 	 *	Test GET:rest/profile

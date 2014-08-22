@@ -224,7 +224,7 @@ class JSONController extends BaseController {
 		}
 	}
 
-	//Reposts a certain post.
+	//  Reposts a certain post.
 	public function getReposts() {
 		if(Request::segment(3) != 0) {
 
@@ -239,6 +239,9 @@ class JSONController extends BaseController {
 			
 			if( !$exists && !$owns ) {  //Doesn't exists and you don't own it.
 				// Repost!
+				$this->repost->create( $user_id, $post_id );
+
+				// Notify the repost to owner
 				NotificationLogic::repost( $post_id );
 				
 				//This has to be outside 
