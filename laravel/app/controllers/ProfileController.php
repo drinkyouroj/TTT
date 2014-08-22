@@ -131,6 +131,7 @@ class ProfileController extends BaseController {
 
 				
 			} else {
+				$user = Auth::user();
 				$activity = $this->activity
 								->findByUserId(
 									$user->id,
