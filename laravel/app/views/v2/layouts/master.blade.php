@@ -6,11 +6,10 @@
        
 	<link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
     
-    <!-- Bootstrap -->
-    <link href="{{Config::get('app.url')}}/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="{{Config::get('app.url')}}/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
     <link href="{{Config::get('app.url')}}/css/animate.css" rel="stylesheet" media="screen">
     
+	<link href="{{Config::get('app.url')}}/css/compiled/v2/bs.css" rel="stylesheet" media="screen">
+
     <!--Application Shared CSS-->
     <link href="{{Config::get('app.url')}}/css/views/style.css" rel="stylesheet" media="screen">
     
@@ -58,16 +57,10 @@
 
 @yield('filters')
 
-	<div class="container">
-		@yield('content','Fudge no content defined.')
-	 	<div class="footer-exes"></div>
-	</div>
 
-
-
-@include('v2.layouts.footer')
+@yield('content','Fudge no content defined.')
     
-    
+ 
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/bootstrap.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/jquery.scrolltofixed.min.js"></script>

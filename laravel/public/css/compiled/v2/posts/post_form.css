@@ -1,0 +1,147 @@
+/* line 5, ../../../../../sass/v2/_base.scss */
+input, textarea, select {
+  -webkit-appearance: none;
+  -webkit-box-shadow: none;
+  outline: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+}
+
+/* line 12, ../../../../../sass/v2/_base.scss */
+textarea {
+  resize: none;
+}
+
+/* line 4, ../../../../../sass/v2/posts/post_form.scss */
+.controls-wrapper {
+  position: fixed;
+  top: 30px;
+  height: 50px;
+  width: 100%;
+  background: #000;
+}
+/* line 12, ../../../../../sass/v2/posts/post_form.scss */
+.controls-wrapper .controls-container button {
+  border: none;
+  background: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+/* line 17, ../../../../../sass/v2/posts/post_form.scss */
+.controls-wrapper .controls-container .post-category {
+  text-align: center;
+}
+/* line 19, ../../../../../sass/v2/posts/post_form.scss */
+.controls-wrapper .controls-container .post-category button {
+  background: #fff;
+  color: #000;
+}
+/* line 24, ../../../../../sass/v2/posts/post_form.scss */
+.controls-wrapper .controls-container .draft-publish {
+  text-align: right;
+}
+/* line 26, ../../../../../sass/v2/posts/post_form.scss */
+.controls-wrapper .controls-container .draft-publish button {
+  width: 100px;
+  background: blue;
+  color: #fff;
+}
+
+/* line 35, ../../../../../sass/v2/posts/post_form.scss */
+.top-submit-wrapper {
+  padding-top: 100px;
+  background: #000;
+}
+/* line 44, ../../../../../sass/v2/posts/post_form.scss */
+.top-submit-wrapper .top-submit-container label {
+  display: inline-block;
+  padding: 3px 5px;
+  margin: 3px 0;
+  background: red;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 8px;
+  font-family: sans-serif;
+}
+/* line 48, ../../../../../sass/v2/posts/post_form.scss */
+.top-submit-wrapper .top-submit-container input[type="text"] {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+  background: none;
+}
+/* line 54, ../../../../../sass/v2/posts/post_form.scss */
+.top-submit-wrapper .top-submit-container .title input {
+  font-size: 40px;
+}
+/* line 61, ../../../../../sass/v2/posts/post_form.scss */
+.top-submit-wrapper .top-submit-container .tldr input {
+  border-top: 0;
+}
+/* line 64, ../../../../../sass/v2/posts/post_form.scss */
+.top-submit-wrapper .top-submit-container .tldr label {
+  float: right;
+}
+/* line 69, ../../../../../sass/v2/posts/post_form.scss */
+.top-submit-wrapper .top-submit-container .image-select {
+  text-align: center;
+  margin: 30px 0;
+  width: 100%;
+}
+/* line 79, ../../../../../sass/v2/posts/post_form.scss */
+.top-submit-wrapper .top-submit-container .image-select a span {
+  color: #eee;
+  font-size: 26px;
+  text-transform: uppercase;
+  font-family: sans-serif;
+}
+
+/* line 90, ../../../../../sass/v2/posts/post_form.scss */
+.body-submit-wrapper {
+  top: -10px;
+}
+/* line 94, ../../../../../sass/v2/posts/post_form.scss */
+.body-submit-wrapper .body-submit-container .story label {
+  display: inline-block;
+  padding: 3px 5px;
+  margin: 3px 0;
+  background: red;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 8px;
+  font-family: sans-serif;
+  float: right;
+}
+/* line 98, ../../../../../sass/v2/posts/post_form.scss */
+.body-submit-wrapper .body-submit-container .story textarea {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+}
+/* line 101, ../../../../../sass/v2/posts/post_form.scss */
+.body-submit-wrapper .body-submit-container .story .row-content {
+  margin: 30px 0;
+  font-size: 12px;
+  line-height: 150%;
+  text-align: justify;
+  padding: 30px 0 10px 0;
+  -moz-column-gap: 40px;
+  /* Firefox */
+  -webkit-column-gap: 40px;
+  /* Safari and Chrome */
+  column-gap: 40px;
+  -moz-column-count: 2;
+  /* Firefox */
+  -webkit-column-count: 2;
+  /* Safari and Chrome */
+  column-count: 2;
+  outline: none;
+}
