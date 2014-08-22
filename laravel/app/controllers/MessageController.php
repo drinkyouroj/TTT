@@ -124,7 +124,7 @@ class MessageController extends BaseController {
 					'notification_type' => 'message'
 					);
 
-				$not = $this->not->create($not_data);
+				$not = $this->not->create( $not_data, Auth::user()->username );
 				
 				//Let's update the parent thread's last mod and last ids so that the thread knows to order it.
 				$this->message->updateLast($message->reply_id, $message->id);

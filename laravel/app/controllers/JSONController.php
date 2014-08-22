@@ -251,8 +251,10 @@ class JSONController extends BaseController {
 				);
 			} elseif ( $exists ) {  //Relationship already exists
 				
+				// Delete the repost!
 				$this->repost->delete( $user_id, $post_id );
-												
+							
+				// Delete the notification of the repost					
 				NotificationLogic::unrepost( $post_id );
 				
 				return Response::json(

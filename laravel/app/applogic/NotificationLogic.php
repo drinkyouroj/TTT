@@ -100,7 +100,7 @@ class NotificationLogic {
 	public function repost ( $post_id ) {
 		// Find the post
 		$post = $this->post->findById( $post_id );
-		
+
 		// Construct the notification params
 		$not_params = array(
 			'post_id' => $post->id,
@@ -168,24 +168,17 @@ class NotificationLogic {
 			//Gotta make sure to not notify you replying to you.
 			if($orig_comment->user_id != $user_id) {
 				
-				$not = $this->not->find($post->id, $orig_comment->user_id, 'reply');
-				
-				if(!$not) {
-					$not = $this->not->instance();
-					$not->post_id = $post->id;
-					$not->post_title = $post->title;
-					$not->post_alias = $post->alias;
-					$not->user_id = $orig_comment->user_id;//Who this notification si going to.
-					$not->noticed = 0;
-					$not->comment_id = $comment->id;
-					$not->notification_type = 'reply';
-					$not->save();
-				} else {
-					//if it exists, just update.
-					$not->update(array('noticed' => 0));
-				}
-				$not->push('users', $username, true);
-				
+				$not_params = array(
+					'post_id' => $post->id,
+					'post_title' => $post->title,
+					'post_alias' => $post->alias,
+					'user_id' => $orig_comment->user_id,
+					'noticed' => 0,
+					'comment_id' => $comment->id,
+					'notification_type' => 'reply'
+				);
+
+				$this->not->create( $not_params, $username );
 			}
 		}
 	}
