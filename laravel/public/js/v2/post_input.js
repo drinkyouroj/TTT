@@ -26,7 +26,14 @@ $(function() {
 			}
 			console.log(current);
 		});
+	} else {
+		//Gotta hide the contenteditable div.
+
+
+		//switch out the submit process.
 	}
+
+
 });
 
 function iOSversion() {

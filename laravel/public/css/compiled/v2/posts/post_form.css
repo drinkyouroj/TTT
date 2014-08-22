@@ -15,7 +15,7 @@ textarea {
   resize: none;
 }
 
-/* line 4, ../../../../../sass/v2/posts/post_form.scss */
+/* line 6, ../../../../../sass/v2/posts/post_form.scss */
 .controls-wrapper {
   position: fixed;
   top: 30px;
@@ -23,7 +23,7 @@ textarea {
   width: 100%;
   background: #000;
 }
-/* line 12, ../../../../../sass/v2/posts/post_form.scss */
+/* line 14, ../../../../../sass/v2/posts/post_form.scss */
 .controls-wrapper .controls-container button {
   border: none;
   background: none;
@@ -31,32 +31,32 @@ textarea {
   -moz-appearance: none;
   appearance: none;
 }
-/* line 17, ../../../../../sass/v2/posts/post_form.scss */
+/* line 19, ../../../../../sass/v2/posts/post_form.scss */
 .controls-wrapper .controls-container .post-category {
   text-align: center;
 }
-/* line 19, ../../../../../sass/v2/posts/post_form.scss */
+/* line 21, ../../../../../sass/v2/posts/post_form.scss */
 .controls-wrapper .controls-container .post-category button {
   background: #fff;
   color: #000;
 }
-/* line 24, ../../../../../sass/v2/posts/post_form.scss */
+/* line 26, ../../../../../sass/v2/posts/post_form.scss */
 .controls-wrapper .controls-container .draft-publish {
   text-align: right;
 }
-/* line 26, ../../../../../sass/v2/posts/post_form.scss */
+/* line 28, ../../../../../sass/v2/posts/post_form.scss */
 .controls-wrapper .controls-container .draft-publish button {
   width: 100px;
   background: blue;
   color: #fff;
 }
 
-/* line 35, ../../../../../sass/v2/posts/post_form.scss */
+/* line 37, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper {
   padding-top: 100px;
   background: #000;
 }
-/* line 44, ../../../../../sass/v2/posts/post_form.scss */
+/* line 46, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper .top-submit-container label {
   display: inline-block;
   padding: 3px 5px;
@@ -67,7 +67,7 @@ textarea {
   font-size: 8px;
   font-family: sans-serif;
 }
-/* line 48, ../../../../../sass/v2/posts/post_form.scss */
+/* line 50, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper .top-submit-container input[type="text"] {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -76,25 +76,25 @@ textarea {
   border-radius: 0;
   background: none;
 }
-/* line 54, ../../../../../sass/v2/posts/post_form.scss */
+/* line 56, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper .top-submit-container .title input {
   font-size: 40px;
 }
-/* line 61, ../../../../../sass/v2/posts/post_form.scss */
+/* line 63, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper .top-submit-container .tldr input {
   border-top: 0;
 }
-/* line 64, ../../../../../sass/v2/posts/post_form.scss */
+/* line 66, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper .top-submit-container .tldr label {
   float: right;
 }
-/* line 69, ../../../../../sass/v2/posts/post_form.scss */
+/* line 71, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper .top-submit-container .image-select {
   text-align: center;
   margin: 30px 0;
   width: 100%;
 }
-/* line 79, ../../../../../sass/v2/posts/post_form.scss */
+/* line 81, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper .top-submit-container .image-select a span {
   color: #eee;
   font-size: 26px;
@@ -102,11 +102,11 @@ textarea {
   font-family: sans-serif;
 }
 
-/* line 90, ../../../../../sass/v2/posts/post_form.scss */
+/* line 92, ../../../../../sass/v2/posts/post_form.scss */
 .body-submit-wrapper {
   top: -10px;
 }
-/* line 94, ../../../../../sass/v2/posts/post_form.scss */
+/* line 96, ../../../../../sass/v2/posts/post_form.scss */
 .body-submit-wrapper .body-submit-container .story label {
   display: inline-block;
   padding: 3px 5px;
@@ -118,7 +118,7 @@ textarea {
   font-family: sans-serif;
   float: right;
 }
-/* line 98, ../../../../../sass/v2/posts/post_form.scss */
+/* line 100, ../../../../../sass/v2/posts/post_form.scss */
 .body-submit-wrapper .body-submit-container .story textarea {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -126,13 +126,16 @@ textarea {
   -o-border-radius: 0;
   border-radius: 0;
 }
-/* line 101, ../../../../../sass/v2/posts/post_form.scss */
+/* line 103, ../../../../../sass/v2/posts/post_form.scss */
+.body-submit-wrapper .body-submit-container .story .text-inputs {
+  border: 1px solid darkgrey;
+}
+/* line 106, ../../../../../sass/v2/posts/post_form.scss */
 .body-submit-wrapper .body-submit-container .story .row-content {
-  margin: 30px 0;
   font-size: 12px;
   line-height: 150%;
   text-align: justify;
-  padding: 30px 0 10px 0;
+  padding: 30px 10px 10px 10px;
   -moz-column-gap: 40px;
   /* Firefox */
   -webkit-column-gap: 40px;
