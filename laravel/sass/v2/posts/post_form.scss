@@ -1,0 +1,117 @@
+@import '../base';//Must import this everywhere.
+
+//Top Controls Fixed (Post Type, Category, Drafe, Publish)
+.controls-wrapper {
+	position: fixed;
+	top: $navbar_height;
+	height: 50px;//height of the Controls bar.
+	width: 100%;
+	background: #000;
+	.controls-container {
+		//button reset.
+		button {
+			border:none;
+			background:none;
+			@include appearance(none);			
+		}
+		.post-category {
+			text-align: center;
+			button {
+				background:#fff;
+				color:#000;
+			}
+		}
+		.draft-publish {
+			text-align: right;
+			button {
+				width: 100px;
+				background: blue;
+				color:#fff;
+			}
+		}
+	}
+}
+
+.top-submit-wrapper {
+	padding-top: 100px;
+	background:#000;
+	.top-submit-container {
+		//Shared error styling
+		.error {
+
+		}
+
+		label {
+			@include label;
+		}
+
+		input[type="text"] {
+			@include border-radius(0);
+			background: none;
+		}
+
+		.title {
+			input {
+				font-size: 40px;
+
+			}
+		}
+
+		.tldr {
+			input {
+				border-top: 0;
+			}
+			label {
+				float: right;
+			}
+		}
+
+		.image-select {
+			text-align: center;
+			
+			margin: 30px 0;//This determines the height of the image.
+
+			width: 100%;
+			a {
+				img {
+
+				}
+				span {
+					color:#eee;
+					font-size: 26px;
+					text-transform: uppercase;
+					font-family: sans-serif;
+				}
+			}
+		}
+	}
+}
+
+.body-submit-wrapper {
+	top: -10px;
+	.body-submit-container {
+		.story {
+			label {
+				@include label;
+				float: right;
+			}
+			textarea {
+				@include border-radius(0);
+			}
+			.row-content {
+				margin: 30px 0;
+				font-size:12px;
+				line-height:150%;
+				text-align:justify;
+				padding: 30px 0 10px 0;
+				-moz-column-gap:40px; /* Firefox */
+				-webkit-column-gap:40px; /* Safari and Chrome */
+				column-gap:40px;
+				-moz-column-count:2; /* Firefox */
+				-webkit-column-count:2; /* Safari and Chrome */
+				column-count:2;
+				outline: none;
+			}
+		}
+	}
+}

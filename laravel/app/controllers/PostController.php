@@ -126,7 +126,7 @@ class PostController extends BaseController {
 				}
 			}
 					
-			return View::make('v2/posts/new_post_form');
+			return View::make('v2/posts/post_form');
 		}
 		
 	}

@@ -1,5 +1,32 @@
+//import the compass library
 @import "compass";
-@import "_grids.scss";
-@import "../../../bower_components/bootstrap-sass/lib/bootstrap.scss";
 
-//Below is to override the bootstrap grid breakpoints.
+//TTT Defaults:
+input,textarea, select {
+	-webkit-appearance: none;
+	-webkit-box-shadow: none;
+	outline: none;
+	@include border-radius(0);
+}
+
+textarea {
+    resize: none;
+}
+
+//Navbar*****
+$navbar_height: 30px;
+
+
+@mixin label() {
+	display:inline-block;
+	padding: 3px 5px;
+	margin: 3px 0;
+	
+	background: red;//setup this color later
+
+	color:#fff;
+	text-transform: uppercase;
+	font-size: 8px;
+	font-family: sans-serif;
+
+}
