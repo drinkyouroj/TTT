@@ -31,81 +31,85 @@ class NotificationLogic {
 	}
 	
 	/**
-	 * Favorites Notifications.
+	 * 	Favorites Notifications.
+	 * 	@param $post_id: The post being favorited
 	 */
-	public function favorite($post_id) 
+	public function favorite ( $post_id )
 	{
+		// Find the post
+		$post = $this->post->findById( $post_id );
+		// Construct the notification params
+		$not_params = array(
+			'post_id' => $post->id,
+			'post_title' => $post->title,
+			'post_alias' => $post->alias,
+			'user_id' => $post->user->id,
+			'notification_type' => 'favorite'
+		);
+		// Create the notification
+		$this->not->create( $not_params, Auth::user()->username );
+	}
+	
+	/**
+	 *	Unfavorite a Notification.
+	 * 	@param $post_id: The post being unfavorited
+	 */
+	public function unfavorite ( $post_id ) {
+		// Find the post
 		$post = $this->post->findById($post_id);
-		
+		// Find the notification ( if any )
 		$not = $this->not->find($post->id, $post->user->id, 'favorite');
-		
-		//Lot of this stuff still needs to be put in the repositories, but 1 step at a time!
-		if(!$not) {
-			$not_data = array(
-				'post_id' => $post->id,
-				'post_title' => $post->title,
-				'post_alias' => $post->alias,
-				'user_id' => $post->user->id,
-				'noticed' => 0,
-				'notification_type' => 'favorite'
-				);
-			$not = $this->not->create($not_data);
-		}
-		
-		$this->not->pushUsers($not, Auth::user()->username);
-		
-	}
-	
-	public function unfavorite($post_id) {
-		$user_id = Auth::user()->id;
-		$post = $this->post->findById($post_id);
-		
-		$not = $this->not->find($post->id, $post->user->id, 'favorite'); 
-
-		if($not != false) {
-			$not->pull('users', Auth::user()->username);
-			if(count($not->first()->users) == 0) {
-				$not->delete();
-			}
-		}
+		// Pull the user from the array of users attached to this notification
+		$this->not->pullUsers($not, Auth::user()->username);
 	}
 
-	public function follow($other_user_id) {
-		//Below is an insert function.  Follows require a new row regardless 
-		$not = $this->not->instance();
-		$not->post_id = 0;
-		$not->noticed = 0;
-		$not->user_id = intval($other_user_id);//the person being notified.
-		$not->notification_type = 'follow';
-		$not->user = Auth::user()->username;//The follower's name
-		$not->users = array(Auth::user()->username);
-		$not->save();
+	/**
+	 *	Follow User Notifcation
+	 *  @param $other_user_id: The user being followed
+	 */
+	public function follow ( $other_user_id ) {
+		// Construct the notification params
+		$not_params = array(
+			'user' => Auth::user()->username,  // The follower's name
+			'user_id' => intval( $other_user_id ),  // The person being notified
+			'post_id' => 0,  // post_id == 0 for all notifications of type 'follow'
+			'notification_type' => 'follow'
+		);
+		// Create the notification
+		$this->not->create( $not_params, Auth::user()->username );
 	}
 
-	public function unfollow($user_id) {
+	/**
+	 *	Unfollow User Notification
+	 *  @param $user_id: The user being unfollowed
+	 */
+	public function unfollow ( $user_id ) {
+		// Delete the notification 
 		$this->not->delete(
-				$user_id, 
-				null, 
-				Auth::user()->username, 
-				'follow'
-				);
+			$user_id,
+			null,
+			Auth::user()->username, 
+			'follow'
+		);
 	}
 
-	
-	public function repost($post) {
-		$not = $this->not->find($post->id, $post->user->id, 'repost');
-				
-		if(!$not) {
-			$not = $this->not->instance();
-			$not->post_id = $post->id;
-			$not->post_title = $post->title;
-			$not->post_alias = $post->alias;
-			$not->user_id = $post->user->id;//Who this notification si going to.
-			$not->noticed = 0;
-			$not->notification_type = 'repost';
-			$not->save();
-		}
-		$not->push('users', Auth::user()->username,true);
+	/**
+	 *	Repost Notification
+	 *  @param $post_id: The post being reposted
+	 */
+	public function repost ( $post_id ) {
+		// Find the post
+		$post = $this->post->findById( $post_id );
+		// Construct the notification params
+		$not_params = array(
+			'post_id' => $post->id,
+			'post_title' => $post->title,
+			'post_alias' => $post->alias,
+			'user_id' => $post->user->id,
+			'notification_type' => 'repost'
+		);
+		// Create the notification
+		$this->not->create( $not_params, Auth::user()->username );
 		
 		//Add to follower's notifications
 		Queue::push('UserAction@repost', 
@@ -117,9 +121,14 @@ class NotificationLogic {
 					);
 	}
 	
-	public function unrepost($post_id) {
-		//Should we get rid fo the notification to the original?
+	/**
+	 *	Un-repost Notification
+	 *  @param $post_id: The post being un-reposted
+	 */
+	public function unrepost ( $post_id ) {
+		//Should we get rid of the notification to the original?
 		
+
 		Queue::push('UserAction@delrepost', //maybe we need to rename one those these 2 methods to keep it consistent.
 							array(
 								'post_id' => $post_id,
@@ -134,34 +143,26 @@ class NotificationLogic {
 	 * @param object $post The Post object
 	 * @param object $comment The Comment Object
 	 */
-	public function comment($post, $comment) 
-	{
+	public function comment ( $post, $comment ) {
 		$user_id = Auth::user()->id;	
 		$username = Auth::user()->username;
-		//Check to make sure that you don't own the post.
-		if($post->user_id != $user_id) {
-			
-			$not = $this->not->find($post->id, $post->user->id, 'comment');
-			
-			if(!$not) {
-				$not = $this->not->instance();
-				$not->post_id = $post->id;
-				$not->post_title = $post->title;
-				$not->post_alias = $post->alias;
-				$not->user_id = $post->user->id;//Who this notification si going to.
-				$not->noticed = 0;
-				$not->comment_id = $comment->id;
-				$not->notification_type = 'comment';
-				$not->save();
-			} else {
-				//if it exists, just update.
-				$not->update(array('noticed' => 0));
-			}
-			$not->push('users', $username,true);
+		// Check to make sure that you don't own the post.
+		if ( $post->user_id != $user_id ) {
+			// Construct the Notification params...
+			$not_params = array(
+				'post_id' => $post->id,
+				'post_title' => $post->title,
+				'post_alias' => $post->alias,
+				'user_id' => $post->user->id,
+				'noticed' => 0,
+				'comment_id' => $comment->id,
+				'notification_type' => 'comment'
+			);
+			$this->not->create( $not_params, $username );
 		}
 
-		//If reply
-		if($comment->parent_id != 0 ) {
+		//  If reply
+		if ( $comment->parent_id != 0 ) {
 			$orig_comment = $this->comment->findById($comment->parent_id);
 			//Gotta make sure to not notify you replying to you.
 			if($orig_comment->user_id != $user_id) {

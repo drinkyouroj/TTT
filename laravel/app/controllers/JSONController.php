@@ -237,24 +237,20 @@ class JSONController extends BaseController {
 			//You can't repost your own stuff.
 			$owns = $this->post->owns($post_id, $user_id);
 			
-			if(!$exists && !$owns) {//Doesn't exists and you don't own it.
-				//Crete a new repost
-				$this->repost->create($user_id, $post_id);
-									
-				$post = $this->post->findById($post_id);
-				
-				NotificationLogic::repost($post);
+			if( !$exists && !$owns ) {  //Doesn't exists and you don't own it.
+				// Repost!
+				NotificationLogic::repost( $post_id );
 				
 				//This has to be outside 
 				return Response::json(
 					array('result'=>'success'),
 					200//response is OK!
 				);
-			} elseif($exists) {//Relationship already exists
+			} elseif ( $exists ) {  //Relationship already exists
 				
-				$this->repost->delete($user_id, $post_id);
+				$this->repost->delete( $user_id, $post_id );
 												
-				NotificationLogic::unrepost($post_id);
+				NotificationLogic::unrepost( $post_id );
 				
 				return Response::json(
 					array('result'=>'deleted'),
