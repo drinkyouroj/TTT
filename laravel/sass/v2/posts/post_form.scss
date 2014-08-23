@@ -98,25 +98,22 @@ $border_color: #a9a9a9;
 				float: right;
 			}
 			textarea {
+				display:none;
 				@include border-radius(0);
 			}
 			.text-inputs {
 				border: 1px solid $border_color;
 			}
 			.row-content {
-
 				font-size:12px;
 				line-height:150%;
 				text-align:justify;
 				padding: 30px 10px 10px 10px;
-
-				-moz-column-gap:40px; /* Firefox */
-				-webkit-column-gap:40px; /* Safari and Chrome */
-				column-gap:40px;
-				-moz-column-count:2; /* Firefox */
-				-webkit-column-count:2; /* Safari and Chrome */
-				column-count:2;
 				outline: none;
+				&.two-col {
+					@include column-gap(40px);
+					@include column-count(2);
+				}
 			}
 		}
 	}

@@ -120,31 +120,35 @@ textarea {
 }
 /* line 100, ../../../../../sass/v2/posts/post_form.scss */
 .body-submit-wrapper .body-submit-container .story textarea {
+  display: none;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   -ms-border-radius: 0;
   -o-border-radius: 0;
   border-radius: 0;
 }
-/* line 103, ../../../../../sass/v2/posts/post_form.scss */
+/* line 104, ../../../../../sass/v2/posts/post_form.scss */
 .body-submit-wrapper .body-submit-container .story .text-inputs {
   border: 1px solid darkgrey;
 }
-/* line 106, ../../../../../sass/v2/posts/post_form.scss */
+/* line 107, ../../../../../sass/v2/posts/post_form.scss */
 .body-submit-wrapper .body-submit-container .story .row-content {
   font-size: 12px;
   line-height: 150%;
   text-align: justify;
   padding: 30px 10px 10px 10px;
-  -moz-column-gap: 40px;
-  /* Firefox */
-  -webkit-column-gap: 40px;
-  /* Safari and Chrome */
-  column-gap: 40px;
-  -moz-column-count: 2;
-  /* Firefox */
-  -webkit-column-count: 2;
-  /* Safari and Chrome */
-  column-count: 2;
   outline: none;
+}
+/* line 113, ../../../../../sass/v2/posts/post_form.scss */
+.body-submit-wrapper .body-submit-container .story .row-content.two-col {
+  -webkit-column-gap: 40px;
+  -moz-column-gap: 40px;
+  -ms-column-gap: 40px;
+  -o-column-gap: 40px;
+  column-gap: 40px;
+  -webkit-column-count: 2;
+  -moz-column-count: 2;
+  -ms-column-count: 2;
+  -o-column-count: 2;
+  column-count: 2;
 }
