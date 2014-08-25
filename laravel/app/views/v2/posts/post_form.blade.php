@@ -100,9 +100,9 @@
 						<div class="col-md-8 col-md-offset-2">
 							<div class="story {{$errors->first('body') ? 'has-error' : '' }}">
 								{{ Form::label('body','Story', array('class'=>'control-label')) }}
-								{{ Form::textarea('body', Input::old('body'), array('class'=>'form-control', 'required', 'minlength' =>'5')) }}
+								{{ Form::textarea('body', Input::old('body'), array('class'=>'form-control normal-input', 'required', 'minlength' =>'5')) }}
 								<div class="text-inputs">
-									<div class="row-content" id="body-1" contenteditable="true">
+									<div class="row-content original" id="body-1" contenteditable="true">
 										Write Your Story Here
 									</div>
 								</div>

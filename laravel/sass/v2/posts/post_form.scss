@@ -1,5 +1,7 @@
 @import '../base';//Must import this everywhere.
 
+$border_color: #a9a9a9;
+
 //Top Controls Fixed (Post Type, Category, Drafe, Publish)
 .controls-wrapper {
 	position: fixed;
@@ -96,21 +98,22 @@
 				float: right;
 			}
 			textarea {
+				display:none;
 				@include border-radius(0);
 			}
+			.text-inputs {
+				border: 1px solid $border_color;
+			}
 			.row-content {
-				margin: 30px 0;
 				font-size:12px;
 				line-height:150%;
 				text-align:justify;
-				padding: 30px 0 10px 0;
-				-moz-column-gap:40px; /* Firefox */
-				-webkit-column-gap:40px; /* Safari and Chrome */
-				column-gap:40px;
-				-moz-column-count:2; /* Firefox */
-				-webkit-column-count:2; /* Safari and Chrome */
-				column-count:2;
+				padding: 30px 10px 10px 10px;
 				outline: none;
+				&.two-col {
+					@include column-gap(40px);
+					@include column-count(2);
+				}
 			}
 		}
 	}
