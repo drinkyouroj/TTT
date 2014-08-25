@@ -6,10 +6,16 @@
 
 	@section('css')
 		<link rel="stylesheet" media="screen" href="{{Config::get('app.url')}}/css/compiled/v2/posts/post_form.css">
+		<link rel="stylesheet" media="screen" href="{{Config::get('app.url')}}/js/vendor/editor/css/medium-editor.min.css">
+		<link rel="stylesheet" media="screen" href="{{Config::get('app.url')}}/js/vendor/editor/css/themes/default.css">
 	@stop
 
 	@section('js')
+		<!---old script-->
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/new-post.js"></script>
+
+		<!--New script-->
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/editor/js/medium-editor.min.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post_input.js"></script>
 	@stop
 
@@ -70,8 +76,9 @@
 							<div class="tldr {{$errors->first('tldr') ? 'has-error' : '' }}">
 								
 								{{ Form::text('tldr', Input::old('tldr'), array('class'=>'form-control', 'required', 'maxlength' => '40') ) }}
-								{{ Form::label('tldr','TLDR', array('class'=>'control-label')) }}
 								<a href="#" data-toggle="tooltip" title="TLDR define what your story might be in less than 40 characters">?</a>
+								{{ Form::label('tldr','TLDR', array('class'=>'control-label')) }}
+								
 								<span class="error">{{ $errors->first('tldr') }}</span>
 							</div>
 						</div>
@@ -80,7 +87,7 @@
 							{{--Select your image --}}
 							<div class="image-select">
 								<a href="#image" class="image-select-modal" data-toggle="modal" data-target="#imageModal">
-									<img src="plus-sign.png">
+									<img src="{{Config::get('app.url')}}/images/posts/add-image.png">
 									<br/>
 									<span>
 										Select Your Image.
@@ -101,10 +108,8 @@
 							<div class="story {{$errors->first('body') ? 'has-error' : '' }}">
 								{{ Form::label('body','Story', array('class'=>'control-label')) }}
 								{{ Form::textarea('body', Input::old('body'), array('class'=>'form-control normal-input', 'required', 'minlength' =>'5')) }}
-								<div class="text-inputs">
-									<div class="row-content original" id="body-1" contenteditable="true">
-										Write Your Story Here
-									</div>
+								<div class="text-input editable">
+									
 								</div>
 
 								<span class="error">{{ $errors->first('body') }}</span>
@@ -171,9 +176,8 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Save changes</button>
-					</div>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button
+>					</div>
 				</div>
 			</div>
 		</div>

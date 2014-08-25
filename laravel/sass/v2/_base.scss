@@ -1,6 +1,25 @@
 //import the compass library
 @import "compass";
 
+//Colors
+$blue: #32b1c6;
+
+
+//Fonts
+@mixin montserrat($weight: normal) {
+	font-family: 'Montserrat', sans-serif;
+	@if $weight == 'normal' {
+		font-weight: 400;
+	} @else if $weight == 'bold' {
+		font-weight: 700;
+	}
+}
+
+@mixin fjalla() {
+  font-family: 'Fjalla One';
+}
+
+
 //TTT Defaults:
 input,textarea, select {
 	-webkit-appearance: none;
@@ -16,17 +35,45 @@ textarea {
 //Navbar*****
 $navbar_height: 30px;
 
-
 @mixin label() {
 	display:inline-block;
 	padding: 3px 5px;
 	margin: 3px 0;
 	
-	background: red;//setup this color later
+	background: $blue;//setup this color later
 
 	color:#fff;
 	text-transform: uppercase;
-	font-size: 8px;
-	font-family: sans-serif;
-
+	font-size: 10px;
+	@include montserrat();
 }
+
+//Modal Mods
+//below is straight off from the landing page.  Modify if need be.
+.modal-backdrop.in {
+	opacity: 0.95 !important;
+}
+.modal-dialog {
+  width: 80%;
+  margin: 30px 10% 30px 10%; }
+  @media (max-width: 479px) {
+    .modal-dialog {
+      width: 90%;
+      margin: 10px 5% 30px 5%; } }
+  @media (min-width: 480px) and (max-width: 767px) {
+    .modal-dialog {
+      width: 90%;
+      margin: 10px 5% 30px 5%; } }
+  .modal-dialog button.close {
+    font-size: 50px;
+    z-index: 100; }
+  .modal-dialog .modal-content {
+    background: none;
+    box-shadow: none;
+    border: none;
+    border-radius: none; }
+    .modal-dialog .modal-content .modal-header {
+      border: none; }
+    @media (max-width: 479px) {
+      .modal-dialog .modal-content .modal-body {
+        margin-top: 0 !important; } }

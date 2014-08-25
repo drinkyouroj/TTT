@@ -4,7 +4,7 @@
     <title>@yield('title','Two Thousand Times')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
        
-	<link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Fjalla+One' rel='stylesheet' type='text/css'>
     
     <link href="{{Config::get('app.url')}}/css/animate.css" rel="stylesheet" media="screen">
     
@@ -12,7 +12,9 @@
 
     <!--Application Shared CSS-->
     <link href="{{Config::get('app.url')}}/css/views/style.css" rel="stylesheet" media="screen">
-    
+    <link href="{{Config::get('app.url')}}/css/compiled/v2/style.css" rel="stylesheet" media="screen">
+
+
     <!--Favicon-->
     <link href="/favicon.ico" rel="icon" type="image/x-icon" />
 	<link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />

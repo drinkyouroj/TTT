@@ -6,10 +6,11 @@ $border_color: #a9a9a9;
 .controls-wrapper {
 	position: fixed;
 	top: $navbar_height;
-	height: 50px;//height of the Controls bar.
+	//height: 50px;//height of the Controls bar.
 	width: 100%;
-	background: #000;
+	background: #3c3c3c;
 	.controls-container {
+		padding: 5px inherit;
 		//button reset.
 		button {
 			border:none;
@@ -26,18 +27,35 @@ $border_color: #a9a9a9;
 		.draft-publish {
 			text-align: right;
 			button {
-				width: 100px;
-				background: blue;
+				display:inline-block;
+				width: 130px;
+				padding: 12px 0;
+				background: $blue;
+
+				@include montserrat(normal);
+				text-transform: uppercase;
+				font-size: 11px;
 				color:#fff;
+				
+				&.save-draft {
+					margin-right: 7px;
+					background: #a4a4a4;
+				}
 			}
 		}
 	}
 }
 
 .top-submit-wrapper {
-	padding-top: 100px;
-	background:#000;
+	background:#fff;
 	.top-submit-container {
+		padding-top: 100px;
+		min-height: 600px;
+		background-size: cover;
+		background-repeat: no-repeat;
+
+		//Change Min-height value based on the window.
+
 		//Shared error styling
 		.error {
 
@@ -50,7 +68,7 @@ $border_color: #a9a9a9;
 		input[type="text"] {
 			@include border-radius(0);
 			background: none;
-		}
+			border-color: $border_color;		}
 
 		.title {
 			input {
@@ -63,7 +81,7 @@ $border_color: #a9a9a9;
 			input {
 				border-top: 0;
 			}
-			label {
+			label,a {
 				float: right;
 			}
 		}
@@ -71,7 +89,7 @@ $border_color: #a9a9a9;
 		.image-select {
 			text-align: center;
 			
-			margin: 30px 0;//This determines the height of the image.
+			margin: 50px 0;//This determines the height of the image.
 
 			width: 100%;
 			a {
@@ -79,10 +97,10 @@ $border_color: #a9a9a9;
 
 				}
 				span {
-					color:#eee;
-					font-size: 26px;
+					@include fjalla;
+					color:#343638;
+					font-size: 22px;
 					text-transform: uppercase;
-					font-family: sans-serif;
 				}
 			}
 		}
@@ -92,27 +110,34 @@ $border_color: #a9a9a9;
 .body-submit-wrapper {
 	top: -10px;
 	.body-submit-container {
+		padding-top: 55px;
 		.story {
 			label {
 				@include label;
 				float: right;
+				margin-top: -33px;
+				&:after {
+					content: ''
+				}
 			}
 			textarea {
 				display:none;
 				@include border-radius(0);
 			}
-			.text-inputs {
+			.text-input {
 				border: 1px solid $border_color;
-			}
-			.row-content {
+			
 				font-size:12px;
 				line-height:150%;
 				text-align:justify;
-				padding: 30px 10px 10px 10px;
+				padding: 25px;
 				outline: none;
-				&.two-col {
-					@include column-gap(40px);
-					@include column-count(2);
+				
+				//Not until we figure out a better js library.
+				//	@include column-gap(40px);
+				//	@include column-count(2);
+				&:after {
+					padding: 25px;
 				}
 			}
 		}

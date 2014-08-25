@@ -1,47 +1,32 @@
 $(function() {
 
+	//Content Editable vs Textarea based input.
 	var iOSver = iOSversion();//iOS 4 and below do not support contentEditable.
 	var contentEditableSupport = "contentEditable" in document.documentElement;
 
 	if(contentEditableSupport || iOSver[0] >= 5 ) {
-		/*
-		var current = 1;
-		var total_panes =1;
-		var char_limit = 1500;
-
-		$('.text-inputs').keydown(function(){
-
-			chars = $('#body-'+current ,this).html().length;
-
-			if(chars >= 750) {
-				$('#body-'+current).removeClass('original');
-			}
-
-			if(chars > 1500 ) {
-				prev = current;
-				current = current+1;			
-				$('.text-inputs').append('<div class="row-divider"><span><span class="of">'+prev+'</span>/<span class="total">'+current+'</span></span></div>');
-				$('.text-inputs').append('<div class="row-content original" id="body-'+current+'">');
-				$('#body-'+current).attr('contenteditable','true').focus(); 
-
-				//If we go above 1, we need to update the numbers.
-				if(current >= 2) {
-					$('.row-divider').each(function(key, value) {
-						//$('.of',value).
-					});
-				}
-			}
-			console.log(current);
+		//Advanced Editor for when we have content editable.
+		var $editor = new MediumEditor($('.story .text-input'), {
+			buttons: ['bold', 'italic'],
+			delay: 80,
+			cleanPastedHTML: true,
+			placeholder: 'Write Your Story Here.'
 		});
-		*/
 	} else {
-		//Gotta hide the contenteditable div.
-		$('.story .text-inputs').fade();
+		//Gotta hide the contenteditable div and show the $.
+		$('.story .text-input').fade();
 		$('.story textarea.normal-input').show();
-
-		//switch out the submit process.
+		$editor = $('.story textarea.normal-input');//designate the $editor as the text area.
 	}
 
+	//Controls.
+	$('.controls-wrapper .save-draft').click(function() {
+
+	});
+
+	$('.controls-wrapper .save-draft').click(function() {
+
+	});
 
 });
 
