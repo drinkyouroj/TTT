@@ -18,7 +18,7 @@ class NotificationLogic {
 	}
 	
 	//Temporary notification getter for the top bar
-	public function top($user_id) {
+	public function top ( $user_id ) {
 		return $this->not->limited($user_id);
 	}
 	

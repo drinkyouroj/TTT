@@ -45,6 +45,11 @@ Route::group(array('before' => 'auth'), function() {
 	Route::controller('rest','JSONController');
 });
 
+// Routes for users profile
+Route::group( array( 'before' => 'auth' ), function() {
+	Route::controller( 'myprofile', 'MyProfileController' );
+});
+
 //Admin area
 Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
 	Route::get('solr', 'AdminController@getResetSolr');//this updates the users on solr
