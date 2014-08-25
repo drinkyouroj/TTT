@@ -13,6 +13,9 @@
 //Protected rest controllers
 Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 {	
+	// Route for rest feed
+	Route::get( 'feed/{feed_type}/{page}', 'MyProfileController@getRestFeed' );
+
 	//Action Limited (no update)
 	$action_limits = array('only'=>array('index','create','show','destroy'));
 
