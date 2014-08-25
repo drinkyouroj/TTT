@@ -6433,7 +6433,7 @@ button.close {
 /* line 46, ../../../../../bower_components/bootstrap-sass/lib/_modals.scss */
 .modal-content {
   position: relative;
-  background-color: white;
+  background-color: none;
   border: 1px solid #999999;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 6px;
@@ -6451,7 +6451,7 @@ button.close {
   bottom: 0;
   left: 0;
   z-index: 1030;
-  background-color: black;
+  background-color: white;
 }
 /* line 68, ../../../../../bower_components/bootstrap-sass/lib/_modals.scss */
 .modal-backdrop.fade {
@@ -6467,7 +6467,7 @@ button.close {
 /* line 74, ../../../../../bower_components/bootstrap-sass/lib/_modals.scss */
 .modal-header {
   padding: 15px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid none;
   min-height: 16.42857px;
 }
 
@@ -6493,7 +6493,7 @@ button.close {
   margin-top: 15px;
   padding: 19px 20px 20px;
   text-align: right;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid none;
 }
 /* line 21, ../../../../../bower_components/bootstrap-sass/lib/_mixins.scss */
 .modal-footer:before, .modal-footer:after {
