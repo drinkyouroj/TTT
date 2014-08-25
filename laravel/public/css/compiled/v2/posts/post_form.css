@@ -129,7 +129,7 @@ textarea {
 /* line 64, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper .top-submit-container label {
   display: inline-block;
-  padding: 3px 5px;
+  padding: 4px 10px 3px 10px;
   margin: 3px 0;
   background: #32b1c6;
   color: #fff;
@@ -150,7 +150,9 @@ textarea {
 }
 /* line 74, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper .top-submit-container .title input {
-  font-size: 40px;
+  font-size: 30px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
 }
 /* line 81, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper .top-submit-container .tldr input {
@@ -165,6 +167,10 @@ textarea {
   text-align: center;
   margin: 50px 0;
   width: 100%;
+}
+/* line 96, ../../../../../sass/v2/posts/post_form.scss */
+.top-submit-wrapper .top-submit-container .image-select a img {
+  margin-bottom: 40px;
 }
 /* line 99, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper .top-submit-container .image-select a span {
@@ -185,7 +191,7 @@ textarea {
 /* line 115, ../../../../../sass/v2/posts/post_form.scss */
 .body-submit-wrapper .body-submit-container .story label {
   display: inline-block;
-  padding: 3px 5px;
+  padding: 4px 10px 3px 10px;
   margin: 3px 0;
   background: #32b1c6;
   color: #fff;
@@ -203,14 +209,17 @@ textarea {
 /* line 123, ../../../../../sass/v2/posts/post_form.scss */
 .body-submit-wrapper .body-submit-container .story textarea {
   display: none;
+  min-height: 300px;
+  border: 1px solid darkgrey;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   -ms-border-radius: 0;
   -o-border-radius: 0;
   border-radius: 0;
 }
-/* line 127, ../../../../../sass/v2/posts/post_form.scss */
+/* line 129, ../../../../../sass/v2/posts/post_form.scss */
 .body-submit-wrapper .body-submit-container .story .text-input {
+  min-height: 300px;
   border: 1px solid darkgrey;
   font-size: 12px;
   line-height: 150%;
@@ -218,7 +227,88 @@ textarea {
   padding: 25px;
   outline: none;
 }
-/* line 139, ../../../../../sass/v2/posts/post_form.scss */
+/* line 142, ../../../../../sass/v2/posts/post_form.scss */
 .body-submit-wrapper .body-submit-container .story .text-input:after {
   padding: 25px;
+}
+
+/* line 154, ../../../../../sass/v2/posts/post_form.scss */
+.photos .photo-system .input-append input.search-query {
+  width: 100%;
+  max-width: 300px;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fff;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+/* line 170, ../../../../../sass/v2/posts/post_form.scss */
+.photos .photo-system .input-append .activate-search {
+  font-family: 'bebas';
+  letter-spacing: 1px;
+  background-color: #000;
+  color: #fff;
+}
+/* line 175, ../../../../../sass/v2/posts/post_form.scss */
+.photos .photo-system .input-append .activate-search:hover {
+  background-color: #333;
+  color: #fff;
+}
+/* line 180, ../../../../../sass/v2/posts/post_form.scss */
+.photos .photo-system .input-append .reset-search {
+  font-family: 'bebas';
+  letter-spacing: 1px;
+  background-color: #428bca;
+  color: #fff;
+}
+/* line 185, ../../../../../sass/v2/posts/post_form.scss */
+.photos .photo-system .input-append .reset-search:hover {
+  background-color: #3581ba;
+}
+/* line 190, ../../../../../sass/v2/posts/post_form.scss */
+.photos .photo-system .chosen {
+  margin-top: 30px;
+}
+/* line 194, ../../../../../sass/v2/posts/post_form.scss */
+.photos .photo-system h4 {
+  font-family: 'bebas';
+}
+/* line 198, ../../../../../sass/v2/posts/post_form.scss */
+.photos .photo-system .chosen-label {
+  font-family: 'bebas';
+}
+/* line 202, ../../../../../sass/v2/posts/post_form.scss */
+.photos .photo-system .processed-label {
+  font-family: 'bebas';
+}
+/* line 206, ../../../../../sass/v2/posts/post_form.scss */
+.photos .photo-system .photo-results {
+  margin-top: 20px;
+}
+/* line 211, ../../../../../sass/v2/posts/post_form.scss */
+.photos .photo-system .photo-results a.pager {
+  width: 75px;
+  height: 75px;
+  font-family: 'bebas';
+  font-size: 18px;
+  font-weight: normal;
+  letter-spacing: 1px;
+  display: inline-block;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+  margin: 0px !important;
+  padding-top: 25px;
+  vertical-align: top;
+}
+/* line 226, ../../../../../sass/v2/posts/post_form.scss */
+.photos .photo-system .photo-results a.pager.previous {
+  border-right: 1px solid #ddd;
 }
