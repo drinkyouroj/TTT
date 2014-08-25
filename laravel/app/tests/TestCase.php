@@ -2,6 +2,7 @@
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase {
 
+	
 	/**
 	 * Creates the application.
 	 *
@@ -23,7 +24,8 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase {
 		$user->password = 'password';
 		$user->password_confirmation = 'password';
 		$user->confirmed = 1;
-		$user->save();
+		// $user->save();
+		$user->id = 121314;
 
 		$this->be( $user );
 		$this->seededUser = $user;
@@ -37,12 +39,4 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase {
 		parent::setUp();
 		$this->seedDefaultUser();
 	}
-
-	/**
-	 *	After testing, remove the seeded user
-	 */
-	public function tearDown() {
-        parent::tearDown();
-        $this->seededUser->delete();
-    }
 }

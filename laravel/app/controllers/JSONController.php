@@ -99,7 +99,7 @@ class JSONController extends BaseController {
 			$owns = $this->post->owns($post_id, $user_id);
 			$post = $this->post->findById($post_id);
 			
-			if(!$exists && !$owns) {//Relationship doesn't exist and the user doesn't own this.
+			if (!$exists && !$owns) {//Relationship doesn't exist and the user doesn't own this.
 				
 				$this->favorite->create($user_id, $post_id);
 
@@ -120,7 +120,7 @@ class JSONController extends BaseController {
 					200//response is OK!
 				);
 			
-			} elseif($exists) {//Relationship already exists, should this be an unfavorite?
+			} elseif ($exists) {//Relationship already exists, should this be an unfavorite?
 				
 				//Delete from Favorites
 				$this->favorite->delete($user_id, $post_id);
@@ -298,7 +298,7 @@ class JSONController extends BaseController {
 		$owns = $this->comment->owns($id, $user_id);
 		
 		if($owns) {
-			$this->comment->unpublish($id, $user_id);//unpublished = deleted.
+			$this->comment->unpublish($id, $user_id);  //unpublished = deleted.
 			return Response::json(
 				array(
 					'result' => 'deleted'
@@ -324,7 +324,7 @@ class JSONController extends BaseController {
 			//archive all posts by user
 			$this->post->archive($id);
 
-			//Add All comment Delete Here also.
+			//TODO: Add All comment Delete Here also.
 			
 			return Response::json(
 				array('result'=>'success'),

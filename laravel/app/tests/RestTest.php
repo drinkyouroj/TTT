@@ -1,20 +1,15 @@
 <?php
 
+
 class RestTest extends TestCase {
 	
+
 	/**
 	 * A basic functional test example.
 	 */
 	public function testBasicExample () {
 		$crawler = $this->client->request('GET', '/');
 		$this->assertTrue($this->client->getResponse()->isOk());
-	}
-
-	/**
-	 *	Test that we have the default user seeded.
-	 */
-	public function testDefaultUserSeeded () {
-		$this->assertEquals( Auth::user()->username, 'seededUser' );
 	}
 
 	/**
@@ -86,8 +81,6 @@ class RestTest extends TestCase {
 					$this->fail( 'Failed to load resource at Get:rest/categories/all/shortest\n'.$e );
 				}
 			}
-
-			
 
 	/**
 	 *	Test GET:rest/profile
