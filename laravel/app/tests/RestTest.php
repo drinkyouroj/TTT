@@ -2,7 +2,6 @@
 
 
 class RestTest extends TestCase {
-	
 
 	/**
 	 * A basic functional test example.
