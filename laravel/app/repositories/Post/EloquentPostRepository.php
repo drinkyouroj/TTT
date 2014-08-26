@@ -46,7 +46,7 @@ class EloquentPostRepository implements PostRepository {
 		
 		$post->body = Request::get('body');//Body is the only updatable thing in an update scenario.
 		$post->published = 1;
-		
+		$post->draft = Request::get('draft', 1);//default is 1 so that it won't accidentally get published.
 		return $post;
 	}
 

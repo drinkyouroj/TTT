@@ -11,20 +11,20 @@
 	@stop
 
 	@section('js')
-		<!---old script-->
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/new-post.js"></script>
-
 		<!--New script-->
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/validation/jquery.validate.min.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/editor/js/medium-editor.min.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_input.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_photo.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_validation.js"></script>
+
 	@stop
 
 	@section('content')
 
-		{{ Form::open(array('url'=>'profile/submitpost', 'method'=>'post','class'=>'form-horizontal','role'=>'form')) }}
+		{{ Form::open(array('url'=>'profile/submitpost', 'method'=>'post','class'=>'form-horizontal','role'=>'form', 'class'=>'post_input')) }}
 		{{--hidden inputs--}}
-		<input type="hidden" class="processed-image">
+		<input type="hidden" class="processed-image" required>
 		<div class="top-controls">
 
 			{{--Top Fixed Controls--}}
@@ -106,6 +106,7 @@
 			<div class="top-submit-wrapper">
 				{{--The big container so that we can assign the images to it. max-width 1440 or something like that--}}
 				<div class="top-submit-container container" style="background-image: url('{{Config::get('app.url')}}/img/photos/nashville.png');">
+					<div class="top-submit-overlay"></div>
 					<div class="row">
 						<div class="col-md-8">
 							{{--Title Input--}}
@@ -121,21 +122,22 @@
 							<div class="tags">
 								<div class="tag {{$errors->first('tagline_1') ? 'has-error' : '' }}">
 									
-									{{ Form::text('tagline_1', Input::old('tagline_1'), array('class'=>'form-control', 'required', 'maxlength' => '20') ) }}
+									{{ Form::text('tagline_1', Input::old('tagline_1'), array('class'=>'form-control', 'required', 'maxlength' => '20', 'placeholder'=>'Tag 1') ) }}
 									<span class="error">{{ $errors->first('tagline_1') }}</span>
 								</div>
 					
 								<div class="tag {{$errors->first('tagline_2') ? 'has-error' : '' }}">
-									{{ Form::text('tagline_2', Input::old('tagline_2'), array('class'=>'form-control', 'required', 'maxlength' => '20')) }}
+									{{ Form::text('tagline_2', Input::old('tagline_2'), array('class'=>'form-control', 'required', 'maxlength' => '20', 'placeholder'=>'Tag 2')) }}
 									<span class="error">{{ $errors->first('tagline_2') }}</span>
 								</div>
 					
 								<div class="tag {{$errors->first('tagline_3') ? 'has-error' : '' }}">
-									{{ Form::text('tagline_3', Input::old('tagline_3'), array('class'=>'form-control', 'required', 'maxlength' => '20')) }}
+									{{ Form::text('tagline_3', Input::old('tagline_3'), array('class'=>'form-control', 'required', 'maxlength' => '20', 'placeholder'=>'Tag 3')) }}
 									<span class="error">{{ $errors->first('tagline_3') }}</span>
 								</div>
-								{{ Form::label('tagline_1','Taglines', array('class'=>'control-label')) }}
-								<a href="#" data-toggle="tooltip" title="Taglines define what your story might be in less than 3 words per tag">?</a>
+								<br/>
+								{{ Form::label('tagline_1','Tags', array('class'=>'control-label')) }}
+								<a href="#" data-toggle="tooltip" title="Tags define what your story might be in less than 3 words per tag">?</a>
 							</div>
 						</div>
 
@@ -152,6 +154,12 @@
 							</div>
 						</div>
 
+						<div class="image-edit">
+							<a href="#image" class="image-select-modal" data-toggle="modal" data-target="#imageModal">
+								Edit Image
+							</a>
+						</div>
+
 					</div>	
 				</div>
 			</div>
@@ -164,7 +172,7 @@
 							<div class="story {{$errors->first('body') ? 'has-error' : '' }}">
 								{{ Form::label('body','Story', array('class'=>'control-label')) }}
 								{{ Form::textarea('body', Input::old('body'), array('class'=>'form-control normal-input', 'required', 'minlength' =>'5')) }}
-								<div class="text-input editable">
+								<div class="text-input editable" name="body" required>
 									
 								</div>
 
@@ -217,14 +225,14 @@
 											<div class="clearfix"></div>
 											</div>
 										</div>
-										<div class="col-md-12 col-sm-12">
+										<div class="col-md-12 col-sm-12 ">
 											<div class="chosen-label"></div>
 											<div class="processed-label"></div>
-											<div class="photo-chosen">
+											<div class="photo-chosen"></div>
 										</div>
+										<div class="clearfix"></div>
+
 									</div>
-								<div class="clearfix"></div>
-								</div>
 								</div>
 							</div>
 							
@@ -232,7 +240,8 @@
 							
 							<div class="clearfix"></div>
 						</div>
-					</div>
+
+					</div><!--End of Modal-->
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button
 >					</div>

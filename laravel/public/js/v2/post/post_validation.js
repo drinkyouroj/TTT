@@ -1,8 +1,8 @@
 $(function(){
-	
 	//Form Validation***********************************************************
+	/*
 	$('.post-form form').validate({
-		ignore: [],
+		ignore: ":hidden:not(.editable)",
 		rules: {
 			title: {
 				required: true,
@@ -26,5 +26,5 @@ $(function(){
 			}
 		}
 	});
-
+*/
 });

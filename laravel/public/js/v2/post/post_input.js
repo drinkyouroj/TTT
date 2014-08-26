@@ -1,23 +1,51 @@
+/**
+This file handles the save/drafts system along with the content editable vs not system selection.
+**/
 $(function() {
+
+	//gotta call the validation system here.
+	save_post.form = $('form.post_input');
+	save_post.form.validate(save_post.validate_options);
+	
+	//Below binds the modal close event incase there's an error
+	$('#imageModal').on('hidden.bs.modal', function () {
+		$('.modal-header span.image-error',this).remove();
+	});
 
 	//Content Editable vs Textarea based input.
 	var iOSver = iOSversion();//iOS 4 and below do not support contentEditable.
 	var contentEditableSupport = "contentEditable" in document.documentElement;
 
+	//set the boxes to the variables.
+	$contentEditable = $('.story .text-input');
+	$textAreaInput = $('.story textarea.normal-input');
+
 	if(contentEditableSupport || iOSver[0] >= 5 ) {
 		//Advanced Editor for when we have content editable.
-		var $editor = new MediumEditor($('.story .text-input'), {
+		window.editor = new MediumEditor($contentEditable, {
 			buttons: ['bold', 'italic'],
 			delay: 80,
 			cleanPastedHTML: true,
+			disableDoubleReturn: true,
 			placeholder: 'Write Your Story Here.'
 		});
+		//remove the validation rules.
+		$textAreaInput.rules("remove");
+		$textAreaInput.remove();
+
+		//$contentEditable.rules("add", save_post.body_rule);
 	} else {
 		//Gotta hide the contenteditable div and show the $.
-		$('.story .text-input').fade();
-		$('.story textarea.normal-input').show();
-		$editor = $('.story textarea.normal-input');//designate the $editor as the text area.
+		$contentEditable.fade();
+		$contentEditable.remove();
+		$contentEditable.rules("remove");
+
+		//Show the TextArea
+		$textAreaInput.show();
+		window.editor = $textAreaInput;//designate the $editor as the text area.
 	}
+	save_post.editor = window.editor;
+
 
 	//Controls.
 	$('.controls-wrapper .categorization').click(function(event) {
@@ -28,17 +56,14 @@ $(function() {
 		});
 	});
 
-	$('.controls-wrapper .save-draft').click(function() {
 
+	$('.controls-wrapper .save-draft').click(function() {
+		save_post.sendDraft(window.editor);
 	});
 
 	$('.controls-wrapper .submit-post').click(function() {
-
+		save_post.sendPublish(window.editor);
 	});
-
-	//photo system activate
-	photoSelection();
-
 });
 
 function iOSversion() {
@@ -49,147 +74,169 @@ function iOSversion() {
   }
 }
 
+//Big bad save post class
+var save_post = new function() {
+	
+	this.body_rule = {
+		required: true,
+		minlength: 400,
+		maxlength: 14000,//This is generalized.
+	};
 
-//Photo Processing Systems**************************************************
-function photoSelection() {
-	$('.photo-chosen').hide();
-	
-	//Search catch on enter keydown (prevents the form from being submitted)
-	$('.photos input.search-query').bind('keyup keypress', function(e) {
-		var code = e.keyCode || e.which; 
-		if (code  == 13) {               
-			e.preventDefault();
-			window.photo_search_page = 1;
-			image_pull();//Pulls in images from Flickr
-			$('.photo-results').fadeIn();
-			return false;
+	this.validate_options = {
+		ignore: [],//":hidden:not(.editable)",
+		rules: {
+			title: {
+				required: true,
+				minlength: 5
+			},
+			image: {
+				required: true,
+				minlength: 1
+			},
+			'category[]': {
+				required: true,
+				minlength: 1,
+				maxlength: 2
+			},
+			body: this.body_rule
+		},
+		messages: {
+			image: {
+				required: 'You need to select an image.'
+			}
+		},
+		invalidHandler: function(form, validator) {
+			//console.log(form);
+			$.each(validator.errorList, function(idx,value) {
+
+				//Category or Story Type issues.
+				if(	$(value.element).hasClass('category') ) {
+					if($('.category-wrapper').css('display') == 'none') {
+						$('a.categorization').click();
+					}
+				}
+				//image issue.
+				if( $(value.element).hasClass('processed-image') ) {
+					$('#imageModal .modal-header').append('<span class="error image-error">Be sure to pick an image!</span>');
+					$('a.image-select-modal').click();//just pull up the modal.
+				}
+			});
 		}
-	});
-	
-	//The button for searching
-	$('.activate-search').on('click', function() {
-		window.photo_search_page = 1;
-		image_pull();//Pulls in images from Flickr
-		$('.photo-results').fadeIn();
-	});//The Search button alias of the above.
-	
-	//Paginated 
-	window.photo_search_page = 1;
-	
-	$('.photo-results').on('click', 'a.pager', function() {
-		window.photo_search_page = $(this).data('page');
-		console.log(window.photo_search_page);
-		image_pull();
-	});
-	
-	window.selected_image = 0;
-	$('.chosen-label, .processed-label').hide();
-	
-	//Click on the photo results to select the image.
-	$('.photo-results').on('click','img',function() {
-		$('.photo-system .reset-search').removeClass('hidden');//Show the reset button
-		img = $(this).data('image');//HTML5 rocks!
-		$('.photo-chosen').html('');//empty the image from the chosen pile.
 		
-		window.selected_image = img;//attach the source to a global variable
-		$('.photo-results').fadeOut();//Hide the photo options
-		$('.photo-processor').fadeIn();//fade in the photo process options
-		$('.chosen-label').fadeIn();
-		
-		//Lets grab a no filter version.
-		image_grab(img, 'nofilter');
-		
-	});//Loads in the chosen photos
-	
-	//Let's reset the photo input system.
-	$('.photo-system .reset-search').on('click', function() {
-		$('.photo-chosen').css('background-image','');
-		$('.photo-chosen').fadeOut();
-		$('.photo-processed').html('');
-		$('.photo-results').fadeIn();//Hide the photo options
-		$('.photo-processor').fadeOut();//fade in the photo process options
-		$('.post-form form input.processed-image').val('');//Get rid of the processed image.
-		$('.photo-system .reset-search').addClass('hidden');//Hide the reset button
-	});
-	
-	//Effects Processor: Instahamming it.
-	$('.photo-processor').on('click', 'img', function() {
-		url = window.selected_image;
-		process = $(this).data('process');
-		
-		//make sure we have all 3 values.
-		if(url.length && process.length) {
-			image_grab(url, process);
+	};
+
+	//States
+	this.draft = 0;
+	this.published = 0;
+
+	//Information
+	this.id = 0;
+
+	this.title = '';
+
+	this.tagline_1 = '';
+	this.tagline_2 = '';
+	this.tagline_3 = '';
+
+	this.category = new Array();
+	this.story_type = '';
+
+
+	this.body = '';
+	this.image = '';
+
+	//Below compiles the data into an object we can send.
+	this.dataCompile = function() {
+		return {
+			draft: this.draft,
+			published: this.published,
+
+			id: this.id,
+
+			title: this.title,
+			tagline_1: this.tagline_1,
+			tagline_2: this.tagline_2,
+			tagline_3: this.tagline_3,
+			category: this.category,
+			story_type: this.story_type,
+			body: this.body,
+			image: this.image
+		}
+	};
+
+	this.validate = function() {
+		console.log(this.form.valid(this.validate_options));
+	};
+	//this function grabs existing data and runs validation
+	this.grabData = function() {
+
+		this.id = $('input.id',this.form).val();
+		this.title = $('input.title',this.form).val();;
+
+		this.tagline_1 = $('input.tagline_1',this.form).val();
+		this.tagline_2 = $('input.tagline_2',this.form).val();
+		this.tagline_3 = $('input.tagline_3',this.form).val();
+		//gotta work on the one below.
+		this.category = new Array();
+		this.story_type = $('input.tagline_1',this.form).val();
+
+		//if the editor is a normal input, check it.
+		if( $(this.editor).hasClass('normal-input')) {
+			this.body = $('textarea.normal-input',this.form).val();
 		} else {
-			console.log('error with image processor: missing var');
+			this.body = $('div.text-input',this.form).html();
 		}
-	});//End of Photo Processor
-}
-
-//Function is used to pull images via the server from flickr.  This is for the Image Listing.
-function image_pull() {
-	if($('.photos input.search-query').val().length >= 3) {
 		
-		//Let's do the load.gif
-		$('.photos .photo-results').html('<img width="200" src="'+window.site_url+'img/profile/loading.gif">');
-		page = window.photo_search_page;
-		keyword = $('.photos input.search-query').val();
+		this.image = $('input.processed-image',this.form).val();
+		if(this.validate()) {
+			this.send();
+		}
+	}
+
+	//Functions.
+	this.send = function() {
 		$.ajax({
-			url: window.site_url+'rest/flickr/?text='+ keyword + '&page=' + page,//Gotta add pagination code.
+			type: "POST",
+			url: window.site_url+'rest/savepost',
+			data: this.dataCompile,//uses the data function to get 
 			success: function(data) {
-				$('.photos .photo-results').html('');
-				photos = data.photos.photo;
-				
-				$.each(photos,function(index, value) {
-					console.log(value);
-					image_url = 'http://farm'+value.farm+'.static.flickr.com/'+value.server+'/'+value.id+'_'+value.secret+'_s.jpg';
-					image_url_orig = 'http://farm'+value.farm+'.static.flickr.com/'+value.server+'/'+value.id+'_'+value.secret+'.jpg';
-					
-					var $newAppend = $('<img class="result-image '+value.id+'" src="'+image_url+'" data-image="'+image_url_orig+'">');
-					
-					$('.photos .photo-results').append($newAppend);
-					image_counter = index;
-				});
-				
-				//number of images on this page.
-				console.log(image_counter);
-				
-				next_page = window.photo_search_page + 1;
-				
-				if(next_page > 2) {
-					prev_page = window.photo_search_page -1;
-					$previous = $('<a class="pager previous" data-page="'+prev_page+'">&#60 Prev</a>');
-					$('.photos .photo-results').append($previous);
+				console.log(data);
+				switch(data.result) {
+					default:
+					case 'create':
+						this.createAfter();
+						break;
+					case 'update':
+						this.updateAfter();
+						break;
+
 				}
-				
-				if(image_counter >= 29) {
-					$more = $('<a class="pager more" data-page="'+next_page+'">More &#62</a>');
-					$('.photos .photo-results').append($more);
-				}
-				
 			}
 		});
-	}
-}
+	};
 
-//This grabs an individual image
-function image_grab(url, process) {
-	$.ajax({
-		type: "GET",
-		url: window.site_url+'rest/photo/',
-		data: {
-			url: encodeURIComponent(url),//Gotta encode that url
-			process: process
-		},
-		success: function(data) {
-			$('input.processed-image').val('');//Let's remove this just incase
-			$('.chosen-label').fadeOut();
-			$('.processed-label').fadeIn();
-			$('.photo-chosen').fadeIn();
-			$('.photo-chosen').css('background-image','');
-			$('.photo-chosen').css('background-image','url('+window.site_url+'uploads/final_images/'+data+')' );
-			$('.top-submit-container').css('background-image','url('+window.site_url+'uploads/final_images/'+data+')' );
-			$('input.processed-image').val(data);
-		}
-	});
+
+	this.sendDraft = function() {
+		//gotta set the states
+		this.draft = 1;
+		this.published = 0;
+		this.grabData();
+	};
+
+	this.sendPublish = function() {
+		//gotta set the states
+		this.draft = 0;
+		this.published = 1;
+		this.grabData();
+	};
+
+	this.createAfter = function() {
+		console.log('create');
+	};
+
+	this.updateAfter = function() {
+		console.log('update');
+	};
+	
 }

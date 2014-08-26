@@ -177,8 +177,27 @@ class PostController extends BaseController {
 		}
 		
 		
-		
 		if($validator->passes()) {//Successful Validation
+			
+			self::savePost($post, $new);//Calls the private save function.
+			
+			return Redirect::to('profile');
+			
+		} else {//Failed Validation
+			if($new) {
+				return Redirect::to('profile/newpost')
+							->withErrors($validator)
+							->withInput();
+			} else {
+				return Redirect::to('profile/editpost/'.Input::get('id'))
+							->withErrors($validator)
+							->withInput();
+			}
+		}
+	}
+
+		//Below assumes that the validation has passed.  It can be used to update or to save the post.
+		private function savePost($post, $new=false) {
 			if($new) {
 				$post->save();
 				
@@ -190,17 +209,7 @@ class PostController extends BaseController {
 						->update(array('featured' => $post->id));
 				}
 				
-				//Gotta put in a thing here to get rid of all relations if this is an update.
-				$post->categories()->detach();//Pivot! Pivot! 
-	
-				//Gotta save the categories pivot
-				foreach(Input::get('category') as $k => $category) {
-					if($k <= 1) {//This will ensure that no more than 2 are added at a time.
-						$post->categories()->attach($category);
-					} else {
-						break;//let's not waste processes
-					}
-				}
+				
 			
 				//Put it into the profile post table (my posts or what other people see as your activity)
 				$new_profilepost = array(
@@ -238,23 +247,21 @@ class PostController extends BaseController {
 			} else {
 				$post->update();
 			}
+
+			//Gotta put in a thing here to get rid of all relations if this is an update.
+			$post->categories()->detach();//Pivot! Pivot! 
+
+			//Gotta save the categories pivot
+			foreach(Input::get('category') as $k => $category) {
+				if($k <= 1) {//This will ensure that no more than 2 are added at a time.
+					$post->categories()->attach($category);
+				} else {
+					break;//let's not waste processes
+				}
+			}
 				
 			SolariumHelper::updatePost($post);//Let's add the data to solarium (Apache Solr)
-			
-			return Redirect::to('profile');
-			
-		} else {//Failed Validation
-			if($new) {
-				return Redirect::to('profile/newpost')
-							->withErrors($validator)
-							->withInput();
-			} else {
-				return Redirect::to('profile/editpost/'.Input::get('id'))
-							->withErrors($validator)
-							->withInput();
-			}
 		}
-	}
 
 
 		

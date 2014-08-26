@@ -98,12 +98,23 @@ $border_color: #a9a9a9;
 .top-submit-wrapper {
 	background:#fff;
 	.top-submit-container {
+		position: relative;
 		padding-top: 100px;
-		min-height: 600px;
+		min-height: 600px;//Change Min-height value based on the window.
 		background-size: cover;
 		background-repeat: no-repeat;
 
-		//Change Min-height value based on the window.
+		//below puts in the white overlay
+		.top-submit-overlay {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 500px;
+			background-image: url('../../../../images/posts/white-opacity.png');
+			background-repeat: repeat-x;
+		}
+
 
 		//Shared error styling
 		.error {
@@ -118,29 +129,46 @@ $border_color: #a9a9a9;
 			@include border-radius(0);
 			background: none;
 			border-color: $border_color;
+			text-transform: uppercase;
+			@include montserrat(bold);
 		}
 
 		.title {
+			label {
+				margin-bottom: 8px;
+				&:after {
+					@include label_arrow_bottom();
+
+				}
+			}
 			input {
 				font-size: 30px;
-				text-transform: uppercase;
-				@include montserrat(bold);
 			}
 		}
 
 		.tags {
+			width: 100%;
 			.tag {
+				width: 32%;
 				font-size: 0;
 				display:inline-block;
 				input {
 					font-size: 12px;
-					width: 120px;
+					width: 100%;
 					border-top: 0;
 				}
-				label,a {
-					font-size: 12px;
-					float: right;
+			}
+			label {
+				margin-top: 8px;
+				margin-right: 20px;
+				&:after {
+					@include label_arrow_top();
+					left: -45px;
 				}
+			}
+			label,a {
+				font-size: 12px;
+				float: right;
 			}
 		}
 
@@ -162,6 +190,25 @@ $border_color: #a9a9a9;
 				}
 			}
 		}
+
+		.image-edit {
+			display:none;//this is displayed once you select the image.
+			position: absolute;
+			bottom: 20px;
+			right: 20px;
+			a {
+				display:inline-block;
+				text-decoration: none;
+				text-transform: uppercase;
+				background: $blue;
+				padding: 5px 10px;
+				color:#fff;
+				@include montserrat;
+				&:hover {
+					color:#000;
+				}
+			}
+		}
 	}
 }
 
@@ -175,7 +222,7 @@ $border_color: #a9a9a9;
 				float: right;
 				margin-top: -33px;
 				&:after {
-					content: ''
+					@include label_arrow_bottom();
 				}
 			}
 			textarea {
@@ -194,9 +241,6 @@ $border_color: #a9a9a9;
 				padding: 25px;
 				outline: none;
 				
-				//Not until we figure out a better js library.
-				//	@include column-gap(40px);
-				//	@include column-count(2);
 				&:after {
 					padding: 25px;
 				}
@@ -290,11 +334,24 @@ $border_color: #a9a9a9;
 			.processor-container {
 				.photo-processor {
 					h4 {
-
+						margin-top:0px;
+						margin-bottom:0px;
 					}
 					img {
-
+						float:left;
+						display:inline;
+						width: 14%;
 					}
+				}
+			}
+			.photo-chosen {
+				height: 400px;
+				overflow: hidden;
+				background-size: cover;
+				background-position: center center;
+				background-repeat: no-repeat;
+				img {
+					width:100%;
 				}
 			}
 		}

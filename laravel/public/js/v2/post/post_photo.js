@@ -1,53 +1,11 @@
-jQuery.validator.addMethod("maxthree", function(value, element) {
-  return $(element).find(":selected").length <= 3;
-},"Max Three Categories.");
+$(function() {
+	//photo system activate
+	photoSelection();
 
-$(function(){
-	
-	//Form Validation***********************************************************
-	$('.post-form form').validate({
-		ignore: [],
-		rules: {
-			title: {
-				required: true,
-				minlength: 5,/*
-				remote: {
-					url: window.site_url+'rest/posttitle',//Gotta make sure the title doesn't exist already...
-					type: 'GET',
-					contentType: "application/json"
-				}*/
-			},
-			image: {
-				required: true
-			},
-			'category[]': {
-				required: true,
-				minlength: 1,
-				maxlength: 2
-			}
-		},
-		messages: {
-			title: {
-				//remote: 'The title is already in use'
-			},
-			image: {
-				required: 'You need to select an image.'
-			}
-		}
-		
-	});
-	
-	//Tool Tips*****************************************************************
-	$('.form-group a').tooltip({
-		placement: 'top'
-	});
-	
-	$('.category li label').tooltip({
-		placement: 'top'
-	});
-	
-	//Photo Processing Systems**************************************************
-	
+});
+
+//Photo Processing Systems**************************************************
+function photoSelection() {
 	$('.photo-chosen').hide();
 	
 	//Search catch on enter keydown (prevents the form from being submitted)
@@ -120,36 +78,6 @@ $(function(){
 			console.log('error with image processor: missing var');
 		}
 	});//End of Photo Processor
-	
-	/**Category*/
-	$('.category label, .category input').on('click', function(event) {
-		if($('[name="category[]"]:checked').length > 2) {
-			event.preventDefault();
-			$('.category .warning').removeClass('hidden');
-		};
-	});
-	
-});
-
-//This grabs an individual image
-function image_grab(url, process) {
-	$.ajax({
-		type: "GET",
-		url: window.site_url+'rest/photo/',
-		data: {
-			url: encodeURIComponent(url),//Gotta encode that url
-			process: process
-		},
-		success: function(data) {
-			$('input.processed-image').val('');//Let's remove this just incase
-			$('.chosen-label').fadeOut();
-			$('.processed-label').fadeIn();
-			$('.photo-chosen').fadeIn();
-			$('.photo-chosen').css('background-image','');
-			$('.photo-chosen').css('background-image','url('+window.site_url+'uploads/final_images/'+data+')' );
-			$('input.processed-image').val(data);
-		}
-	});
 }
 
 //Function is used to pull images via the server from flickr.  This is for the Image Listing.
@@ -167,7 +95,6 @@ function image_pull() {
 				photos = data.photos.photo;
 				
 				$.each(photos,function(index, value) {
-					
 					image_url = 'http://farm'+value.farm+'.static.flickr.com/'+value.server+'/'+value.id+'_'+value.secret+'_s.jpg';
 					image_url_orig = 'http://farm'+value.farm+'.static.flickr.com/'+value.server+'/'+value.id+'_'+value.secret+'.jpg';
 					
@@ -196,4 +123,34 @@ function image_pull() {
 			}
 		});
 	}
+}
+
+//This grabs an individual image
+function image_grab(url, process) {
+	$.ajax({
+		type: "GET",
+		url: window.site_url+'rest/photo/',
+		data: {
+			url: encodeURIComponent(url),//Gotta encode that url
+			process: process
+		},
+		success: function(data) {
+			$('input.processed-image').val('');//Let's remove this just incase
+			$('.chosen-label').fadeOut();
+			$('.processed-label').fadeIn();
+			$('.photo-chosen').fadeIn();
+			$('.photo-chosen').css('background-image','');
+			$('.photo-chosen').css('background-image','url('+window.site_url+'uploads/final_images/'+data+')' );
+			$('.top-submit-container').css('background-image','url('+window.site_url+'uploads/final_images/'+data+')' );
+
+			//Checks to see if this is the intial phase of image selection.
+			if($('input.processed-image').val().length == 0) {
+				$('.top-submit-container .image-select').fadeOut();
+				$('.top-submit-container .image-edit').fadeIn();
+			}
+
+			//update actual data which is required for the submit.
+			$('input.processed-image').val(data);
+		}
+	});
 }
