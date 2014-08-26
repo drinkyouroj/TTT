@@ -46,6 +46,35 @@ $navbar_height: 30px;
 	@include montserrat();
 }
 
+@mixin feed_container_widths() {
+  // 4 items per row
+  @media screen and (min-width: 1230px){
+    .feed-container {
+      width: 1200px;
+    }
+  }
+  // 3 items per row
+  @media screen and (max-width: 1229px){
+    .feed-container {
+      width: 900px;   
+    }
+    
+  }
+  // 2 items per row
+  @media screen and (max-width: 930px){
+    .feed-container {
+      width: 600px;   
+    }
+  }
+  // 1 item per row
+  @media screen and (max-width: 630px){
+    .feed-container {
+      width: 300px; 
+    }
+  }
+}
+
+
 //Modal Mods
 //below is straight off from the landing page.  Modify if need be.
 .modal-backdrop.in {

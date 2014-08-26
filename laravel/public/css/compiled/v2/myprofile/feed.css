@@ -1,129 +1,182 @@
+/* line 24, ../../../../../sass/v2/_base.scss */
+input, textarea, select {
+  outline: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+}
+
+/* line 29, ../../../../../sass/v2/_base.scss */
+textarea {
+  resize: none;
+}
+
+/* line 80, ../../../../../sass/v2/_base.scss */
+.modal-backdrop.in {
+  opacity: 0.95 !important;
+}
+
+/* line 83, ../../../../../sass/v2/_base.scss */
+.modal-dialog {
+  width: 80%;
+  margin: 30px 10% 30px 10%;
+}
+
+@media (max-width: 479px) {
+  /* line 87, ../../../../../sass/v2/_base.scss */
+  .modal-dialog {
+    width: 90%;
+    margin: 10px 5% 30px 5%;
+  }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+  /* line 91, ../../../../../sass/v2/_base.scss */
+  .modal-dialog {
+    width: 90%;
+    margin: 10px 5% 30px 5%;
+  }
+}
+/* line 94, ../../../../../sass/v2/_base.scss */
+.modal-dialog button.close {
+  font-size: 50px;
+  z-index: 100;
+}
+
+/* line 97, ../../../../../sass/v2/_base.scss */
+.modal-dialog .modal-content {
+  background: none;
+  box-shadow: none;
+  border: none;
+  border-radius: none;
+}
+
+/* line 102, ../../../../../sass/v2/_base.scss */
+.modal-dialog .modal-content .modal-header {
+  border: none;
+}
+
+@media (max-width: 479px) {
+  /* line 105, ../../../../../sass/v2/_base.scss */
+  .modal-dialog .modal-content .modal-body {
+    margin-top: 0 !important;
+  }
+}
 /* line 3, ../../../../../sass/v2/myprofile/feed.scss */
-.feed-container {
+.feed-header {
   padding-top: 40px;
   margin-bottom: 40px;
 }
 /* line 7, ../../../../../sass/v2/myprofile/feed.scss */
-.feed-container .row {
+.feed-header .row {
   position: relative;
 }
 /* line 10, ../../../../../sass/v2/myprofile/feed.scss */
-.feed-container .row .feed-filter {
+.feed-header .row .feed-filter {
   position: initial;
 }
 /* line 13, ../../../../../sass/v2/myprofile/feed.scss */
-.feed-container .row .feed-filter ul {
+.feed-header .row .feed-filter ul {
   position: absolute;
   right: 0;
   bottom: 0;
   margin-bottom: 0;
 }
 /* line 19, ../../../../../sass/v2/myprofile/feed.scss */
-.feed-container .row .feed-filter ul li:nth-child(1), .feed-container .row .feed-filter ul li:nth-child(2) {
+.feed-header .row .feed-filter ul li:nth-child(1), .feed-header .row .feed-filter ul li:nth-child(2) {
   border-right: 1px solid gray;
 }
 
 @media screen and (min-width: 1230px) {
-  /* line 29, ../../../../../sass/v2/myprofile/feed.scss */
-  .isotope-container {
-    width: 1170px;
-  }
-  /* line 31, ../../../../../sass/v2/myprofile/feed.scss */
-  .isotope-container .post-container:nth-child(4n) {
-    margin-right: 0;
+  /* line 52, ../../../../../sass/v2/_base.scss */
+  .feed-container {
+    width: 1200px;
   }
 }
 @media screen and (max-width: 1229px) {
-  /* line 38, ../../../../../sass/v2/myprofile/feed.scss */
-  .isotope-container {
-    width: 870px;
-  }
-  /* line 40, ../../../../../sass/v2/myprofile/feed.scss */
-  .isotope-container .post-container:nth-child(3n) {
-    margin-right: 0;
+  /* line 58, ../../../../../sass/v2/_base.scss */
+  .feed-container {
+    width: 900px;
   }
 }
 @media screen and (max-width: 930px) {
-  /* line 48, ../../../../../sass/v2/myprofile/feed.scss */
-  .isotope-container {
-    width: 570px;
-  }
-  /* line 50, ../../../../../sass/v2/myprofile/feed.scss */
-  .isotope-container .post-container:nth-child(even) {
-    margin-right: 0;
+  /* line 65, ../../../../../sass/v2/_base.scss */
+  .feed-container {
+    width: 600px;
   }
 }
 @media screen and (max-width: 630px) {
-  /* line 57, ../../../../../sass/v2/myprofile/feed.scss */
-  .isotope-container {
-    width: 270px;
-  }
-  /* line 59, ../../../../../sass/v2/myprofile/feed.scss */
-  .isotope-container .post-container {
-    margin-right: 0;
+  /* line 71, ../../../../../sass/v2/_base.scss */
+  .feed-container {
+    width: 300px;
   }
 }
-/* line 65, ../../../../../sass/v2/myprofile/feed.scss */
-.isotope-container {
+/* line 29, ../../../../../sass/v2/myprofile/feed.scss */
+.feed-container {
   margin-left: auto;
   margin-right: auto;
+  overflow: hidden;
 }
-/* line 71, ../../../../../sass/v2/myprofile/feed.scss */
-.isotope-container .post-container {
+/* line 34, ../../../../../sass/v2/myprofile/feed.scss */
+.feed-container .post-container {
   width: 270px;
+  height: 250px;
+  margin-left: 15px;
+  margin-right: 15px;
+  float: left;
   position: relative;
-  margin-right: 30px;
 }
-/* line 76, ../../../../../sass/v2/myprofile/feed.scss */
-.isotope-container .post-container .post-image {
+/* line 42, ../../../../../sass/v2/myprofile/feed.scss */
+.feed-container .post-container .post-image {
   height: 170px;
   width: 270px;
   background-color: gray;
 }
-/* line 83, ../../../../../sass/v2/myprofile/feed.scss */
-.isotope-container .post-container .post-image-overlay {
+/* line 49, ../../../../../sass/v2/myprofile/feed.scss */
+.feed-container .post-container .post-image-overlay {
   position: absolute;
   width: 100%;
 }
-/* line 87, ../../../../../sass/v2/myprofile/feed.scss */
-.isotope-container .post-container .post-image-overlay .post-author-avatar {
+/* line 53, ../../../../../sass/v2/myprofile/feed.scss */
+.feed-container .post-container .post-image-overlay .post-author-avatar {
   height: 40px;
   width: 40px;
   border-radius: 50%;
   margin: 5px;
   background-color: lightgrey;
 }
-/* line 95, ../../../../../sass/v2/myprofile/feed.scss */
-.isotope-container .post-container .post-image-overlay .post-repost-container {
+/* line 61, ../../../../../sass/v2/myprofile/feed.scss */
+.feed-container .post-container .post-image-overlay .post-repost-container {
   position: absolute;
   top: 0;
   right: 0;
   text-align: center;
   background-color: lightgray;
 }
-/* line 101, ../../../../../sass/v2/myprofile/feed.scss */
-.isotope-container .post-container .post-image-overlay .post-repost-container .post-repost-image {
+/* line 67, ../../../../../sass/v2/myprofile/feed.scss */
+.feed-container .post-container .post-image-overlay .post-repost-container .post-repost-image {
   height: 30px;
   width: 30px;
 }
-/* line 106, ../../../../../sass/v2/myprofile/feed.scss */
-.isotope-container .post-container .post-image-overlay .post-repost-container .post-repost-user-dropdown {
+/* line 72, ../../../../../sass/v2/myprofile/feed.scss */
+.feed-container .post-container .post-image-overlay .post-repost-container .post-repost-user-dropdown {
   position: absolute;
   top: 100%;
   right: 0;
   width: 150px;
   background-color: lightblue;
 }
-/* line 117, ../../../../../sass/v2/myprofile/feed.scss */
-.isotope-container .post-container .post-title, .isotope-container .post-container .post-taglines {
+/* line 83, ../../../../../sass/v2/myprofile/feed.scss */
+.feed-container .post-container .post-title, .feed-container .post-container .post-taglines {
   text-align: center;
 }
-/* line 121, ../../../../../sass/v2/myprofile/feed.scss */
-.isotope-container .post-container .post-title {
+/* line 87, ../../../../../sass/v2/myprofile/feed.scss */
+.feed-container .post-container .post-title {
   margin-bottom: 0;
   font-size: 1.5em;
 }
-/* line 127, ../../../../../sass/v2/myprofile/feed.scss */
-.isotope-container .post-container .post-taglines li:nth-child(1), .isotope-container .post-container .post-taglines li:nth-child(2) {
+/* line 93, ../../../../../sass/v2/myprofile/feed.scss */
+.feed-container .post-container .post-taglines li:nth-child(1), .feed-container .post-container .post-taglines li:nth-child(2) {
   border-right: 1px solid gray;
 }

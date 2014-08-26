@@ -1,6 +1,6 @@
+@import '../base';
 
-
-.feed-container {
+.feed-header {
 	padding-top: 40px;
 	margin-bottom: 40px;
 
@@ -24,54 +24,20 @@
 	}
 }
 
+@include feed_container_widths;
 
-@media screen and (min-width: 1230px){
-	.isotope-container {
-		width: 1170px;
-		.post-container:nth-child(4n) {
-			margin-right: 0;
-		}
-	}
-}
-// 3 items per row
-@media screen and (max-width: 1229px){
-	.isotope-container {
-		width: 870px;		
-		.post-container:nth-child(3n) {
-			margin-right: 0;
-		}
-	}
-	
-}
-// 2 items per row
-@media screen and (max-width: 930px){
-	.isotope-container {
-		width: 570px;		
-		.post-container:nth-child(even) {
-			margin-right: 0;
-		}
-	}
-}
-// 1 item per row
-@media screen and (max-width: 630px){
-	.isotope-container {
-		width: 270px;	
-		.post-container {
-			margin-right: 0;
-		}
-	}
-}
-
-.isotope-container {
+.feed-container {
 	margin-left: auto;
 	margin-right: auto;
-	// 4 items per row
-	
+	overflow: hidden;
 
 	.post-container {
 		width: 270px;
+		height: 250px;
+		margin-left: 15px;
+		margin-right: 15px;
+		float: left;
 		position: relative;
-		margin-right: 30px;
 
 		.post-image {
 			height: 170px;
