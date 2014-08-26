@@ -1,0 +1,132 @@
+
+
+.feed-container {
+	padding-top: 40px;
+	margin-bottom: 40px;
+
+	.row {
+		position: relative;
+
+		.feed-filter {
+			position: initial;
+
+			ul {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				margin-bottom: 0;
+
+				li:nth-child(1), li:nth-child(2) {
+					border-right: 1px solid gray;
+				}
+			}
+		}
+	}
+}
+
+
+@media screen and (min-width: 1230px){
+	.isotope-container {
+		width: 1170px;
+		.post-container:nth-child(4n) {
+			margin-right: 0;
+		}
+	}
+}
+// 3 items per row
+@media screen and (max-width: 1229px){
+	.isotope-container {
+		width: 870px;		
+		.post-container:nth-child(3n) {
+			margin-right: 0;
+		}
+	}
+	
+}
+// 2 items per row
+@media screen and (max-width: 930px){
+	.isotope-container {
+		width: 570px;		
+		.post-container:nth-child(even) {
+			margin-right: 0;
+		}
+	}
+}
+// 1 item per row
+@media screen and (max-width: 630px){
+	.isotope-container {
+		width: 270px;	
+		.post-container {
+			margin-right: 0;
+		}
+	}
+}
+
+.isotope-container {
+	margin-left: auto;
+	margin-right: auto;
+	// 4 items per row
+	
+
+	.post-container {
+		width: 270px;
+		position: relative;
+		margin-right: 30px;
+
+		.post-image {
+			height: 170px;
+			width: 270px;
+
+			background-color: gray;
+		}
+
+		.post-image-overlay {
+			position: absolute;
+			width: 100%;
+
+			.post-author-avatar {
+				height: 40px;
+				width: 40px;
+				border-radius: 50%;
+				margin: 5px;
+				background-color: lightgrey;
+			}
+
+			.post-repost-container {
+				position: absolute;
+				top: 0; right: 0;
+				text-align: center;
+				background-color: lightgray;
+
+				.post-repost-image {
+					height: 30px;
+					width: 30px;
+				}
+
+				.post-repost-user-dropdown {
+					position: absolute;
+					top: 100%;
+					right: 0;
+					width: 150px;
+					background-color: lightblue;
+				}
+			}
+
+		}
+
+		.post-title, .post-taglines {
+			text-align: center;
+		}
+
+		.post-title {
+			margin-bottom: 0;
+			font-size: 1.5em;
+		}
+
+		.post-taglines {
+			li:nth-child(1), li:nth-child(2) {
+				border-right: 1px solid gray;
+			}
+		}
+	}
+}

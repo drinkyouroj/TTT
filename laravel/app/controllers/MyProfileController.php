@@ -34,7 +34,7 @@ class MyProfileController extends BaseController {
 		$feed_types = array( 'all', 'posts', 'reposts' );
 
 		// Make sure we have appropriate feed type...
-		if ( in_array( $feed_type, $feed_types ) ) {
+		if ( in_array( $feed_type, $feed_types ) && $page > 0 ) {
 			// Fetch the feed based on given params.
 			$feed = $this->feed->find( $user_id, $paginate, $page, $feed_type, true );
 			return Response::json(
@@ -43,7 +43,7 @@ class MyProfileController extends BaseController {
 			);
 		} else {
 			return Response::json(
-				array( 'error' => true ),
+				array( 'error' => 'invalid feed type and/or pagination' ),
 				200
 				);
 		}
