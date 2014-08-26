@@ -1,7 +1,5 @@
 /* line 24, ../../../../../sass/v2/_base.scss */
 input, textarea, select {
-  -webkit-appearance: none;
-  -webkit-box-shadow: none;
   outline: none;
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -10,43 +8,43 @@ input, textarea, select {
   border-radius: 0;
 }
 
-/* line 31, ../../../../../sass/v2/_base.scss */
+/* line 29, ../../../../../sass/v2/_base.scss */
 textarea {
   resize: none;
 }
 
-/* line 53, ../../../../../sass/v2/_base.scss */
+/* line 51, ../../../../../sass/v2/_base.scss */
 .modal-backdrop.in {
   opacity: 0.95 !important;
 }
 
-/* line 56, ../../../../../sass/v2/_base.scss */
+/* line 54, ../../../../../sass/v2/_base.scss */
 .modal-dialog {
   width: 80%;
   margin: 30px 10% 30px 10%;
 }
 
 @media (max-width: 479px) {
-  /* line 60, ../../../../../sass/v2/_base.scss */
+  /* line 58, ../../../../../sass/v2/_base.scss */
   .modal-dialog {
     width: 90%;
     margin: 10px 5% 30px 5%;
   }
 }
 @media (min-width: 480px) and (max-width: 767px) {
-  /* line 64, ../../../../../sass/v2/_base.scss */
+  /* line 62, ../../../../../sass/v2/_base.scss */
   .modal-dialog {
     width: 90%;
     margin: 10px 5% 30px 5%;
   }
 }
-/* line 67, ../../../../../sass/v2/_base.scss */
+/* line 65, ../../../../../sass/v2/_base.scss */
 .modal-dialog button.close {
   font-size: 50px;
   z-index: 100;
 }
 
-/* line 70, ../../../../../sass/v2/_base.scss */
+/* line 68, ../../../../../sass/v2/_base.scss */
 .modal-dialog .modal-content {
   background: none;
   box-shadow: none;
@@ -54,13 +52,13 @@ textarea {
   border-radius: none;
 }
 
-/* line 75, ../../../../../sass/v2/_base.scss */
+/* line 73, ../../../../../sass/v2/_base.scss */
 .modal-dialog .modal-content .modal-header {
   border: none;
 }
 
 @media (max-width: 479px) {
-  /* line 78, ../../../../../sass/v2/_base.scss */
+  /* line 76, ../../../../../sass/v2/_base.scss */
   .modal-dialog .modal-content .modal-body {
     margin-top: 0 !important;
   }
@@ -68,37 +66,51 @@ textarea {
 /* line 6, ../../../../../sass/v2/posts/post_form.scss */
 .controls-wrapper {
   position: fixed;
+  z-index: 4;
   top: 30px;
   width: 100%;
   background: #3c3c3c;
 }
-/* line 12, ../../../../../sass/v2/posts/post_form.scss */
+/* line 13, ../../../../../sass/v2/posts/post_form.scss */
 .controls-wrapper .controls-container {
   padding: 5px inherit;
 }
-/* line 15, ../../../../../sass/v2/posts/post_form.scss */
-.controls-wrapper .controls-container button {
+/* line 16, ../../../../../sass/v2/posts/post_form.scss */
+.controls-wrapper .controls-container a {
   border: none;
   background: none;
+  cursor: pointer;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 }
-/* line 20, ../../../../../sass/v2/posts/post_form.scss */
+/* line 22, ../../../../../sass/v2/posts/post_form.scss */
 .controls-wrapper .controls-container .post-category {
   text-align: center;
 }
-/* line 22, ../../../../../sass/v2/posts/post_form.scss */
-.controls-wrapper .controls-container .post-category button {
-  background: #fff;
-  color: #000;
+/* line 24, ../../../../../sass/v2/posts/post_form.scss */
+.controls-wrapper .controls-container .post-category a {
+  display: inline-block;
+  width: 205px;
+  margin-top: 10px;
+  background: none;
+  color: #fff;
+  font-size: 11px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  text-align: left;
+  border-bottom: 2px solid #fff;
+  background-image: url("");
+  background-position: center right;
+  background-repeat: no-repeat;
 }
-/* line 27, ../../../../../sass/v2/posts/post_form.scss */
+/* line 43, ../../../../../sass/v2/posts/post_form.scss */
 .controls-wrapper .controls-container .draft-publish {
   text-align: right;
 }
-/* line 29, ../../../../../sass/v2/posts/post_form.scss */
-.controls-wrapper .controls-container .draft-publish button {
+/* line 45, ../../../../../sass/v2/posts/post_form.scss */
+.controls-wrapper .controls-container .draft-publish a {
+  text-align: center;
   display: inline-block;
   width: 130px;
   padding: 12px 0;
@@ -109,24 +121,53 @@ textarea {
   font-size: 11px;
   color: #fff;
 }
-/* line 40, ../../../../../sass/v2/posts/post_form.scss */
-.controls-wrapper .controls-container .draft-publish button.save-draft {
+/* line 57, ../../../../../sass/v2/posts/post_form.scss */
+.controls-wrapper .controls-container .draft-publish a.save-draft {
   margin-right: 7px;
   background: #a4a4a4;
 }
 
-/* line 49, ../../../../../sass/v2/posts/post_form.scss */
+/* line 66, ../../../../../sass/v2/posts/post_form.scss */
+.category-wrapper {
+  z-index: 3;
+  position: fixed;
+  width: 100%;
+  background: #1a1a1a;
+  display: none;
+  padding-top: 79px;
+}
+/* line 74, ../../../../../sass/v2/posts/post_form.scss */
+.category-wrapper .category-container label {
+  color: #fff;
+}
+/* line 80, ../../../../../sass/v2/posts/post_form.scss */
+.category-wrapper .category-container .category-box {
+  color: #fff;
+}
+/* line 82, ../../../../../sass/v2/posts/post_form.scss */
+.category-wrapper .category-container .category-box ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* line 86, ../../../../../sass/v2/posts/post_form.scss */
+.category-wrapper .category-container .category-box ul li {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 98, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper {
   background: #fff;
 }
-/* line 51, ../../../../../sass/v2/posts/post_form.scss */
+/* line 100, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper .top-submit-container {
   padding-top: 100px;
   min-height: 600px;
   background-size: cover;
   background-repeat: no-repeat;
 }
-/* line 64, ../../../../../sass/v2/posts/post_form.scss */
+/* line 113, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper .top-submit-container label {
   display: inline-block;
   padding: 4px 10px 3px 10px;
@@ -138,7 +179,7 @@ textarea {
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
 }
-/* line 68, ../../../../../sass/v2/posts/post_form.scss */
+/* line 117, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper .top-submit-container input[type="text"] {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -148,31 +189,40 @@ textarea {
   background: none;
   border-color: darkgrey;
 }
-/* line 74, ../../../../../sass/v2/posts/post_form.scss */
+/* line 124, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper .top-submit-container .title input {
   font-size: 30px;
-  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
 }
-/* line 81, ../../../../../sass/v2/posts/post_form.scss */
-.top-submit-wrapper .top-submit-container .tldr input {
+/* line 132, ../../../../../sass/v2/posts/post_form.scss */
+.top-submit-wrapper .top-submit-container .tags .tag {
+  font-size: 0;
+  display: inline-block;
+}
+/* line 135, ../../../../../sass/v2/posts/post_form.scss */
+.top-submit-wrapper .top-submit-container .tags .tag input {
+  font-size: 12px;
+  width: 120px;
   border-top: 0;
 }
-/* line 84, ../../../../../sass/v2/posts/post_form.scss */
-.top-submit-wrapper .top-submit-container .tldr label, .top-submit-wrapper .top-submit-container .tldr a {
+/* line 140, ../../../../../sass/v2/posts/post_form.scss */
+.top-submit-wrapper .top-submit-container .tags .tag label, .top-submit-wrapper .top-submit-container .tags .tag a {
+  font-size: 12px;
   float: right;
 }
-/* line 89, ../../../../../sass/v2/posts/post_form.scss */
+/* line 147, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper .top-submit-container .image-select {
   text-align: center;
   margin: 50px 0;
   width: 100%;
 }
-/* line 96, ../../../../../sass/v2/posts/post_form.scss */
+/* line 154, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper .top-submit-container .image-select a img {
   margin-bottom: 40px;
 }
-/* line 99, ../../../../../sass/v2/posts/post_form.scss */
+/* line 157, ../../../../../sass/v2/posts/post_form.scss */
 .top-submit-wrapper .top-submit-container .image-select a span {
   font-family: 'Fjalla One';
   color: #343638;
@@ -180,15 +230,15 @@ textarea {
   text-transform: uppercase;
 }
 
-/* line 110, ../../../../../sass/v2/posts/post_form.scss */
+/* line 168, ../../../../../sass/v2/posts/post_form.scss */
 .body-submit-wrapper {
   top: -10px;
 }
-/* line 112, ../../../../../sass/v2/posts/post_form.scss */
+/* line 170, ../../../../../sass/v2/posts/post_form.scss */
 .body-submit-wrapper .body-submit-container {
   padding-top: 55px;
 }
-/* line 115, ../../../../../sass/v2/posts/post_form.scss */
+/* line 173, ../../../../../sass/v2/posts/post_form.scss */
 .body-submit-wrapper .body-submit-container .story label {
   display: inline-block;
   padding: 4px 10px 3px 10px;
@@ -202,11 +252,11 @@ textarea {
   float: right;
   margin-top: -33px;
 }
-/* line 119, ../../../../../sass/v2/posts/post_form.scss */
+/* line 177, ../../../../../sass/v2/posts/post_form.scss */
 .body-submit-wrapper .body-submit-container .story label:after {
   content: "";
 }
-/* line 123, ../../../../../sass/v2/posts/post_form.scss */
+/* line 181, ../../../../../sass/v2/posts/post_form.scss */
 .body-submit-wrapper .body-submit-container .story textarea {
   display: none;
   min-height: 300px;
@@ -217,22 +267,22 @@ textarea {
   -o-border-radius: 0;
   border-radius: 0;
 }
-/* line 129, ../../../../../sass/v2/posts/post_form.scss */
+/* line 187, ../../../../../sass/v2/posts/post_form.scss */
 .body-submit-wrapper .body-submit-container .story .text-input {
   min-height: 300px;
   border: 1px solid darkgrey;
-  font-size: 12px;
+  font-size: 16px;
   line-height: 150%;
   text-align: justify;
   padding: 25px;
   outline: none;
 }
-/* line 142, ../../../../../sass/v2/posts/post_form.scss */
+/* line 200, ../../../../../sass/v2/posts/post_form.scss */
 .body-submit-wrapper .body-submit-container .story .text-input:after {
   padding: 25px;
 }
 
-/* line 154, ../../../../../sass/v2/posts/post_form.scss */
+/* line 212, ../../../../../sass/v2/posts/post_form.scss */
 .photos .photo-system .input-append input.search-query {
   width: 100%;
   max-width: 300px;
@@ -249,50 +299,50 @@ textarea {
   -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
-/* line 170, ../../../../../sass/v2/posts/post_form.scss */
+/* line 228, ../../../../../sass/v2/posts/post_form.scss */
 .photos .photo-system .input-append .activate-search {
   font-family: 'bebas';
   letter-spacing: 1px;
   background-color: #000;
   color: #fff;
 }
-/* line 175, ../../../../../sass/v2/posts/post_form.scss */
+/* line 233, ../../../../../sass/v2/posts/post_form.scss */
 .photos .photo-system .input-append .activate-search:hover {
   background-color: #333;
   color: #fff;
 }
-/* line 180, ../../../../../sass/v2/posts/post_form.scss */
+/* line 238, ../../../../../sass/v2/posts/post_form.scss */
 .photos .photo-system .input-append .reset-search {
   font-family: 'bebas';
   letter-spacing: 1px;
   background-color: #428bca;
   color: #fff;
 }
-/* line 185, ../../../../../sass/v2/posts/post_form.scss */
+/* line 243, ../../../../../sass/v2/posts/post_form.scss */
 .photos .photo-system .input-append .reset-search:hover {
   background-color: #3581ba;
 }
-/* line 190, ../../../../../sass/v2/posts/post_form.scss */
+/* line 248, ../../../../../sass/v2/posts/post_form.scss */
 .photos .photo-system .chosen {
   margin-top: 30px;
 }
-/* line 194, ../../../../../sass/v2/posts/post_form.scss */
+/* line 252, ../../../../../sass/v2/posts/post_form.scss */
 .photos .photo-system h4 {
   font-family: 'bebas';
 }
-/* line 198, ../../../../../sass/v2/posts/post_form.scss */
+/* line 256, ../../../../../sass/v2/posts/post_form.scss */
 .photos .photo-system .chosen-label {
   font-family: 'bebas';
 }
-/* line 202, ../../../../../sass/v2/posts/post_form.scss */
+/* line 260, ../../../../../sass/v2/posts/post_form.scss */
 .photos .photo-system .processed-label {
   font-family: 'bebas';
 }
-/* line 206, ../../../../../sass/v2/posts/post_form.scss */
+/* line 264, ../../../../../sass/v2/posts/post_form.scss */
 .photos .photo-system .photo-results {
   margin-top: 20px;
 }
-/* line 211, ../../../../../sass/v2/posts/post_form.scss */
+/* line 269, ../../../../../sass/v2/posts/post_form.scss */
 .photos .photo-system .photo-results a.pager {
   width: 75px;
   height: 75px;
@@ -308,7 +358,7 @@ textarea {
   padding-top: 25px;
   vertical-align: top;
 }
-/* line 226, ../../../../../sass/v2/posts/post_form.scss */
+/* line 284, ../../../../../sass/v2/posts/post_form.scss */
 .photos .photo-system .photo-results a.pager.previous {
   border-right: 1px solid #dddddd;
 }

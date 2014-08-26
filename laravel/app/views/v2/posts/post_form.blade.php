@@ -16,12 +16,16 @@
 
 		<!--New script-->
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/editor/js/medium-editor.min.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post_input.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_input.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_validation.js"></script>
 	@stop
 
 	@section('content')
 
 		{{ Form::open(array('url'=>'profile/submitpost', 'method'=>'post','class'=>'form-horizontal','role'=>'form')) }}
+		{{--hidden inputs--}}
+		<input type="hidden" class="processed-image">
+		<div class="top-controls">
 
 			{{--Top Fixed Controls--}}
 			<div class="controls-wrapper">
@@ -29,25 +33,21 @@
 					<div class="row">
 
 						<div class="col-sm-4 col-sm-offset-4 post-category">
-							<button class="post-type">
-								Post Type
-							</button>
-						
-							<button class="categories">
-								Categories
-							</button>
+							<a class="categorization">
+								Post Type / Categories
+							</a>
 						</div>
 
 						<div class="col-sm-4 draft-publish">
 							{{--Must place if statements for the submit buttons.--}}
 							
-							<button class="save-draft">
+							<a class="save-draft">
 								Draft
-							</button>
+							</a>
 						
-							<button class="submit-post">
+							<a class="submit-post">
 								Submit
-							</button>
+							</a>
 							
 						</div>
 
@@ -55,7 +55,52 @@
 				</div>
 			</div>
 
-		
+			<div class="category-wrapper">
+				<div class="category-container container">
+					<div class="row">
+						{{--Gotta put this in the middle--}}
+						<div class="col-md-6 col-md-offset-3">
+							<div class="row">
+								<div class="col-md-6 story-type-box">
+									<div class="{{$errors->first('story_type') ? 'has-error' : '' }}">
+									{{ Form::label('story_type','Post Type', array('class'=>'control-label', 'required')) }}
+									<a href="#" data-toggle="tooltip" title="Choose the type of story">?</a>
+									{{ Form::select('story_type', array( 'story'=>'Story',
+																	'advice'=>'Advice',
+																	'thought'=>'Thought'), Input::old('story_type'), array('class'=>'form-control')) }}
+									<span class="error">{{ $errors->first('story_type') }}</span>
+								</div>
+								</div>
+								<div class="col-md-6 category-box">
+									{{--This foreach is just for creating the correct format for the multiselect--}}
+									{? $category_select = array(); ?}
+									@foreach($categories as $category)
+										{? $category_select[$category->id] = $category->title ?}
+									@endforeach
+									{{ Form::label('category','Post Category', array('class'=>'control-label')) }}
+									<a href="#" data-toggle="tooltip" title="Choose 3 categories that this story might fit in.">?</a>
+									<br/>
+									<div class="warning hidden">You can't select more than 3 categories.</div>
+									<ul>
+									@foreach($categories as $category)
+										<li class="col-md-6">
+											{{Form::checkbox('category[]', $category->id, 0, array('class'=>'category','id' => 'cat-'.$category->id) ) }}
+											<label for="cat-{{$category->id}}" data-toggle="tooltip" data-placement="top" title="{{$category->description}}">{{$category->title}}</label>
+										</li>
+									@endforeach
+									</ul>
+									
+									<span class="error">{{ $errors->first('category') }}</span>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div> {{--Top Controls--}}
+
 
 			{{--Wrapper is to be set as 100% and background black--}}
 			<div class="top-submit-wrapper">
@@ -72,14 +117,25 @@
 							</div>
 						</div>
 						<div class="col-md-5">
-							{{--TL;DR Input--}}
-							<div class="tldr {{$errors->first('tldr') ? 'has-error' : '' }}">
-								
-								{{ Form::text('tldr', Input::old('tldr'), array('class'=>'form-control', 'required', 'maxlength' => '40') ) }}
-								<a href="#" data-toggle="tooltip" title="TLDR define what your story might be in less than 40 characters">?</a>
-								{{ Form::label('tldr','TLDR', array('class'=>'control-label')) }}
-								
-								<span class="error">{{ $errors->first('tldr') }}</span>
+							{{--Tag Input--}}
+							<div class="tags">
+								<div class="tag {{$errors->first('tagline_1') ? 'has-error' : '' }}">
+									
+									{{ Form::text('tagline_1', Input::old('tagline_1'), array('class'=>'form-control', 'required', 'maxlength' => '20') ) }}
+									<span class="error">{{ $errors->first('tagline_1') }}</span>
+								</div>
+					
+								<div class="tag {{$errors->first('tagline_2') ? 'has-error' : '' }}">
+									{{ Form::text('tagline_2', Input::old('tagline_2'), array('class'=>'form-control', 'required', 'maxlength' => '20')) }}
+									<span class="error">{{ $errors->first('tagline_2') }}</span>
+								</div>
+					
+								<div class="tag {{$errors->first('tagline_3') ? 'has-error' : '' }}">
+									{{ Form::text('tagline_3', Input::old('tagline_3'), array('class'=>'form-control', 'required', 'maxlength' => '20')) }}
+									<span class="error">{{ $errors->first('tagline_3') }}</span>
+								</div>
+								{{ Form::label('tagline_1','Taglines', array('class'=>'control-label')) }}
+								<a href="#" data-toggle="tooltip" title="Taglines define what your story might be in less than 3 words per tag">?</a>
 							</div>
 						</div>
 

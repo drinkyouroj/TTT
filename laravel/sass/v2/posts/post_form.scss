@@ -5,6 +5,7 @@ $border_color: #a9a9a9;
 //Top Controls Fixed (Post Type, Category, Drafe, Publish)
 .controls-wrapper {
 	position: fixed;
+	z-index: 4;
 	top: $navbar_height;
 	//height: 50px;//height of the Controls bar.
 	width: 100%;
@@ -12,21 +13,37 @@ $border_color: #a9a9a9;
 	.controls-container {
 		padding: 5px inherit;
 		//button reset.
-		button {
+		a {
 			border:none;
 			background:none;
+			cursor: pointer;
 			@include appearance(none);			
 		}
 		.post-category {
 			text-align: center;
-			button {
-				background:#fff;
-				color:#000;
+			a {
+				display:inline-block;
+				width: 205px;
+				margin-top: 10px;
+				
+				background: none;
+				color:#fff;
+
+				font-size: 11px;
+				@include montserrat(normal);
+				text-align: left;
+
+				border-bottom: 2px solid #fff;
+
+				background-image: url('');
+				background-position: center right;
+				background-repeat: no-repeat;
 			}
 		}
 		.draft-publish {
 			text-align: right;
-			button {
+			a {
+				text-align: center;
 				display:inline-block;
 				width: 130px;
 				padding: 12px 0;
@@ -40,6 +57,38 @@ $border_color: #a9a9a9;
 				&.save-draft {
 					margin-right: 7px;
 					background: #a4a4a4;
+				}
+			}
+		}
+	}
+}
+
+.category-wrapper {	
+	z-index: 3;
+	position:fixed;
+	width: 100%;
+	background:#1a1a1a;
+	display:none;
+	padding-top: 79px;
+	.category-container {
+		label {
+			color:#fff;
+		}
+		.story-type-box {
+
+		}
+		.category-box {
+			color:#fff;
+			ul {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				li {
+					margin: 0;
+					padding: 0;
+					input {
+
+					}
 				}
 			}
 		}
@@ -68,21 +117,30 @@ $border_color: #a9a9a9;
 		input[type="text"] {
 			@include border-radius(0);
 			background: none;
-			border-color: $border_color;		}
+			border-color: $border_color;
+		}
 
 		.title {
 			input {
 				font-size: 30px;
+				text-transform: uppercase;
 				@include montserrat(bold);
 			}
 		}
 
-		.tldr {
-			input {
-				border-top: 0;
-			}
-			label,a {
-				float: right;
+		.tags {
+			.tag {
+				font-size: 0;
+				display:inline-block;
+				input {
+					font-size: 12px;
+					width: 120px;
+					border-top: 0;
+				}
+				label,a {
+					font-size: 12px;
+					float: right;
+				}
 			}
 		}
 
@@ -130,7 +188,7 @@ $border_color: #a9a9a9;
 				min-height: 300px;
 				border: 1px solid $border_color;
 			
-				font-size:12px;
+				font-size:16px;
 				line-height:150%;
 				text-align:justify;
 				padding: 25px;
