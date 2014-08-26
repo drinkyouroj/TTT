@@ -59,12 +59,18 @@ class MongoFeedRepository implements FeedRepository {
 
 	}
 
-	public function find($user_id, $paginate = 12 , $page = 1, $rest = false) {
+	public function find( $user_id, $paginate = 12 , $page = 1, $type = 'all' , $rest = false ) {
 		$query = $this->feed
 					->where('user_id', $user_id)
 					->orderBy('updated_at', 'DESC')
 					->skip(($page-1)*$paginate)
 					->take($paginate);
+
+		if ($type == 'posts') {
+			$query = $query->where('feed_type', 'posts');
+		} else if ($type == 'reposts') {
+			$query = $query->where('feed_type', 'reposts');
+		}
 
 		if($rest) {
 			return $query->with('post.user')->get();
