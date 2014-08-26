@@ -31,14 +31,15 @@ class MyProfileController extends BaseController {
 		$user_id = Auth::user()->id;
 		$paginate = 12;  // Default number of item to fetch
 		
-		$feed_types = array( 'all', 'posts', 'reposts' );
+		$feed_types = array( 'all', 'post', 'repost' );
 
 		// Make sure we have appropriate feed type...
 		if ( in_array( $feed_type, $feed_types ) && $page > 0 ) {
 			// Fetch the feed based on given params.
 			$feed = $this->feed->find( $user_id, $paginate, $page, $feed_type, true );
+			//return $feed;
 			return Response::json(
-				array( 'feed' => $feed ),
+				array( 'feed' => $feed->toArray() ),
 				200
 			);
 		} else {
