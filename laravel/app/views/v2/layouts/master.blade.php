@@ -67,6 +67,7 @@
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/bootstrap.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/jquery.scrolltofixed.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/global.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/handlebars/handlebars.min.js"></script>
 	
 	@if(Auth::check())
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/global-loggedin.js"></script>

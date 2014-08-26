@@ -16,8 +16,22 @@
 				bottom: 0;
 				margin-bottom: 0;
 
+				.filter {
+					color: lightgray;
+					// Hover an un-active filter
+					&:hover {
+						cursor: pointer;
+						color: #333;
+					}
+					// The active filter
+					&.active {
+						cursor: default;
+						color: #333;
+					}
+				}
+
 				li:nth-child(1), li:nth-child(2) {
-					border-right: 1px solid gray;
+					border-right: 1px solid gray;					
 				}
 			}
 		}
