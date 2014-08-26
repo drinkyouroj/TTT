@@ -2,7 +2,6 @@
   "name": "2000",
   "dependencies": {
     "bootstrap-sass": "~3.0.2",
-    "isotope": "~2.0.0",
     "trmix": "~1.1.0",
     "medium-editor": "~1.9.0"
   }
