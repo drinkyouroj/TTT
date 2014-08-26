@@ -20,11 +20,19 @@ $(function() {
 	}
 
 	//Controls.
+	$('.controls-wrapper .categorization').click(function(event) {
+		event.preventDefault;
+		$('.category-wrapper').slideToggle('slow',function() {
+			//Gotta figure out if we want to have a white bg.
+			//$('body').append('<div class="modal-backdrop fade in"></div>');
+		});
+	});
+
 	$('.controls-wrapper .save-draft').click(function() {
 
 	});
 
-	$('.controls-wrapper .save-draft').click(function() {
+	$('.controls-wrapper .submit-post').click(function() {
 
 	});
 

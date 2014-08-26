@@ -22,8 +22,6 @@ $blue: #32b1c6;
 
 //TTT Defaults:
 input,textarea, select {
-	-webkit-appearance: none;
-	-webkit-box-shadow: none;
 	outline: none;
 	@include border-radius(0);
 }
