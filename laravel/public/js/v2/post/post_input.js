@@ -33,7 +33,7 @@ $(function() {
 		$textAreaInput.rules("remove");
 		$textAreaInput.remove();
 
-		//$contentEditable.rules("add", save_post.body_rule);
+		$contentEditable.rules("add", save_post.body_rule);
 	} else {
 		//Gotta hide the contenteditable div and show the $.
 		$contentEditable.fade();
@@ -77,6 +77,7 @@ function iOSversion() {
 //Big bad save post class
 var save_post = new function() {
 	
+	//This rule is separted out so that we can use it earlier as well.
 	this.body_rule = {
 		required: true,
 		minlength: 400,
