@@ -9,6 +9,7 @@
 	@stop
 
 	@section('js')
+		@include( 'v2/partials/post-listing-template' )
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/category/category.js"></script>
 	@stop
 
@@ -25,7 +26,7 @@
 			</h1>
 		</section>
 
-		<section class="filters">
+		<section class="filters" data-current-category="{{$current_category}}" data-current-filter="{{$current_filter}}">
 
 			<div class="category-filter-container">
 				<div class="category-filter-title">
@@ -77,6 +78,6 @@
 			@else
 				<h2>Oops! No posts were found in this category...</h2>
 			@endif
-		</section>
+		</section>		
 
 	@stop

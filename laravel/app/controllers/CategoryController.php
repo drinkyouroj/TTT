@@ -28,21 +28,21 @@ class CategoryController extends BaseController {
 	/**
 	 * Autoload function for the Category Pages.
 	 */
-	public function getRestCategory($alias, $request = false) 
+	public function getRestCategory($alias, $request = false, $page = 1)
 	{
 		//Grab the data.
-		$data = CategoryLogic::data($alias, $request, abs(Request::get('page')), $this->paginate);  //pull the data.
+		$data = CategoryLogic::data($alias, $request, $page, $this->paginate);  //pull the data.
 		
 		$posts = $data['posts'];
 		
 		if(!count($posts)) {
 			return Response::json(
-				array('error' => true),
+				array('error' => 'No posts were found for the given search: categories/'.$alias.'/'.$request.'/'.$page),
 				200
 			);
 		} else {
 			return Response::json(
-				$posts->toArray(),
+				array( 'posts' => $posts->toArray()),
 				200
 			);
 		}

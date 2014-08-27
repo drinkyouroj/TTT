@@ -37,6 +37,7 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 Route::group(array('prefix'=>'rest'), function() {
 	//Autoload routes
 	//Category autload
+	Route::get( 'categories/{alais}/{sort}/{page}', 'CategoryController@getRestCategory');
 	Route::get( 'categories/{alais}/{sort}', 'CategoryController@getRestCategory');
 	Route::get( 'categories/{alais}', 'CategoryController@getRestCategory');
 	//Profile autload

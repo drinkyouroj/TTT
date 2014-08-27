@@ -136,6 +136,7 @@ $(function() {
 					console.log( data.error );
 					if ( advance_page )
 						current_feed_page--;
+					no_additional_content = true;
 				} else if ( data.feed ) {
 					if ( data.feed.length == 0 )
 						no_additional_content = true;
