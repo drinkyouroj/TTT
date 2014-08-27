@@ -28,6 +28,9 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 
 	//Photo Processor
 	Route::resource('photo', 'PhotoRestController', array('only'=>array('index','store','show')) );
+
+	Route::post('savepost','PostController@postSavePost');
+
 });
 
 //Unprotected rest controllers
