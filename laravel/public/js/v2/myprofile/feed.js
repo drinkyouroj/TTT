@@ -58,7 +58,7 @@ $(function() {
 				feed_items.forEach( function ( item, index ) {
 					// Render the html
 					item.site_url = window.site_url;  // send this to template for url's
-					var post = feed_item_template( item );
+					var post = feed_item_template( { post: item.post, feed_type: item.feed_type, users: item.users } );
 					// Add it to DOM
 					$('.feed-container').append( post );
 					// Fade in

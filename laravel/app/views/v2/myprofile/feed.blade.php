@@ -9,7 +9,7 @@
 	@stop
 
 	@section('js')
-		@include( 'v2/myprofile/partials/feed-item-template' )
+		@include( 'v2/partials/post-listing-template' )
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/myprofile/feed.js"></script>
 	@stop
 
@@ -36,7 +36,12 @@
 		<section class="posts-container feed-container">
 			@if ( count( $feed ) )
 				@foreach ( $feed as $item )
-					@include( 'v2/myprofile/partials/profile-post-partial' )
+					<?php
+					 	$post = $item->post;
+					 	$feed_type = $item->feed_type;
+					 	$users = $item->users;
+					?>
+					@include( 'v2/partials/post-listing-partial' )
 				@endforeach
 			@else
 				<h2>Oops! No items were found in your feed...</h2>

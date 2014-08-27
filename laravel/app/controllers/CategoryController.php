@@ -14,17 +14,15 @@ class CategoryController extends BaseController {
     public function getCategory($alias, $request = false)
     {
     	//Grab the data.
-		$data = CategoryLogic::data($alias, $request, abs(Request::get('page')), $this->paginate);//pull the data.
+		$data = CategoryLogic::data($alias, $request, abs(Request::get('page')), $this->paginate);  //pull the data.
 		
 		$posts = $data['posts'];
-		
-		if(!count($posts)) {
-			$posts = 'No Posts in this Category!';
-		}
 				
-		return View::make('generic.index')
-					->with('cat_title', $data['cat_title'])//Need the title when forming the actual page.
-					->with('posts', $posts);
+		return View::make('v2/category/category')
+					->with('cat_title', $data['cat_title'])  //Need the title when forming the actual page.
+					->with('posts', $posts)
+					->with('current_filter', $data['filter'])
+					->with('current_category', $alias);
     }
 
 	/**
@@ -33,7 +31,7 @@ class CategoryController extends BaseController {
 	public function getRestCategory($alias, $request = false) 
 	{
 		//Grab the data.
-		$data = CategoryLogic::data($alias, $request, abs(Request::get('page')), $this->paginate);//pull the data.
+		$data = CategoryLogic::data($alias, $request, abs(Request::get('page')), $this->paginate);  //pull the data.
 		
 		$posts = $data['posts'];
 		

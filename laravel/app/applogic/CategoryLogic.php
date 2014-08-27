@@ -86,7 +86,8 @@ class CategoryLogic {
 		//return the data.
 		return  array(
 					'posts' => $posts,
-					'cat_title' => $cat_title
+					'cat_title' => $cat_title,
+					'filter' => $request
 				);
 	}
 	
