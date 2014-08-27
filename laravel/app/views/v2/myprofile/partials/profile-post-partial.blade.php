@@ -11,8 +11,8 @@
 
 		@if ( $item->feed_type == 'repost' )
 			<div class="post-repost-container">
-				<img class="post-repost-image" src="">
-				<div> x 
+				<img class="post-repost-image" src="{{ URL::to('img/icons/repost-single.png') }}">
+				<div class="post-repost-count-container"> x 
 					<span class="post-repost-count">{{ count( $item->users ) }} </span>
 				</div>
 				<ul class="post-repost-user-dropdown list-unstyled fade in out">

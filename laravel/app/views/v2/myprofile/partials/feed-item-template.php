@@ -9,8 +9,8 @@
 
 			{{#isRepost feed_type}}
 				<div class="post-repost-container">
-					<img class="post-repost-image" src="">
-					<div> x 
+					<img class="post-repost-image" src="{{ site_url }}img/icons/repost-single.png">
+					<div class="post-repost-count-container"> x 
 						<span class="post-repost-count">{{ users.length }} </span>
 					</div>
 					<ul class="post-repost-user-dropdown list-unstyled">

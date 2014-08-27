@@ -86,11 +86,12 @@
 			.post-repost-container {
 				position: absolute;
 				top: 0; right: 0;
+				padding: 3px;
 				text-align: center;
 				background-color: lightgray;
 
 
-				div, .post-repost-image {
+				.post-repost-count-container, .post-repost-image {
 					display: block;
 				}
 
@@ -108,6 +109,16 @@
 				.post-repost-image {
 					height: 30px;
 					width: 30px;
+					// Center the repost image when the repost count expands the container.
+					margin-left: auto;
+					margin-right: auto;
+				}
+
+				.post-repost-count-container {
+					font-size: 10px;
+					.post-repost-count {
+						font-size: 14px;
+					}
 				}
 
 				ul.post-repost-user-dropdown {
