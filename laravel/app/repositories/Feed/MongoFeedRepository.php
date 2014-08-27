@@ -31,7 +31,6 @@ class MongoFeedRepository implements FeedRepository {
 			$feed->post_title = $data['post_title'];
 			$feed->post_id = $data['post_id'];
 			$feed->feed_type = $data['feed_type'];
-			$feed->user = (!empty($data['user'])) ? $data['user'] : '' ; //We have a single user since its easier to access if its a new post.
 			$feed->users = (!empty($data['users'])) ? array($data['users']) : array() ;//Stores the users who are involved in the reposting action.
 			$feed->save();
 		} else {
@@ -66,10 +65,10 @@ class MongoFeedRepository implements FeedRepository {
 					->skip(($page-1)*$paginate)
 					->take($paginate);
 
-		if ($type == 'posts') {
-			$query = $query->where('feed_type', 'posts');
-		} else if ($type == 'reposts') {
-			$query = $query->where('feed_type', 'reposts');
+		if ($type == 'post') {
+			$query = $query->where('feed_type', 'post');
+		} else if ($type == 'repost') {
+			$query = $query->where('feed_type', 'repost');
 		}
 
 		if($rest) {

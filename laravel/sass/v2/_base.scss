@@ -63,6 +63,10 @@ $navbar_height: 30px;
   height: 6px;
 }
 
+
+//  Media queries to calculate the width of the feed (so that we can center it).
+//  Based of the assumption that posts in the feed have a width of 270px and gutter
+//  of 30px.
 @mixin feed_container_widths() {
   // 4 items per row
   @media screen and (min-width: 1230px){

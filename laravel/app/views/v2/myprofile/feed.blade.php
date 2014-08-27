@@ -9,7 +9,8 @@
 	@stop
 
 	@section('js')
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/feed.js"></script>
+		@include( 'v2/myprofile/partials/feed-item-template' )
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/myprofile/feed.js"></script>
 	@stop
 
 	@section('content')
@@ -24,9 +25,9 @@
 				</div>
 				<div class="col-md-6 feed-filter">
 					<ul class="list-inline pull-right">
-						<li><span class="filter-all">all</span></li>
-						<li><span class="filter-posts">posts</span></li>
-						<li><span class="filter-reposts">reposts</span></li>
+						<li><span class="filter filter-all active" data-feed-filter="all">all</span></li>
+						<li><span class="filter filter-posts" data-feed-filter="post">posts</span></li>
+						<li><span class="filter filter-reposts" data-feed-filter="repost">reposts</span></li>
 					</ul>
 				</div>
 			</div>
