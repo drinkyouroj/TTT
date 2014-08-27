@@ -29,11 +29,10 @@ $(function() {
 			disableDoubleReturn: true,
 			placeholder: 'Write Your Story Here.'
 		});
-		//remove the validation rules.
-		$textAreaInput.rules("remove");
-		$textAreaInput.remove();
-
-		$contentEditable.rules("add", save_post.body_rule);
+		save_post.editable=true;
+		//hide the textarea
+		$textAreaInput.css('display','none');
+		save_post.textarea = $textAreaInput;
 	} else {
 		//Gotta hide the contenteditable div and show the $.
 		$contentEditable.fade();
@@ -43,9 +42,9 @@ $(function() {
 		//Show the TextArea
 		$textAreaInput.show();
 		window.editor = $textAreaInput;//designate the $editor as the text area.
+		save_post.editable=false;
 	}
 	save_post.editor = window.editor;
-
 
 	//Controls.
 	$('.controls-wrapper .categorization').click(function(event) {
@@ -77,15 +76,8 @@ function iOSversion() {
 //Big bad save post class
 var save_post = new function() {
 	
-	//This rule is separted out so that we can use it earlier as well.
-	this.body_rule = {
-		required: true,
-		minlength: 400,
-		maxlength: 14000,//This is generalized.
-	};
-
 	this.validate_options = {
-		ignore: [],//":hidden:not(.editable)",
+		ignore: [],
 		rules: {
 			title: {
 				required: true,
@@ -100,7 +92,11 @@ var save_post = new function() {
 				minlength: 1,
 				maxlength: 2
 			},
-			body: this.body_rule
+			body: {
+				required: true,
+				minlength: 400,
+				maxlength: 14000,//This is generalized.
+			}
 		},
 		messages: {
 			image: {
@@ -167,6 +163,9 @@ var save_post = new function() {
 	};
 
 	this.validate = function() {
+		if(this.editable) {
+			val( this.editor.html() );
+		}
 		console.log(this.form.valid(this.validate_options));
 	};
 	//this function grabs existing data and runs validation
