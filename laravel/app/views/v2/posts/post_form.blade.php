@@ -16,23 +16,53 @@
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/editor/js/medium-editor.min.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_input.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_photo.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_validation.js"></script>
 
 	@stop
 
 	@section('content')
 
-		{{ Form::open(array('url'=>'profile/submitpost', 'method'=>'post','class'=>'form-horizontal','role'=>'form', 'class'=>'post_input')) }}
+	{{--Below packs the data into the right place--}}
+	<?php 
+		
+		$title = (!empty($post->title)) ? $post->title : '';
+		$story_type = (!empty($post->story_type)) ? $post->story_type : '';
+
+		$tagline_1 = (!empty($post->tagline_1)) ? $post->tagline_1 : '';
+		$tagline_2 = (!empty($post->tagline_2)) ? $post->tagline_2 : '';
+		$tagline_3 = (!empty($post->tagline_3)) ? $post->tagline_3 : '';
+
+		$image = (!empty($post->image)) ? $post->image : ''; 
+		$body = (!empty($post->body)) ? $post->body : '';
+		
+	?>
+
+
+		{{ Form::open(array('class'=>'form-horizontal','role'=>'form', 'class'=>'post_input')) }}
 		{{--hidden inputs--}}
-		<input type="hidden" class="processed-image" required>
+		<input name="image" type="hidden" class="processed-image" required value="{{$image}}">
+		@if($edit)
+			<input name="id" type="hidden" value="{{$post->id}}">
+		@endif
+
 		<div class="top-controls">
 
 			{{--Top Fixed Controls--}}
 			<div class="controls-wrapper">
 				<div class="container controls-container">
 					<div class="row">
-
-						<div class="col-sm-4 col-sm-offset-4 post-category">
+						<div class="col-sm-4 preview">
+							<a class="preview-button @if(!$edit) hidden @endif" data-toggle="modal" data-target="#previewModal">
+								Preview
+							</a>
+							<a 	class="article-link @if(!$edit) hidden @endif"
+								@if($edit)
+								href="{{Config::get('app.url')}}/posts/{{$post->alias}}"
+								@endif
+								>
+								Link to Post
+							</a>
+						</div>
+						<div class="col-sm-4 post-category">
 							<a class="categorization">
 								Post Type / Categories
 							</a>
@@ -46,7 +76,11 @@
 							</a>
 						
 							<a class="submit-post">
-								Submit
+								@if(!$edit)
+									Submit
+								@else
+									Update
+								@endif
 							</a>
 							
 						</div>
@@ -67,7 +101,7 @@
 									<a href="#" data-toggle="tooltip" title="Choose the type of story">?</a>
 									{{ Form::select('story_type', array( 'story'=>'Story',
 																	'advice'=>'Advice',
-																	'thought'=>'Thought'), Input::old('story_type'), array('class'=>'form-control')) }}
+																	'thought'=>'Thought'), $story_type, array('class'=>'form-control')) }}
 									<span class="error">{{ $errors->first('story_type') }}</span>
 								</div>
 								</div>
@@ -113,7 +147,7 @@
 							<div class="title {{$errors->first('title') ? 'has-error' : '' }}">
 								{{ Form::label('title','Title') }}
 								<a href="#" data-toggle="tooltip" title="Need to pick a title!"></a>
-								{{ Form::text('title', Input::old('title'), array('class'=>'form-control input-lg title', 'required', 'minlength' =>'5', 'maxlength' => '40')) }}
+								{{ Form::text('title', $title, array('class'=>'form-control input-lg title', 'required', 'minlength' =>'5', 'maxlength' => '40')) }}
 								<span class="error">{{ $errors->first('title') }}</span>
 							</div>
 						</div>
@@ -122,17 +156,17 @@
 							<div class="tags">
 								<div class="tag {{$errors->first('tagline_1') ? 'has-error' : '' }}">
 									
-									{{ Form::text('tagline_1', Input::old('tagline_1'), array('class'=>'form-control', 'required', 'maxlength' => '20', 'placeholder'=>'Tag 1') ) }}
+									{{ Form::text('tagline_1', $tagline_1, array('class'=>'form-control', 'required', 'maxlength' => '20', 'placeholder'=>'Tag 1') ) }}
 									<span class="error">{{ $errors->first('tagline_1') }}</span>
 								</div>
 					
 								<div class="tag {{$errors->first('tagline_2') ? 'has-error' : '' }}">
-									{{ Form::text('tagline_2', Input::old('tagline_2'), array('class'=>'form-control', 'required', 'maxlength' => '20', 'placeholder'=>'Tag 2')) }}
+									{{ Form::text('tagline_2', $tagline_2, array('class'=>'form-control', 'required', 'maxlength' => '20', 'placeholder'=>'Tag 2')) }}
 									<span class="error">{{ $errors->first('tagline_2') }}</span>
 								</div>
 					
 								<div class="tag {{$errors->first('tagline_3') ? 'has-error' : '' }}">
-									{{ Form::text('tagline_3', Input::old('tagline_3'), array('class'=>'form-control', 'required', 'maxlength' => '20', 'placeholder'=>'Tag 3')) }}
+									{{ Form::text('tagline_3', $tagline_3, array('class'=>'form-control', 'required', 'maxlength' => '20', 'placeholder'=>'Tag 3')) }}
 									<span class="error">{{ $errors->first('tagline_3') }}</span>
 								</div>
 								<br/>
@@ -171,9 +205,9 @@
 						<div class="col-md-8 col-md-offset-2">
 							<div class="story {{$errors->first('body') ? 'has-error' : '' }}">
 								{{ Form::label('body','Story', array('class'=>'control-label')) }}
-								{{ Form::textarea('body', Input::old('body'), array('class'=>'form-control normal-input', 'required', 'minlength' =>'5')) }}
+								{{ Form::textarea('body', $body, array('class'=>'form-control normal-input', 'required', 'minlength' =>'5')) }}
 								<div class="text-input editable" name="body" required>
-									
+									@if($edit) {{$body}} @endif
 								</div>
 
 								<span class="error">{{ $errors->first('body') }}</span>
@@ -241,10 +275,51 @@
 							<div class="clearfix"></div>
 						</div>
 
-					</div><!--End of Modal-->
+					</div><!--End of Modal Body-->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button
->					</div>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		{{--Preview Modal--}}
+		<div class="modal fade" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title" id="previewModalLabel">
+							Preview
+						</h4>
+					</div>
+					<div class="modal-body">
+						Preview of the post to come here soon-ish.
+					</div><!--End of Modal Body-->
+				</div>
+			</div>
+		</div>
+
+
+		{{--Success Modal--}}
+		<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title" id="successModalLabel">
+							Thanks for Posting.
+						</h4>
+					</div>
+					<div class="modal-body">
+						<div class="text">
+							You can take a look at your stuff here:
+							<a class="link"></a>
+							or You can continue to add to change your post for up to 72hrs.<br/>
+							Note: You can only make 1 post every 10 minutes.
+						</div>
+					</div><!--End of Modal Body-->
 				</div>
 			</div>
 		</div>

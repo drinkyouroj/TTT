@@ -7,6 +7,10 @@ $(function() {
 	save_post.form = $('form.post_input');
 	save_post.form.validate(save_post.validate_options);
 	
+	save_post.form.on('submit',function(event) {
+		event.preventDefault;
+	});
+
 	//Below binds the modal close event incase there's an error
 	$('#imageModal').on('hidden.bs.modal', function () {
 		$('.modal-header span.image-error',this).remove();
@@ -33,6 +37,7 @@ $(function() {
 		//hide the textarea
 		$textAreaInput.css('display','none');
 		save_post.textarea = $textAreaInput;
+		save_post.editable = $contentEditable;
 	} else {
 		//Gotta hide the contenteditable div and show the $.
 		$contentEditable.fade();
@@ -49,7 +54,7 @@ $(function() {
 	//Controls.
 	$('.controls-wrapper .categorization').click(function(event) {
 		event.preventDefault;
-		$('.category-wrapper').slideToggle('slow',function() {
+		$('.category-wrapper').slideToggle('fast',function() {
 			//Gotta figure out if we want to have a white bg.
 			//$('body').append('<div class="modal-backdrop fade in"></div>');
 		});
@@ -77,6 +82,7 @@ function iOSversion() {
 var save_post = new function() {
 	
 	this.validate_options = {
+		debug: true,
 		ignore: [],
 		rules: {
 			title: {
@@ -119,8 +125,10 @@ var save_post = new function() {
 					$('a.image-select-modal').click();//just pull up the modal.
 				}
 			});
+		},
+		submitHandler: function(form) {
+			return false;
 		}
-		
 	};
 
 	//States
@@ -128,7 +136,7 @@ var save_post = new function() {
 	this.published = 0;
 
 	//Information
-	this.id = 0;
+	this.post_id = 0;
 
 	this.title = '';
 
@@ -149,7 +157,7 @@ var save_post = new function() {
 			draft: this.draft,
 			published: this.published,
 
-			id: this.id,
+			id: this.post_id,
 
 			title: this.title,
 			tagline_1: this.tagline_1,
@@ -162,24 +170,34 @@ var save_post = new function() {
 		}
 	};
 
+	//content validation.
 	this.validate = function() {
+		//check to see if we're using contentEditable
 		if(this.editable) {
-			val( this.editor.html() );
+			//yes
+			data = this.editable.html();
+			this.textarea.html( data );//load in the data into the textarea.
 		}
-		console.log(this.form.valid(this.validate_options));
+		return this.form.valid(this.validate_options);
 	};
+
 	//this function grabs existing data and runs validation
 	this.grabData = function() {
 
-		this.id = $('input.id',this.form).val();
+		//this.post_id = $('input.id',this.form).val();
 		this.title = $('input.title',this.form).val();;
 
-		this.tagline_1 = $('input.tagline_1',this.form).val();
-		this.tagline_2 = $('input.tagline_2',this.form).val();
-		this.tagline_3 = $('input.tagline_3',this.form).val();
+		this.tagline_1 = $('input[name="tagline_1"]',this.form).val();
+		this.tagline_2 = $('input[name="tagline_2"]',this.form).val();
+		this.tagline_3 = $('input[name="tagline_3"]',this.form).val();
 		//gotta work on the one below.
 		this.category = new Array();
-		this.story_type = $('input.tagline_1',this.form).val();
+
+		$('.category-box ul input:checked').each(function() {			
+			save_post.category.push($(this).val());
+		});
+
+		this.story_type = $('select#story_type',this.form).val();
 
 		//if the editor is a normal input, check it.
 		if( $(this.editor).hasClass('normal-input')) {
@@ -189,6 +207,8 @@ var save_post = new function() {
 		}
 		
 		this.image = $('input.processed-image',this.form).val();
+
+		//validate the data and if its working, we can just send it out.
 		if(this.validate()) {
 			this.send();
 		}
@@ -196,32 +216,68 @@ var save_post = new function() {
 
 	//Functions.
 	this.send = function() {
+		console.log(this.dataCompile());
+		
 		$.ajax({
 			type: "POST",
 			url: window.site_url+'rest/savepost',
-			data: this.dataCompile,//uses the data function to get 
+			data: {
+					draft: this.draft,
+					published: this.published,
+
+					id: this.post_id,
+
+					title: this.title,
+					tagline_1: this.tagline_1,
+					tagline_2: this.tagline_2,
+					tagline_3: this.tagline_3,
+					category: this.category,
+					story_type: this.story_type,
+					body: this.body,
+					image: this.image
+				},//uses the data function to get 
 			success: function(data) {
 				console.log(data);
+
 				switch(data.result) {
 					default:
 					case 'create':
-						this.createAfter();
+						//create scenario
+						save_post.createAfter(data);//Singleton self referring!
 						break;
 					case 'update':
-						this.updateAfter();
+						//update scenario
+						save_post.updateAfter(data);
 						break;
-
+				}
+			},
+			complete: function(xhr, status) {
+				console.log(xhr.status);
+			},
+			error: function(xhr, status) {
+				console.log(xhr.status);
+				switch(data.error) {
+					default:
+					case '72':
+						//72 hours limit has passed for editting.
+						break;
+					case '10':
+						//YOu've posted in the last 10 minuts.
+						break;
+					case '405':
+						//Validation is really bad (as in they bypassed our client side validation scheme)
+						//Redirect this person to terms.
+						break;
 				}
 			}
 		});
 	};
 
-
 	this.sendDraft = function() {
 		//gotta set the states
 		this.draft = 1;
 		this.published = 0;
-		this.grabData();
+		this.grabData();//grab data automatically sends out the data via "send function"
 	};
 
 	this.sendPublish = function() {
@@ -231,12 +287,30 @@ var save_post = new function() {
 		this.grabData();
 	};
 
-	this.createAfter = function() {
-		console.log('create');
+	this.createAfter = function(data) {
+		//first, make sure that update gets called from this point on.
+		this.post_id = data.id;
+		this.alias = data.alias;
+
+		article_link = window.site_url+'posts/'+this.alias;
+
+		$('.preview-button').fadeIn();
+		if(this.published) {
+			a_link = $('.article-link');
+			a_link.prop('href',article_link);
+			a_link.fadeIn();
+
+		}
+		$('.submit-post').html('Update');
+		
+		$link = $('#successModal .link');
+		$link.html(this.title);
+		$link.prop('href', article_link);
+		$('#successModal').modal('show')
 	};
 
-	this.updateAfter = function() {
-		console.log('update');
+	this.updateAfter = function(data) {
+		this.alias = data.alias;
 	};
 	
 }
