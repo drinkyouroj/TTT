@@ -51,8 +51,9 @@ Route::group(array('before' => 'auth'), function() {
 });
 
 // Routes for users profile
-Route::group( array( 'before' => 'auth' ), function() {
-	Route::controller( 'myprofile', 'MyProfileController' );
+Route::group( array('prefix'=>'myprofile', 'before' => 'auth' ), function() {
+	Route::get('/', 'MyProfileController@getMyProfile');
+	//Route::controller( 'myprofile', 'MyProfileController' );
 });
 
 //Admin area

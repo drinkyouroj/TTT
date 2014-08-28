@@ -8,14 +8,7 @@ $(function() {
 	// Once the feed has retrieved all results, prevent additional calls (reset when filter changes)
 	var no_additional_content = false;
 
-	// ========================= HANDLBARS TEMPLATE ===========================
-	// Add some logic to handlebars template
-	Handlebars.registerHelper('isRepost', function ( item, options ) {
-	  	if ( item == 'repost' )
-	  		return options.fn(this);
-	  	else
-	  		return options.inverse(this);
-	});
+	
 	var source   = $("#feed-item-template").html();
 	var feed_item_template = Handlebars.compile(source);
 	
@@ -36,12 +29,12 @@ $(function() {
 	function filterFeed ( filter, scope ) {
 		// Make sure user selected a different filter, and we are not currently fetching the feed.
 		if ( filter !== current_feed_filter && !is_fetching_next_page ) {
-			// Set current_feed_filter
-			current_feed_filter = filter;
-			// Reset the feed page to 1
-			current_feed_page = 1;
-			// Reset the no_additional_content
-			no_additional_content = false;
+
+
+			current_feed_filter = filter;// Set current_feed_filter
+			current_feed_page = 1;// Reset the feed page to 1
+			no_additional_content = false;// Reset the no_additional_content
+			
 			// Remove active class from previous filter
 			$('.feed-filter .filter').removeClass('active');
 			// Add active class to scope

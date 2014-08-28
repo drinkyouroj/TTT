@@ -124,6 +124,22 @@ class EloquentPostRepository implements PostRepository {
 						->get();
 	}
 
+	//All Drafts belonging to a user
+	public function allDraftsByUserId($user_id, $paginate, $page, $rest) {
+		$query = $this->post->where('user_id', $user_id)
+						->where('draft', 1)
+						->where('published',0)
+						->orderBy('updated_at', 'DESC')
+						->skip(($page-1)*$paginate)
+						->take($paginate);
+						;
+		if($rest) {
+			return $query->with('user')->get();
+		} else {
+			return $query->get();
+		}
+	}
+
 	//Count
 	public function countPublished() {
 		return $this->post->where('published', 1)->count();
