@@ -118,7 +118,13 @@ class PostController extends BaseController {
 	 */
 	public function getPostForm($id=false) {
 		if($id) {
+			//EditPost
 			$post = $this->post->findById($id);
+
+			if(!$this->post->checkEditable($post->published_at)) {
+				return View::make('v2/errors/error');
+			}
+
 			return View::make('v2/posts/post_form')//Edit form only has to account for the text.  Not the entire listing.
 					->with('post', $post)
 					->with('edit', true);
@@ -173,8 +179,7 @@ class PostController extends BaseController {
 				
 				if($check_post->published) {
 					//Now that we know this exists, let's check to see if its been more than 3 days since it was initially posted.
-					if(!Session::get('admin') &&
-					   strtotime(date('Y-m-d H:i:s', strtotime('-72 hours'))) >= strtotime($check_post->published_at)) {
+					if(!$this->post->checkEditable($check_post->published_at)) {
 						//more than 72 hours has passed since the post was created.
 						//TODO Maybe I should have this go somewhere more descriptive??
 						if($rest) {
@@ -187,13 +192,28 @@ class PostController extends BaseController {
 						}
 					}
 				}
+
+				//If the post is published and the user is trying to set it as a draft.
+				if($check_post->published && $request['draft']) {
 					if($rest) {
-						$post = self::rest_input($new, $check_post);
+						return Response::json(
+								array('error' => 'pub2draft'),
+								405//method not allowed
+							);
 					} else {
-						$post = $this->post->input($new, $check_post);//Post object filter gets the input and puts it into the post.
+						return Redirect::to('profile');
 					}
-					
-					$validator = $post->validate($post->toArray(),$check_post->id);//validation takes arrays.  Also if this is an update, it needs an id.
+				}
+
+
+
+				if($rest) {
+					$post = self::rest_input($new, $check_post);
+				} else {
+					$post = $this->post->input($new, $check_post);//Post object filter gets the input and puts it into the post.
+				}
+				
+				$validator = $post->validate($post->toArray(),$check_post->id);//validation takes arrays.  Also if this is an update, it needs an id.
 
 
 			} else {
@@ -356,10 +376,12 @@ class PostController extends BaseController {
 				$post->tagline_3 = $query['tagline_3'];
 				
 				$post->body = $query['body'];//Body is the only updatable thing in an update scenario.
-				$post->published = $query['published'];
-				if($post->published) {
-					$post->published_at = Carbon::createFromTimeStamp(strtotime(date('Y-m-d H:i:s'))) ;
+
+				//if the post is becoming published.
+				if( $query['published'] && $post->draft ) {
+					$post->published_at = DB::raw('NOW()');
 				}
+				$post->published = $query['published'];
 				$post->draft = $query['draft'];//default is 1 so that it won't accidentally get published.
 				return $post;
 			}

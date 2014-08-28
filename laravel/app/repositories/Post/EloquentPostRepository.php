@@ -1,6 +1,6 @@
 <?php namespace AppStorage\Post;
 
-use Post, DB, Request, Auth;
+use Post, DB, Request, Auth, Session;
 
 class EloquentPostRepository implements PostRepository {
 
@@ -134,6 +134,18 @@ class EloquentPostRepository implements PostRepository {
 		return $this->post->where('id', $post_id)
 						->where('user_id', $user_id)
 						->count();
+	}
+
+	//Just a simple date check.
+	public function checkEditable($published_at) {
+		if(!Session::get('admin') &&
+		   strtotime(date('Y-m-d H:i:s', strtotime('-72 hours'))) >= 
+		   strtotime($published_at)) 
+		{
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	//Update

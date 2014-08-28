@@ -39,6 +39,8 @@ interface PostRepository {
 	//Check
 	public function owns($post_id, $user_id);
 
+	public function checkEditable($published_at);
+
 	//Update
 	public function update($input);
 	
