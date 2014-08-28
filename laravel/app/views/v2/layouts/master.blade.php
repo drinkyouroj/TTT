@@ -79,6 +79,34 @@
 	@yield('js')
     
     
+	@if( !Auth::check() )
+		<div class="modal fade" id="guestSignup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" id="myModalLabel"></h4>
+		      </div>
+		      <div class="modal-body">
+		        <div class="signup-form">
+		        <h4>Signup</h4>
+				{{ Confide::makeSignupForm()->render() }}
+				</div>
+				
+				<div class="login-form">
+					<h4>Login</h4>
+					{{ Confide::makeLoginForm()->render() }}
+					<a href="{{Config::get('app.url')}}/user/forgot">forget your password?</a>
+				</div>
+				<aside class="login-disclaimer">
+					Read our guidelines on <a href="{{Config::get('app.url')}}/etiquette">Community Etiquette</a>.
+				</aside>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	@endif
+
     <script>
     	/*
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

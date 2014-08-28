@@ -8,7 +8,9 @@
 @stop
 
 @section('js')
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/posts/post.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_actions.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post.js"></script>
+
 @stop
 
 @section('title')
@@ -17,18 +19,58 @@
 
 @section('content')
 
-	<section class="post-action-bar">
-		{{-- Only display like, repost, save if not the author --}}
-		<?php
-			$is_logged_in = Auth::check();
-			$is_author = Auth::check() && $post->user->id == Auth::user()->id;
-		?>
-		@if( $is_logged_in && !$is_author )
-			<a href="#">Like</a>
-			<a href="#">Repost</a>
-			<a href="#">Save</a>
-		@endif
-		<a href="#">Comment</a>
+	<?php
+		$save_tooltip = 'Save this to your profile';
+		$save_term_active = 'Saved';
+		$save_term = 'Save';
+
+		$repost_tooltip = 'Share this with your followers';
+		$repost_term_active = 'Reposted';
+		$repost_term = 'Repost';
+
+		$like_tooltip = 'Give this more visibility to the community';
+		$like_term_active = 'Liked';
+		$like_term = 'Like';
+
+		$follow_term_active = 'Following';
+		$follow_term = 'Follow';
+	?>
+	
+	<section class="post-action-bar-wrapper">
+		<div class="post-action-bar system-share" data-post-id="{{ $post->id }}" data-user-id="{{ $post->user->id }}">
+			{{-- Only display like, repost, save if not the author --}}
+			<?php
+				$is_logged_in = Auth::check();
+				$is_author = Auth::check() && $post->user->id == Auth::user()->id;
+			?>
+			@if( !$is_author )
+				<a href="#" data-action="follow">
+					<span class="{{ $is_following ? 'hidden' : '' }}"> {{ $follow_term }} {{ $post->user->username }} </span>
+					<span class="{{ $is_following ? '' : 'hidden' }}"> {{ $follow_term_active }} {{ $post->user->username }} </span>
+				</a>
+				
+				<a href="#" title="{{ $like_tooltip }}" data-action="like" data-toggle="tooltip" data-placement="bottom">
+					<span class="{{ $liked ? 'hidden' : '' }}">  {{ $like_term }} <span class="action-counts"> {{ $liked ? $post->likes->count() - 1 : $post->likes->count() }} </span> </span>
+					<span class="{{ $liked ? '' : 'hidden' }}">  {{ $like_term_active }} <span class="action-counts"> {{ $liked ? $post->likes->count() : $post->likes->count() + 1 }} </span> </span>
+				</a>
+
+				<a href="#" title="{{ $repost_tooltip }}" data-action="repost" data-toggle="tooltip" data-placement="bottom">
+					<span class="{{ $reposted ? 'hidden' : '' }}"> {{ $repost_term }} <span class="action-counts"> {{ $reposted ? $post->reposts->count() - 1 : $post->reposts->count() }} </span> </span>
+					<span class="{{ $reposted ? '' : 'hidden' }}"> {{ $repost_term_active }} <span class="action-counts"> {{ $reposted ? $post->reposts->count() : $post->reposts->count() + 1 }} </span> </span>
+				</a>
+
+				<a href="#" title="{{ $save_tooltip }}" data-action="save" data-toggle="tooltip" data-placement="bottom">
+					<span class="{{ $favorited ? 'hidden' : ''}}"> {{ $save_term }} <span class="action-counts"> {{ $favorited ? $post->favorites->count() - 1 : $post->favorites->count() }} </span> </span>
+					<span class="{{ $favorited ? '' : 'hidden'}}"> {{ $save_term_active }} <span class="action-counts"> {{ $favorited ? $post->favorites->count() : $post->favorites->count() + 1 }} </span> </span>
+				</a>
+
+			@endif
+
+			<a class="action-comment" href="#">Comment</a>
+			@if ( $is_author && $is_editable )
+				<a href="{{ URL::to( 'profile/editpost/'.$post->id ) }}">Edit Post</a>
+			@endif
+		</div>
 	</section>
 
 	<section class="post-heading-container container">

@@ -1,12 +1,21 @@
 @import '../_base';
 
-.post-action-bar {
+.post-action-bar-wrapper {
 	height: $post_actionbar_height;
-	text-align: center;
-	 a {
-	 	display: inline-block;
-	 	padding: 5px;
-	 }
+	
+	.post-action-bar {
+		position: fixed;
+		height: $post_actionbar_height;
+		width: 100%;
+		z-index: 999;
+		text-align: center;
+		background-color: $dark_gray;
+
+		 a {
+		 	display: inline-block;
+		 	padding: 5px;
+		 }
+	}
 }
 
 .post-heading-container {

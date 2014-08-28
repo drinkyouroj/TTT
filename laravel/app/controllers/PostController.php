@@ -106,6 +106,7 @@ class PostController extends BaseController {
 						->with('liked', $liked)
 						->with('favorited', $favorited)
 						->with('reposted', $reposted)
+						->with('is_editable', $this->post->checkEditable($post->published_at))
 						;
 		} else {
 			return Redirect::to('/');
