@@ -163,28 +163,30 @@ class PostController extends BaseController {
 				//let's double check that this ID exists and belongs to this user.			
 				$new = false;
 				
-				//Now that we know this exists, let's check to see if its been more than 3 days since it was initially posted.
-				if(!Session::get('admin') &&
-				   strtotime(date('Y-m-d H:i:s', strtotime('-72 hours'))) >= strtotime($check_post->created_at)) {
-					//more than 72 hours has passed since the post was created.
-					//TODO Maybe I should have this go somewhere more descriptive??
-					if($rest) {
-						return Response::json(
-								array('error' => '72'),
-								405//method not allowed
-							);
-					} else {
-						return Redirect::to('profile');
+				if($check_post->published) {
+					//Now that we know this exists, let's check to see if its been more than 3 days since it was initially posted.
+					if(!Session::get('admin') &&
+					   strtotime(date('Y-m-d H:i:s', strtotime('-72 hours'))) >= strtotime($check_post->published_at)) {
+						//more than 72 hours has passed since the post was created.
+						//TODO Maybe I should have this go somewhere more descriptive??
+						if($rest) {
+							return Response::json(
+									array('error' => '72'),
+									405//method not allowed
+								);
+						} else {
+							return Redirect::to('profile');
+						}
 					}
 				}
+					if($rest) {
+						$post = self::rest_input($new, $check_post);
+					} else {
+						$post = $this->post->input($new, $check_post);//Post object filter gets the input and puts it into the post.
+					}
+					
+					$validator = $post->validate($post->toArray(),$check_post->id);//validation takes arrays.  Also if this is an update, it needs an id.
 
-				if($rest) {
-					$post = self::rest_input($new, $check_post);
-				} else {
-					$post = $this->post->input($new, $check_post);//Post object filter gets the input and puts it into the post.
-				}
-				
-				$validator = $post->validate($post->toArray(),$check_post->id);//validation takes arrays.  Also if this is an update, it needs an id.
 
 			} else {
 				//New Post.
@@ -347,6 +349,9 @@ class PostController extends BaseController {
 				
 				$post->body = $query['body'];//Body is the only updatable thing in an update scenario.
 				$post->published = $query['published'];
+				if($post->published) {
+					$post->published_at = Carbon::createFromTimeStamp(strtotime(date('Y-m-d H:i:s'))) ;
+				}
 				$post->draft = $query['draft'];//default is 1 so that it won't accidentally get published.
 				return $post;
 			}
