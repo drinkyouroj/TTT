@@ -44,6 +44,7 @@
 
 		$image = (!empty($post->image)) ? $post->image : ''; 
 		$body = (!empty($post->body)) ? $post->body : '';
+		$published = (!empty($post->published)) ? $post->published : false;
 		
 	?>
 
@@ -80,11 +81,13 @@
 						</div>
 
 						<div class="col-sm-4 draft-publish">
-							{{--Must place if statements for the submit buttons.--}}
 							
+							{{--Prevent users from being able to set something published as draft--}}
+							@if( !($edit && $published) ) {{--Note the encasing of edit and published--}}
 							<a class="save-draft">
 								Draft
 							</a>
+							@endif
 						
 							<a class="submit-post">
 								@if(!$edit)

@@ -1,9 +1,7 @@
 <?php
-
 /**
  * Routing for the TTT!
  */
-
 
 /**
  *	JSON API 
