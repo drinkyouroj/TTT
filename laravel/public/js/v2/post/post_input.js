@@ -30,6 +30,7 @@ $(function() {
 			buttons: ['bold', 'italic'],
 			delay: 80,
 			cleanPastedHTML: true,
+			forcePlainText: true,
 			disableDoubleReturn: true,
 			placeholder: 'Write Your Story Here.'
 		});
@@ -292,25 +293,39 @@ var save_post = new function() {
 		this.post_id = data.id;
 		this.alias = data.alias;
 
-		article_link = window.site_url+'posts/'+this.alias;
+		//call in the shared after send function.
+		this.sharedAfter();
 
+		//show the preview button
 		$('.preview-button').fadeIn();
-		if(this.published) {
-			a_link = $('.article-link');
-			a_link.prop('href',article_link);
-			a_link.fadeIn();
 
+		if(this.published) {
+			a_link.fadeIn();
 		}
+		//Make sure to change the "Submit to Update"
 		$('.submit-post').html('Update');
-		
-		$link = $('#successModal .link');
-		$link.html(this.title);
-		$link.prop('href', article_link);
-		$('#successModal').modal('show')
+
 	};
 
 	this.updateAfter = function(data) {
 		this.alias = data.alias;
+		this.sharedAfter();
 	};
+
+	//This one updates and sets the 
+	this.sharedAfter = function(data) {
+
+		article_link = window.site_url+'posts/'+this.alias;
+
+		if(this.published) {
+			a_link = $('.article-link');
+			a_link.prop('href',article_link);
+		}
+
+		$link = $('#successModal .link');
+		$link.html(this.title);
+		$link.prop('href', article_link);
+		$('#successModal').modal('show')
+	}
 	
 }

@@ -1,7 +1,11 @@
 @extends('v2.layouts.master')
 
 	@section('title')
-		New Post | Two Thousand Times
+		@if(!$edit)
+			New Post | Two Thousand Times
+		@else
+			Edit Post | Two Thousand Times
+		@endif
 	@stop
 
 	@section('css')
@@ -11,12 +15,19 @@
 	@stop
 
 	@section('js')
+
+
 		<!--New script-->
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/validation/jquery.validate.min.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/editor/js/medium-editor.min.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_input.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_photo.js"></script>
-
+		
+		@if($edit)
+			<script type="text/javascript">
+				save_post.post_id = {{$post->id}};
+			</script>
+		@endif
 	@stop
 
 	@section('content')
@@ -106,22 +117,28 @@
 								</div>
 								</div>
 								<div class="col-md-6 category-box">
-									{{--This foreach is just for creating the correct format for the multiselect--}}
-									{? $category_select = array(); ?}
-									@foreach($categories as $category)
-										{? $category_select[$category->id] = $category->title ?}
-									@endforeach
 									{{ Form::label('category','Post Category', array('class'=>'control-label')) }}
 									<a href="#" data-toggle="tooltip" title="Choose 3 categories that this story might fit in.">?</a>
 									<br/>
 									<div class="warning hidden">You can't select more than 3 categories.</div>
+
+
+
 									<ul>
-									@foreach($categories as $category)
-										<li class="col-md-6">
-											{{Form::checkbox('category[]', $category->id, 0, array('class'=>'category','id' => 'cat-'.$category->id) ) }}
-											<label for="cat-{{$category->id}}" data-toggle="tooltip" data-placement="top" title="{{$category->description}}">{{$category->title}}</label>
-										</li>
-									@endforeach
+										{? $checked = ''; ?}
+										@foreach($categories as $category)
+											<li class="col-md-6">
+												@if($edit)
+													@if(in_array($category->id, unserialize($post->category) ) )
+													{? $checked = 'checked'?}
+													@else
+													{? $checked = '' ?}
+													@endif
+												@endif											
+												{{Form::checkbox('category[]', $category->id, 0, array('class'=>'category','id' => 'cat-'.$category->id, $checked ) ) }}
+												<label for="cat-{{$category->id}}" data-toggle="tooltip" data-placement="top" title="{{$category->description}}">{{$category->title}}</label>
+											</li>
+										@endforeach
 									</ul>
 									
 									<span class="error">{{ $errors->first('category') }}</span>
@@ -139,7 +156,13 @@
 			{{--Wrapper is to be set as 100% and background black--}}
 			<div class="top-submit-wrapper">
 				{{--The big container so that we can assign the images to it. max-width 1440 or something like that--}}
-				<div class="top-submit-container container" style="background-image: url('{{Config::get('app.url')}}/img/photos/nashville.png');">
+				<div class="top-submit-container container" 
+					@if(!$edit)
+						style="background-image: url('{{Config::get('app.url')}}/img/photos/nashville.png');"
+					@else
+						style="background-image: url('{{Config::get('app.url')}}/uploads/final_images/{{$image}}');"
+					@endif
+					>
 					<div class="top-submit-overlay"></div>
 					<div class="row">
 						<div class="col-md-8">

@@ -152,20 +152,20 @@ class PostController extends BaseController {
 		private function savePost($rest=false) {
 			$request = Request::all();
 			$check_post = false;
-			if( isset($request['id']) ) {
 
+			if( isset($request['id']) ) {
 				$check_post = $this->post->findById( $request['id'] );
 			}
 
-			//Detect if this is an update scenario or if its new and prepare the data accordingly.
+			//The post exists.
 			if(!empty($check_post->id) ) {
 				//THIS is the update scenario.
-				//let's double check that this ID exists and belongs to this user.				
+				//let's double check that this ID exists and belongs to this user.			
 				$new = false;
 				
 				//Now that we know this exists, let's check to see if its been more than 3 days since it was initially posted.
 				if(!Session::get('admin') &&
-				strtotime(date('Y-m-d H:i:s', strtotime('-72 hours'))) >= strtotime($check_post->created_at)) {
+				   strtotime(date('Y-m-d H:i:s', strtotime('-72 hours'))) >= strtotime($check_post->created_at)) {
 					//more than 72 hours has passed since the post was created.
 					//TODO Maybe I should have this go somewhere more descriptive??
 					if($rest) {
@@ -176,7 +176,6 @@ class PostController extends BaseController {
 					} else {
 						return Redirect::to('profile');
 					}
-					
 				}
 
 				if($rest) {

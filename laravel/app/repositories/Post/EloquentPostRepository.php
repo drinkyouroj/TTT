@@ -44,7 +44,7 @@ class EloquentPostRepository implements PostRepository {
 		$post->tagline_2 = Request::get('tagline_2');
 		$post->tagline_3 = Request::get('tagline_3');
 		
-		$post->body = Request::get('body');//Body is the only updatable thing in an update scenario.
+		$post->body = strip_tags(Request::get('body'), '<p><i><b><br>');//Body is the only updatable thing in an update scenario.
 		$post->published = 1;
 		$post->draft = Request::get('draft', 1);//default is 1 so that it won't accidentally get published.
 		return $post;
