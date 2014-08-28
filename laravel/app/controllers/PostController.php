@@ -38,7 +38,7 @@ class PostController extends BaseController {
     /**
      * Get Post
      */
-    public function getPost($alias)
+    public function getPost($alias, $version = false)
     {
         $post = $this->post->findByAlias($alias);
 		
@@ -53,6 +53,7 @@ class PostController extends BaseController {
 			
 			//Logged in.
 			if(Auth::check()) {
+				
 				$my_id = Auth::user()->id;//My user ID
 				
 				$is_following = $this->follow->is_following($my_id,$user_id);
@@ -64,6 +65,7 @@ class PostController extends BaseController {
 				$favorited = $this->favorite->has_favorited($my_id, $post->id);
 
 				$reposted = $this->repost->has_reposted($my_id, $post->id);
+
 			} else {
 				//DEFAULTS for not logged in users
 				$my_id = false;
@@ -90,7 +92,13 @@ class PostController extends BaseController {
 				}
 			}
 			
-	        return View::make('generic.post')
+			// TODO: remove this once v2 post page is finished
+			$template = 'generic.post';
+			if ( $version ) {
+				$template = 'v2/posts/post';
+			}
+
+	        return View::make( $template )
 						->with('post', $post)
 						->with('is_following', $is_following)//you are following this profile
 						->with('is_follower', $is_follower)//This profile follows you.

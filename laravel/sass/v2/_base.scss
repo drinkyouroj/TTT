@@ -3,7 +3,10 @@
 
 //Colors
 $blue: #32b1c6;
-
+//Navbar*****
+$navbar_height: 30px;
+// Post action bar height
+$post_actionbar_height: 30px;
 
 //Fonts
 @mixin montserrat($weight: normal) {
@@ -30,8 +33,6 @@ textarea {
     resize: none;
 }
 
-//Navbar*****
-$navbar_height: 30px;
 
 @mixin label() {
 	display:inline-block;
