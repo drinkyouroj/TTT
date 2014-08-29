@@ -15,8 +15,8 @@
 		}
 	);
 </script>
-<script type="text/x-handlebars-template" id="feed-item-template">	
-	<div class="post-container" style="display:none">
+<script type="text/x-handlebars-template" id="post-item-template">	
+	<div class="post-container fade in">
 		
 		<div class="post-image-overlay">
 			<a href="{{ site_url }}profile/{{ post.user.username }}">
@@ -24,7 +24,7 @@
 			</a>
 			story by <a href="{{ site_url }}profile/{{ post.user.username }}"> {{ post.user.username }} </a>
 
-			{{#ifCond feed_type 'repost'}}
+			{{#ifCond feed_type 'repost' }}
 				<div class="post-repost-container">
 					<img class="post-repost-image" src="{{ site_url }}img/icons/repost-single.png">
 					<div class="post-repost-count-container"> x 
@@ -38,7 +38,7 @@
 						{{/each}}
 					</ul>
 				</div>
-			{{/isRepost}}
+			{{/ifCond}}
 
 		</div>
 

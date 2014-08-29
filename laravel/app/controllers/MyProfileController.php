@@ -63,7 +63,8 @@ class MyProfileController extends BaseController {
 
 		return View::make('v2/myprofile/profile')
 					->with('myprofile', false)				//Make sure that we know that this is not yours.
-					
+					->with('profile_user', $profile_user)	//Profile user
+
 					->with('is_following', $is_following)	//you are following this profile
 					->with('is_follower', $is_follower)		//This profile follows you.
 					->with('mutual', $mutual)				//Mutual?
@@ -97,6 +98,7 @@ class MyProfileController extends BaseController {
 
 		return View::make('v2/myprofile/profile')
 					->with('myprofile', true)				//Make sure that we know that this is not yours.
+					->with('profile_user', $user)			//Profile user
 
 					->with('following_count', $following_count)//Number of people this user is following
 					->with('follower_count', $follower_count)//Number of people following this user
@@ -140,6 +142,7 @@ class MyProfileController extends BaseController {
 		}
 
 	}
+
 
 	/**
 	 *	Get the feed via rest call.
@@ -199,6 +202,22 @@ class MyProfileController extends BaseController {
 		}
 	}
 
+	public function getRestComments($page = 1) {
+		$user_id = Auth::user()->id;
+		$comments = $this->comment->allByUserId($user_id, 8, $page, true);
+		if(count($comments)) {
+			return Response::json(
+				array( 'comments' => $comments->toArray() ),
+				200
+				);
+		} else {
+			return Response::json(
+				array( 'error' => 'No Comments' ),
+				200
+				);
+		}
+		
+	}
 
 
 }
