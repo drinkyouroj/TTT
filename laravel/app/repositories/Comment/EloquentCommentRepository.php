@@ -37,6 +37,21 @@ class EloquentCommentRepository implements CommentRepository {
 	
 	//Read Multi
 	public function all() {}
+
+	public function allByUserId($user_id, $paginate = 5, $page = 1, $rest = false) {
+		$query = $this->comment
+						->where('user_id', $user_id)
+						->orderBy('updated_at', 'DESC')
+						->skip(($page-1)*$paginate)
+						->take($paginate);
+						;
+		if($rest) {
+			return $query->with('post.user')->get();
+		} else {
+			return $query->get();
+		}
+
+	}
 	
 	//Check
 	public function owns($comment_id, $user_id) {

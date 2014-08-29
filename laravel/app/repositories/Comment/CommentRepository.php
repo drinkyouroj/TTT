@@ -17,6 +17,8 @@ interface CommentRepository {
 	//Read Multi
 	public function all();
 	
+	public function allByUserId($user_id, $paginate, $page, $rest);
+
 	//Check
 	public function owns($comment_id, $user_id);
 

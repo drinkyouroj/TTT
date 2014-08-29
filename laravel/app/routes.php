@@ -11,14 +11,18 @@
 //Protected rest controllers
 Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 {	
-	// Route for rest feed
-	Route::get( 'feed/{feed_type}/{page}', 'MyProfileController@getRestFeed' );
+	// Route for MyProfile
+	Route::group(array('prefix' => 'profile'), function() {
+		Route::get( 'collection/{type}/{page}','MyProfileController@getRestCollection');
+		Route::get( 'feed/{feed_type}/{page}', 'MyProfileController@getRestFeed' );
+		Route::get( 'saves/{page}', 'MyProfileController@getRestSaves' );
+		Route::get( 'drafts/{page}', 'MyProfileController@getRestDrafts' );
+		Route::get( 'comments/{page}', 'MyProfileController@getRestComments');
+	});
+	
 
-	//Action Limited (no update)
-	$action_limits = array('only'=>array('index','create','show','destroy'));
-
-	//Profile Image for the Follower/Following buttons. TODO This will go away soon after we create a more robust system
-	Route::resource('profileimage', 'ProfileImageRestController', $action_limits);
+	//Profile Image for the Follower/Following buttons.
+	Route::resource('profileimage', 'ProfileImageRestController', array('only'=>array('show')));
 	
 	/**Post Input Systems***************************/	
 	//Flickr!!!!!
@@ -27,6 +31,7 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	//Photo Processor
 	Route::resource('photo', 'PhotoRestController', array('only'=>array('index','store','show')) );
 
+	//Post Save Route.
 	Route::post('savepost','PostController@postSavePost');
 
 });
@@ -51,8 +56,9 @@ Route::group(array('before' => 'auth'), function() {
 });
 
 // Routes for users profile
-Route::group( array( 'before' => 'auth' ), function() {
-	Route::controller( 'myprofile', 'MyProfileController' );
+Route::group( array('prefix'=>'myprofile', 'before' => 'auth' ), function() {
+	Route::get('/', 'MyProfileController@getMyProfile');
+	//Route::controller( 'myprofile', 'MyProfileController' );
 });
 
 //Admin area

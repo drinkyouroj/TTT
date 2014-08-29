@@ -18,7 +18,7 @@ class Comment extends Eloquent {
 		
 	public function post()
 	{
-		return $this->belongsTo('Post');
+		return $this->belongsTo('Post')->select('id', 'title','user_id','alias');
 	}
 	
 	public function votes()
@@ -28,6 +28,6 @@ class Comment extends Eloquent {
 	
 	public function user()
 	{
-		return $this->belongsTo('User', 'user_id');
+		return $this->belongsTo('User', 'user_id')->select('id','username');
 	}
 }

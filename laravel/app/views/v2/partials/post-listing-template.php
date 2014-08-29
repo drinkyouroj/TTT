@@ -1,5 +1,22 @@
-<script type="text/x-handlebars-template" id="feed-item-template">	
-	<div class="post-container" style="display:none">
+<script type="text/javascript" >
+// ========================= HANDLBARS TEMPLATE ===========================
+	// Repost logic
+	Handlebars.registerHelper('isRepost', function ( item, options ) {
+	  	if ( item == 'repost' )
+	  		return options.fn(this);
+	  	else
+	  		return options.inverse(this);
+	});
+	Handlebars.registerHelper('ifCond', function(v1, v2, options) {
+		if(v1 === v2) {
+			return options.fn(this);
+		}
+			return options.inverse(this);
+		}
+	);
+</script>
+<script type="text/x-handlebars-template" id="post-item-template">	
+	<div class="post-container fade in">
 		
 		<div class="post-image-overlay">
 			<a href="{{ site_url }}profile/{{ post.user.username }}">
@@ -7,7 +24,7 @@
 			</a>
 			story by <a href="{{ site_url }}profile/{{ post.user.username }}"> {{ post.user.username }} </a>
 
-			{{#isRepost feed_type}}
+			{{#ifCond feed_type 'repost' }}
 				<div class="post-repost-container">
 					<img class="post-repost-image" src="{{ site_url }}img/icons/repost-single.png">
 					<div class="post-repost-count-container"> x 
@@ -21,7 +38,7 @@
 						{{/each}}
 					</ul>
 				</div>
-			{{/isRepost}}
+			{{/ifCond}}
 
 		</div>
 

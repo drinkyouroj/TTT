@@ -25,8 +25,8 @@ return array(
 	|
 	*/
 
-	'url' => 'http://twothousandtimes.com',
-	'imageurl' => 'http://twothousandtimes.com/uploads/final_images',
+	'url' => 'http://beta.2000tim.es',
+	'imageurl' => 'http://beta.2000tim.es/uploads/final_images',
 	/*
 	|--------------------------------------------------------------------------
 	| Application Timezone
