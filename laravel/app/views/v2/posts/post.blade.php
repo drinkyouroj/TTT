@@ -44,109 +44,120 @@
 				$is_author = Auth::check() && $post->user->id == Auth::user()->id;
 			?>
 			@if( !$is_author )
-				<a href="#" data-action="follow">
+				<a data-action="follow" class="btn-flat-dark-gray" href="#">
 					<span class="{{ $is_following ? 'hidden' : '' }}"> {{ $follow_term }} {{ $post->user->username }} </span>
 					<span class="{{ $is_following ? '' : 'hidden' }}"> {{ $follow_term_active }} {{ $post->user->username }} </span>
 				</a>
-				
-				<a href="#" title="{{ $like_tooltip }}" data-action="like" data-toggle="tooltip" data-placement="bottom">
+
+				<a data-action="like" class="btn-flat-gray" href="#" title="{{ $like_tooltip }}" data-toggle="tooltip" data-placement="bottom">
 					<span class="{{ $liked ? 'hidden' : '' }}">  {{ $like_term }} <span class="action-counts"> {{ $liked ? $post->likes->count() - 1 : $post->likes->count() }} </span> </span>
 					<span class="{{ $liked ? '' : 'hidden' }}">  {{ $like_term_active }} <span class="action-counts"> {{ $liked ? $post->likes->count() : $post->likes->count() + 1 }} </span> </span>
 				</a>
 
-				<a href="#" title="{{ $repost_tooltip }}" data-action="repost" data-toggle="tooltip" data-placement="bottom">
+				<a data-action="repost" class="btn-flat-blue" href="#" title="{{ $repost_tooltip }}" data-toggle="tooltip" data-placement="bottom">
 					<span class="{{ $reposted ? 'hidden' : '' }}"> {{ $repost_term }} <span class="action-counts"> {{ $reposted ? $post->reposts->count() - 1 : $post->reposts->count() }} </span> </span>
 					<span class="{{ $reposted ? '' : 'hidden' }}"> {{ $repost_term_active }} <span class="action-counts"> {{ $reposted ? $post->reposts->count() : $post->reposts->count() + 1 }} </span> </span>
 				</a>
 
-				<a href="#" title="{{ $save_tooltip }}" data-action="save" data-toggle="tooltip" data-placement="bottom">
+				<a data-action="save" class="btn-flat-gray" href="#" title="{{ $save_tooltip }}" data-toggle="tooltip" data-placement="bottom">
 					<span class="{{ $favorited ? 'hidden' : ''}}"> {{ $save_term }} <span class="action-counts"> {{ $favorited ? $post->favorites->count() - 1 : $post->favorites->count() }} </span> </span>
 					<span class="{{ $favorited ? '' : 'hidden'}}"> {{ $save_term_active }} <span class="action-counts"> {{ $favorited ? $post->favorites->count() : $post->favorites->count() + 1 }} </span> </span>
 				</a>
 
 			@endif
 
-			<a class="action-comment" href="#">Comment</a>
+			<a class="action-comment btn-flat-blue" href="#">Comment</a>
+
 			@if ( $is_author && $is_editable )
 				<a href="{{ URL::to( 'profile/editpost/'.$post->id ) }}">Edit Post</a>
 			@endif
 		</div>
 	</section>
 
-	<section class="post-heading-container container">
-		<div class="row">
-			<div class="post-heading col-md-12">
-				<h2>{{ $post->title }}</h2>
-				<ul class="post-taglines list-inline">
-					<li> {{ $post->tagline_1 }} </li>
-					<li> {{ $post->tagline_2 }} </li>
-					<li> {{ $post->tagline_3 }} </li>
-				</ul>
-				<a href="{{ URL::to('profile/'.$post->user->username ) }}">
-					<img class="post-author-avatar" src="">
-				</a>
-				story by <a href="{{ URL::to('profile/'.$post->user->username ) }}"> {{ $post->user->username }} </a>
+	<section class="post-heading-wrapper">
+		<div class="post-heading-container container">
+			<div class="row">
+				<div class="post-heading col-md-3">
 
+					<h2>{{ $post->title }}</h2>
+					<div class="line"></div>
+					<ul class="post-taglines list-inline">
+						<li> {{ $post->tagline_1 }} </li>
+						<li> {{ $post->tagline_2 }} </li>
+						<li> {{ $post->tagline_3 }} </li>
+					</ul>
+
+					<a href="{{ URL::to('profile/'.$post->user->username ) }}">
+						<img class="post-author-avatar" src="">
+					</a>
+					story by <a href="{{ URL::to('profile/'.$post->user->username ) }}"> {{ $post->user->username }} </a>
+					
+					<ul class="post-categories list-inline">
+						@foreach($post->categories as $category)
+							<li> <a href="{{ URL::to( 'categories/'.$category->alias ) }}"> {{$category->title}} </a> </li>
+						@endforeach
+					</ul>
+
+				</div>
+				<div class="post-image col-md-9" style="background-image: url('{{Config::get('app.imageurl')}}/{{$post->image}}');"></div>
 			</div>
 		</div>
 	</section>
 
-	<section class="post-image-container container">
-		<div class="row">
-			<div class="post-image col-md-12" style="background-image: url('{{Config::get('app.imageurl')}}/{{$post->image}}');"></div>	
-		</div>
-	</section>
-
-	<section class="post-content container">
-		@if( $post->published )
-			<?php 
-				$total = count( $bodyarray );
-			?>
-			@foreach( $bodyarray as $c => $body )
-				<div class="row">
-					<div class="col-md-10 col-md-offset-1 post-content-page-wrapper">
-						<div class="post-content-page" id="{? echo $c ? '':'one' ?}">
-							{{ $body }}
+	<section class="post-content-wrapper">
+		<div class="post-content-container container">
+			@if( $post->published )
+				<?php 
+					$total = count( $bodyarray );
+				?>
+				@foreach( $bodyarray as $c => $body )
+					<div class="row">
+						<div class="col-md-10 col-md-offset-1 post-content-page-wrapper">
+							<div class="post-content-page" id="{? echo $c ? '':'one' ?}">
+								{{ $body }}
+							</div>
+						</div>
+						<div class="col-md-10 col-md-offset-1 row-divider">
+							<span class="page-count">{? echo $c+1 ?}/{{$total}}</span>
+							<div class="clearfix"></div>
 						</div>
 					</div>
-					<div class="col-md-10 col-md-offset-1 row-divider">
-						<span class="page-count">{? echo $c+1 ?}/{{$total}}</span>
-						<div class="clearfix"></div>
+				@endforeach
+			@else
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1">
+						<h3 class="unpublished">This post has been unpublished.</h3>
 					</div>
 				</div>
-			@endforeach
-		@else
-			<div class="row">
-				<div class="col-md-10 col-md-offset-1">
-					<h3 class="unpublished">This post has been unpublished.</h3>
-				</div>
-			</div>
-		@endif
+			@endif
+		</div>
 	</section>
 
-	<section class="post-comment-container container">
-		<div class="row">
-			@if( count( $post->comments ) )
-				<div class="comments col-md-10 col-md-offset-1">
-					@if( Auth::check() )
-						@include('generic.commentform', array('post' => $post) )
-					@endif
-					
-					<ul class="comments-listing">
-						@if( count( $post->nochildcomments) )
-							{{ View::make('generic/comment')->with('comments', $post->nochildcomments) }}
+	<section class="post-comment-wrapper">
+		<div class="post-comment-container container">
+			<div class="row">
+				@if( count( $post->comments ) )
+					<div class="comments col-md-10 col-md-offset-1">
+						@if( Auth::check() )
+							@include('v2/posts/commentform', array('post' => $post) )
 						@endif
-					</ul>
-				</div>
-			@else
-				<div class="comments col-md-10 col-md-offset-1 no-comments">
-					@if( Auth::check() )
-						@include('generic.commentform', array('post' => $post) )
-					@endif
-					
-					<p>No Comments have been made yet...</p>
-				</div>
-			@endif
+						
+						<ul class="comments-listing list-unstyled">
+							@if( count( $post->nochildcomments) )
+								{{ View::make('v2/posts/comment')->with('comments', $post->nochildcomments) }}
+							@endif
+						</ul>
+					</div>
+				@else
+					<div class="comments col-md-10 col-md-offset-1 no-comments">
+						@if( Auth::check() )
+							@include('v2/posts/commentform', array('post' => $post) )
+						@endif
+						
+						<p>No Comments have been made yet...</p>
+					</div>
+				@endif
+			</div>
 		</div>
 	</section>
 @stop

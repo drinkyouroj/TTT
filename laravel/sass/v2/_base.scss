@@ -3,13 +3,15 @@
 
 //Colors
 $blue: #32b1c6;
-$dark_gray: #333;
+$dark_gray: #383838;
+$gray: #a3a3a3;
+$beige: #fff9f0;
 
 //Navbar*****
 $navbar_height: 30px;
 
 // Post action bar height
-$post_actionbar_height: 30px;
+$post_actionbar_height: 55px;
 
 //Fonts
 @mixin montserrat($weight: normal) {
