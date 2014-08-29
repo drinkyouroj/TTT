@@ -57,12 +57,28 @@
 					margin-left: auto;
 					margin-right: auto;
 				}
+
 				ul.post-taglines {
 					margin-bottom: 30px;
+
+					li {
+						line-height: 12px;
+					}
+					li:nth-child(1), li:nth-child(2) {
+						border-right: 1px solid black;
+					}
 				}
+
 				ul.post-categories {
 					margin-top: 100px;
 					margin-bottom: 25px;
+
+					li {
+						padding: 0;
+						a {
+							color: black;
+						}
+					}
 				}
 			}
 			.post-image {
@@ -104,9 +120,10 @@
 		}
 
 		.row-divider {
-			border-bottom: 1px solid black;
+			border-bottom: 2px solid black;
 
 			.page-count {
+				font-weight: bold;
 				float: right;
 			}
 		}

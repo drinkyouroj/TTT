@@ -96,8 +96,6 @@ Route::group(array('prefix'=>'categories'),function() {
 
 
 //Posts routes
-// TODO: will need to remove old route, just kept it in for reference
-Route::get( 'posts/{alias}/{version}', 'PostController@getPost');
 Route::get( 'posts/{alias}', 'PostController@getPost');
 Route::get( 'posts', 'PostController@getIndex');//grabs a random post
 

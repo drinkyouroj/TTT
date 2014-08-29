@@ -93,9 +93,14 @@
 					story by <a href="{{ URL::to('profile/'.$post->user->username ) }}"> {{ $post->user->username }} </a>
 					
 					<ul class="post-categories list-inline">
-						@foreach($post->categories as $category)
-							<li> <a href="{{ URL::to( 'categories/'.$category->alias ) }}"> {{$category->title}} </a> </li>
-						@endforeach
+						@for ($i = 0; $i < count($post->categories); $i++)
+							<li> 
+								<a href="{{ URL::to( 'categories/'.$post->categories[$i]->alias ) }}"> {{ strtoupper( $post->categories[$i]->title ) }} </a> 
+								@if ( $i != count($post->categories) - 1 )
+									/
+								@endif
+							</li>
+						@endfor
 					</ul>
 
 				</div>

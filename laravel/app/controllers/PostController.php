@@ -38,7 +38,7 @@ class PostController extends BaseController {
     /**
      * Get Post
      */
-    public function getPost($alias, $version = false)
+    public function getPost($alias)
     {
         $post = $this->post->findByAlias($alias);
 		
@@ -91,14 +91,8 @@ class PostController extends BaseController {
 					$this->post->incrementView($post->id);//increment on this post.
 				}
 			}
-			
-			// TODO: remove this once v2 post page is finished
-			$template = 'generic.post';
-			if ( $version ) {
-				$template = 'v2/posts/post';
-			}
 
-	        return View::make( $template )
+	        return View::make( 'v2/posts/post' )
 						->with('post', $post)
 						->with('is_following', $is_following)//you are following this profile
 						->with('is_follower', $is_follower)//This profile follows you.
