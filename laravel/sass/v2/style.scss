@@ -1,6 +1,76 @@
 @import 'base';
 //This file stores the shared styling elements for the system.
 
+html, body {
+	height: 100%;
+}
 .header-wrapper {
 	height: $navbar_height;
+}
+
+.btn-flat-gray {
+	font-family: Arial;
+	color: white;
+	font-size: 15px;
+	background: $gray;
+	padding: 5px 15px 5px 15px;
+	text-decoration: none;
+	border: 1px solid $gray;
+	cursor: pointer;
+	&:hover {
+		// background-color: $dark_gray;
+		color: white;
+		text-decoration: none;	
+	}
+}
+
+.btn-flat-dark-gray {
+	font-family: Arial;
+	color: white;
+	font-size: 15px;
+	background: $dark_gray;
+	padding: 5px 15px 5px 15px;
+	text-decoration: none;
+	border: 1px solid white;
+	cursor: pointer;
+	&:hover {
+		// background-color: $gray;
+		// border-color: $dark_gray;
+		color: white;
+		text-decoration: none;
+	}
+}
+
+.btn-flat-white {
+	font-family: Arial;
+	color: $dark_gray;
+	font-size: 15px;
+	background: white;
+	padding: 5px 25px 5px 25px;
+	text-decoration: none;
+	border: 1px solid $dark_gray;
+	cursor: pointer;
+	&:hover {
+		// background-color: $gray;
+		// border-color: $gray;
+		color: $dark_gray;
+
+		text-decoration: none;	
+	}
+}
+
+.btn-flat-blue {
+	font-family: Arial;
+	color: white;
+	font-size: 15px;
+	background: $blue;
+	padding: 5px 15px 5px 15px;
+	text-decoration: none;
+	border: 1px solid $blue;
+	cursor: pointer;
+	&:hover {
+		// background-color: $gray;
+		color: white;
+		text-decoration: none;	
+	}
 }

@@ -48,7 +48,7 @@ class CommentController extends BaseController {
 	public function getCommentForm($post_id, $reply_id = false) 
 	{
 		$post = $this->post->findById($post_id);
-		return View::make('generic/commentform')
+		return View::make('v2/posts/commentform')
 				->with('post', $post)
 				->with('reply_id', $reply_id);
 	}	
