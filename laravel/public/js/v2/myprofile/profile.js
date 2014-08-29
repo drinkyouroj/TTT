@@ -25,6 +25,7 @@ $(function() {
 		$('.section-selectors a').removeAttr('id');//gets rid of active state.
 		$(this).prop('id','active');
 		profile.view = $(this).prop('class');
+		profile.viewRender();
 	});
 
 });
@@ -36,25 +37,29 @@ function ProfileActions() {
 	this.type = 'all';
 
 	this.viewRender = function() {
+		var that = this;
+		that.target.fadeOut(200,function() {
+			that.target.html('');
+			that.page = 1;//Everytime a new view is rendered, the page should be reset to zero.
 
-		this.page = 1;//Everytime a new view is rendered, the page should be reset to zero.
-
-		switch(this.view) {
-			default:
-			case 'collection':
-				this.comment_page = 1;
-				this.renderCollection();
-			break;
-			case 'feed':
-				this.renderFeed();
-			break;
-			case 'saves':
-				this.renderSaves();
-			break;
-			case 'drafts':
-				this.renderDrafts();
-			break;
-		}
+			switch(that.view) {
+				default:
+				case 'collection':
+					that.comment_page = 1;
+					that.renderCollection();
+				break;
+				case 'feed':
+					that.renderFeed();
+				break;
+				case 'saves':
+					that.renderSaves();
+				break;
+				case 'drafts':
+					that.renderDrafts();
+				break;
+			}
+			that.target.fadeIn();
+		});
 	};
 
 	this.urlConstructor = function() {

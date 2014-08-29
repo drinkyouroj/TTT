@@ -35,6 +35,7 @@
 						<a href="#collection" class="collection" id="active">
 							Collection
 						</a>
+
 						@if($myprofile)
 							<a href="#feed" class="feed">
 								Feed
@@ -46,6 +47,7 @@
 								Drafts
 							</a>
 						@endif
+						
 					</div>
 				</div>
 			</div>
