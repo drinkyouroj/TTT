@@ -75,3 +75,8 @@
 		</div>
 	</div>
 </script>
+
+<!--Script-->
+<script type="text/x-handlebars-template" id="settings-template">
+	
+</script>

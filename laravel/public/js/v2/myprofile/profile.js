@@ -1,14 +1,14 @@
-
-
-//Events
+//Events in the Profile Page
 $(function() {
-	var profile = new ProfileActions;//initialize class
+//Initialize Profile class
+	var profile = new ProfileActions;
 
-	//Let's Compile the handlebars source.
+//Let's Compile the handlebars source.
+	//Collection container
 	var collection_source = $('#collection-template').html();
 	profile.collection_template = Handlebars.compile(collection_source);
 	
-	//container for default.
+	//Container for default.
 	var default_source = $('#default-profile-template').html();
 	profile.default_template = Handlebars.compile(default_source);
 	//Post Item compile (used for both collection and feed)
@@ -27,61 +27,130 @@ $(function() {
 	var drafts_item_source = $('#drafts-template').html();
 	profile.drafts_item_template = Handlebars.compile(drafts_item_source);
 	
-	profile.target = $('#profile-content');
-	profile.viewRender();//Render initial view.
 
-
-	//View renders based on the selectors.
+//View renders based on the id selectors.
 	$('.section-selectors a').click(function(event) {
+		//event.preventDefault();
+
+		$('.section-selectors a').removeAttr('class');//gets rid of active state.
+		$(this).prop('class','active');
+		profile.view = $(this).prop('id');
+		//window.location.hash = profile.view;
+		profile.viewInit();//new view has to be rendered out of this scenario
+	});
+
+//View renders for settings/follow
+	$('.header-right a').click(function(event) {
 		event.preventDefault();
-		$('.section-selectors a').removeAttr('id');//gets rid of active state.
-		$(this).prop('id','active');
-		profile.view = $(this).prop('class');
-		profile.viewRender();
+		$('.section-selectors a').removeAttr('class');//gets rid of the class.
+		profile.view = $(this).prop('id');
+		window.location.hash = profile.view;
+		profile.viewInit();//new view has to be rendered out of this scenario
 	});
 
 
+//Pagination detection.
+	$(window).scroll(function() {
+		if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+			profile.paginate();
+		}
+	});
+
+//Only init the system on "window load" so we can catch the right hash.
+	$(window).load(function() {
+		profile.target = $('#profile-content');
+		if(typeof window.location.hash  == 'undefined') {
+			window.location.hash = profile.view;
+		} else {
+			view = window.location.hash;
+			profile.view = view.substring(1);
+		}
+		profile.viewInit();//Render initial view.
+		window.page_processing = false;
+		window.comment_page_processing = false;
+	});
+
 });
 
+//The User Profile functions.
 function ProfileActions() {
 
 	this.view = 'collection';//set a default view
-
 	this.type = 'all';
 
-	this.viewRender = function() {
-		var that = this;//JS scope is fun... not.
-
+	//View initialization for when you click on a new view.
+	this.viewInit = function() {
 		//Everytime a view is rendered the page count should be reset.
 		this.page = 1;
 		this.comment_page = 1;//this only pertains to the collection page
-
-		that.target.fadeOut(200,function() {
+		
+		//fade in fade out scenario
+		var that = this;//JS scope is fun... not.
+		this.target.fadeOut(200,function() {
 			that.target.html('');
-			switch(that.view) {
-				default:
-				case 'collection':
-					that.renderCollection();
-				break;
-				case 'feed':
-					that.renderFeed();
-				break;
-				case 'saves':
-					that.renderSaves();
-				break;
-				case 'drafts':
-					that.renderDrafts();
-				break;
-			}
+			that.viewRenderContainer();
+			that.viewRender(true);
 			that.target.fadeIn();
 		});
 	};
 
-	this.urlConstructor = function() {
-		
+	//Container init
+	this.viewRenderContainer = function() {
+		if(this.view == 'collection') {
+			//collection has a different outer template
+			this.target.html(this.collection_template());
+		} else {
+			this.target.html(this.default_template({view: this.view}));
+		}
+	};
+
+	//Actual Content Rendering routes
+	this.viewRender = function(init) {
+		//this is thrown in here since it happens for every render.
+		this.urlConstructor();
+		switch(this.view) {
+			default:
+			case 'collection':
+				this.renderCollection();
+				if(init) {
+					this.renderComments();
+				}
+				break;
+
+			case 'feed':
+				this.renderFeed();
+				break;
+
+			case 'saves':
+				this.renderSaves();
+				break;
+
+			case 'drafts':
+				this.renderDrafts();
+				break;
+
+			case 'settings':
+				this.renderSettings();
+				break;
+
+			case 'followers':
+				this.renderFollowers();
+				break;
+
+			case 'following':
+				this.renderFollowing();
+				break;
+		}
+	};
+
+	//URL constructor
+	this.urlConstructor = function() {		
 		base_url = window.site_url + 'rest/profile/' + this.view + '/';
 
-		if(this.view == 'collection' || this.view == 'feed' ) {
+		var viewArray = ['collection', 'feed', 'following', 'followers'];
+		
+		if( $.inArray(this.view, viewArray ) != -1) {
+
 			this.url = base_url + this.type + '/' + this.page;
 
 			if(this.view == 'collection') {
@@ -94,17 +163,14 @@ function ProfileActions() {
 		}
 	};
 
+
+//Specific Render methods
+
 	this.renderCollection = function() {
-		//collection has a different outer template
-		this.target.html(this.collection_template());
-		
 		//below has to be done to pass through the scope of both getData and $.each
 		var post_item_template = this.post_item_template;
 		var target = this.target;
-
-		this.urlConstructor();//construct the URL.
-
-		get_collection = this.url;
+		
 		this.getData(this.url, function(data) {
 			$.each(data.collection, function(idx, val) {
 				view_data = {
@@ -114,8 +180,13 @@ function ProfileActions() {
 				$('#collection-content',target).append(post_item_template(view_data));
 			});
 		});
+	};
 
+	this.renderComments = function() {
+		//scope issues
 		var comment_item_template = this.comment_item_template;
+		var target = this.target;
+
 		this.getData(this.comment_url, function(data) {
 			$.each(data.comments,function(idx, val) {
 				view_data = {
@@ -124,22 +195,16 @@ function ProfileActions() {
 				}
 				$('#comment-content',target).append(comment_item_template(view_data));
 			});
-		});
-	};
+		});		
+	}
 
 	this.renderFeed = function() {
-		this.target.html(this.default_template({view: this.view}));
-		
 		//scope issues
 		var post_item_template = this.post_item_template;
 		var target = this.target;
 
-
-		this.urlConstructor();
-		
 		this.getData(this.url,function(data) {
 			$.each(data.feed, function(idx, val) {
-				console.log(val);
 				view_data = {
 					site_url: window.site_url,
 					post: val.post
@@ -150,18 +215,12 @@ function ProfileActions() {
 	};
 
 	this.renderSaves = function() {
-		this.target.html(this.default_template({view: this.view}));
-		
 		//scope issues
 		var saves_item_template = this.saves_item_template;
 		var target = this.target;
 
-
-		this.urlConstructor();
-		
 		this.getData(this.url,function(data) {
 			$.each(data.saves, function(idx, val) {
-				console.log(val);
 				view_data = {
 					site_url: window.site_url,
 					save: val.post,
@@ -174,20 +233,15 @@ function ProfileActions() {
 	};
 
 	this.renderDrafts =  function() {
-		this.target.html(this.default_template({view: this.view}));
-		
 		//scope issues
 		var drafts_item_template = this.drafts_item_template;
 		var target = this.target;
-
-
-		this.urlConstructor();
 		
 		this.getData(this.url,function(data) {
 			$.each(data.drafts, function(idx, val) {
 				view_data = {
 					site_url: window.site_url,
-					drafts: val.drafts
+					draft: val
 				};
 				$('#default-content',target).append(drafts_item_template(view_data));
 			});
@@ -195,30 +249,33 @@ function ProfileActions() {
 
 	};
 
+	this.renderFollowers = function() {
+		var follow_template = this.follow_template;
+		var target = this.target;
+
+	}
+
+	this.renderFollowing = function() {
+		var follow_template = this.follow_template;
+		var target = this.target;
+
+	}
+
+	this.renderSettings = function() {
+		//simple stuff.
+		$('#default-content', this.target).append(this.settings_template());
+	}
 
 
-	//Paginate
-
-	this.page_processing = false;
-
-	this.paginate = function() {
-		if(this.page) {
-
-		} else {
-			//
-		}
-	};
-
-
+//AJAX data getter
 	this.getData = function(get_url, callback) {
 		$.ajax({
 			url: get_url,
 			success: function(data) {
-				console.log(data);
 				callback(data);
 			},
 			complete: function(xhr, status) {
-
+				window.page_processing = false;
 			},
 			error: function(xhr, status) {
 				
@@ -226,6 +283,25 @@ function ProfileActions() {
 		})
 	};
 
+//Pagination Code
+	this.paginate = function() {
+		if(!window.page_processing) {
+			//If we did start processing.
+			window.page_processing = true;
+			this.page = this.page + 1;
+			this.viewRender(false);
+		}
+	};
+
+	//page 
+	this.commentPaginate = function() {
+		if(!window.comment_page_processing) {
+			window.comment_page_processing = true;
+			this.comment_page = this.page + 1;
+			this.urlConstructor();
+			this.renderComments();
+		}
+	};
 
 }
 

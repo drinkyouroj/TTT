@@ -219,5 +219,7 @@ class MyProfileController extends BaseController {
 		
 	}
 
+	//public function getRestFollowers()
+
 
 }

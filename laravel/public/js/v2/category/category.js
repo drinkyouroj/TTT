@@ -23,7 +23,7 @@ $(function() {
 	  	else
 	  		return options.inverse(this);
 	});
-	var source   = $("#feed-item-template").html();
+	var source   = $("#post-item-template").html();
 	var feed_item_template = Handlebars.compile(source);
 
 

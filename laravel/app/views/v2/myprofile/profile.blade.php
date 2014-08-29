@@ -28,22 +28,41 @@
 
 					</div>
 					<div class="col-md-6 header-right">
+						<div class="row">
+							<div class="col-md-6 settings">
+								<a href="#settings" class="settings" id="settings">
+									Settings
+								</a>
+							</div>
+							<div class="col-md-6 follow">
 
+								<a href="#followers" class="followers" id="followers">
+									<span class="count">{{$follower_count}}</span>
+									<span class="text">Followers</span>
+								</a>
+
+								<a href="#following" class="following" id="following">
+									<span class="count">{{$following_count}}</span>
+									<span class="text">Following</span>
+								</a>
+									
+							</div>
+						</div>
 					</div>
 					<div class="col-md-12 section-selectors">
 						{{--Max and Anyone else, do not add any more classes to the below links--}}
-						<a href="#collection" class="collection" id="active">
+						<a href="#collection" id="collection" class="active">
 							Collection
 						</a>
 
 						@if($myprofile)
-							<a href="#feed" class="feed">
+							<a href="#feed" id="feed">
 								Feed
 							</a>
-							<a href="#saves" class="saves">
+							<a href="#saves" id="saves">
 								Saves
 							</a>
-							<a href="#drafts" class="drafts">
+							<a href="#drafts" id="drafts">
 								Drafts
 							</a>
 						@endif
