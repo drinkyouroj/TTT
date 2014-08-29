@@ -2,24 +2,36 @@
 
 //Events
 $(function() {
-	var profile = new ProfileActions;
+	var profile = new ProfileActions;//initialize class
 
 	//Let's Compile the handlebars source.
 	var collection_source = $('#collection-template').html();
 	profile.collection_template = Handlebars.compile(collection_source);
 	
-	//Post Item compile
+	//container for default.
+	var default_source = $('#default-profile-template').html();
+	profile.default_template = Handlebars.compile(default_source);
+	//Post Item compile (used for both collection and feed)
 	var post_item_source = $('#post-item-template').html();
 	profile.post_item_template = Handlebars.compile(post_item_source);
 
+	//Comment Item compile
 	var comment_item_source = $('#comment-template').html();
-	profile.comment_template = Handlebars.compile(comment_item_source);
+	profile.comment_item_template = Handlebars.compile(comment_item_source);
 
+	//Saves Item
+	var saves_item_source = $('#saves-template').html();
+	profile.saves_item_template = Handlebars.compile(saves_item_source);	
+
+	//Drafts Item
+	var drafts_item_source = $('#drafts-template').html();
+	profile.drafts_item_template = Handlebars.compile(drafts_item_source);
 	
 	profile.target = $('#profile-content');
 	profile.viewRender();//Render initial view.
 
 
+	//View renders based on the selectors.
 	$('.section-selectors a').click(function(event) {
 		event.preventDefault();
 		$('.section-selectors a').removeAttr('id');//gets rid of active state.
@@ -27,6 +39,7 @@ $(function() {
 		profile.view = $(this).prop('class');
 		profile.viewRender();
 	});
+
 
 });
 
@@ -37,15 +50,17 @@ function ProfileActions() {
 	this.type = 'all';
 
 	this.viewRender = function() {
-		var that = this;
+		var that = this;//JS scope is fun... not.
+
+		//Everytime a view is rendered the page count should be reset.
+		this.page = 1;
+		this.comment_page = 1;//this only pertains to the collection page
+
 		that.target.fadeOut(200,function() {
 			that.target.html('');
-			that.page = 1;//Everytime a new view is rendered, the page should be reset to zero.
-
 			switch(that.view) {
 				default:
 				case 'collection':
-					that.comment_page = 1;
 					that.renderCollection();
 				break;
 				case 'feed':
@@ -80,7 +95,7 @@ function ProfileActions() {
 	};
 
 	this.renderCollection = function() {
-		//collection has an outer template
+		//collection has a different outer template
 		this.target.html(this.collection_template());
 		
 		//below has to be done to pass through the scope of both getData and $.each
@@ -100,30 +115,87 @@ function ProfileActions() {
 			});
 		});
 
-		var comment_template = this.comment_template;
+		var comment_item_template = this.comment_item_template;
 		this.getData(this.comment_url, function(data) {
 			$.each(data.comments,function(idx, val) {
 				view_data = {
 					site_url: window.site_url,
 					comment: val
 				}
-				$('#comment-content',target).append(comment_template(view_data));
+				$('#comment-content',target).append(comment_item_template(view_data));
 			});
 		});
 	};
 
 	this.renderFeed = function() {
+		this.target.html(this.default_template({view: this.view}));
 		
+		//scope issues
+		var post_item_template = this.post_item_template;
+		var target = this.target;
 
+
+		this.urlConstructor();
+		
+		this.getData(this.url,function(data) {
+			$.each(data.feed, function(idx, val) {
+				console.log(val);
+				view_data = {
+					site_url: window.site_url,
+					post: val.post
+				};
+				$('#default-content',target).append(post_item_template(view_data));
+			});
+		});
 	};
 
 	this.renderSaves = function() {
+		this.target.html(this.default_template({view: this.view}));
+		
+		//scope issues
+		var saves_item_template = this.saves_item_template;
+		var target = this.target;
+
+
+		this.urlConstructor();
+		
+		this.getData(this.url,function(data) {
+			$.each(data.saves, function(idx, val) {
+				console.log(val);
+				view_data = {
+					site_url: window.site_url,
+					save: val.post,
+					date: val.created_at
+				};
+				$('#default-content',target).append(saves_item_template(view_data));
+			});
+		});
 
 	};
 
 	this.renderDrafts =  function() {
+		this.target.html(this.default_template({view: this.view}));
+		
+		//scope issues
+		var drafts_item_template = this.drafts_item_template;
+		var target = this.target;
+
+
+		this.urlConstructor();
+		
+		this.getData(this.url,function(data) {
+			$.each(data.drafts, function(idx, val) {
+				view_data = {
+					site_url: window.site_url,
+					drafts: val.drafts
+				};
+				$('#default-content',target).append(drafts_item_template(view_data));
+			});
+		});
 
 	};
+
+
 
 	//Paginate
 

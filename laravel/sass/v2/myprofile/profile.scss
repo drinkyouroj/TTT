@@ -1,0 +1,71 @@
+@import '../base';
+//Profile Page headers.
+.profile-header-wrapper {
+	.profile-header-container {
+		.header-left {
+
+		}
+		.header-right {
+
+		}
+		.section-selectors {
+			a {
+
+				&.collection {
+
+				}
+				&.feed {
+
+				}
+				&.saves {
+
+				}
+				&.drafts {
+
+				}
+			}
+		}
+	}
+}
+
+.profile-content-wrapper {
+	.profile-content-container {
+
+		//This one contains all of the actual content.  
+		//Note: Handlebars handles all the internal templating.
+		#profile-content {
+
+			//Collection
+			.collection-container {
+				#collection-content {
+					@include post_listing(0);
+				}
+			}
+
+			.comment-container {
+				#comment-content {
+
+				}
+			}
+
+			//All other content containers
+			.default-container {
+				#default-content {
+					&.feed {
+						@include post_listing(1);
+					}
+
+					&.saves {
+						
+					}
+
+					&.drafts {
+
+					}
+				}
+			}
+
+
+		}
+	}
+}

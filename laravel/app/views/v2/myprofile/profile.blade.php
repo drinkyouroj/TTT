@@ -5,7 +5,7 @@
 	@stop
 
 	@section('css')
-		<link rel="stylesheet" media="screen" href="{{Config::get('app.url')}}/css/compiled/v2/myprofile/feed.css">
+		<link rel="stylesheet" media="screen" href="{{Config::get('app.url')}}/css/compiled/v2/myprofile/profile.css">
 	@stop
 
 	@section('js')
