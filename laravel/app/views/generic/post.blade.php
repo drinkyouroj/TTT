@@ -188,7 +188,7 @@
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1 page-content">
 						<div class="row-content" id="{? echo $c ? '':'one' ?}">
-							{{{$body}}}
+							{{ $body }}
 						</div>
 					</div>
 					<div class="col-md-10 col-md-offset-1 row-divider">

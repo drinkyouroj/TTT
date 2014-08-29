@@ -32,12 +32,16 @@ interface PostRepository {
 	public function allByUserId($user_id, $published = true);
 	
 	public function allByUserIds($user_ids, $published = true);
+
+	public function allDraftsByUserId($user_id, $paginate, $page, $rest);
 	
 	//Count
 	public function countPublished();
 	
 	//Check
 	public function owns($post_id, $user_id);
+
+	public function checkEditable($published_at);
 
 	//Update
 	public function update($input);

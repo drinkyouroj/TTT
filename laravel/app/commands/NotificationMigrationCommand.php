@@ -35,7 +35,7 @@ class NotificationMigrationCommand extends Command {
 		$notifications = Notification::get();
 		echo $notifications->count() . '<br>';
 		$c = 1;
-		foreach($notifications as $key=> $notification) {
+		foreach($notifications as $key => $notification) {
 			$this->line('Notification: '. $key );
 			
 			if($notification->notification_type == 'follow') {
@@ -89,7 +89,7 @@ class NotificationMigrationCommand extends Command {
 				if($motification->count() == 1) {
 					$this->line('Adding to Existing Motification');
 				} elseif($motification->count() > 1) {
-					$this->line($motification->count().' motifications exists.  Error');
+					$this->line($motification->count().' motifications exists.');
 				}
 				$motification->push('users', $user_name, true);
 			}

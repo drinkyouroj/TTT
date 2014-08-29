@@ -25,7 +25,7 @@
     
     <!--{{App::environment()}}-->
 	<script>
-		@if(App::environment('local'))
+		@if(App::environment('local') || App::environment('sharktopus'))
 			window.site_url = '/tt/';//has trailing slash
 			window.image_url = '/tt/uploads/final_images';//no trailing on the image url
 		@elseif(App::environment('web'))

@@ -1,9 +1,7 @@
 <?php
-
 /**
  * Routing for the TTT!
  */
-
 
 /**
  *	JSON API 
@@ -12,12 +10,13 @@
 
 //Protected rest controllers
 Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
-{
-	
+{	
+	// Route for rest feed
+	Route::get( 'feed/{feed_type}/{page}', 'MyProfileController@getRestFeed' );
+
 	//Action Limited (no update)
 	$action_limits = array('only'=>array('index','create','show','destroy'));
 
-		
 	//Profile Image for the Follower/Following buttons. TODO This will go away soon after we create a more robust system
 	Route::resource('profileimage', 'ProfileImageRestController', $action_limits);
 	
@@ -27,12 +26,16 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 
 	//Photo Processor
 	Route::resource('photo', 'PhotoRestController', array('only'=>array('index','store','show')) );
+
+	Route::post('savepost','PostController@postSavePost');
+
 });
 
 //Unprotected rest controllers
 Route::group(array('prefix'=>'rest'), function() {
 	//Autoload routes
 	//Category autload
+	Route::get( 'categories/{alais}/{sort}/{page}', 'CategoryController@getRestCategory');
 	Route::get( 'categories/{alais}/{sort}', 'CategoryController@getRestCategory');
 	Route::get( 'categories/{alais}', 'CategoryController@getRestCategory');
 	//Profile autload
@@ -45,6 +48,12 @@ Route::group(array('prefix'=>'rest'), function() {
 //Note, below JSONController route has to be below the abouve REST route Group.
 Route::group(array('before' => 'auth'), function() {
 	Route::controller('rest','JSONController');
+});
+
+// Routes for users profile
+Route::group( array('prefix'=>'myprofile', 'before' => 'auth' ), function() {
+	Route::get('/', 'MyProfileController@getMyProfile');
+	//Route::controller( 'myprofile', 'MyProfileController' );
 });
 
 //Admin area
@@ -82,6 +91,8 @@ Route::group(array('prefix'=>'categories'),function() {
 
 
 //Posts routes
+// TODO: will need to remove old route, just kept it in for reference
+Route::get( 'posts/{alias}/{version}', 'PostController@getPost');
 Route::get( 'posts/{alias}', 'PostController@getPost');
 Route::get( 'posts', 'PostController@getIndex');//grabs a random post
 

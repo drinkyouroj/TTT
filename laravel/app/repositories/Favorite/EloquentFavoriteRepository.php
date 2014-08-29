@@ -21,22 +21,38 @@ class EloquentFavoriteRepository implements FavoriteRepository {
 		return $favorite;
 	}
 
+	public function allByUserId($user_id, $paginate = 12, $page = 1, $rest = false) {
+		$query =  $this->favorite
+						->where('user_id', $user_id)
+						->orderBy('updated_at', 'DESC')
+						->skip(($page-1)*$paginate)
+						->take($paginate);
+		if($rest) {
+			return $query->with('post.user')->get();
+		} else {
+			return $query->get();
+		}
+	}
+
 	public function exists($user_id, $post_id) {
-		return $this->favorite->where('post_id', $post_id)
-							->where('user_id', $user_id)
-							->count();
+		return $this->favorite
+						->where('post_id', $post_id)
+						->where('user_id', $user_id)
+						->count();
 	}
 
 	public function has_favorited($user_id, $post_id) {
-		return $this->favorite->where('user_id', $user_id)
-							->where('post_id', $post_id)
-							->count();
+		return $this->favorite
+						->where('user_id', $user_id)
+						->where('post_id', $post_id)
+						->count();
 	}
 
 	public function delete($user_id, $post_id) {
-		$this->favorite->where('post_id', $post_id)
-						->where('user_id', $user_id)
-						->delete();
+		$this->favorite
+					->where('post_id', $post_id)
+					->where('user_id', $user_id)
+					->delete();
 	}
 
 }

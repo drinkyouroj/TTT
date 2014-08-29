@@ -41,6 +41,7 @@ $env = $app->detectEnvironment(array(
 	
 	'vagrant' => array('localhost:4567', 'vagrant-fedora-19*'),
 	'local' => array('localhost.localdomain'),
+	'sharktopus' => array('sharktopus.localdomain'),//Ryuhei's local machine
 
 ));
 

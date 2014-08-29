@@ -1,8 +1,6 @@
 <?php
 
-use \App, 
-	AppStorage\Post\PostRepository,
-	AppStorage\Notification\NotificationRepository;
+use \App;
 
 /**
  * User Queue Actions
@@ -17,6 +15,7 @@ class UserAction {
 		$this->not = App::make('AppStorage\Notification\NotificationRepository');
 		$this->follow = App::make('AppStorage\Follow\FollowRepository');
 		$this->activity = App::make('AppStorage\Activity\ActivityRepository');
+		$this->feed = App::make('AppStorage\Feed\FeedRepository');
 	}
 	
 	/**
@@ -36,24 +35,18 @@ class UserAction {
 			//process notification for each follower
 			foreach($followers as $follower) {
 				
-				$not = $this->not->find(
-									$data['post_id'], //Post id	
-									$follower->follower_id, //person getting notified
-									'repost'
-									);
-									
-				//If the Notifiation does not exist, 
-				if(!$not) {
-					$not = $this->not->instance();
-					$not->post_id = $data['post_id'];
-					$not->post_title = $post->title;
-					$not->post_alias = $post->alias;
-					$not->user_id = $follower->follower_id;//Who this notification si going to.
-					$not->noticed = 0;
-					$not->notification_type = 'repost';
-					$not->save();
-				}
-				$not->push('users', $data['username'],true);
+				// Create the notification
+				$not_data = array(
+					'post_id' => $data['post_id'],
+					'post_title' => $post->title,
+					'post_alias' => $post->alias,
+					'user_id'    => $follower->follower_id,
+					'noticed'    => 0,
+					'notification_type' => 'repost'
+					);
+				$not = $this->not->create($not_data, $action_user->username);
+				
+				
 				
 				//below statement is to ensure that the user who owns the content doesn't get the repost.
 				if($follower->follower_id != $post->user->id) {
@@ -64,6 +57,16 @@ class UserAction {
 							'post_type' => 'repost'
 							);					
 					$this->activity->create($activity);
+
+					//New Feed System replaces the old activity;
+					$new_feed = array(
+							'user_id' => $follower->follower_id,
+							'post_title' => $post->title,
+							'post_id' => $data['post_id'],
+							'feed_type' => 'repost',
+							'users' => $action_user->username
+							);
+					$this->feed->create($new_feed);
 				}
 			}
 		$job->delete();
@@ -90,13 +93,9 @@ class UserAction {
 							$follower->follower_id, 
 							'repost'
 							);
-			
-			if($not != false) {
-				$not->pull('users', $action_user->username);
-				if(count($not->first()->users) == 0) {
-					$not->delete();
-				}
-			}
+
+			//pull the user out of notifications.
+			$this->not->pullUsers($not, $action_user->username);
 			
 			//below statement is to ensure that the user who owns the content doesn't get the repost.
 			if($follower->follower_id != $post->user->id) {
@@ -107,6 +106,14 @@ class UserAction {
 						'post_type' => 'repost'
 					);
 				$this->activity->delete($activity);
+
+				$del_feed = array(
+						'user_id' => $follower->follower_id,
+						'post_id' => $data['post_id'],
+						'feed_type' => 'repost',
+						'users' => $action_user->username
+						);
+				$this->feed->delete($del_feed);
 			}
 		}
 		$job->delete();
@@ -126,24 +133,16 @@ class UserAction {
 		
 		//process notification for each follower
 		foreach($followers as $follower) {
-			
-			$not = $this->not->find(
-								$data['post_id'],
-								$follower->follower_id,
-								'post'
-								);
 				
-			if($not != false) {
-				$not = $this->not->instance();
-				$not->post_id = $data['post_id'];
-				$not->post_title = $post->title;
-				$not->post_alias = $post->alias;
-				$not->user_id = $follower->follower_id;//Who this notification si going to.
-				$not->noticed = 0;
-				$not->notification_type = 'post';
-				$not->save();
-			}
-			$not->push('users', $data['username'], true);
+			$not_data = array(
+				'post_id' => $data['post_id'],
+				'post_title' => $post->title,
+				'post_alias' => $post->alias,
+				'user_id'    => $follower->follower_id,
+				'noticed'    => 0,
+				'notification_type' => 'post'
+				);
+			$not = $this->not->create($not_data, $data['username']);
 
 			$activity = array(
 						'action_id' => $data['user_id'],
@@ -153,8 +152,16 @@ class UserAction {
 						);					
 			$this->activity->create($activity);
 
+			$new_feed = array(
+					'user_id' => $follower->follower_id,
+					'post_title' => $post->title,
+					'post_id' => $data['post_id'],
+					'feed_type' => 'post',
+					'users' => $data['username']
+					);
+			$this->feed->create($new_feed);
 
-		}					
+		}
 		
 		$job->delete();
 		

@@ -1,0 +1,361 @@
+@import '../base';//Must import this everywhere.
+
+$border_color: #a9a9a9;
+
+//Top Controls Fixed (Post Type, Category, Drafe, Publish)
+.controls-wrapper {
+	position: fixed;
+	z-index: 4;
+	top: $navbar_height;
+	//height: 50px;//height of the Controls bar.
+	width: 100%;
+	background: #3c3c3c;
+	.controls-container {
+		padding: 5px inherit;
+		//button reset.
+		a {
+			border:none;
+			background:none;
+			cursor: pointer;
+			@include appearance(none);			
+		}
+		.post-category {
+			text-align: center;
+			a {
+				display:inline-block;
+				width: 205px;
+				margin-top: 10px;
+				
+				background: none;
+				color:#fff;
+
+				font-size: 11px;
+				@include montserrat(normal);
+				text-align: left;
+
+				border-bottom: 2px solid #fff;
+
+				background-image: url('');
+				background-position: center right;
+				background-repeat: no-repeat;
+			}
+		}
+		.draft-publish {
+			text-align: right;
+			a {
+				text-align: center;
+				display:inline-block;
+				width: 130px;
+				padding: 12px 0;
+				background: $blue;
+
+				@include montserrat(normal);
+				text-transform: uppercase;
+				font-size: 11px;
+				color:#fff;
+				
+				&.save-draft {
+					margin-right: 7px;
+					background: #a4a4a4;
+				}
+			}
+		}
+	}
+}
+
+.category-wrapper {	
+	z-index: 3;
+	position:fixed;
+	width: 100%;
+	background:#1a1a1a;
+	display:none;
+	padding-top: 79px;
+	.category-container {
+		label {
+			color:#fff;
+		}
+		.story-type-box {
+
+		}
+		.category-box {
+			color:#fff;
+			ul {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				li {
+					margin: 0;
+					padding: 0;
+					input {
+
+					}
+				}
+			}
+		}
+	}
+}
+
+.top-submit-wrapper {
+	background:#fff;
+	.top-submit-container {
+		position: relative;
+		padding-top: 100px;
+		min-height: 600px;//Change Min-height value based on the window.
+		background-size: cover;
+		background-repeat: no-repeat;
+
+		//below puts in the white overlay
+		.top-submit-overlay {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 500px;
+			background-image: url('../../../../images/posts/white-opacity.png');
+			background-repeat: repeat-x;
+		}
+
+
+		//Shared error styling
+		.error {
+
+		}
+
+		label {
+			@include label;
+		}
+
+		input[type="text"] {
+			@include border-radius(0);
+			background: none;
+			border-color: $border_color;
+			text-transform: uppercase;
+			@include montserrat(bold);
+		}
+
+		.title {
+			label {
+				margin-bottom: 8px;
+				&:after {
+					@include label_arrow_bottom();
+
+				}
+			}
+			input {
+				font-size: 30px;
+			}
+		}
+
+		.tags {
+			width: 100%;
+			.tag {
+				width: 32%;
+				font-size: 0;
+				display:inline-block;
+				input {
+					font-size: 12px;
+					width: 100%;
+					border-top: 0;
+				}
+			}
+			label {
+				margin-top: 8px;
+				margin-right: 20px;
+				&:after {
+					@include label_arrow_top();
+					left: -45px;
+				}
+			}
+			label,a {
+				font-size: 12px;
+				float: right;
+			}
+		}
+
+		.image-select {
+			text-align: center;
+			
+			margin: 50px 0;//This determines the height of the image.
+
+			width: 100%;
+			a {
+				img {
+					margin-bottom: 40px;
+				}
+				span {
+					@include fjalla;
+					color:#343638;
+					font-size: 22px;
+					text-transform: uppercase;
+				}
+			}
+		}
+
+		.image-edit {
+			display:none;//this is displayed once you select the image.
+			position: absolute;
+			bottom: 20px;
+			right: 20px;
+			a {
+				display:inline-block;
+				text-decoration: none;
+				text-transform: uppercase;
+				background: $blue;
+				padding: 5px 10px;
+				color:#fff;
+				@include montserrat;
+				&:hover {
+					color:#000;
+				}
+			}
+		}
+	}
+}
+
+.body-submit-wrapper {
+	top: -10px;
+	.body-submit-container {
+		padding-top: 55px;
+		.story {
+			label {
+				@include label;
+				float: right;
+				margin-top: -33px;
+				&:after {
+					@include label_arrow_bottom();
+				}
+			}
+			textarea {
+				display:none;
+				min-height: 300px;
+				border: 1px solid $border_color;
+				@include border-radius(0);
+			}
+			.text-input {
+				min-height: 300px;
+				border: 1px solid $border_color;
+			
+				font-size:16px;
+				line-height:150%;
+				text-align:justify;
+				padding: 25px;
+				outline: none;
+				
+				&:after {
+					padding: 25px;
+				}
+			}
+		}
+	}
+}
+
+//Below will be heavily reworked, but its all there for reference.
+.photos {
+	.photo-system {
+		.input-append {
+			input.search-query {
+				width:100%;
+				max-width:300px;
+				height: 34px;
+				padding: 6px 12px;
+				font-size: 14px;
+				line-height: 1.428571429;
+				color: #555;
+				vertical-align: middle;
+				background-color: #fff;
+				border-radius: 4px;
+				-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+				box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+				-webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+				transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+			}
+			.activate-search {
+				font-family:'bebas';
+				letter-spacing:1px;
+				background-color:#000;
+				color:#fff;
+				&:hover {
+					background-color:#333;
+					color:#fff;
+				}
+			}
+			.reset-search {
+				font-family:'bebas';
+				letter-spacing:1px;
+				background-color:#428bca;
+				color:#fff;
+				&:hover {
+					background-color:#3581ba;
+				}
+			}
+		}
+		.chosen {
+			margin-top:30px;
+		}
+
+		h4 {
+			font-family: 'bebas';
+		}
+
+		.chosen-label {
+			font-family: 'bebas';
+		}
+
+		.processed-label {
+			font-family: 'bebas';
+		}
+
+		.photo-results {
+			margin-top:20px;
+			img {
+
+			}
+			 a.pager{
+				width:75px;
+				height:75px;
+				font-family:'bebas';
+				font-size:18px;
+				font-weight:normal;
+				letter-spacing:1px;
+				display:inline-block;
+				background-color:#000;
+				color:#fff;
+				cursor:pointer;
+				margin:0px !important;
+				padding-top:25px;
+				vertical-align:top;
+			}
+			a.pager.previous{
+				border-right:1px solid #ddd;
+			}
+		}
+
+		.chosen {
+			.processor-container {
+				.photo-processor {
+					h4 {
+						margin-top:0px;
+						margin-bottom:0px;
+					}
+					img {
+						float:left;
+						display:inline;
+						width: 14%;
+					}
+				}
+			}
+			.photo-chosen {
+				height: 400px;
+				overflow: hidden;
+				background-size: cover;
+				background-position: center center;
+				background-repeat: no-repeat;
+				img {
+					width:100%;
+				}
+			}
+		}
+
+	}
+
+}

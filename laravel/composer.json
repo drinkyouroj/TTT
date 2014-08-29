@@ -19,7 +19,8 @@
 		"pda/pheanstalk": "2.0.*",
 		"jenssegers/mongodb": "*",
 		"mews/captcha": "dev-master",
-		"thomaswelton/laravel-rackspace-opencloud": "dev-master"
+		"thomaswelton/laravel-rackspace-opencloud": "dev-master",
+		"phpunit/phpunit": "4.2.*"
 	},
 	"autoload": {
 		"classmap": [

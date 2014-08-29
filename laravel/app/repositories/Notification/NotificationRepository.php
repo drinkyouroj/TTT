@@ -7,7 +7,7 @@ interface NotificationRepository {
 	public function instance();
 
 	//Create
-	public function create($data);
+	public function create($data, $action_user);
 
 	//Read
 	public function find($post_id, $user_id, $type);
@@ -24,6 +24,9 @@ interface NotificationRepository {
 	
 	//Update
 	public function noticed($array,$user_id);
+
+	public function pushUsers($not, $username);
+	public function pullUsers($not, $username);
 
 	//Delete
 	public function delete($user_id, $username, $post_id, $type);

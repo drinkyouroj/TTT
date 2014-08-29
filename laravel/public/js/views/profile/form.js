@@ -17,13 +17,13 @@ $(function(){
 					contentType: "application/json"
 				}*/
 			},
+			image: {
+				required: true
+			},
 			'category[]': {
 				required: true,
 				minlength: 1,
 				maxlength: 2
-			},
-			image: {
-				required: true
 			}
 		},
 		messages: {

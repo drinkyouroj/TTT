@@ -3,6 +3,7 @@ class Post extends Eloquent {
 	
 	//Just to be sure!
 	protected $table = 'posts';
+	protected $connection = 'mysql';
 	protected $softDelete = true;
 	protected $with = array('user');
 	

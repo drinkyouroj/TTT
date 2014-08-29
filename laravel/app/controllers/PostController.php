@@ -12,13 +12,22 @@ class PostController extends BaseController {
 							RepostRepository $repost,
 							FavoriteRepository $favorite,
 							LikeRepository $like,
-							FollowRepository $follow
+							FollowRepository $follow,
+							PostViewRepository $postview,
+							ProfilePostRepository $profilepost,
+							ActivityRepository $activity,
+							FeedRepository $feed
+
 							) {
 		$this->post = $post;
 		$this->repost = $repost;
 		$this->favorite = $favorite;
 		$this->like = $like;
 		$this->follow = $follow;
+		$this->postview = $postview;
+		$this->profilepost = $profilepost;
+		$this->activity = $activity;
+		$this->feed = $feed;
 	}
 
 	public function getIndex() {
@@ -29,7 +38,7 @@ class PostController extends BaseController {
     /**
      * Get Post
      */
-    public function getPost($alias)
+    public function getPost($alias, $version = false)
     {
         $post = $this->post->findByAlias($alias);
 		
@@ -44,6 +53,7 @@ class PostController extends BaseController {
 			
 			//Logged in.
 			if(Auth::check()) {
+				
 				$my_id = Auth::user()->id;//My user ID
 				
 				$is_following = $this->follow->is_following($my_id,$user_id);
@@ -55,6 +65,7 @@ class PostController extends BaseController {
 				$favorited = $this->favorite->has_favorited($my_id, $post->id);
 
 				$reposted = $this->repost->has_reposted($my_id, $post->id);
+
 			} else {
 				//DEFAULTS for not logged in users
 				$my_id = false;
@@ -67,21 +78,27 @@ class PostController extends BaseController {
 			
 			//Add the fact that the post has been viewed if you're not the owner and you're logged in.
 			if($user_id != $my_id && Auth::check()) {
-				$postview = PostView::where('user_id', $my_id)
-						->where('post_id', $post->id)
-						->count();
+				$exists = $this->postview->exists($my_id, $post->id);
+
 				//If the record doesn't exist, increment on the post view count and also add to the "viewed" in PostView
-				if(!$postview) {
-					$pv = new PostView;
-					$pv->user_id = $my_id;
-					$pv->post_id = $post->id;
-					$pv->save();
+				if(!$exists) {
+					$view = array(
+						'user_id' => $my_id,
+						'post_id' => $post->id
+						);
+					$this->postview->create($view);
 					
 					$this->post->incrementView($post->id);//increment on this post.
 				}
 			}
 			
-	        return View::make('generic.post')
+			// TODO: remove this once v2 post page is finished
+			$template = 'generic.post';
+			if ( $version ) {
+				$template = 'v2/posts/post';
+			}
+
+	        return View::make( $template )
 						->with('post', $post)
 						->with('is_following', $is_following)//you are following this profile
 						->with('is_follower', $is_follower)//This profile follows you.
@@ -101,10 +118,16 @@ class PostController extends BaseController {
 	 */
 	public function getPostForm($id=false) {
 		if($id) {
+			//EditPost
 			$post = $this->post->findById($id);
-			return View::make('posts/edit_form')//Edit form only has to account for the text.  Not the entire listing.
+
+			if(!$this->post->checkEditable($post->published_at)) {
+				return View::make('v2/errors/error');
+			}
+
+			return View::make('v2/posts/post_form')//Edit form only has to account for the text.  Not the entire listing.
 					->with('post', $post)
-					->with('fullscreen', true);
+					->with('edit', true);
 		} else {
 			//Gotta put in a query here to see if the user submitted something in the last 10 minutes
 			$post = $this->post->lastPostUserId(Auth::user()->id);
@@ -117,7 +140,7 @@ class PostController extends BaseController {
 				}
 			}
 					
-			return View::make('posts/new_form')->with('fullscreen', true);
+			return View::make('v2/posts/post_form')->with('edit', false);
 		}
 		
 	}
@@ -128,62 +151,156 @@ class PostController extends BaseController {
 	 * 
 	 */
 	public function postPostForm() {
-		//Detect if this is an update scenario or if its new and prepare the data accordingly.
-		if(Input::get('id')) {
-			//THIS is the update scenario.
-			//let's double check that this ID exists and belongs to this user.
-			$check_post = $this->post->findById(Input::get('id'));
-			
-			if($check_post){
+		self::savePost(false);
+	}
+
+	/**
+	 * The REST version
+	 * Sends back a JSON Response instead of a Redirect.
+	*/
+	public function postSavePost() {
+		return self::savePost(true);
+	}
+
+		//Below assumes that the validation has passed.  It can be used to update or to save the post.
+		private function savePost($rest=false) {
+			$request = Request::all();
+			$check_post = false;
+
+			if( isset($request['id']) ) {
+				$check_post = $this->post->findById( $request['id'] );
+			}
+
+			//The post exists.
+			if(!empty($check_post->id) ) {
+				//THIS is the update scenario.
+				//let's double check that this ID exists and belongs to this user.			
 				$new = false;
 				
-				//Now that we know this exists, let's check to see if its been more than 3 days since it was initially posted.
-				if(!Session::get('admin') &&
-				strtotime(date('Y-m-d H:i:s', strtotime('-72 hours'))) >= strtotime($check_post->created_at)) {
-					//more than 72 hours has passed since the post was created.
-					//TODO Maybe I should have this go somewhere more descriptive??
-					return Redirect::to('profile');
+				if($check_post->published) {
+					//Now that we know this exists, let's check to see if its been more than 3 days since it was initially posted.
+					if(!$this->post->checkEditable($check_post->published_at)) {
+						//more than 72 hours has passed since the post was created.
+						//TODO Maybe I should have this go somewhere more descriptive??
+						if($rest) {
+							return Response::json(
+									array('error' => '72'),
+									405//method not allowed
+								);
+						} else {
+							return Redirect::to('profile');
+						}
+					}
+				}
+
+				//If the post is published and the user is trying to set it as a draft.
+				if($check_post->published && $request['draft']) {
+					if($rest) {
+						return Response::json(
+								array('error' => 'pub2draft'),
+								405//method not allowed
+							);
+					} else {
+						return Redirect::to('profile');
+					}
+				}
+
+
+
+				if($rest) {
+					$post = self::rest_input($new, $check_post);
+				} else {
+					$post = $this->post->input($new, $check_post);//Post object filter gets the input and puts it into the post.
 				}
 				
-				$post = $this->post->input($new,$check_post);//Post object filter gets the input and puts it into the post.
 				$validator = $post->validate($post->toArray(),$check_post->id);//validation takes arrays.  Also if this is an update, it needs an id.
-			}
-			
-		} else {
-			//New Post.
-			$new = true;
-			//Checking to see if this is an new post being applied by a punk
-			$last_post = $this->post->lastPostUserId(Auth::user()->id);
-			
-			if( isset($last_post->id) && 
-				$new && 
-				!Session::get('admin') &&
-				strtotime(date('Y-m-d H:i:s', strtotime('-10 minutes'))) <= strtotime($last_post->created_at))
-			{
-				//Nice try punk.  Maybe I should have this go somewhere more descriptive.
-				return Redirect::to('profile');
-			}
-			$post = $this->post->input($new);//Post object creates objects.
-			$validator = $post->validate($post->toArray(),false);//no
-		}
-		
-		
-		
-		if($validator->passes()) {//Successful Validation
-			if($new) {
-				$post->save();
+
+
+			} else {
+				//New Post.
+				$new = true;
+				//Checking to see if this is an new post being applied by a punk
+				$last_post = $this->post->lastPostUserId(Auth::user()->id);
 				
-				$user = Auth::user();
-							
-				//no featured for this user? set this new post as featured.
-				if($user->featured == false) {
-					User::where('id', Auth::user()->id)
-						->update(array('featured' => $post->id));
+				if( isset($last_post->id) && 
+					$new && 
+					!Session::get('admin') &&
+					strtotime(date('Y-m-d H:i:s', strtotime('-10 minutes'))) <= strtotime($last_post->created_at))
+				{
+					//Nice try punk.  Maybe I should have this go somewhere more descriptive.
+					if($rest) {
+						return Response::json(
+								array('error' => '10'),
+								405//method not allowed
+							);
+					} else {
+						return Redirect::to('profile');
+					}
+				}
+
+				if($rest) {
+
+					$post = self::rest_input($new, false);
+				} else {
+					$post = $this->post->input($new);//Post object creates objects.
 				}
 				
-				//Gotta put in a thing here to get rid of all relations if this is an update.
-				$post->categories()->detach();//Pivot! Pivot! 
-	
+				$validator = $post->validate($post->toArray(),false);//no
+			}
+			
+			
+			if($validator->passes()) {//Successful Validation
+				
+				if($new) {
+					$post->save();
+					
+					$user = Auth::user();
+								
+					//no featured for this user? set this new post as featured.
+					if($user->featured == false) {
+						User::where('id', Auth::user()->id)
+							->update(array('featured' => $post->id));
+					}
+				
+					//Put it into the profile post table (my posts or what other people see as your activity)
+					$new_profilepost = array(
+						'profile_id' => $user->id,
+						'user_id' => $user->id,
+						'post_id' => $post->id,
+						'post_type' => 'post'
+						);
+					$this->profilepost->create($new_profilepost);
+					
+					//Also save this data to your own activity
+					$new_activity = array(
+						'user_id' => $user->id,//who's profile is this going to?
+						'action_id' => $user->id,//Who's doing the action?
+						'post_id' => $post->id,
+						'post_type' => 'post'//new post!
+						);
+					$this->activity->create($new_activity);
+
+					//If this is the web server upload this content to the CDN.
+					if(App::environment() == 'web') {
+						$file = OpenCloud::upload('Images', public_path().'/uploads/final_images/'.$post->image, $post->image);
+					}
+					
+					//QUEUE
+					//Add to follower's notifications.
+					Queue::push('UserAction@newpost', 
+								array(
+									'post_id' => $post->id,
+									'user_id' => $user->id,
+									'username' => $user->username
+									)
+								);
+				} else {
+					//Gotta put in a thing here to get rid of all relations
+					$post->categories()->detach();//Pivot! Pivot! 
+
+					$post->update();
+				}
+
 				//Gotta save the categories pivot
 				foreach(Input::get('category') as $k => $category) {
 					if($k <= 1) {//This will ensure that no more than 2 are added at a time.
@@ -192,58 +309,82 @@ class PostController extends BaseController {
 						break;//let's not waste processes
 					}
 				}
-			
-				//Put it into the profile post table (my posts or what other people see as your activity)
-				$profile_post = new ProfilePost;
-				$profile_post->profile_id = $user->id;//post on your wall
-				$profile_post->user_id = $user->id;//post by me
-				$profile_post->post_id = $post->id;
-				$profile_post->post_type = 'post';
-				$profile_post->save();
+					
+				SolariumHelper::updatePost($post);//Let's add the data to solarium (Apache Solr)
 				
-				//Also save this data to your own activity
-				$myactivity = new Activity;
-				$myactivity->user_id = $user->id;//who's profile is this going to?
-				$myactivity->action_id = $user->id;//Who's doing the action?
-				$myactivity->post_id = $post->id;
-				$myactivity->post_type = 'post';//new post!
-				$myactivity->save();
-				
-				//If this is the web server upload this content to the cdn.
-				if(App::environment() == 'web') {
-					$file = OpenCloud::upload('Images', public_path().'/uploads/final_images/'.$post->image, $post->image);
+				if($rest) {
+
+					if($new) {
+						$json_result = 'create';
+					} else {
+						$json_result = 'update';
+					}
+
+					return Response::json(
+							array(
+								'result' => $json_result,
+								'id'	=> $post->id,
+								'alias' => $post->alias
+								),
+							200 //happy happy joy joy!
+						);
+				} else {
+					return Redirect::to('profile');
 				}
 				
-				//QUEUE
-				//Add to follower's notifications.
-				Queue::push('UserAction@newpost', 
-							array(
-								'post_id' => $post->id,
-								'user_id' => $user->id,
-								'username' => $user->username
-								)
-							);
-
-			} else {
-				$post->update();
-			}
+			} else {//Failed Validation on serverside should just redirect no matter what.
+				if($rest) {
+					return Response::json(
+						array('error' => '405'),//make sure that they are redirected. They might be trying to mess with us.
+						405//method not allowed
+						);
+				} else {
+					if($new) {
+						return Redirect::to('profile/newpost')
+									->withErrors($validator)
+									->withInput();
+					} else {
+						return Redirect::to('profile/editpost/'.Input::get('id'))
+									->withErrors($validator)
+									->withInput();
+					}
+				}
 				
-			SolariumHelper::updatePost($post);//Let's add the data to solarium (Apache Solr)
-			
-			return Redirect::to('profile');
-			
-		} else {//Failed Validation
-			if($new) {
-				return Redirect::to('profile/newpost')
-							->withErrors($validator)
-							->withInput();
-			} else {
-				return Redirect::to('profile/editpost/'.Input::get('id'))
-							->withErrors($validator)
-							->withInput();
 			}
 		}
-	}
+
+			private function rest_input($new, $post) {
+				$query = Request::all();
+				if($new) {
+					//Creates a new post
+					$post = $this->post->instance();
+					//alias can't be changed ever after initial submit.
+					$post->alias = preg_replace('/[^A-Za-z0-9]/', '', $query['title'] ).'-'.str_random(5).'-'.date('m-d-Y');//makes alias.  Maybe it should exclude other bits too...
+				}
+				$post->user_id = Auth::user()->id;
+				
+				//Gotta make sure to make the alias only alunum.  Don't change alias on the update.  We don't want to have to track this change.
+				$post->story_type = $query['story_type'];
+				
+				$post->category = serialize ($query['category'] );
+				$post->image = $query['image'];//If 0, then it means no photo.
+				
+				
+				$post->title = $query['title'];
+				$post->tagline_1 = $query['tagline_1'];
+				$post->tagline_2 = $query['tagline_2'];
+				$post->tagline_3 = $query['tagline_3'];
+				
+				$post->body = $query['body'];//Body is the only updatable thing in an update scenario.
+
+				//if the post is becoming published.
+				if( $query['published'] && $post->draft ) {
+					$post->published_at = DB::raw('NOW()');
+				}
+				$post->published = $query['published'];
+				$post->draft = $query['draft'];//default is 1 so that it won't accidentally get published.
+				return $post;
+			}
 
 
 		

@@ -136,6 +136,8 @@ return array(
 		'AppStorage\ActivityStorageServiceProvider',
 		'AppStorage\FeaturedStorageServiceProvider',
 		'AppStorage\MessageStorageServiceProvider',
+		'AppStorage\PostViewStorageServiceProvider',
+		'AppStorage\FeedStorageServiceProvider',
 	),
 
 	/*
@@ -202,7 +204,12 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Confide'    => 'Zizaco\Confide\ConfideFacade',
 		'Entrust'    => 'Zizaco\Entrust\EntrustFacade',
+		
+		//Note, below: Original Eloquent has been overridden by Jessenger's Eloquent.
+		//This allows us to relate Mongo Data to MySQL data through the ORM.
 		'Moloquent'       => 'Jenssegers\Mongodb\Model',
+		'Eloquent' 		=> 'Jenssegers\Eloquent\Model',
+
 		'Captcha' => 'Mews\Captcha\Facades\Captcha',
 		'OpenCloud' => 'Thomaswelton\LaravelRackspaceOpencloud\Facades\OpenCloud',
 	),

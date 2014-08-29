@@ -1,6 +1,6 @@
 <?php namespace AppStorage\Post;
 
-use Post, DB, Request, Auth;
+use Post, DB, Request, Auth, Session;
 
 class EloquentPostRepository implements PostRepository {
 
@@ -44,9 +44,9 @@ class EloquentPostRepository implements PostRepository {
 		$post->tagline_2 = Request::get('tagline_2');
 		$post->tagline_3 = Request::get('tagline_3');
 		
-		$post->body = Request::get('body');//Body is the only updatable thing in an update scenario.
+		$post->body = strip_tags(Request::get('body'), '<p><i><b><br>');//Body is the only updatable thing in an update scenario.
 		$post->published = 1;
-		
+		$post->draft = Request::get('draft', 1);//default is 1 so that it won't accidentally get published.
 		return $post;
 	}
 
@@ -124,6 +124,22 @@ class EloquentPostRepository implements PostRepository {
 						->get();
 	}
 
+	//All Drafts belonging to a user
+	public function allDraftsByUserId($user_id, $paginate, $page, $rest) {
+		$query = $this->post->where('user_id', $user_id)
+						->where('draft', 1)
+						->where('published',0)
+						->orderBy('updated_at', 'DESC')
+						->skip(($page-1)*$paginate)
+						->take($paginate);
+						;
+		if($rest) {
+			return $query->with('user')->get();
+		} else {
+			return $query->get();
+		}
+	}
+
 	//Count
 	public function countPublished() {
 		return $this->post->where('published', 1)->count();
@@ -134,6 +150,18 @@ class EloquentPostRepository implements PostRepository {
 		return $this->post->where('id', $post_id)
 						->where('user_id', $user_id)
 						->count();
+	}
+
+	//Just a simple date check.
+	public function checkEditable($published_at) {
+		if(!Session::get('admin') &&
+		   strtotime(date('Y-m-d H:i:s', strtotime('-72 hours'))) >= 
+		   strtotime($published_at)) 
+		{
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	//Update

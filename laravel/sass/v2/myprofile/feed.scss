@@ -1,0 +1,55 @@
+@import '../base';
+
+.feed-header {
+	margin-bottom: 40px;
+
+	.row {
+		position: relative;
+
+		h1.feed-title {
+			margin-bottom: 0;
+		}
+
+		.feed-filter {
+			position: initial;
+
+			ul {
+				position: absolute;
+				right: 0;
+				bottom: 4px;  // Brought up a little to match the base of the title
+				margin-bottom: 0;
+
+				li {
+					padding-left: 15px;
+					padding-right: 15px;
+				
+					span.filter {
+						color: lightgray;
+						// Hover an un-active filter
+						&:hover {
+							cursor: pointer;
+							color: #333;
+						}
+						// The active filter
+						&.active {
+							cursor: default;
+							color: #333;
+						}
+					}
+				}
+
+				li:nth-child(1), li:nth-child(2) {
+					border-right: 1px solid gray;					
+				}
+
+			}
+		}
+	}
+}
+
+
+.feed-container {
+	@include feed_container_widths;
+	overflow: hidden;
+	@include post_listing( true );
+}

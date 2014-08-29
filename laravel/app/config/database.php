@@ -83,7 +83,18 @@ return array(
 			'prefix'   => '',
 		),
 		
-		//setup : db.addUser({user: "twothousand", pwd: "TT99!!!", roles: ["userAdminAnyDatabase"]})
+		/*setup : 
+		use database
+		db.createUser(
+		    {
+		      user: "twothousand",
+		      pwd: "TT99!!!",
+		      roles: [
+		         { role: "dbOwner", db: "database" }
+		      ]
+		    }
+		)
+		*/
 		'mongodb' => array(
 		    'driver'   => 'mongodb',
 		    'host'     => 'localhost',
