@@ -1,19 +1,26 @@
 <!--Note that this is the collection tempalte for holding the collection together-->
 <!--Below is used for the front page.-->
 <script type="text/x-handlebars-template" id="collection-template">
-	<div class="col-md-10 collection-container">
-		<div class="row collection-controls">
+	<div class="collection-container">
+		<div class="collection-controls">
 			<div class="col-md-12">
-				<a data-type="all" class="active">All</a>
-				<a data-type="post">Post</a>
+				<a data-type="all" class="active">All</a> |
+				<a data-type="post">Post</a> |
 				<a data-type="repost">Reposts</a>
 			</div>
 		</div>
-		<div class="row" id="collection-content">
+		<div id="featured-content">
 		</div>
+		
+		<div id="collection-content" class="clearfix">
+		</div>
+	
 	</div>
-	<div class="col-md-2 comment-container">
-		<div class="row" id="comment-content">
+	<div class="comment-container">
+		<div class="comment-border">
+		</div>
+		<div id="comment-content">
+			<h3>Recent Comments</h3>
 		</div>
 	</div>
 </script>
@@ -21,6 +28,13 @@
 <!--Below is used as a container for Feed/Saves/Drafts-->
 <script type="text/x-handlebars-template" id="default-profile-template">
 	<div class="col-md-12 default-container">
+		{{#ifCond view 'feed'}}
+			<div class="feed-controls">
+				<a data-type="all" class="active">All</a> |
+				<a data-type="post">Post</a> |
+				<a data-type="repost">Reposts</a>
+			</div>
+		{{/ifCond}}
 		<div class="row {{view}}" id="default-content">
 		</div>
 	</div>
@@ -36,6 +50,8 @@
 			</div>
 			<div class="comment">
 				{{comment.body}}
+				<br/>
+				<a class="readmore" href=""> Read more<a/>
 			</div>
 		</div>
 	</div>
@@ -43,7 +59,7 @@
 
 <!--Below is used for Saves-->
 <script type="text/x-handlebars-template" id="saves-template">
-	<div class="saves-box">
+	<div class="saves-box col-md-12">
 		<div class="image" style="background-image:url('{{site_url}}/uploads/final_images/{{save.image}}');">
 
 		</div>
@@ -61,7 +77,7 @@
 
 <!--Below is used for Drafts-->
 <script type="text/x-handlebars-template" id="drafts-template">
-	<div class="drafts-box">
+	<div class="drafts-box col-md-12">
 		<div class="date">
 			<span>{{date}}</span>
 		</div>

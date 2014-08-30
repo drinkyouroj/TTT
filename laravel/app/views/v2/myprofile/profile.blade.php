@@ -25,16 +25,19 @@
 			<div class="profile-header-container container">
 				<div class="row">
 					<div class="col-md-6 header-left">
+						<h2 style="background-image:url('{{--$profile_usre->image--}}');">
+							{{$profile_user->username}}
+						</h2>
 
 					</div>
 					<div class="col-md-6 header-right">
 						<div class="row">
-							<div class="col-md-6 settings">
-								<a href="#settings" class="settings" id="settings">
+							<div class="col-md-5 col-md-offset-2 settings">
+								<a href="#settings" id="settings">
 									Settings
 								</a>
 							</div>
-							<div class="col-md-6 follow">
+							<div class="col-md-5 follow">
 
 								<a href="#followers" class="followers" id="followers">
 									<span class="count">{{$follower_count}}</span>
@@ -49,25 +52,38 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-12 section-selectors">
-						{{--Max and Anyone else, do not add any more classes to the below links--}}
-						<a href="#collection" id="collection" class="active">
-							Collection
-						</a>
+					<div class="col-md-8 section-selectors">
+						<div class="border-box">
+							{{--Max and Anyone else, do not add any more classes to the below links--}}
+							<a href="#collection" id="collection" class="active">
+								Collection
+							</a>
 
-						@if($myprofile)
-							<a href="#feed" id="feed">
-								Feed
-							</a>
-							<a href="#saves" id="saves">
-								Saves
-							</a>
-							<a href="#drafts" id="drafts">
-								Drafts
-							</a>
-						@endif
-						
+							@if($myprofile)
+								<a href="#feed" id="feed">
+									Feed
+								</a>
+								<a href="#saves" id="saves">
+									Saves
+								</a>
+								<a href="#drafts" id="drafts">
+									Drafts
+								</a>
+							@endif
+						</div>
 					</div>
+					@if(!$myprofile)
+						<div class="col-md-4 follow-user">
+							<a>
+								Follow
+							</a>
+						</div>
+					@endif
+
+					<div class="col-md-12 border">
+						<div class="border-box"></div>
+					</div>
+
 				</div>
 			</div>
 		</div>

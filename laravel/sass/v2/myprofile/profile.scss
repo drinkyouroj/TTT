@@ -1,28 +1,84 @@
 @import '../base';
+
+a:focus {
+	outline: none;
+}
+
 //Profile Page headers.
 .profile-header-wrapper {
 	.profile-header-container {
 		.header-left {
-
+			h2 {
+				background-position: left center;
+				background-repeat: no-repeat;
+				@include montserrat(bold);
+			}
 		}
 		.header-right {
+			padding-top: 25px;
+			a {
+				text-transform: uppercase;
+				@include montserrat();
+				color:#000;
+				text-decoration: none;
+			}
+			a:hover {
+				text-decoration: none;
+			}
+			.settings {
+				text-align: right;
+				a#settings {
+					display:inline-block;
+					margin-top: 5px;
+					padding: 10px 8px 10px 40px;
+					border: 2px solid $dark;
+					letter-spacing: 2px;
+					font-size: 10px;
+				}
+			}
+			.follow {
+				text-align: center;
+				a {
+					display:inline-block;
+					text-align: center;
+					span.count{
+						display:block;
+						font-size: 25px;
+					}
+					span.text{
+						display:block;
+						font-size: 10px;
+					}
+				}
+				a.followers {
+					margin-right: 10px;
+				}
+				a.following {
 
+				}
+			}
 		}
 		.section-selectors {
 			a {
+				margin-right: 20px;
+				@include montserrat(bold);
+				color: $gray;
+				text-transform: uppercase;
+				text-decoration: none;
+				font-size: 11px;
 
-				&.collection {
-
+				&.active {
+					color:$dark;
 				}
-				&.feed {
+			}
+		}
+		.follow-user {
 
-				}
-				&.saves {
-
-				}
-				&.drafts {
-
-				}
+		}
+		.border {
+			.border-box {
+				border-bottom: 3px solid $dark;
+				padding-bottom: 12px;
 			}
 		}
 	}
@@ -37,31 +93,199 @@
 
 			//Collection
 			.collection-container {
+				float: left;
+				width: 77%;
+				//Note to MAX, We will have to deal with the container widths when we do some mobile work.
+
+
+				.collection-controls {
+					padding-top: 10px;
+					padding-bottom: 10px;
+					margin-bottom: 10px;
+					color:$gray;
+					@include montserrat();
+					font-size: 10px;
+					a {
+						text-transform: lowercase;
+						text-decoration: none;
+						color:$gray;
+						cursor: pointer;
+						&.active {
+							color:$dark;
+						}
+					}
+				}
 				#collection-content {
+					margin-left: auto;
+  					margin-right: auto;
+  					@media screen and (min-width: 1440px) {
+  						width: 900px;
+  					}
+
+  					@media (min-width: 992px) and (max-width: 1439px) {
+  						width: 600px
+  					}
+
+  					@media screen and (max-width:991px) {
+  						width: 300px;
+  					}
+  					//Post
 					@include post_listing(0);
+
 				}
 			}
 
 			.comment-container {
+				float: left;
+				width: 23%;
+				.comment-border {
+					border-top: 17px solid $dark;
+					margin-right: 14px;//gotta change this value on the break. somehow its a pixel off.
+				}
 				#comment-content {
+					margin-right: 15px;
+					margin-bottom: 100px;
+					border-left: 1px solid $gray;
+					padding: 10px 18px 30px 18px;
+					h3 {
+						margin: 0;
+						font-size: 12px;
+						text-transform: uppercase;
+						@include montserrat();
+					}
+					.comment-box {
+						padding: 13px 25px;
+						margin: 10px 0;
+						background:#fff;
+						span.date {
+							color: $gray;
+						}
+						.inner-content {
+							.where {
 
+								color:$dark;
+								padding-bottom: 14px;
+								margin-bottom: 10px;
+								border-bottom: 1px solid $gray;
+								a {
+									text-decoration: none;
+									color: $blue;
+								}
+							}
+							.comment {
+								margin-bottom: 10px;
+								.readmore {
+									display:block;
+									margin-top: 5px;
+									color:$blue;
+									font-size: 10px;
+									text-transform: uppercase;
+									@include montserrat(bold);
+								}
+							}
+						}
+					}
 				}
 			}
 
 			//All other content containers
 			.default-container {
+
+				//special controls for feed.
+				.feed-controls {
+					padding-top: 10px;
+					color:$gray;
+					@include montserrat();
+					font-size: 10px;
+					a {
+						text-transform: lowercase;
+						text-decoration: none;
+						color:$gray;
+						cursor: pointer;
+						&.active {
+							color:$dark;
+						}
+					}
+				}
+
 				#default-content {
 					&.feed {
 						@include post_listing(1);
 					}
 
 					&.saves {
-						
+						.saves-box {
+							.image {
+
+							}
+							.text {
+								h3 {
+
+								}
+								p {
+
+								}
+							}
+							.controls {
+								a.remove-save {
+
+								}
+							}
+						}
 					}
 
 					&.drafts {
+						.drafts-box {
+							.date {
+								span {
+
+								}
+							}
+							.image {
+
+							}
+							.text {
+								h3 {
+
+								}
+								p {
+
+								}
+							}
+							.controls {
+								a {
+
+								}
+								.edit-draft {
+
+								}
+								.publish-draft {
+
+								}
+								.delete-draft {
+
+								}
+							}
+						}
+					}
+
+					&.settings {
 
 					}
+
+					&.following, &.followers {
+						a.follow {
+							display:block;
+							float: left;
+							width: 270px;
+							margin: 10px 10px;
+							height: 150px;
+							background-position: center center;
+							background-repeat: no-repeat;
+							background-size: cover;
+						}
+					}
+
 				}
 			}
 
