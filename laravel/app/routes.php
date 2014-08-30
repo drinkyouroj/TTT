@@ -63,7 +63,10 @@ Route::group(array('before' => 'auth'), function() {
 
 // Routes for users profile
 Route::group( array('prefix'=>'myprofile', 'before' => 'auth' ), function() {
+	Route::get( 'editpost/{id}', 'PostController@getPostForm');
+	Route::get( 'newpost', 'PostController@getPostForm');
 	Route::get('/{alias}', 'MyProfileController@getPublicProfile');
+
 	Route::get('/', 'MyProfileController@getMyProfile');
 	//Route::controller( 'myprofile', 'MyProfileController' );
 });
