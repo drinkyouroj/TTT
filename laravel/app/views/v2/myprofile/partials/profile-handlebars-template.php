@@ -2,6 +2,13 @@
 <!--Below is used for the front page.-->
 <script type="text/x-handlebars-template" id="collection-template">
 	<div class="col-md-10 collection-container">
+		<div class="row collection-controls">
+			<div class="col-md-12">
+				<a data-type="all" class="active">All</a>
+				<a data-type="post">Post</a>
+				<a data-type="repost">Reposts</a>
+			</div>
+		</div>
 		<div class="row" id="collection-content">
 		</div>
 	</div>
@@ -76,7 +83,18 @@
 	</div>
 </script>
 
+<!--Follow Template-->
+<script type="text/x-handlebars-template" id="follow-template">
+	<a 
+		class="follow user"
+		href="{{site_url}}profile/{{username}}"
+		style="background-image:url('{{site_url}}rest/profileimage/{{user_id}}');"
+		>
+		<span>{{username}}</span>
+	</a>
+</script>
+
 <!--Script-->
 <script type="text/x-handlebars-template" id="settings-template">
-	
+
 </script>

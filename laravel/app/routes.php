@@ -15,6 +15,10 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	Route::group(array('prefix' => 'profile'), function() {
 		Route::get( 'collection/{type}/{page}','MyProfileController@getRestCollection');
 		Route::get( 'feed/{feed_type}/{page}', 'MyProfileController@getRestFeed' );
+
+		Route::get( 'followers/{user_id}/{page}', 'MyProfileController@getRestFollowers');
+		Route::get( 'following/{user_id}/{page}', 'MyProfileController@getRestFollowing');
+
 		Route::get( 'saves/{page}', 'MyProfileController@getRestSaves' );
 		Route::get( 'drafts/{page}', 'MyProfileController@getRestDrafts' );
 		Route::get( 'comments/{page}', 'MyProfileController@getRestComments');

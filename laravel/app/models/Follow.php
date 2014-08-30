@@ -16,6 +16,7 @@ class Follow extends Eloquent {
 					->select('id', 'username');
 	}
 
+
 	public function following()
 	{
 		return $this->belongsTo('User','user_id')

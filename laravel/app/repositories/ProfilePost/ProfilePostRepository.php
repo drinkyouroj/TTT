@@ -9,7 +9,7 @@ interface ProfilePostRepository {
 	//Create
 	public function create($data);
 
-	public function findByUserId($user_id, $paginate, $page, $rest);
+	public function findByUserId($user_id, $type, $paginate, $page, $rest);
 
 	//Delete
 	public function delete($data);

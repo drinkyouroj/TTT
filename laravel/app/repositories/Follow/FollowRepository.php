@@ -19,6 +19,9 @@ interface FollowRepository {
 
 	public function jsonFollowing($user_id);
 
+	public function restFollowers($user_id, $page );
+	public function restFollowing($user_id, $page );
+
 	public function follower_count($user_id);
 
 	public function following_count($user_id);

@@ -27,16 +27,20 @@ class EloquentProfilePostRepository implements ProfilePostRepository {
 
 	public function findByUserId(	
 									$user_id,
+									$type,
 									$paginate = 12, 
 									$page = 1, 
 									$rest = false,
 									$trashed = false
 								) {
 
-		$query = $this->profilepost->where('profile_id', $user_id)
+		$query = $this->profilepost->where('profile_id', $user_id)									
 									->orderBy('created_at', 'DESC')
 									->skip(($page-1)*$paginate)
 									->take($paginate);
+		if($type != 'all') {
+			$query = $query->where('post_type', $type);
+		}
 
 		if($trashed) {
 			return $query->withTrashed()->get();

@@ -54,8 +54,6 @@ class MyProfileController extends BaseController {
 			$featured = false;
 		}
 
-		//Load up the Posts and Reposts by the user.
-		$collection = $this->profilepost->findByUserId($profile_user->id, $this->paginate);
 
 		//Follower/Following count
 		$follower_count = $this->follow->follower_count($profile_user->id);
@@ -73,7 +71,7 @@ class MyProfileController extends BaseController {
 					->with('follower_count', $follower_count)//Number of people following this user
 
 					->with('featured', $featured)			//Featured Post
-					->with('collection', $collection)		//Actual posts and reposts.
+					//->with('collection', $collection)		//Actual posts and reposts.
 					;
 
 	}
@@ -89,9 +87,6 @@ class MyProfileController extends BaseController {
 			$featured = false;
 		}
 
-		//Load up the Posts and Reposts by the user.
-		$collection = $this->profilepost->findByUserId($user->id, $this->paginate);
-
 		//Follower/Following count
 		$follower_count = $this->follow->follower_count($user->id);
 		$following_count = $this->follow->following_count($user->id);
@@ -104,7 +99,7 @@ class MyProfileController extends BaseController {
 					->with('follower_count', $follower_count)//Number of people following this user
 
 					->with('featured', $featured)			//Featured Post
-					->with('collection', $collection)		//Actual posts and reposts.
+					//->with('collection', $collection)		//Actual posts and reposts.
 					;
 	}
 
@@ -129,7 +124,7 @@ class MyProfileController extends BaseController {
 		$types = array( 'all', 'post', 'repost' );
 
 		if( in_array($type, $types) && $page > 0 ) {
-			$collection = $this->profilepost->findByUserId($user_id, $this->paginate, $page, true, false);
+			$collection = $this->profilepost->findByUserId($user_id, $type, $this->paginate, $page, true, false);
 			return Response::json(
 					array( 'collection' => $collection->toArray() ),
 					200
@@ -219,7 +214,25 @@ class MyProfileController extends BaseController {
 		
 	}
 
-	//public function getRestFollowers()
+	public function getRestFollowers($user_id, $page = 1) {
+		$followers = $this->follow->restFollowers($user_id, 8,$page);
+		if(count($followers)) {
+			return Response::json(
+				array('follow' => $followers->toArray()),
+				200
+				);
+		}
+	}
 
+
+	public function getRestFollowing($user_id, $page = 1) {
+		$following = $this->follow->restFollowing($user_id, 8,$page);
+		if(count($following)) {
+			return Response::json(
+				array('follow' => $following->toArray()),
+				200
+				);
+		}
+	}
 
 }

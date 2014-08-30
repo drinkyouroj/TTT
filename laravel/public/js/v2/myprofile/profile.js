@@ -26,26 +26,52 @@ $(function() {
 	//Drafts Item
 	var drafts_item_source = $('#drafts-template').html();
 	profile.drafts_item_template = Handlebars.compile(drafts_item_source);
+
+	//Settings template
+	var settings_source = $('#settings-template').html();
+	profile.settings_template = Handlebars.compile(settings_source);
+
+	//Follow template
+	var follow_template = $('#follow-template').html();
+	profile.follow_template = Handlebars.compile(follow_template);
 	
 
 //View renders based on the id selectors.
 	$('.section-selectors a').click(function(event) {
 		//event.preventDefault();
-
 		$('.section-selectors a').removeAttr('class');//gets rid of active state.
 		$(this).prop('class','active');
 		profile.view = $(this).prop('id');
+		profile.type = 'all';//default
+
 		//window.location.hash = profile.view;
-		profile.viewInit();//new view has to be rendered out of this scenario
+		profile.viewInit($(this).prop('id'));//new view has to be rendered out of this scenario
 	});
+
+	//Collection Renders
+		$('body').on('click','.collection-controls a', function(event) {
+			event.preventDefault();			
+			$('.collection-controls a').removeAttr('class');
+			$(this).prop('class','active');
+			profile.type = $(this).data('type');
+			profile.filter = true;
+			profile.viewRender();
+		});
+
 
 //View renders for settings/follow
 	$('.header-right a').click(function(event) {
-		event.preventDefault();
+		//event.preventDefault();
 		$('.section-selectors a').removeAttr('class');//gets rid of the class.
 		profile.view = $(this).prop('id');
+
 		window.location.hash = profile.view;
-		profile.viewInit();//new view has to be rendered out of this scenario
+
+		if($(this).hasClass('followers') || $(this).hasClass('following')) {
+			profile.type = window.user_id;
+		}
+
+		profile.viewInit($(this).prop('id'));//new view has to be rendered out of this scenario
 	});
 
 
@@ -57,18 +83,23 @@ $(function() {
 	});
 
 //Only init the system on "window load" so we can catch the right hash.
-	$(window).load(function() {
+	
 		profile.target = $('#profile-content');
+		/*
+		// Somehow this is really messing with the loading.
 		if(typeof window.location.hash  == 'undefined') {
-			window.location.hash = profile.view;
+			window.location.hash = 'collection';
+			profile.view = 'collection';
 		} else {
 			view = window.location.hash;
 			profile.view = view.substring(1);
 		}
-		profile.viewInit();//Render initial view.
+		*/
+		
+		profile.viewInit('collection');//Render initial view.
 		window.page_processing = false;
 		window.comment_page_processing = false;
-	});
+	
 
 });
 
@@ -77,20 +108,22 @@ function ProfileActions() {
 
 	this.view = 'collection';//set a default view
 	this.type = 'all';
+	this.filter = false; //this is if we're only changing the type and doing another pull
 
 	//View initialization for when you click on a new view.
-	this.viewInit = function() {
+	this.viewInit = function(view) {
 		//Everytime a view is rendered the page count should be reset.
 		this.page = 1;
 		this.comment_page = 1;//this only pertains to the collection page
-		
+		this.view = view
 		//fade in fade out scenario
 		var that = this;//JS scope is fun... not.
-		this.target.fadeOut(200,function() {
+		this.target.fadeOut(100,function() {
 			that.target.html('');
 			that.viewRenderContainer();
 			that.viewRender(true);
-			that.target.fadeIn();
+			that.target.fadeIn(100);
+
 		});
 	};
 
@@ -105,9 +138,10 @@ function ProfileActions() {
 	};
 
 	//Actual Content Rendering routes
-	this.viewRender = function(init) {
-		//this is thrown in here since it happens for every render.
-		this.urlConstructor();
+	this.viewRender = function(init) {		
+		if(this.filter) {
+			this.viewClear();
+		}
 		switch(this.view) {
 			default:
 			case 'collection':
@@ -143,16 +177,26 @@ function ProfileActions() {
 		}
 	};
 
+	this.viewClear = function() {
+		if(this.view == 'collection') {
+			clear = $('#collection-content',this.target);
+		} else {
+			clear = $('#default-content',this.target);
+		}
+		clear.html('');
+		this.filter = false;
+	}
+
 	//URL constructor
-	this.urlConstructor = function() {		
+	this.urlConstructor = function() {
 		base_url = window.site_url + 'rest/profile/' + this.view + '/';
 
 		var viewArray = ['collection', 'feed', 'following', 'followers'];
 		
-		if( $.inArray(this.view, viewArray ) != -1) {
+		if( viewArray.indexOf(this.view) != -1) {
 
 			this.url = base_url + this.type + '/' + this.page;
-
+			
 			if(this.view == 'collection') {
 				//special case in which the collection requires a comment url.
 				this.comment_url = window.site_url + 'rest/profile/comments/' + this.comment_page;
@@ -170,7 +214,7 @@ function ProfileActions() {
 		//below has to be done to pass through the scope of both getData and $.each
 		var post_item_template = this.post_item_template;
 		var target = this.target;
-		
+		this.urlConstructor();
 		this.getData(this.url, function(data) {
 			$.each(data.collection, function(idx, val) {
 				view_data = {
@@ -180,13 +224,14 @@ function ProfileActions() {
 				$('#collection-content',target).append(post_item_template(view_data));
 			});
 		});
+		
 	};
 
 	this.renderComments = function() {
 		//scope issues
 		var comment_item_template = this.comment_item_template;
 		var target = this.target;
-
+		this.urlConstructor();
 		this.getData(this.comment_url, function(data) {
 			$.each(data.comments,function(idx, val) {
 				view_data = {
@@ -202,7 +247,7 @@ function ProfileActions() {
 		//scope issues
 		var post_item_template = this.post_item_template;
 		var target = this.target;
-
+		this.urlConstructor();
 		this.getData(this.url,function(data) {
 			$.each(data.feed, function(idx, val) {
 				view_data = {
@@ -218,7 +263,7 @@ function ProfileActions() {
 		//scope issues
 		var saves_item_template = this.saves_item_template;
 		var target = this.target;
-
+		this.urlConstructor();
 		this.getData(this.url,function(data) {
 			$.each(data.saves, function(idx, val) {
 				view_data = {
@@ -236,7 +281,7 @@ function ProfileActions() {
 		//scope issues
 		var drafts_item_template = this.drafts_item_template;
 		var target = this.target;
-		
+		this.urlConstructor();
 		this.getData(this.url,function(data) {
 			$.each(data.drafts, function(idx, val) {
 				view_data = {
@@ -252,13 +297,36 @@ function ProfileActions() {
 	this.renderFollowers = function() {
 		var follow_template = this.follow_template;
 		var target = this.target;
+		this.urlConstructor();
+		this.getData(this.url, function(data) {
+			$.each(data.follow, function(idx, val) {
+				
+				view_data = {
+					site_url: window.site_url,
+					username: val.followers.username,
+					user_id:  val.follower_id
+				};
+				$('#default-content', target).append(follow_template(view_data));
+			});
+		});
 
 	}
 
 	this.renderFollowing = function() {
 		var follow_template = this.follow_template;
 		var target = this.target;
-
+		this.urlConstructor();
+		this.getData(this.url, function(data) {
+			$.each(data.follow, function(idx, val) {
+					
+					view_data = {
+						site_url: window.site_url,
+						username: val.following.username,
+						user_id:  val.user_id
+					};
+					$('#default-content', target).append(follow_template(view_data));
+			});
+		});
 	}
 
 	this.renderSettings = function() {
@@ -304,5 +372,3 @@ function ProfileActions() {
 	};
 
 }
-
-
