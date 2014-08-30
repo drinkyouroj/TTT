@@ -70,7 +70,7 @@ class MyProfileController extends BaseController {
 					->with('following_count', $following_count)//Number of people this user is following
 					->with('follower_count', $follower_count)//Number of people following this user
 
-					->with('featured', $featured)			//Featured Post
+					//->with('featured', $featured)			//Featured Post
 					//->with('collection', $collection)		//Actual posts and reposts.
 					;
 
@@ -79,13 +79,6 @@ class MyProfileController extends BaseController {
 	public function getMyProfile() {
 		//The one and only user!
 		$user = Auth::user();
-
-		//grab the user's featured post
-		if($user->featured) {
-			$featured = $this->post->findById($user->featured);
-		} else {
-			$featured = false;
-		}
 
 		//Follower/Following count
 		$follower_count = $this->follow->follower_count($user->id);
@@ -98,29 +91,16 @@ class MyProfileController extends BaseController {
 					->with('following_count', $following_count)//Number of people this user is following
 					->with('follower_count', $follower_count)//Number of people following this user
 
-					->with('featured', $featured)			//Featured Post
+					//->with('featured', $featured)			//Featured Post
 					//->with('collection', $collection)		//Actual posts and reposts.
 					;
 	}
 
-	/**
-	 *	Get the default feed.
-	 */
-	/*
-	public function getFeed () {
-		$user_id = Auth::user()->id;
-		$page = 1;
-		$feed_type = 'all';
-		$feed = $this->feed->find( $user_id, $this->paginate, $page, $feed_type, false );
-		// TODO: populate the view accordingly...
-		return View::make('v2/myprofile/feed')
-				   ->with('feed', $feed);
-	}
-	*/
-
-
-	public function getRestCollection ($type = 'all', $page = 1) {
-		$user_id = Auth::user()->id;
+	public function getRestCollection ($type = 'all', $user_id = 0, $page = 1) {
+		if(!$user_id) {
+			$user_id = Auth::user()->id;
+		}
+		
 		$types = array( 'all', 'post', 'repost' );
 
 		if( in_array($type, $types) && $page > 0 ) {
@@ -135,7 +115,6 @@ class MyProfileController extends BaseController {
 				200
 				);
 		}
-
 	}
 
 
@@ -197,8 +176,11 @@ class MyProfileController extends BaseController {
 		}
 	}
 
-	public function getRestComments($page = 1) {
-		$user_id = Auth::user()->id;
+	public function getRestComments($user_id = 0, $page = 1) {
+		if(!$user_id) {
+			$user_id = Auth::user()->id;
+		}
+		
 		$comments = $this->comment->allByUserId($user_id, 8, $page, true);
 		if(count($comments)) {
 			return Response::json(

@@ -194,12 +194,12 @@ function ProfileActions() {
 		var viewArray = ['collection', 'feed', 'following', 'followers'];
 		
 		if( viewArray.indexOf(this.view) != -1) {
-
-			this.url = base_url + this.type + '/' + this.page;
 			
 			if(this.view == 'collection') {
-				//special case in which the collection requires a comment url.
-				this.comment_url = window.site_url + 'rest/profile/comments/' + this.comment_page;
+				this.url = base_url + this.type + '/' + window.user_id + '/' + this.page;
+				this.comment_url = window.site_url + 'rest/profile/comments/' + window.user_id + '/' + this.comment_page;
+			} else {
+				this.url = base_url + this.type + '/' + this.page;
 			}
 
 		} else {

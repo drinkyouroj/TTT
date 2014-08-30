@@ -12,6 +12,7 @@
 		
 		<script>
 			window.user_id = {{$profile_user->id}};
+			window.featured_id = {{$profile_user->featured}};
 		</script>
 
 		@include( 'v2/partials/post-listing-template' )
@@ -33,9 +34,11 @@
 					<div class="col-md-6 header-right">
 						<div class="row">
 							<div class="col-md-5 col-md-offset-2 settings">
+								@if($myprofile)
 								<a href="#settings" id="settings">
 									Settings
 								</a>
+								@endif
 							</div>
 							<div class="col-md-5 follow">
 
@@ -74,9 +77,15 @@
 					</div>
 					@if(!$myprofile)
 						<div class="col-md-4 follow-user">
-							<a>
+							@if(!$is_following)
+							<a class="follow">
 								Follow
 							</a>
+							@else
+							<a class="unfollow">
+								UnFollow
+							</a>
+							@endif
 						</div>
 					@endif
 
