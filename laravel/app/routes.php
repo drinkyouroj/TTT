@@ -48,6 +48,8 @@ Route::group(array('prefix'=>'rest'), function() {
 	Route::get( 'profile', 'ProfileController@getRestProfile');
 	//Auto Load of for featured.
 	Route::get( 'featured', 'HomeController@getRestFeatured');
+
+	Route::get( 'post/{post_id}/comments/{paginate}/{page}', 'CommentController@getRestComments');
 });
 
 //Note, below JSONController route has to be below the abouve REST route Group.

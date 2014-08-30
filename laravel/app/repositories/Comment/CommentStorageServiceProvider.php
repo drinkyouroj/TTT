@@ -9,7 +9,7 @@ class CommentStorageServiceProvider extends ServiceProvider {
 	{
 		$this->app->bind(
 		'AppStorage\Comment\CommentRepository',
-		'AppStorage\Comment\EloquentCommentRepository'
+		'AppStorage\Comment\MongoCommentRepository'
 		);
 		
 		$this->app->booting(function()

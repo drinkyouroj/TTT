@@ -25,8 +25,21 @@ $(function() {
 		});
 	});
 
+	// ========================== LOAD COMMENTS ===========================
+
+	var post_id = $('.post-action-bar').data('post-id');
+	var Comments = new CommentPagination( post_id );
+	$(window).scroll(function() {
+		if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+			Comments.getNextPage( function ( data ) {
+				renderComments( data );
+			});
+		}
+	});
+
+
 	// ========================== COMMENT REPLY ===========================
-	$('.the-comment a.reply').on('click', function(e) {
+	$('.comment a.reply').on('click', function(e) {
 		post = $(this).data('postid');
 		reply = $(this).data('replyid');
 		comment_container = $(this).siblings('.reply-box');
@@ -37,4 +50,27 @@ $(function() {
 			}
 		});
 	});
+
+	/**
+	 *	Algo for rendering comments
+	 *	data:
+	 *		comments
+	 *		is_mod
+	 *		active_user_id
+	 */
+	function renderComments ( data ) {
+		console.log('render comments');
+		var source   = $("#comment-template").html();
+		var comment_template = Handlebars.compile(source);
+		var comments = data.comments;
+		
+		comments.forEach( function ( comment ) {
+			comment.margin = comment.depth * 10 + '%';
+			comment.published = comment.published ? 'published' : 'deleted';
+			var rendered_comment = comment_template( { comment: comment, is_mod: data.is_mod, active_user_id: data.active_user_id } );
+			$('.comments-listing').append( rendered_comment );
+			console.log('rendered comment ' + comment._id);
+		});
+	}
+
 });

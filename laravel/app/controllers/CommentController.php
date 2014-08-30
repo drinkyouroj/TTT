@@ -13,24 +13,53 @@ class CommentController extends BaseController {
 	}
 
 	/**
-	 * The Post Comment Form
+	 *	Get comments via the rest route...
+	 *	@param post_id: the post id
+	 *	@param paginate: number of comments to pull
+	 *	@param page: which page of comments to get
 	 */
-	public function postCommentForm()
-	{
-		$user_id = Auth::user()->id;
+	public function getRestComments ( $post_id, $paginate = 5, $page = 1 ) {
+		$comments = $this->comment->findByPostId( $post_id );
+		if ( count( $comments ) ) {
+			$user = Auth::user();
+			$is_mod = $user->hasRole('Moderator');
+			$active_user_id = $user->id;
+
+			return Response::json(
+					array('comments'=> $comments->toArray(),
+						  'is_mod' => $is_mod,
+						  'active_user_id' => $active_user_id ),
+					200//response is OK!
+				);
+		} else {
+			return Response::json(
+					array('comments'=>array()),
+					200//response is OK!
+				);
+		}
+	}
+
+	/**
+	 * 	The Post Comment Form. Creates a comment, pushes out the proper notifications,
+	 *	and then redirects back to the view.
+	 */
+	public function postCommentForm () {
+		$user = Auth::user();
+		$user_id = $user->id;
+		$username = $user->username;
+
 		//$comment = CommentLogic::comment_object_input_filter();
-		$comment = $this->comment->input($user_id);
-		$validator = $comment->validate($comment->toArray());//validation happens as an array
+		$comment = $this->comment->create( $user_id, $username );
+
+		$validator = $comment->validate( $comment->toArray() );//validation happens as an array
 		
-		if($validator->passes()) {
-			$comment->save();
-			$post = $this->post->findById(Request::segment(3));
-			
+		if( $validator->passes() ) {
+			// Proceed to increment comment count for the given post
+			$post = $this->post->findById(Request::segment(3));			
 			if($post->user_id != $user_id) {
 				//Should the comment counter be incremented if you're the owner? no!
 				$this->post->incrementComment($post->id);
 			}
-			
 			//Notification code for new comments
 			NotificationLogic::comment($post, $comment);
 			
@@ -39,7 +68,7 @@ class CommentController extends BaseController {
 			return Redirect::to('posts/'.$comment->post->alias)
 							->withErrors($validator)
 							->withInput();
-		} 
+		}
 	}
 		
 	/**

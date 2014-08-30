@@ -35,7 +35,7 @@ class Post extends Eloquent {
 	
 	public function comments()
     {
-        return $this->hasMany('Comment', 'post_id')->orderBy('created_at', 'DESC');//Gotta be in chronological order.
+        return $this->hasMany('Comment', 'post_id')->orderBy('created_at', 'DESC');  //Gotta be in chronological order.
     }
 	
 	public function nochildcomments()

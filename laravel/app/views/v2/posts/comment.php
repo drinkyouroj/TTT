@@ -4,6 +4,8 @@
  * It sucks. but it works well.
  */
 $result = '';
+// $current_parent = $comments[0]->_id;
+
 foreach($comments as $comment) {
 	
 	$delete = '';
@@ -54,7 +56,7 @@ foreach($comments as $comment) {
 		'.$vote.$reply.$delete.'
 		<div class="reply-box"></div>';
 	
-	if(count($comment->children)) {
+	if( count($comment->children)) {
 		
 		$view = View::make('v2/posts/comment')//self calling right here.
 					->with('comments', $comment->children);

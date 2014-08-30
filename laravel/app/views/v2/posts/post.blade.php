@@ -8,9 +8,10 @@
 @stop
 
 @section('js')
+	@include( 'v2/posts/partials/comment-handlebars-template')
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/comment-pagination.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_actions.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post.js"></script>
-
 @stop
 
 @section('title')
@@ -141,27 +142,13 @@
 	<section class="post-comment-wrapper">
 		<div class="post-comment-container container">
 			<div class="row">
-				@if( count( $post->comments ) )
-					<div class="comments col-md-10 col-md-offset-1">
-						@if( Auth::check() )
-							@include('v2/posts/commentform', array('post' => $post) )
-						@endif
+				<div class="comments col-md-10 col-md-offset-1">
+					@include('v2/posts/commentform', array('post' => $post) )
+					
+					<ul class="comments-listing list-unstyled">
 						
-						<ul class="comments-listing list-unstyled">
-							@if( count( $post->nochildcomments) )
-								{{ View::make('v2/posts/comment')->with('comments', $post->nochildcomments) }}
-							@endif
-						</ul>
-					</div>
-				@else
-					<div class="comments col-md-10 col-md-offset-1 no-comments">
-						@if( Auth::check() )
-							@include('v2/posts/commentform', array('post' => $post) )
-						@endif
-						
-						<p>No Comments have been made yet...</p>
-					</div>
-				@endif
+					</ul>
+				</div>
 			</div>
 		</div>
 	</section>
