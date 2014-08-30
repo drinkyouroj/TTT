@@ -24,14 +24,23 @@ class MongoCommentRepository implements CommentRepository {
 	 *	@param $user_id: id of the user who authored the post
 	 */
 	public function create ( $user_id, $username ) {
-		
+		// Before creating the comment, make sure the user has not commented within the last 10 seconds
+		$last_comment = MongoComment::where( 'author.user_id', $user_id )
+									->where( 'created_at', '>', new DateTime('-10 seconds') )
+									->get();
+		if ( count( $last_comment ) ) {
+			// User has commented in the last 10 seconds!
+			return null;
+		}
+
+
 		// Step 1: generate the unique portions of the slug and full slug.
 		$slug_part = $this->generateRandomString(5);
 		$created_at = new DateTime();
 		$full_slug_part = $created_at->format('Y.m.d.H.i.s').':'.$slug_part;
 		// Step 2: check if this comment is a reply to another
-		if ( Request::get('reply_id') ) {
-			$parent_comment = MongoComment::find(Request::get('reply_id'));
+		if ( Request::get( 'reply_id' ) ) {
+			$parent_comment = MongoComment::find( Request::get( 'reply_id' ) );
 			// TODO: double check that we actually have the parent comment! (ie: we were given a valid reply_id)
 			$slug = $parent_comment->slug.'/'.$slug_part;
 			$full_slug = $parent_comment->full_slug.'/'.$full_slug_part;
@@ -43,8 +52,8 @@ class MongoCommentRepository implements CommentRepository {
 		}
 		// Step 3: Do the insert!
 		$new_comment = new MongoComment;
-		$new_comment->post_id = intval( Request::segment(3) );
-		$new_comment->parent_comment = Request::get('reply_id') ? Request::get('reply_id') : null;
+		$new_comment->post_id = intval( Request::get( 'post_id' ) );
+		$new_comment->parent_comment = Request::get( 'reply_id' ) ? Request::get( 'reply_id' ) : null;
 		$new_comment->slug = $slug;
 		$new_comment->full_slug = $full_slug;
 		$new_comment->created_at = $created_at;
@@ -54,7 +63,7 @@ class MongoCommentRepository implements CommentRepository {
 							);
 		$new_comment->published = 1;
 		$new_comment->depth = $depth;
-		$new_comment->body = strip_tags(Request::get('body'));
+		$new_comment->body = strip_tags( Request::get( 'body' ) );
 		$new_comment->save();
 		return $new_comment;
 
@@ -91,7 +100,7 @@ class MongoCommentRepository implements CommentRepository {
 	 *	Fetch comments by a given author
 	 */
 	public function allByUserId ( $user_id, $paginate = 5, $page = 1, $rest = false ) {
-		return MongoComment::where( 'author', $user_id )
+		return MongoComment::where( 'author.user_id', $user_id )
 						   ->orderBy( 'created_at' )
 						   ->skip( ($page - 1) * $paginate )
 						   ->take( $paginate )

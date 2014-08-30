@@ -62,7 +62,6 @@ $(function() {
 	
 });
 
-
 /**
  * Mark as Read function
  */

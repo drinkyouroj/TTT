@@ -6,6 +6,7 @@ class MongoComment extends Eloquent {
 	
 	protected $connection = 'mongodb';
 	protected $collection = 'comments';
+	protected $dates = array('created_at');
 
 	public function validate ( $input ) {
 		$rules = array(

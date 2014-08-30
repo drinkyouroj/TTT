@@ -34,6 +34,9 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	//Post Save Route.
 	Route::post('savepost','PostController@postSavePost');
 
+	// Comment post route
+	Route::post('comment', 'CommentController@postRestComment');
+
 });
 
 //Unprotected rest controllers

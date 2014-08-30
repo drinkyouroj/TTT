@@ -9,9 +9,6 @@
 	);
 </script>
 
-<?php 
-// This template is not self closing! (in case it has child comments)
-?>
 <script type="text/x-handlebars-template" id="comment-template">
 
 	<div id="comment-{{ comment._id }}" class="comment {{#ifCond comment.published 1}}published{{else}}deleted{{/ifCond}} {{#ifCond comment.depth 0}}thread-parent{{/ifCond}}" style="margin-left: {{ comment.margin }}">
