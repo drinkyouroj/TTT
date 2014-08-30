@@ -1,7 +1,11 @@
 <?php
 namespace AppStorage\Comment;
 
-use MongoComment, DateTime, Request;
+use MongoComment, DateTime, Request,Exception;
+
+/**
+ *	http://docs.mongodb.org/ecosystem/use-cases/storing-comments/
+ */
 
 class MongoCommentRepository implements CommentRepository {
 
@@ -72,9 +76,9 @@ class MongoCommentRepository implements CommentRepository {
 	 *	Fetch comments for a given post. Pagination is available by the 'highest' level
 	 *	comments (ie: comments with no parent, start of a comment thread, etc...).
 	 */
-	public function findByPostId ( $post_id, $paginate = 5, $page = 1 ) {
+	public function findByPostId ( $post_id, $paginate = 10, $page = 1 ) {
 		return MongoComment::where( 'post_id', intval( $post_id ) )
-						   ->orderBy( 'full_slug', 'desc' )
+						   ->orderBy( 'full_slug' )
 						   ->skip( ($page - 1) * $paginate )
 						   ->take( $paginate )
 						   ->get();
@@ -88,9 +92,9 @@ class MongoCommentRepository implements CommentRepository {
 	 */
 	public function allByUserId ( $user_id, $paginate = 5, $page = 1, $rest = false ) {
 		return MongoComment::where( 'author', $user_id )
+						   ->orderBy( 'created_at' )
 						   ->skip( ($page - 1) * $paginate )
 						   ->take( $paginate )
-						   ->orderBy( 'created_at' )
 						   ->get();
 	}
 
@@ -100,11 +104,9 @@ class MongoCommentRepository implements CommentRepository {
 	 */
 	public function owns($comment_id, $user_id) {
 		$result = MongoComment::where( '_id', $comment_id )
-						      ->where( 'author', $user_id )
+						      ->where( 'author.user_id', $user_id )
 						      ->get();
-		if ( $result )
-			return true;
-		return false;
+		return count( $result ) ? true : false;
 	}
 
 	//Update
@@ -113,16 +115,16 @@ class MongoCommentRepository implements CommentRepository {
 	/**
 	 *	Publish a given comment
 	 */
-	public function publish ( $comment_id, $user_id ) {
-		MongoComment::where( '_id', $comment_id )
-					->where( 'author', $user_id )
-					->update( 'published', 1 );
+	public function publish ( $comment_id ) {
+		$comment = MongoComment::where( '_id', $comment_id )->get()->first();
+		$comment->published = 1;
+		$comment->save();
 	}
 
-	public function unpublish ( $comment_id, $user_id ) {
-		MongoComment::where( '_id', $comment_id )
-					->where( 'author', $user_id )
-					->update( 'published', 0 );		
+	public function unpublish ( $comment_id ) {
+		$comment = MongoComment::where( '_id', $comment_id )->get()->first();
+		$comment->published = 0;
+		$comment->save();
 	}
 	
 	//Delete

@@ -296,8 +296,8 @@ class JSONController extends BaseController {
 	public function getComments($id) {
 		$user_id = Auth::user()->id;	
 		$owns = $this->comment->owns($id, $user_id);
-		
-		if($owns) {
+
+		if( $owns || Auth::user()->hasRole('Moderator') ) {
 			$this->comment->unpublish($id, $user_id);  //unpublished = deleted.
 			return Response::json(
 				array(

@@ -19,11 +19,17 @@ class CommentController extends BaseController {
 	 *	@param page: which page of comments to get
 	 */
 	public function getRestComments ( $post_id, $paginate = 5, $page = 1 ) {
-		$comments = $this->comment->findByPostId( $post_id );
+		$comments = $this->comment->findByPostId( $post_id, $paginate, $page );
 		if ( count( $comments ) ) {
-			$user = Auth::user();
-			$is_mod = $user->hasRole('Moderator');
-			$active_user_id = $user->id;
+			if ( Auth::check() ) {
+				$user = Auth::user();
+				$is_mod = $user->hasRole('Moderator');
+				$active_user_id = $user->id;
+			} else {
+				$is_mod = false;
+				$active_user_id = false;
+			}
+			
 
 			return Response::json(
 					array('comments'=> $comments->toArray(),

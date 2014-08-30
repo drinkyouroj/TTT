@@ -26,8 +26,8 @@ interface CommentRepository {
 	//Update
 	public function update($input);
 	
-	public function publish($comment_id, $user_id);
-	public function unpublish($comment_id, $user_id);
+	public function publish($comment_id);
+	public function unpublish($comment_id);
 	
 	//Delete
 	public function delete($id);

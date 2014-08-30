@@ -6,31 +6,34 @@
  */
 
 function CommentPagination ( post_id ) {
-	this.pagination = 10;
-	this.page = 1;
 	this.post_id = post_id;
-	this.is_fetching_comments = false;
-	this.no_more_comments = false;
+	var pagination = 10;
+	var page = 1;
+	var is_fetching_comments = false;
+	var no_more_comments = false;
 
 
 	this.getNextPage = function ( callback ) {
-		if ( this.is_fetching_comments || this.no_more_comments || !this.post_id )
+
+		if ( is_fetching_comments || no_more_comments || !this.post_id )
 			return undefined;
-		
-		this.is_fetching_comments = true;
+
+		is_fetching_comments = true;
 		$.ajax({
-			url: window.site_url + 'rest/post/' + post_id + '/comments/' + this.pagination + '/' + this.page,
+			url: window.site_url + 'rest/post/' + post_id + '/comments/' + pagination + '/' + page,
 			success: function ( data ) {
 				// Proceed to populate the comments
 				if ( data && data.comments && data.comments.length ) {
-					this.is_fetching_comments = false;
-					this.page++;
+					page++;
 					callback( data );
 				} else {
-					this.no_more_comments = true;
+					no_more_comments = true;
 					callback( undefined );
 				}
-			} 
+			},
+			complete: function () {
+				is_fetching_comments = false;
+			}
 		});
 	}
 }

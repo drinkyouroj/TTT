@@ -39,16 +39,20 @@ $(function() {
 
 
 	// ========================== COMMENT REPLY ===========================
-	$('.comment a.reply').on('click', function(e) {
-		post = $(this).data('postid');
-		reply = $(this).data('replyid');
-		comment_container = $(this).siblings('.reply-box');
-		$.ajax({
-			url: window.site_url+'profile/commentform/'+post+'/'+reply,
-			success: function(data) {
-				comment_container.append(data);//load in the form with CSRF protection!
-			}
-		});
+	$('.comments-listing').on('click', 'a.reply', function() {
+		if ( $(this).hasClass('auth') ) {
+			$('#guestSignup').modal('show');
+		} else {
+			post = $(this).data('postid');
+			reply = $(this).data('replyid');
+			comment_container = $(this).siblings('.reply-box');
+			$.ajax({
+				url: window.site_url + 'profile/commentform/' + post + '/' + reply,
+				success: function(data) {
+					comment_container.append(data);//load in the form with CSRF protection!
+				}
+			});
+		}
 	});
 
 	/**
@@ -66,7 +70,6 @@ $(function() {
 		
 		comments.forEach( function ( comment ) {
 			comment.margin = comment.depth * 10 + '%';
-			comment.published = comment.published ? 'published' : 'deleted';
 			var rendered_comment = comment_template( { comment: comment, is_mod: data.is_mod, active_user_id: data.active_user_id } );
 			$('.comments-listing').append( rendered_comment );
 			console.log('rendered comment ' + comment._id);
