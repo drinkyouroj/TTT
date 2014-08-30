@@ -1,7 +1,7 @@
 <?php
 namespace AppStorage\Comment;
 
-use MongoComment, DateTime, Request,Exception;
+use MongoComment, DateTime, Request, DB;
 
 /**
  *	http://docs.mongodb.org/ecosystem/use-cases/storing-comments/
@@ -100,11 +100,13 @@ class MongoCommentRepository implements CommentRepository {
 	 *	Fetch comments by a given author
 	 */
 	public function allByUserId ( $user_id, $paginate = 5, $page = 1, $rest = false ) {
-		return MongoComment::where( 'author.user_id', $user_id )
-						   ->orderBy( 'created_at' )
+		$comments = MongoComment::where( 'author.user_id', intval($user_id) )
+						   ->orderBy( 'created_at', 'desc' )
 						   ->skip( ($page - 1) * $paginate )
 						   ->take( $paginate )
 						   ->get();
+		return $comments;
+
 	}
 
 	/**
