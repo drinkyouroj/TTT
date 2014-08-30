@@ -5,13 +5,14 @@
 	@stop
 
 	@section('css')
-		<link rel="stylesheet" media="screen" href="{{Config::get('app.url')}}/css/compiled/v2/myprofile/feed.css">
+		<link rel="stylesheet" media="screen" href="{{Config::get('app.url')}}/css/compiled/v2/myprofile/profile.css">
 	@stop
 
 	@section('js')
 		
 		<script>
 			window.user_id = {{$profile_user->id}};
+			window.featured_id = {{$profile_user->featured}};
 		</script>
 
 		@include( 'v2/partials/post-listing-template' )
@@ -25,30 +26,73 @@
 			<div class="profile-header-container container">
 				<div class="row">
 					<div class="col-md-6 header-left">
+						<h2 style="background-image:url('{{--$profile_usre->image--}}');">
+							{{$profile_user->username}}
+						</h2>
 
 					</div>
 					<div class="col-md-6 header-right">
+						<div class="row">
+							<div class="col-md-5 col-md-offset-2 settings">
+								@if($myprofile)
+								<a href="#settings" id="settings">
+									Settings
+								</a>
+								@endif
+							</div>
+							<div class="col-md-5 follow">
 
-					</div>
-					<div class="col-md-12 section-selectors">
-						{{--Max and Anyone else, do not add any more classes to the below links--}}
-						<a href="#collection" class="collection" id="active">
-							Collection
-						</a>
+								<a href="#followers" class="followers" id="followers">
+									<span class="count">{{$follower_count}}</span>
+									<span class="text">Followers</span>
+								</a>
 
-						@if($myprofile)
-							<a href="#feed" class="feed">
-								Feed
-							</a>
-							<a href="#saves" class="saves">
-								Saves
-							</a>
-							<a href="#drafts" class="drafts">
-								Drafts
-							</a>
-						@endif
-						
+								<a href="#following" class="following" id="following">
+									<span class="count">{{$following_count}}</span>
+									<span class="text">Following</span>
+								</a>
+									
+							</div>
+						</div>
 					</div>
+					<div class="col-md-8 section-selectors">
+						<div class="border-box">
+							{{--Max and Anyone else, do not add any more classes to the below links--}}
+							<a href="#collection" id="collection" class="active">
+								Collection
+							</a>
+
+							@if($myprofile)
+								<a href="#feed" id="feed">
+									Feed
+								</a>
+								<a href="#saves" id="saves">
+									Saves
+								</a>
+								<a href="#drafts" id="drafts">
+									Drafts
+								</a>
+							@endif
+						</div>
+					</div>
+					@if(!$myprofile)
+						<div class="col-md-4 follow-user">
+							@if(!$is_following)
+							<a class="follow">
+								Follow
+							</a>
+							@else
+							<a class="unfollow">
+								UnFollow
+							</a>
+							@endif
+						</div>
+					@endif
+
+					<div class="col-md-12 border">
+						<div class="border-box"></div>
+					</div>
+
 				</div>
 			</div>
 		</div>

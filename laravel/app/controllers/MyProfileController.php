@@ -54,8 +54,6 @@ class MyProfileController extends BaseController {
 			$featured = false;
 		}
 
-		//Load up the Posts and Reposts by the user.
-		$collection = $this->profilepost->findByUserId($profile_user->id, $this->paginate);
 
 		//Follower/Following count
 		$follower_count = $this->follow->follower_count($profile_user->id);
@@ -72,8 +70,8 @@ class MyProfileController extends BaseController {
 					->with('following_count', $following_count)//Number of people this user is following
 					->with('follower_count', $follower_count)//Number of people following this user
 
-					->with('featured', $featured)			//Featured Post
-					->with('collection', $collection)		//Actual posts and reposts.
+					//->with('featured', $featured)			//Featured Post
+					//->with('collection', $collection)		//Actual posts and reposts.
 					;
 
 	}
@@ -81,16 +79,6 @@ class MyProfileController extends BaseController {
 	public function getMyProfile() {
 		//The one and only user!
 		$user = Auth::user();
-
-		//grab the user's featured post
-		if($user->featured) {
-			$featured = $this->post->findById($user->featured);
-		} else {
-			$featured = false;
-		}
-
-		//Load up the Posts and Reposts by the user.
-		$collection = $this->profilepost->findByUserId($user->id, $this->paginate);
 
 		//Follower/Following count
 		$follower_count = $this->follow->follower_count($user->id);
@@ -103,33 +91,20 @@ class MyProfileController extends BaseController {
 					->with('following_count', $following_count)//Number of people this user is following
 					->with('follower_count', $follower_count)//Number of people following this user
 
-					->with('featured', $featured)			//Featured Post
-					->with('collection', $collection)		//Actual posts and reposts.
+					//->with('featured', $featured)			//Featured Post
+					//->with('collection', $collection)		//Actual posts and reposts.
 					;
 	}
 
-	/**
-	 *	Get the default feed.
-	 */
-	/*
-	public function getFeed () {
-		$user_id = Auth::user()->id;
-		$page = 1;
-		$feed_type = 'all';
-		$feed = $this->feed->find( $user_id, $this->paginate, $page, $feed_type, false );
-		// TODO: populate the view accordingly...
-		return View::make('v2/myprofile/feed')
-				   ->with('feed', $feed);
-	}
-	*/
-
-
-	public function getRestCollection ($type = 'all', $page = 1) {
-		$user_id = Auth::user()->id;
+	public function getRestCollection ($type = 'all', $user_id = 0, $page = 1) {
+		if(!$user_id) {
+			$user_id = Auth::user()->id;
+		}
+		
 		$types = array( 'all', 'post', 'repost' );
 
 		if( in_array($type, $types) && $page > 0 ) {
-			$collection = $this->profilepost->findByUserId($user_id, $this->paginate, $page, true, false);
+			$collection = $this->profilepost->findByUserId($user_id, $type, $this->paginate, $page, true, false);
 			return Response::json(
 					array( 'collection' => $collection->toArray() ),
 					200
@@ -140,7 +115,6 @@ class MyProfileController extends BaseController {
 				200
 				);
 		}
-
 	}
 
 
@@ -202,8 +176,11 @@ class MyProfileController extends BaseController {
 		}
 	}
 
-	public function getRestComments($page = 1) {
-		$user_id = Auth::user()->id;
+	public function getRestComments($user_id = 0, $page = 1) {
+		if(!$user_id) {
+			$user_id = Auth::user()->id;
+		}
+		
 		$comments = $this->comment->allByUserId($user_id, 8, $page, true);
 		if(count($comments)) {
 			return Response::json(
@@ -219,5 +196,25 @@ class MyProfileController extends BaseController {
 		
 	}
 
+	public function getRestFollowers($user_id, $page = 1) {
+		$followers = $this->follow->restFollowers($user_id, 8,$page);
+		if(count($followers)) {
+			return Response::json(
+				array('follow' => $followers->toArray()),
+				200
+				);
+		}
+	}
+
+
+	public function getRestFollowing($user_id, $page = 1) {
+		$following = $this->follow->restFollowing($user_id, 8,$page);
+		if(count($following)) {
+			return Response::json(
+				array('follow' => $following->toArray()),
+				200
+				);
+		}
+	}
 
 }

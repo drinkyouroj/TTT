@@ -13,13 +13,10 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 {	
 	// Route for MyProfile
 	Route::group(array('prefix' => 'profile'), function() {
-		Route::get( 'collection/{type}/{page}','MyProfileController@getRestCollection');
 		Route::get( 'feed/{feed_type}/{page}', 'MyProfileController@getRestFeed' );
 		Route::get( 'saves/{page}', 'MyProfileController@getRestSaves' );
 		Route::get( 'drafts/{page}', 'MyProfileController@getRestDrafts' );
-		Route::get( 'comments/{page}', 'MyProfileController@getRestComments');
 	});
-	
 
 	//Profile Image for the Follower/Following buttons.
 	Route::resource('profileimage', 'ProfileImageRestController', array('only'=>array('show')));
@@ -41,14 +38,23 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 
 //Unprotected rest controllers
 Route::group(array('prefix'=>'rest'), function() {
-	//Autoload routes
+	//Route for Public Profile functions.
+	Route::group(array('prefix' => 'profile'), function() {
+		Route::get( 'collection/{type}/{user_id}/{page}','MyProfileController@getRestCollection');
+		Route::get( 'followers/{user_id}/{page}', 'MyProfileController@getRestFollowers');
+		Route::get( 'following/{user_id}/{page}', 'MyProfileController@getRestFollowing');
+		Route::get( 'comments/{user_id}/{page}', 'MyProfileController@getRestComments');
+	});
+	
 	//Category autload
 	Route::get( 'categories/{alais}/{sort}/{page}', 'CategoryController@getRestCategory');
 	Route::get( 'categories/{alais}/{sort}', 'CategoryController@getRestCategory');
 	Route::get( 'categories/{alais}', 'CategoryController@getRestCategory');
+
 	//Profile autload
 	Route::get( 'profile/{alias}', 'ProfileController@getRestProfile');
 	Route::get( 'profile', 'ProfileController@getRestProfile');
+
 	//Auto Load of for featured.
 	Route::get( 'featured', 'HomeController@getRestFeatured');
 
@@ -62,6 +68,10 @@ Route::group(array('before' => 'auth'), function() {
 
 // Routes for users profile
 Route::group( array('prefix'=>'myprofile', 'before' => 'auth' ), function() {
+	Route::get( 'editpost/{id}', 'PostController@getPostForm');
+	Route::get( 'newpost', 'PostController@getPostForm');
+	Route::get('/{alias}', 'MyProfileController@getPublicProfile');
+
 	Route::get('/', 'MyProfileController@getMyProfile');
 	//Route::controller( 'myprofile', 'MyProfileController' );
 });
@@ -112,6 +122,7 @@ Route::post('search', 'SearchController@postResult');
 //Protected Profile routes
 Route::group(array('prefix'=> 'profile', 'before'=> 'profile|auth'), function() 
 {
+	/*
 	Route::get( 'editpost/{id}', 'PostController@getPostForm');
 	Route::get( 'newpost', 'PostController@getPostForm');
 	
@@ -137,13 +148,13 @@ Route::group(array('prefix'=> 'profile', 'before'=> 'profile|auth'), function()
 	
 	Route::post( 'submitmessage', 'MessageController@postMessageForm');
 	Route::get( 'messages', 'MessageController@getMessageInbox');
-		
+	*/
 });
 
 //Not protected profile routes
 Route::group(array('before'=>'profile'), function() {
 	//General Posts
-	Route::get( 'profile/{alias}', 'ProfileController@getProfile');
+	Route::get( 'profile/{alias}', 'MyProfileController@getPublicProfile');
 	Route::get( 'profile', 'ProfileController@getProfile');
 	
 });

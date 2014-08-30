@@ -230,6 +230,7 @@ class JSONController extends BaseController {
 
 			$user_id = Auth::user()->id;
 			$post_id = Request::segment(3);
+			$post = $this->post->findById($post_id);
 
 			//Does this relationship already exist?
 			$exists = $this->repost->exists($user_id, $post_id);
@@ -240,6 +241,17 @@ class JSONController extends BaseController {
 			if( !$exists && !$owns ) {  //Doesn't exists and you don't own it.
 				// Repost!
 				$this->repost->create( $user_id, $post_id );
+
+				//Add to the profile
+				$new_profilepost = array(
+						'post_id' => $post->id,
+						'profile_id' => $user_id,
+						'user_id' => $post->user->id,
+						'post_type' => 'repost'
+					);
+
+				//Add to Feed
+				$this->profilepost->create($new_profilepost);
 
 				// Notify the repost to owner
 				NotificationLogic::repost( $post_id );
@@ -253,7 +265,16 @@ class JSONController extends BaseController {
 				
 				// Delete the repost!
 				$this->repost->delete( $user_id, $post_id );
-							
+				
+				//Delete from the Profile
+				$del_profilepost = array(
+						'post_id' => $post->id,
+						'profile_id' => $user_id,
+						'user_id' => $post->user->id,
+						'post_type' => 'repost'
+					);
+				$this->profilepost->delete($del_profilepost);
+
 				// Delete the notification of the repost					
 				NotificationLogic::unrepost( $post_id );
 				

@@ -80,6 +80,30 @@ class EloquentFollowRepository implements FollowRepository {
 		return $data;
 	}
 
+	//better than the stuff above.
+	public function restFollowers($user_id, $paginate = 8, $page = 1 ) {
+		return $this->follow
+					->where('user_id', $user_id)
+					->select('user_id', 'follower_id')
+					->skip(($page-1)*$paginate)
+					->take($paginate)
+					->with('followers')//user type
+					->get()
+					;
+	}
+
+
+	public function restFollowing($user_id, $paginate = 8, $page = 1 ) {
+		return $this->follow
+					->where('follower_id', $user_id)
+					->select('user_id', 'follower_id')
+					->skip(($page-1)*$paginate)
+					->take($paginate)
+					->with('following')//user type
+					->get()
+					;
+	}
+
 	public function follower_count($user_id) {
 		return $this->follow->where('user_id', $user_id)->count();
 	}

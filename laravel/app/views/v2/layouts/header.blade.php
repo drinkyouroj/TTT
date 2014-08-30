@@ -15,14 +15,12 @@
 								</li>
 							@else
 								<li class="loggedin profile">
-				  					<a href="{{Config::get('app.url')}}/profile">{{Session::get('username')}}</a>
+				  					<a href="{{Config::get('app.url')}}/myprofile">{{Session::get('username')}}</a>
 								</li>
 								<li class="loggedin post">
-				  					<a href="{{Config::get('app.url')}}/profile/newpost">Post</a>
+				  					<a href="{{Config::get('app.url')}}/myprofile/newpost">Post</a>
 								</li>
-								<li class="loggedin message">
-				  					<a href="{{Config::get('app.url')}}/profile/messages">Message</a>
-								</li>
+								
 							
 								@if(Session::get('admin'))
 								<li class="loggedin admin">
