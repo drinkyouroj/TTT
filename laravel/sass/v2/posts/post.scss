@@ -142,21 +142,13 @@
 				margin-right: 0;
 			}
 
-			ul.comments-listing {
+			div.comments-listing {
 
-				& > li {
+				background-color: white;
+				
+				div.comment {
 					border-top: 2px solid lightgray !important;
-					background-color: white;
-					margin-top: 20px;
-				}
-
-				li {
-					padding: 25px;
-					border-top: 1px solid lightgray;
-				}
-
-				ul {
-					margin-top: 25px;
+					padding: 20px;
 				}
 
 				p {

@@ -161,9 +161,9 @@
 						<div class="clearfix"></div>
 					</form>
 					
-					<ul class="comments-listing list-unstyled">
+					<div class="comments-listing">
 						
-					</ul>
+					</div>
 				</div>
 			</div>
 		</div>

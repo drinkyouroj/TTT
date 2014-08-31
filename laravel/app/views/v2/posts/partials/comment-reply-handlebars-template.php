@@ -10,7 +10,7 @@
 		</div>
 						
 		<div class="form-group pull-right">
-			<input class="btn-flat-dark-gray" type="submit" value="Comment">	
+			<input class="btn-flat-dark-gray" type="submit" value="Reply">	
 		</div>
 		
 		<div class="clearfix"></div>

@@ -9,7 +9,7 @@ $(function() {
 	// Scroll to comment form
 	$(".action-comment").click(function() {
 	    $('html, body').animate({
-	        scrollTop: $(".comment-form").offset().top
+	        scrollTop: $(".comments > form.comment-reply").offset().top - 150
 	    }, 750);
 	    $('.comment-form textarea').focus();
 	});
@@ -53,6 +53,11 @@ $(function() {
 			var reply_id = $(this).data('replyid');
 			var $comment_container = $(this).siblings('.reply-box');
 			var new_form = reply_form_template( { post_id: post_id, reply_id: reply_id } );
+			// hide/toggle other reply form and reply buttons
+			$('.comments-listing form.comment-reply').remove();
+			$('.comments-listing a.reply').show();
+			// hide/toggle this form and button
+			$(this).hide();
 			$comment_container.append( new_form );
 		}
 	});
@@ -75,7 +80,7 @@ $(function() {
 		var comments = data.comments;
 		
 		comments.forEach( function ( comment ) {
-			comment.margin = comment.depth * 10 + '%';
+			comment.margin = comment.depth * 5 + '%';
 			var rendered_comment = comment_template( { comment: comment, is_mod: data.is_mod, active_user_id: data.active_user_id } );
 			$('.comments-listing').append( rendered_comment );
 			console.log('rendered comment ' + comment._id);
@@ -99,7 +104,7 @@ $(function() {
 					$(form).find('.error').html( data.error );
 				} else if ( data.comment ) {
 					// render the template
-					data.comment.margin = data.comment.depth * 10 + '%';
+					data.comment.margin = data.comment.depth * 5 + '%';
 					var new_comment = comment_template( data );
 					if ( data.comment.parent_comment ) {
 						// This comment was a reply to another comment, insert it accordingly
