@@ -63,9 +63,9 @@ $(function() {
 	$('.header-right a').click(function(event) {
 		//event.preventDefault();
 		$('.section-selectors a').removeAttr('class');//gets rid of the class.
-		profile.view = $(this).prop('id');
+		//profile.view = $(this).prop('id');
 
-		window.location.hash = profile.view;
+		//window.location.hash = profile.view;
 
 		if($(this).hasClass('followers') || $(this).hasClass('following')) {
 			profile.type = window.user_id;
@@ -74,11 +74,38 @@ $(function() {
 		profile.viewInit($(this).prop('id'));//new view has to be rendered out of this scenario
 	});
 
+	//image upload code.
+	$('body').on('change', '#uploadAvatar input#image', function() {
+		console.log('upload event');
+		profile.avatarUpload();
+	});
+
+	//password change
+	$('body').on('submit', '#changePassword',function(event) {
+		event.preventDefault();
+		profile.changePassword();
+	});
+
+	$('#deleteModal').on('click','.btn.delete-account', function() {
+		id = $(this).data('user');
+		console.log(id);
+		if(id) {
+			$.ajax({
+				url: window.site_url+'rest/userdelete/'+id,
+				type:"GET",//previously delete
+				success: function(data) {
+					window.location.href = window.site_url+'user/logout';
+				}
+			});
+		}
+	});
 
 //Pagination detection.
 	$(window).scroll(function() {
-		if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-			profile.paginate();
+		if(profile.view != 'settings') {
+			if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+				profile.paginate();
+			}
 		}
 	});
 
@@ -331,8 +358,70 @@ function ProfileActions() {
 
 	this.renderSettings = function() {
 		//simple stuff.
-		$('#default-content', this.target).append(this.settings_template());
+		$('#default-content', this.target).append(this.settings_template({site_url: this.site_url}));
 	}
+
+		this.avatarUpload = function() {
+			$('#uploadAvatar').ajaxForm({
+				beforeSubmit: this.avatarRequest,
+				success: this.avatarResponse,
+				dataType: 'json'
+			}).submit();
+		}
+
+		this.avatarRequest = function (formData, jqForm, options) {
+			$("#avatarErrors").hide().empty();
+		    $("#avatarOutput").css('display','none');
+		    return true; 
+		}
+
+		this.avatarResponse = function (response, statusText, xhr, $form) {
+			//console.log(response);
+			var $errors = $("#avatarErrors");
+			var $output =  $("#avatarOutput");
+			var site_url = this.site_url;
+			if(response.success == false)
+		    {
+		        var arr = response.errors;
+		        $.each(arr, function(index, value)
+		        {
+		            if (value.length != 0)
+		            {
+		               $errors.append('<div class="alert alert-error"><strong>'+ value +'</strong><div>');
+		            }
+		        });
+		        $errors.show();
+		    } else {
+		    	$('.header-wrapper .avatar-image').animate({opacity: 0},'slow', function() {
+		    		$(this).css(
+		    			{'background-image': 'url("uploads/avatars/' +response.image+'")' }
+		    		).animate({opacity: 1});
+		    	});
+		        $output.html('<img src="uploads/avatars/' +response.image+'" />');
+		        $output.css('display','block');
+		    }
+		}
+
+	this.changePassword = function() {
+		$('form#changePassword').ajaxForm({
+			beforeSubmit: this.passRequest,
+			success: this.passResponse,
+			dataType: 'json'
+		}).submit();
+	}
+
+		this.passRequest = function(formData, jsForm, options) {
+			$('form#changePassword .message-box').html('');
+		}
+
+		this.passResponse = function(response, statusText, xhr, $form) {
+			$('form#changePassword input').val('');//reset all values
+			if(response.success == false) {
+				$('form#changePassword .message-box').html('<p>Wrong Values.  Please try again</p>');
+			} else {
+				$('form#changePassword .message-box').html('<p>Smashing success! Your Password has been changed</p>');
+			}
+		}
 
 
 //AJAX data getter

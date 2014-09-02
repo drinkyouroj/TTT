@@ -12,6 +12,8 @@ class User extends ConfideUser implements UserInterface {
 	use HasRole;
 	
 	protected $softDelete = true;
+
+	protected $fillable = array('image');
 	
 //	protected $guarded = array('password','email','confirmation_code');
 	/**
