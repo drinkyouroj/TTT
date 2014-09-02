@@ -212,7 +212,7 @@ class UserController extends BaseController {
                 return Redirect::to($r);
             }
             
-            return Redirect::to('/profile'); // change it to '/admin', '/dashboard' or something
+            return Redirect::to('myprofile'); // change it to '/admin', '/dashboard' or something
         }
         else
         {
