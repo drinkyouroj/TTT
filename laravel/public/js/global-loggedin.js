@@ -55,13 +55,12 @@ $(function() {
 	});
 	
 	//Delete Comment**********************************************
-	$('.comments-listing a.delete').on('click', function(event) {
+	$('.comments-listing').on('click', 'a.delete', function(event) {
 		event.preventDefault();
 		comment_delete($(this).data('delid'));
 	});
 	
 });
-
 
 /**
  * Mark as Read function
@@ -201,7 +200,10 @@ function comment_delete(id) {
 		type:"GET",//This used to be delete, but not anymore.
 		success: function(data) {
 			if(data.result == 'deleted') {
-				$('#comment-'+id+'>.comment-body').html('<span class="deleted">Comment was deleted</span>');
+				$('#comment-'+id+'>.comment-body').html('<span class="deleted">(This comment has been deleted)</span>');
+				$('#comment-'+id+' a.delete').fadeOut(function() {
+					$(this).remove();
+				});
 			}
 		}
 	});

@@ -16,6 +16,7 @@ class PostController extends BaseController {
 							PostViewRepository $postview,
 							ProfilePostRepository $profilepost,
 							ActivityRepository $activity,
+							CommentRepository $comment,
 							FeedRepository $feed
 
 							) {
@@ -27,6 +28,7 @@ class PostController extends BaseController {
 		$this->postview = $postview;
 		$this->profilepost = $profilepost;
 		$this->activity = $activity;
+		$this->comment = $comment;
 		$this->feed = $feed;
 	}
 
@@ -38,13 +40,13 @@ class PostController extends BaseController {
     /**
      * Get Post
      */
-    public function getPost($alias)
+    public function getPost ( $alias )
     {
-        $post = $this->post->findByAlias($alias);
+        $post = $this->post->findByAlias( $alias );
 		
-		if($post != false) {//Post exists.
+		if ( $post != false ) {//Post exists.
 						
-			if(!isset($post->user->username)) {
+			if( !isset($post->user->username) ) {
 				$user_id = 1;//1 is the loneliest number! (aka user nobody)
 				$post->user = User::find(1);
 			} else {
@@ -52,18 +54,13 @@ class PostController extends BaseController {
 			}
 			
 			//Logged in.
-			if(Auth::check()) {
+			if( Auth::check() ) {
 				
 				$my_id = Auth::user()->id;//My user ID
-				
 				$is_following = $this->follow->is_following($my_id,$user_id);
-								
 				$is_follower = $this->follow->is_follower($my_id,$user_id);
-									
 				$liked = $this->like->has_liked($my_id, $post->id);
-				
 				$favorited = $this->favorite->has_favorited($my_id, $post->id);
-
 				$reposted = $this->repost->has_reposted($my_id, $post->id);
 
 			} else {
@@ -77,23 +74,26 @@ class PostController extends BaseController {
 			}
 			
 			//Add the fact that the post has been viewed if you're not the owner and you're logged in.
-			if($user_id != $my_id && Auth::check()) {
+			if( $user_id != $my_id && Auth::check() ) {
 				$exists = $this->postview->exists($my_id, $post->id);
 
 				//If the record doesn't exist, increment on the post view count and also add to the "viewed" in PostView
-				if(!$exists) {
+				if( !$exists ) {
 					$view = array(
 						'user_id' => $my_id,
 						'post_id' => $post->id
 						);
 					$this->postview->create($view);
-					
 					$this->post->incrementView($post->id);//increment on this post.
 				}
 			}
 
+			// Fetch the comments!
+			// $comments = $this->comment->findByPostId( $post->id );
+
 	        return View::make( 'v2/posts/post' )
 						->with('post', $post)
+						// ->with('comments', $comments)
 						->with('is_following', $is_following)//you are following this profile
 						->with('is_follower', $is_follower)//This profile follows you.
 						->with('bodyarray', PostLogic::divide_text($post->body, 1500))//This divides the body text into parts so that we can display them in multiple steps.

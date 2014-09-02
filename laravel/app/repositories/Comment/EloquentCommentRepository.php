@@ -1,6 +1,6 @@
 <?php namespace AppStorage\Comment;
 
-use Comment,DB, Request;
+use Comment, DB, Request;
 
 class EloquentCommentRepository implements CommentRepository {
 
@@ -28,12 +28,16 @@ class EloquentCommentRepository implements CommentRepository {
 	}
 
 	//Create
-	public function create($input) {}
+	public function create($user_id, $username) {
+		//TODO: if we use this repository again we need to implement this.
+	}
 
 	//Read
 	public function findById($id) {
 		return $this->comment->where('id', $id)->first();
 	}
+	
+	public function findByPostId ( $post_id, $paginate, $page ) {}
 	
 	//Read Multi
 	public function all() {}

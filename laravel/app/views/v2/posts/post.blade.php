@@ -8,9 +8,11 @@
 @stop
 
 @section('js')
+	@include( 'v2/posts/partials/comment-handlebars-template')
+	@include( 'v2/posts/partials/comment-reply-handlebars-template')
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/comment-pagination.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_actions.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post.js"></script>
-
 @stop
 
 @section('title')
@@ -37,7 +39,7 @@
 	?>
 	
 	<section class="post-action-bar-wrapper">
-		<div class="post-action-bar system-share" data-post-id="{{ $post->id }}" data-user-id="{{ $post->user->id }}">
+		<div class="post-action-bar" data-post-id="{{ $post->id }}" data-user-id="{{ $post->user->id }}">
 			{{-- Only display like, repost, save if not the author --}}
 			<?php
 				$is_logged_in = Auth::check();
@@ -141,27 +143,28 @@
 	<section class="post-comment-wrapper">
 		<div class="post-comment-container container">
 			<div class="row">
-				@if( count( $post->comments ) )
-					<div class="comments col-md-10 col-md-offset-1">
-						@if( Auth::check() )
-							@include('v2/posts/commentform', array('post' => $post) )
-						@endif
+				<div class="comments col-md-10 col-md-offset-1">
+					
+					<form method="POST" accept-charset="UTF-8" class="form-horizontal comment-reply" role="form">
+						<input name="post_id" type="hidden" value="{{ $post->id }}">
+						<input name="reply_id" type="hidden" value="">
+							<div class="form-group comment-form ">
+							<label for="body" class="control-label">Comments ({{ $post->comments->count() }})</label>
+							<textarea class="form-control" required="required" minlength="5" name="body" cols="50" rows="10" id="body"></textarea>
+							<span class="error"></span>
+						</div>
+										
+						<div class="form-group pull-right">
+							<input class="btn-flat-dark-gray" type="submit" value="Comment">
+						</div>
 						
-						<ul class="comments-listing list-unstyled">
-							@if( count( $post->nochildcomments) )
-								{{ View::make('v2/posts/comment')->with('comments', $post->nochildcomments) }}
-							@endif
-						</ul>
-					</div>
-				@else
-					<div class="comments col-md-10 col-md-offset-1 no-comments">
-						@if( Auth::check() )
-							@include('v2/posts/commentform', array('post' => $post) )
-						@endif
+						<div class="clearfix"></div>
+					</form>
+					
+					<ul class="comments-listing list-unstyled">
 						
-						<p>No Comments have been made yet...</p>
-					</div>
-				@endif
+					</ul>
+				</div>
 			</div>
 		</div>
 	</section>

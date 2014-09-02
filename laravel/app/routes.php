@@ -31,6 +31,9 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	//Post Save Route.
 	Route::post('savepost','PostController@postSavePost');
 
+	// Comment post route
+	Route::post('comment', 'CommentController@postRestComment');
+
 });
 
 //Unprotected rest controllers
@@ -54,6 +57,8 @@ Route::group(array('prefix'=>'rest'), function() {
 
 	//Auto Load of for featured.
 	Route::get( 'featured', 'HomeController@getRestFeatured');
+
+	Route::get( 'post/{post_id}/comments/{paginate}/{page}', 'CommentController@getRestComments');
 });
 
 //Note, below JSONController route has to be below the abouve REST route Group.

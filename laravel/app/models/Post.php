@@ -35,12 +35,12 @@ class Post extends Eloquent {
 	
 	public function comments()
     {
-        return $this->hasMany('Comment', 'post_id')->orderBy('created_at', 'DESC');//Gotta be in chronological order.
+        return $this->hasMany('MongoComment', 'post_id')->orderBy('created_at', 'DESC');  //Gotta be in chronological order.
     }
 	
 	public function nochildcomments()
 	{
-		return $this->hasMany('Comment', 'post_id')->where('parent_id','=', 0);
+		return $this->hasMany('MongoComment', 'post_id')->where('parent_comment','=', null);
 	}
 	
 	public function favorites()

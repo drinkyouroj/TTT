@@ -9,10 +9,11 @@ interface CommentRepository {
 	public function input($user_id);
 
 	//Create
-	public function create($input);
+	public function create( $user_id, $username );
 
 	//Read
-	public function findById($id);
+	public function findById ( $id );
+	public function findByPostId ( $post_id, $paginate, $page );
 	
 	//Read Multi
 	public function all();
@@ -25,8 +26,8 @@ interface CommentRepository {
 	//Update
 	public function update($input);
 	
-	public function publish($comment_id, $user_id);
-	public function unpublish($comment_id, $user_id);
+	public function publish($comment_id);
+	public function unpublish($comment_id);
 	
 	//Delete
 	public function delete($id);
