@@ -58,6 +58,16 @@ $(function() {
 			profile.viewRender();
 		});
 
+	//Feed Filter Renders
+		$('body').on('click', '.feed-controls a', function(event) {
+			event.preventDefault();
+			$('.feed-controls a').removeAttr('class');
+			$(this).prop('class','active');
+			profile.type = $(this).data('type');
+			profile.filter = true;
+			profile.viewRender();
+		});
+
 
 //View renders for settings/follow
 	$('.header-right a').click(function(event) {
@@ -109,23 +119,30 @@ $(function() {
 		}
 	});
 
-//Only init the system on "window load" so we can catch the right hash.
+
+//System INIT.
+	profile.target = $('#profile-content');
 	
-		profile.target = $('#profile-content');
-		/*
-		// Somehow this is really messing with the loading.
-		if(typeof window.location.hash  == 'undefined') {
-			window.location.hash = 'collection';
-			profile.view = 'collection';
-		} else {
-			view = window.location.hash;
-			profile.view = view.substring(1);
+	// Figure out the hash so we can load the right content in.
+	if(typeof window.location.hash  == 'undefined') {
+		window.location.hash = 'collection';
+		profile.view = 'collection';
+	} else {
+		view = window.location.hash;
+
+		$('.section-selectors a').removeClass('active');
+		$(view, '.section-selectors').prop('class', 'active');
+
+		if(view == '#followers' || view == '#following') {
+			profile.type = window.user_id;
 		}
-		*/
-		
-		profile.viewInit('collection');//Render initial view.
-		window.page_processing = false;
-		window.comment_page_processing = false;
+
+		profile.view = view.substring(1);
+	}
+
+	profile.viewInit(profile.view);//Render initial view.
+	window.page_processing = false;
+	window.comment_page_processing = false;
 	
 
 });
@@ -204,6 +221,7 @@ function ProfileActions() {
 		}
 	};
 
+	//Clears the content before filters
 	this.viewClear = function() {
 		if(this.view == 'collection') {
 			clear = $('#collection-content',this.target);
@@ -327,7 +345,6 @@ function ProfileActions() {
 		this.urlConstructor();
 		this.getData(this.url, function(data) {
 			$.each(data.follow, function(idx, val) {
-				
 				view_data = {
 					site_url: window.site_url,
 					username: val.followers.username,
