@@ -680,6 +680,7 @@ margin-top:20px;
 
 /*********Mobile Filters*********/
 .filters-container .mobile-filters {
+	top:0px;
 	padding-top:50px;
 	text-align:center;
 }

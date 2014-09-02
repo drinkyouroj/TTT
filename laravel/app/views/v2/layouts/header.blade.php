@@ -123,7 +123,7 @@
 		</div>
   	</header>
   	
-  	@if(strlen(Request::segment(1)) === 0) 
+  	@if(strlen(Request::segment(1)) == 0 || Request::segment(1) == 'featured')
   	<div class="banner">
   		<div class="container">
   			<div class="row">

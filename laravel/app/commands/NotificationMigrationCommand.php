@@ -50,7 +50,7 @@ class NotificationMigrationCommand extends Command {
 			
 			$user = User::withTrashed()->where('id', $notification->action_id)->first();
 			if(is_object($user)) {
-				$user_name = $user->first()->username;
+				$user_name = $user->username;
 			} else {
 				$user_name = 'nobody';
 			}
