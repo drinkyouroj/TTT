@@ -147,14 +147,30 @@
 				background-color: white;
 				
 				div.comment {
+					
 					border-top: 2px solid lightgray !important;
 					padding: 20px;
+				
+					&.published {
+
+					}
+					&.deleted {
+
+					}
+					&.thread-parent {
+
+					}
+
+					p {
+						margin-top: 15px;
+						margin-bottom: 15px;
+					}
 				}
 
-				p {
-					margin-top: 15px;
-					margin-bottom: 15px;
-				}
+				div.thread-parent-divider {
+					background-color: $beige;
+					height: 20px;
+				}				
 			}
 		}
 	}

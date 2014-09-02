@@ -10,7 +10,9 @@
 </script>
 
 <script type="text/x-handlebars-template" id="comment-template">
-
+	{{#ifCond comment.depth 0}}
+	<div class="thread-parent-divider"></div>
+	{{/ifCond}}
 	<div id="comment-{{ comment._id }}" class="comment {{#ifCond comment.published 1}}published{{else}}deleted{{/ifCond}} {{#ifCond comment.depth 0}}thread-parent{{/ifCond}}" style="margin-left: {{ comment.margin }}">
 		<span>by <a href="{{ profile_url }}{{ comment.author.username }}"> {{ comment.author.username }} </a> </span>
 		

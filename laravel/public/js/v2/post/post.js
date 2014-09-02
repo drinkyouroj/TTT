@@ -9,7 +9,7 @@ $(function() {
 	// Scroll to comment form
 	$(".action-comment").click(function() {
 	    $('html, body').animate({
-	        scrollTop: $(".comments > form.comment-reply").offset().top - 150
+	        scrollTop: $(".comments > form.comment-reply").offset().top - 110
 	    }, 750);
 	    $('.comment-form textarea').focus();
 	});
