@@ -21,9 +21,11 @@
 				</div>
 				<div class="col-sm-4 col-middle">
 					<div class="header-logo">
-						THE
-						<br>
-						<span>TWO THOUSAND TIMES</span>
+						<a  href="{{Config::get('app.url')}}">
+							THE
+							<br>
+							<span>TWO THOUSAND TIMES</span>
+						</a>
 					</div>
 				</div>
 
@@ -115,7 +117,7 @@
 			@if ( $is_guest )
 			<a href="#" data-toggle="modal" data-target="#guestSignup">	
 			@else
-			<a href="{{ URL::to( 'myprofile' ) }}">
+			<a href="{{ URL::to( 'myprofile' ) }}#feed">
 			@endif
 				MY FEED
 				<span class="glyphicon glyphicon-align-right pull-right"></span>
@@ -159,20 +161,22 @@
 					@if ( count( $saves ) )
 						<ul class="list-unstyled">
 						@foreach ( $saves as $save )
-							<li>
-								<a class="post-image-anchor" href="{{ URL::to( 'posts/'.$save->post->alias ) }}">
-									<div class="post-image" style="background-image: url('{{Config::get('app.imageurl')}}/{{$save->post->image}}')"></div>
-								</a>
-								<div class="post-info">
-									<a class="post-title" href="{{ URL::to( 'posts/'.$save->post->alias ) }}">
-										{{ $save->post->title }}
+							@if(is_object($save->post->user))
+								<li>
+									<a class="post-image-anchor" href="{{ URL::to( 'posts/'.$save->post->alias ) }}">
+										<div class="post-image" style="background-image: url('{{Config::get('app.imageurl')}}/{{$save->post->image}}')"></div>
 									</a>
-									<span>by: </span>
-									<a class="post-author" href="{{ URL::to( 'profile'.$save->post->user->username ) }}">
-										{{ $save->post->user->username }}
-									</a>
-								</div>
-							</li>
+									<div class="post-info">
+										<a class="post-title" href="{{ URL::to( 'posts/'.$save->post->alias ) }}">
+											{{ $save->post->title }}
+										</a>
+										<span>by: </span>
+										<a class="post-author" href="{{ URL::to( 'profile'.$save->post->user->username ) }}">
+											{{ $save->post->user->username }}
+										</a>
+									</div>
+								</li>
+							@endif
 						@endforeach
 						</ul>
 					@else
