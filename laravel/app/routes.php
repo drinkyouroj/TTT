@@ -17,7 +17,7 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 		Route::get( 'saves/{page}', 'MyProfileController@getRestSaves' );
 		Route::get( 'drafts/{page}', 'MyProfileController@getRestDrafts' );
 		Route::post( 'image/upload', 'MyProfileController@postAvatar');
-		Route::post( 'password', 'UserController@postNewpass');//I know its not in myprofile!
+		Route::post( 'password', 'UserController@postNewpass'); //I know its not in myprofile!
 	});
 
 	//Profile Image for the Follower/Following buttons.
@@ -61,6 +61,11 @@ Route::group(array('prefix'=>'rest'), function() {
 	Route::get( 'featured', 'HomeController@getRestFeatured');
 
 	Route::get( 'post/{post_id}/comments/{paginate}/{page}', 'CommentController@getRestComments');
+
+
+	// Route for staging username reservations. 
+	// TODO: this will/should be removed post launch
+	Route::post( 'username/reserve', 'StagingController@postReserveUsername' );
 });
 
 //Note, below JSONController route has to be below the abouve REST route Group.

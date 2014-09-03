@@ -29,7 +29,7 @@ class UserController extends BaseController {
     	//Captcha
 		$rules = array(
 	        'captcha' => 'required|captcha',
-	        'username' => 'required|min:3|max:15|unique:users'
+	        'username' => 'required|min:3|max:15|unique:users|alpha_dash'
 	    );
 		
 		$validation = Validator::make(Input::all(), $rules);

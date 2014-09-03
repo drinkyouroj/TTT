@@ -21,7 +21,7 @@ class User extends ConfideUser implements UserInterface {
      */
     public static $rules = array(
         'username' => 'required|alpha_dash|unique:users',
-        'email' => 'required|email|unique:users',
+        'email' => 'required|email',
         'password' => 'required|between:4,11|confirmed',
         'password_confirmation' => 'between:4,11',
     );
