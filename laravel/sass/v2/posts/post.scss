@@ -11,18 +11,34 @@
 		text-align: center;
 		background-color: $dark_gray;
 		padding: 10px;
-
+		.follow, ul {
+			float:left;
+		}
 		 a {
 		 	display: inline-block;
+		 	margin-left:20px;
 		 }
+		 ul {
+		 	list-style:none;
+		 	li {
+		 		float:left;
+		 	}
+		 }
+		 .like-button {
+		 	background-image:url('/../../images/global/like.png');
+		 	background-repeat: no-repeat;
+			background-position:left top;
+			background-size:23px 51px;
+		}
 	}
 }
 
 .post-heading-wrapper {
-	background-color: white;
+	background-color: $lightgray;
 
 	.post-heading-container {
-
+		padding-left:0px;
+		padding-right:0px;
 		@media screen and (min-width: 992px) {
 			display: table;
 			-moz-box-sizing: border-box;
@@ -44,39 +60,68 @@
 
 		.row {
 			.post-heading {
+				position:relative;
 				text-align: center;
+				background-color: #fff;
 				h2 {
+					padding-top:90px;
 					font-weight: bold;
-					font-size: 50px;
+					font-size: 45px;
+					@include montserrat(bold);
+					text-transform:uppercase;
+					@media screen and (max-width: 992px) {
+						margin-top: 0px;
+					}
 				}
 				.line {
 					display: inline-block;
 					width: 50px;
 					margin-bottom: 10px;
-					border-bottom: 1px solid black;
+					border-bottom: 1px solid $dark;
 					margin-left: auto;
 					margin-right: auto;
 				}
 
 				ul.post-taglines {
+					font-size:17px;
 					margin-bottom: 30px;
+					@include garamond-italic;
 
 					li {
 						line-height: 12px;
 					}
 					li:nth-child(1), li:nth-child(2) {
-						border-right: 1px solid black;
+						border-right: 1px solid $dark;
+					}
+				}
+
+				.author {
+					letter-spacing:1px;
+					.author-name {
+						@include montserrat(bold);
+						letter-spacing:1px;			
 					}
 				}
 
 				ul.post-categories {
+					position: absolute;
+					width:100%;
+					bottom:20px;
+					left:0px;
 					margin-top: 100px;
-					margin-bottom: 25px;
-
+					margin-bottom: 0px;
+					padding-bottom: 25px;
+					font-size:15px;
+					letter-spacing:2px;
+					@include fjalla;
+					@media screen and (max-width: 992px) {
+						position: relative;
+						bottom:0px;
+					}
 					li {
 						padding: 0;
 						a {
-							color: black;
+							color: $dark;
 						}
 					}
 				}
@@ -85,6 +130,8 @@
 				@media screen and (max-width: 992px) {
 					height: 500px;
 				}
+				height: 619px;
+				background-color:#000;//temporary DELETE
 				-webkit-background-size: cover;
 		        -moz-background-size: cover;
 		        -o-background-size: cover;
@@ -109,7 +156,7 @@
 				font-size:18px;
 				line-height:150%;
 				text-align:justify;
-				padding: 30px 0 10px 0;
+				padding: 60px 0 20px 0;
 				-moz-column-gap:40px; /* Firefox */
 				-webkit-column-gap:40px; /* Safari and Chrome */
 				column-gap:40px;
@@ -120,10 +167,10 @@
 		}
 
 		.row-divider {
-			border-bottom: 2px solid black;
+			border-bottom: 3px solid $dark;
 
 			.page-count {
-				font-weight: bold;
+				@include montserrat(bold);
 				float: right;
 			}
 		}
