@@ -141,7 +141,7 @@ function image_grab(url, process) {
 			$('.photo-chosen').fadeIn();
 			$('.photo-chosen').css('background-image','');
 			$('.photo-chosen').css('background-image','url('+window.site_url+'uploads/final_images/'+data+')' );
-			$('.top-submit-container').css('background-image','url('+window.site_url+'uploads/final_images/'+data+')' );
+			$('.top-submit-container .image-system').css('background-image','url('+window.site_url+'uploads/final_images/'+data+')' );
 
 			//Checks to see if this is the intial phase of image selection.
 			if($('input.processed-image').val().length == 0) {

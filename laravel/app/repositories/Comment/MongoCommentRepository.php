@@ -58,7 +58,7 @@ class MongoCommentRepository implements CommentRepository {
 		$new_comment->full_slug = $full_slug;
 		$new_comment->created_at = $created_at;
 		$new_comment->author = array(
-							'user_id' => $user_id,
+							'user_id' => intval($user_id),
 							'username' => $username
 							);
 		$new_comment->published = 1;
