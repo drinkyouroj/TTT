@@ -58,14 +58,24 @@ $(function() {
 			profile.viewRender();
 		});
 
+	//Feed Filter Renders
+		$('body').on('click', '.feed-controls a', function(event) {
+			event.preventDefault();
+			$('.feed-controls a').removeAttr('class');
+			$(this).prop('class','active');
+			profile.type = $(this).data('type');
+			profile.filter = true;
+			profile.viewRender();
+		});
+
 
 //View renders for settings/follow
 	$('.header-right a').click(function(event) {
 		//event.preventDefault();
 		$('.section-selectors a').removeAttr('class');//gets rid of the class.
-		profile.view = $(this).prop('id');
+		//profile.view = $(this).prop('id');
 
-		window.location.hash = profile.view;
+		//window.location.hash = profile.view;
 
 		if($(this).hasClass('followers') || $(this).hasClass('following')) {
 			profile.type = window.user_id;
@@ -74,31 +84,65 @@ $(function() {
 		profile.viewInit($(this).prop('id'));//new view has to be rendered out of this scenario
 	});
 
+	//image upload code.
+	$('body').on('change', '#uploadAvatar input#image', function() {
+		console.log('upload event');
+		profile.avatarUpload();
+	});
 
-//Pagination detection.
-	$(window).scroll(function() {
-		if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-			profile.paginate();
+	//password change
+	$('body').on('submit', '#changePassword',function(event) {
+		event.preventDefault();
+		profile.changePassword();
+	});
+
+	$('#deleteModal').on('click','.btn.delete-account', function() {
+		id = $(this).data('user');
+		console.log(id);
+		if(id) {
+			$.ajax({
+				url: window.site_url+'rest/userdelete/'+id,
+				type:"GET",//previously delete
+				success: function(data) {
+					window.location.href = window.site_url+'user/logout';
+				}
+			});
 		}
 	});
 
-//Only init the system on "window load" so we can catch the right hash.
-	
-		profile.target = $('#profile-content');
-		/*
-		// Somehow this is really messing with the loading.
-		if(typeof window.location.hash  == 'undefined') {
-			window.location.hash = 'collection';
-			profile.view = 'collection';
-		} else {
-			view = window.location.hash;
-			profile.view = view.substring(1);
+//Pagination detection.
+	$(window).scroll(function() {
+		if(profile.view != 'settings') {
+			if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+				profile.paginate();
+			}
 		}
-		*/
-		
-		profile.viewInit('collection');//Render initial view.
-		window.page_processing = false;
-		window.comment_page_processing = false;
+	});
+
+
+//System INIT.
+	profile.target = $('#profile-content');
+	
+	// Figure out the hash so we can load the right content in.
+	if(typeof window.location.hash  == 'undefined') {
+		window.location.hash = 'collection';
+		profile.view = 'collection';
+	} else {
+		view = window.location.hash;
+
+		$('.section-selectors a').removeClass('active');
+		$(view, '.section-selectors').prop('class', 'active');
+
+		if(view == '#followers' || view == '#following') {
+			profile.type = window.user_id;
+		}
+
+		profile.view = view.substring(1);
+	}
+
+	profile.viewInit(profile.view);//Render initial view.
+	window.page_processing = false;
+	window.comment_page_processing = false;
 	
 
 });
@@ -177,6 +221,7 @@ function ProfileActions() {
 		}
 	};
 
+	//Clears the content before filters
 	this.viewClear = function() {
 		if(this.view == 'collection') {
 			clear = $('#collection-content',this.target);
@@ -300,7 +345,6 @@ function ProfileActions() {
 		this.urlConstructor();
 		this.getData(this.url, function(data) {
 			$.each(data.follow, function(idx, val) {
-				
 				view_data = {
 					site_url: window.site_url,
 					username: val.followers.username,
@@ -331,8 +375,70 @@ function ProfileActions() {
 
 	this.renderSettings = function() {
 		//simple stuff.
-		$('#default-content', this.target).append(this.settings_template());
+		$('#default-content', this.target).append(this.settings_template({site_url: this.site_url}));
 	}
+
+		this.avatarUpload = function() {
+			$('#uploadAvatar').ajaxForm({
+				beforeSubmit: this.avatarRequest,
+				success: this.avatarResponse,
+				dataType: 'json'
+			}).submit();
+		}
+
+		this.avatarRequest = function (formData, jqForm, options) {
+			$("#avatarErrors").hide().empty();
+		    $("#avatarOutput").css('display','none');
+		    return true; 
+		}
+
+		this.avatarResponse = function (response, statusText, xhr, $form) {
+			//console.log(response);
+			var $errors = $("#avatarErrors");
+			var $output =  $("#avatarOutput");
+			var site_url = this.site_url;
+			if(response.success == false)
+		    {
+		        var arr = response.errors;
+		        $.each(arr, function(index, value)
+		        {
+		            if (value.length != 0)
+		            {
+		               $errors.append('<div class="alert alert-error"><strong>'+ value +'</strong><div>');
+		            }
+		        });
+		        $errors.show();
+		    } else {
+		    	$('.header-wrapper .avatar-image').animate({opacity: 0},'slow', function() {
+		    		$(this).css(
+		    			{'background-image': 'url("uploads/avatars/' +response.image+'")' }
+		    		).animate({opacity: 1});
+		    	});
+		        $output.html('<img src="uploads/avatars/' +response.image+'" />');
+		        $output.css('display','block');
+		    }
+		}
+
+	this.changePassword = function() {
+		$('form#changePassword').ajaxForm({
+			beforeSubmit: this.passRequest,
+			success: this.passResponse,
+			dataType: 'json'
+		}).submit();
+	}
+
+		this.passRequest = function(formData, jsForm, options) {
+			$('form#changePassword .message-box').html('');
+		}
+
+		this.passResponse = function(response, statusText, xhr, $form) {
+			$('form#changePassword input').val('');//reset all values
+			if(response.success == false) {
+				$('form#changePassword .message-box').html('<p>Wrong Values.  Please try again</p>');
+			} else {
+				$('form#changePassword .message-box').html('<p>Smashing success! Your Password has been changed</p>');
+			}
+		}
 
 
 //AJAX data getter
