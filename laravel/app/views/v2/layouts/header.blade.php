@@ -1,52 +1,74 @@
-<div class="header-wrapper">
+<?php
+	$is_guest = Auth::guest();
+?>
 
-	<div class="menu-wrapper visible-md visible-lg">
-	  	<header class="visible-md visible-lg container menu">
-	  		<div class="row">
-		  		<nav class="col-md-12 navbar navbar-inverse nav-conatiner" role="navigation">
-		  			<div class="container">
-			  			<ul class="nav navbar-nav main-nav">
-			  				@if(Auth::guest())
-				  				<li>
-				  					<a href="{{Config::get('app.url')}}/about">About</a>
-								</li>
-				  				<li>
-				  					<a href="{{Config::get('app.url')}}/user/login">Sign in/Sign up</a>
-								</li>
-							@else
-								<li class="loggedin profile">
-				  					<a href="{{Config::get('app.url')}}/myprofile">{{Session::get('username')}}</a>
-								</li>
-								<li class="loggedin post">
-				  					<a href="{{Config::get('app.url')}}/myprofile/newpost">Post</a>
-								</li>
-								
+<div class="header-wrapper">
+	<div class="header-inner-wrapper">
+		<div class="header-container container">
+			<div class="row">
+				<div class="col-sm-4 col-left">
+					<button class="btn-flat-white toggle-sidebar">
+						<span class="glyphicon glyphicon-align-justify"></span>
+						READ
+					</button>
+
+					@if( $is_guest )
+						<a class="btn-flat-gray" data-toggle="modal" data-target="#guestSignup">POST</a>
+					@else
+						<a class="btn-flat-gray" href="{{Config::get('app.url')}}/myprofile/newpost">POST</a>
+					@endif
+
+				</div>
+				<div class="col-sm-4 col-middle">
+					<div class="header-logo">
+						THE
+						<br>
+						<span>TWO THOUSAND TIMES</span>
+					</div>
+				</div>
+
+				<div class="col-sm-4 col-right">
+					<div class="action">
+						@if( $is_guest )
+							<span class="navbar-dropdown-toggle glyphicon glyphicon-cog"></span>
+						@else
+							<img src="" class="navbar-dropdown-toggle avatar">
 							
-								@if(Session::get('admin'))
-								<li class="loggedin admin">
-									<a href="{{Config::get('app.url')}}/admin">Admin</a>
-								</li>
-								@endif
-							
+							@if (count($notifications))
+								<div class="notification-label">
+									{{ count($notifications) }}
+								</div>
 							@endif
-			  			</ul>
-			  			
-			  			{{--Remember that float: right is inverse visually.--}}
-			  			{{ Form::open(array('url'=> 'search', 'class' => 'navbar-form navbar-right search', 'role'=>'search' )) }}
-							<div class="form-group search" id="search-box">
-								<input autocomplete="off" name="term" type="text" class="form-control" placeholder="Search" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search'">
-								<input type="submit" value="Search" class="hidden" >
-								<div class="result-box"></div>
-							</div>
-						{{ Form::close() }}
-					    @if(!Auth::guest())
-			  			<ul class="nav navbar-nav navbar-right">
-			  				<li class="notifications-parent @if(count($notifications)) active-notifications @endif">
-			  					
-			  					<a href="{{Config::get('app.url')}}/profile/notifications">Notifications</a>
-			  					<ul class="notifications">
-			  						@if(count($notifications))
-			  							<a class="mark-read">Mark as Read</a>
+
+						@endif
+					</div>
+
+					{{ Form::open(array('url'=> 'search', 'class' => 'form-search pull-right', 'role'=>'search' )) }}
+						<input class="search-input" autocomplete="off" name="search" id="search-input" type="text">
+						<label class="glyphicon glyphicon-search" for="search-input">
+						</label>
+						<input type="submit" value="Search" class="hidden" >
+						<div class="result-box hidden"></div>
+					{{ Form::close() }}
+					
+
+					<div class="navbar-dropdown">
+						<div class="dropdown-wrapper">
+							@if( $is_guest )
+								<div class="guest-actions">
+									<a class="btn-flat-blue" data-toggle="modal" data-target="#guestSignup">CREATE AN ACCOUNT</a>
+									<a class="btn-flat-blue" href="{{ URL::to( 'user/login' ) }}">LOG IN</a>
+								</div>
+							@else
+								<div class="user">
+									<img class="avatar" src="">
+									<a href="{{Config::get('app.url')}}/myprofile">{{ Session::get('username') }}</a>
+								</div>
+
+								<div class="notifications-title">NOTIFICATIONS</div>
+								
+								<ul class="notifications list-unstyled">
+									@if(count($notifications))
 			  							@foreach($notifications as $not)
 				  							@include('partials/notifications')
 				  						@endforeach
@@ -55,87 +77,118 @@
 				  						<span>You have no notifications!</span>
 				  					</li>
 				  					@endif
-			  					</ul>
-			  				</li>
-							<li>
-			  					<a href="{{Config::get('app.url')}}/user/logout">Sign out</a>
-							</li>
-			  			</ul>
-			  			@endif
-					</div>
-		  		</nav>
-	  		</div>
-	  	</header>
-  	</div>
-  
-  	
-  	<header id="mobile-header" class="hidden-md hidden-lg navbar-fixed-top">
-		<div class="row">
-			<nav role="navigation" class="mobile-menu nav navbar navbar-default">
-				<div class="mobile-logo hidden-md hidden-lg">
-					<a href="{{Config::get('app.url')}}"><img src="{{Config::get('app.url')}}/img/global/logo-mobile.png"></a>
-				</div>
-		
-				<button type="button" class="hidden-md hidden-lg navbar-toggle glyphicon glyphicon-th-large" data-toggle="collapse" data-target="#mobile-menu"></button>
-				<div id="mobile-menu" class="collapse">
-					<ul class="nav navbar-nav main-nav">
-						@if(Auth::guest())
-						<li>
-							<a href="{{Config::get('app.url')}}/about">About</a>
-						</li>
-						<li>
-							<a href="{{Config::get('app.url')}}/user/login">Sign in/Sign up</a>
-						</li>
-						@else
-						<li class="loggedin profile">
-							<a href="{{Config::get('app.url')}}/profile">{{Session::get('username')}}</a>
-						</li>
-						<li class="loggedin post">
-							<a href="{{Config::get('app.url')}}/profile/newpost">Post</a>
-						</li>
-						<li class="loggedin message">
-							<a href="{{Config::get('app.url')}}/profile/messages">Message</a>
-						</li>
-						<li class="loggedin notifications">
-							<a href="{{Config::get('app.url')}}/profile/notifications">Notifications</a>
-						</li>
-							@if(Session::get('admin'))
-							<li class="loggedin admin">
-								<a href="{{Config::get('app.url')}}/admin">Admin</a>
-							</li>
-							@else
-						
-							@endif
-						@endif
-					
-					</ul>
-				
-					{{--Remember that float: right is inverse visually.--}}
-					{{ Form::open(array('url'=> 'search', 'class' => 'navbar-form search', 'role'=>'search' )) }}
-						<div class="form-group search">
-							<input autocomplete="off" name="term" type="text" class="form-control" placeholder="Search">
-							<input type="submit" value="Search" class="hidden" >
-							<div class="result-box"></div>
-						</div>
-					{{ Form::close() }}
-				</div>
-			</nav>
-		</div>
-  	</header>
-  	
-  	@if(strlen(Request::segment(1)) == 0 || Request::segment(1) == 'featured')
-  	<div class="banner">
-  		<div class="container">
-  			<div class="row">
-  				<div class="col-md-12">
-  					<div class="today row">{{date('l, F d, Y')}}</div>
-  				</div>
-  			</div>
-  		</div>
-  		<a href="{{Config::get('app.url')}}">
-  			<h1><span>Two Thousand Times</span></h1>
-  		</a>
-  	</div>
-  	@endif
+								</ul>
+								
+								<div class="view-all">
+									<a class="btn-flat-blue" href="{{Config::get('app.url')}}/profile/notifications">VIEW ALL</a>
+								</div>
 
+								<div class="additional-user-actions">
+									<a href="">ACCOUNT SETTINGS</a>
+									<br>
+									<a href="{{Config::get('app.url')}}/user/logout">SIGN OUT</a>
+								</div>
+
+							@endif
+							
+							<div class="additional-actions">
+								<a href="{{ URL::to('privacy') }}">privacy policy</a>
+								<br>
+								<a href="{{ URL::to('terms') }}">terms of use</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
 </div> <!--End of Header Wrapper-->
+
+
+{{-- ============ OFFCANVAS SIDEBAR ============= --}}
+<div id="offcanvas-sidebar">
+	<ul class="list-unstyled sidebar-options" id="accordion">
+
+		<li class="sidebar-option feed {{ $is_guest ? 'disabled' : '' }}">
+			@if ( $is_guest )
+			<a href="#" data-toggle="modal" data-target="#guestSignup">	
+			@else
+			<a href="{{ URL::to( 'myprofile' ) }}">
+			@endif
+				MY FEED
+				<span class="glyphicon glyphicon-align-right pull-right"></span>
+			</a>
+		</li>
+
+		<li class="sidebar-option categories">
+			<a href="#itemTwo" data-toggle="collapse" data-parent="#accordion">
+				CATEGORIES
+				<span class="glyphicon glyphicon-plus pull-right"></span>
+			</a>
+			<div id="itemTwo" class="collapse">
+				<ul class="list-unstyled">
+					<li>
+						<a href="{{ URL::to('categories/featured') }}">Featured</a>
+					</li>
+					<li class="category-all">
+						<a href="{{ URL::to('categories/all') }}">All</a>
+					</li>
+					@foreach( $categories as $category )
+						<li> <a href="{{ URL::to('categories/'.$category->alias) }}">{{ $category->title }}</a> </li>
+					@endforeach
+				</ul>
+			</div>
+		</li>
+
+		@if ( $is_guest )
+			<li class="sidebar-option saves disabled">
+				<a href="#" data-toggle="modal" data-target="#guestSignup">
+					SAVES
+					<span class="glyphicon glyphicon-plus pull-right"></span>
+				</a>
+			</li>
+		@else
+			<li class="sidebar-option saves">
+				<a href="#itemThree" data-parent="#accordion" data-toggle="collapse">
+					SAVES
+					<span class="glyphicon glyphicon-plus pull-right"></span>
+				</a>
+				<div id="itemThree" class="collapse">
+					@if ( count( $saves ) )
+						<ul class="list-unstyled">
+						@foreach ( $saves as $save )
+							<li>
+								<a class="post-image-anchor" href="{{ URL::to( 'posts/'.$save->post->alias ) }}">
+									<div class="post-image" style="background-image: url('{{Config::get('app.imageurl')}}/{{$save->post->image}}')"></div>
+								</a>
+								<div class="post-info">
+									<a class="post-title" href="{{ URL::to( 'posts/'.$save->post->alias ) }}">
+										{{ $save->post->title }}
+									</a>
+									<span>by: </span>
+									<a class="post-author" href="{{ URL::to( 'profile'.$save->post->user->username ) }}">
+										{{ $save->post->user->username }}
+									</a>
+								</div>
+							</li>
+						@endforeach
+						</ul>
+					@else
+						<p>It looks like you have no saves!</p>
+					@endif
+				</div>
+			</li>
+		@endif
+
+	</ul>
+</div>
+
+<div id="offcanvas-placeholder">
+	<div class="toggle-sidebar">
+		<div class="circle"></div>
+		<div class="circle"></div>
+		<div class="circle"></div>
+	</div>
+</div>

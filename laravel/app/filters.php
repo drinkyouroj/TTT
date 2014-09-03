@@ -148,6 +148,13 @@ View::composer('*', function($view) {
 	$categories = $category->all();
 
 	if(!Auth::guest()) {
+		$user = Auth::user();
+		// ===================== ITEMS FOR THE SIDEBAR =====================
+		$favRep = App::make('AppStorage\Favorite\FavoriteRepository');
+		$saves = $favRep->allByUserId( $user->id, 6 );
+
+
+
 		//The new Mongo notifications
 		$compiled = NotificationLogic::top(Auth::user()->id);
 		
@@ -160,6 +167,7 @@ View::composer('*', function($view) {
 		$view->with('categories',$categories)
 			 ->with('filters', $filters)
 			 ->with('notifications', $compiled)
+			 ->with('saves', $saves)
 			 ->with('notifications_ids', $notification_ids);
 			 
 	} else {

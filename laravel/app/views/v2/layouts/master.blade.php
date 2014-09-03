@@ -11,7 +11,7 @@
 	<link href="{{Config::get('app.url')}}/css/compiled/v2/bs.css" rel="stylesheet" media="screen">
 
     <!--Application Shared CSS-->
-    <link href="{{Config::get('app.url')}}/css/views/style.css" rel="stylesheet" media="screen">
+    <!-- <link href="{{Config::get('app.url')}}/css/views/style.css" rel="stylesheet" media="screen"> -->
     <link href="{{Config::get('app.url')}}/css/compiled/v2/style.css" rel="stylesheet" media="screen">
 
 
@@ -68,6 +68,8 @@
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/jquery.scrolltofixed.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/global.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/handlebars/handlebars.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/sidr/jquery.sidr.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/header.js"></script>
 	
 	@if(Auth::check())
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/global-loggedin.js"></script>

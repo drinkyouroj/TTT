@@ -12,7 +12,9 @@ $dark: #272727;//color that's not black, but looks like black.
 
 
 //Navbar*****
-$navbar_height: 30px;
+$navbar_height: 40px;
+$offcanvas_sidebar_width: 300px;
+$navbar_dropdown_menu_width: 350px;
 
 // Post action bar height
 $post_actionbar_height: 55px;
@@ -42,6 +44,12 @@ textarea {
     resize: none;
 }
 
+@mixin transition ($property, $duration, $easing, $delay) {
+  -webkit-transition: $property $duration $easing $delay;
+  -moz-transition: $property $duration $easing $delay;
+  -o-transition: $property $duration $easing $delay;
+  transition: $property $duration $easing $delay;
+}
 
 @mixin label() {
 	display:inline-block;
@@ -74,6 +82,11 @@ textarea {
 }
 
 
+@mixin navbar_container_widths() {
+  @media screen and (min-width: 768px) and (max-width: 996px) {
+    width: 100%;
+  }
+}
 //  Media queries to calculate the width of the feed (so that we can center it).
 //  Based of the assumption that posts in the feed have a width of 270px and gutter
 //  of 30px.
