@@ -34,6 +34,18 @@ $(function() {
 
 	var post_id = $('.post-action-bar').data('post-id');
 	var Comments = new CommentPagination( post_id );
+
+	// Check if the initial height of the page is less than window (ie: there is no scroll, so the on scroll will never be called)
+	$(document).ready(function() {
+		console.log('ready');
+		if ( $("body").height() <= $(window).height() ) {
+	    	console.log('load in the comments');
+	    	Comments.getNextPage( function ( data ) {
+	    		renderComments( data );
+	    	});  
+	    }
+	});
+
 	$(window).scroll(function() {
 		if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
 			Comments.getNextPage( function ( data ) {
@@ -76,15 +88,16 @@ $(function() {
 	 *		active_user_id
 	 */
 	function renderComments ( data ) {
-		console.log('render comments');
-		var comments = data.comments;
-		
-		comments.forEach( function ( comment ) {
-			comment.margin = comment.depth * 5 + '%';
-			var rendered_comment = comment_template( { comment: comment, is_mod: data.is_mod, active_user_id: data.active_user_id } );
-			$('.comments-listing').append( rendered_comment );
-			console.log('rendered comment ' + comment._id);
-		});
+		if ( data && data.comments ) {
+			var comments = data.comments;
+			
+			comments.forEach( function ( comment ) {
+				comment.margin = comment.depth * 5 + '%';
+				var rendered_comment = comment_template( { comment: comment, is_mod: data.is_mod, active_user_id: data.active_user_id } );
+				$('.comments-listing').append( rendered_comment );
+				console.log('rendered comment ' + comment._id);
+			});
+		}
 	}
 
 	/**

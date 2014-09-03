@@ -52,13 +52,14 @@ class CommentController extends BaseController {
 	public function postRestComment () {
 		// Make sure there is authenticated user 
 		$user = Auth::check() ? Auth::user() : null;
-		if ( $user == null ) {
+		
+		if ( $user == null || empty($user->id) )  {
 			return Response::json( array(
 					'error' => 'unauthenticated'
 				), 200);
 		}
 		// Proceed to create the comment
-		$comment = $this->comment->create( $user->user_id, $user->username );
+		$comment = $this->comment->create( $user->id, $user->username );
 		if ( $comment == null ) {
 			// Could not comment due to time time restrictions
 			return Response::json( array(

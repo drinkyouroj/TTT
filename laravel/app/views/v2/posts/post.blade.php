@@ -46,26 +46,32 @@
 				$is_author = Auth::check() && $post->user->id == Auth::user()->id;
 			?>
 			@if( !$is_author )
-				<a data-action="follow" class="btn-flat-dark-gray" href="#">
+				<a data-action="follow" class="follow-button follow" href="#">
 					<span class="{{ $is_following ? 'hidden' : '' }}"> {{ $follow_term }} {{ $post->user->username }} </span>
 					<span class="{{ $is_following ? '' : 'hidden' }}"> {{ $follow_term_active }} {{ $post->user->username }} </span>
 				</a>
+				<ul class="actions">
+					<li class="like">
+						<a data-action="like" class="like-button" href="#" title="{{ $like_tooltip }}" data-toggle="tooltip" data-placement="bottom">
+							<span class="{{ $liked ? 'hidden' : '' }}">  {{ $like_term }} <span class="action-counts"> {{ $liked ? $post->likes->count() - 1 : $post->likes->count() }} </span> </span>
+						</a>
+						<span class="{{ $liked ? '' : 'hidden' }}">  {{ $like_term_active }} <span class="action-counts"> {{ $liked ? $post->likes->count() : $post->likes->count() + 1 }} </span> </span>
+					</li>
 
-				<a data-action="like" class="btn-flat-gray" href="#" title="{{ $like_tooltip }}" data-toggle="tooltip" data-placement="bottom">
-					<span class="{{ $liked ? 'hidden' : '' }}">  {{ $like_term }} <span class="action-counts"> {{ $liked ? $post->likes->count() - 1 : $post->likes->count() }} </span> </span>
-					<span class="{{ $liked ? '' : 'hidden' }}">  {{ $like_term_active }} <span class="action-counts"> {{ $liked ? $post->likes->count() : $post->likes->count() + 1 }} </span> </span>
-				</a>
+					<li class="repost">
+						<a data-action="repost" class="repost-button" href="#" title="{{ $repost_tooltip }}" data-toggle="tooltip" data-placement="bottom">
+							<span class="{{ $reposted ? 'hidden' : '' }}"> {{ $repost_term }} <span class="action-counts"> {{ $reposted ? $post->reposts->count() - 1 : $post->reposts->count() }} </span> </span>
+						</a>
+						<span class="{{ $reposted ? '' : 'hidden' }}"> {{ $repost_term_active }} <span class="action-counts"> {{ $reposted ? $post->reposts->count() : $post->reposts->count() + 1 }} </span> </span>
+					</li>
 
-				<a data-action="repost" class="btn-flat-blue" href="#" title="{{ $repost_tooltip }}" data-toggle="tooltip" data-placement="bottom">
-					<span class="{{ $reposted ? 'hidden' : '' }}"> {{ $repost_term }} <span class="action-counts"> {{ $reposted ? $post->reposts->count() - 1 : $post->reposts->count() }} </span> </span>
-					<span class="{{ $reposted ? '' : 'hidden' }}"> {{ $repost_term_active }} <span class="action-counts"> {{ $reposted ? $post->reposts->count() : $post->reposts->count() + 1 }} </span> </span>
-				</a>
-
-				<a data-action="save" class="btn-flat-gray" href="#" title="{{ $save_tooltip }}" data-toggle="tooltip" data-placement="bottom">
-					<span class="{{ $favorited ? 'hidden' : ''}}"> {{ $save_term }} <span class="action-counts"> {{ $favorited ? $post->favorites->count() - 1 : $post->favorites->count() }} </span> </span>
-					<span class="{{ $favorited ? '' : 'hidden'}}"> {{ $save_term_active }} <span class="action-counts"> {{ $favorited ? $post->favorites->count() : $post->favorites->count() + 1 }} </span> </span>
-				</a>
-
+					<li class="save">
+						<a data-action="save" class="save-button" href="#" title="{{ $save_tooltip }}" data-toggle="tooltip" data-placement="bottom">
+							<span class="{{ $favorited ? 'hidden' : ''}}"> {{ $save_term }} <span class="action-counts"> {{ $favorited ? $post->favorites->count() - 1 : $post->favorites->count() }} </span> </span>
+						</a>
+						<span class="{{ $favorited ? '' : 'hidden'}}"> {{ $save_term_active }} <span class="action-counts"> {{ $favorited ? $post->favorites->count() : $post->favorites->count() + 1 }} </span> </span>
+					</li>
+				<ul>
 			@endif
 
 			<a class="action-comment btn-flat-blue" href="#">Comment</a>
@@ -79,7 +85,7 @@
 	<section class="post-heading-wrapper">
 		<div class="post-heading-container container">
 			<div class="row">
-				<div class="post-heading col-md-3">
+				<div class="post-heading col-md-4">
 
 					<h2>{{ $post->title }}</h2>
 					<div class="line"></div>
@@ -89,11 +95,13 @@
 						<li> {{ $post->tagline_3 }} </li>
 					</ul>
 
-					<a href="{{ URL::to('profile/'.$post->user->username ) }}">
-						<img class="post-author-avatar" src="">
-					</a>
-					story by <a href="{{ URL::to('profile/'.$post->user->username ) }}"> {{ $post->user->username }} </a>
-					
+					<div class="author">
+						<a href="{{ URL::to('profile/'.$post->user->username ) }}">
+							<img class="post-author-avatar" src="">
+						</a>
+						story by <a class="author-name" href="{{ URL::to('profile/'.$post->user->username ) }}"> {{ $post->user->username }} </a>
+					</div>
+
 					<ul class="post-categories list-inline">
 						@for ($i = 0; $i < count($post->categories); $i++)
 							<li> 
@@ -106,7 +114,7 @@
 					</ul>
 
 				</div>
-				<div class="post-image col-md-9" style="background-image: url('{{Config::get('app.imageurl')}}/{{$post->image}}');"></div>
+				<div class="post-image col-md-8" style="background-image: url('{{Config::get('app.imageurl')}}/{{$post->image}}');"></div>
 			</div>
 		</div>
 	</section>

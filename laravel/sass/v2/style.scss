@@ -7,6 +7,14 @@ html, body {
 	position: relative;
 }
 
+a {
+	color:$blue;
+}
+
+h1, h2, h3, h4, p {
+	color:$dark;
+}
+
 // ================= HEADER ========================
 .header-wrapper {
 	height: $navbar_height;
@@ -302,6 +310,28 @@ html, body {
 	text-decoration: none;
 	border: 1px solid $blue;
 	cursor: pointer;
+	&:hover {
+		// background-color: $gray;
+		color: white;
+		text-decoration: none;	
+	}
+}
+
+.follow-button {
+	@include montserrat(normal);
+	text-transform:uppercase;
+	color: white;
+	font-size: 12px;
+	letter-spacing:2px;
+	background: $blue;
+	padding: 10px 15px 10px 50px;
+	text-decoration: none;
+	border: 1px solid $blue;
+	cursor: pointer;
+	background-image:url('/../../images/global/follow.png');
+	background-repeat: no-repeat;
+	background-position:left center;
+	background-size:40px 40px;
 	&:hover {
 		// background-color: $gray;
 		color: white;

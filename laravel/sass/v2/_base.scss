@@ -5,9 +5,10 @@
 $blue: #32b1c6;
 $dark_gray: #383838;
 $gray: #a3a3a3;
+$lightgray: #eee;
 $beige: #fff9f0;
 $cream: #fff8ee;
-$dark: #272727;//color that's not black, but looks like black.
+$dark: #222;//color that's not black, but looks like black.
 
 
 
@@ -20,6 +21,41 @@ $navbar_dropdown_menu_width: 350px;
 $post_actionbar_height: 55px;
 
 //Fonts
+@font-face {
+  font-family: 'Garamond';
+  src: url('/../../fonts/garamond/garamondoldstylefs_regular_macroman/GaramondOldstyle-Regular-webfont.eot'); /* IE9 Compat Modes */
+  src: url('/../../fonts/garamond/garamondoldstylefs_regular_macroman/GaramondOldstyle-Regular-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/../../fonts/garamond/garamondoldstylefs_regular_macroman/GaramondOldstyle-Regular-webfont.woff') format('woff'), /* Modern Browsers */
+       url('/../../fonts/garamond/garamondoldstylefs_regular_macroman/GaramondOldstyle-Regular-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('/../../fonts/garamond/garamondoldstylefs_regular_macroman/GaramondOldstyle-Regular-webfont.svg#svgGaramondOldstyle-Regular-webfont') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Garamond Italic';
+  src: url('/../../fonts/garamond/garamondoldstylefs_italic_macroman/GaramondOldstyle-Italic-webfont.eot'); /* IE9 Compat Modes */
+  src: url('/../../fonts/garamond/garamondoldstylefs_italic_macroman/GaramondOldstyle-Italic-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/../../fonts/garamond/garamondoldstylefs_italic_macroman/GaramondOldstyle-Italic-webfont.woff') format('woff'), /* Modern Browsers */
+       url('/../../fonts/garamond/garamondoldstylefs_italic_macroman/GaramondOldstyle-Italic-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('/../../fonts/garamond/garamondoldstylefs_italic_macroman/GaramondOldstyle-Italic-webfont.svg#svgGaramondOldstyle-Italic-webfont') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Garamond DemiBold';
+  src: url('/../../fonts/garamond/garamondoldstylefs_demibold_macroman/GaramondOldstyle-DemiBold-webfont.eot'); /* IE9 Compat Modes */
+  src: url('/../../fonts/garamond/garamondoldstylefs_demibold_macroman/GaramondOldstyle-DemiBold-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/../../fonts/garamond/garamondoldstylefs_demibold_macroman/GaramondOldstyle-DemiBold-webfont.woff') format('woff'), /* Modern Browsers */
+       url('/../../fonts/garamond/garamondoldstylefs_demibold_macroman/GaramondOldstyle-DemiBold-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('/../../fonts/garamond/garamondoldstylefs_demibold_macroman/GaramondOldstyle-DemiBold-webfont.svg#svgGaramondOldstyle-DemiBold-webfont') format('svg'); /* Legacy iOS */
+}
+
+@mixin garamond{
+  font-family: 'Garamond', serif;
+}
+@mixin garamond-italic {
+  font-family: 'Garamond Italic', Georgia, serif;
+}
+@mixin garamond-bold {
+  font-family: 'Garamond DemiBold', Georgia, serif;
+}
+
 @mixin montserrat($weight: normal) {
 	font-family: 'Montserrat', sans-serif;
 	@if $weight == 'normal' {
@@ -31,6 +67,7 @@ $post_actionbar_height: 55px;
 
 @mixin fjalla() {
   font-family: 'Fjalla One';
+  text-transform:uppercase;
 }
 
 
@@ -110,6 +147,65 @@ textarea {
     width: 300px; 
   }
 }
+//Styling for category and sortby dropdowns
+@mixin catfilter {
+  .category-filter-container {
+    width: 150px;
+    display: inline-block;
+    margin: 10px;
+    margin-left: 15px;
+    position: relative;
+
+    .category-filter-title {
+      cursor: pointer;
+      padding: 5px 15px 5px 5px;
+      border-bottom: 5px solid $dark;
+      @include montserrat(normal);
+      text-transform:uppercase;
+      font-size:13px;
+      background-image:url('/../../images/categories/filter-arrow.png');
+      background-position:right center;
+      background-repeat:no-repeat;
+
+    }
+
+    ul.filter-dropdown {
+      position: absolute;
+      top: 100%;
+      width: 100%;
+      display: none;
+      overflow: hidden;
+      z-index: 999;
+      background-color: $dark;
+
+      li {
+        cursor: pointer;
+        position: relative;
+        border-top:solid 1px $dark_gray;
+        &:nth-child(odd) {
+           background-color: #000;
+        }
+        &:hover {
+          background-color: #fff;
+        }
+
+        a {
+          display: inline-block;
+          height: 100%;
+          width: 100%;
+          padding:7px 10px;
+          @include montserrat(normal);
+          font-size:11px;
+          color:#fff;
+          letter-spacing: 1px;
+           &:hover {
+            color:$dark;
+          }
+        }
+      }
+    }
+  }
+}
 // Styling for the post (and repost) listings. $isFeed just tells whether or not to
 // include the css for reposts (only used in profile feed).
 @mixin post_listing( $isFeed ) {
@@ -118,27 +214,60 @@ textarea {
     float: left;
     display: inline-block;
     width: 270px;
-    height: 250px;
+    height: 302px;
     margin-left: 15px;
     margin-right: 15px;
     
-    .post-image {
-      height: 170px;
-      width: 270px;
-
-      background-color: gray;
+    .image-container {
+      position: relative;
+      width: 100%;
+      height:auto;
+      a.image-link2 {
+        position:absolute;
+        display:block;
+        width:100%;
+        height:100%;
+       }
+    }
+    a.image-link {
+      display:block;
+      width:100%;
+      height:auto;
+      .top-fade {
+        position:absolute;
+        width: 100%;
+        height:99px;
+        background-image:url('/../../images/categories/post-image-overlay.png');
+        background-position:top;
+        background-repeat:repeat-x;
+        z-index:1;
+      }
+      .post-image {
+        height: 170px;
+        width: 270px;
+        background-color: gray;
+      }
     }
 
     .post-image-overlay {
       position: absolute;
-      width: 100%;
+      color:#fff;
+      @include garamond;
+      font-size:12px;
+      letter-spacing:1px;
+      z-index:2;
 
-      .post-author-avatar {
-        height: 40px;
-        width: 40px;
-        border-radius: 50%;
-        margin: 5px;
-        background-color: lightgrey;
+      a {
+         @include montserrat(normal);
+         font-size:11px;
+         letter-spacing:1px;
+        .post-author-avatar {
+          height: 30px;
+          width: 30px;
+          border-radius: 50%;
+          margin: 5px;
+          background-color: lightgrey;
+        }
       }
 
       @if $isFeed {
@@ -208,14 +337,23 @@ textarea {
     }
 
     .post-title {
-      margin-bottom: 0;
-      font-size: 1.5em;
+      margin-top:10px;
+      margin-bottom: 3px;
+      a {
+        color:$dark;
+        font-size: 17px;
+        @include montserrat(bold);
+        text-transform:uppercase;
+        line-height: 20px;
+      }
     }
 
     .post-taglines {
       li:nth-child(1), li:nth-child(2) {
         border-right: 1px solid gray;
       }
+      @include garamond-italic;
+      font-size:14px;
     }
   }
 }

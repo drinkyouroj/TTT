@@ -1,54 +1,32 @@
 @import '../base';
 
 .category-header {
+	position: relative;
 	margin-top: $navbar_height;
 	padding: 10px;
 	text-align: center;
+	width:100%;
+	max-width:1200px;
+	margin-left:auto;
+	margin-right:auto;
+	img.corner-icon {
+		position: absolute;
+		right:0px;
+		top:-10px;
+		width:50px;
+		height:auto;
+	}
+	h1.category-title {
+		@include fjalla();
+		font-size:50px;
+		letter-spacing:2px;
+	}
 }
 
 .filters {
 	@include feed_container_widths;
-
-	.category-filter-container {
-		width: 150px;
-		display: inline-block;
-		margin: 10px;
-		margin-left: 15px;
-		position: relative;
-
-		.category-filter-title {
-			cursor: pointer;
-			padding: 5px;
-			border-bottom: 2px solid black;
-		}
-
-		ul.filter-dropdown {
-			position: absolute;
-			top: 100%;
-			width: 100%;
-			display: none;
-			overflow: hidden;
-			z-index: 999;
-			background-color: white;
-			border-bottom: 1px solid;
-
-			li {
-				cursor: pointer;
-				position: relative;
-
-				&:hover {
-					background-color: lightgray;
-				}
-
-				a {
-					display: inline-block;
-					height: 100%;
-					width: 100%;
-					padding: 5px;
-				}
-			}
-		}
-	}
+	@include catfilter;
+	margin-bottom:20px;
 }
 
 .feed-container {

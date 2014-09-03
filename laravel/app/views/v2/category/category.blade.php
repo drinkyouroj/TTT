@@ -16,11 +16,7 @@
 	@section('content')
 
 		<section class="category-header">
-			<div class="company-name">
-				<span>THE</span>
-				<br>
-				<span>TWO THOUSAND TIMES</span>
-			</div>
+			<img class="corner-icon" src="/images/global/ttt-icon.png">
 			<h1 class="category-title">
 				{{ $cat_title }}
 			</h1>

@@ -73,9 +73,7 @@ $(function() {
 	$('.header-right a').click(function(event) {
 		//event.preventDefault();
 		$('.section-selectors a').removeAttr('class');//gets rid of the class.
-		//profile.view = $(this).prop('id');
-
-		//window.location.hash = profile.view;
+		profile.view = $(this).prop('id');
 
 		if($(this).hasClass('followers') || $(this).hasClass('following')) {
 			profile.type = window.user_id;
@@ -86,13 +84,11 @@ $(function() {
 
 	//image upload code.
 	$('body').on('change', '#uploadAvatar input#image', function() {
-		console.log('upload event');
 		profile.avatarUpload();
 	});
 
 	//password change
-	$('body').on('submit', '#changePassword',function(event) {
-		event.preventDefault();
+	$('body').on('click', '#changePassword button',function() {
 		profile.changePassword();
 	});
 
@@ -124,9 +120,11 @@ $(function() {
 	profile.target = $('#profile-content');
 	
 	// Figure out the hash so we can load the right content in.
-	if(typeof window.location.hash  == 'undefined') {
+	if(typeof window.location.hash  == 'undefined' || !window.location.hash.length) {
 		window.location.hash = 'collection';
 		profile.view = 'collection';
+		profile.type = 'all';
+		profile.viewInit('collection');//Render initial view.
 	} else {
 		view = window.location.hash;
 
@@ -138,9 +136,10 @@ $(function() {
 		}
 
 		profile.view = view.substring(1);
+		profile.viewInit(profile.view);//Render initial view.
 	}
 
-	profile.viewInit(profile.view);//Render initial view.
+	
 	window.page_processing = false;
 	window.comment_page_processing = false;
 	
@@ -278,6 +277,7 @@ function ProfileActions() {
 		var target = this.target;
 		this.urlConstructor();
 		this.getData(this.comment_url, function(data) {
+			console.log(data);
 			$.each(data.comments,function(idx, val) {
 				view_data = {
 					site_url: window.site_url,
@@ -362,13 +362,12 @@ function ProfileActions() {
 		this.urlConstructor();
 		this.getData(this.url, function(data) {
 			$.each(data.follow, function(idx, val) {
-					
-					view_data = {
-						site_url: window.site_url,
-						username: val.following.username,
-						user_id:  val.user_id
-					};
-					$('#default-content', target).append(follow_template(view_data));
+				view_data = {
+					site_url: window.site_url,
+					username: val.following.username,
+					user_id:  val.user_id
+				};
+				$('#default-content', target).append(follow_template(view_data));
 			});
 		});
 	}
@@ -434,7 +433,7 @@ function ProfileActions() {
 		this.passResponse = function(response, statusText, xhr, $form) {
 			$('form#changePassword input').val('');//reset all values
 			if(response.success == false) {
-				$('form#changePassword .message-box').html('<p>Wrong Values.  Please try again</p>');
+				$('form#changePassword .message-box').html('<p>'+response.message+'Please try again</p>');
 			} else {
 				$('form#changePassword .message-box').html('<p>Smashing success! Your Password has been changed</p>');
 			}
@@ -443,6 +442,7 @@ function ProfileActions() {
 
 //AJAX data getter
 	this.getData = function(get_url, callback) {
+		console.log(get_url);
 		$.ajax({
 			url: get_url,
 			success: function(data) {

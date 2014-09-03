@@ -39,6 +39,8 @@ class MyProfileController extends BaseController {
 			$is_follower = $this->follow->is_follower($user->id, $profile_user->id);
 			if($is_follower && $is_following) {
 				$mutual = true;
+			} else {
+				$mutual = false;
 			}
 		} else {
 			//load in the defaults anyway since we have to use with().
