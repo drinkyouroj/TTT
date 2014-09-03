@@ -137,6 +137,10 @@
 	@else
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/global-nologin.js"></script>
 	@endif
+
+	<!--v2 header-->
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/sidr/jquery.sidr.min.js"></script>	
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/header.js"></script>
 	
 	<!--Extra Javascript-->
 	@yield('js')
