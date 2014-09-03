@@ -33,7 +33,6 @@
 			"app/applogic",
 			"app/applogic/facades",
 			"app/applogic/providers",
-			"app/lib",
 			"app/repositories",
 			"app/repositories/Post",
 			"app/repositories/Category",

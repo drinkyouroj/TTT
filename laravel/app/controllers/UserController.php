@@ -360,7 +360,7 @@ class UserController extends BaseController {
 		        $user->password_confirmation = $new_input['password_confirmation'];
 		        $user->updateUniques();
 			}
-			
+
         } else {
         	//need to return that auth failed.
         	$failed = true;
@@ -368,11 +368,20 @@ class UserController extends BaseController {
         }
 		
 		if($failed) {
-			return Redirect::to('profile/settings')
-				->with('reset_message', $message);//On redirect, with stores the data in Session::get();
+                return Response::json(
+                    array(
+                        'success' => false,
+                        'message' => $message
+                        ),
+                    200
+                );
 		} else {
-			return Redirect::to('profile/settings')
-				->with('success_message','Successfully reset password');
+            return Response::json(
+                    array(
+                        'success' => true,
+                        'message' => 'Nice!'),
+                    200
+                );
 		}
 		
 	}

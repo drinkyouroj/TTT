@@ -160,24 +160,18 @@
 			<div class="top-submit-wrapper">
 				{{--The big container so that we can assign the images to it. max-width 1440 or something like that--}}
 				<div class="top-submit-container container" 
-					@if(!$edit)
-						style="background-image: url('{{Config::get('app.url')}}/img/photos/nashville.png');"
-					@else
-						style="background-image: url('{{Config::get('app.url')}}/uploads/final_images/{{$image}}');"
-					@endif
+					
 					>
-					<div class="top-submit-overlay"></div>
 					<div class="row">
-						<div class="col-md-8">
+						<div class="col-md-3">
 							{{--Title Input--}}
 							<div class="title {{$errors->first('title') ? 'has-error' : '' }}">
 								{{ Form::label('title','Title') }}
 								<a href="#" data-toggle="tooltip" title="Need to pick a title!"></a>
-								{{ Form::text('title', $title, array('class'=>'form-control input-lg title', 'required', 'minlength' =>'5', 'maxlength' => '40')) }}
+								{{ Form::textarea('title', $title, array('class'=>'form-control input-lg title', 'required', 'minlength' =>'5', 'maxlength' => '40')) }}
 								<span class="error">{{ $errors->first('title') }}</span>
 							</div>
-						</div>
-						<div class="col-md-5">
+
 							{{--Tag Input--}}
 							<div class="tags">
 								<div class="tag {{$errors->first('tagline_1') ? 'has-error' : '' }}">
@@ -200,8 +194,13 @@
 								<a href="#" data-toggle="tooltip" title="Tags define what your story might be in less than 3 words per tag">?</a>
 							</div>
 						</div>
-
-						<div class="col-md-12">
+						<div class="col-md-9 image-system"
+							@if(!$edit)
+								style="background-image: url('{{Config::get('app.url')}}/img/photos/nashville.png');"
+							@else
+								style="background-image: url('{{Config::get('app.url')}}/uploads/final_images/{{$image}}');"
+							@endif
+							>
 							{{--Select your image --}}
 							<div class="image-select">
 								<a href="#image" class="image-select-modal" data-toggle="modal" data-target="#imageModal">
@@ -212,13 +211,17 @@
 									</span>
 								</a>
 							</div>
+
+							<div class="image-edit">
+								<a href="#image" class="image-select-modal" data-toggle="modal" data-target="#imageModal">
+									Edit Image
+								</a>
+							</div>
+
+							<div class="clearfix"></div>
 						</div>
 
-						<div class="image-edit">
-							<a href="#image" class="image-select-modal" data-toggle="modal" data-target="#imageModal">
-								Edit Image
-							</a>
-						</div>
+						
 
 					</div>	
 				</div>

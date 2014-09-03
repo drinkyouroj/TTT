@@ -61,7 +61,6 @@ $(function() {
 		});
 	});
 
-
 	$('.controls-wrapper .save-draft').click(function() {
 		save_post.sendDraft(window.editor);
 	});
@@ -69,6 +68,16 @@ $(function() {
 	$('.controls-wrapper .submit-post').click(function() {
 		save_post.sendPublish(window.editor);
 	});
+
+
+	//prevent text input from being 
+	$('textarea.title').bind('keypress', function(e) {
+	  if ((e.keyCode || e.which) == 13) {
+	    e.preventDefault();
+	    return false;
+	  }
+	});
+
 });
 
 function iOSversion() {
@@ -186,7 +195,7 @@ var save_post = new function() {
 	this.grabData = function() {
 
 		//this.post_id = $('input.id',this.form).val();
-		this.title = $('input.title',this.form).val();;
+		this.title = $('textarea.title',this.form).val();;
 
 		this.tagline_1 = $('input[name="tagline_1"]',this.form).val();
 		this.tagline_2 = $('input[name="tagline_2"]',this.form).val();

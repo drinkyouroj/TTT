@@ -16,6 +16,8 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 		Route::get( 'feed/{feed_type}/{page}', 'MyProfileController@getRestFeed' );
 		Route::get( 'saves/{page}', 'MyProfileController@getRestSaves' );
 		Route::get( 'drafts/{page}', 'MyProfileController@getRestDrafts' );
+		Route::post( 'image/upload', 'MyProfileController@postAvatar');
+		Route::post( 'password', 'UserController@postNewpass');//I know its not in myprofile!
 	});
 
 	//Profile Image for the Follower/Following buttons.
