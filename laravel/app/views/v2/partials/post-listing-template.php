@@ -14,6 +14,13 @@
 			return options.inverse(this);
 		}
 	);
+	Handlebars.registerHelper('ifNotCond', function(v1, v2, options) {
+		if(v1 != v2) {
+			return options.fn(this);
+		}
+			return options.inverse(this);
+		}
+	);
 </script>
 <script type="text/x-handlebars-template" id="post-item-template">	
 	<div class="post-container fade in">
@@ -37,6 +44,17 @@
 							</li>
 						{{/each}}
 					</ul>
+				</div>
+			{{/ifCond}}
+
+			{{#ifCond post.user.id user_id }}
+				<div class="post-options">
+				{{#ifCond editable true}}
+					<a class="post-edit">Edit</a>
+				{{/ifCond}}
+				{{#ifNotCond featured_id post.id}}
+					<a class="set-featured">Feature</a>
+				{{/ifNotCond }}
 				</div>
 			{{/ifCond}}
 

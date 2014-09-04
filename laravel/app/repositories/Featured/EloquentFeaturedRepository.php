@@ -22,7 +22,7 @@ class EloquentFeaturedRepository implements FeaturedRepository {
 
 	}
 
-	public function find($paginate = 8, $page = 1, $rest = false) {
+	public function find($paginate = 8, $page = 1, $rest = false, $front = false) {
 		$query = $this->featured
 						->orderBy('order', 'ASC')
 						->skip(($page-1)*$paginate)

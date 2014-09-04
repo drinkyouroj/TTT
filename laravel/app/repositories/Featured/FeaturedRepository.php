@@ -8,8 +8,7 @@ interface FeaturedRepository {
 
 	public function create($post_id);
 
-
-	public function find($paginate, $page, $rest);
+	public function find($paginate, $page, $rest, $front);
 
 	public function delete($post_id);
 

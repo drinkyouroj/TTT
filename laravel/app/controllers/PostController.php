@@ -373,7 +373,7 @@ class PostController extends BaseController {
 				$post->body = $query['body'];//Body is the only updatable thing in an update scenario.
 
 				//if the post is becoming published.
-				if( $query['published'] && $post->draft ) {
+				if( $query['published'] ) {
 					$post->published_at = DB::raw('NOW()');
 				}
 				$post->published = $query['published'];

@@ -47,6 +47,11 @@ class EloquentPostRepository implements PostRepository {
 		$post->body = strip_tags(Request::get('body'), '<p><i><b><br>');//Body is the only updatable thing in an update scenario.
 		$post->published = 1;
 		$post->draft = Request::get('draft', 1);//default is 1 so that it won't accidentally get published.
+
+		if(!$post->draft) {
+			$post->published_at = DB::raw('NOW()');
+		}
+
 		return $post;
 	}
 

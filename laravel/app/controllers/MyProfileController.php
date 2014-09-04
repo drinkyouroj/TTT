@@ -33,7 +33,12 @@ class MyProfileController extends BaseController {
 		//Load up the profile user.
 		$profile_user = User::where('username',$alias)->first();
 
+		if( !is_object($profile_user) ) {
+			return Redirect::to('myprofile');
+		}
+
 		if( Auth::check() ) {
+
 			$user = Auth::user();//This is the 
 			$is_following = $this->follow->is_following($user->id, $profile_user->id);
 			$is_follower = $this->follow->is_follower($user->id, $profile_user->id);
