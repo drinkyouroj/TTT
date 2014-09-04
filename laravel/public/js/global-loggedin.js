@@ -68,7 +68,6 @@ $(function() {
 		} else {
 			comment_like( comment_id, $(this) );
 		}
-		$(this).toggleClass('active');
 	});
 	// Flag/Unflag Comment*****************************************
 	$('.comments-listing').on('click', '.flag-comment', function() {
@@ -234,10 +233,13 @@ function comment_like(id, scope) {
 		url: window.site_url + 'rest/comment/like/' + id,
 		type: 'GET',
 		success: function(data) {
-			var $count_element = $(scope).closest('.comment').find('.like-comment-count');
-			var count = $count_element.html();
-			count++;
-			$count_element.html(count);
+			if ( data.success ) {
+				$(scope).toggleClass('active');
+				var $count_element = $(scope).closest('.comment').find('.like-comment-count');
+				var count = $count_element.html();
+				count++;
+				$count_element.html(count);
+			}
 		}
 	});
 }
@@ -246,10 +248,13 @@ function comment_unlike(id, scope) {
 		url: window.site_url + 'rest/comment/unlike/' + id,
 		type: 'GET',
 		success: function(data) {
-			var $count_element = $(scope).closest('.comment').find('.like-comment-count');
-			var count = $count_element.html();
-			count--;
-			$count_element.html(count);
+			if ( data.success ) {
+				$(scope).toggleClass('active');
+				var $count_element = $(scope).closest('.comment').find('.like-comment-count');
+				var count = $count_element.html();
+				count--;
+				$count_element.html(count);
+			}
 		}
 	});
 }
@@ -258,7 +263,9 @@ function comment_flag(id, scope) {
 		url: window.site_url + 'rest/comment/flag/' + id,
 		type: 'GET',
 		success: function(data) {
-			$(scope).toggleClass('active');
+			if ( data.success ) {
+				$(scope).toggleClass('active');	
+			}
 		}
 	});
 }
@@ -267,7 +274,9 @@ function comment_unflag(id, scope) {
 		url: window.site_url + 'rest/comment/unflag/' + id,
 		type: 'GET',
 		success: function(data) {
-			$(scope).toggleClass('active');
+			if ( data.success ) {
+				$(scope).toggleClass('active');
+			}
 		}
 	});
 }

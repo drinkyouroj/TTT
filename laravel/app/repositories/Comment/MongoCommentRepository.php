@@ -146,12 +146,18 @@ class MongoCommentRepository implements CommentRepository {
 		$comment = $this->findById( $comment_id );
 		if ( $comment instanceof MongoComment ) {
 			$comment->push('likes', $user_id, true);
+			return true;
+		} else {
+			return false;
 		}
 	}
 	public function unlike( $user_id, $comment_id ) {
 		$comment = $this->findById( $comment_id );
 		if ( $comment instanceof MongoComment ) {
 			$comment->pull('likes', $user_id);
+			return true;
+		} else {
+			return false;
 		}
 	}
 	public function flag( $user_id, $comment_id ) {
@@ -162,12 +168,18 @@ class MongoCommentRepository implements CommentRepository {
 			if ( count( $comment->flags ) > 4 ) {
 				// TODO: so many flags!!! somebody should probably intervene.
 			}
+			return true;
+		} else {
+			return false;
 		}
 	}
 	public function unflag( $user_id, $comment_id ) {
 		$comment = $this->findById( $comment_id );
 		if ( $comment instanceof MongoComment ) {
 			$comment->pull('flags', $user_id);
+			return true;
+		} else {
+			return false;
 		}
 	}
 	

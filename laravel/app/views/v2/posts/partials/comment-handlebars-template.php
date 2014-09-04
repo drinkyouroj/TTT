@@ -7,8 +7,8 @@
 		return options.inverse(this);
 	});
 	Handlebars.registerHelper('contains', function(v1, v2, options) {
-		if ( v1.indexOf(v2) ) {
-			return true;
+		if ( v1 instanceof Array && v1.indexOf(v2) > -1 ) {
+			return options.fn(this);
 		}
 	});
 </script>

@@ -89,9 +89,9 @@ class CommentController extends BaseController {
 	 *	@param $comment_id: the comment id
 	 */
 	public function likeComment ( $comment_id ) {
-		$this->comment->like( $comment_id, Auth::user()->id );
-		return Response::json( 
-			array( 'success' => true ), 
+		$success = $this->comment->like( Auth::user()->id, $comment_id );
+		return Response::json(
+			array( 'success' => $success ),
 			200);
 	}
 
@@ -100,9 +100,9 @@ class CommentController extends BaseController {
 	 *	@param $comment_id: the comment id
 	 */
 	public function unlikeComment ( $comment_id ) {
-		$this->comment->unlike( $comment_id, Auth::user()->id );
+		$success = $this->comment->unlike( Auth::user()->id, $comment_id );
 		return Response::json( 
-			array( 'success' => true ), 
+			array( 'success' => $success ), 
 			200);
 	}
 
@@ -111,9 +111,9 @@ class CommentController extends BaseController {
 	 *	@param $comment_id: the comment id
 	 */
 	public function flagComment ( $comment_id ) {
-		$this->comment->flag( $comment_id, Auth::user()->id );
+		$success = $this->comment->flag( Auth::user()->id, $comment_id );
 		return Response::json( 
-			array( 'success' => true ), 
+			array( 'success' => $success ), 
 			200);
 	}
 
@@ -122,9 +122,9 @@ class CommentController extends BaseController {
 	 *	@param $comment_id: the comment id
 	 */
 	public function unflagComment ( $comment_id ) {
-		$this->comment->unflag( $comment_id, Auth::user()->id );
+		$success = $this->comment->unflag( Auth::user()->id, $comment_id );
 		return Response::json(
-			array( 'success' => true ), 
+			array( 'success' => $success ), 
 			200);
 	}
 }
