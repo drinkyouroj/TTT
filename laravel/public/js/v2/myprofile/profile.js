@@ -280,7 +280,8 @@ function ProfileActions() {
 					post: val.post,
 					user_id: window.user_id,
 					editable: editable,
-					featured_id: window.featured_id
+					featured_id: window.featured_id,
+					post_type: val.post_type
 				};
 				$('#collection-content',target).append(post_item_template(view_data));
 			});
@@ -377,17 +378,29 @@ function ProfileActions() {
 		var drafts_item_template = this.drafts_item_template;
 		var target = this.target;
 		this.urlConstructor();
-		this.getData(this.url,function(data) {
+		draftDate = this.draftDate;
+		this.getData(this.url,function(data) {			
 			$.each(data.drafts, function(idx, val) {
 				view_data = {
 					site_url: window.site_url,
-					draft: val
+					draft: val,
+					date: draftDate(val.updated_at)
 				};
 				$('#default-content',target).append(drafts_item_template(view_data));
 			});
 		});
 
 	};
+	
+		this.draftDate = function(updated_at) {
+			updated = moment(updated_at);
+			twoDaysAgo  = moment().subtract('2','days');
+			if( updated.tz('America/Los_Angeles') >= twoDaysAgo.tz('America/Los_Angeles') ) {
+				return updated.calendar();
+			} else {
+				return updated.format('MM DD YYYY');
+			}
+		}
 
 	this.renderFollowers = function() {
 		var follow_template = this.follow_template;
