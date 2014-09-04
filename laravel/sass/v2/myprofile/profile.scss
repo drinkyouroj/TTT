@@ -9,9 +9,11 @@ a:focus {
 	.profile-header-container {
 		.header-left {
 			h2 {
+				margin-bottom:20px;
 				background-position: left center;
 				background-repeat: no-repeat;
 				@include montserrat(bold);
+				font-size:50px;
 				vertical-align: middle;
 				span.avatar-image {
 					display:inline-block;
@@ -53,12 +55,14 @@ a:focus {
 					display:inline-block;
 					text-align: center;
 					span.count{
+						@include montserrat(bold);
 						display:block;
-						font-size: 25px;
+						font-size: 30px;
 					}
 					span.text{
 						display:block;
-						font-size: 10px;
+						font-size: 13px;
+						line-height:5px;
 					}
 				}
 				a.followers {
@@ -73,10 +77,11 @@ a:focus {
 			a {
 				margin-right: 20px;
 				@include montserrat(bold);
+				font-size: 13px;
 				color: $gray;
 				text-transform: uppercase;
 				text-decoration: none;
-				font-size: 11px;
+				letter-spacing:1px;
 
 				&.active {
 					color:$dark;
@@ -89,7 +94,7 @@ a:focus {
 		.border {
 			.border-box {
 				border-bottom: 3px solid $dark;
-				padding-bottom: 12px;
+				padding-bottom: 7px;
 			}
 		}
 	}
@@ -110,12 +115,13 @@ a:focus {
 
 
 				.collection-controls {
-					padding-top: 10px;
+					padding-top: 7px;
 					padding-bottom: 10px;
-					margin-bottom: 10px;
+					margin-bottom: 23px;
 					color:$gray;
 					@include montserrat();
-					font-size: 10px;
+					font-size: 13px;
+					letter-spacing:1px;
 					a {
 						text-transform: lowercase;
 						text-decoration: none;
