@@ -91,7 +91,7 @@
 		</div>
 
 		<div class="controls">
-			<a class="edit-draft" data-id="{{draft.id}}" >Edit Draft</a>
+			<a class="edit-draft" href="{{site_url}}myprofile/editpost/{{draft.id}}" >Edit Draft</a>
 			<a class="publish-draft" data-id="{{draft.id}}" >Publish</a>
 			<br/>
 			<a class="delete-draft" data-id="{{draft.id}}" data-toggle="tooltip" data-placement="bottom" title="Delete Forever!">Delete</a>
