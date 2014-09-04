@@ -7,15 +7,14 @@
 		<div class="header-container container">
 			<div class="row">
 				<div class="col-sm-4 col-left">
-					<button class="btn-flat-white toggle-sidebar">
-						<span class="glyphicon glyphicon-align-justify"></span>
+					<button class="read-button toggle-sidebar">
 						READ
 					</button>
 
 					@if( $is_guest )
-						<a class="btn-flat-gray" data-toggle="modal" data-target="#guestSignup">POST</a>
+						<a class="btn-flat-blue" data-toggle="modal" data-target="#guestSignup">POST</a>
 					@else
-						<a class="btn-flat-gray" href="{{Config::get('app.url')}}/myprofile/newpost">POST</a>
+						<a class="btn-flat-blue" href="{{Config::get('app.url')}}/myprofile/newpost">POST</a>
 					@endif
 
 				</div>

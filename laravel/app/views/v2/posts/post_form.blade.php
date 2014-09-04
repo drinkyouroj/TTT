@@ -91,7 +91,7 @@
 						
 							<a class="submit-post">
 								@if(!$edit)
-									Submit
+									Publish
 								@else
 									Update
 								@endif
@@ -107,9 +107,9 @@
 				<div class="category-container container">
 					<div class="row">
 						{{--Gotta put this in the middle--}}
-						<div class="col-md-6 col-md-offset-3">
+						<div class="col-md-8 col-md-offset-2">
 							<div class="row">
-								<div class="col-md-6 story-type-box">
+								<div class="col-md-4 story-type-box">
 									<div class="{{$errors->first('story_type') ? 'has-error' : '' }}">
 									{{ Form::label('story_type','Post Type', array('class'=>'control-label', 'required')) }}
 									<a href="#" data-toggle="tooltip" title="Choose the type of story">?</a>
@@ -119,7 +119,7 @@
 									<span class="error">{{ $errors->first('story_type') }}</span>
 								</div>
 								</div>
-								<div class="col-md-6 category-box">
+								<div class="col-md-8 category-box">
 									{{ Form::label('category','Post Category', array('class'=>'control-label')) }}
 									<a href="#" data-toggle="tooltip" title="Choose 3 categories that this story might fit in.">?</a>
 									<br/>
@@ -146,7 +146,13 @@
 									
 									<span class="error">{{ $errors->first('category') }}</span>
 								</div>
-
+							</div>
+							<div class="row">
+								<div class="col-md-12 close-category">
+									<a class="btn-flat-dark-gray" href="">
+										OK
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -163,12 +169,12 @@
 					
 					>
 					<div class="row">
-						<div class="col-md-3">
+						<div class="col-md-4 form-heading">
 							{{--Title Input--}}
 							<div class="title {{$errors->first('title') ? 'has-error' : '' }}">
 								{{ Form::label('title','Title') }}
 								<a href="#" data-toggle="tooltip" title="Need to pick a title!"></a>
-								{{ Form::textarea('title', $title, array('class'=>'form-control input-lg title', 'required', 'minlength' =>'5', 'maxlength' => '40')) }}
+								{{ Form::textarea('title', $title, array('class'=>'form-control input-lg title', 'required', 'minlength' =>'5', 'maxlength' => '40', 'placeholder'=>'My New Post')) }}
 								<span class="error">{{ $errors->first('title') }}</span>
 							</div>
 
@@ -191,12 +197,12 @@
 								</div>
 								<br/>
 								{{ Form::label('tagline_1','Tags', array('class'=>'control-label')) }}
-								<a href="#" data-toggle="tooltip" title="Tags define what your story might be in less than 3 words per tag">?</a>
+								<a class="tags-tooltip" href="#" data-toggle="tooltip" title="Tags define what your story might be in less than 3 words per tag">?</a>
 							</div>
 						</div>
-						<div class="col-md-9 image-system"
+						<div class="col-md-8 image-system"
 							@if(!$edit)
-								style="background-image: url('{{Config::get('app.url')}}/img/photos/nashville.png');"
+								style="background-image: url('{{Config::get('app.url')}}/images/posts/sample-img2.jpg');"
 							@else
 								style="background-image: url('{{Config::get('app.url')}}/uploads/final_images/{{$image}}');"
 							@endif
@@ -213,7 +219,7 @@
 							</div>
 
 							<div class="image-edit">
-								<a href="#image" class="image-select-modal" data-toggle="modal" data-target="#imageModal">
+								<a href="#image" class="image-select-modal btn-flat-white" data-toggle="modal" data-target="#imageModal">
 									Edit Image
 								</a>
 							</div>

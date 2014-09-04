@@ -54,11 +54,18 @@ $(function() {
 
 	//Controls.
 	$('.controls-wrapper .categorization').click(function(event) {
-		event.preventDefault;
+		event.preventDefault();
 		$('.category-wrapper').slideToggle('fast',function() {
 			//Gotta figure out if we want to have a white bg.
 			//$('body').append('<div class="modal-backdrop fade in"></div>');
 		});
+	});
+
+	$('.close-category a').click(function(event) {
+		event.preventDefault();
+		console.log('test');
+		$('.category-wrapper').slideToggle('fast');
+
 	});
 
 	$('.controls-wrapper .save-draft').click(function() {
