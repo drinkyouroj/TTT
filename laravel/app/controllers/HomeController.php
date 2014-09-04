@@ -5,9 +5,11 @@ class HomeController extends BaseController {
 	private $paginate = 8;//pagination for the front page is set to 8 since it worked out better with the packery blocks.
 	
 	public function __construct(
-							FeaturedRepository $featured
+							FeaturedRepository $featured,
+							EmailRepository $email
 							){
 		$this->featured = $featured;
+		$this->email = $email;
 	}
 
 
@@ -15,7 +17,7 @@ class HomeController extends BaseController {
 	 * The featured page.
 	 */
 	public function getIndex()
-	{	
+	{
 		$featured = $featured = $this->featured->find($this->paginate, 1, false);
 		
 		return View::make('home.index')

@@ -1,4 +1,4 @@
-<form method="POST" action="{{{ Confide::checkAction('UserController@do_login') ?: URL::to('/user/login') }}}" accept-charset="UTF-8">
+<form method="POST" action="{{{ URL::to('/user/login') }}}" accept-charset="UTF-8">
 	
 	    @if( isset($error) )
             <div class="alert alert-error">
@@ -12,22 +12,24 @@
         
     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
     <fieldset>
-        <label for="email">{{{ Lang::get('confide::confide.username_e_mail') }}}</label>
-        <input tabindex="1" placeholder="{{{ Lang::get('confide::confide.username_e_mail') }}}" type="text" name="email" id="email" value="{{{ Input::old('email') }}}">
+        <label for="username">Username</label>
+        <input tabindex="1" placeholder="Username" type="text" name="username" id="username" value="{{{ Input::old('username') }}}">
 
         <label for="password">
-            {{{ Lang::get('confide::confide.password') }}}
+            Password
             <small>
-                <a href="{{{ (Confide::checkAction('UserController@forgot_password')) ?: 'forgot' }}}">{{{ Lang::get('confide::confide.login.forgot_password') }}}</a>
+                <a href="{{{ URL::to('/user/forgot') }}}">Forgot Password</a>
             </small>
         </label>
-        <input tabindex="2" placeholder="{{{ Lang::get('confide::confide.password') }}}" type="password" name="password" id="password">
+        <input tabindex="2" placeholder="Password" type="password" name="password" id="password">
 
-        <label for="remember" class="checkbox">{{{ Lang::get('confide::confide.login.remember') }}}
+        {{--
+        <label for="remember" class="checkbox">Remember
             <input type="hidden" name="remember" value="0">
             <input tabindex="4" type="checkbox" name="remember" id="remember" value="1">
         </label>
-        
-        <button tabindex="3" type="submit" class="btn">{{{ Lang::get('confide::confide.login.submit') }}}</button>        
+        --}}
+
+        <button tabindex="3" type="submit" class="btn">Login</button>        
     </fieldset>
 </form>

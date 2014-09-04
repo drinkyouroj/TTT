@@ -1,8 +1,14 @@
 <?php
 class UserController extends BaseController {
 
-	public function __construct(PostRepository $post) {
+	public function __construct(
+                        PostRepository $post,
+                        UserRepository $user,
+                        EmailRepository $email
+                        ) {
 		$this->post = $post;
+        $this->user = $user;
+        $this->email = $email;
 	}
 
 	/**
@@ -26,59 +32,38 @@ class UserController extends BaseController {
      */
     public function postIndex()
     {	
-    	//Captcha
-		$rules = array(
-	        'captcha' => 'required|captcha',
-	        'username' => 'required|min:3|max:15|unique:users|alpha_dash'
-	    );
-		
-		$validation = Validator::make(Input::all(), $rules);
-		
-        if ($validation->fails() )
-        {	
-        	return Redirect::to('user/create')
-                ->withInput(Input::except('password'))
-				->withErrors($validation);
-        }
-		
-        $user = new User;
+        //Data input
+        $data = array();
+        $data['username']   = Request::get('username');
+        $data['email']      = Request::get('email');
+        $data['password']   = Request::get('password');
+        $data['password_confirmation'] = Request::get('password_confirmation');
+        $data['captcha']    = Request::get('captcha');
 
-        $user->username = Input::get( 'username' );
-		
-		//If the signup form has no input for the email, then make it up.
-		if(strlen(Input::get( 'email' )) == 0) {
-			$user->email = Input::get( 'username' ).'@twothousandtimes.com';
-		}else {
-			$user->email = Input::get( 'email' );
-		}
-        
-        $user->password = Input::get( 'password' );
+        $result = $this->user->create($data);
 
-        // The password confirmation will be removed from model
-        // before saving. This field will be used in Ardent's
-        // auto validation.
-        $user->password_confirmation = Input::get( 'password_confirmation' );
-
-        // Save if valid. Password field will be hashed before save
-        $user->save();
-		
-        if ( $user->id )
-        {
-        	//Gotta add the new user to SOLR
-        	SolariumHelper::updateUser($user);
-        	
-            // Redirect with success message, You may replace "Lang::get(..." for your custom message.
-	        return Redirect::to('user/loginonly')
-	            ->with( 'notice', Lang::get('confide::confide.alerts.account_created') );
-        }
-        else
-        {
-            // Get validation errors (see Ardent package)
-            $error = $user->errors()->all(':message');
-
+        //If save goes well on the other side and passed validation, it will give the user object an ID.
+        if(!$result['user']) {
             return Redirect::to('user/create')
                 ->withInput(Input::except('password'))
-                ->with( 'error', $error );
+                ->withErrors($result['validation']);//returns validator if $user is not created.
+        } else {
+            //Auto Login on Creation.
+            $user = $this->user->login($data);
+            //Gotta send out email
+            if(!empty($data['email'])) {
+                $email_data = array(
+                    'from' => 'no_reply@twothousandtimes.com',
+                    'to' => array($data['email']),
+                    'subject' => 'Thanks for Joining Two Thousand Times!',
+                    'plaintext' => View::make('v2/emails/new_user_plain')->with('data', $data),
+                    'html'  => View::make('v2/emails/new_user_html')->with('data',$data)
+                    );
+
+                $this->email->create($email_data);
+            }
+
+	        return Redirect::to('myprofile');
         }
     }
 
@@ -88,10 +73,9 @@ class UserController extends BaseController {
      */
     public function getLogin()
     {
-        if( Confide::user() )
+        if( !Auth::guest() )
         {
-            // If user is logged, redirect to internal 
-            // page, change it to '/admin', '/dashboard' or something
+            // If user is logged, redirect            
             return Redirect::to('/');
         }
         else
@@ -102,7 +86,7 @@ class UserController extends BaseController {
 	
 	public function getLoginonly()
     {
-        if( Confide::user() )
+        if( !Auth::guest() )
         {
             // If user is logged, redirect to internal 
             // page, change it to '/admin', '/dashboard' or something
@@ -118,8 +102,10 @@ class UserController extends BaseController {
 	 * Async Username checker
 	 * 	This is used forthe signup process. 
 	 */
-	public function getUserCheck() {
-		if(User::where('username', Request::get('username'))->count()) {
+	public function getUserCheck()
+    {
+		if( $this->user->usernameExists( Request::get('username') ) ) 
+        {
 			$val = false;
 		} else {
 			$val = true;
@@ -137,62 +123,14 @@ class UserController extends BaseController {
     public function postLogin()
     {
         $input = array(
-            'email'    => Input::get( 'email' ), // May be the username too
-            'username' => Input::get( 'email' ), // so we have to pass both
-            'password' => Input::get( 'password' ),
-            'remember' => Input::get( 'remember' ),
+            'username' => Request::get( 'username' ), // so we have to pass both
+            'password' => Request::get( 'password' )
         );
+        
+        $user = $this->user->login($input);
 
-        // If you wish to only allow login from confirmed users, call logAttempt
-        // with the second parameter as true.
-        // logAttempt will check if the 'email' perhaps is the username.
-        if ( Confide::logAttempt( $input ) ) 
+        if ( is_object($user) ) 
         {
-        	
-        	//YD change here: Let's store the UN and stuff.
-        	$user = User::where('email', '=', $input['email'])
-        			->orwhere('username', '=', $input['email'])
-        			->first();
-			
-			//If this user is banned.....
-			if($user->banned == 1) {
-				Confide::logout();
-				return Redirect::to('/banned');
-			}
-
-			Session::put('username', $user->username);
-			Session::put('email', $user->email);
-			Session::put('user_id', $user->id);
-			//Session::put('join_date', $user->created_at);
-			Session::put('featured', $user->featured);
-			Session::put('first', $user->first);
-			
-			//This sets the Session first to false.  
-			if($user->first) {
-				User::where('id', $user->id)
-					->update(array('first'=>false));
-			}
-			
-			if($user->featured != 0) {
-				//Let's just grab the user's image.
-				$user_featured = $this->post->findById($user->featured);
-				Session::put('image', $user_featured->image);
-			}
-			
-			//Is this user an admin?
-			if($user->hasRole('Admin')) {
-				//this was more convienent in some places as pulling the user is a pain in the ass.
-				Session::put('admin', 1);
-			} else {
-				Session::put('admin', 0);
-			}
-			
-			//Is this user a moderator?
-			if($user->hasRole('Moderator')) {
-				Session::put('mod', 1);
-			} else {
-				Session::put('mod', 0);
-			}
 			
 			//Gotta redirect to an acknowledge page if the user happens to have softDeleted their account
 			if(!is_null($user->deleted_at)) {
@@ -216,20 +154,16 @@ class UserController extends BaseController {
         }
         else
         {
-            $user = new User;
+            $user = $this->user->instance();
 
             // Check if there was too many login attempts
-            if( Confide::isThrottled( $input ) )
+            if( Session::get('login-attempt') >= 5 )
             {
-                $err_msg = Lang::get('confide::confide.alerts.too_many_attempts');
-            }
-            elseif( $user->checkUserExists( $input ) and ! $user->isConfirmed( $input ) )
-            {
-                $err_msg = Lang::get('confide::confide.alerts.not_confirmed');
+                $err_msg = 'Too many attempts';
             }
             else
             {
-                $err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
+                $err_msg = 'Wrong Credentials';
             }
 
             return Redirect::to('user/loginonly')
@@ -245,9 +179,10 @@ class UserController extends BaseController {
 			$id = Request::segment(3);
 			$rando_string = Request::segment(4);
 			if($rando_string == Session::get('restore_string')) {
-				$user = User::onlyTrashed()->where('id', $id)->restore();
-				//Might want to think about the below a bit more.
-				$this->post->restore($id);
+                //User Restore
+				$this->user->restore($id);
+				//Post Restore
+				$this->post->restore($id);//Might want to think about this a bit more.
 				return Redirect::to('user/loginonly');
 			} else {
 				return Redirect::to('featured');
@@ -263,18 +198,20 @@ class UserController extends BaseController {
      */
     public function getConfirm( $code )
     {
-        if ( Confide::confirm( $code ) )
+        
+        if ( $this->user->confirm( $code ) )
         {
-            $notice_msg = Lang::get('confide::confide.alerts.confirmation');
+            $notice_msg = 'Your user is confirmed.';
                         return Redirect::to('user/login')
                             ->with( 'notice', $notice_msg );
         }
         else
         {
-            $error_msg = Lang::get('confide::confide.alerts.wrong_confirmation');
+            $error_msg = 'Wrong Code Bro.';
                         return Redirect::to('user/login')
                             ->with( 'error', $error_msg );
         }
+        
     }
 
     /**
@@ -284,7 +221,6 @@ class UserController extends BaseController {
     public function getForgot()
     {
     	return View::make('user.forgot');
-        //return View::make(Config::get('confide::forgot_password_form'));
     }
 
     /**
@@ -314,8 +250,6 @@ class UserController extends BaseController {
      */
     public function getReset( $token )
     {
-        //return View::make(Config::get('confide::reset_password_form'))
-        //        ->with('token', $token);
         return View::make('user.reset')->with('token', $token);
     }
 
@@ -325,14 +259,17 @@ class UserController extends BaseController {
 	 * This function kind of sucks (had to mix confide and our own wants)
 	 */
 	public function postNewpass() {
-		$input = array(
-            'email' => Auth::user()->username, // so we have to pass both
-            'username' => Auth::user()->username,
-            'password' => Input::get( 'current_password' )
+
+        $input = array(
+            'username' => Auth::user()->username, // so we have to pass both
+            'password' => Request::get( 'current_password' )
         );
+        
+        $user = $this->user->login($input);
+
 		$failed = false;
 		
-        if ( Confide::logAttempt( $input ) ) 
+        if ( $user ) 
         {
         	$new_input = array(
         			'password' => Input::get( 'password' ),
@@ -355,10 +292,8 @@ class UserController extends BaseController {
 				
 			} else {
 				//Actually update the damn passwords
-				$user = Auth::user();
-				$user->password = $new_input['password'];	        
-		        $user->password_confirmation = $new_input['password_confirmation'];
-		        $user->updateUniques();
+                $user = Auth::user();
+				$this->user->updatePassword($user, $new_input['password']);
 			}
 
         } else {
@@ -379,14 +314,13 @@ class UserController extends BaseController {
             return Response::json(
                     array(
                         'success' => true,
-                        'message' => 'Nice!'),
+                        'message' => 'Nice!'
+                        ),
                     200
                 );
 		}
 		
 	}
-	 
-	 
 
     /**
      * Attempt change password of the user
@@ -422,9 +356,8 @@ class UserController extends BaseController {
      */
     public function getLogout()
     {
-        Confide::logout();
-		Session::flush();
-		Session::regenerate();
+        $this->user->logout();
+
         return Redirect::to('/');
     }
 

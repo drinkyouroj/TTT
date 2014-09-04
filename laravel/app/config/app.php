@@ -138,6 +138,8 @@ return array(
 		'AppStorage\MessageStorageServiceProvider',
 		'AppStorage\PostViewStorageServiceProvider',
 		'AppStorage\FeedStorageServiceProvider',
+		'AppStorage\EmailStorageServiceProvider',
+		'AppStorage\UserStorageServiceProvider',
 	),
 
 	/*

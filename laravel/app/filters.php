@@ -206,7 +206,7 @@ View::composer('*', function($view) {
 			//This isn't most ideal, but let's just place the banned detector here
 			if(User::where('id', $user_id)->where('banned', true)->count()) {
 				//this guy's session will terminate right as he/she clicks on any profile action.
-				Confide::logout();
+				Auth::logout();
 				return Redirect::to('/banned');
 			}
 		}

@@ -1,13 +1,4 @@
 <form method="POST" action="{{{ (Confide::checkAction('UserController@store')) ?: URL::to('user')  }}}" accept-charset="UTF-8">
-
-	@if ( Session::get('error') )
-	<div class="alert alert-error">
-		@if ( is_array(Session::get('error')) )
-			{{ head(Session::get('error')) }}
-		@endif
-	</div>
-	@endif
-	
 	
 	@if ( Session::get('notice') )
 		<div class="alert alert-yes">{{ Session::get('notice') }}</div>
@@ -23,23 +14,35 @@
 		</div>
 		
 		<div class="email-group">
-	        <label for="email">{{{ Lang::get('confide::confide.e_mail') }}}</label>
-	        <input placeholder="{{{ Lang::get('confide::confide.e_mail') }}}" type="text" name="email" id="email" value="{{{ Input::old('email') }}}">
+	        <label for="email">Email</label>
+	        <input placeholder="Email" type="text" name="email" id="email" value="{{{ Input::old('email') }}}">
+	        @if($errors->first('email'))
+	        	<span class="error">{{$errors->first('email')}}</span>
+	        @endif
 		</div>
 		
-        <label for="password">{{{ Lang::get('confide::confide.password') }}}</label>
-        <input placeholder="{{{ Lang::get('confide::confide.password') }}}" type="password" name="password" id="password" minlength="6">
+        <label for="password">Password</label>
+        <input placeholder="Password" type="password" name="password" id="password" minlength="6">
+        @if($errors->first('password'))
+        	<span class="error">{{$errors->first('password')}}</span>
+        @endif
 
-        <label for="password_confirmation">{{{ Lang::get('confide::confide.password_confirmation') }}}</label>
-        <input placeholder="{{{ Lang::get('confide::confide.password_confirmation') }}}" type="password" name="password_confirmation" id="password_confirmation" minlength="6" >
+        <label for="password_confirmation">Password Confirmation</label>
+        <input placeholder="Password Confirmation" type="password" name="password_confirmation" id="password_confirmation" minlength="6" >
+    	@if($errors->first('password_confirmation'))
+        	<span class="error">{{$errors->first('password_confirmation')}}</span>
+        @endif
 		
 		<br/>
 		<br/>
 		<img src="{{Captcha::img()}}"/><br/>
 		<input type="text" name="captcha" placeholder="Captcha">
+		@if($errors->first('captcha'))
+        	<span class="error">{{$errors->first('captcha')}}</span>
+        @endif
 		
         <div class="form-actions">
-          <button type="submit" class="btn">{{{ Lang::get('confide::confide.signup.submit') }}}</button>
+          <button type="submit" class="btn">Submit</button>
         </div>
 
     </fieldset>
