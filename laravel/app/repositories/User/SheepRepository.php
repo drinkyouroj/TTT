@@ -21,17 +21,22 @@ class SheepRepository implements UserRepository {
 		return new User;
 	}
 
-	public function create($data) {
+	public function create($data, $json = false) {
 		//Sanitize the data.
 		$user = self::instance();
-		$user->username = $data['username'];
-		$user->email = $data['email'];
-		$user->password = $data['password'];
-		$user->password_confirmation = $data['password_confirmation'];
-		$user->captcha = $data['captcha'];
+		$user->username = isset( $data['username'] ) ? $data['username'] : null;
+		$user->email = isset( $data['email'] ) ? $data['email'] : null;
+		$user->password = isset( $data['password'] ) ? $data['password'] : null;
+		$user->password_confirmation = isset( $data['password_confirmation'] ) ? $data['password_confirmation'] : null;
+		$user->captcha = isset( $data['captcha'] ) ? $data['captcha'] : null;
 
 		//Run Validation.
-		$validation = $user->validate($user->toArray());
+		if($json) {
+			unset($user->captcha);
+			$validation = $user->validateJSON($user->toArray());
+		}else {
+			$validation = $user->validate($user->toArray());
+		}
 
 		if($validation->fails()) {
 			$result = array();

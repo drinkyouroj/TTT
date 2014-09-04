@@ -6,7 +6,7 @@ interface UserRepository {
 	public function instance();
 
 //Create
-	public function create($data);
+	public function create($data, $flag);
 
 //Read
 	public function exists($id);
