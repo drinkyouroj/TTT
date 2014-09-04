@@ -3,20 +3,20 @@
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
 
-class UserStorageServiceProvider extends ServiceProvider {
+class EmailStorageServiceProvider extends ServiceProvider {
  
 	public function register()
 	{
 		$this->app->bind(
-		'AppStorage\User\UserRepository',
-		'AppStorage\User\SheepRepository'
+		'AppStorage\Email\EmailRepository',
+		'AppStorage\Email\SesEmailRepository'
 		);
 		
 		$this->app->booting(function()
         {
             $loader = AliasLoader::getInstance();
-            $loader->alias('UserRepository',
-            		'AppStorage\User\UserRepository');
+            $loader->alias('EmailRepository',
+            		'AppStorage\Email\EmailRepository');
         });
 	}
 }

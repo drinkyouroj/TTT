@@ -20,7 +20,8 @@
 		"jenssegers/mongodb": "*",
 		"mews/captcha": "dev-master",
 		"thomaswelton/laravel-rackspace-opencloud": "dev-master",
-		"phpunit/phpunit": "4.2.*"
+		"phpunit/phpunit": "4.2.*",
+		"aws/aws-sdk-php": "2.*"
 	},
 	"autoload": {
 		"classmap": [

@@ -1,6 +1,6 @@
 @import '../base';//Must import this everywhere.
 
-$border_color: #a9a9a9;
+$border_color: #eee;
 
 //Top Controls Fixed (Post Type, Category, Drafe, Publish)
 .controls-wrapper {
@@ -9,9 +9,9 @@ $border_color: #a9a9a9;
 	top: $navbar_height;
 	//height: 50px;//height of the Controls bar.
 	width: 100%;
-	background: #3c3c3c;
+	background-image:url('/../../images/posts/black-90.png');
 	.controls-container {
-		padding: 5px inherit;
+		padding:15px 15px;
 		//button reset.
 		a {
 			border:none;
@@ -23,21 +23,20 @@ $border_color: #a9a9a9;
 			text-align: center;
 			a {
 				display:inline-block;
-				width: 205px;
-				margin-top: 10px;
-				
-				background: none;
-				color:#fff;
+				width: 192px;
+				text-align:left;
+				margin-top: 5px;
+				padding: 5px 15px 3px 0px;
+				color:$lightgray;
 
-				font-size: 11px;
-				@include montserrat(normal);
-				text-align: left;
-
-				border-bottom: 2px solid #fff;
-
-				background-image: url('');
-				background-position: center right;
-				background-repeat: no-repeat;
+				cursor: pointer;
+		        @include montserrat(normal);
+		        text-transform:uppercase;
+		        font-size:13px;
+		        background-image:url('/../../images/posts/cat-arrow-white.png');
+		        background-position:right center;
+		        background-repeat:no-repeat;
+		        background-size:10px 7px;
 			}
 		}
 		.draft-publish {
@@ -67,28 +66,58 @@ $border_color: #a9a9a9;
 	z-index: 3;
 	position:fixed;
 	width: 100%;
-	background:#1a1a1a;
+	background-image:url('/../../images/posts/black-90.png');
 	display:none;
-	padding-top: 79px;
+	padding-top: 30px;
+	padding-bottom: 50px;
 	.category-container {
 		label {
-			color:#fff;
+			color:#eee;
+		}
+		label.control-label {
+			text-transform:uppercase;
+			font-size:12px;
+			letter-spacing:2px;
+			@include montserrat(normal);
 		}
 		.story-type-box {
 
 		}
 		.category-box {
-			color:#fff;
+			color:$lightgray;
 			ul {
+				display:inline-block;
 				list-style: none;
 				margin: 0;
-				padding: 0;
+				padding: 15px 0px 15px 15px;
+				border:solid 1px  #525252;
 				li {
 					margin: 0;
 					padding: 0;
 					input {
 
 					}
+					label {
+						font-size:16px;
+						letter-spacing:1px;
+						@include garamond-italic;
+					}
+					label.error {
+						width:100%;
+					}
+				}
+			}
+		}
+		.close-category {
+			border-top: solid 1px $lightgray;
+			margin-top:30px;
+			padding-top:30px;
+			text-align:center;
+			a {
+				background:none;
+				&:hover {
+					color:$blue;
+					border: solid 2px $blue;
 				}
 			}
 		}
@@ -96,17 +125,32 @@ $border_color: #a9a9a9;
 }
 
 .top-submit-wrapper {
-	background:#fff;
+	background:$lightgray;
 	.top-submit-container {
 		position: relative;
 		width: 100%;
 		max-width: 1400px;		
-		padding-top: 49px;
-		min-height: 370px;//Change Min-height value based on the window.
-		
+		margin-top: 69px;
+		padding-left:0px;
+		padding-right:0px;
+		height: 619px;//Change Min-height value based on the window.
+		@media screen and (min-width: 992px) {
+			display: table;
+			-moz-box-sizing: border-box;
+		    box-sizing: border-box;
+		    .row {
+		    	height: 100%;
+				display: table-row;
+				.form-heading, .image-system {
+					display: table-cell;
+					height: auto;
+					float: none;
+				}
+		    }
+		}
 		//Shared error styling
 		.error {
-
+			background:$red;
 		}
 
 		label {
@@ -121,71 +165,97 @@ $border_color: #a9a9a9;
 			@include montserrat(bold);
 		}
 
-		.title {
-			margin-bottom: 20px;
-			label {
-				margin-bottom: 8px;
-				&:after {
-					@include label_arrow_bottom();
+		.form-heading {
+			position:relative;
+			background-color: #fff;
+			padding-top: 30px;
 
+			.title, .tags {
+				margin-left:15px;
+				margin-right:15px;
+			}
+
+			.title {
+				margin-bottom: 20px;
+				label {
+					margin-bottom: 8px;
+					&:after {
+						@include label_arrow_bottom();
+
+					}
+				}
+				textarea {
+					text-align: center;
+					height: 150px;
+					@include border-radius(0);
+					background: none;
+					border-color: $border_color;
+					font-size: 45px;
+					@include montserrat(bold);
+					text-transform:uppercase;
+					color:$dark;
+					line-height:49.5px;
+					margin-left:0px;
 				}
 			}
-			textarea {
-				text-align: center;
-				height: 150px;
-				@include border-radius(0);
-				background: none;
-				border-color: $border_color;
-				text-transform: uppercase;
-				@include montserrat(bold);
-				font-size: 30px;
-			}
-		}
 
-		.tags {
-			width: 100%;
-			.tag {
-				width: 32%;
-				font-size: 0;
-				display:inline-block;
-				input {
+			.tags {
+				
+				.tag {
+					float:left;
+					width: 33.33%;
+					font-size: 0;
+					display:inline-block;
+					input {
+						font-size:17px;
+						@include garamond-italic;
+						width: 100%;
+						text-transform:none;
+					}
+				}
+				label {
+					margin-top: 8px;
+					margin-right: 1px;
 					font-size: 12px;
-					width: 100%;
+					&:after {
+						@include label_arrow_top();
+						left: -45px;
+					}
 				}
-			}
-			label {
-				margin-top: 8px;
-				margin-right: 20px;
-				&:after {
-					@include label_arrow_top();
-					left: -45px;
+				a.tags-tooltip {
+					font-size:12px;
+					border:solid 2px $blue;
+					padding:2px 6px 1px 6px;
 				}
-			}
-			label,a {
-				font-size: 12px;
-				float: right;
 			}
 		}
-
 		.image-system {
-			min-height: 370px;
+			@media screen and (max-width: 992px) {
+				height: 500px;
+			}
+			position:relative;
+			height: 619px;
 			background-size: cover;
 			background-repeat: no-repeat;
 			.image-select {
+				position:absolute;
+				left:0px;
+				top:220px;
 				text-align: center;
 				
-				margin: 50px 0;//This determines the height of the image.
+				margin: 0px 0;//This determines the height of the image.
 
 				width: 100%;
 				a {
 					img {
-						margin-bottom: 40px;
+						margin-bottom: 20px;
 					}
 					span {
-						@include fjalla;
-						color:#343638;
-						font-size: 22px;
+						@include montserrat(normal);
+						color:#525252;
+						font-size: 16px;
 						text-transform: uppercase;
+						letter-spacing:2px;
 					}
 				}
 			}
@@ -196,13 +266,6 @@ $border_color: #a9a9a9;
 				bottom: 20px;
 				right: 20px;
 				a {
-					display:inline-block;
-					text-decoration: none;
-					text-transform: uppercase;
-					background: $blue;
-					padding: 5px 10px;
-					color:#fff;
-					@include montserrat;
 					&:hover {
 						color:#000;
 					}
@@ -217,6 +280,7 @@ $border_color: #a9a9a9;
 	top: -10px;
 	.body-submit-container {
 		padding-top: 55px;
+		padding-bottom: 55px;
 		.story {
 			label {
 				@include label;
@@ -233,12 +297,12 @@ $border_color: #a9a9a9;
 				@include border-radius(0);
 			}
 			.text-input {
-				min-height: 300px;
+				min-height: 600px;
 				border: 1px solid $border_color;
-			
+				background:#fff;
 				font-size:16px;
 				line-height:150%;
-				text-align:justify;
+				text-align:left;
 				padding: 25px;
 				outline: none;
 				

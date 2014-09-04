@@ -9,10 +9,10 @@
 		height: $post_actionbar_height;
 		z-index: 999;
 		text-align: center;
-		background-color: $dark_gray;
-		padding: 10px;
+		background-image:url('/../../images/posts/black-90.png');
+		padding: 15px;
 		.follow, ul {
-			float:left;
+			float:right;
 		}
 		 a {
 		 	display: inline-block;
@@ -34,9 +34,10 @@
 }
 
 .post-heading-wrapper {
-	background-color: $lightgray;
+	background-color: #fff;
 
 	.post-heading-container {
+		position: relative;
 		padding-left:0px;
 		padding-right:0px;
 		@media screen and (min-width: 992px) {
@@ -53,10 +54,6 @@
 				}
 		    }
 		}
-		
-		width: 100%;
-		max-width: 1400px;
-		position: relative;
 
 		.row {
 			.post-heading {
@@ -65,7 +62,6 @@
 				background-color: #fff;
 				h2 {
 					padding-top:90px;
-					font-weight: bold;
 					font-size: 45px;
 					@include montserrat(bold);
 					text-transform:uppercase;
@@ -130,7 +126,7 @@
 				@media screen and (max-width: 992px) {
 					height: 500px;
 				}
-				height: 619px;
+				height: 500px;
 				background-color:#000;//temporary DELETE
 				-webkit-background-size: cover;
 		        -moz-background-size: cover;
