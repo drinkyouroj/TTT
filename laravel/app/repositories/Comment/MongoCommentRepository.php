@@ -22,8 +22,14 @@ class MongoCommentRepository implements CommentRepository {
 	/**
 	 *	Constructs a new comment
 	 *	@param $user_id: id of the user who authored the post
+	 *	@param $username: username of the author
+	 *	@param $reply_id: the id of the comment in which this is a reply to (if any)
+	 *	@param $post_id: the post id to which this comment originated
+	 *	@param $comment_body: the actual text of the comment
+	 *
+	 *	@return Returns the new comment, or the errors if the comment was not successfully saved.
 	 */
-	public function create ( $user_id, $username ) {
+	public function create ( $user_id, $username, $reply_id, $post_id, $comment_body ) {
 		// Before creating the comment, make sure the user has not commented within the last 10 seconds
 		$last_comment = MongoComment::where( 'author.user_id', $user_id )
 									->where( 'created_at', '>', new DateTime('-10 seconds') )
@@ -33,14 +39,13 @@ class MongoCommentRepository implements CommentRepository {
 			return null;
 		}
 
-
 		// Step 1: generate the unique portions of the slug and full slug.
 		$slug_part = $this->generateRandomString(5);
 		$created_at = new DateTime();
 		$full_slug_part = $created_at->format('Y.m.d.H.i.s').':'.$slug_part;
 		// Step 2: check if this comment is a reply to another
-		if ( Request::get( 'reply_id' ) ) {
-			$parent_comment = MongoComment::find( Request::get( 'reply_id' ) );
+		if ( $reply_id ) {
+			$parent_comment = MongoComment::find( $reply_id );
 			// TODO: double check that we actually have the parent comment! (ie: we were given a valid reply_id)
 			$slug = $parent_comment->slug.'/'.$slug_part;
 			$full_slug = $parent_comment->full_slug.'/'.$full_slug_part;
@@ -50,10 +55,10 @@ class MongoCommentRepository implements CommentRepository {
 			$full_slug = $full_slug_part;
 			$depth = 0;
 		}
-		// Step 3: Do the insert!
+		// Step 3: Build up the new comment
 		$new_comment = new MongoComment;
-		$new_comment->post_id = intval( Request::get( 'post_id' ) );
-		$new_comment->parent_comment = Request::get( 'reply_id' ) ? Request::get( 'reply_id' ) : null;
+		$new_comment->post_id = intval( $post_id );
+		$new_comment->parent_comment = $reply_id ? $reply_id : null;
 		$new_comment->slug = $slug;
 		$new_comment->full_slug = $full_slug;
 		$new_comment->created_at = $created_at;
@@ -63,16 +68,35 @@ class MongoCommentRepository implements CommentRepository {
 							);
 		$new_comment->published = 1;
 		$new_comment->depth = $depth;
-		$new_comment->body = strip_tags( Request::get( 'body' ) );
-		$new_comment->save();
-		return $new_comment;
+		$new_comment->body = strip_tags( $comment_body );
+		$new_comment->likes = array();
+		$new_comment->flags = array();
 
-		// $this->comment->raw(function($colleciton) {
-		// });
+		// Step 4: Run the validate to make sure all fields are actually valid
+		$validation = $new_comment->validate( $new_comment->toArray() );
+
+		if ( $validation->fails() ) {
+			return null;
+		} else {
+			// Step 5: Save the beast
+			$new_comment->save();	
+			if ( $new_comment->id ) {
+				return $new_comment;
+			} else {
+				return null;
+			}
+		}
 	}
 
-	//Create??
-	public function input ($input) {}
+	public function update($input) {
+
+	}
+	public function delete ( $id ) {
+		$comment = MongoComment::find( $id );
+		if ( $comment instanceof MongoComment ) {
+			$comment->delete();
+		}
+	}
 
 	/**
 	 *	Find a comment by its id (the actual _id field given to it by mongo)
@@ -92,9 +116,6 @@ class MongoCommentRepository implements CommentRepository {
 						   ->take( $paginate )
 						   ->get();
 	}
-	
-	//Read Multi
-	public function all() {}
 	
 	/**
 	 *	Fetch comments by a given author
@@ -120,8 +141,47 @@ class MongoCommentRepository implements CommentRepository {
 		return count( $result ) ? true : false;
 	}
 
-	//Update
-	public function update($input) {}
+
+	public function like( $user_id, $comment_id ) {
+		$comment = $this->findById( $comment_id );
+		if ( $comment instanceof MongoComment ) {
+			$comment->push('likes', $user_id, true);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public function unlike( $user_id, $comment_id ) {
+		$comment = $this->findById( $comment_id );
+		if ( $comment instanceof MongoComment ) {
+			$comment->pull('likes', $user_id);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public function flag( $user_id, $comment_id ) {
+		$comment = $this->findById( $comment_id );
+		if ( $comment instanceof MongoComment ) {
+			$comment->push('flags', $user_id, true);
+
+			if ( count( $comment->flags ) > 4 ) {
+				// TODO: so many flags!!! somebody should probably intervene.
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public function unflag( $user_id, $comment_id ) {
+		$comment = $this->findById( $comment_id );
+		if ( $comment instanceof MongoComment ) {
+			$comment->pull('flags', $user_id);
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	/**
 	 *	Publish a given comment
@@ -138,14 +198,12 @@ class MongoCommentRepository implements CommentRepository {
 		$comment->save();
 	}
 	
-	//Delete
-	public function delete ($id) {}
 
-	/**
-	 *	Simple random string generator for creating slugs.
-	 */
-	private function generateRandomString($length = 5) {
-	    return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
-	}
-	
+		/**
+		 *	Simple random string generator for creating slugs.
+		 */
+		private function generateRandomString($length = 5) {
+		    return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+		}
+		
 }

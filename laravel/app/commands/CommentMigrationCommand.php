@@ -118,6 +118,8 @@ class CommentMigrationCommand extends Command {
 			$new_comment->published = $comment->published;
 			$new_comment->depth = $depth;
 			$new_comment->body = $comment->body;
+			$new_comment->likes = array();
+			$new_comment->flags = array();
 			$new_comment->save();
 			// echo "Saved comment ".$comment->id."\n";
 			return $new_comment->id;

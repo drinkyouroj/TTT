@@ -258,18 +258,29 @@ function ProfileActions() {
 		//below has to be done to pass through the scope of both getData and $.each
 		var post_item_template = this.post_item_template;
 		var target = this.target;
+		var editCheck = this.editCheck;
 		this.urlConstructor();
 		this.getData(this.url, function(data) {
 			$.each(data.collection, function(idx, val) {
+				var editable = editCheck(val.post.published_at);
 				view_data = {
 					site_url: window.site_url,
-					post: val.post
+					post: val.post,
+					user_id: window.user_id,
+					editable: editable,
+					featured_id: window.featured_id
 				};
 				$('#collection-content',target).append(post_item_template(view_data));
 			});
 		});
 		
 	};
+
+		this.editCheck = function(published_at) {
+			date = moment(published_at);
+			threeDaysAgo  = moment().subtract('3','days');
+			return date.tz('America/Los_Angeles') >= threeDaysAgo.tz('America/Los_Angeles');
+		}
 
 	this.renderComments = function() {
 		//scope issues
@@ -476,5 +487,4 @@ function ProfileActions() {
 			this.renderComments();
 		}
 	};
-
 }

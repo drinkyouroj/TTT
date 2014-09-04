@@ -6,7 +6,8 @@
 
 class StagingController extends BaseController {
 
-	public function __construct( ) {
+	public function __construct( UserRepository $user ) {
+		$this->user = $user;
 		/**
 		 *	Used to ensure a reservation cap on usernames! use in validation as follows
 		 *	reservation_cap:{max usernames}
@@ -14,8 +15,8 @@ class StagingController extends BaseController {
 		 */
 		Validator::extend('reservation_cap', function($attribute, $value, $parameters) {
 		    $cap = $parameters[0];
-		    $users = User::where( 'email', $value )->get();
-		    return count( $users ) < $cap;
+		    $users = User::where( 'email', $value )->count();
+		    return $users < $cap;
 		});
 	}
 
@@ -37,11 +38,11 @@ class StagingController extends BaseController {
 				array( 
 					'username' => $username,
 					'email' => $email
-				), 
+				),
 				// Validation rules
-				array( 
+				array(
 					'username' => 'required|min:3|max:15|unique:users|alpha_dash', 
-					'email' => 'required|email|reservation_cap:2' 
+					'email' => 'required|email|reservation_cap:3'
 				),
 				// Error messages
 				array(
@@ -58,19 +59,22 @@ class StagingController extends BaseController {
 
 		if ( $validation->fails() ) {
 			// Failed to validate, return erros
-			return Response::json( array( 'error' => $validation->messages()->toArray() ), 200 );
+			return Response::json( 
+				array( 
+					'error' => $validation->messages()->toArray()
+				), 200 );
 		} else {
 			// Succesfully validated, proceed to create user
-			$user = new User;
-			$user->username = $username;
-			$user->email = $email;
-			$user->password = $this->generateRandomString(10);
-			$user->password_confirmation = $user->password;
-			$user->save();
-			if ( $user->id ) {
+			$data = array();
+			$data['username'] = $username;
+			$data['email'] = $email;
+			$data['password'] = $this->generateRandomString(10);
+			$data['password_confirmation'] = $data['password'];
+			$results = $this->user->create( $data, true );
+			if ( $results['user'] ) {
 				return Response::json( array( 'success' => 'Thank you! You have succesfully reserved the username: '.$username ), 200 );
 			} else {
-				return Response::json( array( 'error' => $user->errors()->toArray() ), 200 );
+				return Response::json( array( 'error' => $results['validation']->errors()->toArray() ), 200 );
 			}
 		}
 	}

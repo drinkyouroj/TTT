@@ -80,6 +80,7 @@ $(function() {
 		submit_comment( $(this) );
 	});
 
+
 	/**
 	 *	Algo for rendering comments
 	 *	data:

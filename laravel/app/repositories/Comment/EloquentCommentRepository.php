@@ -28,7 +28,7 @@ class EloquentCommentRepository implements CommentRepository {
 	}
 
 	//Create
-	public function create($user_id, $username) {
+	public function create( $user_id, $username, $reply_id, $post_id, $comment_body ) {
 		//TODO: if we use this repository again we need to implement this.
 	}
 

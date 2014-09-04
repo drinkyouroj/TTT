@@ -63,7 +63,7 @@ class UserController extends BaseController {
                 $this->email->create($email_data);
             }
 
-	        return Redirect::to('myprofile');
+            return Redirect::to('myprofile');
         }
     }
 

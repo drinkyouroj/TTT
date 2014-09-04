@@ -59,7 +59,26 @@ $(function() {
 		event.preventDefault();
 		comment_delete($(this).data('delid'));
 	});
-	
+	// Like/Unlike Comment****************************************
+	$('.comments-listing').on('click', '.like-comment', function() {
+		var comment_id = $(this).closest('.comment').attr('id');
+		comment_id = comment_id.split('-')[1];
+		if ( $(this).hasClass('active') ) {
+			comment_unlike( comment_id, $(this) );
+		} else {
+			comment_like( comment_id, $(this) );
+		}
+	});
+	// Flag/Unflag Comment*****************************************
+	$('.comments-listing').on('click', '.flag-comment', function() {
+		var comment_id = $(this).closest('.comment').attr('id');
+		comment_id = comment_id.split('-')[1];
+		if ( $(this).hasClass('active') ) {
+			comment_unflag( comment_id, $(this) );
+		} else {
+			comment_flag( comment_id, $(this) );
+		}
+	});
 });
 
 /**
@@ -209,6 +228,58 @@ function comment_delete(id) {
 	});
 }
 
+function comment_like(id, scope) {
+	$.ajax({
+		url: window.site_url + 'rest/comment/like/' + id,
+		type: 'GET',
+		success: function(data) {
+			if ( data.success ) {
+				$(scope).toggleClass('active');
+				var $count_element = $(scope).closest('.comment').find('.like-comment-count');
+				var count = $count_element.html();
+				count++;
+				$count_element.html(count);
+			}
+		}
+	});
+}
+function comment_unlike(id, scope) {
+	$.ajax({
+		url: window.site_url + 'rest/comment/unlike/' + id,
+		type: 'GET',
+		success: function(data) {
+			if ( data.success ) {
+				$(scope).toggleClass('active');
+				var $count_element = $(scope).closest('.comment').find('.like-comment-count');
+				var count = $count_element.html();
+				count--;
+				$count_element.html(count);
+			}
+		}
+	});
+}
+function comment_flag(id, scope) {
+	$.ajax({
+		url: window.site_url + 'rest/comment/flag/' + id,
+		type: 'GET',
+		success: function(data) {
+			if ( data.success ) {
+				$(scope).toggleClass('active');	
+			}
+		}
+	});
+}
+function comment_unflag(id, scope) {
+	$.ajax({
+		url: window.site_url + 'rest/comment/unflag/' + id,
+		type: 'GET',
+		success: function(data) {
+			if ( data.success ) {
+				$(scope).toggleClass('active');
+			}
+		}
+	});
+}
 
 function error_log(result, action) {
 	switch(result) {

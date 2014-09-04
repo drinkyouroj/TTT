@@ -33,8 +33,12 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	//Post Save Route.
 	Route::post('savepost','PostController@postSavePost');
 
-	// Comment post route
+	// Comment routes!
 	Route::post('comment', 'CommentController@postRestComment');
+	Route::get('comment/like/{comment_id}', 'CommentController@likeComment');
+	Route::get('comment/unlike/{comment_id}', 'CommentController@unlikeComment');
+	Route::get('comment/flag/{comment_id}', 'CommentController@flagComment');
+	Route::get('comment/unflag/{comment_id}', 'CommentController@unflagComment');
 
 });
 

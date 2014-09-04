@@ -210,6 +210,38 @@
 						margin-top: 15px;
 						margin-bottom: 15px;
 					}
+
+					div.left-col {
+						float: left;
+						overflow: hidden;
+						margin-right: 10px;
+						text-align: center;
+						min-width: 40px;
+
+						.flag-comment, .like-comment {
+							display: inline-block;
+							margin: 0px 0px 15px 0px;
+							font-size: 16px;
+							cursor: pointer;
+							width: 100%;
+
+							&.flag-comment.active {
+								color: red;
+							}
+							&.like-comment.active {
+								color: $blue;
+							}
+						}
+						.like-comment-count {
+							display: block;
+							width: 100%;
+							margin-bottom: -15px;
+						}
+					}
+					div.right-col {
+						overflow: hidden;
+					}
+
 				}
 
 				div.thread-parent-divider {

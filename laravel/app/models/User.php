@@ -79,6 +79,17 @@ class User extends Eloquent implements UserInterface {
     	);
 	}
 
+	public function validateJSON($input)
+	{
+		return Validator::make($input, array(
+	        'username' => 'required|min:3|max:15|alpha_dash|unique:users',
+	        'email' => 'email|reservation_cap:3',
+	        'password' => 'required|between:4,11|confirmed',
+	        'password_confirmation' => 'between:4,11'
+    		)
+    	);
+	}
+
 
 	//Interface requirements:
 	public function getAuthIdentifier() 
