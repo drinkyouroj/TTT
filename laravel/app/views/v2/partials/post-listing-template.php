@@ -50,10 +50,10 @@
 			{{#ifCond post.user.id user_id }}
 				<div class="post-options">
 				{{#ifCond editable true}}
-					<a class="post-edit">Edit</a>
+					<a class="post-edit" href="{{site_url}}myprofile/editpost/{{post.id}}">Edit</a>
 				{{/ifCond}}
 				{{#ifNotCond featured_id post.id}}
-					<a class="set-featured">Feature</a>
+					<a class="set-featured" data-id="{{post.id}}">Feature</a>
 				{{/ifNotCond }}
 				</div>
 			{{/ifCond}}
