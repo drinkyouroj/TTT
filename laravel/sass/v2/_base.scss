@@ -4,12 +4,14 @@
 //Colors
 $blue: #32b1c6;
 $red: #f74141;
-$dark_gray: #383838;
-$gray: #a3a3a3;
+$dark_gray: #333;
+$gray: #dbd3ca;
 $lightgray: #eee;
 $beige: #fff9f0;
 $cream: #fff8ee;
-$dark: #222;//color that's not black, but looks like black.
+$dark: #181919;//color that's not black, but looks like black.
+$black: #000;
+$white: #fff;
 
 
 
@@ -102,13 +104,28 @@ textarea {
 	@include montserrat();
 }
 
+//shadow for notifications and dropdowns
+@mixin drop_shadow() {
+-moz-box-shadow:    0px 1px 1px 0px #525252;
+  -webkit-box-shadow: 0px 1px 1px 0px #525252;
+  box-shadow:         0px 1px 1px 0px #525252;
+}
+
+@mixin notifications_arrow_top() {
+  content: url('../../../../images/global/notifications-arrow.png');
+  position: absolute;
+  top: -14px;
+  left: 10px;
+  width: 16px;
+  height: 10px;
+}
+
 @mixin label_arrow_top() {
   content: url('../../../../images/posts/up-pointer.png');
   position: relative;
   top: -15px;
   width: 6px;
   height: 6px;
-  
 }
 
 @mixin label_arrow_bottom() {
@@ -148,6 +165,21 @@ textarea {
     width: 300px; 
   }
 }
+
+@mixin title_listing {
+  @include montserrat(bold);
+  text-transform:uppercase;
+  font-size:17px;
+  color:$dark;
+  line-height:20px;
+}
+
+@mixin tagline_listing {
+  @include garamond-italic;
+  text-transform:lowercase;
+  font-size:14px;
+}
+
 //Styling for category and sortby dropdowns
 @mixin catfilter {
   .category-filter-container {
@@ -184,7 +216,7 @@ textarea {
         position: relative;
         border-top:solid 1px $dark_gray;
         &:nth-child(odd) {
-           background-color: #000;
+           background-color: $black;
         }
         &:hover {
           background-color: #fff;
@@ -340,12 +372,9 @@ textarea {
     .post-title {
       margin-top:10px;
       margin-bottom: 3px;
+      word-break: break-all;
       a {
-        color:$dark;
-        font-size: 17px;
-        @include montserrat(bold);
-        text-transform:uppercase;
-        line-height: 20px;
+        @include title_listing;
       }
     }
 
@@ -353,8 +382,8 @@ textarea {
       li:nth-child(1), li:nth-child(2) {
         border-right: 1px solid gray;
       }
-      @include garamond-italic;
-      font-size:14px;
+      @include tagline_listing;
+      word-break: break-all;
     }
   }
 }

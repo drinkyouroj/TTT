@@ -62,8 +62,10 @@
 								</div>
 							@else
 								<div class="user">
-									<img class="avatar" src="">
-									<a href="{{Config::get('app.url')}}/myprofile">{{ Session::get('username') }}</a>
+									<a href="{{Config::get('app.url')}}/myprofile">
+										<img class="avatar" src="">
+										{{ Session::get('username') }}
+									</a>
 								</div>
 
 								<div class="notifications-title">NOTIFICATIONS</div>
@@ -81,7 +83,7 @@
 								</ul>
 								
 								<div class="view-all">
-									<a class="btn-flat-blue" href="{{Config::get('app.url')}}/profile/notifications">VIEW ALL</a>
+									<a class="btn-outline-blue" href="{{Config::get('app.url')}}/profile/notifications">VIEW ALL</a>
 								</div>
 
 								<div class="additional-user-actions">
@@ -94,7 +96,7 @@
 							
 							<div class="additional-actions">
 								<a href="{{ URL::to('privacy') }}">privacy policy</a>
-								<br>
+								|
 								<a href="{{ URL::to('terms') }}">terms of use</a>
 							</div>
 						</div>
