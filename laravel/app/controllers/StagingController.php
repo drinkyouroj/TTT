@@ -14,8 +14,8 @@ class StagingController extends BaseController {
 		 */
 		Validator::extend('reservation_cap', function($attribute, $value, $parameters) {
 		    $cap = $parameters[0];
-		    $users = User::where( 'email', $value )->get();
-		    return count( $users ) < $cap;
+		    $users = User::where( 'email', $value )->count();
+		    return $users < $cap;
 		});
 	}
 
@@ -37,11 +37,11 @@ class StagingController extends BaseController {
 				array( 
 					'username' => $username,
 					'email' => $email
-				), 
+				),
 				// Validation rules
-				array( 
+				array(
 					'username' => 'required|min:3|max:15|unique:users|alpha_dash', 
-					'email' => 'required|email|reservation_cap:2' 
+					'email' => 'required|email|reservation_cap:3'
 				),
 				// Error messages
 				array(
@@ -58,7 +58,15 @@ class StagingController extends BaseController {
 
 		if ( $validation->fails() ) {
 			// Failed to validate, return erros
-			return Response::json( array( 'error' => $validation->messages()->toArray() ), 200 );
+			return Response::json( 
+				array( 
+					'error' => $validation->messages()->toArray(),
+					'input' => array(
+							'username' => $username,
+							'email' => $email,
+							'what?' => $top_secret
+						)
+				), 200 );
 		} else {
 			// Succesfully validated, proceed to create user
 			$user = new User;

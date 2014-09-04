@@ -10,7 +10,14 @@ class MongoComment extends Eloquent {
 
 	public function validate ( $input ) {
 		$rules = array(
-				'body' => 'Required'
+				'body' => 'required|min:1|max:5000',
+				'post_id' => 'required',
+				'slug' => 'required',
+				'full_slug' => 'required',
+				'author' => 'required',
+				'depth' => 'required|integer|min:0',
+				'likes' => 'required|array',
+				'flags' => 'required|array'
 		);
 		return Validator::make( $input, $rules );
 	}

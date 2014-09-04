@@ -35,7 +35,7 @@ class UserController extends BaseController {
 		$validation = Validator::make(Input::all(), $rules);
 		
         if ($validation->fails() )
-        {	
+        {
         	return Redirect::to('user/create')
                 ->withInput(Input::except('password'))
 				->withErrors($validation);

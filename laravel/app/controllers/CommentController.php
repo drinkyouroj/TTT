@@ -50,31 +50,26 @@ class CommentController extends BaseController {
 	 *	@param 
 	 */
 	public function postRestComment () {
-		// Make sure there is authenticated user 
-		$user = Auth::check() ? Auth::user() : null;
-		
-		if ( $user == null || empty($user->id) )  {
-			return Response::json( array(
-					'error' => 'unauthenticated'
-				), 200);
-		}
+		// We can assume there is an authenticated user at this point (route filter)
+		$user = Auth::user();
 		// Proceed to create the comment
-		$comment = $this->comment->create( $user->id, $user->username );
+		$reply_id = Input::has('reply_id') ? Input::get('reply_id') : null;
+		$post_id = Input::has('post_id') ? Input::get('post_id') : null;
+		$comment_body = Input::has('body') ? Input::get('body') : null;
+
+		$comment = $this->comment->create( $user->id, $user->username, $reply_id, $post_id, $comment_body );
 		if ( $comment == null ) {
 			// Could not comment due to time time restrictions
+			// NOTE: $comment == null could mean several things (invalid comment, failed save)
 			return Response::json( array(
 					'error' => 'You must wait at least 10 seconds before commenting'
 				), 200);
-		}
-
-		$validator = $comment->validate( $comment->toArray() );//validation happens as an array
-		if( $validator->passes() ) {
+		} else {
 			// Proceed to increment comment count for the given post
-	
-			$post = $this->post->findById( intval( Request::get( 'post_id' ) ) );
+			$post = $this->post->findById( intval( $post_id ) );
 			if($post->user_id != $user->user_id) {
 				//Should the comment counter be incremented if you're the owner? no!
-				$this->post->incrementComment($post->id);
+				$this->post->incrementComment( $post->id );
 			}
 			//Notification code for new comments
 			NotificationLogic::comment($post, $comment);
@@ -86,55 +81,50 @@ class CommentController extends BaseController {
 					'is_mod' => $is_mod,
 					'active_user_id' => $user->id
 				), 200);
-		} else {
-
-			return Response::json( array(
-					'error' => 'invalid input'
-				), 200);
 		}
 	}
 
 	/**
-	 * 	The Post Comment Form. Creates a comment, pushes out the proper notifications,
-	 *	and then redirects back to the view.
+	 *	Like a comment
+	 *	@param $comment_id: the comment id
 	 */
-	public function postCommentForm () {
-		$user = Auth::user();
-		$user_id = $user->id;
-		$username = $user->username;
-
-		//$comment = CommentLogic::comment_object_input_filter();
-		$comment = $this->comment->create( $user_id, $username );
-
-		$validator = $comment->validate( $comment->toArray() );//validation happens as an array
-		
-		if( $validator->passes() ) {
-			// Proceed to increment comment count for the given post
-			$post = $this->post->findById(Request::segment(3));			
-			if($post->user_id != $user_id) {
-				//Should the comment counter be incremented if you're the owner? no!
-				$this->post->incrementComment($post->id);
-			}
-			//Notification code for new comments
-			NotificationLogic::comment($post, $comment);
-			
-			return Redirect::to('posts/'.$comment->post->alias.'#comment-'.$comment->id);
-		} else {
-			return Redirect::to('posts/'.$comment->post->alias)
-							->withErrors($validator)
-							->withInput();
-		}
+	public function likeComment ( $comment_id ) {
+		$this->comment->like( $comment_id, Auth::user()->id );
+		return Response::json( 
+			array( 'success' => true ), 
+			200);
 	}
-		
-	/**
-	 * Creates a form to be injected as a reply.  Not the best method, but we'll improve on this once we go full app for users.
-	 */
-	public function getCommentForm($post_id, $reply_id = false) 
-	{
-		$post = $this->post->findById($post_id);
-		return View::make('v2/posts/commentform')
-				->with('post', $post)
-				->with('reply_id', $reply_id);
-	}	
 
+	/**
+	 *	Unlike a comment
+	 *	@param $comment_id: the comment id
+	 */
+	public function unlikeComment ( $comment_id ) {
+		$this->comment->unlike( $comment_id, Auth::user()->id );
+		return Response::json( 
+			array( 'success' => true ), 
+			200);
+	}
+
+	/**
+	 *	Flag a comment
+	 *	@param $comment_id: the comment id
+	 */
+	public function flagComment ( $comment_id ) {
+		$this->comment->flag( $comment_id, Auth::user()->id );
+		return Response::json( 
+			array( 'success' => true ), 
+			200);
+	}
+
+	/**
+	 *	Unflag a comment
+	 *	@param $comment_id: the comment id
+	 */
+	public function unflagComment ( $comment_id ) {
+		$this->comment->unflag( $comment_id, Auth::user()->id );
+		return Response::json(
+			array( 'success' => true ), 
+			200);
+	}
 }
