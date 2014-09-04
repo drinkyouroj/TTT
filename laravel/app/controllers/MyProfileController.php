@@ -124,6 +124,36 @@ class MyProfileController extends BaseController {
 		}
 	}
 
+	public function getRestFeatured ($post_id) {
+		if($post_id) {
+			$featured  = $this->post->findById($post_id, true, array('user'));
+			//Build the 
+			$featured->excerpt = substr(strip_tags($featured->body),0,100);
+			return Response::json(
+					array('featured' => $featured->toArray() ),
+					200
+				);
+		} 
+	}
+
+	//Sets the user's featured id.
+	public function postRestFeatured ($post_id) {
+		if($post_id) {
+			$user = Auth::user();
+			$user->featured = $post_id;
+			$user->save();
+			return Response::json(
+					array('success'=> 'true'),
+					200
+				);
+		} else {
+			return Response::json(
+					array('success'=> 'false'),
+					200
+				);
+		}
+	}
+
 
 	/**
 	 *	Get the feed via rest call.
