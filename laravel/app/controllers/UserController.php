@@ -24,7 +24,7 @@ class UserController extends BaseController {
      */
     public function getCreate()
     {	
-        return View::make('user/signup');
+        return View::make('v2/users/signup_only');
     }
 
     /**
@@ -80,7 +80,7 @@ class UserController extends BaseController {
         }
         else
         {
-            return View::make('user.login');
+            return View::make('v2/users/signup_login');
         }
     }
 	
@@ -94,7 +94,7 @@ class UserController extends BaseController {
         }
         else
         {
-            return View::make('user.loginonly');
+            return View::make('v2/users/login_only');
         }
     }
 		

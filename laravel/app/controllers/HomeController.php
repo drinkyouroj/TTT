@@ -20,7 +20,7 @@ class HomeController extends BaseController {
 	{
 		$featured = $featured = $this->featured->find($this->paginate, 1, false);
 		
-		return View::make('home.index')
+		return View::make('v2/featured/featured')
 					->with('featured',$featured);
 	}
 	
