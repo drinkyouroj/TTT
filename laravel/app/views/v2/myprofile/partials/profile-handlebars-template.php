@@ -2,7 +2,7 @@
 <!--Below is used for the front page.-->
 <script type="text/x-handlebars-template" id="collection-template">
 	<div class="collection-container">
-		<div class="collection-controls">
+		<div class="collection-controls generic-controls">
 			<div class="col-md-12">
 				<a data-type="all" class="active">All</a> |
 				<a data-type="post">Post</a> |
@@ -29,7 +29,7 @@
 <script type="text/x-handlebars-template" id="default-profile-template">
 	<div class="col-md-12 default-container">
 		{{#ifCond view 'feed'}}
-			<div class="feed-controls">
+			<div class="feed-controls generic-controls">
 				<a data-type="all" class="active">All</a> |
 				<a data-type="post">Post</a> |
 				<a data-type="repost">Reposts</a>
@@ -59,42 +59,52 @@
 
 <!--Below is used for Saves-->
 <script type="text/x-handlebars-template" id="saves-template">
-	<div class="saves-box col-md-12">
-		<div class="image" style="background-image:url('{{site_url}}/uploads/final_images/{{save.image}}');">
+	<div class="container">
+		<div class="saves-box">
+			<div class="row">
+				<div class="image-container col-md-3">
+					<div class="image" style="background-image:url('{{site_url}}/uploads/final_images/{{save.image}}');">
 
-		</div>
+					</div>
+				</div>
 
-		<div class="text">
-			<h3>{{save.title}}</h3>
-			<p>{{save.tagline_1}} | {{save.tagline_2}} | {{save.tagline_3}}</p>
-		</div>
+				<div class="text col-md-7">
+					<h3>{{save.title}}</h3>
+					<p>{{save.tagline_1}} | {{save.tagline_2}} | {{save.tagline_3}}</p>
+				</div>
 
-		<div class="controls">
-			<a class="remove-save" data-id="{{save.id}}" >Remove</a>
+				<div class="controls col-md-2">
+					<a class="remove-save icon-button" data-id="{{save.id}}" >Remove</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </script>
 
 <!--Below is used for Drafts-->
 <script type="text/x-handlebars-template" id="drafts-template">
-	<div class="drafts-box col-md-12">
-		<div class="date">
-			<span>{{date}}</span>
-		</div>
-		<div class="image" style="background-image:url('{{site_url}}/uploads/final_images/{{draft.image}}');">
+	<div class="container">
+		<div class="drafts-box">
+			<div class="row">
+				<div class="date col-md-2">
+					<span>{{date}}</span>
+				</div>
+				<div class="image col-md-2" style="background-image:url('{{site_url}}/uploads/final_images/{{draft.image}}');">
 
-		</div>
+				</div>
 
-		<div class="text">
-			<h3>{{draft.title}}</h3>
-			<p>{{draft.tagline_1}} | {{draft.tagline_2}} | {{draft.tagline_3}}</p>
-		</div>
+				<div class="text col-md-5">
+					<h3>{{draft.title}}</h3>
+					<p>{{draft.tagline_1}} | {{draft.tagline_2}} | {{draft.tagline_3}}</p>
+				</div>
 
-		<div class="controls">
-			<a class="edit-draft" href="{{site_url}}myprofile/editpost/{{draft.id}}" >Edit Draft</a>
-			<a class="publish-draft" data-id="{{draft.id}}" >Publish</a>
-			<br/>
-			<a class="delete-draft" data-id="{{draft.id}}" data-toggle="tooltip" data-placement="bottom" title="Delete Forever!">Delete</a>
+				<div class="controls col-md-3">
+					<a class="edit-draft icon-button" href="{{site_url}}myprofile/editpost/{{draft.id}}" >Edit Draft</a>
+					<a class="publish-draft btn-flat-blue" data-id="{{draft.id}}" >Publish</a>
+					<br/>
+					<a class="delete-draft" data-id="{{draft.id}}" data-toggle="tooltip" data-placement="bottom" title="Delete Forever!">Delete</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </script>

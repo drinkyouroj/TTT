@@ -486,6 +486,29 @@ body {
 	}
 }
 
+//generic buton with icon to the left. just add a bg image
+.icon-button {
+	display:inline-block;
+	@include montserrat(normal);
+	text-transform:uppercase;
+	color: $dark;
+	font-size: 12px;
+	letter-spacing:2px;
+	background: none;
+	padding: 10px 15px 10px 50px;
+	text-decoration: none;
+	border: 2px solid $dark;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position:left center;
+	background-size:38px 38px;
+	&:hover {
+		// background-color: $gray;
+		background-color: $lightgray;
+	}
+}
+
+
 .post-button {
 	@include montserrat(normal);
 	color: white;

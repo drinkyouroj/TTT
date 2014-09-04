@@ -7,9 +7,10 @@ a:focus {
 //Profile Page headers.
 .profile-header-wrapper {
 	.profile-header-container {
+		margin-top:20px;
 		.header-left {
 			h2 {
-				margin-bottom:20px;
+				margin-bottom:40px;
 				background-position: left center;
 				background-repeat: no-repeat;
 				@include montserrat(bold);
@@ -77,7 +78,7 @@ a:focus {
 			a {
 				margin-right: 20px;
 				@include montserrat(bold);
-				font-size: 13px;
+				font-size: 14px;
 				color: $gray;
 				text-transform: uppercase;
 				text-decoration: none;
@@ -113,25 +114,6 @@ a:focus {
 				width: 77%;
 				//Note to MAX, We will have to deal with the container widths when we do some mobile work.
 
-
-				.collection-controls {
-					padding-top: 7px;
-					padding-bottom: 10px;
-					margin-bottom: 23px;
-					color:$gray;
-					@include montserrat();
-					font-size: 13px;
-					letter-spacing:1px;
-					a {
-						text-transform: lowercase;
-						text-decoration: none;
-						color:$gray;
-						cursor: pointer;
-						&.active {
-							color:$dark;
-						}
-					}
-				}
 				#collection-content {
 					margin-left: auto;
   					margin-right: auto;
@@ -166,9 +148,10 @@ a:focus {
 					padding: 10px 18px 30px 18px;
 					h3 {
 						margin: 0;
-						font-size: 12px;
+						font-size: 14px;
 						text-transform: uppercase;
-						@include montserrat();
+						@include montserrat(bold);
+						letter-spacing: 1px;
 					}
 					.comment-box {
 						padding: 13px 25px;
@@ -205,25 +188,28 @@ a:focus {
 				}
 			}
 
-			//All other content containers
-			.default-container {
-
-				//special controls for feed.
-				.feed-controls {
-					padding-top: 10px;
+			//Generic Controls
+			.generic-controls {
+				padding-top: 7px;
+				padding-bottom: 10px;
+				margin-bottom: 23px;
+				color:$gray;
+				@include montserrat();
+				font-size: 14px;
+				letter-spacing:1px;
+				a {
+					text-transform: lowercase;
+					text-decoration: none;
 					color:$gray;
-					@include montserrat();
-					font-size: 10px;
-					a {
-						text-transform: lowercase;
-						text-decoration: none;
-						color:$gray;
-						cursor: pointer;
-						&.active {
-							color:$dark;
-						}
+					cursor: pointer;
+					&.active {
+						color:$dark;
 					}
 				}
+			}
+
+			//All other content containers
+			.default-container {
 
 				#default-content {
 					&.feed {
@@ -232,20 +218,27 @@ a:focus {
 
 					&.saves {
 						.saves-box {
+							border-bottom:solid 1px $dark;
+							padding:5px 0;
 							.image {
-
+								width:150px;
+								height:103px;
+								background:#000; //DELETE!!!
 							}
 							.text {
 								h3 {
-
+									@include title_listing;
 								}
 								p {
-
+									@include tagline_listing;
 								}
 							}
 							.controls {
 								a.remove-save {
-
+									display:inline-block;
+									float:right;
+									margin-top:30px;
+									background-image:url('/../../images/global/remove.png');
 								}
 							}
 						}
@@ -253,25 +246,29 @@ a:focus {
 
 					&.drafts {
 						.drafts-box {
+							border-bottom:solid 1px $dark;
+							padding:5px 0;
 							.date {
 								span {
 
 								}
 							}
 							.image {
-
+								width:150px;
+								height:103px;
+								background:#000; //DELETE!!!
 							}
 							.text {
 								h3 {
-
+									@include title_listing;
 								}
 								p {
-
+									@include tagline_listing;
 								}
 							}
 							.controls {
 								a {
-
+									display:inline-block;
 								}
 								.edit-draft {
 
@@ -280,7 +277,8 @@ a:focus {
 
 								}
 								.delete-draft {
-
+									width:100%;
+									text-align:right;
 								}
 							}
 						}
