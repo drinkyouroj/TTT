@@ -63,9 +63,7 @@ $(function() {
 
 	$('.close-category a').click(function(event) {
 		event.preventDefault();
-		console.log('test');
 		$('.category-wrapper').slideToggle('fast');
-
 	});
 
 	$('.controls-wrapper .save-draft').click(function() {
@@ -234,7 +232,7 @@ var save_post = new function() {
 	//Functions.
 	this.send = function() {
 		console.log(this.dataCompile());
-		
+		save_post = this;
 		$.ajax({
 			type: "POST",
 			url: window.site_url+'rest/savepost',
@@ -254,6 +252,7 @@ var save_post = new function() {
 					image: this.image
 				},//uses the data function to get 
 			success: function(data) {
+				console.log('testing');
 				console.log(data);
 
 				switch(data.result) {
@@ -277,13 +276,16 @@ var save_post = new function() {
 					default:
 					case '72':
 						//72 hours limit has passed for editting.
+						console.log('you can not edit published posts after 72 hours');
 						break;
 					case '10':
 						//YOu've posted in the last 10 minuts.
+						console.log('you have posted in the last 10 minutes');
 						break;
 					case '405':
 						//Validation is really bad (as in they bypassed our client side validation scheme)
 						//Redirect this person to terms.
+						console.log('you have done some bad things');
 						break;
 				}
 			}

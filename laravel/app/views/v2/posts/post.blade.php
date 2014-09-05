@@ -1,8 +1,13 @@
 @extends('v2.layouts.master')
 	<?php
-		$user = Auth::user();
-		$is_mod = $user->hasRole('Moderator');
-		$is_admin = $user->hasRole('Admin');
+		if(Auth::check()) {
+			$user = Auth::user();
+			$is_mod = $user->hasRole('Moderator');
+			$is_admin = $user->hasRole('Admin');
+		} else {
+			$is_admin = false;
+			$is_mod = false;
+		}
 	?>
 
 @section('css')
@@ -137,7 +142,7 @@
 					</ul>
 
 				</div>
-				<div class="post-image col-md-8 style="background-image: url('{{Config::get('app.imageurl')}}/{{$post->image}}');"></div>
+				<div class="post-image col-md-8" style="background-image: url('{{Config::get('app.imageurl')}}/{{$post->image}}');"></div>
 			</div>
 		</div>
 	</section>
@@ -203,6 +208,9 @@
 
 
 @section('admin-mod-post-controls')
+	<?php 
+		$featured = isset($featured) ? $featured : false; 
+	?>
 	<p class="post-title"> {{ $post->title }}
 		<span class="post-featured-label label label-danger {{ $featured ? '' : 'hidden' }}">
 			@if ( $featured )

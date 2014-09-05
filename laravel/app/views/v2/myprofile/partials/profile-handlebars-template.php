@@ -46,12 +46,12 @@
 		<span class="date">{{comment.created_at}}</span>
 		<div class="inner-content">
 			<div class="where">
-				Commented on <a href="{{site_url}}posts/{{comment.post.alias}}">{{comment.post.title}}</a>
+				Commented on <a href="{{site_url}}posts/{{comment.post.alias}}#comment-{{comment._id}}">{{comment.post.title}}</a>
 			</div>
 			<div class="comment">
 				{{comment.body}}
 				<br/>
-				<a class="readmore" href=""> Read more<a/>
+				<a class="readmore" href="{{site_url}}posts/{{comment.post.alias}}#comment-{{comment._id}}"> Read more<a/>
 			</div>
 		</div>
 	</div>
