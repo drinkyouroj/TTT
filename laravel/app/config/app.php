@@ -140,7 +140,8 @@ return array(
 		'AppStorage\FeedStorageServiceProvider',
 		'AppStorage\EmailStorageServiceProvider',
 		'AppStorage\UserStorageServiceProvider',
-		'AppStorage\FlaggedContentStorageServiceProvider'
+		'AppStorage\FlaggedContentStorageServiceProvider',
+		'AppStorage\PostFlaggedStorageServiceProvider'
 	),
 
 	/*

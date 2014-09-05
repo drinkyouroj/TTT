@@ -45,7 +45,13 @@ class PostController extends BaseController {
     {
         $post = $this->post->findByAlias( $alias );
 		
-		if ( $post != false ) {//Post exists.
+		$user_id = false;
+        if(Auth::check()) {
+        	$user_id = Auth::user()->id;
+        }
+
+		if ( is_object($post) && ($post->published || $post->user_id == $user_id) ) {
+			//Post exists and (is published OR draft is owned by appropriate user)
 						
 			if( !isset($post->user->username) ) {
 				$user_id = 1;//1 is the loneliest number! (aka user nobody)
@@ -126,8 +132,10 @@ class PostController extends BaseController {
 			//EditPost
 			$post = $this->post->findById($id);
 
-			if(!$this->post->checkEditable($post->published_at)) {
-				return View::make('v2/errors/error');
+			if($post->published) {
+				if(!$this->post->checkEditable($post->published_at)) {
+					return View::make('v2/errors/error');
+				}
 			}
 
 			return View::make('v2/posts/post_form')//Edit form only has to account for the text.  Not the entire listing.
@@ -178,6 +186,10 @@ class PostController extends BaseController {
 
 			//The post exists.
 			if(!empty($check_post->id) ) {
+
+				//If the post exists, let's save its previous published state.
+				$previously_published = $check_post->published_at;
+
 				//THIS is the update scenario.
 				//let's double check that this ID exists and belongs to this user.			
 				$new = false;
@@ -187,36 +199,23 @@ class PostController extends BaseController {
 					if(!$this->post->checkEditable($check_post->published_at)) {
 						//more than 72 hours has passed since the post was created.
 						//TODO Maybe I should have this go somewhere more descriptive??
-						if($rest) {
-							return Response::json(
-									array('error' => '72'),
-									405//method not allowed
-								);
-						} else {
-							return Redirect::to('profile');
-						}
+						return Response::json(
+								array('error' => '72'),
+								405//method not allowed
+							);
+
 					}
 				}
 
 				//If the post is published and the user is trying to set it as a draft.
 				if($check_post->published && $request['draft']) {
-					if($rest) {
-						return Response::json(
-								array('error' => 'pub2draft'),
-								405//method not allowed
-							);
-					} else {
-						return Redirect::to('profile');
-					}
+					return Response::json(
+							array('error' => 'pub2draft'),
+							405//method not allowed
+						);
 				}
 
-
-
-				if($rest) {
-					$post = self::rest_input($new, $check_post);
-				} else {
-					$post = $this->post->input($new, $check_post);//Post object filter gets the input and puts it into the post.
-				}
+				$post = self::rest_input($new, $check_post);
 				
 				$validator = $post->validate($post->toArray(),$check_post->id);//validation takes arrays.  Also if this is an update, it needs an id.
 
@@ -233,22 +232,14 @@ class PostController extends BaseController {
 					strtotime(date('Y-m-d H:i:s', strtotime('-10 minutes'))) <= strtotime($last_post->created_at))
 				{
 					//Nice try punk.  Maybe I should have this go somewhere more descriptive.
-					if($rest) {
-						return Response::json(
-								array('error' => '10'),
-								405//method not allowed
-							);
-					} else {
-						return Redirect::to('profile');
-					}
+					return Response::json(
+							array('error' => '10'),
+							405//method not allowed
+						);
 				}
 
-				if($rest) {
 
-					$post = self::rest_input($new, false);
-				} else {
-					$post = $this->post->input($new);//Post object creates objects.
-				}
+				$post = self::rest_input($new, false);
 				
 				$validator = $post->validate($post->toArray(),false);//no
 			}
@@ -256,17 +247,41 @@ class PostController extends BaseController {
 			
 			if($validator->passes()) {//Successful Validation
 				
+				$user = Auth::user();
+
 				if($new) {
+					//post is new.
 					$post->save();
-					
-					$user = Auth::user();
 								
 					//no featured for this user? set this new post as featured.
 					if($user->featured == false) {
 						User::where('id', Auth::user()->id)
 							->update(array('featured' => $post->id));
 					}
+					
+				} else {
+					//Gotta put in a thing here to get rid of all relations
+					$post->categories()->detach();//Pivot! Pivot! 
+
+					$post->update();
+				}
+
+				//If this is the web server upload this content to the CDN.
+				if(App::environment() == 'web') {
+					$file = OpenCloud::upload('Images', public_path().'/uploads/final_images/'.$post->image, $post->image);
+				}
+
+				//Gotta save the categories pivot
+				foreach(Input::get('category') as $k => $category) {
+					if($k <= 1) {//This will ensure that no more than 2 are added at a time.
+						$post->categories()->attach($category);
+					} else {
+						break;//let's not waste processes
+					}
+				}
 				
+				//if the post becomes published. (published now, wasn't published before.)
+				if($post->published_at && !$previously_published) {
 					//Put it into the profile post table (my posts or what other people see as your activity)
 					$new_profilepost = array(
 						'profile_id' => $user->id,
@@ -285,11 +300,6 @@ class PostController extends BaseController {
 						);
 					$this->activity->create($new_activity);
 
-					//If this is the web server upload this content to the CDN.
-					if(App::environment() == 'web') {
-						$file = OpenCloud::upload('Images', public_path().'/uploads/final_images/'.$post->image, $post->image);
-					}
-					
 					//QUEUE
 					//Add to follower's notifications.
 					Queue::push('UserAction@newpost', 
@@ -299,62 +309,31 @@ class PostController extends BaseController {
 									'username' => $user->username
 									)
 								);
+
+					SolariumHelper::updatePost($post);//Let's add the data to solarium (Apache Solr)
+				}
+
+				if($new) {
+					$json_result = 'create';
 				} else {
-					//Gotta put in a thing here to get rid of all relations
-					$post->categories()->detach();//Pivot! Pivot! 
-
-					$post->update();
+					$json_result = 'update';
 				}
 
-				//Gotta save the categories pivot
-				foreach(Input::get('category') as $k => $category) {
-					if($k <= 1) {//This will ensure that no more than 2 are added at a time.
-						$post->categories()->attach($category);
-					} else {
-						break;//let's not waste processes
-					}
-				}
-					
-				SolariumHelper::updatePost($post);//Let's add the data to solarium (Apache Solr)
-				
-				if($rest) {
+				return Response::json(
+						array(
+							'result' => $json_result,
+							'id'	=> $post->id,
+							'alias' => $post->alias
+							),
+						200 //happy happy joy joy!
+					);
 
-					if($new) {
-						$json_result = 'create';
-					} else {
-						$json_result = 'update';
-					}
-
-					return Response::json(
-							array(
-								'result' => $json_result,
-								'id'	=> $post->id,
-								'alias' => $post->alias
-								),
-							200 //happy happy joy joy!
-						);
-				} else {
-					return Redirect::to('profile');
-				}
 				
 			} else {//Failed Validation on serverside should just redirect no matter what.
-				if($rest) {
-					return Response::json(
-						array('error' => '405'),//make sure that they are redirected. They might be trying to mess with us.
-						405//method not allowed
-						);
-				} else {
-					if($new) {
-						return Redirect::to('profile/newpost')
-									->withErrors($validator)
-									->withInput();
-					} else {
-						return Redirect::to('profile/editpost/'.Input::get('id'))
-									->withErrors($validator)
-									->withInput();
-					}
-				}
-				
+				return Response::json(
+					array('error' => '405'),//make sure that they are redirected. They might be trying to mess with us.
+					405//method not allowed
+					);
 			}
 		}
 

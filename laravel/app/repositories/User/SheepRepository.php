@@ -150,8 +150,14 @@ class SheepRepository implements UserRepository {
 		} else {
 			//Bad News bears.
 			//Maybe add to a session variable and enable throttling for later.
-			$attempt = empty(Session::get('login-attempt')) ? 0 : Session::get('login-attempt');
+			if( intval( Session::get('login-attempt') ) ) {
+				$attempt = 0;
+			} else {
+				$attempt = Session::get('login-attempt');
+			}
+			
 			$attempt++;
+
 			Session::put('login-attempt', $attempt);
 			return false;
 		}
