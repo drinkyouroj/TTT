@@ -46,7 +46,7 @@ class EloquentFeaturedRepository implements FeaturedRepository {
 	public function find($paginate = 8, $page = 1, $rest = false, $front = false) {
 		$query = $this->featured
 						->where('front', false)//we have to make sure that it isn't already on the front page.
-						->orderBy('order', 'ASC')
+						->orderBy('created_at', 'ASC')
 						->skip(($page-1)*$paginate)
 						->take($paginate);
 
