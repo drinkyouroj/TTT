@@ -281,7 +281,8 @@ function ProfileActions() {
 					user_id: window.user_id,
 					editable: editable,
 					featured_id: window.featured_id,
-					post_type: val.post_type
+					post_type: val.post_type,
+					myprofile: window.myprofile
 				};
 				$('#collection-content',target).append(post_item_template(view_data));
 			});

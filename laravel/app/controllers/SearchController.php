@@ -40,7 +40,7 @@ class SearchController extends BaseController {
 					->get();
 			}
 			
-			return View::make('generic.search')
+			return View::make('v2.search.search')
 					->with('posts',$posts)
 					->with('users',$users)
 					->with('term', $term);

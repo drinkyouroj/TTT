@@ -13,16 +13,20 @@
 	<script>
 		window.user_id = {{$profile_user->id}};
 		window.featured_id = {{$profile_user->featured}};
+		@if($myprofile)
+			window.myprofile = true;
+		@endif
 	</script>
 
 	@include( 'v2/partials/post-listing-template' )
 	@include( 'v2/myprofile/partials/profile-handlebars-template')
 
 	@if($myprofile)
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/form/jquery.form.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment/moment.min.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment-timezone/moment-timezone-with-data.min.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/form/jquery.form.js"></script>		
 	@endif
+	
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment/moment.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment-timezone/moment-timezone-with-data.min.js"></script>
 
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/myprofile/profile.js"></script>		
 @stop
