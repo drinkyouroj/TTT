@@ -99,8 +99,7 @@
 				</div>
 
 				<div class="controls col-md-3">
-					<a class="edit-draft icon-button" href="{{site_url}}myprofile/editpost/{{draft.id}}" >Edit Draft</a>
-					<a class="publish-draft btn-flat-blue" data-id="{{draft.id}}" >Publish</a>
+					<a class="edit-draft icon-button" href="{{site_url}}myprofile/editpost/{{draft.id}}" >Edit Draft</a>					
 					<br/>
 					<a class="delete-draft" data-id="{{draft.id}}" data-toggle="tooltip" data-placement="bottom" title="Delete Forever!">Delete</a>
 				</div>
@@ -126,14 +125,7 @@
 		<div class="col-md-5 col-md-offset-1 avatar">
 			<h2>Upload your Avator</h2>
 			<div class="upload-form">
-
-				<div id="avatarErrors"></div>
-
-				<form id="uploadAvatar" enctype="multipart/form-data" method="post" action="{{this.site_url}}rest/profile/image/upload">
-                    <input type="file" name="image" id="image" />
-				</form>
-				<div id="avatarOutput" style="display:none">
-                </div>
+				<h3>Coming soon</h3>
 			</div>
 		</div>
 		<div class="col-md-5 change-password">

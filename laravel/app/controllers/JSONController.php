@@ -12,7 +12,9 @@ class JSONController extends BaseController {
 						FavoriteRepository $favorite,
 						ProfilePostRepository $profilepost,
 						ActivityRepository $activity,
-						FeedRepository $feed
+						FeedRepository $feed,
+						PostFlaggedRepository $postFlagged,
+						FlaggedContentRepository $flaggedContent
 
 						) {
 		$this->post = $post;
@@ -25,6 +27,8 @@ class JSONController extends BaseController {
 		$this->profilepost = $profilepost; //This might change its name to feed or something.
 		$this->activity = $activity;
 		$this->feed = $feed;
+		$this->postFlagged = $postFlagged;
+		$this->flaggedContent = $flaggedContent;
 	}
 
 	//Like or Unlike a Post
@@ -101,19 +105,20 @@ class JSONController extends BaseController {
 			
 			if (!$exists && !$owns) {//Relationship doesn't exist and the user doesn't own this.
 				
+				//Add to favorite.
 				$this->favorite->create($user_id, $post_id);
 
+				//Add to Feed
 				$new_profilepost = array(
 						'post_id' => $post->id,
 						'profile_id' => $user_id,
 						'user_id' => $post->user->id,
 						'post_type' => 'favorite'
-					);
-
-				//Add to Feed
+					);				
 				$this->profilepost->create($new_profilepost);
 				
-				NotificationLogic::favorite($post_id);
+				//Saves/Favorites should not send out a notification.
+				//NotificationLogic::favorite($post_id);
 				
 				return Response::json(
 					array('result'=>'success'),
@@ -134,8 +139,8 @@ class JSONController extends BaseController {
 					);
 				$this->profilepost->delete($del_profilepost);
 
-				//Delete from Notifications
-				NotificationLogic::unfavorite($post_id);
+				//Saves/Favorites should not send out a notification.
+				//NotificationLogic::unfavorite($post_id);
 	
 				return Response::json(
 					array('result'=>'deleted'),
@@ -412,6 +417,22 @@ class JSONController extends BaseController {
 		if(Auth::check()) {
 			$user = Auth::user();
 			$this->favorite->read($user->id, $post_id);
+			return Response::json(
+					array('result' => 'success'),//great success!
+					200
+				);
+		}
+	}
+
+	public function getPostFlag($post_id) {
+		if( Auth::check() ) {
+			$user = Auth::user();
+			$this->postFlagged->create($user->id, $post_id);
+
+			if($this->postFlagged->count($post_id) >= 5) {
+				$this->flaggedContent->create('post', $post_id);
+			}
+
 			return Response::json(
 					array('result' => 'success'),//great success!
 					200

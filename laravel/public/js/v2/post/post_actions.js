@@ -18,14 +18,25 @@ function UserAction () {
 	this.user_id = undefined;
 
 	this.send = function ( callback ) {
-		if ( this.action == 'save' ) {
-			this.ajaxSave( callback );
-		} else if ( this.action == 'repost' ) {
-			this.ajaxRepost( callback );
-		} else if ( this.action == 'like' ) {
-			this.ajaxLike( callback );
-		} else if ( this.action == 'follow' ) {
-			this.ajaxFollow( callback );
+		switch(this.action) {
+			case 'save':
+				this.ajaxSave( callback );
+				break;
+			case 'repost':
+				this.ajaxRepost( callback );
+				break;
+			case 'like':
+				this.ajaxLike( callback );
+				break;
+			case 'follow':
+				this.ajaxFollow( callback );
+				break;
+			case 'read':
+				this.ajaxRead( callback );
+				break;
+			case 'flag':
+				this.ajaxFlag( callback );
+				break;
 		}
 	};
 
@@ -73,6 +84,32 @@ function UserAction () {
 		if ( this.action == 'follow' && this.user_id ) {
 			$.ajax({
 				url: window.site_url + 'rest/follows/' + this.user_id,
+				success: function ( data ) {
+					callback( data );
+				}
+			});
+		} else {
+			console.log('missing parameters!');
+		}
+	}
+
+	this.ajaxRead = function ( callback ) {
+		if ( this.action == 'read' && this.post_id ) {
+			$.ajax({
+				url: window.site_url + 'rest/read/' + this.user_id,
+				success: function ( data ) {
+					callback( data );
+				}
+			});
+		} else {
+			console.log('missing parameters!');
+		}
+	}
+
+	this.ajaxFlag = function ( callback ) {
+		if ( this.action == 'flag' && this.post_id ) {
+			$.ajax({
+				url: window.site_url + 'rest/flag/' + this.user_id,
 				success: function ( data ) {
 					callback( data );
 				}
