@@ -107,18 +107,6 @@ class JSONController extends BaseController {
 				
 				//Add to favorite.
 				$this->favorite->create($user_id, $post_id);
-
-				//Add to Feed
-				$new_profilepost = array(
-						'post_id' => $post->id,
-						'profile_id' => $user_id,
-						'user_id' => $post->user->id,
-						'post_type' => 'favorite'
-					);				
-				$this->profilepost->create($new_profilepost);
-				
-				//Saves/Favorites should not send out a notification.
-				//NotificationLogic::favorite($post_id);
 				
 				return Response::json(
 					array('result'=>'success'),
@@ -129,18 +117,6 @@ class JSONController extends BaseController {
 				
 				//Delete from Favorites
 				$this->favorite->delete($user_id, $post_id);
-				
-				//Delete from the Feed
-				$del_profilepost = array(
-						'post_id' => $post->id,
-						'profile_id' => $user_id,
-						'user_id' => $post->user->id,
-						'post_type' => 'favorite'
-					);
-				$this->profilepost->delete($del_profilepost);
-
-				//Saves/Favorites should not send out a notification.
-				//NotificationLogic::unfavorite($post_id);
 	
 				return Response::json(
 					array('result'=>'deleted'),
