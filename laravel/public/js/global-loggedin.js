@@ -3,10 +3,6 @@ $(function() {
 		event.preventDefault();
 	});
 	
-	//*Mark as Read  *********************************************
-	$('.mark-read').on('click',function(event) {
-		mark_read();//function defined below
-	});
 	
 	//*Follow Actions*********************************************
 	$('.profile-options .follow').on('click', function(event) {
@@ -60,7 +56,7 @@ $(function() {
 		comment_delete($(this).data('delid'));
 	});
 	// Like/Unlike Comment****************************************
-	$('.comments-listing').on('click', '.like-comment', function() {
+	$('.comments-listing').on('click', '.comment.published .like-comment', function() {
 		var comment_id = $(this).closest('.comment').attr('id');
 		comment_id = comment_id.split('-')[1];
 		if ( $(this).hasClass('active') ) {
@@ -70,7 +66,7 @@ $(function() {
 		}
 	});
 	// Flag/Unflag Comment*****************************************
-	$('.comments-listing').on('click', '.flag-comment', function() {
+	$('.comments-listing').on('click', '.comment.published .flag-comment', function() {
 		var comment_id = $(this).closest('.comment').attr('id');
 		comment_id = comment_id.split('-')[1];
 		if ( $(this).hasClass('active') ) {
@@ -80,24 +76,6 @@ $(function() {
 		}
 	});
 });
-
-/**
- * Mark as Read function
- */
-
-function mark_read() {
-	$.ajax({
-		url: window.site_url+'rest/notification/',
-		type: "POST",
-		data: {"notification_ids": window.cur_notifications},
-		success: function(data) {
-			console.log(data);
-			$('.notifications-parent').removeClass('active-notifications');
-			$('.notifications-parent ul.notifications').children().remove();
-			$('.notifications-parent ul.notifications').append('<li class="no-notifications"><span>You have no notifications!</span></li>');
-		}
-	});
-}
 
 /**
  * Global functions for the 4 major ajax based actions
@@ -219,10 +197,18 @@ function comment_delete(id) {
 		type:"GET",//This used to be delete, but not anymore.
 		success: function(data) {
 			if(data.result == 'deleted') {
-				$('#comment-'+id+'>.comment-body').html('<span class="deleted">(This comment has been deleted)</span>');
-				$('#comment-'+id+' a.delete').fadeOut(function() {
+				$comment = $('#comment-'+id);
+				
+				$comment.find('a.delete').fadeOut(function() {
 					$(this).remove();
+					// Remove comment body
+					$comment.find('.comment-body').html('<span class="deleted">(This comment has been deleted)</span>');
+					// Update comment css
+					$comment.addClass('deleted').removeClass('published');
+					// Remove comment author
+					$comment.find('.user').html('<span>Nobody</span>');
 				});
+				
 			}
 		}
 	});

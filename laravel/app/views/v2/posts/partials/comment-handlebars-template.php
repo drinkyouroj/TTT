@@ -27,7 +27,11 @@
 
 		<div class="right-col">
 			<div class="user">
-				<a href="{{ profile_url }}{{ comment.author.username }}"> {{ comment.author.username }} </a>
+				{{#ifCond comment.published 1 }}
+					<a href="{{ profile_url }}{{ comment.author.username }}"> {{ comment.author.username }} </a>
+				{{else}}
+					<span class="deleted">Nobody</span>
+				{{/ifCond}}
 			</div>
 
 			<p class="comment-body">

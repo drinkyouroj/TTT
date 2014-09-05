@@ -141,7 +141,8 @@ body {
 					position: absolute;
 					top: $navbar_height;
 					right: 0;
-					max-width: $navbar_dropdown_menu_width;
+					min-width: $navbar_dropdown_menu_min_width;
+					max-width: $navbar_dropdown_menu_max_width;
 					background-color: $white;
 					display: none;
 					padding-bottom:10px;
@@ -173,7 +174,7 @@ body {
 							}
 						}
 						.notifications-title {
-
+							padding: 10px;
 						}
 						ul.notifications {
 							max-height: 250px;
@@ -181,6 +182,20 @@ body {
 							padding: 0;
 							li {
 								background-color: #f7f7f7;
+								a {
+									display: block;
+									padding: 10px;
+									color: gray;
+									span {
+										color: $dark;
+										font-size: 12px;
+										@include montserrat(bold);
+									}
+								}
+							}
+							.no-notifications {
+								padding: 10px;
+								text-align: center;
 							}
 						}
 						.view-all {

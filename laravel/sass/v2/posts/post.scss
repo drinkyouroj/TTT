@@ -35,6 +35,10 @@
 				li {
 					float:left;
 					@include post_actions;
+					
+					a.active {
+						color: $blue;
+					}
 				}
 			}
 		}
@@ -224,12 +228,45 @@
 					border-top: 2px solid $lightgray;
 					padding: 10px 20px 5px 10px;
 				
+					// Styles only applied to PUBLISHED comments
 					&.published {
-
+						.flag-comment, .like-comment {
+							cursor: pointer;
+						}
+						.flag-comment {
+							&:hover {
+								color: $red;
+							}
+							&.active {
+								color: $red;
+							}
+						}
+						.like-comment {
+							&:hover {
+								color: $blue;
+							}
+							&.active {
+								color: $blue;
+							}
+						}
 					}
+					// Styles only applied to DELETED comments
 					&.deleted {
+						color: $gray;
 
+						div.right-col {
+							.reply-links {
+								a.reply {
+									color: $gray;
+									&:hover {
+										cursor: default;
+									}
+								}
+							}
+						}
 					}
+
+
 					&.thread-parent {
 						position:relative;
 						border-top: 3px solid $gray;
@@ -257,30 +294,17 @@
 							display: inline-block;
 							margin: 0px 0px 5px 0px;
 							font-size: 16px;
-							cursor: pointer;
 							width: 100%;
 						}
 						.flag-comment {
 							text-align:right;
 							color:$gray;
-							&:hover {
-								color: $red;
-							}
-							&.active {
-								color: $red;
-							}
 						}
 						.like-comment {
 							display:inline-block;
 							width:50%;
 							text-align:right;
 							color:$gray;
-							&:hover {
-								color: $blue;
-							}
-							&.active {
-								color: $blue;
-							}
 						}
 						.like-comment-count {
 							display:inline-block;
@@ -289,6 +313,7 @@
 							color:$gray;
 						}
 					}
+
 					div.right-col {
 						overflow: hidden;
 						.comment-body {
