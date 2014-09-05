@@ -11,9 +11,13 @@ $(function() {
 	//Container for default.
 	var default_source = $('#default-profile-template').html();
 	profile.default_template = Handlebars.compile(default_source);
+
 	//Post Item compile (used for both collection and feed)
 	var post_item_source = $('#post-item-template').html();
 	profile.post_item_template = Handlebars.compile(post_item_source);
+
+	var feature_item_source = $('#feature-item-template').html();
+	profile.feature_item_template = Handlebars.compile(feature_item_source);
 
 	//Comment Item compile
 	var comment_item_source = $('#comment-template').html();
@@ -94,7 +98,6 @@ $(function() {
 
 	$('#deleteModal').on('click','.btn.delete-account', function() {
 		id = $(this).data('user');
-		console.log(id);
 		if(id) {
 			$.ajax({
 				url: window.site_url+'rest/userdelete/'+id,
@@ -105,6 +108,11 @@ $(function() {
 			});
 		}
 	});
+
+//Set Featured events
+	$('body').on('click', '.set-featured',function() {
+		profile.setFeatured($(this).data('id'));
+	})
 
 //Pagination detection.
 	$(window).scroll(function() {
@@ -189,8 +197,11 @@ function ProfileActions() {
 			default:
 			case 'collection':
 				this.renderCollection();
-				if(init) {
-					this.renderComments();
+				if(init) {					
+					this.renderComments();					
+				}
+				if((init || this.type == 'all') && window.featured_id && this.page == 1 ) {
+					this.renderFeatured();//only renders when the person has a featured article.
 				}
 				break;
 
@@ -241,6 +252,7 @@ function ProfileActions() {
 			
 			if(this.view == 'collection') {
 				this.url = base_url + this.type + '/' + window.user_id + '/' + this.page;
+				this.feature_url = window.site_url + 'rest/profile/featured/' + window.featured_id;
 				this.comment_url = window.site_url + 'rest/profile/comments/' + window.user_id + '/' + this.comment_page;
 			} else {
 				this.url = base_url + this.type + '/' + this.page;
@@ -258,12 +270,18 @@ function ProfileActions() {
 		//below has to be done to pass through the scope of both getData and $.each
 		var post_item_template = this.post_item_template;
 		var target = this.target;
+		var editCheck = this.editCheck;
 		this.urlConstructor();
 		this.getData(this.url, function(data) {
 			$.each(data.collection, function(idx, val) {
+				var editable = editCheck(val.post.published_at);
 				view_data = {
 					site_url: window.site_url,
-					post: val.post
+					post: val.post,
+					user_id: window.user_id,
+					editable: editable,
+					featured_id: window.featured_id,
+					post_type: val.post_type
 				};
 				$('#collection-content',target).append(post_item_template(view_data));
 			});
@@ -271,13 +289,46 @@ function ProfileActions() {
 		
 	};
 
+		this.editCheck = function(published_at) {
+			date = moment(published_at);
+			threeDaysAgo  = moment().subtract('3','days');
+			return date.tz('America/Los_Angeles') >= threeDaysAgo.tz('America/Los_Angeles');
+		}
+
+	this.renderFeatured = function() {
+		var feature_item_template = this.feature_item_template;
+		var target = this.target;
+		this.urlConstructor();
+		this.getData(this.feature_url,function(data) {
+			view_data = {
+				site_url: window.site_url,
+				post: data.featured
+			}
+			$('#collection-content',target).prepend( feature_item_template(view_data) );
+
+		});
+	}
+
+		this.setFeatured = function(id) {
+			$('#collection-content .feature-item',target).fadeOut().remove();
+
+			featured_url = window.site_url + 'rest/profile/featured/' + id;
+			var target = this.target;
+			this.setData(featured_url, function(data) {
+				//console.log(data);
+				
+				
+			});
+			window.featured_id = id;//make the window remember the featured id.
+			this.renderFeatured();
+		}
+
 	this.renderComments = function() {
 		//scope issues
 		var comment_item_template = this.comment_item_template;
 		var target = this.target;
 		this.urlConstructor();
 		this.getData(this.comment_url, function(data) {
-			console.log(data);
 			$.each(data.comments,function(idx, val) {
 				view_data = {
 					site_url: window.site_url,
@@ -327,17 +378,29 @@ function ProfileActions() {
 		var drafts_item_template = this.drafts_item_template;
 		var target = this.target;
 		this.urlConstructor();
-		this.getData(this.url,function(data) {
+		draftDate = this.draftDate;
+		this.getData(this.url,function(data) {			
 			$.each(data.drafts, function(idx, val) {
 				view_data = {
 					site_url: window.site_url,
-					draft: val
+					draft: val,
+					date: draftDate(val.updated_at)
 				};
 				$('#default-content',target).append(drafts_item_template(view_data));
 			});
 		});
 
 	};
+	
+		this.draftDate = function(updated_at) {
+			updated = moment(updated_at);
+			twoDaysAgo  = moment().subtract('2','days');
+			if( updated.tz('America/Los_Angeles') >= twoDaysAgo.tz('America/Los_Angeles') ) {
+				return updated.calendar();
+			} else {
+				return updated.format('MM DD YYYY');
+			}
+		}
 
 	this.renderFollowers = function() {
 		var follow_template = this.follow_template;
@@ -392,7 +455,6 @@ function ProfileActions() {
 		}
 
 		this.avatarResponse = function (response, statusText, xhr, $form) {
-			//console.log(response);
 			var $errors = $("#avatarErrors");
 			var $output =  $("#avatarOutput");
 			var site_url = this.site_url;
@@ -442,9 +504,9 @@ function ProfileActions() {
 
 //AJAX data getter
 	this.getData = function(get_url, callback) {
-		console.log(get_url);
 		$.ajax({
 			url: get_url,
+			type: "GET",
 			success: function(data) {
 				callback(data);
 			},
@@ -456,6 +518,23 @@ function ProfileActions() {
 			}
 		})
 	};
+
+//AJAX data setter
+	this.setData = function(set_url, callback) {
+		$.ajax({
+			url: set_url,
+			type: "POST",
+			success: function(data) {
+				callback(data);
+			},
+			complete: function(xhr,status) {
+
+			},
+			error: function(xhr,status) {
+
+			}
+		})
+	}
 
 //Pagination Code
 	this.paginate = function() {
@@ -476,5 +555,4 @@ function ProfileActions() {
 			this.renderComments();
 		}
 	};
-
 }

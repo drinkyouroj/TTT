@@ -11,6 +11,7 @@ a {
 	color:$blue;
 	&:hover {
 		text-decoration:none;
+		color:$dark;
 	}
 }
 
@@ -45,7 +46,6 @@ body {
 
 			.col-left {
 				margin-top: 3px;
-				padding-left:0px;
 			}
 
 			.col-middle {
@@ -67,7 +67,6 @@ body {
 
 			.col-right {
 				padding-top: 7px;
-				padding-right:0px;
 				&>*, &>form>* {
 					float: right;
 				}
@@ -95,13 +94,15 @@ body {
 				label.glyphicon-search {
 					margin-top: 7px;
 					margin-right: 4px;
+					font-size: 20px;
 				}
 				input.search-input {
 					background-color: transparent !important;
 					border-style: solid;
 					border-width: 0px 0px 2px 0px;
 					border-color: black;
-					width: 35%;
+					width: 0px;
+					padding:0px;
 
 					@include transition( width, 500ms, ease-out, 0);
 
@@ -114,13 +115,13 @@ body {
 					top: $navbar_height;
 					right: 0;
 					max-width: $navbar_dropdown_menu_width;
-					background-color: white;
+					background-color: $white;
 					display: none;
+					padding-bottom:10px;
 					border-top: 1px solid lightgray;
 					box-shadow: 2px 2px 2px 0px lightgray, -2px 2px 2px 0px lightgray;
 					.dropdown-wrapper {
 						&>*, ul.notifications > li {
-							padding: 10px 25px 10px 25px;
 						}
 						.guest-actions a {
 							display: block;
@@ -130,11 +131,18 @@ body {
 							border-bottom: 1px solid lightgray;
 						}
 						.user {
-							.avatar {
-								height: 25px;
-								width: 25px;
-								border-radius: 50%;
-								background-color: #333;
+							a {
+								padding: 20px 20px;
+								display:block;
+								width:100%;
+								@include montserrat;
+								font-size:14px;
+								.avatar {
+									height: 25px;
+									width: 25px;
+									border-radius: 50%;
+									background-color: #333;
+								}
 							}
 						}
 						.notifications-title {
@@ -150,15 +158,50 @@ body {
 						}
 						.view-all {
 							text-align: right;
+							a {
+								font-size: 10px;
+								padding: 5px 10px;
+								margin-right:10px;
+							}
 						}
 						.additional-user-actions {
-
+							padding:0px 20px;
+							a {
+								@include montserrat;
+								font-size:10px;
+								letter-spacing:1px;
+							}
 						}
 						.additional-actions {
 							margin-top: 10px;
+							padding:0px 20px;
+							float:right;
+							color:$lightgray !important;
+							a {
+								@include garamond;
+								font-size:12px;
+								letter-spacing:1px;
+								color:$gray;
+								&:hover {
+									color:$dark;
+								}
+							}
 						}
 					}
 				}	
+
+				.notification-label {
+					 position: relative;
+					background:$red;
+					color:$white;
+					margin-top:5px;
+					padding:5px 10px;
+					@include garamond;
+					@include drop_shadow;
+					&::before {
+						@include notifications_arrow_top;
+					}
+				}
 			}
 		}
 	}
@@ -174,12 +217,13 @@ body {
 	z-index: 10001;
 	overflow-y: auto;
 
-	background-color: #333;
+	background-color: $dark;
 
 	ul#accordion.sidebar-options {
 		color: white;
 
 		li.sidebar-option {
+			border-bottom:solid 1px $dark_gray;
 			&.disabled {
 				a {
 					color: gray;
@@ -195,28 +239,56 @@ body {
 
 			}
 			&.categories {
+			ul {
+        		li {
+      				&.category-all {
+      					padding-bottom:10px;
+      				}
+        			a {	
+        				display: block;
+						width: 100%;
+        				padding: 5px 0px;
+        				color:$lightgray;
+						@include montserrat(normal);
+						font-size:12px;
+						letter-spacing:2px;
+
+						&:hover {
+							color:$blue;
+						}
+        			}
+        		}
+        	}
 
 			}
 			&.saves {
 				.post-image-anchor {
 					.post-image {
-						height: 70px;
-						margin-left: 25px;
-						width: 110px;
 						display: inline-block;
+						width: 110px;
+						height: 70px;
+						margin-left: 0;
 						background-size: cover;
+						background: $lightgray; //temporary!!!
 					}
 				}
 				.post-info {
 					display: inline-block;
+					width: 134px;
 					vertical-align: top;
 					margin-left: 10px;
 
 					.post-title {
 						display: block;
+						padding:0px;
+						color:$lightgray;
+						@include montserrat(normal);
+						font-size:12px;
+						letter-spacing:1px;
 					}
 					.post-author {
-
+						@include montserrat(normal);
+						font-size:12px;
 					}
 					// This is the 'by: ' text
 					span {
@@ -231,7 +303,23 @@ body {
 				display: block;
 				width: 100%;
 				padding: 20px;
+				color:$lightgray;
+				@include montserrat(normal);
+				font-size:12px;
+				letter-spacing:2px;
+				
+				&:hover {
+					color:$blue;
+				}
 			}
+
+			&:nth-child(odd) {
+           		background-color: $black;
+        	}
+
+        	ul {
+        		padding:0px 20px 20px 20px;
+        	}
 
 		}
 	}
@@ -243,7 +331,7 @@ body {
 	top: 0; left: 0;
 	width: 22px;
 	height: 100%;
-	background-color: $dark;
+	background-color: $black;
 	z-index: 10000;
 
 	&.sidebar-open {
@@ -338,6 +426,23 @@ body {
 	}
 }
 
+.btn-outline-blue {
+	@include montserrat(normal);
+	color: $blue;
+	font-size: 12px;
+	padding: 10px 15px;
+	text-decoration: none;
+	text-transform:uppercase;
+	border: 2px solid $blue;
+	cursor: pointer;
+	&:hover {
+		// background-color: $gray;
+		color: $dark;
+		border: 2px solid $dark;
+		text-decoration: none;	
+	}
+}
+
 .follow-button {
 	@include montserrat(normal);
 	text-transform:uppercase;
@@ -380,6 +485,29 @@ body {
 		background-color: $lightgray;
 	}
 }
+
+//generic buton with icon to the left. just add a bg image
+.icon-button {
+	display:inline-block;
+	@include montserrat(normal);
+	text-transform:uppercase;
+	color: $dark;
+	font-size: 12px;
+	letter-spacing:2px;
+	background: none;
+	padding: 10px 15px 10px 50px;
+	text-decoration: none;
+	border: 2px solid $dark;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position:left center;
+	background-size:38px 38px;
+	&:hover {
+		// background-color: $gray;
+		background-color: $lightgray;
+	}
+}
+
 
 .post-button {
 	@include montserrat(normal);

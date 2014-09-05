@@ -16,6 +16,7 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 		Route::get( 'feed/{feed_type}/{page}', 'MyProfileController@getRestFeed' );
 		Route::get( 'saves/{page}', 'MyProfileController@getRestSaves' );
 		Route::get( 'drafts/{page}', 'MyProfileController@getRestDrafts' );
+		Route::post( 'featured/{post_id}', 'MyProfileController@postRestFeatured');
 		Route::post( 'image/upload', 'MyProfileController@postAvatar');
 		Route::post( 'password', 'UserController@postNewpass'); //I know its not in myprofile!
 	});
@@ -50,6 +51,7 @@ Route::group(array('prefix'=>'rest'), function() {
 		Route::get( 'followers/{user_id}/{page}', 'MyProfileController@getRestFollowers');
 		Route::get( 'following/{user_id}/{page}', 'MyProfileController@getRestFollowing');
 		Route::get( 'comments/{user_id}/{page}', 'MyProfileController@getRestComments');
+		Route::get( 'featured/{post_id}', 'MyProfileController@getRestFeatured');
 	});
 	
 	//Category autload

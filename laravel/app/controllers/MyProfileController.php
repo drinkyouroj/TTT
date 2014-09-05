@@ -33,7 +33,12 @@ class MyProfileController extends BaseController {
 		//Load up the profile user.
 		$profile_user = User::where('username',$alias)->first();
 
+		if( !is_object($profile_user) ) {
+			return Redirect::to('myprofile');
+		}
+
 		if( Auth::check() ) {
+
 			$user = Auth::user();//This is the 
 			$is_following = $this->follow->is_following($user->id, $profile_user->id);
 			$is_follower = $this->follow->is_follower($user->id, $profile_user->id);
@@ -115,6 +120,36 @@ class MyProfileController extends BaseController {
 			return Response::json(
 				array( 'error' => 'invalid collection type and/or pagination' ),
 				200
+				);
+		}
+	}
+
+	public function getRestFeatured ($post_id) {
+		if($post_id) {
+			$featured  = $this->post->findById($post_id, true, array('user'));
+			//Build the 
+			$featured->excerpt = substr(strip_tags($featured->body),0,100);
+			return Response::json(
+					array('featured' => $featured->toArray() ),
+					200
+				);
+		} 
+	}
+
+	//Sets the user's featured id.
+	public function postRestFeatured ($post_id) {
+		if($post_id) {
+			$user = Auth::user();
+			$user->featured = $post_id;
+			$user->save();
+			return Response::json(
+					array('success'=> 'true'),
+					200
+				);
+		} else {
+			return Response::json(
+					array('success'=> 'false'),
+					200
 				);
 		}
 	}
