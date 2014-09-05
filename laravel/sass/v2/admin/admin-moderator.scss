@@ -11,6 +11,10 @@
 	overflow-y: auto;
 
 	background-color: $dark;
+
+	.post-title, ul, .post-categories-title {
+		color: white !important;
+	}
 }
 
 #offcanvas-admin-placeholder {

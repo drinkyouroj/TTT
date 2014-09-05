@@ -17,8 +17,8 @@ class PostController extends BaseController {
 							ProfilePostRepository $profilepost,
 							ActivityRepository $activity,
 							CommentRepository $comment,
-							FeedRepository $feed
-
+							FeedRepository $feed,
+							FeaturedRepository $featured
 							) {
 		$this->post = $post;
 		$this->repost = $repost;
@@ -30,6 +30,7 @@ class PostController extends BaseController {
 		$this->activity = $activity;
 		$this->comment = $comment;
 		$this->feed = $feed;
+		$this->featured = $featured;
 	}
 
 	public function getIndex() {
@@ -68,6 +69,9 @@ class PostController extends BaseController {
 				$liked = $this->like->has_liked($my_id, $post->id);
 				$favorited = $this->favorite->has_favorited($my_id, $post->id);
 				$reposted = $this->repost->has_reposted($my_id, $post->id);
+				// Admin shit
+				$is_mod = Session::get('mod');
+				$is_admin = Session::get('admin');
 
 			} else {
 				//DEFAULTS for not logged in users
@@ -94,10 +98,7 @@ class PostController extends BaseController {
 				}
 			}
 
-			// Fetch the comments!
-			// $comments = $this->comment->findByPostId( $post->id );
-
-	        return View::make( 'v2/posts/post' )
+			$view = View::make( 'v2/posts/post' )
 						->with('post', $post)
 						// ->with('comments', $comments)
 						->with('is_following', $is_following)//you are following this profile
@@ -108,6 +109,15 @@ class PostController extends BaseController {
 						->with('reposted', $reposted)
 						->with('is_editable', $this->post->checkEditable($post->published_at))
 						;
+
+			// If admin or mod, we need some additional info for the view
+			if ( $is_mod || $is_admin ) {
+				$featured = $this->featured->findByPostId( $post->id );
+				$view->with( 'featured', $featured );
+			}
+
+	        return $view;
+
 		} else {
 			return Redirect::to('/');
 		}
