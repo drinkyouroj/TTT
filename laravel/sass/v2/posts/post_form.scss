@@ -2,6 +2,8 @@
 
 $border_color: #eee;
 
+@include photo_selection;
+
 //Top Controls Fixed (Post Type, Category, Drafe, Publish)
 .controls-wrapper {
 	position: fixed;
@@ -9,7 +11,7 @@ $border_color: #eee;
 	top: $navbar_height;
 	//height: 50px;//height of the Controls bar.
 	width: 100%;
-	background-image:url('/../../images/posts/black-90.png');
+	background-image:url('../../../../images/posts/black-90.png');
 	.controls-container {
 		padding:15px 15px;
 		//button reset.
@@ -33,7 +35,7 @@ $border_color: #eee;
 		        @include montserrat(normal);
 		        text-transform:uppercase;
 		        font-size:13px;
-		        background-image:url('/../../images/posts/cat-arrow-white.png');
+		        background-image:url('../../../../images/posts/cat-arrow-white.png');
 		        background-position:right center;
 		        background-repeat:no-repeat;
 		        background-size:10px 7px;
@@ -66,7 +68,7 @@ $border_color: #eee;
 	z-index: 3;
 	position:fixed;
 	width: 100%;
-	background-image:url('/../../images/posts/black-90.png');
+	background-image:url('../../../../images/posts/black-90.png');
 	display:none;
 	padding-top: 30px;
 	padding-bottom: 50px;
@@ -133,7 +135,7 @@ $border_color: #eee;
 		margin-top: 69px;
 		padding-left:0px;
 		padding-right:0px;
-		height: 619px;//Change Min-height value based on the window.
+		height: 500px;//Change Min-height value based on the window.
 		@media screen and (min-width: 992px) {
 			display: table;
 			-moz-box-sizing: border-box;
@@ -230,17 +232,14 @@ $border_color: #eee;
 			}
 		}
 		.image-system {
-			@media screen and (max-width: 992px) {
-				height: 500px;
-			}
 			position:relative;
-			height: 619px;
+			height: 500px;
 			background-size: cover;
 			background-repeat: no-repeat;
 			.image-select {
 				position:absolute;
 				left:0px;
-				top:220px;
+				top:170px;
 				text-align: center;
 				
 				margin: 0px 0;//This determines the height of the image.
@@ -312,115 +311,4 @@ $border_color: #eee;
 			}
 		}
 	}
-}
-
-//Below will be heavily reworked, but its all there for reference.
-.photos {
-	.photo-system {
-		.input-append {
-			input.search-query {
-				width:100%;
-				max-width:300px;
-				height: 34px;
-				padding: 6px 12px;
-				font-size: 14px;
-				line-height: 1.428571429;
-				color: #555;
-				vertical-align: middle;
-				background-color: #fff;
-				border-radius: 4px;
-				-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
-				box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
-				-webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-				transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-			}
-			.activate-search {
-				font-family:'bebas';
-				letter-spacing:1px;
-				background-color:#000;
-				color:#fff;
-				&:hover {
-					background-color:#333;
-					color:#fff;
-				}
-			}
-			.reset-search {
-				font-family:'bebas';
-				letter-spacing:1px;
-				background-color:#428bca;
-				color:#fff;
-				&:hover {
-					background-color:#3581ba;
-				}
-			}
-		}
-		.chosen {
-			margin-top:30px;
-		}
-
-		h4 {
-			font-family: 'bebas';
-		}
-
-		.chosen-label {
-			font-family: 'bebas';
-		}
-
-		.processed-label {
-			font-family: 'bebas';
-		}
-
-		.photo-results {
-			margin-top:20px;
-			img {
-
-			}
-			 a.pager{
-				width:75px;
-				height:75px;
-				font-family:'bebas';
-				font-size:18px;
-				font-weight:normal;
-				letter-spacing:1px;
-				display:inline-block;
-				background-color:#000;
-				color:#fff;
-				cursor:pointer;
-				margin:0px !important;
-				padding-top:25px;
-				vertical-align:top;
-			}
-			a.pager.previous{
-				border-right:1px solid #ddd;
-			}
-		}
-
-		.chosen {
-			.processor-container {
-				.photo-processor {
-					h4 {
-						margin-top:0px;
-						margin-bottom:0px;
-					}
-					img {
-						float:left;
-						display:inline;
-						width: 14%;
-					}
-				}
-			}
-			.photo-chosen {
-				height: 400px;
-				overflow: hidden;
-				background-size: cover;
-				background-position: center center;
-				background-repeat: no-repeat;
-				img {
-					width:100%;
-				}
-			}
-		}
-
-	}
-
 }

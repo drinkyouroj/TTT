@@ -80,7 +80,7 @@
 					<a class="action-comment btn-flat-blue" href="#">Comment</a>
 
 					@if ( $is_author && $is_editable )
-						<a href="{{ URL::to( 'profile/editpost/'.$post->id ) }}">Edit Post</a>
+						<a class="btn-flat-white-borderless" href="{{ URL::to( 'profile/editpost/'.$post->id ) }}">Edit Post</a>
 					@endif
 					</div>
 				</div>
