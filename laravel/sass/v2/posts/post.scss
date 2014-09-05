@@ -8,31 +8,54 @@
 		width: 100%;
 		height: $post_actionbar_height;
 		z-index: 999;
-		text-align: center;
 		background-image:url('../../../../images/posts/black-90.png');
 		padding: 15px;
-		.follow, ul {
-			float:right;
+		.actions-container, .comment-container, .utility-container {
+			margin-top:5px;
 		}
-
-		ul {
-			list-style:none;
-			li {
-				float:left;
-				@include post-actions;
+		.utility-container {
+			border-right:solid 1px $dark_gray;
+			a.read {
+				@include post_actions_label;
+				background-image:url('../../../../images/posts/mark-read.png');
+				cursor:pointer;
+				margin-right:20px;
+			}
+			a.flag {
+				@include post_actions_label;
+				background-image:url('../../../../images/posts/flag.png');
+				cursor:pointer;
+			}
+		}
+		.actions-container {
+			ul {
+				display:inline-block;
+				list-style:none;
+				text-align:right;
+				li {
+					float:left;
+					@include post_actions;
+				}
+			}
+		}
+		.comment-container {
+			.comment-button {
+				@include post_actions_label;
+				background-image:url('../../../../images/global/comment.png');
 			}
 		}
 		.follow-container {
 			float:right;
-		}
-		.comment-container {
-			text-align:right;
+			.follow {
+				float:right;
+			}
 		}
 	}
 }
 
 .post-heading-wrapper {
 	background-color: $lightgray;
+	border-bottom:solid 1px $lightgray;
 
 	.post-heading-container {
 		position: relative;
@@ -60,11 +83,11 @@
 				position:relative;
 				text-align: center;
 				background-color: #fff;
+				padding-left:25px;
+				padding-right:25px;
 				h2 {
-					padding-top:90px;
-					font-size: 45px;
-					@include montserrat(bold);
-					text-transform:uppercase;
+					@include post_page_title;
+					padding-top:75px;
 					@media screen and (max-width: 992px) {
 						margin-top: 0px;
 					}
@@ -79,10 +102,8 @@
 				}
 
 				ul.post-taglines {
-					font-size:17px;
-					margin-bottom: 30px;
-					@include garamond-italic;
-
+					@include post_page_tagline;
+					margin-bottom: 25px;
 					li {
 						line-height: 12px;
 					}
@@ -102,7 +123,7 @@
 				ul.post-categories {
 					position: absolute;
 					width:100%;
-					bottom:20px;
+					bottom:10px;
 					left:0px;
 					margin-top: 100px;
 					margin-bottom: 0px;
@@ -123,9 +144,6 @@
 				}
 			}
 			.post-image {
-				@media screen and (max-width: 992px) {
-					height: 500px;
-				}
 				height: 500px;
 				background-color:#000;//temporary DELETE
 				-webkit-background-size: cover;
@@ -149,10 +167,10 @@
 			padding-right: 0px !important;
 
 			.post-content-page {
-				font-size:18px;
-				line-height:150%;
+				font-size:20px;
+				line-height:175%;
 				text-align:justify;
-				padding: 60px 0 20px 0;
+				padding: 50px 0 10px 0;
 				-moz-column-gap:40px; /* Firefox */
 				-webkit-column-gap:40px; /* Safari and Chrome */
 				column-gap:40px;
@@ -179,11 +197,22 @@
 	.post-comment-container {
 		padding-bottom:200px;
 		.comments {
-			
+			textarea, .comment-body {
+				font-size:16px;
+				color: $dark;
+			}
+			span.deleted {
+				color:$gray;
+			}
 			.form-group {
-				margin-top:20px;
+				margin-top:0px;
 				margin-left: 0;
 				margin-right: 0;
+				label {
+					@include montserrat;
+					text-transform:uppercase;
+					padding-bottom:5px;
+				}
 			}
 
 			div.comments-listing {
@@ -193,8 +222,7 @@
 				div.comment {
 					
 					border-top: 2px solid $lightgray;
-					border-bottom: 1px solid $lightgray;
-					padding: 20px 20px 1px 20px;
+					padding: 10px 20px 5px 10px;
 				
 					&.published {
 
@@ -220,48 +248,79 @@
 					div.left-col {
 						float: left;
 						overflow: hidden;
+						margin-top:27px;
 						margin-right: 10px;
 						text-align: center;
 						min-width: 40px;
 
 						.flag-comment, .like-comment {
 							display: inline-block;
-							margin: 0px 0px 15px 0px;
+							margin: 0px 0px 5px 0px;
 							font-size: 16px;
 							cursor: pointer;
 							width: 100%;
-
-							&.flag-comment.active {
-								color: red;
+						}
+						.flag-comment {
+							text-align:right;
+							color:$gray;
+							&:hover {
+								color: $red;
 							}
-							&.like-comment.active {
+							&.active {
+								color: $red;
+							}
+						}
+						.like-comment {
+							display:inline-block;
+							width:50%;
+							text-align:right;
+							color:$gray;
+							&:hover {
+								color: $blue;
+							}
+							&.active {
 								color: $blue;
 							}
 						}
 						.like-comment-count {
-							display: block;
-							width: 100%;
+							display:inline-block;
 							margin-bottom: -15px;
+							width:40%;
+							color:$gray;
 						}
 					}
 					div.right-col {
 						overflow: hidden;
 						.comment-body {
-							font-size:16px;
+							margin:5px 0 10px 0;
 						}
-						a {
-							opacity: .75;
-							font-size:10px;
-							padding:5px 10px;
-							&:hover {
-								opacity: 1;
+						.user {
+							a {
+								@include montserrat;
+								cursor:pointer;
+								font-size:12px;
 							}
-							&.reply {
-							}
-							&.delete {
-								color:$red;
-								border:solid 2px $red;
-								background:$white;
+						}
+						.reply-links {
+							a {
+								opacity: .75;
+								padding:0 10px;
+								@include montserrat;
+								text-transform: uppercase;
+								cursor:pointer;
+								&:hover {
+									opacity: 1;
+								}
+								&.reply {
+									color:$dark;
+									font-size:11px;
+									padding-left:0;
+									border-right:solid 1px $gray;
+								}
+								&.delete {
+									color:$red;
+									font-size:10px;
+								}
 							}
 						}
 					}

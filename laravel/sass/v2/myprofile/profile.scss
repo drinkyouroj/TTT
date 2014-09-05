@@ -144,7 +144,6 @@ a:focus {
 				#comment-content {
 					margin-right: 15px;
 					margin-bottom: 100px;
-					border-left: 1px solid $gray;
 					padding: 10px 18px 30px 18px;
 					h3 {
 						margin: 0;
@@ -157,8 +156,11 @@ a:focus {
 						padding: 13px 25px;
 						margin: 10px 0;
 						background:#fff;
+						@include word-break(break-all);
 						span.date {
 							color: $gray;
+							@include montserrat;
+							font-size:10px;
 						}
 						.inner-content {
 							.where {
@@ -250,7 +252,9 @@ a:focus {
 							padding:5px 0;
 							.date {
 								span {
-
+									@include montserrat;
+									font-size:12px;
+									color:$dark;
 								}
 							}
 							.image {
