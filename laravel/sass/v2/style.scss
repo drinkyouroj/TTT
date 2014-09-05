@@ -23,8 +23,8 @@ body {
 	@include garamond;
 }
 
-.btn:focus {
-  outline: none;
+.btn {
+	border-radius:0px !important;
 }
 
 // ================= HEADER ========================
@@ -60,6 +60,7 @@ body {
 							font-size: 21px;
 							line-height: 19px;
 							@include fjalla;
+							letter-spacing:2px;
 						}
 					}
 				}
@@ -380,7 +381,7 @@ body {
 	padding: 10px 15px;
 	text-decoration: none;
 	text-transform:uppercase;
-	border: 2px solid white;
+	border: 2px solid $white;
 	cursor: pointer;
 	&:hover {
 		// background-color: $gray;
@@ -409,7 +410,27 @@ body {
 	}
 }
 
+.btn-flat-white-borderless {
+	@include montserrat(normal);
+	color: $dark;
+	font-size: 12px;
+	background: $white;
+	padding: 10px 15px;
+	text-decoration: none;
+	text-transform:uppercase;
+	border: 2px solid $white;
+	cursor: pointer;
+	&:hover {
+		// background-color: $gray;
+		// border-color: $gray;
+		color: $dark;
+
+		text-decoration: none;	
+	}
+}
+
 .btn-flat-blue {
+	display:inline-block;
 	@include montserrat(normal);
 	color: white;
 	font-size: 12px;
@@ -454,7 +475,7 @@ body {
 	text-decoration: none;
 	border: 1px solid $blue;
 	cursor: pointer;
-	background-image:url('/../../images/global/follow.png');
+	background-image:url('../../../images/global/follow.png');
 	background-repeat: no-repeat;
 	background-position:left center;
 	background-size:40px 40px;
@@ -476,7 +497,7 @@ body {
 	text-decoration: none;
 	border: 2px solid $dark;
 	cursor: pointer;
-	background-image:url('/../../images/global/read.png');
+	background-image:url('../../../images/global/read.png');
 	background-repeat: no-repeat;
 	background-position:left center;
 	background-size:38px 38px;
@@ -485,6 +506,29 @@ body {
 		background-color: $lightgray;
 	}
 }
+
+//generic buton with icon to the left. just add a bg image
+.icon-button {
+	display:inline-block;
+	@include montserrat(normal);
+	text-transform:uppercase;
+	color: $dark;
+	font-size: 12px;
+	letter-spacing:2px;
+	background: none;
+	padding: 10px 15px 10px 50px;
+	text-decoration: none;
+	border: 2px solid $dark;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position:left center;
+	background-size:38px 38px;
+	&:hover {
+		// background-color: $gray;
+		background-color: $lightgray;
+	}
+}
+
 
 .post-button {
 	@include montserrat(normal);
@@ -502,3 +546,49 @@ body {
 		text-decoration: none;	
 	}
 }
+
+//generic modal styling
+.modal {
+	text-align:center;
+	.modal-content {
+		max-width:900px;
+		margin:0px auto;
+		.modal-header {
+			position:relative;
+			button.close {
+				position:absolute;
+				top:0px;
+				right:0px;
+				span {
+					font-size:100px;
+					color:$dark;
+				}
+			}
+			h4.modal-title {
+				margin-top:70px;
+				text-align:center;
+				@include montserrat();
+				font-size:32px;
+				text-transform:uppercase;
+				letter-spacing:1px;
+			}
+		}
+		.modal-body {
+			input {
+				border:solid 1px $lightgray;
+				@include montserrat();
+				text-transform:uppercase;
+				font-size:12px;
+				height:41px;
+			}
+		}
+		.modal-footer {
+			border-top:solid 1px $lightgray;
+			text-align:center;
+		}
+	}
+}
+
+
+
+

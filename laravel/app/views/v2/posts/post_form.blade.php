@@ -263,16 +263,19 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 						<h4 class="modal-title" id="imageModalLabel">
-							Image Selection
+							Search for an image.
 						</h4>
 					</div>
 					<div class="modal-body">
 				      	<div class="photos">
 							<div class="photo-system">
 								<div class="input-append">
-									Search Photos <input type="text" class="span2 search-query" placeholder="type in more than 3 characters!">
-									<a class="btn activate-search">Search</a>
-									<a class="btn reset-search hidden">Reset</a>
+									<input type="text" class="span2 search-query" placeholder="Search Photos*">
+									<a class="btn activate-search btn-flat-gray">Search</a>
+									<a class="btn reset-search btn-flat-blue hidden">Reset</a>
+									<br/>
+									<br/>
+									*must be more than 3 characters.
 								</div>
 								
 								<div class="photo-results">
@@ -283,7 +286,7 @@
 									<div class="row">
 										<div class="col-md-12 col-sm-12 processor-container">
 											<div class="photo-processor" style="display:none;">
-												<h4>Filters:</h4>
+												<h4>Choose a Filter</h4>
 												<img src="{{Config::get('app.url')}}/img/photos/nofilter.png" data-process="nofilter"/>
 												<img src="{{Config::get('app.url')}}/img/photos/gotham.png" data-process="Gotham"/>
 												<img src="{{Config::get('app.url')}}/img/photos/toaster.png" data-process="Toaster"/>
@@ -312,7 +315,7 @@
 
 					</div><!--End of Modal Body-->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-default btn-flat-white" data-dismiss="modal">OK</button>
 					</div>
 				</div>
 			</div>

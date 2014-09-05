@@ -23,7 +23,7 @@
 	);
 </script>
 <script type="text/x-handlebars-template" id="post-item-template">	
-	<div class="post-container fade in">
+	<div class="post-container fade in {{feed_type}} {{post_type}}">
 		
 		<div class="post-image-overlay">
 			<a href="{{ site_url }}profile/{{ post.user.username }}">

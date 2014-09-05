@@ -408,4 +408,15 @@ class JSONController extends BaseController {
 		}
 	}
 
+	public function getSaveRead($post_id) {
+		if(Auth::check()) {
+			$user = Auth::user();
+			$this->favorite->read($user->id, $post_id);
+			return Response::json(
+					array('result' => 'success'),//great success!
+					200
+				);
+		}
+	}
+
 }

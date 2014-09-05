@@ -1,6 +1,6 @@
 <?php namespace AppStorage\Favorite;
 
-use Favorite,DB, Request;
+use Favorite,DB;
 
 class EloquentFavoriteRepository implements FavoriteRepository {
 
@@ -17,6 +17,7 @@ class EloquentFavoriteRepository implements FavoriteRepository {
 		$favorite = self::instance();
 		$favorite->post_id = $post_id;
 		$favorite->user_id = $user_id;//Gotta be from you.
+		$favorite->read = 0;//not read yet!
 		$favorite->save();
 		return $favorite;
 	}
@@ -39,6 +40,15 @@ class EloquentFavoriteRepository implements FavoriteRepository {
 						->where('post_id', $post_id)
 						->where('user_id', $user_id)
 						->count();
+	}
+
+	public function read($user_id, $post_id) {
+		$favorite = $this->favorite
+						->where('post_id', $post_id)
+						->where('user_id', $user_id)
+						->first();
+		$favorite->read = 1;
+		$favorite->save();
 	}
 
 	public function has_favorited($user_id, $post_id) {

@@ -6,12 +6,11 @@
 
 class FlickrRestController extends \BaseController {
 
-	/**
-	 * API Keys and stuff
-	 */
-	private static $api_key = "199d51aaaeb7c32a953f13ec958358c9";
-	private static $secret = "d35085a81eb05474";
-	private static $url = "https://api.flickr.com/services/rest/?";//Note, SSL is important stuff
+	public function __construct() {
+		$this->api_key = Config::get('flickr.key');
+		$this->secret = Config::get('flickr.secret');
+		$this->url = "https://api.flickr.com/services/rest/?";//Note, SSL is important stuff
+	}
 
 	/**
 	 * Display a listing of pictures based on a tag based search.
@@ -28,7 +27,7 @@ class FlickrRestController extends \BaseController {
 		
 		//
 		$params = array(
-			'api_key' => self::$api_key,
+			'api_key' => $this->api_key,
 			'method' => 'flickr.photos.search',
 			'format'	=> 'php_serial',
 			'text' => Input::get( 'text' ),//This one we'll have to think about a bit, but it shouldn't be too hard.
@@ -45,7 +44,7 @@ class FlickrRestController extends \BaseController {
 			$encoded_params[] = urlencode($k).'='.urlencode($v);
 		}
 		
-		$res = curl_init(self::$url.implode('&', $encoded_params));
+		$res = curl_init($this->url.implode('&', $encoded_params));
 		
 		curl_setopt($res, CURLOPT_RETURNTRANSFER, true);
 		
@@ -74,7 +73,7 @@ class FlickrRestController extends \BaseController {
 	{
 		//
 		$params = array(
-			'api_key'	=> self::$api_key,
+			'api_key'	=> $this->api_key,
 			'method'	=> 'flickr.photos.getSizes',
 			'photo_id'	=> $id,
 			'format'	=> 'php_serial',
@@ -86,7 +85,7 @@ class FlickrRestController extends \BaseController {
 			$encoded_params[] = urlencode($k).'='.urlencode($v);
 		}
 		
-		$res = curl_init(self::$url.implode('&', $encoded_params));
+		$res = curl_init($this->url.implode('&', $encoded_params));
 		
 		curl_setopt($res, CURLOPT_RETURNTRANSFER, true);
 		
