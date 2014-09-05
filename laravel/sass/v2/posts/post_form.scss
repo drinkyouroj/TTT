@@ -128,6 +128,7 @@ $border_color: #eee;
 
 .top-submit-wrapper {
 	background:$lightgray;
+	border-bottom:solid 1px $lightgray;
 	.top-submit-container {
 		position: relative;
 		width: 100%;
@@ -163,8 +164,6 @@ $border_color: #eee;
 			@include border-radius(0);
 			background: none;
 			border-color: $border_color;
-			text-transform: uppercase;
-			@include montserrat(bold);
 		}
 
 		.form-heading {
@@ -178,6 +177,7 @@ $border_color: #eee;
 			}
 
 			.title {
+				@include post_page_title;
 				margin-bottom: 20px;
 				label {
 					margin-bottom: 8px;
@@ -202,17 +202,14 @@ $border_color: #eee;
 			}
 
 			.tags {
-				
 				.tag {
 					float:left;
 					width: 33.33%;
 					font-size: 0;
 					display:inline-block;
 					input {
-						font-size:17px;
-						@include garamond-italic;
 						width: 100%;
-						text-transform:none;
+						@include post_page_tagline;
 					}
 				}
 				label {

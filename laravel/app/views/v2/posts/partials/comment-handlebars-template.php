@@ -20,16 +20,16 @@
 	<div id="comment-{{ comment._id }}" class="comment {{#ifCond comment.published 1}}published{{else}}deleted{{/ifCond}} {{#ifCond comment.depth 0}}thread-parent{{/ifCond}}" style="margin-left: {{ comment.margin }}">
 		<div class="left-col">
 			<span class="like-comment-count">{{comment.likes.length}}</span>
-			<br>
 			<span class="like-comment glyphicon glyphicon-thumbs-up {{#contains comment.likes active_user_id}}active{{/contains}}"></span>
 			<br>
 			<span class="flag-comment glyphicon glyphicon-flag {{#contains comment.flags active_user_id}}active{{/contains}}"></span>
 		</div>
 
 		<div class="right-col">
+			<div class="user">
+				<a href="{{ profile_url }}{{ comment.author.username }}"> {{ comment.author.username }} </a>
+			</div>
 
-			<span>by <a href="{{ profile_url }}{{ comment.author.username }}"> {{ comment.author.username }} </a> </span>
-			
 			<p class="comment-body">
 				{{#ifCond comment.published 0 }}
 					<span class="deleted">(This comment has been deleted)</span>
@@ -37,22 +37,23 @@
 					 {{ comment.body }} 	
 				{{/ifCond}}
 			</p>
-
-			<a class="reply {{#ifCond active_user_id false}}auth{{/ifCond}} btn-flat-white" data-replyid="{{ comment._id }}" data-postid="{{ comment.post_id }}">Reply</a>
-			
-			{{#ifCond comment.author.user_id active_user_id }}
-				{{#ifCond comment.published 1}}			
-					<a class="delete btn-flat-dark-gray" data-delid="{{ comment._id }}" title="Delete Comment" >Delete</a>
+			<div class="reply-links">
+				<a class="reply {{#ifCond active_user_id false}}auth{{/ifCond}}" data-replyid="{{ comment._id }}" data-postid="{{ comment.post_id }}">Reply</a>
+				
+				{{#ifCond comment.author.user_id active_user_id }}
+					{{#ifCond comment.published 1}}			
+						<a class="delete" data-delid="{{ comment._id }}" title="Delete Comment" >Delete</a>
+					{{/ifCond}}
 				{{/ifCond}}
-			{{/ifCond}}
 
-			{{#ifCond is_mod true }}
-				{{#ifCond comment.published 1}}
-					<a class="delete mod-del-comment btn-flat-dark-gray" data-delid="{{ comment._id }}" title="Delete Comment" >Moderator Delete </a>
+				{{#ifCond is_mod true }}
+					{{#ifCond comment.published 1}}
+						<a class="delete mod-del-comment" data-delid="{{ comment._id }}" title="Delete Comment" >Moderator Delete </a>
+					{{/ifCond}}
 				{{/ifCond}}
-			{{/ifCond}}
 
-			<div class="reply-box"></div>
+				<div class="reply-box"></div>
+			</div>
 		</div>
 	</div>
 

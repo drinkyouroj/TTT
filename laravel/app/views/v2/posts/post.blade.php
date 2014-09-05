@@ -52,12 +52,13 @@
 							$is_author = Auth::check() && $post->user->id == Auth::user()->id;
 						?>
 							@if( !$is_author )
-								<div class="col-md-3">
-									<a data-action="read" class="read-button read">Read</a>
-									<a data-action="flag" class="flag-button flag">Flag</a>
+								<div class="col-md-3 utility-container">
+									<a data-action="read" class="read">Mark as Read</a>
+									<a data-action="flag" class="flag-button flag glyphicon glyphicon-flag">
+										Flag</a>
 								</div>
 
-								<div class="col-md-4">
+								<div class="col-md-3 actions-container">
 									<ul class="actions">
 										<li class="like">
 											<a data-action="like" class="like-button" href="#" title="{{ $like_tooltip }}" data-toggle="tooltip" data-placement="bottom">
@@ -82,7 +83,7 @@
 									<ul>
 								</div>
 
-								<div class="col-md-3 follow-container">
+								<div class="col-md-4 follow-container">
 									<a data-action="follow" class="follow-button follow" href="#">
 										<span class="{{ $is_following ? 'hidden' : '' }}"> {{ $follow_term }} {{ $post->user->username }} </span>
 										<span class="{{ $is_following ? '' : 'hidden' }}"> {{ $follow_term_active }} {{ $post->user->username }} </span>
@@ -90,7 +91,7 @@
 								</div>
 							@endif
 								<div class="col-md-2 comment-container">
-									<a class="action-comment btn-flat-blue" href="#">Comment</a>
+									<a class="comment-button action-comment" href="#">Comment</a>
 								</div>
 							@if ( $is_author && $is_editable )
 								<div class="col-md-3">
@@ -136,7 +137,7 @@
 					</ul>
 
 				</div>
-				<div class="post-image col-md-8" style="background-image: url('{{Config::get('app.imageurl')}}/{{$post->image}}');"></div>
+				<div class="post-image col-md-8 style="background-image: url('{{Config::get('app.imageurl')}}/{{$post->image}}');"></div>
 			</div>
 		</div>
 	</section>
@@ -185,7 +186,7 @@
 						</div>
 										
 						<div class="form-group pull-right">
-							<input class="btn-flat-dark-gray" type="submit" value="Comment">
+							<input class="btn-flat-gray" type="submit" value="Comment">
 						</div>
 						
 						<div class="clearfix"></div>
