@@ -58,7 +58,40 @@ class EloquentFeaturedRepository implements FeaturedRepository {
 			
 	}
 
+	public function findByPostId ( $post_id ) {
+		$result = $this->featured->where( 'post_id', $post_id )->get()->first();
+		if ( $result instanceof Featured ) {
+			return $result;
+		}
+		return false;
+	}
+
 	public function delete($post_id) {
-		$this->featured->where('post_id', $post_id)->delete();
+		$this->featured->where('post_id', intval( $post_id ) )->delete();
+	}
+
+	/**
+	 *	Swaps a featured items position with the target position item. If no item
+	 * 	exists in the target position, just move this one there.
+	 */
+	public function swapFeaturedItems ( $post_id, $target_position ) {
+		$existing = $this->findByPostId( $post_id );
+		$target_featured = $this->featured->where('front', true)
+										  ->where('position', $target_position)
+										  ->get();
+		// Make sure we have featured item and it is on the front page
+		if ( $existing && $existing->front ) {
+			$current_position = $existing->position;
+			$existing->position = $target_position;
+			if ( $target_featured instanceof Featured ) {
+				// There is a featured post in that position.
+				$target_featured->position = $current_position;
+				$target_featured->save();
+			}
+			$existing->save();
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

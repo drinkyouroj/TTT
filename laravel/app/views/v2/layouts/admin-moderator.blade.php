@@ -16,9 +16,11 @@
 				<ul class="list-unstyled">
 					@if ( count( $flagged_post_content ) )
 						@foreach ( $flagged_post_content as $content )
-							<li data-flagged-post-id="{{ $content->post->id }}">
-								<a class="flagged-post-title" href="{{ URL::to('posts/'.$content->post->alias ) }}" target="_blank">{{ $content->post->title }}</a>
-							</li>
+							@if ( $content->post )
+								<li data-flagged-post-id="{{ $content->post->id }}">
+									<a class="flagged-post-title" href="{{ URL::to('posts/'.$content->post->alias ) }}" target="_blank">{{ $content->post->title }}</a>
+								</li>
+							@endif
 						@endforeach
 					@else
 						<li>There are currently no flagged posts.</li>
@@ -36,10 +38,12 @@
 				<ul class="list-unstyled">
 					@if ( count( $flagged_comment_content ) )
 						@foreach ( $flagged_comment_content as $content )
-							<li data-flagged-comment-id="{{ $content->comment->id }}">
-								<p class="flagged-comment-body">{{ $content->comment->body }}</p>
-								<a class="flagged-comment-author" href="{{ URL::to('profile/'.$content->comment->author['username'] ) }}" target="_blank">{{ $content->comment->author['username'] }}</a>
-							</li>
+							@if ( $content->comment )
+								<li data-flagged-comment-id="{{ $content->comment->id }}">
+									<p class="flagged-comment-body">{{ $content->comment->body }}</p>
+									<a class="flagged-comment-author" href="{{ URL::to('profile/'.$content->comment->author['username'] ) }}" target="_blank">{{ $content->comment->author['username'] }}</a>
+								</li>
+							@endif
 						@endforeach
 					@else
 						<li>There are currently no flagged comments.</li>

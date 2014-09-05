@@ -162,7 +162,7 @@
 					@if ( count( $saves ) )
 						<ul class="list-unstyled">
 						@foreach ( $saves as $save )
-							@if(is_object($save->post->user))
+							@if( is_object( $save->post ) && is_object( $save->post->user ) )
 								<li>
 									<a class="post-image-anchor" href="{{ URL::to( 'posts/'.$save->post->alias ) }}">
 										<div class="post-image" style="background-image: url('{{Config::get('app.imageurl')}}/{{$save->post->image}}')"></div>

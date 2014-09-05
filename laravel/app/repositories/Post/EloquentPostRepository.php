@@ -1,12 +1,13 @@
 <?php namespace AppStorage\Post;
 
-use Post, DB, Request, Auth, Session;
+use Post, DB, Request, Auth, Session, FeaturedRepository;
 
 class EloquentPostRepository implements PostRepository {
 
-	public function __construct(Post $post)
+	public function __construct(Post $post, FeaturedRepository $featured)
 	{
 		$this->post = $post;
+		$this->featured = $featured;
 	}
 
 	//Instance
@@ -181,6 +182,8 @@ class EloquentPostRepository implements PostRepository {
 	public function unpublish($id) {
 		$this->post->where('id', $id)
 					->update(array('published'=>0));
+		// IMPORTANT! Make sure we remove from the featured page (if applicable)
+		$this->featured->delete( $id );
 	}
 	
 	//restores All User posts
@@ -213,6 +216,8 @@ class EloquentPostRepository implements PostRepository {
 	//Delete
 	public function delete($id) {
 		$this->post->where('id', $id)->delete();//remember that the Eloquent model has softdelete.
+		// IMPORTANT! Make sure we remove from the featured page (if applicable)
+		$this->featured->delete( $id );
 	}
 	
 	public function undelete($id) {

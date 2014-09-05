@@ -1,6 +1,8 @@
 @extends('v2.layouts.master')
 	<?php
 		$user = Auth::user();
+		$is_mod = $user->hasRole('Moderator');
+		$is_admin = $user->hasRole('Admin');
 	?>
 
 @section('css')
@@ -200,5 +202,37 @@
 
 
 @section('admin-mod-post-controls')
-	<button>Do Stuff</button>
+	<p class="post-title"> {{ $post->title }}
+		<span class="post-featured-label label label-danger {{ $featured ? '' : 'hidden' }}">
+			@if ( $featured )
+				Featured {{ $featured->position }}
+			@endif
+		</span>
+	</p>
+	
+	{{-- Admin only access to featured controls --}}
+	@if ( $is_admin )
+		<div class="admin-post-featured-controls">
+			{{ Form::select( 'admin-featured-position', Config::get('featured'), null, array( 'class' => 'form-control' ) ) }}
+			<button class="admin-set-featured btn btn-xs btn-danger {{ $featured ? 'hidden' : '' }}">Set Featured Position</button>
+			<button class="admin-unset-featured btn btn-xs btn-warning {{ $featured ? '' : 'hidden' }}">Remove from Featured</button>
+		</div>
+		<hr>
+	@endif
+
+	<div class="mod-post-controls">
+		<button class="mod-post-delete btn btn-xs btn-warning {{ $post ? '' : 'hidden' }}">Delete This Post</button>
+		<button class="mod-post-undelete btn btn-xs btn-default {{ $post ? 'hidden' : '' }}">Un-delete This Post</button>
+		<p class="post-categories-title">Categories</p>
+		<ul class="list-unstyled">
+			@foreach ( $post->categories as $category )
+				<li>
+					{{ $category->title }}
+					<button class="mod-post-category-delete btn btn-xs btn-warning" data-category-id="{{$category->id}}">Remove</button>
+				</li>
+			@endforeach
+		</ul>
+	</div>
+
+	
 @stop
