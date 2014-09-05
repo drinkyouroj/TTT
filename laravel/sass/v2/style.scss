@@ -430,6 +430,7 @@ body {
 }
 
 .btn-flat-blue {
+	display:inline-block;
 	@include montserrat(normal);
 	color: white;
 	font-size: 12px;
@@ -474,7 +475,7 @@ body {
 	text-decoration: none;
 	border: 1px solid $blue;
 	cursor: pointer;
-	background-image:url('../../../../images/global/follow.png');
+	background-image:url('../../../images/global/follow.png');
 	background-repeat: no-repeat;
 	background-position:left center;
 	background-size:40px 40px;
@@ -496,7 +497,7 @@ body {
 	text-decoration: none;
 	border: 2px solid $dark;
 	cursor: pointer;
-	background-image:url('../../../../images/global/read.png');
+	background-image:url('../../../images/global/read.png');
 	background-repeat: no-repeat;
 	background-position:left center;
 	background-size:38px 38px;

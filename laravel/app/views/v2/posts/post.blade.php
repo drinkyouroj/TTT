@@ -43,57 +43,59 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-					{{-- Only display like, repost, save if not the author --}}
-					<?php
-						$is_logged_in = Auth::check();
-						$is_author = Auth::check() && $post->user->id == Auth::user()->id;
-					?>
-					@if( !$is_author )
 						<div class="row">
-							<div class="col-md-3">
-								<a data-action="read" class="read-button read">Read</a>
-								<a data-action="flag" class="flag-button flag">Flag</a>
-							</div>
+						{{-- Only display like, repost, save if not the author --}}
+						<?php
+							$is_logged_in = Auth::check();
+							$is_author = Auth::check() && $post->user->id == Auth::user()->id;
+						?>
+							@if( !$is_author )
+								<div class="col-md-3">
+									<a data-action="read" class="read-button read">Read</a>
+									<a data-action="flag" class="flag-button flag">Flag</a>
+								</div>
 
-							<div class="col-md-3">
-								<ul class="actions">
-									<li class="like">
-										<a data-action="like" class="like-button" href="#" title="{{ $like_tooltip }}" data-toggle="tooltip" data-placement="bottom">
-											<span class="{{ $liked ? 'hidden' : '' }}">  {{ $like_term }} <span class="action-counts"> {{ $liked ? $post->likes->count() - 1 : $post->likes->count() }} </span> </span>
-										</a>
-										<span class="{{ $liked ? '' : 'hidden' }}">  {{ $like_term_active }} <span class="action-counts"> {{ $liked ? $post->likes->count() : $post->likes->count() + 1 }} </span> </span>
-									</li>
+								<div class="col-md-4">
+									<ul class="actions">
+										<li class="like">
+											<a data-action="like" class="like-button" href="#" title="{{ $like_tooltip }}" data-toggle="tooltip" data-placement="bottom">
+												<span class="{{ $liked ? 'hidden' : '' }}"> <span class="action-counts"> {{ $liked ? $post->likes->count() - 1 : $post->likes->count() }} </span> </span>
+											</a>
+											<span class="{{ $liked ? '' : 'hidden' }}"> <span class="action-counts"> {{ $liked ? $post->likes->count() : $post->likes->count() + 1 }} </span> </span>
+										</li>
 
-									<li class="repost">
-										<a data-action="repost" class="repost-button" href="#" title="{{ $repost_tooltip }}" data-toggle="tooltip" data-placement="bottom">
-											<span class="{{ $reposted ? 'hidden' : '' }}"> {{ $repost_term }} <span class="action-counts"> {{ $reposted ? $post->reposts->count() - 1 : $post->reposts->count() }} </span> </span>
-										</a>
-										<span class="{{ $reposted ? '' : 'hidden' }}"> {{ $repost_term_active }} <span class="action-counts"> {{ $reposted ? $post->reposts->count() : $post->reposts->count() + 1 }} </span> </span>
-									</li>
+										<li class="repost">
+											<a data-action="repost" class="repost-button" href="#" title="{{ $repost_tooltip }}" data-toggle="tooltip" data-placement="bottom">
+												<span class="{{ $reposted ? 'hidden' : '' }}"> <span class="action-counts"> {{ $reposted ? $post->reposts->count() - 1 : $post->reposts->count() }} </span> </span>
+											</a>
+											<span class="{{ $reposted ? '' : 'hidden' }}"> <span class="action-counts"> {{ $reposted ? $post->reposts->count() : $post->reposts->count() + 1 }} </span> </span>
+										</li>
 
-									<li class="save">
-										<a data-action="save" class="save-button" href="#" title="{{ $save_tooltip }}" data-toggle="tooltip" data-placement="bottom">
-											<span class="{{ $favorited ? 'hidden' : ''}}"> {{ $save_term }} <span class="action-counts"> {{ $favorited ? $post->favorites->count() - 1 : $post->favorites->count() }} </span> </span>
-										</a>
-										<span class="{{ $favorited ? '' : 'hidden'}}"> {{ $save_term_active }} <span class="action-counts"> {{ $favorited ? $post->favorites->count() : $post->favorites->count() + 1 }} </span> </span>
-									</li>
-								<ul>
-							</div>
+										<li class="save">
+											<a data-action="save" class="save-button" href="#" title="{{ $save_tooltip }}" data-toggle="tooltip" data-placement="bottom">
+												<span class="{{ $favorited ? 'hidden' : ''}}"> <span class="action-counts"> {{ $favorited ? $post->favorites->count() - 1 : $post->favorites->count() }} </span> </span>
+											</a>
+											<span class="{{ $favorited ? '' : 'hidden'}}"> <span class="action-counts"> {{ $favorited ? $post->favorites->count() : $post->favorites->count() + 1 }} </span> </span>
+										</li>
+									<ul>
+								</div>
 
-							<div class="col-md-3">
-								<a data-action="follow" class="follow-button follow" href="#">
-									<span class="{{ $is_following ? 'hidden' : '' }}"> {{ $follow_term }} {{ $post->user->username }} </span>
-									<span class="{{ $is_following ? '' : 'hidden' }}"> {{ $follow_term_active }} {{ $post->user->username }} </span>
-								</a>
-							</div>
+								<div class="col-md-3 follow-container">
+									<a data-action="follow" class="follow-button follow" href="#">
+										<span class="{{ $is_following ? 'hidden' : '' }}"> {{ $follow_term }} {{ $post->user->username }} </span>
+										<span class="{{ $is_following ? '' : 'hidden' }}"> {{ $follow_term_active }} {{ $post->user->username }} </span>
+									</a>
+								</div>
+							@endif
+								<div class="col-md-2 comment-container">
+									<a class="action-comment btn-flat-blue" href="#">Comment</a>
+								</div>
+							@if ( $is_author && $is_editable )
+								<div class="col-md-3">
+									<a class="btn-flat-white-borderless" href="{{ URL::to( 'profile/editpost/'.$post->id ) }}">Edit Post</a>
+								</div>
+							@endif
 						</div>
-					@endif
-
-					<a class="action-comment btn-flat-blue" href="#">Comment</a>
-
-					@if ( $is_author && $is_editable )
-						<a class="btn-flat-white-borderless" href="{{ URL::to( 'profile/editpost/'.$post->id ) }}">Edit Post</a>
-					@endif
 					</div>
 				</div>
 			</div>

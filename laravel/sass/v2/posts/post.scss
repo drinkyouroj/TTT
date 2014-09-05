@@ -14,21 +14,19 @@
 		.follow, ul {
 			float:right;
 		}
-		 a {
-		 	display: inline-block;
-		 	margin-left:20px;
-		 }
-		 ul {
-		 	list-style:none;
-		 	li {
-		 		float:left;
-		 	}
-		 }
-		 .like-button {
-		 	background-image:url('../../../../images/global/like.png');
-		 	background-repeat: no-repeat;
-			background-position:left top;
-			background-size:23px 51px;
+
+		ul {
+			list-style:none;
+			li {
+				float:left;
+				@include post-actions;
+			}
+		}
+		.follow-container {
+			float:right;
+		}
+		.comment-container {
+			text-align:right;
 		}
 	}
 }
@@ -179,10 +177,11 @@
 	background-color: $beige;
 
 	.post-comment-container {
-
+		padding-bottom:200px;
 		.comments {
 			
 			.form-group {
+				margin-top:20px;
 				margin-left: 0;
 				margin-right: 0;
 			}
@@ -193,8 +192,9 @@
 				
 				div.comment {
 					
-					border-top: 2px solid lightgray !important;
-					padding: 20px;
+					border-top: 2px solid $lightgray;
+					border-bottom: 1px solid $lightgray;
+					padding: 20px 20px 1px 20px;
 				
 					&.published {
 
@@ -203,7 +203,13 @@
 
 					}
 					&.thread-parent {
-
+						position:relative;
+						border-top: 3px solid $gray;
+						&::before {
+							position:absolute;
+							content:url(../../../../images/posts/comment-arrow.png);
+							top:-15px;
+						}
 					}
 
 					p {
@@ -240,6 +246,24 @@
 					}
 					div.right-col {
 						overflow: hidden;
+						.comment-body {
+							font-size:16px;
+						}
+						a {
+							opacity: .75;
+							font-size:10px;
+							padding:5px 10px;
+							&:hover {
+								opacity: 1;
+							}
+							&.reply {
+							}
+							&.delete {
+								color:$red;
+								border:solid 2px $red;
+								background:$white;
+							}
+						}
 					}
 
 				}
