@@ -185,3 +185,19 @@
 
 	</div>
 </script>
+
+
+<script type="text/x-handlebars-template" id="feature-item-template">
+	<div class="feature-item">
+		<div class="text feature-inner">
+			<h2>{{post.title}}</h2>
+			<p class="tagline">{{post.tagline_1}} | {{post.tagline_2}} | {{post.tagline_3}}</p>
+			<p class="excerpt">
+				{{post.excerpt}}
+			</p>
+		</div>
+		<div class="image feature-inner" style="background-image: url('{{site_url}}uploads/final_images/{{post.image}}');">
+
+		</div>
+	</div>
+</script>

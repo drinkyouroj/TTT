@@ -18,10 +18,13 @@ class HomeController extends BaseController {
 	 */
 	public function getIndex()
 	{
+		/*
 		$featured = $featured = $this->featured->find($this->paginate, 1, false);
 		
 		return View::make('v2/featured/featured')
 					->with('featured',$featured);
+		*/
+		return Redirect::to('categories/all');
 	}
 	
 	//This is a little weird fix to the invitation system since it posts to the Index and needs to be redirected.

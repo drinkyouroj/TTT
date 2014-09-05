@@ -183,3 +183,8 @@
 		</div>
 	</section>
 @stop
+
+
+@section('admin-mod-post-controls')
+	<button>Do Stuff</button>
+@stop

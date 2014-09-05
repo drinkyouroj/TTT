@@ -129,6 +129,7 @@ Route::filter('csrf', function()
  * This is called everytime any view is rendered.  Most of the views in our site require the below right now.
  * This will need to be figured out later as the view composer is unable to figure out how to reach the layouts.master.blade.php file 
  */
+
 View::composer('*', function($view) {
 	//Below is the filters for the Categories.  Its stored here since we needed to iterate through to see what is or is not active.
 	//We can probably make this an admin function later.
@@ -219,6 +220,29 @@ View::composer('*', function($view) {
 		
 		$view->with('followers', $followers)
 			 ->with('following', $following);
+	}
+
+	// Admin/Moderator
+	$is_mod = Session::get('mod');
+	$is_admin = Session::get('admin');
+	if ( $is_mod || $is_admin ) {
+
+		$flagged = App::make('AppStorage\FlaggedContent\FlaggedContentRepository');
+		// Include the flagged content
+		$flagged_post_content = $flagged->getFlaggedOfType( 'post' );
+		$flagged_comment_content = $flagged->getFlaggedOfType( 'comment' );
+		
+		// Check if we are on user and/or post page (additional functionalities will be given)
+		$seg = Request::segment(1);
+		if( $seg == 'profile') {
+			$view->with( 'is_profile_page', true );
+		} else if ( $seg == 'posts') {
+			$view->with( 'is_post_page', true );
+		}
+		$view->with( 'flagged_post_content', $flagged_post_content )
+			 ->with( 'flagged_comment_content', $flagged_comment_content );
+	
+
 	}
 	
 });
