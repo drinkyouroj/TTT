@@ -66,24 +66,24 @@
 								<div class="col-md-3 actions-container">
 									<ul class="actions">
 										<li class="like">
-											<a data-action="like" class="like-button" href="#" title="{{ $like_tooltip }}" data-toggle="tooltip" data-placement="bottom">
+											<a data-action="like" class="like-button {{ $liked ? 'active' : '' }}" href="#" title="{{ $like_tooltip }}" data-toggle="tooltip" data-placement="bottom">
 												<span class="{{ $liked ? 'hidden' : '' }}"> <span class="action-counts"> {{ $liked ? $post->likes->count() - 1 : $post->likes->count() }} </span> </span>
+												<span class="{{ $liked ? '' : 'hidden' }}"> <span class="action-counts"> {{ $liked ? $post->likes->count() : $post->likes->count() + 1 }} </span> </span>
 											</a>
-											<span class="{{ $liked ? '' : 'hidden' }}"> <span class="action-counts"> {{ $liked ? $post->likes->count() : $post->likes->count() + 1 }} </span> </span>
 										</li>
 
 										<li class="repost">
-											<a data-action="repost" class="repost-button" href="#" title="{{ $repost_tooltip }}" data-toggle="tooltip" data-placement="bottom">
+											<a data-action="repost" class="repost-button {{ $reposted ? 'active' : '' }}" href="#" title="{{ $repost_tooltip }}" data-toggle="tooltip" data-placement="bottom">
 												<span class="{{ $reposted ? 'hidden' : '' }}"> <span class="action-counts"> {{ $reposted ? $post->reposts->count() - 1 : $post->reposts->count() }} </span> </span>
+												<span class="{{ $reposted ? '' : 'hidden' }}"> <span class="action-counts"> {{ $reposted ? $post->reposts->count() : $post->reposts->count() + 1 }} </span> </span>
 											</a>
-											<span class="{{ $reposted ? '' : 'hidden' }}"> <span class="action-counts"> {{ $reposted ? $post->reposts->count() : $post->reposts->count() + 1 }} </span> </span>
 										</li>
 
 										<li class="save">
-											<a data-action="save" class="save-button" href="#" title="{{ $save_tooltip }}" data-toggle="tooltip" data-placement="bottom">
-												<span class="{{ $favorited ? 'hidden' : ''}}"> <span class="action-counts"> {{ $favorited ? $post->favorites->count() - 1 : $post->favorites->count() }} </span> </span>
+											<a data-action="save" class="save-button {{ $favorited ? 'active' : '' }}" href="#" title="{{ $save_tooltip }}" data-toggle="tooltip" data-placement="bottom">
+												<!-- <span class="{{ $favorited ? 'hidden' : ''}}"> <span class="action-counts"> {{ $favorited ? $post->favorites->count() - 1 : $post->favorites->count() }} </span> </span>
+												<span class="{{ $favorited ? '' : 'hidden'}}"> <span class="action-counts"> {{ $favorited ? $post->favorites->count() : $post->favorites->count() + 1 }} </span> </span> -->
 											</a>
-											<span class="{{ $favorited ? '' : 'hidden'}}"> <span class="action-counts"> {{ $favorited ? $post->favorites->count() : $post->favorites->count() + 1 }} </span> </span>
 										</li>
 									<ul>
 								</div>

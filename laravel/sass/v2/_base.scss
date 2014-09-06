@@ -19,7 +19,9 @@ $white: #fff;
 //Navbar*****
 $navbar_height: 50px;
 $offcanvas_sidebar_width: 300px;
-$navbar_dropdown_menu_width: 350px;
+$navbar_dropdown_menu_min_width: 250px;
+$navbar_dropdown_menu_max_width: 350px;
+
 
 // Post action bar height
 $post_actionbar_height: 69px;
@@ -172,6 +174,9 @@ textarea {
       background-position:left 0px;
       background-size:23px 51px;
       &:hover {
+        background-position:left -26px;
+      }
+      &.active {
         background-position:left -26px;
       }
   }
