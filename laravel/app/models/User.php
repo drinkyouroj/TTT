@@ -62,13 +62,21 @@ class User extends Eloquent implements UserInterface {
 
 	public function validate($input)
 	{
-		return Validator::make($input, array(
-	        'username' => 'required|min:3|max:15|alpha_dash|unique:users',
-	        'email' => 'email|reservation_cap:3',
-	        'password' => 'required|between:4,11|confirmed',
-	        'password_confirmation' => 'between:4,11',
-	        'captcha' => 'required|captcha',
+		return Validator::make( $input, 
+			// Validation rules
+			array(
+		        'username' => 'required|min:3|max:15|alpha_dash|unique:users',
+		        'email' => 'email|reservation_cap:3',
+		        'password' => 'required|between:4,11|confirmed',
+		        'password_confirmation' => 'between:4,11',
+		        'captcha' => 'required|captcha',
+    		), 
+			// Error messages
+			array(
+				'captcha.required' => 'Let us know that you are a human: fill out the captcha!',
+				'captcha.captcha' => 'Are you a human? You got the captcha wrong!'
     		)
+
     	);
 	}
 

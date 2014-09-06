@@ -599,4 +599,14 @@ body {
 }
 
 
+// Signup/Sign In Errors
+fieldset .errors {
+	background-color: lightcoral;
+	
+	ul {
 
+		li {
+			padding: 10px;
+		}
+	}
+}

@@ -18,7 +18,7 @@ Sign up!
 @section('content')
 	<div class="col-md-4 col-md-offset-4 signup-container">
 		<div class="signup-form">
-		{{ Confide::makeSignupForm()->render() }}
+		{{ View::make('v2.users.forms.signup') }}
 		</div>
 		<aside class="explanation">
 			<p>Read our <a href="{{Config::get('app.url')}}/privacy">Privacy Policy</a> and <a href="{{Config::get('app.url')}}/terms">Terms of Use</a>.</p>

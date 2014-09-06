@@ -46,14 +46,14 @@ class StagingController extends BaseController {
 				),
 				// Error messages
 				array(
-					'username_required' => 'No username was provided',
-					'username_min' => 'Username must be at least 3 characters long',
-					'username_max' => 'Username must be less than 15 characters long',
-					'username_unique' => 'Oops! That username has already been reserved',
-					'username_alpha_dash' => 'The username contains invalid characters. Available characters: a-z,0-9,-, and _',
-					'email_required' => 'No email was provided',
-					'email_reservation_cap' => 'The given email has reached the maximum number of username reservations',
-					'email_email' => 'Invalid email'
+					'username.required' => 'No username was provided',
+					'username.min' => 'Username must be at least 3 characters long',
+					'username.max' => 'Username must be less than 15 characters long',
+					'username.unique' => 'Oops! That username has already been reserved',
+					'username.alpha_dash' => 'The username contains invalid characters. Available characters: a-z,0-9,-, and _',
+					'email.required' => 'No email was provided',
+					'email.reservation_cap' => 'The given email has reached the maximum number of username reservations',
+					'email.email' => 'Invalid email'
 				)
 		);
 
