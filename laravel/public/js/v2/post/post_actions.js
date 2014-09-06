@@ -46,6 +46,7 @@ function UserAction () {
 			$.ajax({
 				url: window.site_url + 'rest/favorites/' + this.post_id,
 				success: function ( data ) {
+					console.log(data);
 					callback( data );
 				}
 			});

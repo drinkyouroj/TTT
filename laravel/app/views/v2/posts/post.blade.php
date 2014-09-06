@@ -1,8 +1,13 @@
 @extends('v2.layouts.master')
 	<?php
-		$user = Auth::user();
-		$is_mod = $user->hasRole('Moderator');
-		$is_admin = $user->hasRole('Admin');
+		if(Auth::check()) {
+			$user = Auth::user();
+			$is_mod = $user->hasRole('Moderator');
+			$is_admin = $user->hasRole('Admin');
+		} else {
+			$is_admin = false;
+			$is_mod = false;
+		}
 	?>
 
 @section('css')
@@ -61,24 +66,24 @@
 								<div class="col-md-3 actions-container">
 									<ul class="actions">
 										<li class="like">
-											<a data-action="like" class="like-button" href="#" title="{{ $like_tooltip }}" data-toggle="tooltip" data-placement="bottom">
+											<a data-action="like" class="like-button {{ $liked ? 'active' : '' }}" href="#" title="{{ $like_tooltip }}" data-toggle="tooltip" data-placement="bottom">
 												<span class="{{ $liked ? 'hidden' : '' }}"> <span class="action-counts"> {{ $liked ? $post->likes->count() - 1 : $post->likes->count() }} </span> </span>
+												<span class="{{ $liked ? '' : 'hidden' }}"> <span class="action-counts"> {{ $liked ? $post->likes->count() : $post->likes->count() + 1 }} </span> </span>
 											</a>
-											<span class="{{ $liked ? '' : 'hidden' }}"> <span class="action-counts"> {{ $liked ? $post->likes->count() : $post->likes->count() + 1 }} </span> </span>
 										</li>
 
 										<li class="repost">
-											<a data-action="repost" class="repost-button" href="#" title="{{ $repost_tooltip }}" data-toggle="tooltip" data-placement="bottom">
+											<a data-action="repost" class="repost-button {{ $reposted ? 'active' : '' }}" href="#" title="{{ $repost_tooltip }}" data-toggle="tooltip" data-placement="bottom">
 												<span class="{{ $reposted ? 'hidden' : '' }}"> <span class="action-counts"> {{ $reposted ? $post->reposts->count() - 1 : $post->reposts->count() }} </span> </span>
+												<span class="{{ $reposted ? '' : 'hidden' }}"> <span class="action-counts"> {{ $reposted ? $post->reposts->count() : $post->reposts->count() + 1 }} </span> </span>
 											</a>
-											<span class="{{ $reposted ? '' : 'hidden' }}"> <span class="action-counts"> {{ $reposted ? $post->reposts->count() : $post->reposts->count() + 1 }} </span> </span>
 										</li>
 
 										<li class="save">
-											<a data-action="save" class="save-button" href="#" title="{{ $save_tooltip }}" data-toggle="tooltip" data-placement="bottom">
-												<span class="{{ $favorited ? 'hidden' : ''}}"> <span class="action-counts"> {{ $favorited ? $post->favorites->count() - 1 : $post->favorites->count() }} </span> </span>
+											<a data-action="save" class="save-button {{ $favorited ? 'active' : '' }}" href="#" title="{{ $save_tooltip }}" data-toggle="tooltip" data-placement="bottom">
+												<!-- <span class="{{ $favorited ? 'hidden' : ''}}"> <span class="action-counts"> {{ $favorited ? $post->favorites->count() - 1 : $post->favorites->count() }} </span> </span>
+												<span class="{{ $favorited ? '' : 'hidden'}}"> <span class="action-counts"> {{ $favorited ? $post->favorites->count() : $post->favorites->count() + 1 }} </span> </span> -->
 											</a>
-											<span class="{{ $favorited ? '' : 'hidden'}}"> <span class="action-counts"> {{ $favorited ? $post->favorites->count() : $post->favorites->count() + 1 }} </span> </span>
 										</li>
 									<ul>
 								</div>
@@ -137,7 +142,7 @@
 					</ul>
 
 				</div>
-				<div class="post-image col-md-8 style="background-image: url('{{Config::get('app.imageurl')}}/{{$post->image}}');"></div>
+				<div class="post-image col-md-8" style="background-image: url('{{Config::get('app.imageurl')}}/{{$post->image}}');"></div>
 			</div>
 		</div>
 	</section>
@@ -203,6 +208,9 @@
 
 
 @section('admin-mod-post-controls')
+	<?php 
+		$featured = isset($featured) ? $featured : false; 
+	?>
 	<p class="post-title"> {{ $post->title }}
 		<span class="post-featured-label label label-danger {{ $featured ? '' : 'hidden' }}">
 			@if ( $featured )

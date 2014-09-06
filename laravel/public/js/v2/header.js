@@ -13,10 +13,24 @@ $(function() {
     	}
     });
 
+    var notificationsMarkedAsRead = false;
     // Dropdown
     $('.navbar-dropdown-toggle').click(function() {
     	$('.notification-label').fadeOut();
     	$('.navbar-dropdown').slideToggle();
+        if ( !notificationsMarkedAsRead ) {
+            // Mark the notifications as read.
+            $.ajax({
+                url: window.site_url + 'rest/notification/',
+                type: "POST",
+                data: { "notification_ids": window.cur_notifications },
+                success: function(data) {
+                    if ( data.result == 'success' ) {
+                        notificationsMarkedAsRead = true;
+                    }
+                }
+            });
+        }
     });
 
     // Bring up the signup for disabled actions

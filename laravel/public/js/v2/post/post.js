@@ -15,7 +15,8 @@ $(function() {
 	});
 	// Tooltips
 	$('.post-action-bar a').tooltip();
-	$('.post-action-bar a').click(function() {
+	$('.post-action-bar a').click(function(event) {
+		event.preventDefault();
 		var $action = $(this);
 		var Action = new UserAction();
 		Action.action = $action.data('action');
@@ -26,6 +27,7 @@ $(function() {
 				// TODO: notify of failure?
 			} else {
 				$action.find('> span').toggleClass('hidden');
+				$action.toggleClass('active');
 			}
 		});
 	});
@@ -56,7 +58,7 @@ $(function() {
 
 
 	// ========================== COMMENT REPLY ===========================
-	$('.comments-listing').on('click', 'a.reply', function() {
+	$('.comments-listing').on('click', '.comment.published a.reply', function() {
 		if ( $(this).hasClass('auth') ) {
 			$('#guestSignup').modal('show');
 		} else {

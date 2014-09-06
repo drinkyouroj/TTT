@@ -73,7 +73,7 @@
 								<ul class="notifications list-unstyled">
 									@if(count($notifications))
 			  							@foreach($notifications as $not)
-				  							@include('partials/notifications')
+				  							@include('v2/partials/notifications')
 				  						@endforeach
 				  					@else
 				  					<li class="no-notifications">

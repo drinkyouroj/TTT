@@ -121,12 +121,17 @@ class MongoCommentRepository implements CommentRepository {
 	 *	Fetch comments by a given author
 	 */
 	public function allByUserId ( $user_id, $paginate = 5, $page = 1, $rest = false ) {
-		$comments = MongoComment::where( 'author.user_id', intval($user_id) )
-						   ->orderBy( 'created_at', 'desc' )
-						   ->skip( ($page - 1) * $paginate )
-						   ->take( $paginate )
-						   ->get();
-		return $comments;
+		$query = $this->comment->where( 'author.user_id', intval($user_id) )
+							   ->orderBy( 'created_at', 'desc' )
+							   ->skip( ($page - 1) * $paginate )
+							   ->take( $paginate )
+						   		;
+		
+		if($rest) {
+			return $query->with('post.user')->get();
+		} else {
+			return $query->get();
+		}
 
 	}
 
