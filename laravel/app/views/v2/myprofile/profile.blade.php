@@ -18,6 +18,7 @@
 
 			@if(Session::get('post'))
 				window.post = '{{Session::get('post')}}';
+				<?php Session::put('post','')?>
 			@else
 				window.post = false;
 			@endif
