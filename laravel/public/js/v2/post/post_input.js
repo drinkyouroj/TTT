@@ -16,6 +16,12 @@ $(function() {
 		$('.modal-header span.image-error',this).remove();
 	});
 
+	//
+	$('body').on('dragstart dragover dragenter dragleave drop', function (event) {
+	    event.preventDefault();
+	    return false;
+	});
+
 	//Content Editable vs Textarea based input.
 	var iOSver = iOSversion();//iOS 4 and below do not support contentEditable.
 	var contentEditableSupport = "contentEditable" in document.documentElement;
@@ -63,9 +69,7 @@ $(function() {
 
 	$('.close-category a').click(function(event) {
 		event.preventDefault();
-		console.log('test');
 		$('.category-wrapper').slideToggle('fast');
-
 	});
 
 	$('.controls-wrapper .save-draft').click(function() {
@@ -234,7 +238,7 @@ var save_post = new function() {
 	//Functions.
 	this.send = function() {
 		console.log(this.dataCompile());
-		
+		save_post = this;
 		$.ajax({
 			type: "POST",
 			url: window.site_url+'rest/savepost',
@@ -254,6 +258,7 @@ var save_post = new function() {
 					image: this.image
 				},//uses the data function to get 
 			success: function(data) {
+				console.log('testing');
 				console.log(data);
 
 				switch(data.result) {
@@ -277,13 +282,16 @@ var save_post = new function() {
 					default:
 					case '72':
 						//72 hours limit has passed for editting.
+						console.log('you can not edit published posts after 72 hours');
 						break;
 					case '10':
 						//YOu've posted in the last 10 minuts.
+						console.log('you have posted in the last 10 minutes');
 						break;
 					case '405':
 						//Validation is really bad (as in they bypassed our client side validation scheme)
 						//Redirect this person to terms.
+						console.log('you have done some bad things');
 						break;
 				}
 			}
@@ -326,6 +334,7 @@ var save_post = new function() {
 	this.updateAfter = function(data) {
 		this.alias = data.alias;
 		this.sharedAfter();
+		
 	};
 
 	//This one updates and sets the 
@@ -338,10 +347,11 @@ var save_post = new function() {
 			a_link.prop('href',article_link);
 		}
 
-		$link = $('#successModal .link');
-		$link.html(this.title);
-		$link.prop('href', article_link);
-		$('#successModal').modal('show')
+		if(this.draft) {
+			window.location.replace(window.site_url+'myprofile#drafts');
+		} else {
+			window.location.replace(window.site_url+'myprofile#collection');
+		}
 	}
 	
 }

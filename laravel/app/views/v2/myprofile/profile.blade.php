@@ -15,6 +15,14 @@
 		window.featured_id = {{$profile_user->featured}};
 		@if($myprofile)
 			window.myprofile = true;
+
+			@if(Session::get('post'))
+				window.post = '{{Session::get('post')}}';
+				<?php Session::put('post','')?>
+			@else
+				window.post = false;
+			@endif
+
 		@endif
 	</script>
 
@@ -138,6 +146,50 @@
 		  </div>
 		</div>
 	@endif
+
+	{{--Publish Modal--}}
+	<div class="modal fade" id="publishModal" tabindex="-1" role="dialog" aria-labelledby="publishModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title" id="publishModalLabel">
+						Thanks for Posting.
+					</h4>
+				</div>
+				<div class="modal-body">
+					<div class="text">
+						Thanks for Publishing your post.
+						You can continue to add to change your post for up to 72hrs.<br/>
+						Note: You can only make 1 post every 10 minutes.
+					</div>
+				</div><!--End of Modal Body-->
+			</div>
+		</div>
+	</div>
+
+	{{--Drafts Modal--}}
+	<div class="modal fade" id="draftsModal" tabindex="-1" role="dialog" aria-labelledby="draftsModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title" id="draftsModalLabel">
+						Thanks for Posting.
+					</h4>
+				</div>
+				<div class="modal-body">
+					<div class="text">
+						Thanks for writing a draft!
+						You can continue to add to change your post for as long as you want.<br/>
+						If you publish your post, you can continue to add to change your post for up to 72hrs.<br/>
+						Note: You can only publish a post every 10 minutes.
+					</div>
+				</div><!--End of Modal Body-->
+			</div>
+		</div>
+	</div>
+
 
 @stop
 

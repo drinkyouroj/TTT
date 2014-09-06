@@ -6,7 +6,6 @@
 	
     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
     <fieldset>
-        <label for="username">{{{ Lang::get('confide::confide.username') }}}</label>
         <input id="username" placeholder="{{{ Lang::get('confide::confide.username') }}}" type="text" name="username" id="username" value="{{{ Input::old('username') }}}" maxlength="15" minlength="3" required>
 		
 		<div class="email-please">
@@ -14,14 +13,11 @@
 		</div>
 		
 		<div class="email-group">
-	        <label for="email">Email</label>
 	        <input placeholder="Email" type="text" name="email" id="email" value="{{{ Input::old('email') }}}">
 		</div>
 		
-        <label for="password">Password</label>
         <input placeholder="Password" type="password" name="password" id="password" minlength="6">
 
-        <label for="password_confirmation">Password Confirmation</label>
         <input placeholder="Password Confirmation" type="password" name="password_confirmation" id="password_confirmation" minlength="6" >
 		
 		<br/>
@@ -43,8 +39,12 @@
         </div>
 		
         <div class="form-actions">
-          <button type="submit" class="btn">Submit</button>
+          <button type="submit" class="btn btn-flat-gray">Submit</button>
         </div>
+
+        <div class="terms-agree">
+			By creating an account you agree to our <a class="terms" href="{{Config::get('app.url')}}/terms">Terms Of Use</a>.
+		</div>
 
     </fieldset>
 </form>

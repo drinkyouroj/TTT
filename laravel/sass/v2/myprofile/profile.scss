@@ -117,19 +117,63 @@ a:focus {
 				#collection-content {
 					margin-left: auto;
   					margin-right: auto;
-  					@media screen and (min-width: 1440px) {
-  						width: 900px;
-  					}
-
-  					@media (min-width: 992px) and (max-width: 1439px) {
-  						width: 600px
-  					}
-
-  					@media screen and (max-width:991px) {
-  						width: 300px;
-  					}
+  					
   					//Post
 					@include post_listing(0);
+
+					.feature-item {
+						position: relative;
+						float: left;
+						display: block;
+						width:100%;
+						height:384px;
+						max-width:870px;
+						margin-left:15px;
+						margin-right:15px;
+						margin-bottom:15px;
+
+						.text {
+							position:relative;
+							background:$white;
+							text-align:center;
+							height:384px;
+							padding:0 40px;
+							h2 {
+								@include title_listing;
+								font-size:20px;
+								line-height:21px;
+								padding-top:25px;
+							}
+							.line {
+								width:20px;
+								border-top:solid 1px $dark;
+								margin:0px auto;
+								padding:10px 0 0 0;
+							}
+							p.tagline {
+								@include tagline_listing;
+								font-size:15px;
+							}
+							p.excerpt {
+								text-align:justify;
+								font-size:14px;
+								line-height:150%;
+							}
+						}
+						.image {
+							position:relative;
+							background-size:cover;
+							background-repeat:no-repeat;
+							height:384px;
+						}
+						.read-more {
+							@include montserrat(bold);
+							text-transform:uppercase;
+							text-align:left;
+							font-size:10px;
+							letter-spacing:1px;
+						}
+					}
 
 				}
 			}

@@ -54,10 +54,12 @@ $(function() {
 
 	//Collection Renders
 		$('body').on('click','.collection-controls a', function(event) {
-			event.preventDefault();			
+			event.preventDefault();
+
 			$('.collection-controls a').removeAttr('class');
 			$(this).prop('class','active');
 			profile.type = $(this).data('type');
+			profile.page = 1;
 			profile.filter = true;
 			profile.viewRender();
 		});
@@ -68,6 +70,7 @@ $(function() {
 			$('.feed-controls a').removeAttr('class');
 			$(this).prop('class','active');
 			profile.type = $(this).data('type');
+			profile.page = 1;
 			profile.filter = true;
 			profile.viewRender();
 		});
@@ -147,10 +150,17 @@ $(function() {
 		profile.viewInit(profile.view);//Render initial view.
 	}
 
-	
 	window.page_processing = false;
 	window.comment_page_processing = false;
-	
+
+	//figure out which modals to show.
+	if(window.post) {
+		if(window.post == 'draft') {
+			$('#draftsModal').modal('show')
+		} else if (window.post == 'published') {
+			$('#publishModal').modal('show')
+		}
+	}
 
 });
 
@@ -330,7 +340,9 @@ function ProfileActions() {
 		var target = this.target;
 		this.urlConstructor();
 		this.getData(this.comment_url, function(data) {
+			console.log(data);
 			$.each(data.comments,function(idx, val) {
+
 				view_data = {
 					site_url: window.site_url,
 					comment: val
@@ -361,6 +373,7 @@ function ProfileActions() {
 		var saves_item_template = this.saves_item_template;
 		var target = this.target;
 		this.urlConstructor();
+		console.log(this.url);
 		this.getData(this.url,function(data) {
 			$.each(data.saves, function(idx, val) {
 				view_data = {

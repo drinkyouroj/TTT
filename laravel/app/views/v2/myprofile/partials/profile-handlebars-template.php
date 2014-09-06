@@ -46,12 +46,12 @@
 		<span class="date">{{comment.created_at}}</span>
 		<div class="inner-content">
 			<div class="where">
-				Commented on <a href="{{site_url}}posts/{{comment.post.alias}}">{{comment.post.title}}</a>
+				Commented on <a href="{{site_url}}posts/{{comment.post.alias}}#comment-{{comment._id}}">{{comment.post.title}}</a>
 			</div>
 			<div class="comment">
 				{{comment.body}}
 				<br/>
-				<a class="readmore" href=""> Read more<a/>
+				<a class="readmore" href="{{site_url}}posts/{{comment.post.alias}}#comment-{{comment._id}}"> Read more<a/>
 			</div>
 		</div>
 	</div>
@@ -99,7 +99,8 @@
 				</div>
 
 				<div class="controls col-md-3">
-					<a class="edit-draft icon-button" href="{{site_url}}myprofile/editpost/{{draft.id}}" >Edit Draft</a>					
+					<a class="edit-draft icon-button" href="{{site_url}}myprofile/editpost/{{draft.id}}" >Edit Draft</a>
+					<a class="publish-draft btn-flat-blue" data-id="{{draft.id}}" >Publish</a>
 					<br/>
 					<a class="delete-draft" data-id="{{draft.id}}" data-toggle="tooltip" data-placement="bottom" title="Delete Forever!">Delete</a>
 				</div>
@@ -125,7 +126,14 @@
 		<div class="col-md-5 col-md-offset-1 avatar">
 			<h2>Upload your Avator</h2>
 			<div class="upload-form">
-				<h3>Coming soon</h3>
+
+				<div id="avatarErrors"></div>
+
+				<form id="uploadAvatar" enctype="multipart/form-data" method="post" action="{{this.site_url}}rest/profile/image/upload">
+                    <input type="file" name="image" id="image" />
+				</form>
+				<div id="avatarOutput" style="display:none">
+                </div>
 			</div>
 		</div>
 		<div class="col-md-5 change-password">
@@ -181,14 +189,18 @@
 
 <script type="text/x-handlebars-template" id="feature-item-template">
 	<div class="feature-item">
-		<div class="text feature-inner">
+		<div class="text feature-inner col-md-4">
 			<h2>{{post.title}}</h2>
+			<div class="line"></div>
 			<p class="tagline">{{post.tagline_1}} | {{post.tagline_2}} | {{post.tagline_3}}</p>
 			<p class="excerpt">
 				{{post.excerpt}}
 			</p>
+			<div class="read-more">
+				<a href="">Read More</a>
+			</div>
 		</div>
-		<div class="image feature-inner" style="background-image: url('{{site_url}}uploads/final_images/{{post.image}}');">
+		<div class="image feature-inner col-md-8" style="background-image: url('{{site_url}}uploads/final_images/{{post.image}}');">
 
 		</div>
 	</div>
