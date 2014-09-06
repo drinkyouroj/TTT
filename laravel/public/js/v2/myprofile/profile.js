@@ -150,10 +150,17 @@ $(function() {
 		profile.viewInit(profile.view);//Render initial view.
 	}
 
-	
 	window.page_processing = false;
 	window.comment_page_processing = false;
-	
+
+	//figure out which modals to show.
+	if(window.post) {
+		if(window.post == 'draft') {
+			$('#draftsModal').modal('show')
+		} else if (window.post == 'published') {
+			$('#publishModal').modal('show')
+		}
+	}
 
 });
 

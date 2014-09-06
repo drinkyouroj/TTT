@@ -20,8 +20,10 @@
 		<!--New script-->
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/validation/jquery.validate.min.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/editor/js/medium-editor.min.js"></script>
+		{{-- <script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/handlePaste.js"></script> --}}
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_input.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_photo.js"></script>
+
 		
 		@if($edit)
 			<script type="text/javascript">
@@ -124,8 +126,6 @@
 									<a href="#" data-toggle="tooltip" title="Choose 3 categories that this story might fit in.">?</a>
 									<br/>
 									<div class="warning hidden">You can't select more than 3 categories.</div>
-
-
 
 									<ul>
 										{? $checked = ''; ?}
@@ -340,26 +340,6 @@
 		</div>
 
 
-		{{--Success Modal--}}
-		<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-						<h4 class="modal-title" id="successModalLabel">
-							Thanks for Posting.
-						</h4>
-					</div>
-					<div class="modal-body">
-						<div class="text">
-							You can take a look at your stuff here:
-							<a class="link"></a>
-							or You can continue to add to change your post for up to 72hrs.<br/>
-							Note: You can only make 1 post every 10 minutes.
-						</div>
-					</div><!--End of Modal Body-->
-				</div>
-			</div>
-		</div>
+
 
 	@stop

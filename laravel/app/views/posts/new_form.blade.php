@@ -194,23 +194,6 @@ New Post | Two Thousand Times
 				</div>
 			</div>
 		</div>
-		
-		<!--Delete this code if not necessary <div class="col-md-2 navigation-container"> 
-			<div class="navigation">
-				<ol>
-					<li>
-						<a href="#content-container">Content</a>
-					</li>
-					<li>
-						<a href="#photo-container">Image</a>
-					</li>
-					<li>
-						<a href="#details-container">Details</a>
-					</li>
-				</ol>
-			</div>
-		</div> -->
-		
 	{{ Form::close() }}
 </div>
 @stop

@@ -130,6 +130,7 @@ class PostController extends BaseController {
 	 * Post form
 	 */
 	public function getPostForm($id=false) {
+		Session::put('post','');
 		if($id) {
 			//EditPost
 			$post = $this->post->findById($id);
@@ -178,7 +179,7 @@ class PostController extends BaseController {
 	}
 
 		//Below assumes that the validation has passed.  It can be used to update or to save the post.
-		private function savePost($rest=false) {
+		private function savePost($rest=false) {			
 			$request = Request::all();
 			$check_post = false;
 			$previously_published = false;
@@ -322,6 +323,14 @@ class PostController extends BaseController {
 					$json_result = 'update';
 				}
 
+				//this is to let the profile page know what happened after the redirect.
+				if($post->draft) {
+					Session::put('post','draft');
+				} else {
+					Session::put('post','published');
+				}
+				
+
 				return Response::json(
 						array(
 							'result' => $json_result,
@@ -372,7 +381,5 @@ class PostController extends BaseController {
 				$post->draft = $query['draft'];//default is 1 so that it won't accidentally get published.
 				return $post;
 			}
-
-
 		
 }
