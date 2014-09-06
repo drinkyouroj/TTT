@@ -41,6 +41,11 @@ a {
 	}
 }
 
+h1, h2, h3 {
+	@include montserrat(bold);
+	text-transform:uppercase;
+}
+
 h1, h2, h3, h4, p {
 	color:$dark;
 }
@@ -52,6 +57,9 @@ body {
 .btn {
 	border-radius:0px !important;
 }
+
+//delete blue selector outline
+input, textarea, button:focus {outline: none !important;}
 
 // ================= HEADER ========================
 .header-wrapper {
@@ -560,7 +568,7 @@ body {
 		}
 		.modal-body {
 			input {
-				border:solid 1px $lightgray;
+				border:solid 1px $gray;
 				@include montserrat();
 				text-transform:uppercase;
 				font-size:12px;
@@ -576,11 +584,67 @@ body {
 
 //signup-login modal styling
 #guestSignup.modal {
-.modal-header {
-	padding:0px;
-	height:0px;
-}
-.modal-title{display:none;}
+	text-align:left;
+	.modal-header {
+		.modal-title {
+			display:none;
+		}
+	}
+	.modal-body {
+		position:relative;
+		display:block;
+		h4 {
+			margin-top:0px;
+		}
+		.signup-form, .login-form {
+			position:relative;
+			display:inline-block;
+			width:47%;
+			margin:0 1%;
+			float:left;
+
+			fieldset {
+				input {
+					width:100%;
+					margin-bottom:5px;
+					padding:5px;
+					box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+				}
+				.forgot-pw {
+					text-align:right;
+				}
+				.form-actions {
+					margin-top:20px;
+					text-align:center;
+				}
+				.email-please, .terms-agree, .login-disclaimer {
+					margin-top:10px;
+					margin-bottom:7px;
+				}
+				.terms-agree, .login-disclaimer {
+					text-align:center;
+				}
+			}
+
+			@media (max-width: 768px) {
+				width:90%;
+				margin:30px 0 0 0;
+			}
+		}
+
+		.signup-form {
+			padding-right:2%;
+			border-right:solid 1px $gray;
+			@media (max-width: 768px) {
+				border-right:0px;
+			}
+		}
+		.login-form {
+			form {
+				margin-bottom:10px;
+			}
+		}
+	}
 }
 
 

@@ -115,18 +115,14 @@
 		      </div>
 		      <div class="modal-body">
 		        <div class="signup-form">
-		        <h4>Signup</h4>
-				{{ Confide::makeSignupForm()->render() }}
+		        	<h4>Signup</h4>
+			        {{ View::make('v2.users.forms.signup') }}
 				</div>
 				
 				<div class="login-form">
 					<h4>Login</h4>
-					{{ Confide::makeLoginForm()->render() }}
-					<a href="{{Config::get('app.url')}}/user/forgot">forget your password?</a>
+					{{ View::make('v2.users.forms.login') }}
 				</div>
-				<aside class="login-disclaimer">
-					Read our guidelines on <a href="{{Config::get('app.url')}}/etiquette">Community Etiquette</a>.
-				</aside>
 		      </div>
 		    </div>
 		  </div>

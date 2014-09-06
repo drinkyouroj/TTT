@@ -18,9 +18,6 @@
 		<div class="login-form">
 			<h2>Login</h2>
 			{{ View::make('v2.users.forms.login') }}
-			<div class="forgot-pw">
-				<a href="{{Config::get('app.url')}}/user/forgot">forget your password?</a>
-			</div>
 		</div>
 		<aside class="login-disclaimer">
 			Read our guidelines on <a href="{{Config::get('app.url')}}/etiquette">Community Etiquette</a>.

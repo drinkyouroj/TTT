@@ -69,27 +69,27 @@ class HomeController extends BaseController {
 	
 	public function getAbout()
 	{
-		return View::make('static.about');
+		return View::make('v2.static.about');
 	}
 	
 	public function getEtiquette()
 	{
-		return View::make('static.etiquette');
+		return View::make('v2.static.etiquette');
 	}
 	
 	public function getPrivacy()
 	{
-		return View::make('static.privacy');
+		return View::make('v2.static.privacy');
 	}
 	
 	public function getContact()
 	{
-		return View::make('static.contact');
+		return View::make('v2.static.contact');
 	}
 	
 	public function getTerms()
 	{
-		return View::make('static.terms');
+		return View::make('v2.static.terms');
 	}
 	
 }

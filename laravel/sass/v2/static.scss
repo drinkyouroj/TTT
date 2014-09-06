@@ -1,0 +1,32 @@
+@import 'base';
+
+.info-container {
+	margin-top:50px;
+	margin-bottom:50px;
+}
+h1 {
+	@include fjalla;
+	letter-spacing:3px;
+	text-transform:uppercase;
+	margin-bottom:50px;
+	text-align:center;
+}
+h2 {
+	@include fjalla;
+	letter-spacing:3px;
+	text-transform:uppercase;
+}
+h3 {
+	text-transform: uppercase;
+	@include montserrat;
+	margin-top:60px;
+	padding-bottom:10px;
+	border-bottom:solid 1px $dark;
+}
+p {
+	text-align:justify !important;
+	strong {
+		text-transform: uppercase;
+		@include montserrat;
+	}
+}

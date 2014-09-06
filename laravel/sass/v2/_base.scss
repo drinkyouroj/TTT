@@ -57,12 +57,14 @@ $post_actionbar_height: 69px;
   font-size:17px;
   color:$dark;
   line-height:20px;
+  @include word-break(break-all);
 }
 
 @mixin tagline_listing {
   @include garamond-italic;
   text-transform:capitalize;
   font-size:14px;
+  @include word-break(break-all);
 }
 //==================Typography:end==================
 
@@ -492,7 +494,6 @@ textarea {
     .post-title {
       margin-top:10px;
       margin-bottom: 3px;
-      @include word-break(break-all);
       a {
         @include title_listing;
       }
@@ -502,7 +503,6 @@ textarea {
       li:nth-child(1), li:nth-child(2) {
         border-right: 1px solid gray;
       }
-      @include word-break(break-all);
       @include tagline_listing;
     }
   }
