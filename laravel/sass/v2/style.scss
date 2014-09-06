@@ -250,7 +250,7 @@ body {
 }
 
 #offcanvas-sidebar {
-	@include offcanvas-sidebar;
+	@include offcanvas-sidebar( left, $offcanvas_sidebar_width );
 		ul#accordion.sidebar-options {
 			li.sidebar-option {
 				&.feed {

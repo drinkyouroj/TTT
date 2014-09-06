@@ -1,16 +1,7 @@
 @import '../base';
 
 #offcanvas-admin-sidebar {
-	position: fixed;
-	display: none;
-	top: 0;
-	right: -$offcanvas_sidebar_width;
-	height: 100%;
-	width: $offcanvas_sidebar_width;
-	z-index: 10001;
-	overflow-y: auto;
-
-	background-color: $dark;
+	@include offcanvas-sidebar( right, $offcanvas_sidebar_width );
 
 	.post-title, ul, .post-categories-title {
 		color: white !important;

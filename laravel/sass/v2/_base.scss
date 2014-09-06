@@ -100,22 +100,27 @@ textarea {
 
 
 //===Nav sidebar===
-@mixin offcanvas-sidebar {
+@mixin offcanvas-sidebar ( $side, $width ) {
   position: fixed;
   display: none;
   top: 0;
-  left: -$offcanvas_sidebar_width;
+  @if $side == left {
+    left: -$width;  
+  }
+  @if $side == right {
+    right: -$width;
+  }
   height: 100%;
-  width: $offcanvas_sidebar_width;
+  width: $width;
   z-index: 10001;
   overflow-y: auto;
 
   background-color: $dark;
 
-  ul#accordion.sidebar-options {
+  ul.sidebar-options {
     color: $white;
 
-    li.sidebar-option {
+    li.sidebar-option, li.admin-sidebar-option {
       border-bottom:solid 1px $dark_gray;
       &.disabled {
         a {
