@@ -102,7 +102,7 @@
 					<a class="edit-draft icon-button" href="{{site_url}}myprofile/editpost/{{draft.id}}" >Edit Draft</a>
 					<a class="publish-draft btn-flat-blue" data-id="{{draft.id}}" >Publish</a>
 					<br/>
-					<a class="delete-draft" data-id="{{draft.id}}" data-toggle="tooltip" data-placement="bottom" title="Delete Forever!">Delete</a>
+					<a class="delete-draft icon-link" data-id="{{draft.id}}" data-toggle="tooltip" data-placement="bottom" title="Delete Forever!">Delete</a>
 				</div>
 			</div>
 		</div>
@@ -116,7 +116,9 @@
 		href="{{site_url}}profile/{{username}}"
 		style="background-image:url('{{site_url}}rest/profileimage/{{user_id}}');"
 		>
-		<span>{{username}}</span>
+		<div class="follow-name">
+			<span>{{username}}</span>
+		</div>
 	</a>
 </script>
 
@@ -188,8 +190,8 @@
 
 
 <script type="text/x-handlebars-template" id="feature-item-template">
-	<div class="feature-item">
-		<div class="text feature-inner col-md-4">
+	<div class="feature-item row">
+		<div class="text feature-inner col-md-5 col-sm-5">
 			<h2>{{post.title}}</h2>
 			<div class="line"></div>
 			<p class="tagline">{{post.tagline_1}} | {{post.tagline_2}} | {{post.tagline_3}}</p>
@@ -200,7 +202,7 @@
 				<a href="">Read More</a>
 			</div>
 		</div>
-		<div class="image feature-inner col-md-8" style="background-image: url('{{site_url}}uploads/final_images/{{post.image}}');">
+		<div class="image feature-inner col-md-7 col-sm-7" style="background-image: url('{{site_url}}uploads/final_images/{{post.image}}');">
 
 		</div>
 	</div>

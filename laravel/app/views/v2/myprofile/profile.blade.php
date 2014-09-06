@@ -51,14 +51,14 @@
 				</div>
 				<div class="col-md-6 header-right">
 					<div class="row">
-						<div class="col-md-5 col-md-offset-2 settings">
+						<div class="col-md-5 settings">
 							@if($myprofile)
-							<a href="#settings" id="settings">
+							<a class="icon-button" href="#settings" id="settings">
 								Settings
 							</a>
 							@endif
 						</div>
-						<div class="col-md-5 follow">
+						<div class="col-md-7 follow">
 
 							<a href="#followers" class="followers" id="followers">
 								<span class="count">{{$follower_count}}</span>
@@ -96,7 +96,7 @@
 				@if(!$myprofile)
 					<div class="col-md-4 follow-user">
 						@if(!$is_following)
-						<a class="follow">
+						<a class="follow follow-button">
 							Follow
 						</a>
 						@else

@@ -6,7 +6,7 @@
 	<div class="header-inner-wrapper">
 		<div class="header-container container">
 			<div class="row">
-				<div class="col-sm-4 col-left">
+				<div class="col-sm-4 col-xs-4 col-left">
 					<button class="read-button toggle-sidebar">
 						READ
 					</button>
@@ -18,7 +18,7 @@
 					@endif
 
 				</div>
-				<div class="col-sm-4 col-middle">
+				<div class="col-sm-4 col-xs-4 col-middle">
 					<div class="header-logo">
 						<a  href="{{Config::get('app.url')}}">
 							THE
@@ -28,11 +28,12 @@
 					</div>
 				</div>
 
-				<div class="col-sm-4 col-right">
-					<div class="action">
+				<div class="col-sm-4 col-xs-4 col-right">
 						@if( $is_guest )
-							<span class="navbar-dropdown-toggle glyphicon glyphicon-cog"></span>
+							<a class="btn-outline-blue" data-toggle="modal" data-target="#guestSignup">Signup</a>
+							<a class="login-btn" href="{{ URL::to( 'user/login' ) }}">LOG IN</a>
 						@else
+						<div class="action">
 							<img src="" class="navbar-dropdown-toggle avatar">
 							
 							@if (count($notifications))
@@ -40,9 +41,9 @@
 									{{ count($notifications) }}
 								</div>
 							@endif
-
+						</div>
 						@endif
-					</div>
+					
 
 					{{ Form::open(array('url'=> 'search', 'class' => 'form-search pull-right', 'role'=>'search' )) }}
 						<input class="search-input" autocomplete="off" name="search" id="search-input" type="text">
@@ -52,15 +53,9 @@
 						<div class="result-box hidden"></div>
 					{{ Form::close() }}
 					
-
-					<div class="navbar-dropdown">
-						<div class="dropdown-wrapper">
-							@if( $is_guest )
-								<div class="guest-actions">
-									<a class="btn-flat-blue" data-toggle="modal" data-target="#guestSignup">CREATE AN ACCOUNT</a>
-									<a class="btn-flat-blue" href="{{ URL::to( 'user/login' ) }}">LOG IN</a>
-								</div>
-							@else
+					@if( !$is_guest )
+						<div class="navbar-dropdown">
+							<div class="dropdown-wrapper">
 								<div class="user">
 									<a href="{{Config::get('app.url')}}/myprofile">
 										<img class="avatar" src="">
@@ -91,16 +86,17 @@
 									<br>
 									<a href="{{Config::get('app.url')}}/user/logout">SIGN OUT</a>
 								</div>
-
-							@endif
-							
-							<div class="additional-actions">
-								<a href="{{ URL::to('privacy') }}">privacy policy</a>
-								|
-								<a href="{{ URL::to('terms') }}">terms of use</a>
+								
+								<div class="additional-actions">
+									<a href="{{ URL::to('privacy') }}">privacy policy</a>
+									|
+									<a href="{{ URL::to('terms') }}">terms of use</a>
+								</div>
 							</div>
 						</div>
-					</div>
+
+					@endif
+
 				</div>
 
 			</div>

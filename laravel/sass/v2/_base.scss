@@ -14,6 +14,12 @@ $dark: #181919;//color that's not black, but looks like black.
 $black: #000;
 $white: #fff;
 
+//Media Queries
+$break-lg: 1200px;
+$break-md: 992px;
+$break-sm: 768px;
+$break-xs: 480px;
+
 
 
 //Navbar*****
@@ -68,7 +74,6 @@ $post_actionbar_height: 69px;
   font-size:14px;
   @include word-break(break-all);
 }
-//==================Typography:end==================
 
 //TTT Defaults:
 input,textarea, select {
@@ -258,7 +263,7 @@ textarea {
 }
 
 @mixin notifications_arrow_top() {
-  content: url('../../../../images/global/notifications-arrow.png');
+  content: url('/images/global/notifications-arrow.png');
   position: absolute;
   top: -14px;
   left: 10px;
@@ -267,7 +272,7 @@ textarea {
 }
 
 @mixin label_arrow_top() {
-  content: url('../../../../images/posts/up-pointer.png');
+  content: url('/images/posts/up-pointer.png');
   position: relative;
   top: -15px;
   width: 6px;
@@ -275,7 +280,7 @@ textarea {
 }
 
 @mixin label_arrow_bottom() {
-  content: url('../../../../images/posts/down-pointer.png');
+  content: url('/images/posts/down-pointer.png');
   position: relative;
   top: 12px;
   width: 6px;
@@ -410,7 +415,9 @@ textarea {
       .post-image {
         height: 170px;
         width: 270px;
-        background-color: gray;
+        background-size:cover;
+        background-position:center center;
+        background-repeat:no-repeat;
       }
     }
 

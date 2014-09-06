@@ -11,7 +11,7 @@ $(function() {
 	// Slide toggle for filter dropdowns
 	$('.category-filter-title').click(function(event) {
 		event.preventDefault();
-		$(this).next().slideToggle();
+		$(this).next().toggle();
 	});
 
 

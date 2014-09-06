@@ -19,9 +19,6 @@
 			<h2>Login</h2>
 			{{ View::make('v2.users.forms.login') }}
 		</div>
-		<aside class="login-disclaimer">
-			Read our <a href="{{Config::get('app.url')}}/etiquette">Community Etiquette</a> page.	
-		</aside>
 		<div class="clearfix"></div>
 	</div>
 @stop

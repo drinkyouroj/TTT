@@ -101,14 +101,14 @@ input, textarea, button:focus {outline: none !important;}
 			}
 
 			.col-right {
-				padding-top: 7px;
+				margin-top: 3px;
 				&>*, &>form>* {
 					float: right;
 				}
 				.action {
 					height: 35px;
 					width: 35px;
-					margin-top: -4px;
+					margin-top: 2px;
 					margin-left: 10px;
 					position: relative;
 					text-align: center;
@@ -128,16 +128,20 @@ input, textarea, button:focus {outline: none !important;}
 				}
 				label.glyphicon-search {
 					margin-top: 7px;
-					margin-right: 4px;
+					margin-right: 3px;
 					font-size: 20px;
+					cursor:pointer;
 				}
 				input.search-input {
 					background-color: transparent !important;
+					margin-top:5px;
 					border-style: solid;
 					border-width: 0px 0px 2px 0px;
 					border-color: black;
 					width: 0px;
 					padding:0px;
+					@include montserrat;
+					font-size:12px;
 
 					@include transition( width, 500ms, ease-out, 0);
 
@@ -149,13 +153,14 @@ input, textarea, button:focus {outline: none !important;}
 					position: absolute;
 					top: $navbar_height;
 					right: 0;
+					margin-top:-3px;
 					min-width: $navbar_dropdown_menu_min_width;
 					max-width: $navbar_dropdown_menu_max_width;
 					background-color: $white;
 					display: none;
 					padding-bottom:10px;
 					border-top: 1px solid lightgray;
-					box-shadow: 2px 2px 2px 0px lightgray, -2px 2px 2px 0px lightgray;
+					@include drop_shadow;
 					.dropdown-wrapper {
 						&>*, ul.notifications > li {
 						}
@@ -179,10 +184,17 @@ input, textarea, button:focus {outline: none !important;}
 									border-radius: 50%;
 									background-color: #333;
 								}
+								&:hover {
+									background-color:$lightgray;
+									color:$blue;
+								}
 							}
 						}
 						.notifications-title {
 							padding: 10px;
+							@include montserrat;
+							font-size:10px;
+							border-bottom:$lightgray !important;
 						}
 						ul.notifications {
 							max-height: 250px;
@@ -190,6 +202,7 @@ input, textarea, button:focus {outline: none !important;}
 							padding: 0;
 							li {
 								background-color: #f7f7f7;
+								border-bottom:$lightgray;
 								a {
 									display: block;
 									padding: 10px;
@@ -241,7 +254,7 @@ input, textarea, button:focus {outline: none !important;}
 				}	
 
 				.notification-label {
-					 position: relative;
+					position: relative;
 					background:$red;
 					color:$white;
 					margin-top:5px;
@@ -295,7 +308,7 @@ input, textarea, button:focus {outline: none !important;}
 							height: 70px;
 							margin-left: 0;
 							background-size: cover;
-							background: $lightgray; //temporary!!!
+							background-position: center center;
 						}
 					}
 					.post-info {
@@ -386,6 +399,25 @@ input, textarea, button:focus {outline: none !important;}
 	text-decoration: none;
 	text-transform:uppercase;
 	border: 2px solid $white;
+	cursor: pointer;
+	&:hover {
+		// background-color: $gray;
+		// border-color: $dark_gray;
+		color: white;
+		text-decoration: none;
+	}
+}
+
+.btn-flat-light-gray {
+	display:inline-block;
+	@include montserrat(normal);
+	color: white;
+	font-size: 12px;
+	background: $gray;
+	padding: 10px 15px;
+	text-decoration: none;
+	text-transform:uppercase;
+	border: 2px solid $gray;
 	cursor: pointer;
 	&:hover {
 		// background-color: $gray;
@@ -516,7 +548,27 @@ input, textarea, button:focus {outline: none !important;}
 	}
 }
 
-//generic buton with icon to the left. just add a bg image
+.login-btn {
+	display:inline-block;
+	@include montserrat(normal);
+	color: $dark;
+	font-size: 12px;
+	background: white;
+	padding: 10px 15px;
+	text-decoration: none;
+	text-transform:uppercase;
+	border: 2px solid $white;
+	cursor: pointer;
+	&:hover {
+		// background-color: $gray;
+		// border-color: $gray;
+		color: $dark;
+
+		text-decoration: none;	
+	}
+}
+
+//generic button with icon to the left. just add a bg image
 .icon-button {
 	display:inline-block;
 	@include montserrat(normal);
@@ -528,6 +580,27 @@ input, textarea, button:focus {outline: none !important;}
 	padding: 10px 15px 10px 50px;
 	text-decoration: none;
 	border: 2px solid $dark;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-position:left center;
+	background-size:38px 38px;
+	&:hover {
+		// background-color: $gray;
+		background-color: $lightgray;
+	}
+}
+
+//generic link with icon to the left (no border). just add a bg image
+.icon-link {
+	display:inline-block;
+	@include montserrat(normal);
+	text-transform:uppercase;
+	color: $dark;
+	font-size: 12px;
+	letter-spacing:2px;
+	background: none;
+	padding: 10px 0px 10px 30px;
+	text-decoration: none;
 	cursor: pointer;
 	background-repeat: no-repeat;
 	background-position:left center;
@@ -566,7 +639,7 @@ input, textarea, button:focus {outline: none !important;}
 		h4 {
 			margin-top:70px;
 			text-align:center;
-			@include montserrat();
+			@include montserrat(bold);
 			font-size:32px;
 			text-transform:uppercase;
 			letter-spacing:1px;
@@ -583,9 +656,8 @@ input, textarea, button:focus {outline: none !important;}
 		}
 		.modal-body {
 			input {
-				border:solid 1px $gray;
+				border:solid 1px #ddd;
 				@include montserrat();
-				text-transform:uppercase;
 				font-size:12px;
 				height:41px;
 			}
@@ -610,6 +682,7 @@ input, textarea, button:focus {outline: none !important;}
 		display:block;
 		h4 {
 			margin-top:0px;
+			margin-bottom:20px;
 		}
 		.signup-form, .login-form {
 			position:relative;
@@ -631,6 +704,9 @@ input, textarea, button:focus {outline: none !important;}
 				.form-actions {
 					margin-top:20px;
 					text-align:center;
+					button {
+						letter-spacing:2px;
+					}
 				}
 				.email-please, .terms-agree, .login-disclaimer {
 					margin-top:10px;

@@ -10,11 +10,13 @@
 		z-index: 999;
 		background-image:url('../../../../images/posts/black-90.png');
 		padding: 15px;
-		.actions-container, .comment-container, .utility-container {
+		.actions-container, .comment-container {
 			margin-top:5px;
 		}
 		.utility-container {
-			border-right:solid 1px $dark_gray;
+			padding-top:7px;
+			padding-bottom:10px;
+			border-right:solid 1px #525252;
 			a.read {
 				@include post_actions_label;
 				background-image:url('../../../../images/posts/mark-read.png');
@@ -25,6 +27,9 @@
 				@include post_actions_label;
 				background-image:url('../../../../images/posts/flag.png');
 				cursor:pointer;
+				&:hover {
+					color:$red;
+				}
 			}
 		}
 		.actions-container {

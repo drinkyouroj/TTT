@@ -17,7 +17,7 @@ $(function() {
     // Dropdown
     $('.navbar-dropdown-toggle').click(function() {
     	$('.notification-label').fadeOut();
-    	$('.navbar-dropdown').slideToggle();
+    	$('.navbar-dropdown').toggle();
         if ( !notificationsMarkedAsRead ) {
             // Mark the notifications as read.
             $.ajax({

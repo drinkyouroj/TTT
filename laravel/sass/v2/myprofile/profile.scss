@@ -42,16 +42,13 @@ a:focus {
 			.settings {
 				text-align: right;
 				a#settings {
-					display:inline-block;
 					margin-top: 5px;
-					padding: 10px 8px 10px 40px;
-					border: 2px solid $dark;
-					letter-spacing: 2px;
 					font-size: 10px;
+					background-image:url('../../../../images/global/settings.png');
 				}
 			}
 			.follow {
-				text-align: center;
+				text-align: right;
 				a {
 					display:inline-block;
 					text-align: center;
@@ -90,7 +87,9 @@ a:focus {
 			}
 		}
 		.follow-user {
-
+			.follow-button {
+				float:right;
+			}
 		}
 		.border {
 			.border-box {
@@ -113,36 +112,43 @@ a:focus {
 				float: left;
 				width: 77%;
 				//Note to MAX, We will have to deal with the container widths when we do some mobile work.
-
+				@media (max-width:$break-md) {
+					width: 100%;
+				}
 				#collection-content {
 					margin-left: auto;
   					margin-right: auto;
-  					
+  				
   					//Post
 					@include post_listing(0);
 
 					.feature-item {
-						position: relative;
-						float: left;
-						display: block;
-						width:100%;
-						height:384px;
-						max-width:870px;
 						margin-left:15px;
 						margin-right:15px;
-						margin-bottom:15px;
-
+						margin-bottom:30px;
+						.text, .image {
+							height:350px; // featured post height
+							@media (max-width:$break-lg) and (min-width:$break-md) {
+								height:310px;
+							}
+						}
 						.text {
-							position:relative;
 							background:$white;
 							text-align:center;
-							height:384px;
 							padding:0 40px;
+							@media (max-width:$break-sm) {
+								height:auto;
+								padding-bottom:30px;
+							}
 							h2 {
 								@include title_listing;
 								font-size:20px;
 								line-height:21px;
-								padding-top:25px;
+								padding-top:40px;
+								@media (max-width:$break-lg) {
+									padding-top:20px;
+									font-size:17px;
+								}
 							}
 							.line {
 								width:20px;
@@ -153,6 +159,9 @@ a:focus {
 							p.tagline {
 								@include tagline_listing;
 								font-size:15px;
+								@media (max-width:$break-lg) {
+									font-size:12px;
+								}
 							}
 							p.excerpt {
 								text-align:justify;
@@ -161,10 +170,12 @@ a:focus {
 							}
 						}
 						.image {
-							position:relative;
 							background-size:cover;
 							background-repeat:no-repeat;
-							height:384px;
+							background-position:center center;
+							@media (max-width:$break-sm) {
+								height:300px;
+							}
 						}
 						.read-more {
 							@include montserrat(bold);
@@ -181,6 +192,9 @@ a:focus {
 			.comment-container {
 				float: left;
 				width: 23%;
+				@media screen and (max-width:$break-md) {
+					display:none;
+				}
 				.comment-border {
 					border-top: 17px solid $dark;
 					margin-right: 14px;//gotta change this value on the break. somehow its a pixel off.
@@ -188,7 +202,8 @@ a:focus {
 				#comment-content {
 					margin-right: 15px;
 					margin-bottom: 100px;
-					padding: 10px 18px 30px 18px;
+					padding: 10px 0px 30px 18px;
+					border-left: 1px solid $dark_cream;
 					h3 {
 						margin: 0;
 						font-size: 14px;
@@ -208,14 +223,15 @@ a:focus {
 						}
 						.inner-content {
 							.where {
-
-								color:$dark;
+								color:$gray;
 								padding-bottom: 14px;
 								margin-bottom: 10px;
 								border-bottom: 1px solid $gray;
+								font-size:12px;
 								a {
 									text-decoration: none;
 									color: $blue;
+									@include montserrat(bold);
 								}
 							}
 							.comment {
@@ -261,15 +277,17 @@ a:focus {
 					&.feed {
 						@include post_listing(1);
 					}
-
+					&.saves .image, &.drafts .image  {
+						width:150px;
+						height:103px;
+						background-size:cover;
+						background-position:center center;
+					}
 					&.saves {
 						.saves-box {
 							border-bottom:solid 1px $dark;
 							padding:5px 0;
 							.image {
-								width:150px;
-								height:103px;
-								background:#000; //DELETE!!!
 							}
 							.text {
 								h3 {
@@ -302,9 +320,6 @@ a:focus {
 								}
 							}
 							.image {
-								width:150px;
-								height:103px;
-								background:#000; //DELETE!!!
 							}
 							.text {
 								h3 {
@@ -315,6 +330,7 @@ a:focus {
 								}
 							}
 							.controls {
+								text-align:right;
 								a {
 									display:inline-block;
 								}
@@ -325,8 +341,9 @@ a:focus {
 
 								}
 								.delete-draft {
-									width:100%;
+									float:right;
 									text-align:right;
+									background-image:url('../../../../images/global/remove.png');
 								}
 							}
 						}
@@ -338,14 +355,34 @@ a:focus {
 
 					&.following, &.followers {
 						a.follow {
+							position:relative;
 							display:block;
 							float: left;
 							width: 270px;
 							margin: 10px 10px;
-							height: 150px;
+							height: 170px;
 							background-position: center center;
 							background-repeat: no-repeat;
 							background-size: cover;
+							background-color:#ccc;//DELETE
+							.follow-name {
+							position:absolute;
+							width:100%;
+							min-height:99px;
+							top:0px;
+							left:0px;
+							padding:5px 10px;
+							color:$white;
+							background-image:url('../../../../images/categories/post-image-overlay.png');
+        					background-position:top;
+        					background-repeat:repeat-x;
+								span {
+									@include montserrat;
+									letter-spacing:1px;
+									font-size:18px;
+									@include word-break(break-all);
+								}
+							}
 						}
 					}
 
