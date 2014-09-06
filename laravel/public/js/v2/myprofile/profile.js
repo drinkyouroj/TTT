@@ -112,9 +112,14 @@ $(function() {
 		}
 	});
 
+//We should probably make these into better action systems.
 //Set Featured events
 	$('body').on('click', '.set-featured',function() {
 		profile.setFeatured($(this).data('id'));
+	})
+
+	$('body').on('click', '.remove-repost',function() {
+		profile.setRepost($(this).data('id'));
 	})
 
 //Pagination detection.
@@ -320,18 +325,28 @@ function ProfileActions() {
 		});
 	}
 
+
+	//Collection Actions
+		//Set a post as featured.
 		this.setFeatured = function(id) {
 			$('#collection-content .feature-item',target).fadeOut().remove();
 
 			featured_url = window.site_url + 'rest/profile/featured/' + id;
 			var target = this.target;
 			this.setData(featured_url, function(data) {
-				//console.log(data);
-				
 				
 			});
 			window.featured_id = id;//make the window remember the featured id.
 			this.renderFeatured();
+		}
+
+		//Remove a repost
+		this.setRepost = function(id) {
+			$('#post-'+id).fadeOut().remove();
+			removeRepost = window.site_url + 'rest/reposts/'+ id;
+			this.getData(removeRepost, function(data) {
+				
+			});
 		}
 
 	this.renderComments = function() {
@@ -340,7 +355,6 @@ function ProfileActions() {
 		var target = this.target;
 		this.urlConstructor();
 		this.getData(this.comment_url, function(data) {
-			console.log(data);
 			$.each(data.comments,function(idx, val) {
 
 				view_data = {
@@ -373,7 +387,6 @@ function ProfileActions() {
 		var saves_item_template = this.saves_item_template;
 		var target = this.target;
 		this.urlConstructor();
-		console.log(this.url);
 		this.getData(this.url,function(data) {
 			$.each(data.saves, function(idx, val) {
 				view_data = {

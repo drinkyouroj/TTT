@@ -267,6 +267,7 @@ a:focus {
 							border-bottom:solid 1px $dark;
 							padding:5px 0;
 							.image {
+								display:block;
 								width:150px;
 								height:103px;
 								background:#000; //DELETE!!!
@@ -302,6 +303,7 @@ a:focus {
 								}
 							}
 							.image {
+								display:block;
 								width:150px;
 								height:103px;
 								background:#000; //DELETE!!!
