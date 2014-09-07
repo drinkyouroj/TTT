@@ -24,13 +24,15 @@ class HomeController extends BaseController {
 		return View::make('v2/featured/featured')
 					->with('featured',$featured);
 		*/
-		return Redirect::to('categories/all');
+		//return Redirect::to('categories/all');
+		return View::make('v2.static.beta');
 	}
 	
 	//This is a little weird fix to the invitation system since it posts to the Index and needs to be redirected.
 	public function postIndex() 
 	{
-		return Redirect::to('featured');
+		return View::make('v2.static.beta');
+		//return Redirect::to('featured');
 	}
 	
 	/**

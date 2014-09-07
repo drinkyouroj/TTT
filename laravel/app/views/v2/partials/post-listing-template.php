@@ -23,7 +23,7 @@
 	);
 </script>
 <script type="text/x-handlebars-template" id="post-item-template">	
-	<div class="post-container fade in {{feed_type}} {{post_type}}">
+	<div class="post-container fade in {{feed_type}} {{post_type}}" id="post-{{post.id}}">
 		
 		<div class="post-image-overlay">
 			<a href="{{ site_url }}profile/{{ post.user.username }}">
@@ -49,12 +49,23 @@
 			{{#ifCond myprofile true }}
 				{{#ifCond post.user.id user_id }}
 					<div class="post-options">
-					{{#ifCond editable true}}
-						<a class="post-edit" href="{{site_url}}myprofile/editpost/{{post.id}}">Edit</a>
-					{{/ifCond}}
-					{{#ifNotCond featured_id post.id}}
-						<a class="set-featured" data-id="{{post.id}}">Feature</a>
-					{{/ifNotCond }}
+						{{#ifCond editable true}}
+							<a class="post-edit" href="{{site_url}}myprofile/editpost/{{post.id}}">
+								Edit
+							</a>
+						{{/ifCond}}
+						{{#ifNotCond featured_id post.id}}
+							<a class="set-featured" data-id="{{post.id}}">
+								Feature
+							</a>
+						{{/ifNotCond }}
+					</div>
+				{{/ifCond}}
+				{{#ifCond post_type 'repost' }}
+					<div class="post-options">
+						<a class="remove-repost" data-id="{{post.id}}">
+							Remove Repost
+						</a>
 					</div>
 				{{/ifCond}}
 			{{/ifCond}}

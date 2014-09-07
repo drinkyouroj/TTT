@@ -54,10 +54,16 @@ Route::group(array('prefix'=>'rest'), function() {
 		Route::get( 'featured/{post_id}', 'MyProfileController@getRestFeatured');
 	});
 	
+	Route::get( 'post/{post_id}/comments/{paginate}/{page}', 'CommentController@getRestComments');
+
 	//Category autload
 	Route::get( 'categories/{alais}/{sort}/{page}', 'CategoryController@getRestCategory');
 	Route::get( 'categories/{alais}/{sort}', 'CategoryController@getRestCategory');
 	Route::get( 'categories/{alais}', 'CategoryController@getRestCategory');
+
+	// Route for staging username reservations. 
+	// TODO: this will/should be removed post launch
+	Route::post( 'username/reserve', 'StagingController@postReserveUsername' );
 
 	//Profile autload
 	Route::get( 'profile/{alias}', 'ProfileController@getRestProfile');
@@ -66,12 +72,10 @@ Route::group(array('prefix'=>'rest'), function() {
 	//Auto Load of for featured.
 	Route::get( 'featured', 'HomeController@getRestFeatured');
 
-	Route::get( 'post/{post_id}/comments/{paginate}/{page}', 'CommentController@getRestComments');
+	
 
 
-	// Route for staging username reservations. 
-	// TODO: this will/should be removed post launch
-	Route::post( 'username/reserve', 'StagingController@postReserveUsername' );
+	
 });
 
 //Note, below JSONController route has to be below the abouve REST route Group.
@@ -94,8 +98,8 @@ Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
 	Route::get('featured/post/{post_id}/remove', 'AdminController@removeFromFeatured');
 	Route::get('featured/post/{post_id}/position/{position}', 'AdminController@setFeaturedPosition');
 
-	Route::get('solr', 'AdminController@getResetSolr');//this updates the users on solr
-	Route::get('resetnot/{batch}', 'AdminController@getResetNotifications');//this updates the users on solr
+	//Route::get('solr', 'AdminController@getResetSolr');//this updates the users on solr
+	//Route::get('resetnot/{batch}', 'AdminController@getResetNotifications');//this updates the users on solr
 	Route::controller('/','AdminController');	
 });
 

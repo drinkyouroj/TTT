@@ -63,13 +63,19 @@
 		<div class="saves-box">
 			<div class="row">
 				<div class="image-container col-md-3">
-					<div class="image" style="background-image:url('{{site_url}}/uploads/final_images/{{save.image}}');">
+					<a 	href="{{site_url}}posts/{{save.alias}}"
+						class="image"
+						style="background-image:url('{{site_url}}uploads/final_images/{{save.image}}');">
 
-					</div>
+					</a>
 				</div>
 
 				<div class="text col-md-7">
-					<h3>{{save.title}}</h3>
+					<h3>
+						<a href="{{site_url}}posts/{{save.alias}}">
+							{{save.title}}
+						</a>
+					</h3>
 					<p>{{save.tagline_1}} | {{save.tagline_2}} | {{save.tagline_3}}</p>
 				</div>
 
@@ -89,12 +95,18 @@
 				<div class="date col-md-2">
 					<span>{{date}}</span>
 				</div>
-				<div class="image col-md-2" style="background-image:url('{{site_url}}/uploads/final_images/{{draft.image}}');">
+				<a  href="{{site_url}}posts/{{draft.alias}}"
+					class="image col-md-2"
+					style="background-image:url('{{site_url}}uploads/final_images/{{draft.image}}');">
 
-				</div>
+				</a>
 
 				<div class="text col-md-5">
-					<h3>{{draft.title}}</h3>
+					<h3>
+						<a href="{{site_url}}posts/{{post.alias}}">
+							{{draft.title}}
+						</a>
+					</h3>
 					<p>{{draft.tagline_1}} | {{draft.tagline_2}} | {{draft.tagline_3}}</p>
 				</div>
 
@@ -192,18 +204,24 @@
 <script type="text/x-handlebars-template" id="feature-item-template">
 	<div class="feature-item row">
 		<div class="text feature-inner col-md-5 col-sm-5">
-			<h2>{{post.title}}</h2>
+			<h2>
+				<a href="{{site_url}}posts/{{post.alias}}">
+					{{post.title}}
+				</a>
+			</h2>
 			<div class="line"></div>
 			<p class="tagline">{{post.tagline_1}} | {{post.tagline_2}} | {{post.tagline_3}}</p>
 			<p class="excerpt">
 				{{post.excerpt}}
 			</p>
 			<div class="read-more">
-				<a href="">Read More</a>
+				<a href="{{site_url}}posts/{{post.alias}}">Read More</a>
 			</div>
 		</div>
-		<div class="image feature-inner col-md-7 col-sm-7" style="background-image: url('{{site_url}}uploads/final_images/{{post.image}}');">
 
-		</div>
+		<a  href="{{site_url}}posts/{{post.alias}}"
+				class="image feature-inner col-md-7 col-sm-7"
+				style="background-image: url('{{site_url}}uploads/final_images/{{post.image}}');">
+		</a>
 	</div>
 </script>
