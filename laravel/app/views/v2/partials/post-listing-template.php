@@ -73,7 +73,9 @@
 
 		<a class="image-link" href="{{ site_url }}posts/{{ post.alias }}">
 			<div class="top-fade"> </div>
-			<img class="post-image" src="{{ site_url }}uploads/final_images/{{ post.image }}">
+				<div class="post-image" style="background-image:url('{{ site_url }}uploads/final_images/{{ post.image }}')">
+
+					</div>
 		</a>
 		<p class="post-title"> 
 			<a href="{{ site_url }}posts/{{ post.alias }}">
