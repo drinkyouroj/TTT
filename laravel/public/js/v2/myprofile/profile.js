@@ -38,6 +38,10 @@ $(function() {
 	//Follow template
 	var follow_template = $('#follow-template').html();
 	profile.follow_template = Handlebars.compile(follow_template);
+
+	// No Content Template
+	var no_content_template = $('#no-content-template').html();
+	profile.no_content_template = Handlebars.compile(no_content_template);
 	
 
 //View renders based on the id selectors.
@@ -136,7 +140,7 @@ $(function() {
 	profile.target = $('#profile-content');
 	
 	// Figure out the hash so we can load the right content in.
-	if(typeof window.location.hash  == 'undefined' || !window.location.hash.length) {
+	if ( typeof window.location.hash  == 'undefined' || !window.location.hash.length ) {
 		window.location.hash = 'collection';
 		profile.view = 'collection';
 		profile.type = 'all';
@@ -147,7 +151,7 @@ $(function() {
 		$('.section-selectors a').removeClass('active');
 		$(view, '.section-selectors').prop('class', 'active');
 
-		if(view == '#followers' || view == '#following') {
+		if ( view == '#followers' || view == '#following' ) {
 			profile.type = window.user_id;
 		}
 
@@ -161,9 +165,9 @@ $(function() {
 	//figure out which modals to show.
 	if(window.post) {
 		if(window.post == 'draft') {
-			$('#draftsModal').modal('show')
+			$('#draftsModal').modal('show');
 		} else if (window.post == 'published') {
-			$('#publishModal').modal('show')
+			$('#publishModal').modal('show');
 		}
 	}
 
@@ -189,7 +193,6 @@ function ProfileActions() {
 			that.viewRenderContainer();
 			that.viewRender(true);
 			that.target.fadeIn(100);
-
 		});
 	};
 
@@ -284,23 +287,29 @@ function ProfileActions() {
 	this.renderCollection = function() {
 		//below has to be done to pass through the scope of both getData and $.each
 		var post_item_template = this.post_item_template;
+		var no_content_template = this.no_content_template;
 		var target = this.target;
 		var editCheck = this.editCheck;
 		this.urlConstructor();
 		this.getData(this.url, function(data) {
-			$.each(data.collection, function(idx, val) {
-				var editable = editCheck(val.post.published_at);
-				view_data = {
-					site_url: window.site_url,
-					post: val.post,
-					user_id: window.user_id,
-					editable: editable,
-					featured_id: window.featured_id,
-					post_type: val.post_type,
-					myprofile: window.myprofile
-				};
-				$('#collection-content',target).append(post_item_template(view_data));
-			});
+
+			if ( data.no_content ) {
+				$('#collection-content',target).append( no_content_template( {section: 'collection'} ) );
+			} else {
+				$.each(data.collection, function(idx, val) {
+					var editable = editCheck(val.post.published_at);
+					view_data = {
+						site_url: window.site_url,
+						post: val.post,
+						user_id: window.user_id,
+						editable: editable,
+						featured_id: window.featured_id,
+						post_type: val.post_type,
+						myprofile: window.myprofile
+					};
+					$('#collection-content',target).append(post_item_template(view_data));
+				});
+			}
 		});
 		
 	};
@@ -369,33 +378,43 @@ function ProfileActions() {
 	this.renderFeed = function() {
 		//scope issues
 		var post_item_template = this.post_item_template;
+		var no_content_template = this.no_content_template;
 		var target = this.target;
 		this.urlConstructor();
 		this.getData(this.url,function(data) {
-			$.each(data.feed, function(idx, val) {
-				view_data = {
-					site_url: window.site_url,
-					post: val.post
-				};
-				$('#default-content',target).append(post_item_template(view_data));
-			});
+			if ( data.no_content ) {
+				$('#default-content',target).append( no_content_template( {section: 'feed'} ) );
+			} else {
+				$.each(data.feed, function(idx, val) {
+					view_data = {
+						site_url: window.site_url,
+						post: val.post
+					};
+					$('#default-content',target).append(post_item_template(view_data));
+				});
+			}
 		});
 	};
 
 	this.renderSaves = function() {
 		//scope issues
 		var saves_item_template = this.saves_item_template;
+		var no_content_template = this.no_content_template;
 		var target = this.target;
 		this.urlConstructor();
 		this.getData(this.url,function(data) {
-			$.each(data.saves, function(idx, val) {
-				view_data = {
-					site_url: window.site_url,
-					save: val.post,
-					date: val.created_at
-				};
-				$('#default-content',target).append(saves_item_template(view_data));
-			});
+			if ( data.no_content ) {
+				$('#default-content',target).append( no_content_template( {section: 'saves'} ) );
+			} else {
+				$.each(data.saves, function(idx, val) {
+					view_data = {
+						site_url: window.site_url,
+						save: val.post,
+						date: val.created_at
+					};
+					$('#default-content',target).append(saves_item_template(view_data));
+				});
+			}
 		});
 
 	};
@@ -403,18 +422,23 @@ function ProfileActions() {
 	this.renderDrafts =  function() {
 		//scope issues
 		var drafts_item_template = this.drafts_item_template;
+		var no_content_template = this.no_content_template;
 		var target = this.target;
 		this.urlConstructor();
 		draftDate = this.draftDate;
-		this.getData(this.url,function(data) {			
-			$.each(data.drafts, function(idx, val) {
-				view_data = {
-					site_url: window.site_url,
-					draft: val,
-					date: draftDate(val.updated_at)
-				};
-				$('#default-content',target).append(drafts_item_template(view_data));
-			});
+		this.getData(this.url,function(data) {		
+			if ( data.no_content ) {
+				$('#default-content',target).append( no_content_template( {section: 'drafts'} ) );
+			} else {	
+				$.each(data.drafts, function(idx, val) {
+					view_data = {
+						site_url: window.site_url,
+						draft: val,
+						date: draftDate(val.updated_at)
+					};
+					$('#default-content',target).append(drafts_item_template(view_data));
+				});
+			}
 		});
 
 	};

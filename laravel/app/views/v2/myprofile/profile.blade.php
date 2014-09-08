@@ -27,7 +27,8 @@
 	</script>
 
 	@include( 'v2/partials/post-listing-template' )
-	@include( 'v2/myprofile/partials/profile-handlebars-template')
+	@include( 'v2/myprofile/partials/profile-handlebars-template' )
+	@include( 'v2/myprofile/partials/no-content-handlebars-template' )
 
 	@if($myprofile)
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/form/jquery.form.js"></script>		
