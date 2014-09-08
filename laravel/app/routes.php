@@ -26,10 +26,9 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	
 	/**Post Input Systems***************************/	
 	//Flickr!!!!!
-	Route::resource('flickr', 'FlickrRestController', array('only'=>array('index','show')));//API wrapper
-
-	//Photo Processor
-	Route::resource('photo', 'PhotoRestController', array('only'=>array('index','store','show')) );
+	Route::get('flickr/{photo_id}', 'PhotoController@getPhoto');//For grabbing the Photo License info.
+	Route::get('flickr', 'PhotoController@getPhotoSearch');
+	Route::get('photo', 'PhotoController@getProcessPhoto');//Photo processor
 
 	//Post Save Route.
 	Route::post('savepost','PostController@postSavePost');
@@ -54,6 +53,7 @@ Route::group(array('prefix'=>'rest'), function() {
 		Route::get( 'featured/{post_id}', 'MyProfileController@getRestFeatured');
 	});
 	
+	//Grab Comments
 	Route::get( 'post/{post_id}/comments/{paginate}/{page}', 'CommentController@getRestComments');
 
 	//Category autload
@@ -71,10 +71,6 @@ Route::group(array('prefix'=>'rest'), function() {
 
 	//Auto Load of for featured.
 	Route::get( 'featured', 'HomeController@getRestFeatured');
-
-	
-
-
 	
 });
 
