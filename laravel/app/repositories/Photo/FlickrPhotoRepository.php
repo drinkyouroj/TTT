@@ -1,7 +1,8 @@
 <?php
 namespace AppStorage\Photo;
 
-use Config,
+use App,
+	Config,
 	Validator,
 	Exception,
 	Instagraph,//We'll do the processing in here for now.
@@ -116,8 +117,10 @@ class FlickrPhotoRepository implements PhotoRepository {
 				
 				file_put_contents($file_path , fopen($url, 'r'));
 				
-				//CDN Upload action.
-				self::cdn_upload($file_path, $file_name);
+				if( App::environment('prod') ) {
+					//CDN Upload action.
+					self::cdn_upload($file_path, $file_name);
+				}
 
 				//just return the damn thing as no filter
 				return $file_name;
@@ -145,8 +148,10 @@ class FlickrPhotoRepository implements PhotoRepository {
 			$insta->setOutput($final_path);
 			$insta->process($process);
 
-			//CDN Upload.. Maybe put this into a queue later if things don't run so good.
-			self::cdn_upload($final_path, $file_name);
+			if( App::environment('prod') ) {
+				//CDN Upload.. Maybe put this into a queue later if things don't run so good.
+				self::cdn_upload($final_path, $file_name);
+			}
 			
 			return $md5_title.'_'.$process.'.jpg';
 			
@@ -181,6 +186,5 @@ class FlickrPhotoRepository implements PhotoRepository {
 	public function delete($post_id) {
 
 	}
-
 
 }

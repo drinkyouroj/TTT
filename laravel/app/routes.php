@@ -26,7 +26,7 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	
 	/**Post Input Systems***************************/	
 	//Flickr!!!!!
-	Route::get('flickr/{photo_id}', 'PhotoController@getPhoto');
+	Route::get('flickr/{photo_id}', 'PhotoController@getPhoto');//For grabbing the Photo License info.
 	Route::get('flickr', 'PhotoController@getPhotoSearch');
 	Route::get('photo', 'PhotoController@getProcessPhoto');//Photo processor
 
