@@ -97,6 +97,11 @@ Route::group( array('prefix'=>'myprofile', 'before' => 'auth' ), function() {
 Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
 	Route::get('featured/post/{post_id}/remove', 'AdminController@removeFromFeatured');
 	Route::get('featured/post/{post_id}/position/{position}', 'AdminController@setFeaturedPosition');
+	Route::get('assign/moderator/user/{user_id}', 'AdminController@assignModerator');
+	Route::get('unassign/moderator/user/{user_id}', 'AdminController@unassignModerator');
+	Route::get('delete/user/{user_id}', 'AdminController@deleteUser');
+	Route::get('restore/user/{user_id}', 'AdminController@restoreUser');
+	Route::get('reset/user/{user_id}', 'AdminController@resetUser');
 
 	//Route::get('solr', 'AdminController@getResetSolr');//this updates the users on solr
 	//Route::get('resetnot/{batch}', 'AdminController@getResetNotifications');//this updates the users on solr
@@ -108,6 +113,9 @@ Route::group(array('prefix'=> 'mod', 'before'=> 'mod'), function() {
 	Route::get('delete/post/{post_id}','ModController@deletePost');
 	Route::get('undelete/post/{post_id}','ModController@undeletePost');
 	Route::get('delete/post/{post_id}/category/{category_id}', 'ModController@deletePostCategory');
+	Route::get('ban/user/{user_id}', 'ModController@banUser');
+	Route::get('unban/user/{user_id}', 'ModController@unbanUser');
+
 	// Route::get('delcomment/{id}','ModController@getDelComment');
 	// Route::get('ban/{id}','ModController@getBan');
 	// Route::get('/','ModController@getIndex');

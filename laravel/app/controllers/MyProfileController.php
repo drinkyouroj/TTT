@@ -30,16 +30,21 @@ class MyProfileController extends BaseController {
 			return Redirect::to('myprofile');
 		}
 
-		//Load up the profile user.
+		//Load up the profile user. If admin or moderator, include soft deleted users
 		$profile_user = User::where('username',$alias)->first();
+		// If the user wasnt found and we are a moderator, check for the same alias among soft deleted users.
+		if ( !is_object($profile_user) && Auth::check() && Auth::user()->hasRole('Moderator') ) {
+			$profile_user = User::withTrashed()->where('username', $alias)->first();
+		}
 
+		// If we still dont have a user, just redirect back to profile page.
 		if( !is_object($profile_user) ) {
 			return Redirect::to('myprofile');
 		}
 
 		if( Auth::check() ) {
 
-			$user = Auth::user();//This is the 
+			$user = Auth::user();  //This is the current logged in user
 			$is_following = $this->follow->is_following($user->id, $profile_user->id);
 			$is_follower = $this->follow->is_follower($user->id, $profile_user->id);
 			if($is_follower && $is_following) {
@@ -262,7 +267,7 @@ class MyProfileController extends BaseController {
 			$user_id = Auth::user()->id;
 		}
 		
-		$comments = $this->comment->allByUserId($user_id, 8, $page, true);
+		$comments = $this->comment->findByUserId($user_id, 8, $page, true);
 		if(count($comments)) {
 			return Response::json(
 				array( 'comments' => $comments->toArray() ),

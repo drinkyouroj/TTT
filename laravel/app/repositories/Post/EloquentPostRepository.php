@@ -68,7 +68,7 @@ class EloquentPostRepository implements PostRepository {
 	}
 	
 	public function findByUserId($user_id, $published = true) {
-		$post = $this->post->where('user_id', $alias);
+		$post = $this->post->where('user_id', $user_id);
 		return self::count_check($post, $published, array());
 	}
 	
@@ -222,6 +222,17 @@ class EloquentPostRepository implements PostRepository {
 	
 	public function undelete($id) {
 		$this->post->where('id', $id)->withTrashed()->restore();
+	}
+
+	public function deleteAllByUserId ( $id ) {
+		$posts = $this->allByUserId( $id );
+		foreach ($posts as $post) {
+			$this->delete( $post->id );
+		}
+	}
+
+	public function restoreAllByUserId($id) {
+		$this->post->where( 'user_id', $id )->withTrashed()->restore();
 	}
 	
 }

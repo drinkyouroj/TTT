@@ -120,7 +120,7 @@ class MongoCommentRepository implements CommentRepository {
 	/**
 	 *	Fetch comments by a given author
 	 */
-	public function allByUserId ( $user_id, $paginate = 5, $page = 1, $rest = false ) {
+	public function findByUserId ( $user_id, $paginate = 5, $page = 1, $rest = false ) {
 		$query = $this->comment->where( 'author.user_id', intval($user_id) )
 							   ->orderBy( 'created_at', 'desc' )
 							   ->skip( ($page - 1) * $paginate )
@@ -132,7 +132,13 @@ class MongoCommentRepository implements CommentRepository {
 		} else {
 			return $query->get();
 		}
+	}
 
+	/**
+	 *	Find all comments by a given user_id
+	 */
+	public function findAllByUserId ( $user_id ) {
+		return $this->comment->where( 'author.user_id', intval( $user_id ) )->get();
 	}
 
 	/**

@@ -40,8 +40,11 @@
 						@foreach ( $flagged_comment_content as $content )
 							@if ( $content->comment )
 								<li data-flagged-comment-id="{{ $content->comment->id }}">
-									<p class="flagged-comment-body">{{ $content->comment->body }}</p>
-									<a class="flagged-comment-author" href="{{ URL::to('profile/'.$content->comment->author['username'] ) }}" target="_blank">{{ $content->comment->author['username'] }}</a>
+									<a class="flagged-comment" href="{{ URL::to('posts/'.$content->comment->post->alias.'#comment-'.$content->comment->id ) }}" target="_blank">
+										<span class="flagged-comment-body">{{ $content->comment->body }}</span>
+										<br>
+										<span class="flagged-comment-author">{{ $content->comment->author['username'] }}</span>
+									</a>
 								</li>
 							@endif
 						@endforeach

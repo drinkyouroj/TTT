@@ -6,15 +6,20 @@ use User,
 	Hash,
 	Auth,
 	Session,
-	SolariumHelper
+	SolariumHelper,
+	CommentRepository,
+	PostRepository
 	;
  
 class SheepRepository implements UserRepository {
 
 	public function __construct(
-			User $user
-		) {
+					User $user,
+					CommentRepository $comment,
+					PostRepository $post ) {
 		$this->user = $user;
+		$this->comment = $comment;
+		$this->post = $post;
 	}
 
 	public function instance() {
@@ -96,12 +101,31 @@ class SheepRepository implements UserRepository {
 		$user->save();
 	}
 
-	public function restore($id) {
-		return $this->user->onlyTrashed()->where('id', $id)->restore();
+	public function delete($id) {
+		$this->user->where('id', $id)->delete();
+		// Soft delete users posts
+		$this->post->deleteAllByUserId( $id );
+		// Unpublish comments by this user
+		$comments = $this->comment->findAllByUserId( $id );
+		foreach ($comments as $comment) {
+			$this->comment->unpublish( $comment->_id );
+		}
 	}
 
-	public function delete($id) {
-		$this->user->where('id', $id)->remove();
+	public function restore($id) {
+		$user =	$this->user->onlyTrashed()->where('id', $id)->first(); 
+		if ( $user instanceof User ) {
+			$user->restore();
+			// Restore all their posts
+			$this->post->restoreAllByUserId( $id );
+			// Restore all their comments
+			$comments = $this->comment->findAllByUserId( $id );
+			foreach ($comments as $comment) {
+				$this->comment->publish( $comment->_id );
+			}
+			return true;
+		}
+		return false;
 	}
 
 	public function login($data) {
@@ -183,6 +207,26 @@ class SheepRepository implements UserRepository {
 
 	public function register($data) {
 
+	}
+
+	public function ban($id) {
+		$user = $this->user->where('id', $id)->first();
+		if ( $user instanceof User ) {
+			$user->banned = 1;
+			$user->save();
+			return true;
+		}
+		return false;
+	}
+
+	public function unban($id) {
+		$user = $this->user->where('id', $id)->first();
+		if ( $user instanceof User ) {
+			$user->banned = 0;
+			$user->save();
+			return true;
+		}
+		return false;
 	}
 
 }

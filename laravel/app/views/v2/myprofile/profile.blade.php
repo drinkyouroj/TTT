@@ -194,6 +194,42 @@
 
 @stop
 
+
+<?php
+	if(Auth::check()) {
+		$user = Auth::user();
+		$is_mod = $user->hasRole('Moderator');
+		$is_admin = $user->hasRole('Admin');
+	} else {
+		$is_admin = false;
+		$is_mod = false;
+	}
+
+	$profile_user_is_mod = $profile_user->hasRole('Moderator');
+	$profile_user_is_admin = $profile_user->hasRole('Admin');
+	$profile_user_banned = $profile_user->banned;
+	$profile_user_is_deleted = $profile_user->deleted_at != null;
+?>
+
 @section('admin-mod-user-controls')
-	<button>Do Stuff</button>
+	
+	@if ( $profile_user_is_admin )
+		<p>This user is an admin</p>
+	@else
+		<p>Target User: {{$profile_user->username}}</p>
+
+		<button class="mod-ban-user btn btn-xs btn-warning {{ $profile_user_banned ? 'hidden' : '' }}">Ban</button>
+		<button class="mod-unban-user btn btn-xs btn-default {{ $profile_user_banned ? '' : 'hidden' }}">Un-Ban</button>
+		<br>
+		@if ( $is_admin )
+			<button class="admin-assign-moderator btn btn-xs btn-warning {{ $profile_user_is_mod ? 'hidden' : '' }}">Assign as Moderator</button>
+			<button class="admin-unassign-moderator btn btn-xs btn-default {{ $profile_user_is_mod ? '' : 'hidden' }}">Revoke Moderator Status</button>
+			<br>
+			<button class="admin-soft-delete btn btn-xs btn-warning {{ $profile_user_is_deleted ? 'hidden' : '' }}">Soft Delete</button>
+			<button class="admin-restore-soft-delete btn btn-xs btn-default {{ $profile_user_is_deleted ? '' : 'hidden' }}">Restore Soft Deleted User</button>
+			<br>
+			<button class="admin-user-reset btn btn-xs btn-warning disabled">User Reset</button>
+			<br>
+		@endif	
+	@endif
 @stop

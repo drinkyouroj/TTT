@@ -12,6 +12,8 @@ $(function() {
     	}
     });
 
+    //================================= POST RELATED FUNCTIONS ==========================
+
     // Soft delete post
     $('#offcanvas-admin-sidebar .mod-post-delete').click( function() {
         var post_id = getPostId();
@@ -59,7 +61,40 @@ $(function() {
                 }
             }
         });
-    });   
+    }); 
+
+    //================================= USER RELATED FUNCTIONS ==========================
+    
+    // Ban a user
+    $('#offcanvas-admin-sidebar .mod-ban-user').click( function () {
+        var target_user_id = window.user_id;
+        $.ajax({
+            url: window.site_url + 'mod/ban/user/' + target_user_id,
+            type: 'GET',
+            success: function ( data ) {
+                if ( data.success ) {
+                    $('#offcanvas-admin-sidebar .mod-ban-user').addClass('hidden');
+                    $('#offcanvas-admin-sidebar .mod-unban-user').removeClass('hidden');
+                }
+            }
+        });
+    });
+
+    // Un-Ban a user
+    $('#offcanvas-admin-sidebar .mod-unban-user').click( function () {
+        var target_user_id = window.user_id;
+        $.ajax({
+            url: window.site_url + 'mod/unban/user/' + target_user_id,
+            type: 'GET',
+            success: function ( data ) {
+                if ( data.success ) {
+                    $('#offcanvas-admin-sidebar .mod-ban-user').removeClass('hidden');
+                    $('#offcanvas-admin-sidebar .mod-unban-user').addClass('hidden');
+                }
+            }
+        });
+    });
+
 });
 
 function getPostId () {

@@ -14,8 +14,8 @@ class JSONController extends BaseController {
 						ActivityRepository $activity,
 						FeedRepository $feed,
 						PostFlaggedRepository $postFlagged,
-						FlaggedContentRepository $flaggedContent
-
+						FlaggedContentRepository $flaggedContent,
+						UserRepository $user
 						) {
 		$this->post = $post;
 		$this->not = $not;
@@ -29,6 +29,7 @@ class JSONController extends BaseController {
 		$this->feed = $feed;
 		$this->postFlagged = $postFlagged;
 		$this->flaggedContent = $flaggedContent;
+		$this->user = $user;
 	}
 
 	//Like or Unlike a Post
@@ -319,14 +320,9 @@ class JSONController extends BaseController {
 
 	public function getUserdelete($id) {
 		//Was the ID passed and is it the Authenticated user?
-		if($id && Auth::user()->id == $id) {
-			User::where('id', $id)
-				->delete();
-			
-			//archive all posts by user
-			$this->post->archive($id);
+		if ( $id && Auth::user()->id == $id ) {
 
-			//TODO: Add All comment Delete Here also.
+			$this->user->delete( $id );
 			
 			return Response::json(
 				array('result'=>'success'),

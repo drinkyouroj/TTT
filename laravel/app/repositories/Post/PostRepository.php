@@ -62,5 +62,7 @@ interface PostRepository {
 	//Delete
 	public function delete($id);
 	public function undelete($id);
-	
+
+	public function deleteAllByUserId($id);
+	public function restoreAllByUserId($id);
 }

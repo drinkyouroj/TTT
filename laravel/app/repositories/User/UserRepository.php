@@ -18,8 +18,18 @@ interface UserRepository {
 //Update
 	public function update($input);
 	
-//Delete
+	/**
+	 *	Soft Delete a user. This method has the cascading effect
+	 *	of soft deleting all posts authored by this user, as well
+	 *	as unpublishing all comments by this user.
+	 */
 	public function delete($id);
+
+	/**
+	 *	Restore a previously deleted user's account. This also
+	 *	restores the user's posts and re-publishes their comments.
+	 */
+	public function restore($id);
 
 //Credentials
 	public function login($data);
@@ -33,5 +43,9 @@ interface UserRepository {
 
 //Registers an unregistered user.
 	public function register($data);
+
+	public function ban($id);
+
+	public function unban($id);
 	
 }
