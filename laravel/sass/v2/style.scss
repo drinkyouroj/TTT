@@ -299,6 +299,11 @@ input, textarea, button:focus {outline: none !important;}
 		}
 	}
 }
+#offcanvas-admin-placeholder { //Temporary DELETE!!!
+@media (max-width:$break-xs) {
+		display:none;
+	}
+}
 
 #offcanvas-sidebar {
 	@include offcanvas-sidebar( left, $offcanvas_sidebar_width );
@@ -391,6 +396,9 @@ input, textarea, button:focus {outline: none !important;}
 	height: 100%;
 	background-color: $black;
 	z-index: 10000;
+	@media (max-width:$break-sm) {
+		display:none !important;
+	}
 
 	&.sidebar-open {
 		left: inherit;
