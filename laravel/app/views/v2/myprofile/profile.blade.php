@@ -49,7 +49,7 @@
 	<div class="profile-header-wrapper">
 		<div class="profile-header-container container">
 			<div class="row">
-				<div class="col-md-6 header-left">
+				<div class="col-md-6 col-xs-6 header-left">
 					<h2>
 						<a>
 							@if($profile_user->image)
@@ -62,7 +62,7 @@
 						</a>
 					</h2>
 				</div>
-				<div class="col-md-6 header-right">
+				<div class="col-md-6 col-xs-6 header-right">
 					<div class="row">
 						<div class="col-md-5">
 
@@ -81,7 +81,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-8 section-selectors">
+				<div class="col-md-8 col-xs-12 section-selectors">
 					<div class="border-box">
 						{{--Max and Anyone else, do not add any more classes to the below links--}}
 						<a href="#collection" id="collection" class="active">
@@ -101,7 +101,7 @@
 						@endif
 					</div>
 				</div>
-				<div class="col-md-4 follow-user">
+				<div class="col-md-4 col-xs-12 follow-user">
 					@if($myprofile)
 						<div class="settings">
 							<a class="icon-button" href="#settings" id="settings">
@@ -120,7 +120,7 @@
 						@endif
 					@endif
 				</div>
-				<div class="col-md-12 border">
+				<div class="col-md-12 col-xs-12 border">
 					<div class="border-box"></div>
 				</div>
 

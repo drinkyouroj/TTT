@@ -16,20 +16,31 @@ a:focus {
 				@include montserrat(bold);
 				font-size:50px;
 				vertical-align: middle;
-				span.avatar-image {
-					display:inline-block;
-					vertical-align: middle;
-					width: 40px;
-					height: 40px;
-					@include border-radius(20px);
-					background-position: center center;
-					background-size: cover;
-					background-repeat: no-repeat;
+				a {	
+					cursor:pointer;
+					span.avatar-image {
+						display:inline-block;
+						vertical-align: middle;
+						width: 40px;
+						height: 40px;
+						@include border-radius(20px);
+						background-position: center center;
+						background-size: cover;
+						background-repeat: no-repeat;
+					}
+				}
+				@media (max-width:$break-sm) {
+					font-size:24px;
+					margin-top:0px;
+					margin-bottom:0px;
 				}
 			}
 		}
 		.header-right {
 			padding-top: 25px;
+			@media (max-width:$break-sm) {
+				padding-top:5px;
+			}
 			a {
 				text-transform: uppercase;
 				@include montserrat();
@@ -38,14 +49,6 @@ a:focus {
 			}
 			a:hover {
 				text-decoration: none;
-			}
-			.settings {
-				text-align: right;
-				a#settings {
-					margin-top: 5px;
-					font-size: 10px;
-					background-image:url('../../../../images/global/settings.png');
-				}
 			}
 			.follow {
 				text-align: right;
@@ -56,11 +59,17 @@ a:focus {
 						@include montserrat(bold);
 						display:block;
 						font-size: 30px;
+						@media (max-width:$break-sm) {
+							font-size:21px;
+						}
 					}
 					span.text{
 						display:block;
 						font-size: 13px;
 						line-height:5px;
+						@media (max-width:$break-sm) {
+							font-size:10px;
+						}
 					}
 				}
 				a.followers {
@@ -81,6 +90,10 @@ a:focus {
 				text-decoration: none;
 				letter-spacing:1px;
 
+				&:hover {
+					color:$dark;
+				}
+
 				&.active {
 					color:$dark;
 				}
@@ -89,6 +102,21 @@ a:focus {
 		.follow-user {
 			.follow-button, .following-button {
 				float:right;
+			}
+		}
+		.settings {
+			text-align:right;
+			a#settings {
+				margin-top: 5px;
+				font-size: 10px;
+				background-image:url('../../../../images/global/settings.png');
+				@media (max-width:$break-xs) {
+					width:30px;
+					height:20px;
+					border:0px;
+					padding:0px;
+					font-size:0px;
+				}
 			}
 		}
 		.border {
@@ -119,21 +147,76 @@ a:focus {
 				#collection-content {
 					margin-left: auto;
   					margin-right: auto;
+  					@media (max-width:$break-sm) {
+						margin-left: 15px;
+  						margin-right: 15px;
+					}
   				
   					//Post
 					@include post_listing(0);
 
 					.post-container {
-						margin-right:0px;
+						@media (max-width:$break-lg) and (min-width:$break-lg-min) {
+							width:328px;
+						}
+						@media (min-width:$break-lg) {
+								margin-right:0px;
+						}
+						@media (max-width:$break-md) and (min-width:$break-md-min) {
+							width:345px;
+						}
+						@media (max-width:$break-sm) and (min-width:$break-sm-min) {
+							width:48%;
+						}
+						&:nth-child(even) {
+							@media (max-width:$break-sm) and (min-width:$break-sm-min) {
+								margin-right:2%;
+								margin-left:0px;
+							}
+						}
+						&:nth-child(odd) {
+							@media (max-width:$break-sm) and (min-width:$break-sm-min) {
+								margin-left:2%;
+								margin-right:0px;
+							}
+						}
+						@media (max-width:$break-xs) {
+							width:100%;
+							margin-left:0%;
+							margin-right:0%;
+						}
+						.post-image {
+							width:100% !important;
+
+							@media (max-width:$break-lg) and (min-width:$break-lg-min) {
+								height:206px;
+							}
+							@media (max-width:$break-md) and (min-width:$break-md-min) {
+								height:217px;
+							}
+							@media (max-width:$break-sm) and (min-width:$break-sm-min) {
+
+							}
+							@media (max-width:$break-xs) {
+
+							}
+						}
 					}
 
 					.feature-item {
 						margin-left:15px;
-						margin-right:12px;
+						margin-right:15px;
 						margin-bottom:30px;
+						@media (min-width:$break-lg) {
+							margin-right:10px;
+						}
+						@media (max-width:$break-sm) {
+							margin-left:0px;
+							margin-right:0px;
+						}
 						.text, .image {
 							height:350px; // featured post height
-							@media (max-width:$break-lg) and (min-width:$break-md) {
+							@media (max-width:$break-lg) and (min-width:$break-lg-min) {
 								height:310px;
 							}
 						}
@@ -285,6 +368,9 @@ a:focus {
 					text-decoration: none;
 					color:$gray;
 					cursor: pointer;
+					&:hover {
+						color:$dark;
+					}
 					&.active {
 						color:$dark;
 					}
@@ -374,10 +460,6 @@ a:focus {
 								}
 							}
 						}
-					}
-
-					&.settings {
-
 					}
 
 					&.following, &.followers {
