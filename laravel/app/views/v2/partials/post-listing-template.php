@@ -21,15 +21,23 @@
 			return options.inverse(this);
 		}
 	);
+	Handlebars.registerHelper('userImage', function(v1, v2, options) {
+			//v2 is site url
+			if(v1) {
+				return window.site_url + 'uploads/final_images/' + v1;
+			}else {
+				return window.site_url + 'images/profile/avatar-default.png';
+			}
+	});
 </script>
 <script type="text/x-handlebars-template" id="post-item-template">	
 	<div class="post-container fade in {{feed_type}} {{post_type}}" id="post-{{post.id}}">
 		
 		<div class="post-image-overlay">
 			<a href="{{ site_url }}profile/{{ post.user.username }}">
-				<img class="post-author-avatar" src="">
+				<img class="post-author-avatar" src="{{#userImage post.user.image }}{{/userImage}}">
 			</a>
-			story by <a href="{{ site_url }}profile/{{ post.user.username }}"> {{ post.user.username }} </a>
+			{{post.story_type}} by <a href="{{ site_url }}profile/{{ post.user.username }}"> {{ post.user.username }} </a>
 
 			{{#ifCond feed_type 'repost' }}
 				<div class="post-repost-container">

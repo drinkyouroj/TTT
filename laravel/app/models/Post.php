@@ -30,7 +30,7 @@ class Post extends Eloquent {
 	}
 	
 	public function user() {
-		return $this->belongsTo('User')->select('id','username');//maybe take out the id later.
+		return $this->belongsTo('User')->select('id','username','image');//maybe take out the id later.
 	}
 	
 	public function comments()

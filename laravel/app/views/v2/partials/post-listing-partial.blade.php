@@ -5,9 +5,10 @@
 	
 	<div class="post-image-overlay">
 		<a href="{{ URL::to('profile/'.$post->user->username ) }}">
-			<img class="post-author-avatar" src="">
+			<?php $user_image = $post->user->image ? 'uploads/final_images/'.$post->user->image : 'images/profile/avatar-default.png' ;?>
+			<img class="post-author-avatar" src="{{Config::get('app.url')}}/{{$user_image}}">
 		</a>
-		story by <a href="{{ URL::to('profile/'.$post->user->username ) }}"> {{ $post->user->username }} </a>
+		{{$post->story_type}} by <a href="{{ URL::to('profile/'.$post->user->username ) }}"> {{ $post->user->username }} </a>
 
 		@if ( isset( $feed_type ) && $feed_type == 'repost' )
 			<div class="post-repost-container">
