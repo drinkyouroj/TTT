@@ -69,6 +69,7 @@ class StagingController extends BaseController {
 			$data['username'] = $username;
 			$data['email'] = $email;
 			$data['password'] = $this->generateRandomString(10);
+			$data['reserved'] = 1;
 			$data['password_confirmation'] = $data['password'];
 			$results = $this->user->create( $data, true );
 			if ( $results['user'] ) {

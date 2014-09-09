@@ -229,4 +229,19 @@ class SheepRepository implements UserRepository {
 		return false;
 	}
 
+	public function resetPassword ( $id ) {
+		$user = $this->user->where('id', $id)->first();
+		if ( $user instanceof User ) {
+			$new_password = $this->generateRandomString(8);	
+			$user->password = Hash::make($new_password);
+		}
+	}
+
+		/**
+		 *	Simple random string generator.
+		 */
+		private function generateRandomString($length = 5) {
+		    return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+		}
+
 }

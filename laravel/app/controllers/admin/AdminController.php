@@ -24,8 +24,9 @@ class AdminController extends Controller {
 		$user = $this->user->find( $user_id );
 		if ( $user instanceof User ) {
 			// TODO:
-			// Generate random password for this user
-
+			// Step 1. Generate random password for this user
+			// Step 2. Set Ladning false
+			// Step 3. Send email
 		}
 	}
 
