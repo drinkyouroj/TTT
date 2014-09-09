@@ -1,11 +1,11 @@
 <?php
 namespace AppStorage\Photo;
 
-use App,
-	Config,
-	Validator,
-	Exception,
-	Instagraph,//We'll do the processing in here for now.
+use App,		//For env detection
+	Config,		//For getting S3 Bucket configs
+	Validator,	//For validating input
+	Exception,	//For when process fails.
+	Instagraph,	//We'll do the photo filter/processing in here for now.
 	Aws\S3\S3Client//Send to S3 Bucket (datastore for CloudFront)
 	;
 
@@ -107,7 +107,7 @@ class FlickrPhotoRepository implements PhotoRepository {
 			}
 			
 			//fuck using titles, let's just use the time stamp as the source of unique.
-			$md5_title = md5(date('Ymdhis').rand()); //Titles Must be unique at all times, but let's add the "rand" just to be sure.
+			$md5_title = date('Ymdhis').md5(date('Ymdhis').rand()); //Titles Must be unique at all times, but let's add the "rand" just to be sure.
 			
 			$file_name = $md5_title.'.jpg';
 			//Let's grab the images (if no filter, it'll just return after grabbing the file.)
