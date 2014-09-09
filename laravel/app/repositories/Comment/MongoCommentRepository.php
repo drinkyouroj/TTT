@@ -127,7 +127,7 @@ class MongoCommentRepository implements CommentRepository {
 	 */
 	public function findByPostId ( $post_id, $paginate = 10, $page = 1 ) {
 		return MongoComment::where( 'post_id', intval( $post_id ) )
-						   ->orderBy( 'full_slug' )
+						   ->orderBy( 'full_slug', 'desc' )
 						   ->skip( ($page - 1) * $paginate )
 						   ->take( $paginate )
 						   ->get();
@@ -169,14 +169,14 @@ class MongoCommentRepository implements CommentRepository {
 		if ( $target_comment instanceof MongoComment ) {
 			// Step 2. Then query the number of comments up until that comment
 			$number_of_comments = MongoComment::where( 'post_id', $post_id )
-											  ->where( 'full_slug', '<=', $target_comment->full_slug )
+											  ->where( 'full_slug', '>=', $target_comment->full_slug )
 											  ->count();
 			// Step 3. calculate the correct pagination/page so that we return proper
 			// pagination to the front end.
 			$pages_to_pull = ceil( $number_of_comments / $paginate );
 			// Step 4. Make the final query
 			$comments = MongoComment::where( 'post_id', intval( $post_id ) )
-						   ->orderBy( 'full_slug' )
+						   ->orderBy( 'full_slug', 'desc' )
 						   ->take( $paginate * $pages_to_pull )
 						   ->get();
 			return array(
