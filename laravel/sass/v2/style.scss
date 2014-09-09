@@ -80,6 +80,23 @@ input, textarea, button:focus {outline: none !important;}
 
 			.col-left {
 				margin-top: 3px;
+				button.read-button {
+					@media (max-width:$break-sm) {
+						padding:0px;
+						height:40px;
+						width:40px;
+					}
+					span {
+						@media (max-width:$break-sm) {
+							visibility:hidden;
+						}
+					}
+				}
+				.post-btn {
+					@media (max-width:$break-sm) {
+						display:none;
+					}
+				}
 			}
 
 			.col-middle {
@@ -88,6 +105,10 @@ input, textarea, button:focus {outline: none !important;}
 					text-align: center;
 					font-size: 10px;
 					font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+					@media (max-width:$break-sm) {
+						margin-top: 10px;
+						font-size: 7px;
+					}
 					a {
 						color:$dark;
 						span {
@@ -95,6 +116,12 @@ input, textarea, button:focus {outline: none !important;}
 							line-height: 19px;
 							@include fjalla;
 							letter-spacing:2px;
+
+							@media (max-width:$break-sm) {
+								font-size: 14px;
+								line-height: 15px;
+								letter-spacing:1px;
+							}
 						}
 					}
 				}
@@ -104,6 +131,9 @@ input, textarea, button:focus {outline: none !important;}
 				margin-top: 3px;
 				&>*, &>form>* {
 					float: right;
+				}
+				@media (max-width:$break-xs) {
+					padding-left:0px !important;
 				}
 				.action {
 					height: 35px;
@@ -336,7 +366,19 @@ input, textarea, button:focus {outline: none !important;}
 
 					}
 				}
-
+				&.post-btn-mobile {
+					a {
+						background:$blue;
+						color:$white;
+					}
+				}
+				&.signup-mobile, &.login-mobile {
+					a {
+						color:$blue;
+						font-size:11px;
+						pointer:cursor;
+					}
+				}
 			}
 		}
 
@@ -516,6 +558,29 @@ input, textarea, button:focus {outline: none !important;}
 	border: 1px solid $blue;
 	cursor: pointer;
 	background-image:url('../../../images/global/follow.png');
+	background-repeat: no-repeat;
+	background-position:left center;
+	background-size:40px 40px;
+	&:hover {
+		// background-color: $gray;
+		color: white;
+		text-decoration: none;	
+	}
+}
+
+.following-button {
+	display:inline-block;
+	@include montserrat(normal);
+	text-transform:uppercase;
+	color: white;
+	font-size: 12px;
+	letter-spacing:1px;
+	background: $dark;
+	padding: 10px 15px 10px 50px;
+	text-decoration: none;
+	border: 1px solid $dark;
+	cursor: pointer;
+	background-image:url('../../../images/global/following.png');
 	background-repeat: no-repeat;
 	background-position:left center;
 	background-size:40px 40px;

@@ -2,13 +2,16 @@
 
 .category-header {
 	position: relative;
-	margin-top: 30px;
-	padding: 10px 10px 0px 10px;
-	text-align: center;
 	width:100%;
 	max-width:1200px;
+	margin-top: 30px;
 	margin-left:auto;
 	margin-right:auto;
+	padding: 10px 10px 0px 10px;
+	text-align: center;
+	@media (max-width:$break-sm) {
+		margin-top: 0px;
+	}
 	img.corner-icon {
 		position: absolute;
 		display:none;//decide on whether to delete or keep this
@@ -21,6 +24,9 @@
 		@include fjalla();
 		font-size:50px;
 		letter-spacing:2px;
+		@media (max-width:$break-sm) {
+			font-size:21px;
+		}
 	}
 }
 
@@ -28,6 +34,13 @@
 	@include feed_container_widths;
 	@include catfilter;
 	margin-bottom:20px;
+	.category-filter-container {
+		@media (max-width:$break-sm) {
+			width:48%;
+			float:left;
+			margin:0 .5% 20px .5%;
+		}
+	}
 }
 
 .feed-container {

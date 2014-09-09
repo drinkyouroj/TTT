@@ -15,10 +15,14 @@ $black: #000;
 $white: #fff;
 
 //Media Queries
-$break-lg: 1200px;
-$break-md: 992px;
-$break-sm: 768px;
-$break-xs: 480px;
+$break-lg: 1199px;
+$break-md: 991px;
+$break-sm: 767px;
+$break-xs: 479px;
+//'min-width:' values
+$break-lg-min: 992px;
+$break-md-min: 768px;
+$break-sm-min: 480px;
 
 
 
