@@ -1,5 +1,29 @@
 //Events in the Profile Page
 $(function() {
+
+//Non user specific code
+	var user_action = new UserAction;
+	$('div.follow a.follow').click(function() {
+		user_action.user_id = window.user_id;
+		user_action.action = 'follow';
+
+		if( $(this).hasClass('follow-button') ) {
+			current_state = false;//currently 
+		} else {
+			current_state = true;//currently following
+		}
+		that = $(this);
+		user_action.send(function(data){
+			if(data.result == 'deleted') {
+				that.removeClass('following-button').addClass('follow-button');
+				that.html('Follow');
+			} else {
+				that.removeClass('follow-button').addClass('following-button');
+				that.html('Following');
+			}
+		});
+	});
+
 //Initialize Profile class
 	var profile = new ProfileActions;
 
@@ -42,7 +66,11 @@ $(function() {
 	// No Content Template
 	var no_content_template = $('#no-content-template').html();
 	profile.no_content_template = Handlebars.compile(no_content_template);
-	
+
+//User Title renders Collection
+	$('.header-left h2 a').click(function() {
+		$('.section-selectors a#collection').click();
+	});
 
 //View renders based on the id selectors.
 	$('.section-selectors a').click(function(event) {
@@ -59,7 +87,6 @@ $(function() {
 	//Collection Renders
 		$('body').on('click','.collection-controls a', function(event) {
 			event.preventDefault();
-
 			$('.collection-controls a').removeAttr('class');
 			$(this).prop('class','active');
 			profile.type = $(this).data('type');
@@ -81,7 +108,7 @@ $(function() {
 
 
 //View renders for settings/follow
-	$('.header-right a').click(function(event) {
+	$('.header-right a, a#settings').click(function(event) {
 		//event.preventDefault();
 		$('.section-selectors a').removeAttr('class');//gets rid of the class.
 		profile.view = $(this).prop('id');
@@ -95,7 +122,6 @@ $(function() {
 
 	//image upload code.
 	$('body').on('change', '#uploadAvatar input.image', function() {
-		console.log('avatar change');
 		profile.avatarUpload();
 	});
 
@@ -117,16 +143,19 @@ $(function() {
 		}
 	});
 
+//Collection Post Actions.
 //We should probably make these into better action systems.
-//Set Featured events
+	//Set Featured events
 	$('body').on('click', '.set-featured',function() {
 		profile.setFeatured( $(this).data('id') );
 	});
 
+	//Delete Post
 	$('body').on('click', '.post-delete', function() {
 		profile.setPostDelete( $(this).data('id') );
 	});
 
+	//Remove Repost.
 	$('body').on('click', '.remove-repost',function() {
 		profile.setRepost( $(this).data('id') );
 	});
@@ -295,6 +324,7 @@ function ProfileActions() {
 		var no_content_template = this.no_content_template;
 		var target = this.target;
 		var editCheck = this.editCheck;
+
 		this.urlConstructor();
 		this.getData(this.url, function(data) {
 
@@ -303,6 +333,7 @@ function ProfileActions() {
 			} else {
 				$.each(data.collection, function(idx, val) {
 					var editable = editCheck(val.post.published_at);
+					console.log(val.post);
 					view_data = {
 						site_url: window.site_url,
 						post: val.post,
@@ -399,9 +430,12 @@ function ProfileActions() {
 				$('#default-content',target).append( no_content_template( {section: 'feed'} ) );
 			} else {
 				$.each(data.feed, function(idx, val) {
+					console.log(val);
 					view_data = {
 						site_url: window.site_url,
-						post: val.post
+						post: val.post,
+						feed_type: val.feed_type,
+						users: val.users
 					};
 					$('#default-content',target).append(post_item_template(view_data));
 				});
@@ -506,8 +540,7 @@ function ProfileActions() {
 		} else {
 			user_image = 'default.jpg';
 		}
-
-
+		
 		view_data = {
 			site_url: this.site_url,
 			user_image: user_image

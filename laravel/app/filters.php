@@ -166,13 +166,16 @@ View::composer('*', function($view) {
 		foreach($compiled as $k => $nots) {
 			$notification_ids[$k] = $nots->_id;
 		}
+		
+		$user_image = $user->image ? 'uploads/final_images/'.$user->image : 'images/profile/avatar-default.png';
 
 		$view->with('categories',$categories)
 			 ->with('filters', $filters)
 			 ->with('notifications', $compiled)
 			 ->with('notification_count', $notification_count)
 			 ->with('saves', $saves)
-			 ->with('notifications_ids', $notification_ids);
+			 ->with('notifications_ids', $notification_ids)
+			 ->with('user_image', $user_image);
 			 
 	} else {
 		//Guests

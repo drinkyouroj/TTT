@@ -33,30 +33,36 @@
 	@include( 'v2/partials/photo-input' )
 
 	@if($myprofile)
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/form/jquery.form.js"></script>		
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/form/jquery.form.js"></script>
 	@endif
+	{{--This is for the follow action--}}
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_actions.js"></script>
+	
 	
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment/moment.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment-timezone/moment-timezone-with-data.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/photo/photo.js"></script>	
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/myprofile/profile.js"></script>	
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/myprofile/profile.js"></script>
 @stop
 
 @section('content')
 	<div class="profile-header-wrapper">
 		<div class="profile-header-container container">
 			<div class="row">
-				<div class="col-md-6 header-left">
+				<div class="col-md-6 col-xs-6 header-left">
 					<h2>
-						@if($profile_user->image)
-						<span class="avatar-image" style="background-image:url('{{Config::get('app.url')}}/uploads/final_images/{{$profile_user->image}}');"></span>
-						@else
-						<span class="avatar-image" style="background-image:url('{{Config::get('app.url')}}/images/default.jpg');"></span>
-						@endif
-						{{$profile_user->username}}
+						<a>
+							@if($profile_user->image)
+								<span class="avatar-image" style="background-image:url('{{Config::get('app.url')}}/uploads/final_images/{{$profile_user->image}}');"></span>
+							@else
+								<span class="avatar-image" style="background-image:url('{{Config::get('app.url')}}/images/profile/avatar-default.png');"></span>
+							@endif
+							
+							{{$profile_user->username}}
+						</a>
 					</h2>
 				</div>
-				<div class="col-md-6 header-right">
+				<div class="col-md-6 col-xs-6 header-right">
 					<div class="row">
 						<div class="col-md-5">
 
@@ -74,17 +80,26 @@
 							</a>
 							
 							@if($myprofile)
-							<div class="settings">
-								<a class="icon-button" href="#settings" id="settings">
-									Settings
+								<div class="settings">
+									<a class="icon-button" href="#settings" id="settings">
+										Settings
+									</a>
+								</div>
+							@else
+								@if(!$is_following)
+								<a class="follow follow-button">
+									Follow
 								</a>
-							</div>
+								@else
+								<a class="follow following-button">
+									Following
+								</a>
+								@endif
 							@endif
-								
 						</div>
 					</div>
 				</div>
-				<div class="col-md-8 section-selectors">
+				<div class="col-md-8 col-xs-12 section-selectors">
 					<div class="border-box">
 						{{--Max and Anyone else, do not add any more classes to the below links--}}
 						<a href="#collection" id="collection" class="active">
@@ -104,21 +119,10 @@
 						@endif
 					</div>
 				</div>
-				@if(!$myprofile)
-					<div class="col-md-4 follow-user">
-						@if(!$is_following)
-						<a class="follow follow-button">
-							Follow
-						</a>
-						@else
-						<a class="unfollow following-button">
-							Following
-						</a>
-						@endif
-					</div>
-				@endif
-
-				<div class="col-md-12 border">
+				<div class="col-md-4 col-xs-12 follow-user">
+				
+				</div>
+				<div class="col-md-12 col-xs-12 border">
 					<div class="border-box"></div>
 				</div>
 

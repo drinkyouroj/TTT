@@ -16,7 +16,9 @@
 					@if( $is_guest )
 						<a class="post-btn btn-flat-blue" data-toggle="modal" data-target="#guestSignup">POST</a>
 					@else
-						<a class="post-btn btn-flat-blue" href="{{Config::get('app.url')}}/myprofile/newpost">POST</a>
+						@if(Route::current()->uri() != 'myprofile/newpost')
+							<a class="post-btn btn-flat-blue" href="{{Config::get('app.url')}}/myprofile/newpost">POST</a>
+						@endif
 					@endif
 
 				</div>
@@ -32,11 +34,13 @@
 
 				<div class="col-sm-4 col-xs-3 col-right">
 						@if( $is_guest )
-							<a class="btn-outline-blue signup hidden-xs" data-toggle="modal" data-target="#guestSignup">Signup</a>
+							@if(Request::segment(1) != 'user')
+								<a class="btn-outline-blue signup hidden-xs" data-toggle="modal" data-target="#guestSignup">Signup</a>
+							@endif
 							<a class="login-btn login hidden-xs" href="{{ URL::to( 'user/login' ) }}">LOG IN</a>
 						@else
 						<div class="action">
-							<img src="" class="navbar-dropdown-toggle avatar">
+							<img class="navbar-dropdown-toggle avatar" src="{{Config::get('app.url')}}/{{$user_image}}">
 							
 							@if ( count($notifications) )
 								<div class="notification-label">
@@ -59,8 +63,8 @@
 						<div class="navbar-dropdown">
 							<div class="dropdown-wrapper">
 								<div class="user">
-									<a href="{{Config::get('app.url')}}/myprofile">
-										<img class="avatar" src="">
+									<a href="{{Config::get('app.url')}}/myprofile">										
+										<img class="avatar" src="{{Config::get('app.url')}}/{{$user_image}}">
 										{{ Session::get('username') }}
 									</a>
 								</div>
