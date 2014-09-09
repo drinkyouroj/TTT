@@ -100,13 +100,15 @@ class MoloquentNotificationRepository implements NotificationRepository {
 							->get();
 	}
 
-	public function getByUserId ( $user_id, $page = 1, $paginate = 10 ) {
-		return $this->not->where( 'user_id', $user_id )
-						 ->where( 'noticed', 0 )
+	public function getByUserId ( $user_id, $page = 1, $paginate = 10, $only_unread = false ) {
+		$query = $this->not->where( 'user_id', $user_id )
 						 ->orderBy('updated_at', 'DESC')
 						 ->skip( ($page - 1) * $paginate )
-						 ->take( $paginate )
-						 ->get();
+						 ->take( $paginate );
+		if ( $only_unread ) {
+			$query = $query->where( 'noticed', 0 );
+		}
+		return $query->get();
 	}
 
 	public function unreadNotificationCount( $user_id ) {
