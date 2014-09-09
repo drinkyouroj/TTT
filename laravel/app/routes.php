@@ -54,7 +54,9 @@ Route::group(array('prefix'=>'rest'), function() {
 	});
 	
 	//Grab Comments
+	Route::get( 'post/{post_id}/comments/deeplink/{comment_id}', 'CommentController@getDeepLinkedComments');
 	Route::get( 'post/{post_id}/comments/{paginate}/{page}', 'CommentController@getRestComments');
+
 
 	//Category autload
 	Route::get( 'categories/{alais}/{sort}/{page}', 'CategoryController@getRestCategory');

@@ -37,11 +37,20 @@ $(function() {
 	var post_id = $('.post-action-bar').data('post-id');
 	var Comments = new CommentPagination( post_id );
 
+	// Check if there is a comment hash in the url (ie: deep link to a comment)
+	var hash = window.location.hash;
+	if ( hash ) {
+		var comment_id = hash.split('-')[1];
+		window.target_comment = comment_id;
+		Comments.commentDeepLink( comment_id, function ( data ) {
+			renderComments( data );
+		});
+	}
+
 	// Check if the initial height of the page is less than window (ie: there is no scroll, so the on scroll will never be called)
 	$(document).ready(function() {
-		console.log('ready');
+		
 		if ( $("body").height() <= $(window).height() ) {
-	    	console.log('load in the comments');
 	    	Comments.getNextPage( function ( data ) {
 	    		renderComments( data );
 	    	});  
@@ -93,12 +102,25 @@ $(function() {
 	function renderComments ( data ) {
 		if ( data && data.comments ) {
 			var comments = data.comments;
-			
 			comments.forEach( function ( comment ) {
 				comment.margin = comment.depth * 5 + '%';
-				var rendered_comment = comment_template( { comment: comment, is_mod: data.is_mod, active_user_id: data.active_user_id } );
+				var is_target = comment._id == window.target_comment;
+				var rendered_comment = comment_template( 
+						{ comment: comment, 
+						   is_mod: data.is_mod, 
+				   active_user_id: data.active_user_id,
+				   target_comment: is_target} );
+
 				$('.comments-listing').append( rendered_comment );
-				console.log('rendered comment ' + comment._id);
+
+				// Do we need to animate to the linked comment??
+				if ( is_target ) {
+					// Why yes we do.
+					$('html, body').animate({
+				        scrollTop: $(".comments .target-comment").offset().top - $(window).height() / 2
+				    }, 750);
+				}
+
 			});
 		}
 	}

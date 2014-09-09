@@ -142,6 +142,39 @@ class MongoCommentRepository implements CommentRepository {
 	}
 
 	/**
+	 *	Find all comments related to given post up until $comment_id is found.
+	 *	This is used for deep linking to comments so that we only load the correct
+	 *	number of comments
+	 */
+	public function findByCommentAndPostId ( $comment_id, $post_id, $paginate = 10 ) {
+		$post_id = intval( $post_id );
+		// Step 1. First query for the comment by id.
+		$target_comment = MongoComment::find( $comment_id );
+		if ( $target_comment instanceof MongoComment ) {
+			// Step 2. Then query the number of comments up until that comment
+			$number_of_comments = MongoComment::where( 'post_id', $post_id )
+											  ->where( 'full_slug', '<=', $target_comment->full_slug )
+											  ->count();
+			// Step 3. calculate the correct pagination/page so that we return proper
+			// pagination to the front end.
+			$pages_to_pull = ceil( $number_of_comments / $paginate );
+			// Step 4. Make the final query
+			$comments = MongoComment::where( 'post_id', intval( $post_id ) )
+						   ->orderBy( 'full_slug' )
+						   ->take( $paginate * $pages_to_pull )
+						   ->get();
+			return array(
+				'comments' => $comments->toArray(),
+				'page' => $pages_to_pull + 1,
+				'paginate' => $paginate
+				);
+		} else {
+			// Oops! no comment was found by given id.
+			return false;
+		}
+	}
+
+	/**
 	 *	Check whether a given user was the author of a given comment.
 	 *	@return boolean: owns or not
 	 */

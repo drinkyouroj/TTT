@@ -17,7 +17,7 @@
 	{{#ifCond comment.depth 0}}
 	<div class="thread-parent-divider"></div>
 	{{/ifCond}}
-	<div id="comment-{{ comment._id }}" class="comment {{#ifCond comment.published 1}}published{{else}}deleted{{/ifCond}} {{#ifCond comment.depth 0}}thread-parent{{/ifCond}}" style="margin-left: {{ comment.margin }}">
+	<div id="comment-{{ comment._id }}" class="comment {{#ifCond comment.published 1}}published{{else}}deleted{{/ifCond}} {{#ifCond comment.depth 0}}thread-parent{{/ifCond}} {{#ifCond target_comment true}}target-comment{{/ifCond}}" style="margin-left: {{ comment.margin }}">
 		<div class="left-col">
 			<span class="like-comment-count">{{comment.likes.length}}</span>
 			<span class="like-comment glyphicon glyphicon-thumbs-up {{#contains comment.likes active_user_id}}active{{/contains}}"></span>
