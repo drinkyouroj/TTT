@@ -18,6 +18,9 @@ interface NotificationRepository {
 	public function all();
 	public function allDesc($user_id);
 	public function limited($user_id);
+	public function getByUserId ( $user_id, $page, $paginate );
+
+	public function unreadNotificationCount( $user_id );
 	
 	//Check
 	public function check();

@@ -73,6 +73,15 @@ class JSONController extends BaseController {
 		);
 	}
 
+	// Pull notifications ( rest/notifications/{page}/{paginate} )
+	public function getNotifications () {
+		$user = Auth::user();
+		$page = Request::segment(3);
+		$paginate = Request::segment(4);
+		$notifications = $this->not->getByUserId( $user->id, $page, $paginate );
+		return Response::json( array( 'notifications' => $notifications->toArray(), 'page' => $page, 'paginate' => $paginate), 200);
+	}
+
 	//Mark as Read
 	public function postNotification() {
 		$notification_ids = Input::get('notification_ids');//Its a GET situation on AJAX

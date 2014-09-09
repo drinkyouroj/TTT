@@ -36,9 +36,9 @@
 						<div class="action">
 							<img src="" class="navbar-dropdown-toggle avatar">
 							
-							@if (count($notifications))
+							@if ( count($notifications) )
 								<div class="notification-label">
-									{{ count($notifications) }}
+									{{ $notification_count > 10 ? '10+' : $notification_count }}
 								</div>
 							@endif
 						</div>
@@ -64,6 +64,8 @@
 								</div>
 
 								<div class="notifications-title">NOTIFICATIONS</div>
+								
+								{{-- This is where the notifications are loaded in! --}}
 								
 								<ul class="notifications list-unstyled">
 									@if(count($notifications))

@@ -95,11 +95,27 @@ class MoloquentNotificationRepository implements NotificationRepository {
 		return $this->not->where('user_id',$user_id)
 							->where('notification_type', '!=', 'message')//message notification is different.
 							->where('noticed',0)
-							->take(7)//taking 7 for now.  We'll change this up when we do a full rest interfaced situation.
+							->take(10)//taking 10 for now.
 							->orderBy('updated_at', 'DESC')
 							->get();
 	}
-	
+
+	public function getByUserId ( $user_id, $page = 1, $paginate = 10 ) {
+		return $this->not->where( 'user_id', $user_id )
+						 ->where( 'noticed', 0 )
+						 ->orderBy('updated_at', 'DESC')
+						 ->skip( ($page - 1) * $paginate )
+						 ->take( $paginate )
+						 ->get();
+	}
+
+	public function unreadNotificationCount( $user_id ) {
+		return $this->not->where( 'user_id', $user_id )
+						 ->where( 'noticed', 0 )
+						 ->count();
+	}
+
+
 	//Check
 	public function check() {
 		

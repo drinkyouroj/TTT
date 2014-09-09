@@ -157,8 +157,10 @@ View::composer('*', function($view) {
 
 
 		//The new Mongo notifications
-		$compiled = NotificationLogic::top(Auth::user()->id);
-		
+		$compiled = NotificationLogic::top( $user->id );
+		// Count of how many unread notifications the user has
+		$notification_count = NotificationLogic::getUnreadCount( $user->id );
+
 		//Unfortunately, we'll have to do this for now.
 		$notification_ids = array();
 		foreach($compiled as $k => $nots) {
@@ -168,6 +170,7 @@ View::composer('*', function($view) {
 		$view->with('categories',$categories)
 			 ->with('filters', $filters)
 			 ->with('notifications', $compiled)
+			 ->with('notification_count', $notification_count)
 			 ->with('saves', $saves)
 			 ->with('notifications_ids', $notification_ids);
 			 

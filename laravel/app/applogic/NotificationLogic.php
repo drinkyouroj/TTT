@@ -17,9 +17,13 @@ class NotificationLogic {
 		$this->not = App::make('AppStorage\Notification\NotificationRepository');
 	}
 	
-	//Temporary notification getter for the top bar
+	// Fetch the last few notifications to pre-populate the view
 	public function top ( $user_id ) {
-		return $this->not->limited($user_id);
+		return $this->not->getByUserId( $user_id );
+	}
+
+	public function getUnreadCount ( $user_id ) {
+		return $this->not->unreadNotificationCount( $user_id );
 	}
 	
 	/**
@@ -166,13 +170,13 @@ class NotificationLogic {
 		if ( $comment->parent_comment != null ) {
 			$orig_comment = $this->comment->findById( $comment->parent_comment );
 			//Gotta make sure to not notify you replying to you.
-			if ( $orig_comment->author->user_id != $user_id ) {
+			if ( $orig_comment->author['user_id'] != $user_id ) {
 				
 				$not_params = array(
 					'post_id' => $post->id,
 					'post_title' => $post->title,
 					'post_alias' => $post->alias,
-					'user_id' => $orig_comment->author->user_id,
+					'user_id' => $orig_comment->author['user_id'],
 					'noticed' => 0,
 					'comment_id' => $comment->id,
 					'notification_type' => 'reply'
