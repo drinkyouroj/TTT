@@ -118,7 +118,9 @@ $(function() {
 					// Why yes we do.
 					$('html, body').animate({
 				        scrollTop: $(".comments .target-comment").offset().top - $(window).height() / 2
-				    }, 750);
+				    }, 750, function() {
+				    	$('.comments .target-comment').removeClass('target-comment');
+				    });
 				}
 
 			});
