@@ -212,11 +212,11 @@
 ?>
 
 @section('admin-mod-user-controls')
-	
+	<div class="mod-user-controls">
 	@if ( $profile_user_is_admin )
 		<p>This user is an admin</p>
 	@else
-		<p>Target User: {{$profile_user->username}}</p>
+		<p class="user-name">{{$profile_user->username}}</p>
 
 		<button class="mod-ban-user btn btn-xs btn-warning {{ $profile_user_banned ? 'hidden' : '' }}">Ban</button>
 		<button class="mod-unban-user btn btn-xs btn-default {{ $profile_user_banned ? '' : 'hidden' }}">Un-Ban</button>
@@ -232,4 +232,5 @@
 			<br>
 		@endif	
 	@endif
+	</div>
 @stop
