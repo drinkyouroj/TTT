@@ -1,6 +1,6 @@
 
 <script type="text/javascript">
-	Handlebars.registerHelper('ifCond', function(v1, v2, options) {
+	Handlebars.registerHelper('ifEqual', function(v1, v2, options) {
 		if(v1 === v2) {
 			return options.fn(this);
 		}
@@ -11,13 +11,23 @@
 			return options.fn(this);
 		}
 	});
+	Handlebars.registerHelper('isEditable', function(created_date, options) {
+		var created = new Date(created_date);
+		var now = new Date();
+		if ( now - created < 259200000 ) {
+			return options.fn(this);
+		}
+	});
+	Handlebars.registerHelper('formatDate', function(date) {
+		return moment(date).fromNow();
+	});
 </script>
 
 <script type="text/x-handlebars-template" id="comment-template">
-	{{#ifCond comment.depth 0}}
+	{{#ifEqual comment.depth 0}}
 	<div class="thread-parent-divider"></div>
-	{{/ifCond}}
-	<div id="comment-{{ comment._id }}" class="comment {{#ifCond comment.published 1}}published{{else}}deleted{{/ifCond}} {{#ifCond comment.depth 0}}thread-parent{{/ifCond}} {{#ifCond target_comment true}}target-comment{{/ifCond}}" style="margin-left: {{ comment.margin }}">
+	{{/ifEqual}}
+	<div id="comment-{{ comment._id }}" class="comment {{#ifEqual comment.published 1}}published{{else}}deleted{{/ifEqual}} {{#ifEqual comment.depth 0}}thread-parent{{/ifEqual}} {{#ifEqual target_comment true}}target-comment{{/ifEqual}}" style="margin-left: {{ comment.margin }}">
 		<div class="left-col">
 			<span class="like-comment-count">{{comment.likes.length}}</span>
 			<span class="like-comment glyphicon glyphicon-thumbs-up {{#contains comment.likes active_user_id}}active{{/contains}}"></span>
@@ -27,34 +37,35 @@
 
 		<div class="right-col">
 			<div class="user">
-				{{#ifCond comment.published 1 }}
+				{{#ifEqual comment.published 1 }}
 					<a href="{{ profile_url }}{{ comment.author.username }}"> {{ comment.author.username }} </a>
+					<span class="published-date"> - {{formatDate comment.created_at}}</span>
+					{{#if comment.edited}}
+						<span class="edited-date">(edited {{formatDate comment.updated_at}})</span>
+					{{/if}}
 				{{else}}
 					<span class="deleted">Nobody</span>
-				{{/ifCond}}
+				{{/ifEqual}}
 			</div>
 
-			<p class="comment-body">
-				{{#ifCond comment.published 0 }}
-					<span class="deleted">(This comment has been deleted)</span>
-				{{else}}
-					 {{ comment.body }} 	
-				{{/ifCond}}
-			</p>
+			<p class="comment-body">{{#ifEqual comment.published 0 }}<span class="deleted">(This comment has been deleted)</span>{{else}}{{ comment.body }}{{/ifEqual}}</p>
 			<div class="reply-links">
-				<a class="reply {{#ifCond active_user_id false}}auth{{/ifCond}}" data-replyid="{{ comment._id }}" data-postid="{{ comment.post_id }}">Reply</a>
+				<a class="reply {{#ifEqual active_user_id false}}auth{{/ifEqual}}" data-replyid="{{ comment._id }}" data-postid="{{ comment.post_id }}">Reply</a>
 				
-				{{#ifCond comment.author.user_id active_user_id }}
-					{{#ifCond comment.published 1}}			
+				{{#ifEqual comment.author.user_id active_user_id }}
+					{{#ifEqual comment.published 1}}
+						{{#isEditable comment.created_at}}
+							<a class="edit" data-editid="{{ comment._id }}" title="Edit Comment" >Edit</a>
+						{{/isEditable}}
 						<a class="delete" data-delid="{{ comment._id }}" title="Delete Comment" >Delete</a>
-					{{/ifCond}}
-				{{/ifCond}}
+					{{/ifEqual}}
+				{{/ifEqual}}
 
-				{{#ifCond is_mod true }}
-					{{#ifCond comment.published 1}}
+				{{#ifEqual is_mod true }}
+					{{#ifEqual comment.published 1}}
 						<a class="delete mod-del-comment" data-delid="{{ comment._id }}" title="Delete Comment" >Moderator Delete </a>
-					{{/ifCond}}
-				{{/ifCond}}
+					{{/ifEqual}}
+				{{/ifEqual}}
 
 				<div class="reply-box"></div>
 			</div>

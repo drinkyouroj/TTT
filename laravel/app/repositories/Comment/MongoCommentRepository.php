@@ -68,7 +68,7 @@ class MongoCommentRepository implements CommentRepository {
 							);
 		$new_comment->published = 1;
 		$new_comment->depth = $depth;
-		$new_comment->body = strip_tags( $comment_body );
+		$new_comment->body = trim( strip_tags( $comment_body ) );
 		$new_comment->likes = array();
 		$new_comment->flags = array();
 
@@ -91,6 +91,22 @@ class MongoCommentRepository implements CommentRepository {
 	public function update($input) {
 
 	}
+
+	public function editBody($comment_id, $body) {
+		$comment = $this->comment->find( $comment_id );
+		if ($comment instanceof MongoComment) {
+			if ( $comment->edited > 1 ) {
+				// Imposed a limit of 2 edits 
+				return array( 'error' => 'Each comment may only be edited twice.' );
+			}
+			$comment->body = trim( strip_tags( $body ) );
+			$comment->edited = $comment->edited ? $comment->edited + 1 : 1;
+			$comment->save();
+			return array( 'comment' => $comment );
+		}
+		return array( 'error' => 'The comment in question was not found!' );
+	}
+
 	public function delete ( $id ) {
 		$comment = MongoComment::find( $id );
 		if ( $comment instanceof MongoComment ) {
@@ -181,8 +197,8 @@ class MongoCommentRepository implements CommentRepository {
 	public function owns($comment_id, $user_id) {
 		$result = MongoComment::where( '_id', $comment_id )
 						      ->where( 'author.user_id', $user_id )
-						      ->get();
-		return count( $result ) ? true : false;
+						      ->first();
+		return ( $result instanceof MongoComment );
 	}
 
 

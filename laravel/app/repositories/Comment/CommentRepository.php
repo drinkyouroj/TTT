@@ -7,6 +7,7 @@ interface CommentRepository {
 
 	public function create( $user_id, $username, $reply_id, $post_id, $comment_body );
 	public function update($input);
+	public function editBody($comment_id, $body);
 	public function delete($id);
 
 	public function findById ( $id );

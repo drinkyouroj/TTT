@@ -15,8 +15,11 @@
 @stop
 
 @section('js')
-	@include( 'v2/posts/partials/comment-handlebars-template')
-	@include( 'v2/posts/partials/comment-reply-handlebars-template')
+	@include( 'v2/posts/partials/comment-handlebars-template' )
+	@include( 'v2/posts/partials/comment-reply-handlebars-template' )
+	@include( 'v2/posts/partials/comment-edit-handlebars-template' )
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment/moment.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment-timezone/moment-timezone-with-data.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/comment-pagination.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_actions.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post.js"></script>

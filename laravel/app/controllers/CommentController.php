@@ -13,6 +13,32 @@ class CommentController extends BaseController {
 	}
 
 	/**
+	 *	Edit a comment. Comments are only editable within 72 hours of
+	 *	being published!
+	 */
+	public function editComment () {
+		// We can assume there is an authenticated user at this point (route filter)
+		$user = Auth::user();
+		// Fetch the comment
+		$comment_id = Input::has('comment_id') ? Input::get('comment_id') : null;
+		$comment_body = Input::has('body') ? Input::get('body') : null;
+		
+		// Check that the logged in user is the author of this comment
+		if ( $this->comment->owns( $comment_id, $user->id ) ) {
+			// Proceed to edit this comment...
+			$results = $this->comment->editBody( $comment_id, $comment_body );
+			if ( isset($results['error']) ) {
+				return Response::json( array( 'error' => $results['error'] ), 200);
+			} else {
+				return Response::json( array( 'comment' => $results['comment']->toArray() ), 200);
+			}
+		} else {
+			// You are not the author, and cannot edit this comment!
+			return Response::json( array( 'error' => 'You do not have permission to edit this comment!' ), 200);
+		}
+	}
+
+	/**
 	 *	Get comments via the rest route...
 	 *	@param post_id: the post id
 	 *	@param paginate: number of comments to pull
@@ -79,7 +105,6 @@ class CommentController extends BaseController {
 
 	/**
 	 *	Rest route for posting a comment
-	 *	@param 
 	 */
 	public function postRestComment () {
 		// We can assume there is an authenticated user at this point (route filter)

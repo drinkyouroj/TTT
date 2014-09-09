@@ -39,6 +39,7 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 
 	// Comment routes!
 	Route::post('comment', 'CommentController@postRestComment');
+	Route::post('comment/edit', 'CommentController@editComment');
 	Route::get('comment/like/{comment_id}', 'CommentController@likeComment');
 	Route::get('comment/unlike/{comment_id}', 'CommentController@unlikeComment');
 	Route::get('comment/flag/{comment_id}', 'CommentController@flagComment');

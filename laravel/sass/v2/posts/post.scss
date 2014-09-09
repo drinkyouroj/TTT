@@ -336,6 +336,13 @@
 								cursor:pointer;
 								font-size:12px;
 							}
+							span.published-date {
+
+							}
+							span.edited-date {
+								float: right;
+								color: lightgray;
+							}
 						}
 						.reply-links {
 							a {
@@ -347,15 +354,31 @@
 								&:hover {
 									opacity: 1;
 								}
-								&.reply {
+								&.reply, &.edit {
 									color:$dark;
 									font-size:11px;
-									padding-left:0;
 									border-right:solid 1px $gray;
+								}
+								&.reply {
+									padding-left:0;
 								}
 								&.delete {
 									color:$red;
 									font-size:10px;
+								}
+							}
+
+							form.comment-reply, form.comment-edit {
+								textarea {
+									border-radius: 0;	
+								}
+								input {
+									border: 0;
+								}
+								span.error {
+									color: $red;
+									font-size: 15px;
+									text-align: center;
 								}
 							}
 						}
