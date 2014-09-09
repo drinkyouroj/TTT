@@ -3,7 +3,7 @@ $(function() {
 
 //Non user specific code
 	var user_action = new UserAction;
-	$('.follow-user .follow').click(function() {
+	$('div.follow a.follow').click(function() {
 		user_action.user_id = window.user_id;
 		user_action.action = 'follow';
 

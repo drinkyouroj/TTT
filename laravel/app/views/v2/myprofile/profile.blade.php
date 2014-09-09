@@ -78,6 +78,24 @@
 								<span class="count">{{$following_count}}</span>
 								<span class="text">Following</span>
 							</a>
+							
+							@if($myprofile)
+								<div class="settings">
+									<a class="icon-button" href="#settings" id="settings">
+										Settings
+									</a>
+								</div>
+							@else
+								@if(!$is_following)
+								<a class="follow follow-button">
+									Follow
+								</a>
+								@else
+								<a class="follow following-button">
+									Following
+								</a>
+								@endif
+							@endif
 						</div>
 					</div>
 				</div>
@@ -102,23 +120,7 @@
 					</div>
 				</div>
 				<div class="col-md-4 follow-user">
-					@if($myprofile)
-						<div class="settings">
-							<a class="icon-button" href="#settings" id="settings">
-								Settings
-							</a>
-						</div>
-					@else
-						@if(!$is_following)
-						<a class="follow follow-button">
-							Follow
-						</a>
-						@else
-						<a class="follow following-button">
-							Following
-						</a>
-						@endif
-					@endif
+					
 				</div>
 				<div class="col-md-12 border">
 					<div class="border-box"></div>
