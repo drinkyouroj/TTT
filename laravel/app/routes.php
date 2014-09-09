@@ -16,6 +16,10 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 		Route::get( 'feed/{feed_type}/{page}', 'MyProfileController@getRestFeed' );
 		Route::get( 'saves/{page}', 'MyProfileController@getRestSaves' );
 		Route::get( 'drafts/{page}', 'MyProfileController@getRestDrafts' );
+		//below 2 are delete functions
+		Route::get( 'repost/{id}', 'MyProfileController@getRestRepostDelete' );
+		Route::get( 'post/{id}', 'MyProfileController@getRestPostDelete' );
+
 		Route::post( 'featured/{post_id}', 'MyProfileController@postRestFeatured');
 		Route::post( 'image/upload', 'MyProfileController@postAvatar');
 		Route::post( 'password', 'UserController@postNewpass'); //I know its not in myprofile!
