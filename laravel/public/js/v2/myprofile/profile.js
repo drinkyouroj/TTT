@@ -325,6 +325,7 @@ function ProfileActions() {
 		var no_content_template = this.no_content_template;
 		var target = this.target;
 		var editCheck = this.editCheck;
+
 		this.urlConstructor();
 		this.getData(this.url, function(data) {
 
@@ -333,6 +334,7 @@ function ProfileActions() {
 			} else {
 				$.each(data.collection, function(idx, val) {
 					var editable = editCheck(val.post.published_at);
+					console.log(val.post);
 					view_data = {
 						site_url: window.site_url,
 						post: val.post,
