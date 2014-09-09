@@ -228,7 +228,7 @@
 			<button class="admin-soft-delete btn btn-xs btn-warning {{ $profile_user_is_deleted ? 'hidden' : '' }}">Soft Delete</button>
 			<button class="admin-restore-soft-delete btn btn-xs btn-default {{ $profile_user_is_deleted ? '' : 'hidden' }}">Restore Soft Deleted User</button>
 			<br>
-			<button class="admin-user-reset btn btn-xs btn-warning disabled">User Reset</button>
+			<button class="admin-user-reset btn btn-xs btn-warning">Reset User Password</button>
 			<br>
 		@endif	
 	@endif

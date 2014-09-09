@@ -101,7 +101,7 @@ $(function() {
             type: 'GET',
             success: function ( data ) {
                 if ( data.success ) {
-                    $('#offcanvas-admin-sidebar .admin-user-reset').addClass('disabled');
+                    $('#offcanvas-admin-sidebar .admin-user-reset').addClass('disabled').html('Password Reset!');
                 }
             }
         });
