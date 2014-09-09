@@ -34,10 +34,10 @@
 
 	@if($myprofile)
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/form/jquery.form.js"></script>
-	@else
-		{{--This is for the follow action--}}
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_actions.js"></script>
 	@endif
+	{{--This is for the follow action--}}
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_actions.js"></script>
+	
 	
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment/moment.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment-timezone/moment-timezone-with-data.min.js"></script>

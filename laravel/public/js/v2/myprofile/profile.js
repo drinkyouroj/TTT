@@ -536,8 +536,7 @@ function ProfileActions() {
 		} else {
 			user_image = 'default.jpg';
 		}
-
-
+		
 		view_data = {
 			site_url: this.site_url,
 			user_image: user_image
