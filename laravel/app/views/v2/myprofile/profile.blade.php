@@ -13,6 +13,7 @@
 	<script>
 		window.user_id = {{$profile_user->id}};
 		window.featured_id = {{$profile_user->featured}};
+		window.user_image = '{{$profile_user->image}}';
 		@if($myprofile)
 			window.myprofile = true;
 
@@ -29,6 +30,7 @@
 	@include( 'v2/partials/post-listing-template' )
 	@include( 'v2/myprofile/partials/profile-handlebars-template' )
 	@include( 'v2/myprofile/partials/no-content-handlebars-template' )
+	@include( 'v2/partials/photo-input' )
 
 	@if($myprofile)
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/form/jquery.form.js"></script>		
@@ -36,8 +38,8 @@
 	
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment/moment.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment-timezone/moment-timezone-with-data.min.js"></script>
-
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/myprofile/profile.js"></script>		
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/photo/photo.js"></script>	
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/myprofile/profile.js"></script>	
 @stop
 
 @section('content')
@@ -46,7 +48,11 @@
 			<div class="row">
 				<div class="col-md-6 header-left">
 					<h2>
-						<span class="avatar-image" style="background-image:url('{{Config::get('app.url')}}/uploads/avatars/{{$profile_user->username}}');"></span>
+						@if($profile_user->image)
+						<span class="avatar-image" style="background-image:url('{{Config::get('app.url')}}/uploads/final_images/{{$profile_user->image}}');"></span>
+						@else
+						<span class="avatar-image" style="background-image:url('{{Config::get('app.url')}}/images/default.jpg');"></span>
+						@endif
 						{{$profile_user->username}}
 					</h2>
 				</div>
@@ -195,6 +201,23 @@
 		</div>
 	</div>
 
+	{{--Photo Modal--}}
+	<div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title" id="draftsModalLabel">
+						Choose an Avatar
+					</h4>
+				</div>
+				<div class="modal-body">
+					
+				</div><!--End of Modal Body-->
+			</div>
+		</div>
+	</div>
+
 
 @stop
 
@@ -216,11 +239,11 @@
 ?>
 
 @section('admin-mod-user-controls')
-	
+	<div class="mod-user-controls">
 	@if ( $profile_user_is_admin )
 		<p>This user is an admin</p>
 	@else
-		<p>Target User: {{$profile_user->username}}</p>
+		<p class="user-name">{{$profile_user->username}}</p>
 
 		<button class="mod-ban-user btn btn-xs btn-warning {{ $profile_user_banned ? 'hidden' : '' }}">Ban</button>
 		<button class="mod-unban-user btn btn-xs btn-default {{ $profile_user_banned ? '' : 'hidden' }}">Un-Ban</button>
@@ -232,8 +255,9 @@
 			<button class="admin-soft-delete btn btn-xs btn-warning {{ $profile_user_is_deleted ? 'hidden' : '' }}">Soft Delete</button>
 			<button class="admin-restore-soft-delete btn btn-xs btn-default {{ $profile_user_is_deleted ? '' : 'hidden' }}">Restore Soft Deleted User</button>
 			<br>
-			<button class="admin-user-reset btn btn-xs btn-warning disabled">User Reset</button>
+			<button class="admin-user-reset btn btn-xs btn-warning">Reset User Password</button>
 			<br>
 		@endif	
 	@endif
+	</div>
 @stop

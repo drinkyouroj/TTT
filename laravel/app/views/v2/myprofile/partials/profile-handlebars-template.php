@@ -134,18 +134,21 @@
 	</a>
 </script>
 
-<!--Script-->
+<!--Settings Template-->
 <script type="text/x-handlebars-template" id="settings-template">
 	<div class="col-md-12">
 		<div class="col-md-5 col-md-offset-1 avatar">
 			<h2>Upload your Avator</h2>
 			<div class="upload-form">
+				<a class="btn-flat-blue avatar-modal">Choose an Avatar</a>
 
 				<div id="avatarErrors"></div>
 
-				<form id="uploadAvatar" enctype="multipart/form-data" method="post" action="{{this.site_url}}rest/profile/image/upload">
-                    <input type="file" name="image" id="image" />
+				<form id="uploadAvatar" method="post" action="{{this.site_url}}rest/profile/image/upload">
+                    <input type="hidden" name="image" class="image">
+                    <img width="100%" class="thumb" src="{{site_url}}uploads/final_images/{{user_image}}">
 				</form>
+
 				<div id="avatarOutput" style="display:none">
                 </div>
 			</div>

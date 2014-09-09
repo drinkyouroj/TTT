@@ -40,6 +40,8 @@ class EloquentProfilePostRepository implements ProfilePostRepository {
 									->take($paginate);
 		if($type != 'all') {
 			$query = $query->where('post_type', $type);
+		} else {
+			$query = $query->whereIn('post_type', array('post', 'repost'));
 		}
 
 		if($trashed) {
@@ -58,7 +60,7 @@ class EloquentProfilePostRepository implements ProfilePostRepository {
 	public function delete($data) {
 		$this->profilepost->where('profile_id', $data['user_id'])
 						->where('post_id', $data['post_id'])
-						->where('user_id', $data['user_id'])
+						//->where('user_id', $data['user_id']) //Doesn't matter anymore the way the data is being used.
 						->where('post_type', $data['post_type'])
 						->delete();
 	}

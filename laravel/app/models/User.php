@@ -21,6 +21,13 @@ class User extends Eloquent implements UserInterface {
 		    	return true;
 		    }
 		});
+
+		Validator::extend('math_captcha', function($attribute, $value, $parameters) {
+			$num1 = intval(Session::get('signup_num1'));
+			$num2 = intval(Session::get('signup_num2'));
+			$sum = $num1 + $num2;
+			return intval($value) === $sum;
+		});
     }
 	
 	public function posts()
@@ -69,12 +76,12 @@ class User extends Eloquent implements UserInterface {
 		        'email' => 'email|reservation_cap:3',
 		        'password' => 'required|between:4,11|confirmed',
 		        'password_confirmation' => 'between:4,11',
-		        'captcha' => 'required|captcha',
+		        'captcha' => 'required|math_captcha',
     		), 
 			// Error messages
 			array(
 				'captcha.required' => 'Let us know that you are a human: fill out the captcha!',
-				'captcha.captcha' => 'Are you a human? You got the captcha wrong!'
+				'captcha.math_captcha' => 'Are you a human? You got the captcha wrong!'
     		)
 
     	);

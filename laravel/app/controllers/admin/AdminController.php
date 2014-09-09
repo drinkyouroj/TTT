@@ -6,12 +6,13 @@ class AdminController extends Controller {
 						UserRepository $user,
 						PostRepository $post,
 						CommentRepository $comment,
-						FeaturedRepository $featured
-						) {
+						FeaturedRepository $featured,
+						EmailRepository $email ) {
 		$this->user = $user;
 		$this->post = $post;
 		$this->comment = $comment;
 		$this->featured = $featured;
+		$this->email = $email;
 	}
 
 	/**
@@ -21,11 +22,19 @@ class AdminController extends Controller {
 	 *		no longer considered 'landing pre-signup'
 	 */
 	function resetUser ( $user_id ) {
-		$user = $this->user->find( $user_id );
-		if ( $user instanceof User ) {
-			// TODO:
-			// Generate random password for this user
-
+		$results = $this->user->resetPassword( $user_id );
+		if ( $results ) {
+			// Send the appropriate email
+			$data = array(
+				'to' => array( $results['user']->email ),
+				'subject' => 'Reset Password',
+				'plaintext' => 'Your password has been reset to '.$results['new_password'].'.',
+				'html' => '<p>Your password has been reset to '.$results['new_password'].'.</p>'
+			);
+			$this->email->create( $data );
+			return Response::json( array( 'success' => true ), 200);
+		} else {
+			return Response::json( array( 'success' => false ), 200);
 		}
 	}
 

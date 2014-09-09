@@ -420,3 +420,7 @@ a:focus {
 		}
 	}
 }
+
+#photoModal {
+	@include photo_selection;
+}

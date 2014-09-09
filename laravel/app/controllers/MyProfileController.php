@@ -6,6 +6,7 @@ class MyProfileController extends BaseController {
 							FeedRepository $feed,
 							ProfilePostRepository $profilepost,
 							FavoriteRepository $save,
+							RepostRepository $repost,
 							PostRepository $post,
 							FollowRepository $follow,
 							CommentRepository $comment
@@ -14,6 +15,7 @@ class MyProfileController extends BaseController {
 		$this->feed = $feed;
 		$this->profilepost = $profilepost;
 		$this->save = $save;
+		$this->repost = $repost;
 		$this->post = $post;
 		$this->follow = $follow;
 		$this->comment = $comment;
@@ -155,6 +157,49 @@ class MyProfileController extends BaseController {
 					200
 				);
 		} 
+	}
+
+	public function getRestPostDelete($post_id) {
+		if($post_id) {
+			$user = Auth::user();
+			$data = array(
+					'user_id' => $user->id,
+					'post_id' => $post_id,
+					'post_type' => 'post'
+				);
+			$this->profilepost->delete($data);
+
+			//let's make sure that this belongs to the user.
+			$post = $this->post->findById($post_id);
+
+			if($post->user_id == $user->id) {
+				$this->post->delete($post_id);
+			}
+			
+			return Response::json(
+					array('success' => true),
+					200
+				);
+		}
+	}
+
+	public function getRestRepostDelete ($post_id) {
+		if($post_id) {
+			$user = Auth::user();
+			$data = array(
+					'user_id' => $user->id,
+					'post_id' => $post_id,
+					'post_type' => 'repost'
+				);
+			$this->profilepost->delete($data);
+
+			$this->repost->delete($user->id, $post_id);
+
+			return Response::json(
+					array('success' => true),
+					200
+				);
+		}
 	}
 
 	//Sets the user's featured id.
@@ -305,12 +350,12 @@ class MyProfileController extends BaseController {
 
 	//This is for the avatar upload.
 	public function postAvatar( ) {
-		$file = Input::file('image');
-		$input = array('image' => $file);
+		$file_name = Request::get('image');
+		$input = array('image' => $file_name);
 
 		//validation that the file infact is an image
 		$rules = array(
-			'image' => 'image'
+			'image' => 'required'
 		);
 
 		$validator = Validator::make($input, $rules);
@@ -318,22 +363,18 @@ class MyProfileController extends BaseController {
 		//kill two birds in one.
 		if ($validator->fails() || Auth::guest() ) {
 			return Response::json(
-					array('error' => 'wrong file type or you are not logged in'),
+					array('error' => 'You are not logged in or you did not send anything'),
 					200
 				);
-		} else {			
+		} else {
+			//save the image as part of the usermodel.  We'll need to put this in the User repo later.
 			$user = Auth::user();
-
-			$path = public_path() . '/uploads/avatars/';
-			$filename = $user->username;
-
-			Input::file('image')->move($path, $filename);
-
-			//We should in theory update the image on the user, but we're having trouble with the user model.
+			$user->image = $file_name;
+			$user->update();
 
 			return Response::json(
 					array(
-						'image' => $filename
+						'image' => $file_name
 						),
 					200
 				);

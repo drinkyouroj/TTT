@@ -97,7 +97,7 @@ class SheepRepository implements UserRepository {
 	}
 
 	public function updatePassword($user, $password) {
-		$user->passwod = Hash::make($password);
+		$user->password = Hash::make($password);
 		$user->save();
 	}
 
@@ -228,5 +228,26 @@ class SheepRepository implements UserRepository {
 		}
 		return false;
 	}
+
+	public function resetPassword ( $id ) {
+		$user = $this->user->where('id', $id)->first();
+		if ( $user instanceof User ) {
+			$new_password = $this->generateRandomString(8);	
+			$user->password = Hash::make($new_password);
+			$user->save();
+			return array(
+				'new_password' => $new_password,
+				'user' => $user
+				);
+		}
+		return false;
+	}
+
+		/**
+		 *	Simple random string generator.
+		 */
+		private function generateRandomString($length = 5) {
+		    return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+		}
 
 }

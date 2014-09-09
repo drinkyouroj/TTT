@@ -94,7 +94,8 @@ $(function() {
 	});
 
 	//image upload code.
-	$('body').on('change', '#uploadAvatar input#image', function() {
+	$('body').on('change', '#uploadAvatar input.image', function() {
+		console.log('avatar change');
 		profile.avatarUpload();
 	});
 
@@ -119,12 +120,16 @@ $(function() {
 //We should probably make these into better action systems.
 //Set Featured events
 	$('body').on('click', '.set-featured',function() {
-		profile.setFeatured($(this).data('id'));
-	})
+		profile.setFeatured( $(this).data('id') );
+	});
+
+	$('body').on('click', '.post-delete', function() {
+		profile.setPostDelete( $(this).data('id') );
+	});
 
 	$('body').on('click', '.remove-repost',function() {
-		profile.setRepost($(this).data('id'));
-	})
+		profile.setRepost( $(this).data('id') );
+	});
 
 //Pagination detection.
 	$(window).scroll(function() {
@@ -349,10 +354,18 @@ function ProfileActions() {
 			this.renderFeatured();
 		}
 
+		this.setPostDelete = function(id) {
+			$('#post-'+id).fadeOut().remove();
+			removePost = window.site_url + 'rest/profile/post/' + id;
+			this.getData(removePost, function(data) {
+
+			});
+		}
+
 		//Remove a repost
 		this.setRepost = function(id) {
 			$('#post-'+id).fadeOut().remove();
-			removeRepost = window.site_url + 'rest/reposts/'+ id;
+			removeRepost = window.site_url + 'rest/profile/repost/'+ id;
 			this.getData(removeRepost, function(data) {
 				
 			});
@@ -487,8 +500,32 @@ function ProfileActions() {
 	}
 
 	this.renderSettings = function() {
-		//simple stuff.
-		$('#default-content', this.target).append(this.settings_template({site_url: this.site_url}));
+		
+		if(window.user_image.length) {
+			user_image = window.user_image;
+		} else {
+			user_image = 'default.jpg';
+		}
+
+
+		view_data = {
+			site_url: this.site_url,
+			user_image: user_image
+		};
+		$('#default-content', this.target).append(this.settings_template(view_data));
+		
+		photo_input = new PhotoInput;
+
+		photo_input.target = $('#photoModal .modal-body');
+		photo_input.input = $('#uploadAvatar input.image');
+		photo_input.image_dom = '#uploadAvatar img.thumb';
+		photoInit(photo_input);
+		photo_input.viewInit();
+
+		$('body').on('click', '.avatar-modal', function(event) {
+			event.preventDefault();			
+			$('#photoModal').modal('show');
+		})
 	}
 
 		this.avatarUpload = function() {
@@ -520,14 +557,6 @@ function ProfileActions() {
 		            }
 		        });
 		        $errors.show();
-		    } else {
-		    	$('.header-wrapper .avatar-image').animate({opacity: 0},'slow', function() {
-		    		$(this).css(
-		    			{'background-image': 'url("uploads/avatars/' +response.image+'")' }
-		    		).animate({opacity: 1});
-		    	});
-		        $output.html('<img src="uploads/avatars/' +response.image+'" />');
-		        $output.css('display','block');
 		    }
 		}
 

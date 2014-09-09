@@ -54,6 +54,11 @@
 								Edit
 							</a>
 						{{/ifCond}}
+
+							<a class="post-delete" data-id="{{post.id}}">
+								Delete
+							</a>
+
 						{{#ifNotCond featured_id post.id}}
 							<a class="set-featured" data-id="{{post.id}}">
 								Feature
