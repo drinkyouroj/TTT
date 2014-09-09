@@ -199,6 +199,10 @@ View::composer('*', function($view) {
 		
 		if($alias && !in_array($alias, $not_segment) ) {//This is for other users. not yourself
 			$user = User::where('username', '=', $alias)->first();
+			// If you are mod or admin, you may view soft deleted user profiles as well
+			if ( !is_object($user) && Auth::check() && Auth::user()->hasRole('Moderator') ) {
+				$user = User::withTrashed()->where('username', '=', $alias)->first();
+			}
 			$user_id = $user->id;//set the profile user id for rest of the session.
 		} else {
 			//We're doing the user info loading this way to keep the view clean.

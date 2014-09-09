@@ -14,6 +14,20 @@ class AdminController extends Controller {
 		$this->featured = $featured;
 	}
 
+	/**
+	 *	Reset a user account. This includes the following:
+	 *		password reset
+	 *		email to user
+	 *		no longer considered 'landing pre-signup'
+	 */
+	function resetUser ( $user_id ) {
+		$user = $this->user->find( $user_id );
+		if ( $user instanceof User ) {
+			// TODO:
+			// Generate random password for this user
+
+		}
+	}
 
 	/**
 	 *	Assign the Moderator role to a given user.
@@ -24,8 +38,46 @@ class AdminController extends Controller {
 		$success = false;
 		if ( $user instanceof User ) {
 			$user->attachRole( $mod );
+			$user->save();
 			$success = true;
 		}
+		return Response::json(
+				array( 'success' => $success ),
+				200 );
+	}
+
+	/**
+	 *	Remove the Moderator role from a given user.
+	 */
+	function unassignModerator( $user_id ) {
+		$mod = Role::where('name','Moderator')->first();
+		$user = $this->user->find( $user_id );
+		$success = false;
+		if ( $user instanceof User ) {
+			$user->detachRole( $mod );
+			$user->save();
+			$success = true;
+		}
+		return Response::json(
+				array( 'success' => $success ),
+				200 );
+	}
+
+	/**
+	 *	Delete a user
+	 */
+	function deleteUser ( $user_id ) {
+		$this->user->delete( $user_id );
+		return Response::json(
+				array( 'success' => true ),
+				200 );
+	}
+
+	/**
+	 *	Restore a deleted user
+	 */
+	function restoreUser ( $user_id ) {
+		$success = $this->user->restore( $user_id );
 		return Response::json(
 				array( 'success' => $success ),
 				200 );

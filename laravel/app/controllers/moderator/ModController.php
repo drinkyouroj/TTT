@@ -48,5 +48,36 @@ class ModController extends Controller {
 			200 );
 	}
 
+	/**
+	 *	Ban a user
+	 */
+	function banUser ( $user_id ) {
+		if ( $this->user->ban( $user_id ) ) {
+			// TODO: send appropriate email to banned user.
+			
+			return Response::json(
+				array( 'success' => true ),
+				200 );
+		} else {
+			return Response::json(
+				array( 'success' => false ),
+				200 );
+		}
+	}
+
+	/**
+	 *	Un-Ban a user
+	 */
+	function unbanUser ( $user_id ) {
+		if ( $this->user->unban( $user_id ) ) {
+			return Response::json(
+				array( 'success' => true ),
+				200 );
+		} else {
+			return Response::json(
+				array( 'success' => false ),
+				200 );
+		}
+	}
 	
 }

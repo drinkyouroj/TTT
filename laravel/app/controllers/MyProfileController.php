@@ -30,16 +30,21 @@ class MyProfileController extends BaseController {
 			return Redirect::to('myprofile');
 		}
 
-		//Load up the profile user.
+		//Load up the profile user. If admin or moderator, include soft deleted users
 		$profile_user = User::where('username',$alias)->first();
+		// If the user wasnt found and we are a moderator, check for the same alias among soft deleted users.
+		if ( !is_object($profile_user) && Auth::check() && Auth::user()->hasRole('Moderator') ) {
+			$profile_user = User::withTrashed()->where('username', $alias)->first();
+		}
 
+		// If we still dont have a user, just redirect back to profile page.
 		if( !is_object($profile_user) ) {
 			return Redirect::to('myprofile');
 		}
 
 		if( Auth::check() ) {
 
-			$user = Auth::user();//This is the 
+			$user = Auth::user();  //This is the current logged in user
 			$is_following = $this->follow->is_following($user->id, $profile_user->id);
 			$is_follower = $this->follow->is_follower($user->id, $profile_user->id);
 			if($is_follower && $is_following) {
@@ -103,6 +108,13 @@ class MyProfileController extends BaseController {
 					;
 	}
 
+	/**
+	 *	Get the users Collection feed.
+	 *	returns 200:
+	 *		collection => array (the actual collection data),
+	 *		error => string (invalid request parameters),
+	 *		no_content => string (message to be displayed if there is nothing in collection)
+	 */
 	public function getRestCollection ($type = 'all', $user_id = 0, $page = 1) {
 		if(!$user_id) {
 			$user_id = Auth::user()->id;
@@ -112,10 +124,19 @@ class MyProfileController extends BaseController {
 
 		if( in_array($type, $types) && $page > 0 ) {
 			$collection = $this->profilepost->findByUserId($user_id, $type, $this->paginate, $page, true, false);
-			return Response::json(
+			
+			if ( count( $collection ) == 0 && $page == 1 ) {
+				// If we are on page 1 and there is no content, send back empty content message
+				return Response::json(
+					array( 'no_content' => true ),
+					200
+				);
+			} else {
+				return Response::json(
 					array( 'collection' => $collection->toArray() ),
 					200
 				);
+			}
 		} else {
 			return Response::json(
 				array( 'error' => 'invalid collection type and/or pagination' ),
@@ -156,7 +177,11 @@ class MyProfileController extends BaseController {
 
 
 	/**
-	 *	Get the feed via rest call.
+	 *	Get the users feed.
+	 *	returns 200:
+	 *		collection => array (the actual feed data),
+	 *		error => string (invalid request parameters),
+	 *		no_content => string (message to be displayed if there is nothing in feed)
 	 */
 	public function getRestFeed ( $feed_type = 'all', $page = 1 ) {
 		$user_id = Auth::user()->id;	
@@ -166,11 +191,18 @@ class MyProfileController extends BaseController {
 		if ( in_array( $feed_type, $feed_types ) && $page > 0 ) {
 			// Fetch the feed based on given params.
 			$feed = $this->feed->find( $user_id, $this->paginate, $page, $feed_type, true );
-			//return $feed;
-			return Response::json(
-				array( 'feed' => $feed->toArray() ),
-				200
-			);
+			
+			if ( count( $feed ) == 0 && $page == 1 ) {
+				return Response::json(
+					array( 'no_content' => true ),
+					200
+				);
+			} else {
+				return Response::json(
+					array( 'feed' => $feed->toArray() ),
+					200
+				);	
+			}
 		} else {
 			return Response::json(
 				array( 'error' => 'invalid feed type and/or pagination' ),
@@ -180,15 +212,27 @@ class MyProfileController extends BaseController {
 		
 	}
 
+	/**
+	 *	Get the users saves.
+	 *	returns 200:
+	 *		collection => array (the actual saves data),
+	 *		error => string (invalid request parameters),
+	 *		no_content => string (message to be displayed if there is nothing in saves)
+	 */
 	public function getRestSaves ($page = 1) {
 		$user_id = Auth::user()->id;
 		$saves = $this->save->allByUserId($user_id, $this->paginate, $page, true);
 
-		if(count($saves)) {
+		if ( count( $saves ) == 0 && $page == 1 ) {
+			return Response::json(
+				array( 'no_content' => true ),
+				200
+			);
+		} else if( count( $saves ) ) {
 			return Response::json(
 				array( 'saves' => $saves->toArray() ),
 				200
-				);
+			);
 		} else {
 			return Response::json(
 				array( 'error' => 'No Saves' ),
@@ -200,16 +244,21 @@ class MyProfileController extends BaseController {
 	public function getRestDrafts($page = 1) {
 		$user_id = Auth::user()->id;
 		$drafts = $this->post->allDraftsByUserId($user_id, $this->paginate, $page, true);
-		if(count($drafts)) {
+		if ( count( $drafts ) == 0 && $page == 1 ) {
+			return Response::json(
+				array( 'no_content' => true ),
+				200
+			);
+		} else if( count( $drafts ) ) {
 			return Response::json(
 				array( 'drafts' => $drafts->toArray() ),
 				200
-				);
+			);
 		} else {
 			return Response::json(
 				array( 'error' => 'No Drafts' ),
 				200
-				);
+			);
 		}
 	}
 
@@ -218,7 +267,7 @@ class MyProfileController extends BaseController {
 			$user_id = Auth::user()->id;
 		}
 		
-		$comments = $this->comment->allByUserId($user_id, 8, $page, true);
+		$comments = $this->comment->findByUserId($user_id, 8, $page, true);
 		if(count($comments)) {
 			return Response::json(
 				array( 'comments' => $comments->toArray() ),

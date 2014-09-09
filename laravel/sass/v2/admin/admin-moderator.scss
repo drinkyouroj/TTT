@@ -6,6 +6,11 @@
 	.post-title, ul, .post-categories-title {
 		color: white !important;
 	}
+
+	a.flagged-comment {
+		display: block;
+		width: 100%;
+	}
 }
 
 #offcanvas-admin-placeholder {
@@ -24,7 +29,7 @@
 		position: absolute;
 		width: 100%;
 		top: 50%;
-		margin-top: -50%;
+		margin-top: -100%;
 		cursor: pointer;
 		color: white;
 		text-align: center;

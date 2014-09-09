@@ -11,7 +11,8 @@ interface CommentRepository {
 
 	public function findById ( $id );
 	public function findByPostId ( $post_id, $paginate, $page );
-	public function allByUserId($user_id, $paginate, $page, $rest);
+	public function findByUserId($user_id, $paginate, $page, $rest);
+	public function findAllByUserId ( $user_id );
 
 	public function owns($comment_id, $user_id);
 	
