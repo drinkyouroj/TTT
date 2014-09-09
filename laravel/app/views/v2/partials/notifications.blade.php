@@ -11,7 +11,12 @@
 		</a>
 	@else
 
-		<a href="{{Config::get('app.url')}}/posts/{{$not->post_alias}}">
+		@if ( $not->notification_type == 'reply' || $not->notification_type == 'comment' )
+			<a href="{{Config::get('app.url')}}/posts/{{$not->post_alias}}#comment-{{$not->comment_id}}">
+		@else
+			<a href="{{Config::get('app.url')}}/posts/{{$not->post_alias}}">
+		@endif
+
 			<span class="action-user">
 				{{$not->users{0} }}
 			</span>

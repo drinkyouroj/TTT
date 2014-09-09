@@ -17,6 +17,7 @@ function CommentPagination ( post_id ) {
 
 		if ( is_fetching_comments || no_more_comments || !this.post_id )
 			return undefined;
+		console.log('paginate: ' + pagination + ' page: ' + page);
 
 		is_fetching_comments = true;
 		$.ajax({
@@ -29,6 +30,29 @@ function CommentPagination ( post_id ) {
 				} else {
 					no_more_comments = true;
 					callback( undefined );
+				}
+			},
+			complete: function () {
+				is_fetching_comments = false;
+			}
+		});
+	}
+
+	this.commentDeepLink = function ( comment_id, callback ) {
+
+		if ( is_fetching_comments || no_more_comments || !this.post_id )
+			return undefined;
+
+		console.log('paginate: ' + pagination + ' page: ' + page);
+		is_fetching_comments = true;
+		$.ajax({
+			url: window.site_url + 'rest/post/' + post_id + '/comments/deeplink/' + comment_id,
+			type: 'GET',
+			success: function ( data ) {
+				if ( data && data.comments ) {
+					page = data.page;
+					pagination = data.paginate;
+					callback( data );
 				}
 			},
 			complete: function () {

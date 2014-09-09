@@ -232,6 +232,7 @@
 					
 					border-top: 2px solid $lightgray;
 					padding: 10px 20px 5px 10px;
+					@include transition (background-color, 3s, linear, 0s);
 				
 					// Styles only applied to PUBLISHED comments
 					&.published {
@@ -269,6 +270,11 @@
 								}
 							}
 						}
+					}
+
+					&.target-comment {
+						background-color: orange;
+
 					}
 
 

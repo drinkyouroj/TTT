@@ -13,7 +13,6 @@ $(function() {
             type: 'GET',
             success: function ( data ) {
                 if ( data.success ) {
-                    // TODO: update view
                     $('#offcanvas-admin-sidebar .post-featured-label').removeClass('hidden').html('Featured ' + position);
                     $('#offcanvas-admin-sidebar .admin-unset-featured').removeClass('hidden');
                 }
@@ -29,7 +28,6 @@ $(function() {
             type: 'GET',
             success: function ( data ) {
                 if ( data.success ) {
-                    // TODO: update view
                     $('#offcanvas-admin-sidebar .post-featured-label').addClass('hidden').html('');
                     $('#offcanvas-admin-sidebar .admin-unset-featured').addClass('hidden');
                     $('#offcanvas-admin-sidebar .admin-set-featured').removeClass('hidden');

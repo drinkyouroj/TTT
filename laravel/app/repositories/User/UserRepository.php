@@ -47,5 +47,10 @@ interface UserRepository {
 	public function ban($id);
 
 	public function unban($id);
+
+	/**
+	 *	Reset and return the users new password.
+	 */
+	public function resetPassword($id);
 	
 }

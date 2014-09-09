@@ -46,6 +46,38 @@ class CommentController extends BaseController {
 	}
 
 	/**
+	 *	Retrieve all comments up until the target comment with id == $comment_id
+	 *	is reached. This allows us to save/view specific comments while keeping
+	 *	things dynamic. If the comment id is not found, all comments are returned.
+	 *	@param $post_id: the post id in which the comment refers
+	 *	@param $comment_id: the target comment
+	 */
+	public function getDeepLinkedComments ( $post_id, $comment_id ) {
+		// Basically we keep pulling comments in order until we reach the target comment, then
+		// send back the current pagination info so that we can pick up at the right point on
+		// the front end. 
+		$paginate = 10;
+
+		$result = $this->comment->findByCommentAndPostId( $comment_id, $post_id, $paginate );
+		if ( $result ) {
+			if ( Auth::check() ) {
+				$user = Auth::user();
+				$is_mod = $user->hasRole('Moderator');
+				$active_user_id = $user->id;
+			} else {
+				$is_mod = false;
+				$active_user_id = false;
+			}
+			$result['is_mod'] = $is_mod;
+			$result['active_user_id'] = $active_user_id;
+			return Response::json( $result, 200 );
+		} else {
+			return Response::json( array( 'error' => true ), 200 );
+		}
+
+	}
+
+	/**
 	 *	Rest route for posting a comment
 	 *	@param 
 	 */

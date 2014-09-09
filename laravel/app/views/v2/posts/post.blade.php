@@ -212,26 +212,27 @@
 		$featured = isset($featured) ? $featured : false; 
 	?>
 	<p class="post-title"> {{ $post->title }}
-		<span class="post-featured-label label label-danger {{ $featured ? '' : 'hidden' }}">
+		<span class="post-featured-label label label-success {{ $featured ? '' : 'hidden' }}">
 			@if ( $featured )
 				Featured {{ $featured->position }}
 			@endif
 		</span>
 	</p>
-	
+	<hr>
 	{{-- Admin only access to featured controls --}}
 	@if ( $is_admin )
 		<div class="admin-post-featured-controls">
 			{{ Form::select( 'admin-featured-position', Config::get('featured'), null, array( 'class' => 'form-control' ) ) }}
-			<button class="admin-set-featured btn btn-xs btn-danger {{ $featured ? 'hidden' : '' }}">Set Featured Position</button>
+			<button class="admin-set-featured btn btn-xs btn-success">Set Featured Position</button>
 			<button class="admin-unset-featured btn btn-xs btn-warning {{ $featured ? '' : 'hidden' }}">Remove from Featured</button>
 		</div>
 		<hr>
 	@endif
 
 	<div class="mod-post-controls">
-		<button class="mod-post-delete btn btn-xs btn-warning {{ $post ? '' : 'hidden' }}">Delete This Post</button>
+		<button class="mod-post-delete btn btn-xs btn-danger {{ $post ? '' : 'hidden' }}">Delete This Post</button>
 		<button class="mod-post-undelete btn btn-xs btn-default {{ $post ? 'hidden' : '' }}">Un-delete This Post</button>
+		<hr>
 		<p class="post-categories-title">Categories</p>
 		<ul class="list-unstyled">
 			@foreach ( $post->categories as $category )

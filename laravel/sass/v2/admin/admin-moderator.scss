@@ -6,10 +6,50 @@
 	.post-title, ul, .post-categories-title {
 		color: white !important;
 	}
-
+	.post-title {
+		text-align: center;
+	}
 	a.flagged-comment {
 		display: block;
 		width: 100%;
+	}
+
+	.admin-post-featured-controls {
+		overflow: hidden;
+		&>* {
+			width: 50%;
+			height: 35px;
+			display: inline-block;
+			border-radius: 0;
+			border: 0;
+			float: left;
+		}
+		.admin-unset-featured {
+			float: right;
+		}
+	}
+
+	.mod-post-controls {
+		.mod-post-delete, .mod-post-undelete {
+			width: 50%;
+			height: 35px;
+			margin-left: 25%;
+		}
+	}
+
+	.mod-user-controls {
+		p {
+			text-align: center;
+			color: white;
+		}
+		button {
+			width: 50%;
+			height: 35px;
+		}
+	}
+
+	hr {
+		clear: both;
 	}
 }
 
