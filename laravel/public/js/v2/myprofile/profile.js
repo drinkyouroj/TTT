@@ -3,6 +3,10 @@ $(function() {
 //Initialize Profile class
 	var profile = new ProfileActions;
 
+//Initialize the Photo Selection Class
+	
+	
+
 //Let's Compile the handlebars source.
 	//Collection container
 	var collection_source = $('#collection-template').html();
@@ -94,7 +98,8 @@ $(function() {
 	});
 
 	//image upload code.
-	$('body').on('change', '#uploadAvatar input#image', function() {
+	$('body').on('change', '#uploadAvatar input.image', function() {
+		console.log('avatar change');
 		profile.avatarUpload();
 	});
 
@@ -487,8 +492,32 @@ function ProfileActions() {
 	}
 
 	this.renderSettings = function() {
-		//simple stuff.
-		$('#default-content', this.target).append(this.settings_template({site_url: this.site_url}));
+		
+		if(window.user_image.length) {
+			user_image = window.user_image;
+		} else {
+			user_image = 'default.jpg';
+		}
+
+
+		view_data = {
+			site_url: this.site_url,
+			user_image: user_image
+		};
+		$('#default-content', this.target).append(this.settings_template(view_data));
+		
+		photo_input = new PhotoInput;
+
+		photo_input.target = $('#photoModal .modal-body');
+		photo_input.input = $('#uploadAvatar input.image');
+		photo_input.image_dom = '#uploadAvatar img.thumb';
+		photoInit(photo_input);
+		photo_input.viewInit();
+
+		$('body').on('click', '.avatar-modal', function(event) {
+			event.preventDefault();			
+			$('#photoModal').modal('show');
+		})
 	}
 
 		this.avatarUpload = function() {
@@ -520,14 +549,6 @@ function ProfileActions() {
 		            }
 		        });
 		        $errors.show();
-		    } else {
-		    	$('.header-wrapper .avatar-image').animate({opacity: 0},'slow', function() {
-		    		$(this).css(
-		    			{'background-image': 'url("uploads/avatars/' +response.image+'")' }
-		    		).animate({opacity: 1});
-		    	});
-		        $output.html('<img src="uploads/avatars/' +response.image+'" />');
-		        $output.css('display','block');
 		    }
 		}
 
