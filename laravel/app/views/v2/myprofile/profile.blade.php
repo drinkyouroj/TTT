@@ -48,12 +48,15 @@
 			<div class="row">
 				<div class="col-md-6 header-left">
 					<h2>
-						@if($profile_user->image)
-						<span class="avatar-image" style="background-image:url('{{Config::get('app.url')}}/uploads/final_images/{{$profile_user->image}}');"></span>
-						@else
-						<span class="avatar-image" style="background-image:url('{{Config::get('app.url')}}/images/default.jpg');"></span>
-						@endif
-						{{$profile_user->username}}
+						<a>
+							@if($profile_user->image)
+								<span class="avatar-image" style="background-image:url('{{Config::get('app.url')}}/uploads/final_images/{{$profile_user->image}}');"></span>
+							@else
+								<span class="avatar-image" style="background-image:url('{{Config::get('app.url')}}/images/default.jpg');"></span>
+							@endif
+							
+							{{$profile_user->username}}
+						</a>
 					</h2>
 				</div>
 				<div class="col-md-6 header-right">
@@ -72,15 +75,6 @@
 								<span class="count">{{$following_count}}</span>
 								<span class="text">Following</span>
 							</a>
-							
-							@if($myprofile)
-							<div class="settings">
-								<a class="icon-button" href="#settings" id="settings">
-									Settings
-								</a>
-							</div>
-							@endif
-								
 						</div>
 					</div>
 				</div>
@@ -104,8 +98,14 @@
 						@endif
 					</div>
 				</div>
-				@if(!$myprofile)
-					<div class="col-md-4 follow-user">
+				<div class="col-md-4 follow-user">
+					@if($myprofile)
+						<div class="settings">
+							<a class="icon-button" href="#settings" id="settings">
+								Settings
+							</a>
+						</div>
+					@else
 						@if(!$is_following)
 						<a class="follow follow-button">
 							Follow
@@ -115,9 +115,8 @@
 							Following
 						</a>
 						@endif
-					</div>
-				@endif
-
+					@endif
+				</div>
 				<div class="col-md-12 border">
 					<div class="border-box"></div>
 				</div>

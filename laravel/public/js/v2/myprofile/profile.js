@@ -42,7 +42,11 @@ $(function() {
 	// No Content Template
 	var no_content_template = $('#no-content-template').html();
 	profile.no_content_template = Handlebars.compile(no_content_template);
-	
+
+//User Title renders Collection
+	$('.header-left h2 a').click(function() {
+		$('.section-selectors a#collection').click();
+	});
 
 //View renders based on the id selectors.
 	$('.section-selectors a').click(function(event) {
@@ -59,7 +63,6 @@ $(function() {
 	//Collection Renders
 		$('body').on('click','.collection-controls a', function(event) {
 			event.preventDefault();
-
 			$('.collection-controls a').removeAttr('class');
 			$(this).prop('class','active');
 			profile.type = $(this).data('type');
@@ -81,7 +84,7 @@ $(function() {
 
 
 //View renders for settings/follow
-	$('.header-right a').click(function(event) {
+	$('.header-right a, a#settings').click(function(event) {
 		//event.preventDefault();
 		$('.section-selectors a').removeAttr('class');//gets rid of the class.
 		profile.view = $(this).prop('id');
