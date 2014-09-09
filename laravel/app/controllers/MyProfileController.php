@@ -305,12 +305,12 @@ class MyProfileController extends BaseController {
 
 	//This is for the avatar upload.
 	public function postAvatar( ) {
-		$file = Input::file('image');
-		$input = array('image' => $file);
+		$file_name = Request::get('image');
+		$input = array('image' => $file_name);
 
 		//validation that the file infact is an image
 		$rules = array(
-			'image' => 'image'
+			'image' => 'required'
 		);
 
 		$validator = Validator::make($input, $rules);
@@ -318,22 +318,18 @@ class MyProfileController extends BaseController {
 		//kill two birds in one.
 		if ($validator->fails() || Auth::guest() ) {
 			return Response::json(
-					array('error' => 'wrong file type or you are not logged in'),
+					array('error' => 'You are not logged in or you did not send anything'),
 					200
 				);
-		} else {			
+		} else {
+			//save the image as part of the usermodel.  We'll need to put this in the User repo later.
 			$user = Auth::user();
-
-			$path = public_path() . '/uploads/avatars/';
-			$filename = $user->username;
-
-			Input::file('image')->move($path, $filename);
-
-			//We should in theory update the image on the user, but we're having trouble with the user model.
+			$user->image = $file_name;
+			$user->update();
 
 			return Response::json(
 					array(
-						'image' => $filename
+						'image' => $file_name
 						),
 					200
 				);
