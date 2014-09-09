@@ -33,13 +33,16 @@
 	@include( 'v2/partials/photo-input' )
 
 	@if($myprofile)
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/form/jquery.form.js"></script>		
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/form/jquery.form.js"></script>
+	@else
+		{{--This is for the follow action--}}
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_actions.js"></script>
 	@endif
 	
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment/moment.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment-timezone/moment-timezone-with-data.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/photo/photo.js"></script>	
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/myprofile/profile.js"></script>	
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/myprofile/profile.js"></script>
 @stop
 
 @section('content')
@@ -52,7 +55,7 @@
 							@if($profile_user->image)
 								<span class="avatar-image" style="background-image:url('{{Config::get('app.url')}}/uploads/final_images/{{$profile_user->image}}');"></span>
 							@else
-								<span class="avatar-image" style="background-image:url('{{Config::get('app.url')}}/images/default.jpg');"></span>
+								<span class="avatar-image" style="background-image:url('{{Config::get('app.url')}}/images/profile/avatar-default.png');"></span>
 							@endif
 							
 							{{$profile_user->username}}
@@ -111,7 +114,7 @@
 							Follow
 						</a>
 						@else
-						<a class="unfollow following-button">
+						<a class="follow following-button">
 							Following
 						</a>
 						@endif

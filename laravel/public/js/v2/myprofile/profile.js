@@ -1,5 +1,30 @@
 //Events in the Profile Page
 $(function() {
+
+//Non user specific code
+	var user_action = new UserAction;
+	$('.follow-user .follow').click(function() {
+		user_action.user_id = window.user_id;
+		user_action.action = 'follow';
+
+		if( $(this).hasClass('follow-button') ) {
+			current_state = false;//currently 
+		} else {
+			current_state = true;//currently following
+		}
+		that = $(this);
+		user_action.send(function(data){
+			if(data.result == 'deleted') {
+				that.removeClass('following-button').addClass('follow-button');
+				that.html('Follow');
+			} else {
+				that.removeClass('follow-button').addClass('following-button');
+				that.html('Following');
+			}
+		});
+	});
+
+
 //Initialize Profile class
 	var profile = new ProfileActions;
 
@@ -98,7 +123,6 @@ $(function() {
 
 	//image upload code.
 	$('body').on('change', '#uploadAvatar input.image', function() {
-		console.log('avatar change');
 		profile.avatarUpload();
 	});
 
@@ -120,16 +144,19 @@ $(function() {
 		}
 	});
 
+//Collection Post Actions.
 //We should probably make these into better action systems.
-//Set Featured events
+	//Set Featured events
 	$('body').on('click', '.set-featured',function() {
 		profile.setFeatured( $(this).data('id') );
 	});
 
+	//Delete Post
 	$('body').on('click', '.post-delete', function() {
 		profile.setPostDelete( $(this).data('id') );
 	});
 
+	//Remove Repost.
 	$('body').on('click', '.remove-repost',function() {
 		profile.setRepost( $(this).data('id') );
 	});
