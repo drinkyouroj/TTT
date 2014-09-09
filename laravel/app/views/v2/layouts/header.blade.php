@@ -6,19 +6,21 @@
 	<div class="header-inner-wrapper">
 		<div class="header-container container">
 			<div class="row">
-				<div class="col-sm-4 col-xs-4 col-left">
+				<div class="col-sm-4 col-xs-3 col-left">
 					<button class="read-button toggle-sidebar">
-						READ
+						<span>
+							READ
+						</span>
 					</button>
 
 					@if( $is_guest )
-						<a class="btn-flat-blue" data-toggle="modal" data-target="#guestSignup">POST</a>
+						<a class="post-btn btn-flat-blue" data-toggle="modal" data-target="#guestSignup">POST</a>
 					@else
-						<a class="btn-flat-blue" href="{{Config::get('app.url')}}/myprofile/newpost">POST</a>
+						<a class="post-btn btn-flat-blue" href="{{Config::get('app.url')}}/myprofile/newpost">POST</a>
 					@endif
 
 				</div>
-				<div class="col-sm-4 col-xs-4 col-middle">
+				<div class="col-sm-4 col-xs-6 col-middle">
 					<div class="header-logo">
 						<a  href="{{Config::get('app.url')}}">
 							THE
@@ -28,10 +30,10 @@
 					</div>
 				</div>
 
-				<div class="col-sm-4 col-xs-4 col-right">
+				<div class="col-sm-4 col-xs-3 col-right">
 						@if( $is_guest )
-							<a class="btn-outline-blue" data-toggle="modal" data-target="#guestSignup">Signup</a>
-							<a class="login-btn" href="{{ URL::to( 'user/login' ) }}">LOG IN</a>
+							<a class="btn-outline-blue signup hidden-xs" data-toggle="modal" data-target="#guestSignup">Signup</a>
+							<a class="login-btn login hidden-xs" href="{{ URL::to( 'user/login' ) }}">LOG IN</a>
 						@else
 						<div class="action">
 							<img src="" class="navbar-dropdown-toggle avatar">
@@ -185,6 +187,22 @@
 			</li>
 		@endif
 
+		@if( $is_guest )
+			<li class="sidebar-option post-btn-mobile visible-xs">
+				<a data-toggle="modal" data-target="#guestSignup">POST</a>
+			</li>
+		@else
+			<li class="sidebar-option post-btn-mobile visible-xs">
+				<a href="{{Config::get('app.url')}}/myprofile/newpost">POST</a>
+			</li>
+		@endif
+
+		<li class="sidebar-option signup-mobile visible-xs">
+			<a data-toggle="modal" data-target="#guestSignup">Signup</a>
+		</li>
+		<li class="sidebar-option login-mobile visible-xs">
+			<a href="{{ URL::to( 'user/login' ) }}">Log in</a>
+		</li>
 	</ul>
 </div>
 

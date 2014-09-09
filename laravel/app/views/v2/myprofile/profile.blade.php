@@ -58,12 +58,8 @@
 				</div>
 				<div class="col-md-6 header-right">
 					<div class="row">
-						<div class="col-md-5 settings">
-							@if($myprofile)
-							<a class="icon-button" href="#settings" id="settings">
-								Settings
-							</a>
-							@endif
+						<div class="col-md-5">
+
 						</div>
 						<div class="col-md-7 follow">
 
@@ -76,6 +72,14 @@
 								<span class="count">{{$following_count}}</span>
 								<span class="text">Following</span>
 							</a>
+							
+							@if($myprofile)
+							<div class="settings">
+								<a class="icon-button" href="#settings" id="settings">
+									Settings
+								</a>
+							</div>
+							@endif
 								
 						</div>
 					</div>
@@ -107,8 +111,8 @@
 							Follow
 						</a>
 						@else
-						<a class="unfollow">
-							UnFollow
+						<a class="unfollow following-button">
+							Following
 						</a>
 						@endif
 					</div>

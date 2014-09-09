@@ -22,7 +22,14 @@
 		
 		<br/>
 		<br/>
-		<img src="{{Captcha::img()}}"/><br/>
+		<br/>
+		<?php 
+		$num1 = rand(1,9);
+		$num2 = rand(1,9);
+		Session::put('signup_num1', $num1 );
+		Session::put('signup_num2', $num2 );
+		?>
+		<p>{{$num1}} + {{$num2}} = ??</p>
 		<input type="text" name="captcha" placeholder="Captcha">
 
 

@@ -105,30 +105,32 @@
 	@yield('js')
     
     
-	@if( !$have_user )
-		<div class="modal fade" id="guestSignup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" id="myModalLabel"></h4>
-		      </div>
-		      <div class="modal-body">
-		        <div class="signup-form">
-		        	<h4>Signup</h4>
-			        {{ View::make('v2.users.forms.signup') }}
-				</div>
-				
-				<div class="login-form">
-					<h4>Login</h4>
-					{{ View::make('v2.users.forms.login') }}
-				</div>
-		      </div>
-		    </div>
-		  </div>
-		</div>
+    @if(Request::segment(1) != 'user')
+		@if( !$have_user )
+			<div class="modal fade" id="guestSignup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			        <h4 class="modal-title" id="myModalLabel"></h4>
+			      </div>
+			      <div class="modal-body">
+			        <div class="signup-form">
+			        	<h4>Signup</h4>
+				        {{ View::make('v2.users.forms.signup') }}
+					</div>
+					
+					<div class="login-form">
+						<h4>Login</h4>
+						{{ View::make('v2.users.forms.login') }}
+					</div>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		@endif
 	@endif
-
+	
     <script>
     	/*
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -6,6 +6,7 @@ class MyProfileController extends BaseController {
 							FeedRepository $feed,
 							ProfilePostRepository $profilepost,
 							FavoriteRepository $save,
+							RepostRepository $repost,
 							PostRepository $post,
 							FollowRepository $follow,
 							CommentRepository $comment
@@ -14,6 +15,7 @@ class MyProfileController extends BaseController {
 		$this->feed = $feed;
 		$this->profilepost = $profilepost;
 		$this->save = $save;
+		$this->repost = $repost;
 		$this->post = $post;
 		$this->follow = $follow;
 		$this->comment = $comment;
@@ -155,6 +157,49 @@ class MyProfileController extends BaseController {
 					200
 				);
 		} 
+	}
+
+	public function getRestPostDelete($post_id) {
+		if($post_id) {
+			$user = Auth::user();
+			$data = array(
+					'user_id' => $user->id,
+					'post_id' => $post_id,
+					'post_type' => 'post'
+				);
+			$this->profilepost->delete($data);
+
+			//let's make sure that this belongs to the user.
+			$post = $this->post->findById($post_id);
+
+			if($post->user_id == $user->id) {
+				$this->post->delete($post_id);
+			}
+			
+			return Response::json(
+					array('success' => true),
+					200
+				);
+		}
+	}
+
+	public function getRestRepostDelete ($post_id) {
+		if($post_id) {
+			$user = Auth::user();
+			$data = array(
+					'user_id' => $user->id,
+					'post_id' => $post_id,
+					'post_type' => 'repost'
+				);
+			$this->profilepost->delete($data);
+
+			$this->repost->delete($user->id, $post_id);
+
+			return Response::json(
+					array('success' => true),
+					200
+				);
+		}
 	}
 
 	//Sets the user's featured id.

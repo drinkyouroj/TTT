@@ -87,7 +87,7 @@ a:focus {
 			}
 		}
 		.follow-user {
-			.follow-button {
+			.follow-button, .following-button {
 				float:right;
 			}
 		}
@@ -110,7 +110,8 @@ a:focus {
 			//Collection
 			.collection-container {
 				float: left;
-				width: 77%;
+				width: 74%;
+				margin-right:2%;
 				//Note to MAX, We will have to deal with the container widths when we do some mobile work.
 				@media (max-width:$break-md) {
 					width: 100%;
@@ -122,9 +123,13 @@ a:focus {
   					//Post
 					@include post_listing(0);
 
+					.post-container {
+						margin-right:0px;
+					}
+
 					.feature-item {
 						margin-left:15px;
-						margin-right:15px;
+						margin-right:12px;
 						margin-bottom:30px;
 						.text, .image {
 							height:350px; // featured post height
@@ -136,6 +141,9 @@ a:focus {
 							background:$white;
 							text-align:center;
 							padding:0 40px;
+							border-top:solid 1px $lightgray;
+							border-bottom:solid 1px $lightgray;
+							border-left:solid 1px $lightgray;
 							@media (max-width:$break-sm) {
 								height:auto;
 								padding-bottom:30px;
@@ -148,6 +156,9 @@ a:focus {
 								@media (max-width:$break-lg) {
 									padding-top:20px;
 									font-size:17px;
+								}
+								a {
+									color:$dark;
 								}
 							}
 							.line {
@@ -193,7 +204,7 @@ a:focus {
 
 			.comment-container {
 				float: left;
-				width: 23%;
+				width: 24%;
 				@media screen and (max-width:$break-md) {
 					display:none;
 				}
@@ -214,9 +225,11 @@ a:focus {
 						letter-spacing: 1px;
 					}
 					.comment-box {
+						position: relative;
 						padding: 13px 25px;
-						margin: 10px 0;
+						margin: 20px 0;
 						background:#fff;
+						border:solid 1px $lightgray;
 						@include word-break(break-all);
 						span.date {
 							color: $gray;
@@ -247,6 +260,12 @@ a:focus {
 									@include montserrat(bold);
 								}
 							}
+						}
+						&::before {
+							position: absolute;
+							content: url(../../../../images/profile/profile-comment-arrow.png);
+							top: -13px;
+							left:10px;
 						}
 					}
 				}

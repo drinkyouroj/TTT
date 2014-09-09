@@ -3,10 +3,6 @@ $(function() {
 //Initialize Profile class
 	var profile = new ProfileActions;
 
-//Initialize the Photo Selection Class
-	
-	
-
 //Let's Compile the handlebars source.
 	//Collection container
 	var collection_source = $('#collection-template').html();
@@ -124,12 +120,16 @@ $(function() {
 //We should probably make these into better action systems.
 //Set Featured events
 	$('body').on('click', '.set-featured',function() {
-		profile.setFeatured($(this).data('id'));
-	})
+		profile.setFeatured( $(this).data('id') );
+	});
+
+	$('body').on('click', '.post-delete', function() {
+		profile.setPostDelete( $(this).data('id') );
+	});
 
 	$('body').on('click', '.remove-repost',function() {
-		profile.setRepost($(this).data('id'));
-	})
+		profile.setRepost( $(this).data('id') );
+	});
 
 //Pagination detection.
 	$(window).scroll(function() {
@@ -354,10 +354,18 @@ function ProfileActions() {
 			this.renderFeatured();
 		}
 
+		this.setPostDelete = function(id) {
+			$('#post-'+id).fadeOut().remove();
+			removePost = window.site_url + 'rest/profile/post/' + id;
+			this.getData(removePost, function(data) {
+
+			});
+		}
+
 		//Remove a repost
 		this.setRepost = function(id) {
 			$('#post-'+id).fadeOut().remove();
-			removeRepost = window.site_url + 'rest/reposts/'+ id;
+			removeRepost = window.site_url + 'rest/profile/repost/'+ id;
 			this.getData(removeRepost, function(data) {
 				
 			});
