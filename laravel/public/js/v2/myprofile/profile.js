@@ -24,7 +24,6 @@ $(function() {
 		});
 	});
 
-
 //Initialize Profile class
 	var profile = new ProfileActions;
 
@@ -431,9 +430,12 @@ function ProfileActions() {
 				$('#default-content',target).append( no_content_template( {section: 'feed'} ) );
 			} else {
 				$.each(data.feed, function(idx, val) {
+					console.log(val);
 					view_data = {
 						site_url: window.site_url,
-						post: val.post
+						post: val.post,
+						feed_type: val.feed_type,
+						users: val.users
 					};
 					$('#default-content',target).append(post_item_template(view_data));
 				});
