@@ -459,7 +459,11 @@ a:focus {
 									display:inline-block;
 								}
 								.edit-draft {
-
+									@media (max-width:$break-xs) {
+										font-size:10px;
+										background-size:25px 25px;
+										background-position:3px center;
+									}
 								}
 								.publish-draft {
 

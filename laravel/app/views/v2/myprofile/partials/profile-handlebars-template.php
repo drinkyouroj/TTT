@@ -92,16 +92,16 @@
 	<div class="container">
 		<div class="drafts-box">
 			<div class="row">
-				<div class="date col-md-2">
+				<div class="date col-md-2 col-sm-2 col-xs-1">
 					<span>{{date}}</span>
 				</div>
 				<a  href="{{site_url}}posts/{{draft.alias}}"
-					class="image col-md-2"
+					class="image col-md-2 col-sm-3 col-xs-3"
 					style="background-image:url('{{site_url}}uploads/final_images/{{draft.image}}');">
 
 				</a>
 
-				<div class="text col-md-5">
+				<div class="text col-md-5 col-sm-5 col-xs-5">
 					<h3>
 						<a href="{{site_url}}posts/{{post.alias}}">
 							{{draft.title}}
@@ -110,7 +110,7 @@
 					<p>{{draft.tagline_1}} | {{draft.tagline_2}} | {{draft.tagline_3}}</p>
 				</div>
 
-				<div class="controls col-md-3">
+				<div class="controls col-md-3 col-sm-2 col-xs-3">
 					<a class="edit-draft icon-button" href="{{site_url}}myprofile/editpost/{{draft.id}}" >Edit Draft</a>
 					<br/>
 					<a class="delete-draft icon-link" data-id="{{draft.id}}" data-toggle="tooltip" data-placement="bottom" title="Delete Forever!">Delete</a>
