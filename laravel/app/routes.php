@@ -14,7 +14,9 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 	// Route for MyProfile
 	Route::group(array('prefix' => 'profile'), function() {
 		Route::get( 'feed/{feed_type}/{page}', 'MyProfileController@getRestFeed' );
+		Route::get( 'saves/delete/{post_id}', 'MyProfileController@getRestSaveDelete' );
 		Route::get( 'saves/{page}', 'MyProfileController@getRestSaves' );
+		
 		Route::get( 'drafts/{page}', 'MyProfileController@getRestDrafts' );
 		//below 2 are delete functions
 		Route::get( 'repost/{id}', 'MyProfileController@getRestRepostDelete' );

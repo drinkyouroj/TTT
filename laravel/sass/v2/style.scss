@@ -574,19 +574,24 @@ input, textarea, button:focus {outline: none !important;}
 		color: white;
 		text-decoration: none;	
 	}
+	@media (max-width:$break-xs) {
+		font-size:10px;
+		background-size:25px 25px;
+		background-position:3px center;
+	}
 }
 
 .following-button {
 	display:inline-block;
 	@include montserrat(normal);
 	text-transform:uppercase;
-	color: white;
+	color: $white;
 	font-size: 12px;
 	letter-spacing:1px;
-	background: $dark;
+	background: $gray;
 	padding: 10px 15px 10px 50px;
 	text-decoration: none;
-	border: 1px solid $dark;
+	border: 1px solid $gray;
 	cursor: pointer;
 	background-image:url('../../../images/global/following.png');
 	background-repeat: no-repeat;
@@ -596,6 +601,11 @@ input, textarea, button:focus {outline: none !important;}
 		// background-color: $gray;
 		color: white;
 		text-decoration: none;	
+	}
+	@media (max-width:$break-xs) {
+		font-size:10px;
+		background-size:25px 25px;
+		background-position:3px center;
 	}
 }
 

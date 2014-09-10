@@ -130,6 +130,7 @@ $(function() {
 		profile.changePassword();
 	});
 
+	//We'll just leave this as is for now.
 	$('#deleteModal').on('click','.btn.delete-account', function() {
 		id = $(this).data('user');
 		if(id) {
@@ -157,7 +158,14 @@ $(function() {
 
 	//Remove Repost.
 	$('body').on('click', '.remove-repost',function() {
-		profile.setRepost( $(this).data('id') );
+		profile.setRepostDelete( $(this).data('id') );
+	});
+
+
+//Saves Actions
+	//Remove Saved
+	$('body').on('click', 'a.remove-save',function() {
+		profile.setSaveDelete( $(this).data('id') );		
 	});
 
 //Pagination detection.
@@ -333,7 +341,6 @@ function ProfileActions() {
 			} else {
 				$.each(data.collection, function(idx, val) {
 					var editable = editCheck(val.post.published_at);
-					console.log(val.post);
 					view_data = {
 						site_url: window.site_url,
 						post: val.post,
@@ -394,7 +401,7 @@ function ProfileActions() {
 		}
 
 		//Remove a repost
-		this.setRepost = function(id) {
+		this.setRepostDelete = function(id) {
 			$('#post-'+id).fadeOut().remove();
 			removeRepost = window.site_url + 'rest/profile/repost/'+ id;
 			this.getData(removeRepost, function(data) {
@@ -409,7 +416,6 @@ function ProfileActions() {
 		this.urlConstructor();
 		this.getData(this.comment_url, function(data) {
 			$.each(data.comments,function(idx, val) {
-
 				view_data = {
 					site_url: window.site_url,
 					comment: val
@@ -430,7 +436,6 @@ function ProfileActions() {
 				$('#default-content',target).append( no_content_template( {section: 'feed'} ) );
 			} else {
 				$.each(data.feed, function(idx, val) {
-					console.log(val);
 					view_data = {
 						site_url: window.site_url,
 						post: val.post,
@@ -465,6 +470,14 @@ function ProfileActions() {
 		});
 
 	};
+
+		this.setSaveDelete = function(post_id) {
+			$('#save-'+post_id).fadeOut().remove();
+			url = window.site_url + 'rest/profile/saves/delete/' + post_id;
+			this.getData(url, function(data) {
+				console.log(data);
+			});
+		};
 
 	this.renderDrafts =  function() {
 		//scope issues
@@ -533,6 +546,8 @@ function ProfileActions() {
 		});
 	}
 
+	this.photo_init = false;
+
 	this.renderSettings = function() {
 		
 		if(window.user_image.length) {
@@ -547,13 +562,17 @@ function ProfileActions() {
 		};
 		$('#default-content', this.target).append(this.settings_template(view_data));
 		
-		photo_input = new PhotoInput;
+		if(this.photo_init == false) {
+			photo_input = new PhotoInput;
+			this.photo_init = true;
 
-		photo_input.target = $('#photoModal .modal-body');
-		photo_input.input = $('#uploadAvatar input.image');
-		photo_input.image_dom = '#uploadAvatar img.thumb';
-		photoInit(photo_input);
-		photo_input.viewInit();
+			photo_input.target = $('#photoModal .modal-body');
+			photo_input.input = $('#uploadAvatar input.image');
+			photo_input.image_dom = '#uploadAvatar img.thumb';
+			photoInit(photo_input);
+			
+			photo_input.viewInit();
+		}
 
 		$('body').on('click', '.avatar-modal', function(event) {
 			event.preventDefault();			
