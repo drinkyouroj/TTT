@@ -4,6 +4,8 @@ $(function() {
 	var comment_template = Handlebars.compile(source);
 	var reply_form_source = $('#comment-reply-template').html();
 	var reply_form_template = Handlebars.compile( reply_form_source );
+	var edit_comment_form_source = $('#comment-edit-template').html();
+	var edit_comment_form_template = Handlebars.compile( edit_comment_form_source );
 
 	// ======================== ACTION BAR ACTIONS ========================
 	// Scroll to comment form
@@ -81,6 +83,7 @@ $(function() {
 			$('.comments-listing a.reply').show();
 			// hide/toggle this form and button
 			$(this).hide();
+			$(this).siblings('a').hide();
 			$comment_container.append( new_form );
 		}
 	});
@@ -91,6 +94,31 @@ $(function() {
 		submit_comment( $(this) );
 	});
 
+	// ========================= COMMENT EDITS =============================
+	$('.comments-listing').on('click', '.comment.published a.edit', function(event) {
+		event.preventDefault();
+		var comment_id = $(this).data('editid');
+		var comment_body = $(this).closest('.comment').find('.comment-body').html().trim();
+		var $comment_edit_container = $(this).siblings('.reply-box');
+		var edit_form = edit_comment_form_template( { comment_id: comment_id, comment_body: comment_body } );
+		// Hide the action buttons
+		$(this).hide();
+		$(this).siblings('a').hide();
+		$comment_edit_container.append( edit_form );
+	});
+	// Comment edit submit
+	$(document).on('submit', 'form.comment-edit', function(event) {
+		event.preventDefault();
+		submit_comment_edit( $(this) );
+	});
+	// Comment edit cancel
+	$('.comments-listing').on('click', '.comment-edit-cancel', function(event) {
+		event.preventDefault();
+		// Bring back the action buttons
+		$(this).closest('.reply-links').find('a').show();
+		// Remove the edit form
+		$(this).closest('form').remove();
+	});
 
 	/**
 	 *	Algo for rendering comments
@@ -160,6 +188,31 @@ $(function() {
 				}
 			}
 		});
+	}
+
+	/**
+	 *	Submit edit comment
+	 */
+	function submit_comment_edit ( form ) {
+		// TODO: some frontend validation!
+		$.ajax({
+			url: window.site_url + 'rest/comment/edit',
+			type: 'POST',
+			data: {
+				comment_id: $(form).find('input[name="comment_id"]').val(),
+				body: $(form).find('textarea').val()
+			},
+			success: function ( data ) {
+				if ( data.error ) {
+					$(form).find('.error').html( data.error );
+				} else {
+					// TODO: update dom with edited comment
+					$(form).closest('.comment').find('.comment-body').html( data.comment.body );
+					$(form).closest('.reply-links').find('a').show();
+					$(form).remove();
+				}
+			}
+		})
 	}
 
 });
