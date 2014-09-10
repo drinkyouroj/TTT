@@ -60,13 +60,13 @@
 							$is_author = Auth::check() && $post->user->id == Auth::user()->id;
 						?>
 							@if( !$is_author )
-								<div class="col-md-3 utility-container">
+								<div class="col-md-3 hidden-sm hidden-xs utility-container">
 									<a data-action="read" class="read">Mark as Read</a>
 									<a data-action="flag" class="flag-button flag glyphicon glyphicon-flag">
 										Flag</a>
 								</div>
 
-								<div class="col-md-3 actions-container">
+								<div class="col-md-3 col-xs-9 actions-container">
 									<ul class="actions">
 										<li class="like">
 											<a data-action="like" class="like-button {{ $liked ? 'active' : '' }}" href="#" title="{{ $like_tooltip }}" data-toggle="tooltip" data-placement="bottom">
@@ -91,14 +91,14 @@
 									<ul>
 								</div>
 
-								<div class="col-md-4 follow-container">
+								<div class="col-md-4 hidden-sm hidden-xs follow-container">
 									<a data-action="follow" class="follow-button follow" href="#">
 										<span class="{{ $is_following ? 'hidden' : '' }}"> {{ $follow_term }} {{ $post->user->username }} </span>
 										<span class="{{ $is_following ? '' : 'hidden' }}"> {{ $follow_term_active }} {{ $post->user->username }} </span>
 									</a>
 								</div>
 							@endif
-								<div class="col-md-2 comment-container">
+								<div class="col-md-2 col-xs-3 comment-container">
 									<a class="comment-button action-comment" href="#">Comment</a>
 								</div>
 							@if ( $is_author && $is_editable )

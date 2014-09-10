@@ -356,9 +356,9 @@ var save_post = new function() {
 		}
 
 		if(this.draft) {
-			//window.location.replace(window.site_url+'myprofile#drafts');
+			window.location.replace(window.site_url+'myprofile#drafts');
 		} else {
-			//window.location.replace(window.site_url+'myprofile#collection');
+			window.location.replace(window.site_url+'myprofile#collection');
 		}
 	}
 	
