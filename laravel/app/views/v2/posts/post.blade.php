@@ -203,6 +203,9 @@
 					<div class="comments-listing">
 						
 					</div>
+					<div class="comment-loading-container">
+						<img src="{{ URL::to('images/posts/comment-loading.gif') }}">
+					</div>
 				</div>
 			</div>
 		</div>

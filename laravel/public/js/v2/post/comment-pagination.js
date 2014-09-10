@@ -27,8 +27,11 @@ function CommentPagination ( post_id ) {
 				if ( data && data.comments && data.comments.length ) {
 					page++;
 					callback( data );
+					console.log(data.comments);
 				} else {
 					no_more_comments = true;
+					// Remove loading gif from view
+					$('.comment-loading-container img').fadeOut();
 					callback( undefined );
 				}
 			},
