@@ -89,6 +89,14 @@ $(function() {
 	  }
 	});
 
+	// Simple frontend stop to selecting more than 2 categories
+	$('input.category').on('change', function(evt) {
+	   if($('input.category:checked').length > 2) {
+	       this.checked = false;
+	       $('.category-box .warning').removeClass('hidden');
+	   }
+	});
+
 });
 
 function iOSversion() {

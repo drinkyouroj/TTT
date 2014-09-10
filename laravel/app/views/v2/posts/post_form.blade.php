@@ -123,9 +123,9 @@
 								</div>
 								<div class="col-md-8 category-box">
 									{{ Form::label('category','Post Category', array('class'=>'control-label')) }}
-									<a href="#" data-toggle="tooltip" title="Choose 3 categories that this story might fit in.">?</a>
+									<a href="#" data-toggle="tooltip" title="Choose 2 categories that this story might fit in.">?</a>
 									<br/>
-									<div class="warning hidden">You can't select more than 3 categories.</div>
+									<div class="warning hidden">You can only select up to 2 categories.</div>
 
 									<ul>
 										{? $checked = ''; ?}
