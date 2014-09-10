@@ -3,6 +3,10 @@
 .post-action-bar-wrapper {
 	height: $post_actionbar_height;
 
+	@media (max-width:$break-sm) {
+		height:45px;
+	}
+
 	.post-action-bar {
 		position: fixed;
 		width: 100%;
@@ -10,6 +14,12 @@
 		z-index: 999;
 		background-image:url('../../../../images/posts/black-90.png');
 		padding: 15px;
+
+		@media (max-width:$break-sm) {
+			height:45px;
+			padding: 5px 15px;
+		}
+
 		.actions-container, .comment-container {
 			margin-top:5px;
 		}
@@ -46,11 +56,24 @@
 					}
 				}
 			}
+			@media (max-width: $break-xs) {
+				margin-top:7px;
+			}
 		}
 		.comment-container {
 			.comment-button {
 				@include post_actions_label;
 				background-image:url('../../../../images/global/comment.png');
+				 @media (max-width: $break-xs) {
+				 	font-size:9px;
+			         background-size:15px 35px;
+			         height:17px;
+			         padding-left:19px;
+			         background-position:left 0px;
+			        &:hover {
+			          background-position:left -18px;
+			        }
+			      }
 			}
 		}
 		.follow-container {
@@ -65,14 +88,18 @@
 .post-heading-wrapper {
 	background-color: $lightgray;
 	border-bottom:solid 1px $lightgray;
+	@media (max-width:$break-md) {
+		background-color: $white;
+		padding-bottom:20px;	
+	}
 
 	.post-heading-container {
 		position: relative;
-		width: 100%;
-		max-width: 1400px;
-		padding-left:0px;
-		padding-right:0px;
-		@media screen and (min-width: 992px) {
+		@media (min-width: $break-lg-min) {
+			width: 100%;
+			max-width: 1400px;
+			padding-left:0px;
+			padding-right:0px;
 			display: table;
 			-moz-box-sizing: border-box;
 		    box-sizing: border-box;
@@ -97,8 +124,14 @@
 				h2 {
 					@include post_page_title;
 					padding-top:75px;
-					@media screen and (max-width: 992px) {
-						margin-top: 0px;
+					@media (max-width: $break-md) {
+						margin-top: 50px;
+						padding-top:0px;
+					}
+					@media (max-width: $break-xs) {
+						margin-top: 25px;
+						margin-bottom: 0px;
+						font-size:24px;
 					}
 				}
 				.line {
@@ -108,6 +141,10 @@
 					border-bottom: 1px solid $dark;
 					margin-left: auto;
 					margin-right: auto;
+					@media (max-width: $break-xs) {
+						width: 20px;
+						margin-bottom: 5px;
+					}
 				}
 
 				ul.post-taglines {
@@ -118,6 +155,10 @@
 					}
 					li:nth-child(1), li:nth-child(2) {
 						border-right: 1px solid $dark;
+					}
+					@media (max-width: $break-xs) {
+						margin-bottom: 20px;
+						font-size:14px;
 					}
 				}
 
@@ -140,15 +181,21 @@
 					font-size:15px;
 					letter-spacing:2px;
 					@include fjalla;
-					@media screen and (max-width: 992px) {
-						position: relative;
-						bottom:0px;
-					}
 					li {
 						padding: 0;
 						a {
 							color: $dark;
 						}
+					}
+					@media (max-width:$break-md) {
+						position: relative;
+						margin-top:20px;
+						bottom:0px;
+					}
+					@media (max-width: $break-xs) {
+						margin-top:10px;
+						padding-bottom:10px;
+						font-size:12px;
 					}
 				}
 			}
@@ -160,6 +207,13 @@
 		        -o-background-size: cover;
 		        background-size: cover;
 		        background-position: center;
+
+		        @media (max-width:$break-md) {
+		        	width: 75%;
+		        	height:0px;
+		        	padding-top:47.25%;
+		        	margin:0px auto;
+		        }
 			}	
 		}
 	}
@@ -170,6 +224,9 @@
 
 	.post-content-container {
 		padding-bottom: 30px;
+		@media (max-width:$break-xs) {
+			margin:0px 15px;
+		}
 
 		.post-content-page-wrapper {
 			padding-left: 0px !important;
@@ -186,6 +243,20 @@
 				-moz-column-count:2; /* Firefox */
 				-webkit-column-count:2; /* Safari and Chrome */
 				column-count:2;
+
+				@media (max-width:$break-sm) {
+					-moz-column-gap:0px; /* Firefox */
+					-webkit-column-gap:0px; /* Safari and Chrome */
+					column-gap:0px;
+					-moz-column-count:1 !important; /* Firefox */
+					-webkit-column-count:1 !important; /* Safari and Chrome */
+					column-count:1 !important;
+					padding: 50px 100px 10px 100px;
+				}
+				@media (max-width:$break-xs) {
+					font-size:18px;
+					padding: 20px 20px 10px 20px;
+				}
 			}
 		}
 

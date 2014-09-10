@@ -1,6 +1,6 @@
 <?php
 
 return array(
-	'url' => 'http://localhost:4567',
-	'imageurl' => 'http://localhost:4567/uploads/final_images'
+	'url' => 'http://192.168.9.140:4567',
+	'imageurl' => 'http://192.168.9.140:4567/uploads/final_images'
 );

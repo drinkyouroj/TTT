@@ -84,7 +84,7 @@ input, textarea, button:focus {outline: none !important;}
 					@media (max-width:$break-sm) {
 						padding:0px;
 						height:40px;
-						width:40px;
+						width:42px;
 					}
 					span {
 						@media (max-width:$break-sm) {
@@ -527,6 +527,24 @@ input, textarea, button:focus {outline: none !important;}
 	text-decoration: none;
 	text-transform:uppercase;
 	border: 2px solid $blue;
+	cursor: pointer;
+	&:hover {
+		// background-color: $gray;
+		color: white;
+		text-decoration: none;	
+	}
+}
+
+.btn-flat-red {
+	display:inline-block;
+	@include montserrat(normal);
+	color: white;
+	font-size: 12px;
+	background: $red;
+	padding: 10px 15px;
+	text-decoration: none;
+	text-transform:uppercase;
+	border: 2px solid $red;
 	cursor: pointer;
 	&:hover {
 		// background-color: $gray;

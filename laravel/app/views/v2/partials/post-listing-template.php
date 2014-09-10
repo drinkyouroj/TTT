@@ -56,6 +56,7 @@
 			{{/ifCond}}
 			{{#ifCond myprofile true }}
 				{{#ifCond post.user.id user_id }}
+					<div class="options-link"> </div>
 					<div class="post-options">
 						{{#ifCond editable true}}
 							<a class="post-edit" href="{{site_url}}myprofile/editpost/{{post.id}}">

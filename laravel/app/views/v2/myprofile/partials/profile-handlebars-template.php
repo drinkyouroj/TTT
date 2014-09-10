@@ -62,7 +62,7 @@
 	<div class="container" id="save-{{save.id}}">
 		<div class="saves-box">
 			<div class="row">
-				<div class="image-container col-md-3">
+				<div class="image-container col-md-3 col-sm-3">
 					<a 	href="{{site_url}}posts/{{save.alias}}"
 						class="image"
 						style="background-image:url('{{site_url}}uploads/final_images/{{save.image}}');">
@@ -70,7 +70,7 @@
 					</a>
 				</div>
 
-				<div class="text col-md-7">
+				<div class="text col-md-7 col-sm-7">
 					<h3>
 						<a href="{{site_url}}posts/{{save.alias}}">
 							{{save.title}}
@@ -79,7 +79,7 @@
 					<p>{{save.tagline_1}} | {{save.tagline_2}} | {{save.tagline_3}}</p>
 				</div>
 
-				<div class="controls col-md-2">
+				<div class="controls col-md-2 col-sm-2">
 					<a class="remove-save icon-button" data-id="{{save.id}}" >Remove</a>
 				</div>
 			</div>
@@ -92,7 +92,7 @@
 	<div class="container">
 		<div class="drafts-box">
 			<div class="row">
-				<div class="date col-md-2 col-sm-2 col-xs-1">
+				<div class="date col-md-2 col-sm-2 col-xs-12">
 					<span>{{date}}</span>
 				</div>
 				<a  href="{{site_url}}posts/{{draft.alias}}"
@@ -101,7 +101,7 @@
 
 				</a>
 
-				<div class="text col-md-5 col-sm-5 col-xs-5">
+				<div class="text col-md-5 col-sm-5 col-xs-6">
 					<h3>
 						<a href="{{site_url}}posts/{{post.alias}}">
 							{{draft.title}}
@@ -110,9 +110,8 @@
 					<p>{{draft.tagline_1}} | {{draft.tagline_2}} | {{draft.tagline_3}}</p>
 				</div>
 
-				<div class="controls col-md-3 col-sm-2 col-xs-3">
-					<a class="edit-draft icon-button" href="{{site_url}}myprofile/editpost/{{draft.id}}" >Edit Draft</a>
-					<br/>
+				<div class="controls col-md-3 col-sm-2 col-xs-12">
+					<a class="edit-draft icon-button" href="{{site_url}}myprofile/editpost/{{draft.id}}" >Edit</a>
 					<a class="delete-draft icon-link" data-id="{{draft.id}}" data-toggle="tooltip" data-placement="bottom" title="Delete Forever!">Delete</a>
 				</div>
 			</div>
@@ -135,70 +134,62 @@
 
 <!--Settings Template-->
 <script type="text/x-handlebars-template" id="settings-template">
-	<div class="col-md-12">
-		<div class="col-md-5 col-md-offset-1 avatar">
-			<h2>Upload your Avator</h2>
-			<div class="upload-form">
-				<a class="btn-flat-blue avatar-modal">Choose an Avatar</a>
+	<div class="col-md-4 avatar">
+		<div class="upload-form">
 
-				<div id="avatarErrors"></div>
+			<form id="uploadAvatar" method="post" action="{{this.site_url}}rest/profile/image/upload">
+	            <input type="hidden" name="image" class="image">
+	            <div class="thumb-container" style="background-image:url('{{site_url}}uploads/final_images/{{user_image}}');">
+	            </div>
+			</form>
+			<a class="btn-flat-blue avatar-modal">Choose an Avatar</a>
 
-				<form id="uploadAvatar" method="post" action="{{this.site_url}}rest/profile/image/upload">
-                    <input type="hidden" name="image" class="image">
-                    <img width="100%" class="thumb" src="{{site_url}}uploads/final_images/{{user_image}}">
-				</form>
+			<div id="avatarErrors"></div>
 
-				<div id="avatarOutput" style="display:none">
-                </div>
-			</div>
+			<div id="avatarOutput" style="display:none">
+	        </div>
 		</div>
-		<div class="col-md-5 change-password">
-			<h2>Change Your Password</h2>
-			<div class="password-message">
-				
-			</div>
-			<div class="reset-pass">
-				<form role="form" class="form-horizontal" id="changePassword" method="post" action="{{this.site_url}}rest/profile/password">
-					<div class="form-group">
-						<label for="current_password" class="col-sm-4 control-label">Current Password</label>
-						<div class="col-sm-8">
-							<input type="password" name="current_password" class="current_password">
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label for="password" class="col-sm-4 control-label">New Password</label>
-						<div class="col-sm-8">
-							<input type="password" name="password" class="password">
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label for="password_confirmation" class="col-sm-4 control-label">New Password Again</label>
-						<div class="col-sm-8">
-							<input type="password" name="password_confirmation" class="password_confirmation">
-						</div>
-					</div>
-
-					<button class="btn btn-default">Change Password</button>
-
-					<div class="message-box"></div>
-				</form>
-
-			</div>
+	</div>
+	<div class="col-md-8 change-password">
+		<h2>Change Your Password</h2>
+		<div class="password-message">
+			
 		</div>
-		
-		<div class="col-md-5 col-md-offset-6 del-acc">
-			<h2>Delete Your Account</h2>
-			<p>
-				This will delete your account from the system.  All of your content will be unpublished (but they will remain in place)
-			</p>
-			<p>Should you decide to come back, all of your content will be republished and your user will re-appear.</p>
-			<button class="btn btn-warning delete-button" data-toggle="modal" data-target="#deleteModal">Yes! Delete this Account!</button>
+		<div class="reset-pass">
+			<form role="form" class="form-horizontal" id="changePassword" method="post" action="{{this.site_url}}rest/profile/password">
+				<div class="form-group">
+					<div class="col-sm-8">
+						<input type="password" name="current_password" class="current_password" placeholder="current password">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-8">
+						<input type="password" name="password" class="password" placeholder="new password">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-8">
+						<input type="password" name="password_confirmation" class="password_confirmation" placeholder="confirm new password">
+					</div>
+				</div>
+
+				<button class="btn btn-default btn-flat-dark-gray">Change Password</button>
+
+				<div class="message-box"></div>
+			</form>
+
 		</div>
+	</div>
 
-		
-
+	<div class="col-md-12 del-acc">
+		<h2>Delete Your Account</h2>
+		<p>
+			This will delete your account from the system.  All of your content will be unpublished (but they will remain in place)
+		</p>
+		<p>Should you decide to come back, all of your content will be republished and your user will re-appear.</p>
+		<button class="btn btn-flat-red delete-button" data-toggle="modal" data-target="#deleteModal">Delete My Account</button>
 	</div>
 </script>
 

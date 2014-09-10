@@ -102,6 +102,10 @@ a:focus {
 					padding:0px;
 					font-size:0px;
 				}
+				&:visited, &:focus {
+					text-decoration:none !important;
+					color:$dark;
+				}
 			}
 		}
 		.section-selectors {
@@ -166,6 +170,8 @@ a:focus {
 					@include post_listing(0);
 
 					.post-container {
+						height:auto;
+						margin-bottom:10px;
 						@media (max-width:$break-lg) and (min-width:$break-lg-min) {
 							width:328px;
 						}
@@ -177,6 +183,7 @@ a:focus {
 						}
 						@media (max-width:$break-sm) and (min-width:$break-sm-min) {
 							width:48%;
+							height:312px;
 						}
 						&:nth-child(even) {
 							@media (max-width:$break-sm) and (min-width:$break-sm-min) {
@@ -194,21 +201,48 @@ a:focus {
 							width:100%;
 							margin-left:0%;
 							margin-right:0%;
+							margin-bottom:30px;
+						}
+
+						.options-link {
+							position:absolute;
+							top:0px;
+							right:0px;
+							width:50px;
+							height:50px;
+							background:$dark;
+						}
+						.post-options {
+							display:none;
+						  	background:$white;
 						}
 						.post-image {
+							position:relative;
 							width:100% !important;
 
 							@media (max-width:$break-lg) and (min-width:$break-lg-min) {
-								height:206px;
+								height:206px !important;
 							}
 							@media (max-width:$break-md) and (min-width:$break-md-min) {
-								height:217px;
+								height:217px !important;
 							}
-							@media (max-width:$break-sm) and (min-width:$break-sm-min) {
-
+							@media (max-width:$break-sm) {
+								height:0px !important;
+								padding-top:63%;
 							}
-							@media (max-width:$break-xs) {
-
+						}
+						.post-title {
+							a {
+								@media (max-width:$break-sm) and (min-width:$break-sm-min) {
+									font-size:13px;
+								}
+							}
+						}
+						.post-taglines {
+							li {
+								@media (max-width:$break-sm) and (min-width:$break-sm-min) {
+									font-size:13px;
+								}
 							}
 						}
 					}
@@ -409,13 +443,27 @@ a:focus {
 								display:block;
 								width:150px;
 								height:103px;
+								background:#333;
+								@media (max-width:$break-sm) {
+									width:33%;
+									float:left;
+									height:0px;
+									padding-top:20.78%;
+								}
 							}
 							.text {
 								h3 {
 									@include title_listing;
+									@media (max-width:$break-sm) {
+										margin:10px 0 5px 0;
+									}
 								}
 								p {
 									@include tagline_listing;
+								}
+								@media (max-width:$break-sm) {
+									width:65%;
+									float:left;
 								}
 							}
 							.controls {
@@ -424,6 +472,13 @@ a:focus {
 									float:right;
 									margin-top:30px;
 									background-image:url('../../../../images/global/remove.png');
+									@media (max-width:$break-sm) {
+										margin-top:10px;
+										font-size:10px;
+										background-size:25px 25px;
+										background-position:3px center;
+										padding:5px 5px 5px 30px;
+									}
 								}
 							}
 						}
@@ -444,34 +499,54 @@ a:focus {
 								display:block;
 								width:150px;
 								height:103px;
+								@media (max-width:$break-sm) {
+									margin-left:15px !important;
+									width:25%;
+									height:0px;
+									padding-top:15.75%;
+								}
 							}
 							.text {
 								h3 {
 									@include title_listing;
+									@media (max-width:$break-sm) {
+										margin-top:5px;
+									}
 								}
 								p {
 									@include tagline_listing;
 								}
+								@media (max-width:$break-sm) {
+									width:70%;
+								}
 							}
 							.controls {
+								margin-top:10px;
 								text-align:right;
 								a {
 									display:inline-block;
 								}
 								.edit-draft {
-									@media (max-width:$break-xs) {
+									background-image:url('../../../../images/global/edit.png');
+									@media (max-width:$break-sm) {
 										font-size:10px;
 										background-size:25px 25px;
 										background-position:3px center;
+										padding:5px 5px 5px 30px;
 									}
 								}
 								.publish-draft {
 
 								}
 								.delete-draft {
-									float:right;
 									text-align:right;
 									background-image:url('../../../../images/global/remove.png');
+									@media (max-width:$break-sm) {
+										font-size:10px;
+										background-size:25px 25px;
+										background-position:3px center;
+										padding:5px 5px 5px 25px;
+									}
 								}
 							}
 						}
@@ -507,6 +582,61 @@ a:focus {
 									@include word-break(break-all);
 								}
 							}
+						}
+					}
+
+					&.settings {
+						.avatar {
+							margin-top:20px;
+							.upload-form {
+								background:$white;
+								padding:20px 30px;
+								border:solid 1px $lightgray;
+								form {
+									.thumb-container {
+										position:relative;
+										width:100px;
+										height:100px;
+										overflow:hidden;
+										@include border-radius(50px);
+										background-position: center center;
+										background-size: cover;
+										background-repeat: no-repeat;
+
+										margin-bottom:10px;
+									}
+									
+								}
+							}
+						}
+						.del-acc {
+							h2 {
+								padding-top:30px;
+								margin-top:50px;
+								border-top:solid 1px $dark;
+							}
+							.delete-button {
+								margin-top:20px;
+								background: $red !important;
+								color:#fff !important;
+								border: 2px solid $red !important;
+								font-size:12px;
+								@include montserrat(normal);
+								text-transform:uppercase;
+							}
+						}
+						h2 {
+							font-size:17px;
+						}
+						.form-group {
+							margin-bottom:0px;
+						}
+						input {
+							width:75%;
+							margin-bottom:10px;
+							padding:5px;
+							box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+							border:solid 1px $gray;
 						}
 					}
 
