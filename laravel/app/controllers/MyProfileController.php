@@ -285,6 +285,16 @@ class MyProfileController extends BaseController {
 				);
 		}
 	}
+		public function getRestSaveDelete ($post_id) {			
+			if($post_id) {
+				$user_id = Auth::user()->id;
+				$this->save->delete($user_id, $post_id);
+				return Response::json(
+						array( 'success' => true),
+						200
+					);
+			}
+		}
 
 	public function getRestDrafts($page = 1) {
 		$user_id = Auth::user()->id;

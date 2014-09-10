@@ -59,7 +59,7 @@
 
 <!--Below is used for Saves-->
 <script type="text/x-handlebars-template" id="saves-template">
-	<div class="container">
+	<div class="container" id="save-{{save.id}}">
 		<div class="saves-box">
 			<div class="row">
 				<div class="image-container col-md-3">
@@ -112,7 +112,6 @@
 
 				<div class="controls col-md-3">
 					<a class="edit-draft icon-button" href="{{site_url}}myprofile/editpost/{{draft.id}}" >Edit Draft</a>
-					<a class="publish-draft btn-flat-blue" data-id="{{draft.id}}" >Publish</a>
 					<br/>
 					<a class="delete-draft icon-link" data-id="{{draft.id}}" data-toggle="tooltip" data-placement="bottom" title="Delete Forever!">Delete</a>
 				</div>
