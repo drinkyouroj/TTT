@@ -100,7 +100,6 @@ class CommentController extends BaseController {
 		} else {
 			return Response::json( array( 'error' => true ), 200 );
 		}
-
 	}
 
 	/**

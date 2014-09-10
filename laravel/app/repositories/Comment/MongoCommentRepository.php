@@ -48,19 +48,23 @@ class MongoCommentRepository implements CommentRepository {
 			$parent_comment = MongoComment::find( $reply_id );
 			// TODO: double check that we actually have the parent comment! (ie: we were given a valid reply_id)
 			$slug = $parent_comment->slug.'/'.$slug_part;
-			$full_slug = $parent_comment->full_slug.'/'.$full_slug_part;
+			$full_slug_asc = $parent_comment->full_slug_asc.'/'.$full_slug_part;
 			$depth = $parent_comment->depth + 1;
 		} else {
 			$slug = $slug_part;
-			$full_slug = $full_slug_part;
+			$full_slug_asc = $full_slug_part;
 			$depth = 0;
 		}
+		// In order to sort by descending (newest comments first), we have to append a \.
+		$full_slug_desc = $full_slug_asc."\\";
+
 		// Step 3: Build up the new comment
 		$new_comment = new MongoComment;
 		$new_comment->post_id = intval( $post_id );
 		$new_comment->parent_comment = $reply_id ? $reply_id : null;
 		$new_comment->slug = $slug;
-		$new_comment->full_slug = $full_slug;
+		$new_comment->full_slug_asc = $full_slug_asc;
+		$new_comment->full_slug_desc = $full_slug_desc;
 		$new_comment->created_at = $created_at;
 		$new_comment->author = array(
 							'user_id' => intval($user_id),
@@ -127,7 +131,8 @@ class MongoCommentRepository implements CommentRepository {
 	 */
 	public function findByPostId ( $post_id, $paginate = 10, $page = 1 ) {
 		return MongoComment::where( 'post_id', intval( $post_id ) )
-						   ->orderBy( 'full_slug', 'asc' )
+						   ->orderBy( 'full_slug_desc', 'desc' )
+						   // ->orderBy( 'full_slug_asc', 'asc' )
 						   ->skip( ($page - 1) * $paginate )
 						   ->take( $paginate )
 						   ->get();
@@ -138,7 +143,7 @@ class MongoCommentRepository implements CommentRepository {
 	 */
 	public function findByUserId ( $user_id, $paginate = 5, $page = 1, $rest = false ) {
 		$query = $this->comment->where( 'author.user_id', intval($user_id) )
-								->where('published', 1)
+							   ->where('published', 1)
 							   ->orderBy( 'created_at', 'asc' )							   
 							   ->skip( ($page - 1) * $paginate )
 							   ->take( $paginate )
@@ -170,14 +175,14 @@ class MongoCommentRepository implements CommentRepository {
 		if ( $target_comment instanceof MongoComment ) {
 			// Step 2. Then query the number of comments up until that comment
 			$number_of_comments = MongoComment::where( 'post_id', $post_id )
-											  ->where( 'full_slug', '<=', $target_comment->full_slug )
+											  ->where( 'full_slug_desc', '>=', $target_comment->full_slug_desc )
 											  ->count();
 			// Step 3. calculate the correct pagination/page so that we return proper
 			// pagination to the front end.
 			$pages_to_pull = ceil( $number_of_comments / $paginate );
 			// Step 4. Make the final query
 			$comments = MongoComment::where( 'post_id', intval( $post_id ) )
-						   ->orderBy( 'full_slug', 'asc' )
+						   ->orderBy( 'full_slug_desc', 'desc' )
 						   ->take( $paginate * $pages_to_pull )
 						   ->get();
 			return array(
