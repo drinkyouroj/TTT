@@ -68,34 +68,38 @@
 
 						</div>
 						<div class="col-md-7 follow">
+							<div class="row">
+								<div class="col-md-12">
+									<a href="#followers" class="followers" id="followers">
+										<span class="count">{{$follower_count}}</span>
+										<span class="text">Followers</span>
+									</a>
 
-							<a href="#followers" class="followers" id="followers">
-								<span class="count">{{$follower_count}}</span>
-								<span class="text">Followers</span>
-							</a>
-
-							<a href="#following" class="following" id="following">
-								<span class="count">{{$following_count}}</span>
-								<span class="text">Following</span>
-							</a>
-							
-							@if($myprofile)
-								<div class="settings">
-									<a class="icon-button" href="#settings" id="settings">
-										Settings
+									<a href="#following" class="following" id="following">
+										<span class="count">{{$following_count}}</span>
+										<span class="text">Following</span>
 									</a>
 								</div>
-							@else
-								@if(!$is_following)
-								<a class="follow follow-button">
-									Follow
-								</a>
-								@else
-								<a class="follow following-button">
-									Following
-								</a>
-								@endif
-							@endif
+								<div class="col-md-12 follow-btn-container">
+									@if($myprofile)
+										<div class="settings">
+											<a class="icon-button" href="#settings" id="settings">
+												Settings
+											</a>
+										</div>
+									@else
+										@if(!$is_following)
+										<a class="follow follow-button">
+											Follow
+										</a>
+										@else
+										<a class="follow following-button">
+											Following
+										</a>
+										@endif
+									@endif
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

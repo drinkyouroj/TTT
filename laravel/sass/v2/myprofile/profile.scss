@@ -14,7 +14,7 @@ a:focus {
 				background-position: left center;
 				background-repeat: no-repeat;
 				@include montserrat(bold);
-				font-size:50px;
+				font-size:40px;
 				vertical-align: middle;
 				a {	
 					cursor:pointer;
@@ -27,10 +27,15 @@ a:focus {
 						background-position: center center;
 						background-size: cover;
 						background-repeat: no-repeat;
+						@media (max-width:$break-xs) {
+							display:block;
+							clear:both;
+							margin-bottom:5px;
+						}
 					}
 				}
 				@media (max-width:$break-sm) {
-					font-size:24px;
+					font-size:21px;
 					margin-top:0px;
 					margin-bottom:0px;
 				}
@@ -41,17 +46,11 @@ a:focus {
 			@media (max-width:$break-sm) {
 				padding-top:5px;
 			}
-			a {
-				text-transform: uppercase;
-				@include montserrat();
-				color:#000;
-				text-decoration: none;
-			}
-			a:hover {
-				text-decoration: none;
-			}
 			.follow {
 				text-align: right;
+				.follow-btn-container {
+					margin-top:5px;
+				}
 				a {
 					display:inline-block;
 					text-align: center;
@@ -60,7 +59,7 @@ a:focus {
 						display:block;
 						font-size: 30px;
 						@media (max-width:$break-sm) {
-							font-size:21px;
+							font-size:17px;
 						}
 					}
 					span.text{
@@ -71,12 +70,37 @@ a:focus {
 							font-size:10px;
 						}
 					}
+					&.followers, &.following {
+						text-transform: uppercase;
+						@include montserrat();
+						color:#000;
+						text-decoration: none;
+					}
+					&.followers {
+						margin-right: 10px;
+					}
+					&.following {
+					}
+					&:hover {
+						text-decoration: none;
+					}
 				}
-				a.followers {
-					margin-right: 10px;
-				}
-				a.following {
-
+			}
+		}
+		.settings {
+			text-align:right;
+			@media (max-width:$break-xs) {
+				margin-top:-10px;
+			}
+			a#settings {
+				font-size: 10px;
+				background-image:url('../../../../images/global/settings.png');
+				@media (max-width:$break-xs) {
+					width:30px;
+					height:20px;
+					border:0px;
+					padding:0px;
+					font-size:0px;
 				}
 			}
 		}
@@ -89,7 +113,9 @@ a:focus {
 				text-transform: uppercase;
 				text-decoration: none;
 				letter-spacing:1px;
-
+				@media (max-width:$break-xs) {
+					font-size: 11px;
+				}
 				&:hover {
 					color:$dark;
 				}
@@ -98,27 +124,11 @@ a:focus {
 					color:$dark;
 				}
 			}
-		}
-		.follow-user {
-			.follow-button, .following-button {
-				float:right;
+			@media (max-width:$break-sm) {
+				margin-top:20px;
 			}
 		}
-		.settings {
-			text-align:right;
-			a#settings {
-				margin-top: 5px;
-				font-size: 10px;
-				background-image:url('../../../../images/global/settings.png');
-				@media (max-width:$break-xs) {
-					width:30px;
-					height:20px;
-					border:0px;
-					padding:0px;
-					font-size:0px;
-				}
-			}
-		}
+		
 		.border {
 			.border-box {
 				border-bottom: 3px solid $dark;
@@ -224,9 +234,7 @@ a:focus {
 							background:$white;
 							text-align:center;
 							padding:0 40px;
-							border-top:solid 1px $lightgray;
-							border-bottom:solid 1px $lightgray;
-							border-left:solid 1px $lightgray;
+							border:solid 1px $lightgray;
 							@media (max-width:$break-sm) {
 								height:auto;
 								padding-bottom:30px;
@@ -374,6 +382,9 @@ a:focus {
 					&.active {
 						color:$dark;
 					}
+				}
+				@media (max-width:$break-xs) {
+					font-size: 11px;
 				}
 			}
 
