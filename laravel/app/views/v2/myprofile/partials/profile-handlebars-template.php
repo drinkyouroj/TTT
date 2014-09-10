@@ -59,7 +59,7 @@
 
 <!--Below is used for Saves-->
 <script type="text/x-handlebars-template" id="saves-template">
-	<div class="container">
+	<div class="container" id="save-{{save.id}}">
 		<div class="saves-box">
 			<div class="row">
 				<div class="image-container col-md-3">

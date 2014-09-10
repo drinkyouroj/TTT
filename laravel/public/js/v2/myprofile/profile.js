@@ -165,7 +165,7 @@ $(function() {
 //Saves Actions
 	//Remove Saved
 	$('body').on('click', 'a.remove-save',function() {
-		profile.setSaveDelete( $(this).data('id') );
+		profile.setSaveDelete( $(this).data('id') );		
 	});
 
 //Pagination detection.
@@ -416,7 +416,6 @@ function ProfileActions() {
 		this.urlConstructor();
 		this.getData(this.comment_url, function(data) {
 			$.each(data.comments,function(idx, val) {
-
 				view_data = {
 					site_url: window.site_url,
 					comment: val
@@ -472,8 +471,12 @@ function ProfileActions() {
 
 	};
 
-		this.setSaveDelete = function() {
-			
+		this.setSaveDelete = function(post_id) {
+			$('#save-'+post_id).fadeOut().remove();
+			url = window.site_url + 'rest/profile/saves/delete/' + post_id;
+			this.getData(url, function(data) {
+				console.log(data);
+			});
 		};
 
 	this.renderDrafts =  function() {
