@@ -189,6 +189,8 @@ $(function() {
 		profile.viewInit('collection');//Render initial view.
 	} else {
 		view = window.location.hash;
+		// Prevent a jump to anchor
+		window.scrollTo(0,0);
 
 		$('.section-selectors a').removeClass('active');
 		$(view, '.section-selectors').prop('class', 'active');

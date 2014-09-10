@@ -186,6 +186,17 @@
 				-moz-column-count:2; /* Firefox */
 				-webkit-column-count:2; /* Safari and Chrome */
 				column-count:2;
+				overflow: visible;
+
+				&#one {
+					&::first-letter {
+						font-size: 50px;
+						text-transform: uppercase;
+					}
+					&::first-line {
+
+					}
+				}
 			}
 		}
 

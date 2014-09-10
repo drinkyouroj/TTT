@@ -64,12 +64,15 @@ function photoSelection() {
 		$('.photo-processor').fadeOut();//fade in the photo process options
 		$('.post-form form input.processed-image').val('');//Get rid of the processed image.
 		$('.photo-system .reset-search').addClass('hidden');//Hide the reset button
+		$('.photo-processor img').removeClass('selected');
 	});
 	
 	//Effects Processor: Instahamming it.
 	$('.photo-processor').on('click', 'img', function() {
 		url = window.selected_image;
 		process = $(this).data('process');
+
+		$(this).addClass('selected');
 		
 		//make sure we have all 3 values.
 		if(url.length && process.length) {
@@ -109,6 +112,10 @@ function image_pull() {
 				
 				next_page = window.photo_search_page + 1;
 				
+				if(next_page > 2 || image_counter >= 29) {
+					$('.photos .photo-results').append('<br>');
+				}
+
 				if(next_page > 2) {
 					prev_page = window.photo_search_page -1;
 					$previous = $('<a class="pager previous" data-page="'+prev_page+'">&#60 Prev</a>');

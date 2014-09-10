@@ -102,6 +102,10 @@ a:focus {
 					padding:0px;
 					font-size:0px;
 				}
+				&:focus {
+					text-decoration: none;
+					color: inherit;
+				}
 			}
 		}
 		.section-selectors {

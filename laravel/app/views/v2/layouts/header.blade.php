@@ -90,7 +90,7 @@
 								</div>
 
 								<div class="additional-user-actions">
-									<a href="">ACCOUNT SETTINGS</a>
+									<a href="{{Config::get('app.url')}}/myprofile#settings">ACCOUNT SETTINGS</a>
 									<br>
 									<a href="{{Config::get('app.url')}}/user/logout">SIGN OUT</a>
 								</div>

@@ -585,7 +585,7 @@ textarea {
           width:150px;
           height:75px;
           vertical-align:top;
-          margin :0px !important;
+          margin: 10px 5px;
           padding:30px 25px 10px 25px;
           cursor:pointer;
 
@@ -596,9 +596,12 @@ textarea {
           background-color:$dark;
           color:#fff;
         }
-        a.pager.previous{
-          border-right:1px solid #ddd;
-        }
+        // a.pager.previous{
+        //   border-right:1px solid #ddd;
+        // }
+        // a.pager.more{
+        //   border-left:1px solid #ddd;
+        // }
       }
 
       .chosen {
@@ -619,6 +622,14 @@ textarea {
               float:left;
               display:inline;
               width: 14.28%;
+              opacity: 0.5;
+              cursor: pointer;
+              &:hover, &.selected {
+                opacity: 1;
+              }
+              &.selected {
+                cursor: default;
+              }
             }
           }
         }

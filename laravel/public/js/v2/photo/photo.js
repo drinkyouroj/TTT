@@ -57,7 +57,7 @@ function photoInit(photoInput) {
 
 	$('body').on('click', photoInput.photo_processor+' img',function() {		
 		photoInput.process = $(this).data('process');
-		
+
 		//make sure we have all values.
 		if(photoInput.selected_image.length && photoInput.process.length) {
 			photoInput.applyProcess();
@@ -145,7 +145,11 @@ function PhotoInput() {
 			});
 
 			next_page = this.photo_search_page + 1;
-				
+			
+			if(next_page > 2 || image_counter >= 29) {
+				$(photo_results).append('<br>');
+			}
+
 			if(next_page > 2) {
 				prev_page = this.photo_search_page -1;
 				view_data = {
