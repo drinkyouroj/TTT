@@ -192,7 +192,7 @@ class PostController extends BaseController {
 			if(!empty($check_post->id) ) {
 
 				//If the post exists, let's save its previous published state.
-				$previously_published = $check_post->published_at;
+				$previously_published = $check_post->published;
 
 				//THIS is the update scenario.
 				//let's double check that this ID exists and belongs to this user.			
@@ -242,12 +242,10 @@ class PostController extends BaseController {
 						);
 				}
 
-
 				$post = self::rest_input($new, false);
 				
 				$validator = $post->validate($post->toArray(),false);//no
 			}
-			
 			
 			if($validator->passes()) {//Successful Validation
 				
@@ -271,9 +269,11 @@ class PostController extends BaseController {
 				}
 
 				//If this is the web server upload this content to the CDN.
+				/*
 				if(App::environment() == 'web') {
 					$file = OpenCloud::upload('Images', public_path().'/uploads/final_images/'.$post->image, $post->image);
 				}
+				*/
 
 				//Gotta save the categories pivot
 				foreach(Input::get('category') as $k => $category) {
@@ -283,9 +283,11 @@ class PostController extends BaseController {
 						break;//let's not waste processes
 					}
 				}
+
 				
 				//if the post becomes published. (published now, wasn't published before.)
-				if($post->published_at && !$previously_published) {
+				if($post->published && !$previously_published) {
+					
 					//Put it into the profile post table (my posts or what other people see as your activity)
 					$new_profilepost = array(
 						'profile_id' => $user->id,
@@ -293,7 +295,8 @@ class PostController extends BaseController {
 						'post_id' => $post->id,
 						'post_type' => 'post'
 						);
-					$this->profilepost->create($new_profilepost);
+					$profilepost = $this->profilepost->create($new_profilepost);
+					
 					
 					//Also save this data to your own activity
 					$new_activity = array(

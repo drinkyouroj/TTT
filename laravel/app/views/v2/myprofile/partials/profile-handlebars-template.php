@@ -112,7 +112,6 @@
 
 				<div class="controls col-md-3">
 					<a class="edit-draft icon-button" href="{{site_url}}myprofile/editpost/{{draft.id}}" >Edit Draft</a>
-					<a class="publish-draft btn-flat-blue" data-id="{{draft.id}}" >Publish</a>
 					<br/>
 					<a class="delete-draft icon-link" data-id="{{draft.id}}" data-toggle="tooltip" data-placement="bottom" title="Delete Forever!">Delete</a>
 				</div>
