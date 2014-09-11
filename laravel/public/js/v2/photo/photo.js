@@ -205,7 +205,7 @@ function PhotoInput() {
 
 			//for other applications than the post input page.
 			if(that.image_dom.length) {
-				$(that.image_dom).prop('src', image_url);
+				$(that.image_dom).css('background-image','url('+image_url+')' );
 			}
 
 			//Checks to see if this is the intial phase of image selection.
