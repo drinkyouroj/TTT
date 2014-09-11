@@ -570,7 +570,7 @@ function ProfileActions() {
 
 			photo_input.target = $('#photoModal .modal-body');
 			photo_input.input = $('#uploadAvatar input.image');
-			photo_input.image_dom = '#uploadAvatar img.thumb';
+			photo_input.image_dom = '#uploadAvatar .thumb-container';
 			photoInit(photo_input);
 			
 			photo_input.viewInit();
