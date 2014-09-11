@@ -63,6 +63,9 @@ $(function() {
 	var follow_template = $('#follow-template').html();
 	profile.follow_template = Handlebars.compile(follow_template);
 
+	var notification_item_template = $('#notifications-template').html();
+	profile.notification_item_template = Handlebars.compile(notification_item_template);
+
 	// No Content Template
 	var no_content_template = $('#no-content-template').html();
 	profile.no_content_template = Handlebars.compile(no_content_template);
@@ -229,7 +232,8 @@ function ProfileActions() {
 		//Everytime a view is rendered the page count should be reset.
 		this.page = 1;
 		this.comment_page = 1;//this only pertains to the collection page
-		this.view = view
+		this.view = view;
+		window.page_processing = false;
 		//fade in fade out scenario
 		var that = this;//JS scope is fun... not.
 		this.target.fadeOut(100,function() {
@@ -283,6 +287,10 @@ function ProfileActions() {
 				this.renderSettings();
 				break;
 
+			case 'notifications':
+				this.renderNotifications();
+				break;
+
 			case 'followers':
 				this.renderFollowers();
 				break;
@@ -327,6 +335,32 @@ function ProfileActions() {
 
 
 //Specific Render methods
+
+	this.renderNotifications = function () {
+		var notification_item_template = this.notification_item_template;
+		var no_content_template = this.no_content_template;
+		// TODO
+		var target = this.target;
+		this.urlConstructor();
+		this.getData(this.url,function(data) {
+			if ( data.no_content ) {
+				$('#default-content',target).append( no_content_template( {section: 'notifications'} ) );
+				window.page_processing = true;
+			} else {
+				if ( data.notifications && data.notifications.length == 0 ) {
+					window.page_processing = true; // no more notifications
+				} else {
+					$.each(data.notifications, function(idx, val) {
+						view_data = {
+							notification: val
+						};
+						$('#default-content',target).append(notification_item_template(view_data));
+					});
+				}
+			}
+		});
+
+	};
 
 	this.renderCollection = function() {
 		//below has to be done to pass through the scope of both getData and $.each
