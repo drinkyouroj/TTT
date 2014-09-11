@@ -1,4 +1,10 @@
 <!--Note that this is the collection tempalte for holding the collection together-->
+<script type="text/x-handlebars-template" id="notifications-template">
+	<div class="notification-container">
+		{{notification}}
+	</div>
+</script>
+
 <!--Below is used for the front page.-->
 <script type="text/x-handlebars-template" id="collection-template">
 	<div class="collection-container">

@@ -111,11 +111,38 @@ class MyProfileController extends BaseController {
 	}
 
 	/**
+	 *	Get the users notification.
+	 *	returns 200:
+	 *		notifications => array (array of notifications),
+	 *		no_content => boolean (only true if there are no notifications on page 1)	
+	 */
+	public function getRestNotifications ( $page ) {
+		$user = Auth::user();
+		$page = $page;
+		$paginate = 20;
+		$notifications = $this->not->getByUserId( $user->id, $page, $paginate, false );
+		$count = count( $notifications );
+		if ( $count > 0 ) {
+			return Response::json( array( 'notifications' => $notifications->toArray(), 'page' => $page, 'paginate' => $paginate), 200);
+		} else {
+
+			if ( $page == 1 ) {
+				// page 1 and 0 notifications => ie: no content at all
+				return Response::json( array( 'no_content' => true ), 200);
+			} else {
+				// No more notifications -> reached the end
+				return Response::json( array( 'notifications' => array() ), 200);
+			}
+
+		}
+	}
+
+	/**
 	 *	Get the users Collection feed.
 	 *	returns 200:
 	 *		collection => array (the actual collection data),
 	 *		error => string (invalid request parameters),
-	 *		no_content => string (message to be displayed if there is nothing in collection)
+	 *		no_content => boolean (only true if there is no content to be returned on page 1)
 	 */
 	public function getRestCollection ($type = 'all', $user_id = 0, $page = 1) {
 		if(!$user_id) {
