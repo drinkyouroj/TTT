@@ -231,6 +231,18 @@ a:focus {
 						.post-options {
 							display:none;
 						  	background:$white;
+						  	text-align: right;
+
+						  	a {
+						  		cursor: pointer;
+						  	}
+						  	
+						  	a.post-delete {
+
+						  	}
+						  	a.post-delete-confirm {
+						  		display: none;
+						  	}
 						}
 						.post-image {
 							position:relative;
