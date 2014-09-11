@@ -10,12 +10,13 @@ a:focus {
 		margin-top:20px;
 		.header-left {
 			h2 {
-				margin-bottom:40px;
 				background-position: left center;
 				background-repeat: no-repeat;
 				@include montserrat(bold);
 				font-size:40px;
+				text-transform:none;
 				vertical-align: middle;
+				@include word-break(break-all);
 				a {	
 					cursor:pointer;
 					span.avatar-image {
@@ -27,15 +28,16 @@ a:focus {
 						background-position: center center;
 						background-size: cover;
 						background-repeat: no-repeat;
-						@media (max-width:$break-xs) {
+						@include word-break(break-all);
+						@media (max-width:$break-sm) {
 							display:block;
 							clear:both;
-							margin-bottom:5px;
+							margin-bottom:3px;
 						}
 					}
 				}
 				@media (max-width:$break-sm) {
-					font-size:21px;
+					font-size:13px;
 					margin-top:0px;
 					margin-bottom:0px;
 				}
@@ -45,9 +47,13 @@ a:focus {
 			padding-top: 25px;
 			@media (max-width:$break-sm) {
 				padding-top:5px;
+				padding-left:0px;
 			}
-			.follow {
+			.follow-container {
 				text-align: right;
+				@media (max-width:$break-sm) {
+					padding-left:0px;
+				}
 				.follow-btn-container {
 					margin-top:5px;
 				}
@@ -110,7 +116,13 @@ a:focus {
 			}
 		}
 		.section-selectors {
+			@media (max-width:$break-xs) {
+				border-top:solid 1px $gray;
+				padding-top:10px;
+			}
 			a {
+				display:block;
+				float:left;
 				margin-right: 20px;
 				@include montserrat(bold);
 				font-size: 14px;
@@ -118,8 +130,10 @@ a:focus {
 				text-transform: uppercase;
 				text-decoration: none;
 				letter-spacing:1px;
+				padding:5px 0px;
 				@media (max-width:$break-xs) {
 					font-size: 11px;
+					letter-spacing:0px;
 				}
 				&:hover {
 					color:$dark;
@@ -130,7 +144,7 @@ a:focus {
 				}
 			}
 			@media (max-width:$break-sm) {
-				margin-top:20px;
+				margin-top:5px;
 			}
 		}
 		
@@ -408,6 +422,7 @@ a:focus {
 				font-size: 14px;
 				letter-spacing:1px;
 				a {
+
 					text-transform: lowercase;
 					text-decoration: none;
 					color:$gray;
@@ -418,9 +433,14 @@ a:focus {
 					&.active {
 						color:$dark;
 					}
+					@media (max-width:$break-xs) {
+						padding:10px;
+					}
 				}
 				@media (max-width:$break-xs) {
-					font-size: 11px;
+					font-size: 13px;
+					letter-spacing:0px;
+					margin-bottom: 5px;
 				}
 			}
 
