@@ -195,6 +195,9 @@ Route::group(array('before'=>'profile'), function() {
 	
 });
 
+//For Error Logging if the user wishes to contribute.
+Route::get('error/form', 'HomeController@getErrorForm');
+
 //For banned users to see when try try to log in.
 Route::get('banned', 'UserController@getBanned');
 

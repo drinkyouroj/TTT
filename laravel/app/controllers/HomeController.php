@@ -64,6 +64,13 @@ class HomeController extends BaseController {
 		}
 	}
 	
+	/**
+	* Error Form
+	*/
+	public function getErrorForm()
+	{
+		return View::make('v2.errors.form');
+	}
 
 	/**
 	 * Static Pages below
