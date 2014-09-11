@@ -307,7 +307,18 @@ input, textarea, button:focus {outline: none !important;}
 
 #offcanvas-sidebar {
 	@include offcanvas-sidebar( left, $offcanvas_sidebar_width );
+	@media (max-width:$break-sm) {
+		border-right:solid 10px $dark;
+	}
 		ul#accordion.sidebar-options {
+			li input.search-input {
+				width:98%;
+				height:30px;
+				padding:5px 10px;
+				margin:10px 0 10px 2%;
+				@include montserrat(normal);
+				font-size:12px;
+			}
 			li.sidebar-option {
 				&.feed {
 
@@ -336,11 +347,16 @@ input, textarea, button:focus {outline: none !important;}
 
 				}
 				&.saves {
+					ul {
+						li {
+							margin-bottom:20px;
+						}
+					}
 					.post-image-anchor {
 						.post-image {
 							display: inline-block;
-							width: 110px;
-							height: 70px;
+							width: 90px;
+							height: 57px;
 							margin-left: 0;
 							background-size: cover;
 							background-position: center center;
@@ -348,21 +364,26 @@ input, textarea, button:focus {outline: none !important;}
 					}
 					.post-info {
 						display: inline-block;
-						width: 134px;
+						width: 100%;
 						vertical-align: top;
-						margin-left: 10px;
 
 						.post-title {
 							display: block;
 							padding:0px;
 							color:$lightgray;
 							@include montserrat(normal);
-							font-size:12px;
+							font-size:11px;
+							text-transform:uppercase;
 							letter-spacing:1px;
+							@include word-break(break-all);
+						}
+						span {
+							font-size:10px;
 						}
 						.post-author {
 							@include montserrat(normal);
 							font-size:12px;
+							@include word-break(break-all);
 						}
 						// This is the 'by: ' text
 						span {

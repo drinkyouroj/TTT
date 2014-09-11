@@ -6,7 +6,7 @@
 	<div class="header-inner-wrapper">
 		<div class="header-container container">
 			<div class="row">
-				<div class="col-sm-4 col-xs-3 col-left">
+				<div class="col-sm-4 col-xs-2 col-left">
 					<button class="read-button toggle-sidebar">
 						<span>
 							READ
@@ -22,7 +22,7 @@
 					@endif
 
 				</div>
-				<div class="col-sm-4 col-xs-6 col-middle">
+				<div class="col-sm-4 col-xs-8 col-middle">
 					<div class="header-logo">
 						<a  href="{{Config::get('app.url')}}">
 							THE
@@ -32,7 +32,7 @@
 					</div>
 				</div>
 
-				<div class="col-sm-4 col-xs-3 col-right">
+				<div class="col-sm-4 col-xs-2 col-right">
 						@if( $is_guest )
 							@if(Request::segment(1) != 'user')
 								<a class="btn-outline-blue signup hidden-xs" data-toggle="modal" data-target="#guestSignup">Signup</a>
@@ -53,7 +53,7 @@
 
 					{{ Form::open(array('url'=> 'search', 'class' => 'form-search pull-right', 'role'=>'search' )) }}
 						<input class="search-input" autocomplete="off" name="search" id="search-input" type="text">
-						<label class="glyphicon glyphicon-search" for="search-input">
+						<label class="glyphicon glyphicon-search hidden-xs" for="search-input">
 						</label>
 						<input type="submit" value="Search" class="hidden" >
 						<div class="result-box hidden"></div>
@@ -117,6 +117,23 @@
 {{-- ============ OFFCANVAS SIDEBAR ============= --}}
 <div id="offcanvas-sidebar">
 	<ul class="list-unstyled sidebar-options" id="accordion">
+		<li class="visible-xs">
+			{{ Form::open(array('url'=> 'search', 'class' => 'form-search', 'role'=>'search' )) }}
+				<input class="search-input" autocomplete="off" name="search" id="search-input" type="text" placeholder="search">
+				</label>
+				<input type="submit" value="Search" class="hidden" >
+				<div class="result-box hidden"></div>
+			{{ Form::close() }}
+		</li>
+		@if( $is_guest )
+			<li class="sidebar-option post-btn-mobile visible-xs">
+				<a data-toggle="modal" data-target="#guestSignup">POST</a>
+			</li>
+		@else
+			<li class="sidebar-option post-btn-mobile visible-xs">
+				<a href="{{Config::get('app.url')}}/myprofile/newpost">POST</a>
+			</li>
+		@endif
 
 		<li class="sidebar-option feed {{ $is_guest ? 'disabled' : '' }}">
 			@if ( $is_guest )
@@ -188,16 +205,6 @@
 						<p>It looks like you have no saves!</p>
 					@endif
 				</div>
-			</li>
-		@endif
-
-		@if( $is_guest )
-			<li class="sidebar-option post-btn-mobile visible-xs">
-				<a data-toggle="modal" data-target="#guestSignup">POST</a>
-			</li>
-		@else
-			<li class="sidebar-option post-btn-mobile visible-xs">
-				<a href="{{Config::get('app.url')}}/myprofile/newpost">POST</a>
 			</li>
 		@endif
 
