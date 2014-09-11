@@ -26,7 +26,7 @@ class AdminController extends Controller {
 		$tagline_2 = Input::has('tagline_2') ? Input::get('tagline_2') : false;
 		$tagline_3 = Input::has('tagline_3') ? Input::get('tagline_3') : false;
 		// Trusting admins at this point, skip validation.
-		$post = $this->post->findByPostId( $post_id );
+		$post = $this->post->findById( $post_id );
 		if ( $body ) { $post->body = $body; }
 		if ( $title ) { $post->title = $title; }
 		if ( $tagline_1 ) { $post->tagline_1 = $tagline_1; }

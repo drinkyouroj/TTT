@@ -68,7 +68,7 @@ $(function() {
 	save_post.editor = window.editor;
 
 	//Controls.
-	$('.controls-wrapper .categorization').click(function(event) {
+	$('.categorization').click(function(event) {
 		event.preventDefault();
 		$('.category-wrapper').slideToggle('fast',function() {
 			//Gotta figure out if we want to have a white bg.
@@ -81,11 +81,11 @@ $(function() {
 		$('.category-wrapper').slideToggle('fast');
 	});
 
-	$('.controls-wrapper .save-draft').click(function() {
+	$('.save-draft').click(function() {
 		save_post.sendDraft(window.editor);
 	});
 
-	$('.controls-wrapper .submit-post').click(function() {
+	$('.submit-post').click(function() {
 		save_post.sendPublish(window.editor);
 	});
 

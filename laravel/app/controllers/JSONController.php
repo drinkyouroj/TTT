@@ -244,7 +244,6 @@ class JSONController extends BaseController {
 					200//response is OK!
 				);
 			} elseif ( $exists ) {  //Relationship already exists
-				
 				// Delete the repost!
 				$this->repost->delete( $user_id, $post_id );
 				

@@ -130,7 +130,7 @@ function PhotoInput() {
 		photo_results = this.photo_results;
 
 		this.getData(url, {}, function(data) {			
-			$(photo_results).html('test');//clear it out.
+			$(photo_results).html('');//clear it out.
 			photos = data.photos.photo;//actual photo array
 
 			$.each(photos,function(index, value) {
@@ -154,7 +154,7 @@ function PhotoInput() {
 				prev_page = this.photo_search_page -1;
 				view_data = {
 					class: 'previous',
-					html: '&#60 Prev',
+					html: '< Prev',
 					page: prev_page
 				}
 
@@ -165,7 +165,7 @@ function PhotoInput() {
 			if(image_counter >= 29) {
 				view_data = {
 					class: 'more',
-					html: 'More &#62',
+					html: 'More >',
 					page: next_page
 				}
 				more = pager_template(view_data);

@@ -4,6 +4,45 @@ $border_color: #eee;
 
 @include photo_selection;
 
+@mixin draftPublishButtons() {
+	text-align: right;
+	a {
+		text-align: center;
+		display:inline-block;
+		width: 130px;
+		padding: 12px 0;
+		background: $blue;
+
+		@include montserrat(normal);
+		text-transform: uppercase;
+		font-size: 11px;
+		color:#fff;
+		
+		&.save-draft {
+			margin-right: 7px;
+			background: #a4a4a4;
+		}
+	}
+}
+
+@mixin categoriesLink() {
+	display:inline-block;
+	// width: 192px;
+	text-align:left;
+	margin-top: 5px;
+	padding: 5px 15px 3px 0px;
+	color:$lightgray;
+
+	cursor: pointer;
+    @include montserrat(normal);
+    text-transform:uppercase;
+    font-size:13px;
+    background-image:url('../../../../images/posts/cat-arrow-white.png');
+    background-position:right center;
+    background-repeat:no-repeat;
+    background-size:10px 7px;
+}
+
 //Top Controls Fixed (Post Type, Category, Drafe, Publish)
 .controls-wrapper {
 	position: fixed;
@@ -24,45 +63,33 @@ $border_color: #eee;
 		.post-category {
 			text-align: center;
 			a.categorization {
-				display:inline-block;
-				// width: 192px;
-				text-align:left;
-				margin-top: 5px;
-				padding: 5px 15px 3px 0px;
-				color:$lightgray;
-
-				cursor: pointer;
-		        @include montserrat(normal);
-		        text-transform:uppercase;
-		        font-size:13px;
-		        background-image:url('../../../../images/posts/cat-arrow-white.png');
-		        background-position:right center;
-		        background-repeat:no-repeat;
-		        background-size:10px 7px;
+				@include categoriesLink();
 			}
 		}
 		.draft-publish {
-			text-align: right;
-			a {
-				text-align: center;
-				display:inline-block;
-				width: 130px;
-				padding: 12px 0;
-				background: $blue;
-
-				@include montserrat(normal);
-				text-transform: uppercase;
-				font-size: 11px;
-				color:#fff;
-				
-				&.save-draft {
-					margin-right: 7px;
-					background: #a4a4a4;
-				}
-			}
+			@include draftPublishButtons();
 		}
 	}
 }
+
+.bottom-controls-container {
+	margin-bottom: 100px;
+	text-align: right;
+		
+	a.categorization {
+		@include categoriesLink();
+		color: $dark;
+	}	
+	
+	.draft-publish {
+		@include draftPublishButtons();
+		a {
+			cursor: pointer;
+		}
+	}
+
+}
+
 
 .category-wrapper {	
 	z-index: 3;
@@ -284,7 +311,7 @@ $border_color: #eee;
 	top: -10px;
 	.body-submit-container {
 		padding-top: 55px;
-		padding-bottom: 55px;
+		padding-bottom: 8px;
 		.story {
 			label {
 				@include label;
