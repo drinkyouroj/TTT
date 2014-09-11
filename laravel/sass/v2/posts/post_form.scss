@@ -23,9 +23,9 @@ $border_color: #eee;
 		}
 		.post-category {
 			text-align: center;
-			a {
+			a.categorization {
 				display:inline-block;
-				width: 192px;
+				// width: 192px;
 				text-align:left;
 				margin-top: 5px;
 				padding: 5px 15px 3px 0px;

@@ -10,12 +10,6 @@ $(function() {
 		follow($(this).data('user'),'profile');
 	});
 	
-	$('.follow-container .follow').on('click', function(event) {
-		event.preventDefault();
-		follow($(this).data('user'),'post');
-		$(this).fadeOut();
-	});
-	
 		//See the followers list
 		$('.followers a').on('click', function(event){
 			followers_box($(this).data('user'));

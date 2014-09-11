@@ -92,7 +92,7 @@
 								</div>
 
 								<div class="col-md-4 hidden-sm hidden-xs follow-container">
-									<a data-action="follow" class="follow-button follow" href="#">
+									<a data-action="follow" class="follow-button follow {{ $is_following ? 'active' : '' }}" href="#">
 										<span class="{{ $is_following ? 'hidden' : '' }}"> {{ $follow_term }} {{ $post->user->username }} </span>
 										<span class="{{ $is_following ? '' : 'hidden' }}"> {{ $follow_term_active }} {{ $post->user->username }} </span>
 									</a>

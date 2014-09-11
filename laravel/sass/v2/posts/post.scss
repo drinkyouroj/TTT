@@ -80,6 +80,14 @@
 			float:right;
 			.follow {
 				float:right;
+
+				&.active {
+					background-image: none;
+					background: none;
+					border: 0;
+					color: $lightgray;
+					cursor: default;
+				}
 			}
 		}
 	}
