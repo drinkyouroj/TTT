@@ -44,7 +44,7 @@
 
 		{{#ifCond feed_type 'repost' }}
 			<div class="post-repost-container">
-				<img class="post-repost-image" src="{{ site_url }}img/icons/repost-single.png">
+				<img class="post-repost-image" src="{{ site_url }}images/global/repost-single.png" width="30px" height="30px">
 				<div class="post-repost-count-container"> x 
 					<span class="post-repost-count">{{ users.length }} </span>
 				</div>
@@ -54,6 +54,7 @@
 							<a href="{{ ../site_url }}profile/{{ this }}"> {{ this }} </a> 
 						</li>
 					{{/each}}
+					<li class="reposted-label">reposted this post.</li>
 				</ul>
 			</div>
 		{{/ifCond}}

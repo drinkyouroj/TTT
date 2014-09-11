@@ -12,16 +12,17 @@
 
 		@if ( isset( $feed_type ) && $feed_type == 'repost' )
 			<div class="post-repost-container">
-				<img class="post-repost-image" src="{{ URL::to('img/icons/repost-single.png') }}">
+				<img class="post-repost-image" src="{{ URL::to('images/global/repost-single.png') }}" width="30px" height="30px">
 				<div class="post-repost-count-container"> x 
 					<span class="post-repost-count">{{ count( $users ) }} </span>
 				</div>
 				<ul class="post-repost-user-dropdown list-unstyled fade in out">
 					@foreach ( $users as $user )
-						<li> 
-							<a href="{{ URL::to('profile/'.$user) }}"> {{ $user }} </a> 
+						<li>
+							<a href="{{ URL::to('profile/'.$user) }}"> {{ $user }} </a>
 						</li>
 					@endforeach
+						<li class="reposted-label">reposted this post.</li>
 				</ul>
 			</div>
 		@endif
