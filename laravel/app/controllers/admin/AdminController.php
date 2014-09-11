@@ -16,6 +16,27 @@ class AdminController extends Controller {
 	}
 
 	/**
+	 *	Edit a post body, title, and/or taglines
+	 */
+	function editPost () {
+		$post_id = Input::has('post_id') ? Input::get('post_id') : false;
+		$body = Input::has('body') ? Input::get('body') : false;
+		$title = Input::has('title') ? Input::get('title') : false;
+		$tagline_1 = Input::has('tagline_1') ? Input::get('tagline_1') : false;
+		$tagline_2 = Input::has('tagline_2') ? Input::get('tagline_2') : false;
+		$tagline_3 = Input::has('tagline_3') ? Input::get('tagline_3') : false;
+		// Trusting admins at this point, skip validation.
+		$post = $this->post->findByPostId( $post_id );
+		if ( $body ) { $post->body = $body; }
+		if ( $title ) { $post->title = $title; }
+		if ( $tagline_1 ) { $post->tagline_1 = $tagline_1; }
+		if ( $tagline_2 ) { $post->tagline_2 = $tagline_2; }
+		if ( $tagline_3 ) { $post->tagline_3 = $tagline_3; }
+		$post->save();
+		return Response::json( array( 'success', true ), 200 );
+	}
+
+	/**
 	 *	Reset a user account. This includes the following:
 	 *		password reset
 	 *		email to user

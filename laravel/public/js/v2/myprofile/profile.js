@@ -141,13 +141,24 @@ $(function() {
 
 	//We'll just leave this as is for now.
 	$('#deleteModal').on('click','.btn.delete-account', function() {
-		id = $(this).data('user');
+		var password = $('.delete-account-password').val();
+		if ( !password )
+			return;
+		var id = $(this).data('user');
 		if(id) {
 			$.ajax({
-				url: window.site_url+'rest/userdelete/'+id,
-				type:"GET",//previously delete
+				url: window.site_url+'rest/userdelete',
+				type:"POST",
+				data: {
+					id: id,
+					password: password
+				},
 				success: function(data) {
-					window.location.href = window.site_url+'user/logout';
+					if ( data.error ) {
+						$('.delete-account-error').html( data.error );
+					} else if ( data.success ) {
+						window.location.href = window.site_url+'user/logout';	
+					}
 				}
 			});
 		}
@@ -162,6 +173,11 @@ $(function() {
 
 	//Delete Post
 	$('body').on('click', '.post-delete', function() {
+		$(this).fadeOut(function() {
+			$(this).siblings('.post-delete-confirm').fadeIn();
+		});
+	});
+	$('body').on('click', '.post-delete-confirm', function() {
 		profile.setPostDelete( $(this).data('id') );
 	});
 
@@ -179,7 +195,7 @@ $(function() {
 
 //Pagination detection.
 	$(window).scroll(function() {
-		if(profile.view != 'settings') {
+		if(profile.view != 'settings' && !window.finished_pagination && !window.page_processing) {
 			if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
 				profile.paginate();
 			}
@@ -214,6 +230,7 @@ $(function() {
 
 	window.page_processing = false;
 	window.comment_page_processing = false;
+	window.finished_pagination = false;
 
 	//figure out which modals to show.
 	if(window.post) {
@@ -240,6 +257,7 @@ function ProfileActions() {
 		this.comment_page = 1;//this only pertains to the collection page
 		this.view = view;
 		window.page_processing = false;
+		window.finished_pagination = false;
 		//fade in fade out scenario
 		var that = this;//JS scope is fun... not.
 		this.target.fadeOut(100,function() {
@@ -351,14 +369,15 @@ function ProfileActions() {
 		this.getData(this.url,function(data) {
 			if ( data.no_content ) {
 				$('#default-content',target).append( no_content_template( {section: 'notifications'} ) );
-				window.page_processing = true;
+				window.finished_pagination = true;
 			} else {
 				if ( data.notifications && data.notifications.length == 0 ) {
-					window.page_processing = true; // no more notifications
+					window.finished_pagination = true; // no more notifications
 				} else {
 					$.each(data.notifications, function(idx, val) {
 						view_data = {
-							notification: val
+							notification: val,
+							site_url: window.site_url
 						};
 						$('#default-content',target).append(notification_item_template(view_data));
 					});
@@ -382,17 +401,19 @@ function ProfileActions() {
 				$('#collection-content',target).append( no_content_template( {section: 'collection'} ) );
 			} else {
 				$.each(data.collection, function(idx, val) {
-					var editable = editCheck(val.post.published_at);
-					view_data = {
-						site_url: window.site_url,
-						post: val.post,
-						user_id: window.user_id,
-						editable: editable,
-						featured_id: window.featured_id,
-						post_type: val.post_type,
-						myprofile: window.myprofile
-					};
-					$('#collection-content',target).append(post_item_template(view_data));
+					if ( val.post && val.post.id != window.featured_id ) {
+						var editable = val.post ? editCheck(val.post.published_at) : false;
+						view_data = {
+							site_url: window.site_url,
+							post: val.post,
+							user_id: window.user_id,
+							editable: editable,
+							featured_id: window.featured_id,
+							post_type: val.post_type,
+							myprofile: window.myprofile
+						};
+						$('#collection-content',target).append(post_item_template(view_data));
+					}
 				});
 			}
 		});
@@ -424,7 +445,7 @@ function ProfileActions() {
 		//Set a post as featured.
 		this.setFeatured = function(id) {
 			$('#collection-content .feature-item',target).fadeOut().remove();
-
+			$('#collection-content #post-' + id).fadeOut().remove();
 			featured_url = window.site_url + 'rest/profile/featured/' + id;
 			var target = this.target;
 			this.setData(featured_url, function(data) {
@@ -712,7 +733,8 @@ function ProfileActions() {
 
 //Pagination Code
 	this.paginate = function() {
-		if(!window.page_processing) {
+
+		if(!window.page_processing && !window.finished_pagination) {
 			//If we did start processing.
 			window.page_processing = true;
 			this.page = this.page + 1;

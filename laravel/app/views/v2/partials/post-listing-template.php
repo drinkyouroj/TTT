@@ -68,8 +68,11 @@
 						</a>
 					{{/ifCond}}
 
-						<a class="post-delete" data-id="{{post.id}}">
+						<a class="post-delete">
 							Delete
+						</a>
+						<a class="post-delete-confirm" data-id="{{post.id}}">
+							Confirm Delete?
 						</a>
 
 					{{#ifNotCond featured_id post.id}}

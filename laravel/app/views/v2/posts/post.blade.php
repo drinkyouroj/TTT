@@ -119,11 +119,23 @@
 				<div class="post-heading col-md-4">
 
 					<h2>{{ $post->title }}</h2>
+					{{-- Admin edit capabilities --}}
+					@if ( $is_admin )	
+						<h2 class="hidden">
+							<input class="admin-post-title form-control" type="text" value="{{$post->title}}">
+						</h2>
+					@endif
 					<div class="line"></div>
 					<ul class="post-taglines list-inline">
 						<li> {{ $post->tagline_1 }} </li>
 						<li> {{ $post->tagline_2 }} </li>
 						<li> {{ $post->tagline_3 }} </li>
+						{{-- Admin edit capabilities --}}
+						@if ( $is_admin )	
+							<li class="hidden"> <input class="admin-post-tagline-1 form-control" type="text" value="{{ $post->tagline_1 }}"> </li>
+							<li class="hidden"> <input class="admin-post-tagline-2 form-control" type="text" value="{{ $post->tagline_2 }}"> </li>
+							<li class="hidden"> <input class="admin-post-tagline-3 form-control" type="text" value="{{ $post->tagline_3 }}"> </li>
+						@endif
 					</ul>
 
 					<div class="author">
@@ -177,6 +189,18 @@
 				</div>
 			@endif
 		</div>
+		{{-- Admin edit capabilities --}}
+		@if ( $is_admin )	
+			<div class="post-content-container container hidden">
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1 post-content-page-wrapper">
+						<textarea class="admin-post-body form-control" rows="20" style="margin-top: 60px;">
+							{{ $post->body }}
+						</textarea>
+					</div>
+				</div>
+			</div>
+		@endif
 	</section>
 
 	<section class="post-comment-wrapper">
@@ -231,11 +255,16 @@
 			{{ Form::select( 'admin-featured-position', Config::get('featured'), null, array( 'class' => 'form-control' ) ) }}
 			<button class="admin-set-featured btn btn-xs btn-success">Set Featured Position</button>
 			<button class="admin-unset-featured btn btn-xs btn-warning {{ $featured ? '' : 'hidden' }}">Remove from Featured</button>
+			<br>
 		</div>
 		<hr>
 	@endif
 
 	<div class="mod-post-controls">
+		@if ( $is_admin )
+			<button class="admin-edit-post btn btn-xs btn-warning">Edit Post</button>
+			<button class="admin-edit-post-submit btn btn-xs btn-success hidden">Submit Changes</button>
+		@endif
 		<button class="mod-post-delete btn btn-xs btn-danger {{ $post ? '' : 'hidden' }}">Delete This Post</button>
 		<button class="mod-post-undelete btn btn-xs btn-default {{ $post ? 'hidden' : '' }}">Un-delete This Post</button>
 		<hr>

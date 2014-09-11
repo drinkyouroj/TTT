@@ -152,7 +152,7 @@ class PostController extends BaseController {
 				//not an admin and 10min has not passed since your last post.
 				if(!Session::get('admin') && strtotime(date('Y-m-d H:i:s', strtotime('-10 minutes'))) <= strtotime($post->created_at)  ){
 					//Gotta make a new view for that.
-					return View::make('generic/post-error');
+					return View::make('v2/errors/post-limit-error');
 				}
 			}
 					

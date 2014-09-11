@@ -108,6 +108,7 @@ Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
 	Route::get('delete/user/{user_id}', 'AdminController@deleteUser');
 	Route::get('restore/user/{user_id}', 'AdminController@restoreUser');
 	Route::get('reset/user/{user_id}', 'AdminController@resetUser');
+	Route::post('post/edit', 'AdminController@editPost');
 
 	//Route::get('solr', 'AdminController@getResetSolr');//this updates the users on solr
 	//Route::get('resetnot/{batch}', 'AdminController@getResetNotifications');//this updates the users on solr
