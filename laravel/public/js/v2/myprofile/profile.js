@@ -87,7 +87,7 @@ $(function() {
 		profile.viewInit($(this).prop('id'));//new view has to be rendered out of this scenario
 	});
 
-	//Collection Renders
+//Collection Renders
 		$('body').on('click','.collection-controls a', function(event) {
 			event.preventDefault();
 			$('.collection-controls a').removeAttr('class');
@@ -98,7 +98,13 @@ $(function() {
 			profile.viewRender();
 		});
 
-	//Feed Filter Renders
+		//Collection options-link
+			$('body').on('click', '#collection-content .options-link',function(event) {
+				event.preventDefault();
+				$(this).siblings('.post-options').toggle();
+			});
+
+//Feed Filter Renders
 		$('body').on('click', '.feed-controls a', function(event) {
 			event.preventDefault();
 			$('.feed-controls a').removeAttr('class');
