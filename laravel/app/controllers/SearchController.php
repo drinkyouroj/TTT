@@ -8,6 +8,10 @@ class SearchController extends BaseController {
 		$this->post = $post;
 	}
 	
+	public function getSearchPage() {
+		return View::make('v2.search.search')
+			->with('default', true);
+	}
 	/**
 	 * Grabs Results in a page for both Posts and Users
 	 * @param string $term String that you're searching for.

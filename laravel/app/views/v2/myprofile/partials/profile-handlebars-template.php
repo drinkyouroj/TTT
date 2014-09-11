@@ -185,7 +185,7 @@
 	            <div class="thumb-container" style="background-image:url('{{site_url}}uploads/final_images/{{user_image}}');">
 	            </div>
 			</form>
-			<a class="btn-flat-blue avatar-modal">Choose an Avatar</a>
+			<a class="btn-flat-light-gray avatar-modal">Choose an Avatar</a>
 
 			<div id="avatarErrors"></div>
 

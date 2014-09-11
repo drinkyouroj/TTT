@@ -62,6 +62,11 @@
 			{{#ifCond post.user.id user_id }}
 				<div class="options-link"> </div>
 				<div class="post-options">
+					{{#ifNotCond featured_id post.id}}
+						<a class="set-featured" data-id="{{post.id}}">
+							Feature
+						</a>
+					{{/ifNotCond }}
 					{{#ifCond editable true}}
 						<a class="post-edit" href="{{site_url}}myprofile/editpost/{{post.id}}">
 							Edit
@@ -74,12 +79,6 @@
 						<a class="post-delete-confirm" data-id="{{post.id}}">
 							Confirm Delete?
 						</a>
-
-					{{#ifNotCond featured_id post.id}}
-						<a class="set-featured" data-id="{{post.id}}">
-							Feature
-						</a>
-					{{/ifNotCond }}
 				</div>
 			{{/ifCond}}
 			{{#ifCond post_type 'repost' }}

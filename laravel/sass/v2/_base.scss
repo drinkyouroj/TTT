@@ -398,6 +398,30 @@ textarea {
     }
   }
 }
+
+//dropdowns for reposts and post options
+@mixin profile-dropdowns {
+  position:absolute;
+  right:0px;
+  display:none;
+  min-width:120px;
+  margin-top:7px;
+  text-align:right;
+  background: url('../../../../images/global/white-95.png');
+  padding:5px 10px;
+  border:solid 1px $lightgray;
+  z-index: 3;
+  @include secondary_drop_shadow();
+  &::before {
+    content: url('../../../../images/profile/repost-arrow.png');
+    position: absolute;
+    top: -14px;
+    right: 10px;
+    width: 7px;
+    height: 10px;
+  }
+}
+
 // Styling for the post (and repost) listings. $isFeed just tells whether or not to
 // include the css for reposts (only used in profile feed).
 @mixin post_listing( $isFeed ) {
