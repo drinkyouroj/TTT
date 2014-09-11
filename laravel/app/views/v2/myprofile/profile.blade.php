@@ -43,6 +43,7 @@
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment-timezone/moment-timezone-with-data.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/photo/photo.js"></script>	
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/myprofile/profile.js"></script>
+	
 @stop
 
 @section('content')

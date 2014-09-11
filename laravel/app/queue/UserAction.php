@@ -36,6 +36,7 @@ class UserAction {
 			foreach($followers as $follower) {
 				
 				// Create the notification
+				/*  Notifications are no longer sent on 
 				$not_data = array(
 					'post_id' => $data['post_id'],
 					'post_title' => $post->title,
@@ -45,7 +46,7 @@ class UserAction {
 					'notification_type' => 'repost'
 					);
 				$not = $this->not->create($not_data, $action_user->username);
-				
+				*/
 				
 				
 				//below statement is to ensure that the user who owns the content doesn't get the repost.
@@ -88,11 +89,13 @@ class UserAction {
 		
 		//process notification for each follower
 		foreach($followers as $follower) {
+			/*
 			$not = $this->not->find(
 							$data['post_id'], 
 							$follower->follower_id, 
 							'repost'
 							);
+			*/
 
 			//pull the user out of notifications.
 			$this->not->pullUsers($not, $action_user->username);
@@ -133,7 +136,8 @@ class UserAction {
 		
 		//process notification for each follower
 		foreach($followers as $follower) {
-				
+
+			/*  New notifications are no longer sent on new post
 			$not_data = array(
 				'post_id' => $data['post_id'],
 				'post_title' => $post->title,
@@ -143,6 +147,7 @@ class UserAction {
 				'notification_type' => 'post'
 				);
 			$not = $this->not->create($not_data, $data['username']);
+			*/
 
 			$activity = array(
 						'action_id' => $data['user_id'],
