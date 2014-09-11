@@ -11,6 +11,15 @@ $(function() {
 		event.preventDefault;
 	});
 
+	//photo system initialize
+	photo_input = new PhotoInput;
+
+	photo_input.target = $('#imageModal .modal-body');
+	photo_input.input = $('input.processed-image');
+	photo_input.image_dom = 'form .image-system';
+	photoInit(photo_input);	
+	photo_input.viewInit();
+
 	//Below binds the modal close event incase there's an error
 	$('#imageModal').on('hidden.bs.modal', function () {
 		$('.modal-header span.image-error',this).remove();

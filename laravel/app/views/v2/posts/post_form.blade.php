@@ -16,14 +16,17 @@
 
 	@section('js')
 
+		@include( 'v2/partials/photo-input' )
 
 		<!--New script-->
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/validation/jquery.validate.min.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/editor/js/medium-editor.min.js"></script>
 		{{-- <script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/handlePaste.js"></script> --}}
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_input.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/photo/photo.js"></script>
+		{{--
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_photo.js"></script>
-
+		--}}
 		
 		@if($edit)
 			<script type="text/javascript">
@@ -267,52 +270,7 @@
 						</h4>
 					</div>
 					<div class="modal-body">
-				      	<div class="photos">
-							<div class="photo-system">
-								<div class="input-append">
-									<input type="text" class="span2 search-query" placeholder="Search Photos*">
-									<a class="btn activate-search btn-flat-gray">Search</a>
-									<a class="btn reset-search btn-flat-blue hidden">Reset</a>
-									<br/>
-									<br/>
-									*must be more than 3 characters.
-								</div>
-								
-								<div class="photo-results">
-									
-								</div>
-								
-								<div class="chosen">
-									<div class="row">
-										<div class="col-md-12 col-sm-12 processor-container">
-											<div class="photo-processor" style="display:none;">
-												<h4>Choose a Filter</h4>
-												<img src="{{Config::get('app.url')}}/img/photos/nofilter.png" data-process="nofilter"/>
-												<img src="{{Config::get('app.url')}}/img/photos/gotham.png" data-process="Gotham"/>
-												<img src="{{Config::get('app.url')}}/img/photos/toaster.png" data-process="Toaster"/>
-												<img src="{{Config::get('app.url')}}/img/photos/nashville.png" data-process="Nashville"/>
-												<img src="{{Config::get('app.url')}}/img/photos/lomo.png" data-process="Lomo"/>
-												<img src="{{Config::get('app.url')}}/img/photos/kelvin.png" data-process="Kelvin"/>
-												<img src="{{Config::get('app.url')}}/img/photos/tilt_shift.png" data-process="TiltShift"/>
-											<div class="clearfix"></div>
-											</div>
-										</div>
-										<div class="col-md-12 col-sm-12 ">
-											<div class="chosen-label"></div>
-											<div class="processed-label"></div>
-											<div class="photo-chosen"></div>
-										</div>
-										<div class="clearfix"></div>
-
-									</div>
-								</div>
-							</div>
-							
-							<input class="processed-image" type="hidden" name="image" value="">
-							
-							<div class="clearfix"></div>
-						</div>
-
+						
 					</div><!--End of Modal Body-->
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default btn-flat-white" data-dismiss="modal">OK</button>

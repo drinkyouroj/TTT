@@ -17,11 +17,15 @@ $(function() {
 	});
 	// Tooltips
 	$('.post-action-bar a').tooltip();
+	// Actions
 	$('.post-action-bar a').click(function(event) {
 		event.preventDefault();
 		var $action = $(this);
 		var Action = new UserAction();
 		Action.action = $action.data('action');
+		if ( Action.action == 'follow' && $action.hasClass('active') ) {
+			return;	// Hotfix: disabled unfollow from the post page
+		}
 		Action.user_id = $('.post-action-bar').data('user-id');
 		Action.post_id = $('.post-action-bar').data('post-id');
 		Action.send( function ( data ) {
