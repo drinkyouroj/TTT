@@ -20,6 +20,9 @@ class FlickrPhotoRepository implements PhotoRepository {
 		$this->secret = Config::get('flickr.secret');
 		$this->url = "https://api.flickr.com/services/rest/?";//Note, SSL is important stuff
 
+		//CDN upload
+		$this->cdn_config = Config::get('app.cdn_upload');
+
 		//Instagraph stuff
 		Validator::extend('Processes', function($attribute, $value, $parameters)
 		{
@@ -117,7 +120,7 @@ class FlickrPhotoRepository implements PhotoRepository {
 				
 				file_put_contents($file_path , fopen($url, 'r'));
 				
-				if( App::environment('prod') ) {
+				if( $this->cdn_config ) {
 					//CDN Upload action.
 					self::cdn_upload($file_path, $file_name);
 				}
@@ -148,7 +151,7 @@ class FlickrPhotoRepository implements PhotoRepository {
 			$insta->setOutput($final_path);
 			$insta->process($process);
 
-			if( App::environment('prod') ) {
+			if( $this->cdn_config ) {
 				//CDN Upload.. Maybe put this into a queue later if things don't run so good.
 				self::cdn_upload($final_path, $file_name);
 			}
