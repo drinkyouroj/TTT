@@ -225,29 +225,48 @@ a:focus {
 							position:absolute;
 							top:0px;
 							right:0px;
-							width:50px;
-							height:50px;
-							background:$dark;
+							width:30px;
+							height:30px;
+							background-image: url('../../../../images/profile/post-options-btn.png');
+							background-repeat: no-repeat;
+      						background-position:left 0px;
+      						background-size:30px 30px;
 							z-index: 3;
+							cursor:pointer;
 						}
 						.post-options {
-							position:absolute;
-							top:40px;
-						  	right:0px;
-							display:none;
-						  	background:$white;
-						  	z-index: 3;
-						  	text-align: right;
+							@include profile-dropdowns;
+							top:30px;
 
 						  	a {
+						  		width:100%;
+						  		display:block;
+						  		padding:5px 0;
 						  		cursor: pointer;
+						  		@include montserrat;
+						  		font-size:10px;
+						  		text-transform:uppercase;
+						  		letter-spacing:1px;
+						  	}
+  							a.set-featured {
+  								
 						  	}
 						  	
+						  	a.post-delete, a.post-delete-confirm {
+						  		margin-top:20px !important;
+						  		padding-top:10px;
+						  		border-top:solid 1px $gray;
+						  		font-size:8px;
+						  	}
 						  	a.post-delete {
-
+						  		color:$dark_gray;
 						  	}
 						  	a.post-delete-confirm {
 						  		display: none;
+						  		color:$red;
+						  		&:hover {
+						  			color:$dark;
+						  		}
 						  	}
 						}
 						.post-image {
@@ -501,24 +520,7 @@ a:focus {
 								line-height:7px;
 							}
 							ul.post-repost-user-dropdown {
-								position:absolute;
-								right:0px;
-								display:none;
-								min-width:120px;
-								margin-top:7px;
-								text-align:right;
-								background: url('../../../../images/global/white-95.png');
-								padding:5px 10px;
-								border:solid 1px $lightgray;
-								@include secondary_drop_shadow();
-								&::before {
-									content: url('../../../../images/profile/repost-arrow.png');
-									position: absolute;
-									top: -14px;
-									right: 10px;
-									width: 7px;
-									height: 10px;
-								}
+								@include profile-dropdowns;
 								li {
 									font-size:12px;
 									a {
@@ -694,6 +696,7 @@ a:focus {
 					&.settings {
 						.avatar {
 							margin-top:20px;
+							text-align:center;
 							.upload-form {
 								background:$white;
 								padding:20px 30px;
@@ -701,15 +704,15 @@ a:focus {
 								form {
 									.thumb-container {
 										position:relative;
-										width:100px;
-										height:100px;
+										width:120px;
+										height:120px;
 										overflow:hidden;
-										@include border-radius(50px);
+										@include border-radius(60px);
 										background-position: center center;
 										background-size: cover;
 										background-repeat: no-repeat;
 
-										margin-bottom:10px;
+										margin:0px auto 10px auto;
 									}
 									
 								}

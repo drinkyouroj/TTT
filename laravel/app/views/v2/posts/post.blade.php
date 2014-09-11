@@ -117,7 +117,6 @@
 		<div class="post-heading-container container">
 			<div class="row">
 				<div class="post-heading col-md-4">
-
 					<h2>{{ $post->title }}</h2>
 					{{-- Admin edit capabilities --}}
 					@if ( $is_admin )	
