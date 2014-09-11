@@ -244,7 +244,6 @@ class JSONController extends BaseController {
 					200//response is OK!
 				);
 			} elseif ( $exists ) {  //Relationship already exists
-				
 				// Delete the repost!
 				$this->repost->delete( $user_id, $post_id );
 				
@@ -318,19 +317,30 @@ class JSONController extends BaseController {
 		}
 	}
 
-	public function getUserdelete($id) {
+	public function postUserdelete() {
+		$id = Input::has('id') ? Input::get('id') : null;
+		$password = Input::has('password') ? Input::get('password') : null;
 		//Was the ID passed and is it the Authenticated user?
 		if ( $id && Auth::user()->id == $id ) {
+			// TODO: make sure user password is correct before delete.
 
-			$this->user->delete( $id );
+			if ( Auth::validate(array( 'id' => $id, 'password' => $password )) ) {
+				$this->user->delete( $id );	
+				return Response::json(
+					array('success'=>true),
+					200//response is OK!
+				);
+			} else {
+				// Invalid password
+				return Response::json(
+					array('error'=>'Incorrect password.'),
+					200//response is OK!
+				);
+			}
 			
-			return Response::json(
-				array('result'=>'success'),
-				200//response is OK!
-			);
 		} else {
 			return Response::json(
-				array('result'=>'failed'),
+				array('error'=>'Invalid permissions to perform this action.'),
 				200//response is OK!
 			);
 		}

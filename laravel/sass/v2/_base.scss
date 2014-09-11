@@ -271,11 +271,17 @@ textarea {
 
 
 
-//shadow for notifications and dropdowns
+//shadow for nav elements
 @mixin drop_shadow() {
--moz-box-shadow:    0px 1px 1px 0px #525252;
-  -webkit-box-shadow: 0px 1px 1px 0px #525252;
-  box-shadow:         0px 1px 1px 0px #525252;
+-moz-box-shadow:    0px 1px 2px 0px #525252;
+  -webkit-box-shadow: 0px 1px 2px 0px #525252;
+  box-shadow:         0px 1px 2px 0px #525252;
+}
+//shadow for secondary dropdowns
+@mixin secondary_drop_shadow() {
+-moz-box-shadow:    0px 1px 1px 0px #999;
+  -webkit-box-shadow: 0px 1px 1px 0px #999;
+  box-shadow:         0px 1px 1px 0px #999;
 }
 
 @mixin notifications_arrow_top() {
@@ -392,6 +398,30 @@ textarea {
     }
   }
 }
+
+//dropdowns for reposts and post options
+@mixin profile-dropdowns {
+  position:absolute;
+  right:0px;
+  display:none;
+  min-width:120px;
+  margin-top:7px;
+  text-align:right;
+  background: url('../../../../images/global/white-95.png');
+  padding:5px 10px;
+  border:solid 1px $lightgray;
+  z-index: 3;
+  @include secondary_drop_shadow();
+  &::before {
+    content: url('../../../../images/profile/repost-arrow.png');
+    position: absolute;
+    top: -14px;
+    right: 10px;
+    width: 7px;
+    height: 10px;
+  }
+}
+
 // Styling for the post (and repost) listings. $isFeed just tells whether or not to
 // include the css for reposts (only used in profile feed).
 @mixin post_listing( $isFeed ) {

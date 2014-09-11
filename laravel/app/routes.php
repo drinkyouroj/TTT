@@ -109,6 +109,7 @@ Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
 	Route::get('delete/user/{user_id}', 'AdminController@deleteUser');
 	Route::get('restore/user/{user_id}', 'AdminController@restoreUser');
 	Route::get('reset/user/{user_id}', 'AdminController@resetUser');
+	Route::post('post/edit', 'AdminController@editPost');
 
 	//Route::get('solr', 'AdminController@getResetSolr');//this updates the users on solr
 	//Route::get('resetnot/{batch}', 'AdminController@getResetNotifications');//this updates the users on solr
@@ -152,8 +153,10 @@ Route::get( 'posts/{alias}', 'PostController@getPost');
 Route::get( 'posts', 'PostController@getIndex');//grabs a random post
 
 //Search routes
+Route::get('search', 'SearchController@getSearchPage');
 Route::get('search/{term}', 'SearchController@getResult');//Might turn into a rest system later
 Route::post('search', 'SearchController@postResult');
+
 
 
 //Protected Profile routes
@@ -195,6 +198,9 @@ Route::group(array('before'=>'profile'), function() {
 	Route::get( 'profile', 'ProfileController@getProfile');
 	
 });
+
+//For Error Logging if the user wishes to contribute.
+Route::get('error/form', 'HomeController@getErrorForm');
 
 //For banned users to see when try try to log in.
 Route::get('banned', 'UserController@getBanned');

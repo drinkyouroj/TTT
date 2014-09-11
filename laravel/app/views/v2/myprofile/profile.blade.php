@@ -68,9 +68,9 @@
 						<div class="col-md-5">
 
 						</div>
-						<div class="col-md-7 follow">
+						<div class="col-md-7 follow-container">
 							<div class="row">
-								<div class="col-md-12">
+								<div class="col-md-12 col-sm-12 col-xs-12">
 									<a href="#followers" class="followers" id="followers">
 										<span class="count">{{$follower_count}}</span>
 										<span class="text">Followers</span>
@@ -81,7 +81,7 @@
 										<span class="text">Following</span>
 									</a>
 								</div>
-								<div class="col-md-12 follow-btn-container">
+								<div class="col-md-12 col-sm-12 col-xs-12 follow-btn-container">
 									@if($myprofile)
 										<div class="settings">
 											<a class="icon-button" href="#settings" id="settings">
@@ -154,16 +154,27 @@
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+		        <h4 class="modal-title" id="myModalLabel">Account Deletion</h4>
 		      </div>
 		      <div class="modal-body">
-		        Are you absolutely sure???
+		        Are you absolutely sure? This step is irreversible.
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-danger delete-account" data-user="{{$profile_user->id}}">
-		        	Delete The Account Already!
-		        </button>
+
+		        <div class="input-group col-md-8 col-md-offset-2">
+			      <input type="password" placeholder="Password" class="form-control delete-account-password">
+			      <span class="input-group-btn">
+			        <button type="button" class="btn btn-danger delete-account" data-user="{{$profile_user->id}}">
+			        	Delete The Account Already!
+			        </button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			      </span>
+			    </div>
+
+			    <div class="delete-account-error col-md-12">
+
+			    </div>
+		        
 		      </div>
 		    </div>
 		  </div>

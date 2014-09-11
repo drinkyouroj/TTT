@@ -1,10 +1,47 @@
-<!--Note that this is the collection tempalte for holding the collection together-->
+<!-- Notification template -->
+<script type="text/javascript">
+	Handlebars.registerHelper('substring', function(v1) {
+		if ( v1.length > 25 )
+			return v1.substring(0,25) + '...';
+		else
+			return v1;
+	});
+</script>
 <script type="text/x-handlebars-template" id="notifications-template">
 	<div class="notification-container">
-		{{notification}}
+	
+		{{#ifCond notification.notification_type 'follow'}}
+		
+		{{/ifCond}}
+		{{#ifCond notification.notification_type 'post'}}
+			<a href="{{site_url}}posts/{{notification.post_alias}}">
+				<span class="action-user">{{ notification.users.[0] }}</span> submitted a new post:
+				<span class="notification-post-title">{{ notification.post_title }}</span>
+			</a>
+		{{/ifCond}}
+		{{#ifCond notification.notification_type 'repost'}}
+			<a href="{{site_url}}posts/{{notification.post_alias}}">
+				<span class="action-user">{{ notification.users.[0] }}</span> reposted: 
+				<span class="notification-post-title">{{ notification.post_title }}</span>
+			</a>
+		{{/ifCond}}
+		{{#ifCond notification.notification_type 'comment'}}
+			<a href="{{site_url}}posts/{{notification.post_alias}}#comment-{{notification.comment_id}}">
+				<span class="action-user">{{ notification.users.[0] }}</span> commented on your post: 
+				<span class="notification-post-title">{{ notification.post_title }}</span>
+			</a>
+		{{/ifCond}}
+		{{#ifCond notification.notification_type 'reply'}}
+			<a href="{{site_url}}posts/{{notification.post_alias}}#comment-{{notification.comment_id}}">
+				<span class="action-user">{{ notification.users.[0] }}</span> replyed to your commment: 
+				<span class="notification-post-title">{{#substring notification.post_title}}{{/substring}}</span>
+			</a>
+		{{/ifCond}}
+			
 	</div>
 </script>
 
+<!--Note that this is the collection tempalte for holding the collection together-->
 <!--Below is used for the front page.-->
 <script type="text/x-handlebars-template" id="collection-template">
 	<div class="collection-container">
@@ -148,7 +185,7 @@
 	            <div class="thumb-container" style="background-image:url('{{site_url}}uploads/final_images/{{user_image}}');">
 	            </div>
 			</form>
-			<a class="btn-flat-blue avatar-modal">Choose an Avatar</a>
+			<a class="btn-flat-light-gray avatar-modal">Choose an Avatar</a>
 
 			<div id="avatarErrors"></div>
 
@@ -202,7 +239,7 @@
 
 <script type="text/x-handlebars-template" id="feature-item-template">
 	<div class="feature-item row">
-		<div class="text feature-inner col-md-5 col-sm-5">
+		<div class="text feature-inner col-md-4 col-sm-4">
 			<h2>
 				<a href="{{site_url}}posts/{{post.alias}}">
 					{{post.title}}
@@ -219,7 +256,7 @@
 		</div>
 
 		<a  href="{{site_url}}posts/{{post.alias}}"
-				class="image feature-inner col-md-7 col-sm-7"
+				class="image feature-inner col-md-8 col-sm-8"
 				style="background-image: url('{{site_url}}uploads/final_images/{{post.image}}');">
 		</a>
 	</div>

@@ -149,9 +149,9 @@
 		<li class="sidebar-option categories">
 			<a href="#itemTwo" data-toggle="collapse" data-parent="#accordion">
 				CATEGORIES
-				<span class="glyphicon glyphicon-plus pull-right"></span>
+				<span class="glyphicon glyphicon-minus pull-right"></span>
 			</a>
-			<div id="itemTwo" class="collapse">
+			<div id="itemTwo" class="collapse in">
 				<ul class="list-unstyled">
 					<li>
 						<a href="{{ URL::to('categories/featured') }}">Featured</a>

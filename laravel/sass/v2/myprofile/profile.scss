@@ -10,12 +10,13 @@ a:focus {
 		margin-top:20px;
 		.header-left {
 			h2 {
-				margin-bottom:40px;
 				background-position: left center;
 				background-repeat: no-repeat;
 				@include montserrat(bold);
 				font-size:40px;
+				text-transform:none;
 				vertical-align: middle;
+				@include word-break(break-all);
 				a {	
 					cursor:pointer;
 					span.avatar-image {
@@ -27,15 +28,16 @@ a:focus {
 						background-position: center center;
 						background-size: cover;
 						background-repeat: no-repeat;
-						@media (max-width:$break-xs) {
+						@include word-break(break-all);
+						@media (max-width:$break-sm) {
 							display:block;
 							clear:both;
-							margin-bottom:5px;
+							margin-bottom:3px;
 						}
 					}
 				}
 				@media (max-width:$break-sm) {
-					font-size:21px;
+					font-size:13px;
 					margin-top:0px;
 					margin-bottom:0px;
 				}
@@ -45,9 +47,13 @@ a:focus {
 			padding-top: 25px;
 			@media (max-width:$break-sm) {
 				padding-top:5px;
+				padding-left:0px;
 			}
-			.follow {
+			.follow-container {
 				text-align: right;
+				@media (max-width:$break-sm) {
+					padding-left:0px;
+				}
 				.follow-btn-container {
 					margin-top:5px;
 				}
@@ -110,7 +116,13 @@ a:focus {
 			}
 		}
 		.section-selectors {
+			@media (max-width:$break-xs) {
+				border-top:solid 1px $gray;
+				padding-top:10px;
+			}
 			a {
+				display:block;
+				float:left;
 				margin-right: 20px;
 				@include montserrat(bold);
 				font-size: 14px;
@@ -118,8 +130,10 @@ a:focus {
 				text-transform: uppercase;
 				text-decoration: none;
 				letter-spacing:1px;
+				padding:5px 0px;
 				@media (max-width:$break-xs) {
 					font-size: 11px;
+					letter-spacing:0px;
 				}
 				&:hover {
 					color:$dark;
@@ -130,7 +144,7 @@ a:focus {
 				}
 			}
 			@media (max-width:$break-sm) {
-				margin-top:20px;
+				margin-top:5px;
 			}
 		}
 		
@@ -171,20 +185,21 @@ a:focus {
 					@include post_listing(0);
 
 					.post-container {
-						height:auto;
 						margin-bottom:10px;
 						@media (max-width:$break-lg) and (min-width:$break-lg-min) {
 							width:328px;
+							height:340px;
 						}
 						@media (min-width:$break-lg) {
 								margin-right:0px;
 						}
 						@media (max-width:$break-md) and (min-width:$break-md-min) {
 							width:345px;
+							height:350px;
 						}
 						@media (max-width:$break-sm) and (min-width:$break-sm-min) {
 							width:48%;
-							height:312px;
+							height:330px;
 						}
 						&:nth-child(even) {
 							@media (max-width:$break-sm) and (min-width:$break-sm-min) {
@@ -200,6 +215,7 @@ a:focus {
 						}
 						@media (max-width:$break-xs) {
 							width:100%;
+							height:auto;
 							margin-left:0%;
 							margin-right:0%;
 							margin-bottom:30px;
@@ -209,14 +225,49 @@ a:focus {
 							position:absolute;
 							top:0px;
 							right:0px;
-							width:50px;
-							height:50px;
-							background:$dark;
+							width:30px;
+							height:30px;
+							background-image: url('../../../../images/profile/post-options-btn.png');
+							background-repeat: no-repeat;
+      						background-position:left 0px;
+      						background-size:30px 30px;
 							z-index: 3;
+							cursor:pointer;
 						}
 						.post-options {
-							display:none;
-						  	background:$white;
+							@include profile-dropdowns;
+							top:30px;
+
+						  	a {
+						  		width:100%;
+						  		display:block;
+						  		padding:5px 0;
+						  		cursor: pointer;
+						  		@include montserrat;
+						  		font-size:10px;
+						  		text-transform:uppercase;
+						  		letter-spacing:1px;
+						  	}
+  							a.set-featured {
+  								
+						  	}
+						  	
+						  	a.post-delete, a.post-delete-confirm {
+						  		margin-top:20px !important;
+						  		padding-top:10px;
+						  		border-top:solid 1px $gray;
+						  		font-size:8px;
+						  	}
+						  	a.post-delete {
+						  		color:$dark_gray;
+						  	}
+						  	a.post-delete-confirm {
+						  		display: none;
+						  		color:$red;
+						  		&:hover {
+						  			color:$dark;
+						  		}
+						  	}
 						}
 						.post-image {
 							position:relative;
@@ -253,6 +304,8 @@ a:focus {
 						margin-left:15px;
 						margin-right:15px;
 						margin-bottom:30px;
+						background:$white;
+						border:solid 1px $lightgray;
 						@media (min-width:$break-lg) {
 							margin-right:10px;
 						}
@@ -269,8 +322,10 @@ a:focus {
 						.text {
 							background:$white;
 							text-align:center;
-							padding:0 40px;
-							border:solid 1px $lightgray;
+							padding:25px 20px 0 20px;
+							@media (max-width:$break-lg) and (min-width:$break-lg-min)  {
+								padding:10px 15px 0 15px;
+							}
 							@media (max-width:$break-sm) {
 								height:auto;
 								padding-bottom:30px;
@@ -279,10 +334,11 @@ a:focus {
 								@include title_listing;
 								font-size:20px;
 								line-height:21px;
-								padding-top:40px;
 								@media (max-width:$break-lg) {
-									padding-top:20px;
 									font-size:17px;
+								}
+								@media (max-width:$break-xs) {
+									padding-top:10px;
 								}
 								a {
 									color:$dark;
@@ -305,6 +361,12 @@ a:focus {
 								text-align:justify;
 								font-size:14px;
 								line-height:150%;
+								@media (max-width:$break-lg) and (min-width:$break-lg-min)  {
+									font-size:13px;
+								}
+								@media (max-width:$break-sm) and (min-width:$break-sm-min)  {
+									text-align:center;
+								}
 							}
 						}
 						.image {
@@ -313,8 +375,12 @@ a:focus {
 							background-repeat:no-repeat;
 							background-position:center center;
 							@media (max-width:$break-sm) {
-								width: 100%;
-								height:300px;
+								width: 90%;
+								height:0px;
+								padding-top:56%;
+								margin-left:5%;
+								margin-right:5%;
+								margin-bottom:5%;
 							}
 						}
 						.read-more {
@@ -323,6 +389,9 @@ a:focus {
 							text-align:left;
 							font-size:10px;
 							letter-spacing:1px;
+							@media (max-width:$break-sm) and (min-width:$break-sm-min)  {
+								text-align:center;
+							}
 						}
 					}
 
@@ -408,6 +477,7 @@ a:focus {
 				font-size: 14px;
 				letter-spacing:1px;
 				a {
+
 					text-transform: lowercase;
 					text-decoration: none;
 					color:$gray;
@@ -418,9 +488,14 @@ a:focus {
 					&.active {
 						color:$dark;
 					}
+					@media (max-width:$break-xs) {
+						padding:10px;
+					}
 				}
 				@media (max-width:$break-xs) {
-					font-size: 11px;
+					font-size: 13px;
+					letter-spacing:0px;
+					margin-bottom: 5px;
 				}
 			}
 
@@ -430,6 +505,37 @@ a:focus {
 				#default-content {
 					&.feed {
 						@include post_listing(1);
+						.post-repost-container {
+							position:absolute;
+							top:0px;
+							right:0px;
+							z-index:3;
+							background: url('../../../../images/global/blue-75.png');
+							cursor:pointer;
+							padding-bottom:7px;
+							.post-repost-count-container {
+								color:#fff;
+								text-align:center;
+								@include garamond-italic;
+								line-height:7px;
+							}
+							ul.post-repost-user-dropdown {
+								@include profile-dropdowns;
+								li {
+									font-size:12px;
+									a {
+										@include montserrat;
+									}
+									&.reposted-label {
+										
+										color:$dark_gray;
+									}
+								}
+							}
+							&:hover > ul.post-repost-user-dropdown {
+								display:block;
+							}
+						}
 					}
 					&.saves .image, &.drafts .image  {
 						width:150px;
@@ -590,6 +696,7 @@ a:focus {
 					&.settings {
 						.avatar {
 							margin-top:20px;
+							text-align:center;
 							.upload-form {
 								background:$white;
 								padding:20px 30px;
@@ -597,15 +704,15 @@ a:focus {
 								form {
 									.thumb-container {
 										position:relative;
-										width:100px;
-										height:100px;
+										width:120px;
+										height:120px;
 										overflow:hidden;
-										@include border-radius(50px);
+										@include border-radius(60px);
 										background-position: center center;
 										background-size: cover;
 										background-repeat: no-repeat;
 
-										margin-bottom:10px;
+										margin:0px auto 10px auto;
 									}
 									
 								}

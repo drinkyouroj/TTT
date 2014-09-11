@@ -256,6 +256,32 @@
 			</div>
 
 		{{ Form::close() }}
+		<div class="bottom-controls-container container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					
+					<a class="categorization">
+						Post Type / Categories
+					</a>
+					<span class="draft-publish">
+						{{--Prevent users from being able to set something published as draft--}}
+						@if( !($edit && $published) ) {{--Note the encasing of edit and published--}}
+						<a class="save-draft">
+							Draft
+						</a>
+						@endif
+					
+						<a class="submit-post">
+							@if(!$edit)
+								Publish
+							@else
+								Update
+							@endif
+						</a>
+					</span>
+				</div>
+			</div>
+		</div>
 
 
 		{{--Modal for the image selection system should go here--}}

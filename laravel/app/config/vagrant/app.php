@@ -1,6 +1,6 @@
 <?php
 
 return array(
-	'url' => 'http://192.168.9.140:4567',
-	'imageurl' => 'http://192.168.9.140:4567/uploads/final_images'
+	'url' => 'http://'.$_SERVER['HTTP_HOST'],
+	'imageurl' => 'http://'.$_SERVER['HTTP_HOST'].'/uploads/final_images'
 );
