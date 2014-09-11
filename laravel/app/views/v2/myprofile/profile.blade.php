@@ -237,6 +237,9 @@
 				<div class="modal-body">
 					
 				</div><!--End of Modal Body-->
+				<div class="modal-footer hidden">
+					<button class="btn-flat-blue pull-right" data-dismiss="modal">Ok</button>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -626,7 +626,7 @@ function ProfileActions() {
 		$('#default-content', this.target).append(this.settings_template(view_data));
 		
 		if(this.photo_init == false) {
-			photo_input = new PhotoInput;
+			photo_input = new PhotoInput();
 			this.photo_init = true;
 
 			photo_input.target = $('#photoModal .modal-body');

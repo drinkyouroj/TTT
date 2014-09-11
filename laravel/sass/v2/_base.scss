@@ -637,10 +637,10 @@ textarea {
               width: 14.28%;
               opacity: 0.5;
               cursor: pointer;
-              &:hover, &.selected {
+              &:hover, &.active {
                 opacity: 1;
               }
-              &.selected {
+              &.active {
                 cursor: default;
               }
             }
