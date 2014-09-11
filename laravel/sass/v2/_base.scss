@@ -271,11 +271,17 @@ textarea {
 
 
 
-//shadow for notifications and dropdowns
+//shadow for nav elements
 @mixin drop_shadow() {
--moz-box-shadow:    0px 1px 1px 0px #525252;
-  -webkit-box-shadow: 0px 1px 1px 0px #525252;
-  box-shadow:         0px 1px 1px 0px #525252;
+-moz-box-shadow:    0px 1px 2px 0px #525252;
+  -webkit-box-shadow: 0px 1px 2px 0px #525252;
+  box-shadow:         0px 1px 2px 0px #525252;
+}
+//shadow for secondary dropdowns
+@mixin secondary_drop_shadow() {
+-moz-box-shadow:    0px 1px 1px 0px #999;
+  -webkit-box-shadow: 0px 1px 1px 0px #999;
+  box-shadow:         0px 1px 1px 0px #999;
 }
 
 @mixin notifications_arrow_top() {

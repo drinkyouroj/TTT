@@ -202,7 +202,7 @@
 
 <script type="text/x-handlebars-template" id="feature-item-template">
 	<div class="feature-item row">
-		<div class="text feature-inner col-md-5 col-sm-5">
+		<div class="text feature-inner col-md-4 col-sm-4">
 			<h2>
 				<a href="{{site_url}}posts/{{post.alias}}">
 					{{post.title}}
@@ -219,7 +219,7 @@
 		</div>
 
 		<a  href="{{site_url}}posts/{{post.alias}}"
-				class="image feature-inner col-md-7 col-sm-7"
+				class="image feature-inner col-md-8 col-sm-8"
 				style="background-image: url('{{site_url}}uploads/final_images/{{post.image}}');">
 		</a>
 	</div>

@@ -185,20 +185,21 @@ a:focus {
 					@include post_listing(0);
 
 					.post-container {
-						height:auto;
 						margin-bottom:10px;
 						@media (max-width:$break-lg) and (min-width:$break-lg-min) {
 							width:328px;
+							height:340px;
 						}
 						@media (min-width:$break-lg) {
 								margin-right:0px;
 						}
 						@media (max-width:$break-md) and (min-width:$break-md-min) {
 							width:345px;
+							height:350px;
 						}
 						@media (max-width:$break-sm) and (min-width:$break-sm-min) {
 							width:48%;
-							height:312px;
+							height:330px;
 						}
 						&:nth-child(even) {
 							@media (max-width:$break-sm) and (min-width:$break-sm-min) {
@@ -214,6 +215,7 @@ a:focus {
 						}
 						@media (max-width:$break-xs) {
 							width:100%;
+							height:auto;
 							margin-left:0%;
 							margin-right:0%;
 							margin-bottom:30px;
@@ -229,8 +231,12 @@ a:focus {
 							z-index: 3;
 						}
 						.post-options {
+							position:absolute;
+							top:40px;
+						  	right:0px;
 							display:none;
 						  	background:$white;
+						  	z-index: 3;
 						}
 						.post-image {
 							position:relative;
@@ -267,6 +273,8 @@ a:focus {
 						margin-left:15px;
 						margin-right:15px;
 						margin-bottom:30px;
+						background:$white;
+						border:solid 1px $lightgray;
 						@media (min-width:$break-lg) {
 							margin-right:10px;
 						}
@@ -283,8 +291,10 @@ a:focus {
 						.text {
 							background:$white;
 							text-align:center;
-							padding:0 40px;
-							border:solid 1px $lightgray;
+							padding:25px 20px 0 20px;
+							@media (max-width:$break-lg) and (min-width:$break-lg-min)  {
+								padding:10px 15px 0 15px;
+							}
 							@media (max-width:$break-sm) {
 								height:auto;
 								padding-bottom:30px;
@@ -293,10 +303,11 @@ a:focus {
 								@include title_listing;
 								font-size:20px;
 								line-height:21px;
-								padding-top:40px;
 								@media (max-width:$break-lg) {
-									padding-top:20px;
 									font-size:17px;
+								}
+								@media (max-width:$break-xs) {
+									padding-top:10px;
 								}
 								a {
 									color:$dark;
@@ -319,6 +330,12 @@ a:focus {
 								text-align:justify;
 								font-size:14px;
 								line-height:150%;
+								@media (max-width:$break-lg) and (min-width:$break-lg-min)  {
+									font-size:13px;
+								}
+								@media (max-width:$break-sm) and (min-width:$break-sm-min)  {
+									text-align:center;
+								}
 							}
 						}
 						.image {
@@ -327,8 +344,12 @@ a:focus {
 							background-repeat:no-repeat;
 							background-position:center center;
 							@media (max-width:$break-sm) {
-								width: 100%;
-								height:300px;
+								width: 90%;
+								height:0px;
+								padding-top:56%;
+								margin-left:5%;
+								margin-right:5%;
+								margin-bottom:5%;
 							}
 						}
 						.read-more {
@@ -337,6 +358,9 @@ a:focus {
 							text-align:left;
 							font-size:10px;
 							letter-spacing:1px;
+							@media (max-width:$break-sm) and (min-width:$break-sm-min)  {
+								text-align:center;
+							}
 						}
 					}
 
@@ -450,6 +474,54 @@ a:focus {
 				#default-content {
 					&.feed {
 						@include post_listing(1);
+						.post-repost-container {
+							position:absolute;
+							top:0px;
+							right:0px;
+							z-index:3;
+							background: url('../../../../images/global/blue-75.png');
+							cursor:pointer;
+							padding-bottom:7px;
+							.post-repost-count-container {
+								color:#fff;
+								text-align:center;
+								@include garamond-italic;
+								line-height:7px;
+							}
+							ul.post-repost-user-dropdown {
+								position:absolute;
+								right:0px;
+								display:none;
+								min-width:120px;
+								margin-top:7px;
+								text-align:right;
+								background: url('../../../../images/global/white-95.png');
+								padding:5px 10px;
+								border:solid 1px $lightgray;
+								@include secondary_drop_shadow();
+								&::before {
+									content: url('../../../../images/profile/repost-arrow.png');
+									position: absolute;
+									top: -14px;
+									right: 10px;
+									width: 7px;
+									height: 10px;
+								}
+								li {
+									font-size:12px;
+									a {
+										@include montserrat;
+									}
+									&.reposted-label {
+										
+										color:$dark_gray;
+									}
+								}
+							}
+							&:hover > ul.post-repost-user-dropdown {
+								display:block;
+							}
+						}
 					}
 					&.saves .image, &.drafts .image  {
 						width:150px;
