@@ -6,17 +6,17 @@
 					@if(isset($featured{0}))
 						<?php $main = $featured{0}->post; ?>
 						@if(is_object($main))
-							<div class="featured-item">
-								<div class="text">
+							<div class="featured-item row">
+								<div class="text col-md-4">
 									<h2>{{$main->title}}</h2>
 									<p>
-										{{$main->body}}
+										{{substr($main->body, 0,300)}}
 										<br/>
 										<br/>
 										<a href="">Read More</a>
 									</p>
 								</div>
-								<div class="image" style="background-image: url({{Config::get('app.imageurl')}}/{{$main->image}} )">
+								<div class="image col-md-8" style="background-image: url({{Config::get('app.imageurl')}}/{{$main->image}} )">
 								</div>
 							</div>
 							<?php unset($featured{0});?>
