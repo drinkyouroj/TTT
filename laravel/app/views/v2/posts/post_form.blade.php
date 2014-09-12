@@ -133,8 +133,10 @@
 									<ul>
 										{? $checked = ''; ?}
 										<?php
-											$unserialized = unserialize($post->category);
-											$unserialized = is_array($unserialized) ? $unserialized : array();
+											if($edit) {
+												$unserialized = unserialize($post->category);
+												$unserialized = is_array($unserialized) ? $unserialized : array();
+											}
 										?>
 										@foreach($categories as $category)
 											<li class="col-md-6">
@@ -214,8 +216,15 @@
 								style="background-image: url('{{Config::get('app.url')}}/uploads/final_images/{{$image}}');"
 							@endif
 							>
+							<?php 
+								if($edit) {
+									$draft = $post->draft;
+								} else {
+									$draft = false;
+								}
+							?>
 							{{--Select your image --}}
-							<div class="image-select <?php if ( $post->draft ) { echo 'hidden'; } ?>">
+							<div class="image-select <?php if ( $draft ) { echo 'hidden'; } ?>">
 								<a href="#image" class="image-select-modal" data-toggle="modal" data-target="#imageModal">
 									<img src="{{Config::get('app.url')}}/images/posts/add-image.png">
 									<br/>
@@ -225,7 +234,7 @@
 								</a>
 							</div>
 
-							<div class="image-edit" <?php if ( $post->draft ) { echo 'style="display:block"'; } ?>>
+							<div class="image-edit" <?php if ( $draft ) { echo 'style="display:block"'; } ?>>
 								<a href="#image" class="image-select-modal btn-flat-white" data-toggle="modal" data-target="#imageModal">
 									Edit Image
 								</a>
