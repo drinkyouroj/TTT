@@ -51,8 +51,8 @@ class UserController extends BaseController {
             //Auto Login on Creation.
             $user = $this->user->login($data);
             //Gotta send out email
-            if(!empty($data['email'])) {
-                
+            if(!empty($data['email']) && Config::get('app.email_send') ) {
+                $data['confirm'] = $user->confirmation_code;
                 $email_data = array(
                     'from' => 'no_reply@twothousandtimes.com',
                     'to' => array($data['email']),

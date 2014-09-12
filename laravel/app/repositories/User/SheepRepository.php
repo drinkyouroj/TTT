@@ -202,8 +202,15 @@ class SheepRepository implements UserRepository {
 
 	}
 
-	public function confirm($data) {
-
+	public function confirm($code) {
+		$user = $this->user->where('confirmation_code',$code)->first();
+		if($user instanceof User) {
+			$user->verified = 1;
+			$user->save();
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function register($data) {
