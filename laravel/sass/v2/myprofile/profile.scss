@@ -184,6 +184,55 @@ a:focus {
   					//Post
 					@include post_listing(0);
 
+					.options-link {
+						position:absolute;
+						top:0px;
+						right:0px;
+						width:30px;
+						height:30px;
+						background-image: url('../../../../images/profile/post-options-btn.png');
+						background-repeat: no-repeat;
+  						background-position:left 0px;
+  						background-size:30px 30px;
+						z-index: 3;
+						cursor:pointer;
+					}
+					.post-options {
+						@include profile-dropdowns;
+						top:30px;
+
+					  	a {
+					  		width:100%;
+					  		display:block;
+					  		padding:5px 0;
+					  		cursor: pointer;
+					  		@include montserrat;
+					  		font-size:10px;
+					  		text-transform:uppercase;
+					  		letter-spacing:1px;
+					  	}
+							a.set-featured {
+								
+					  	}
+					  	
+					  	a.post-delete, a.post-delete-confirm {
+					  		margin-top:20px !important;
+					  		padding-top:10px;
+					  		border-top:solid 1px $gray;
+					  		font-size:8px;
+					  	}
+					  	a.post-delete {
+					  		color:$dark_gray;
+					  	}
+					  	a.post-delete-confirm {
+					  		display: none;
+					  		color:$red;
+					  		&:hover {
+					  			color:$dark;
+					  		}
+					  	}
+					}
+
 					.post-container {
 						margin-bottom:10px;
 						@media (max-width:$break-lg) and (min-width:$break-lg-min) {
@@ -221,54 +270,6 @@ a:focus {
 							margin-bottom:30px;
 						}
 
-						.options-link {
-							position:absolute;
-							top:0px;
-							right:0px;
-							width:30px;
-							height:30px;
-							background-image: url('../../../../images/profile/post-options-btn.png');
-							background-repeat: no-repeat;
-      						background-position:left 0px;
-      						background-size:30px 30px;
-							z-index: 3;
-							cursor:pointer;
-						}
-						.post-options {
-							@include profile-dropdowns;
-							top:30px;
-
-						  	a {
-						  		width:100%;
-						  		display:block;
-						  		padding:5px 0;
-						  		cursor: pointer;
-						  		@include montserrat;
-						  		font-size:10px;
-						  		text-transform:uppercase;
-						  		letter-spacing:1px;
-						  	}
-  							a.set-featured {
-  								
-						  	}
-						  	
-						  	a.post-delete, a.post-delete-confirm {
-						  		margin-top:20px !important;
-						  		padding-top:10px;
-						  		border-top:solid 1px $gray;
-						  		font-size:8px;
-						  	}
-						  	a.post-delete {
-						  		color:$dark_gray;
-						  	}
-						  	a.post-delete-confirm {
-						  		display: none;
-						  		color:$red;
-						  		&:hover {
-						  			color:$dark;
-						  		}
-						  	}
-						}
 						.post-image {
 							position:relative;
 							width:100% !important;
@@ -306,6 +307,7 @@ a:focus {
 						margin-bottom:30px;
 						background:$white;
 						border:solid 1px $lightgray;
+						position: relative;
 						@media (min-width:$break-lg) {
 							margin-right:10px;
 						}

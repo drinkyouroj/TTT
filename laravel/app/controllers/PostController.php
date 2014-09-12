@@ -256,7 +256,7 @@ class PostController extends BaseController {
 					$post->save();
 								
 					//no featured for this user? set this new post as featured.
-					if($user->featured == false) {
+					if($user->featured == false && $post->draft == false) {
 						User::where('id', Auth::user()->id)
 							->update(array('featured' => $post->id));
 					}
@@ -274,13 +274,14 @@ class PostController extends BaseController {
 					$file = OpenCloud::upload('Images', public_path().'/uploads/final_images/'.$post->image, $post->image);
 				}
 				*/
-
-				//Gotta save the categories pivot
-				foreach(Input::get('category') as $k => $category) {
-					if($k <= 1) {//This will ensure that no more than 2 are added at a time.
-						$post->categories()->attach($category);
-					} else {
-						break;//let's not waste processes
+				if (Input::has('category')) {
+					//Gotta save the categories pivot
+					foreach(Input::get('category') as $k => $category) {
+						if($k <= 1) {//This will ensure that no more than 2 are added at a time.
+							$post->categories()->attach($category);
+						} else {
+							break;//let's not waste processes
+						}
 					}
 				}
 
@@ -363,18 +364,18 @@ class PostController extends BaseController {
 				$post->user_id = Auth::user()->id;
 				
 				//Gotta make sure to make the alias only alunum.  Don't change alias on the update.  We don't want to have to track this change.
-				$post->story_type = $query['story_type'];
+				$post->story_type = isset($query['story_type']) ? $query['story_type'] : '';
 				
-				$post->category = serialize ($query['category'] );
-				$post->image = $query['image'];//If 0, then it means no photo.
+				$post->category = isset($query['category']) ? serialize ( $query['category'] ) : '';
+				$post->image = isset($query['image']) ? $query['image'] : 0;//If 0, then it means no photo.
 				
 				
 				$post->title = $query['title'];
-				$post->tagline_1 = $query['tagline_1'];
-				$post->tagline_2 = $query['tagline_2'];
-				$post->tagline_3 = $query['tagline_3'];
+				$post->tagline_1 = isset($query['tagline_1']) ? $query['tagline_1'] : '';
+				$post->tagline_2 = isset($query['tagline_2']) ? $query['tagline_2'] : '';
+				$post->tagline_3 = isset($query['tagline_3']) ? $query['tagline_3'] : '';
 				
-				$post->body = strip_tags($query['body'], '<p><i><b>');//Body is the only updatable thing in an update scenario.
+				$post->body = isset($query['body']) ? trim( strip_tags($query['body'], '<p><i><b>') ) : '';//Body is the only updatable thing in an update scenario.
 
 				//if the post is becoming published.
 				if( $query['published'] ) {

@@ -103,24 +103,42 @@ class Post extends Eloquent {
 	 */
 	public function validate($input, $id = false)
 	{
-		//If id is false its a new situation.
+		// New Post
 		if($id == false) {
-			$rules = array(
-				'title' => 'Required',
-				'tagline_1' => 'Required',
-				'tagline_2' => 'Required',
-				'tagline_3' => 'Required',
-				'body' => 'Twothousand',
-				'image' => 'required'
-			);
+			if ($input['draft']) {
+				// Validation for new post that is a draft (fewer required fields)
+				$rules = array(
+					'title' => 'Required'
+				);
+			} else {
+				// Validation for new post -> published
+				$rules = array(
+					'title' => 'Required',
+					'tagline_1' => 'Required',
+					'tagline_2' => 'Required',
+					'tagline_3' => 'Required',
+					'body' => 'Twothousand',
+					'image' => 'required'
+				);
+			}
+		// Existing Post
 		} else {
-			$rules = array(
-				'title' => 'Required',
-				'tagline_1' => 'Required',
-				'tagline_2' => 'Required',
-				'tagline_3' => 'Required',
-				'body' => 'Twothousand'
-		);
+			if ($input['draft']) {
+				// Validation for existing post -> save as draft
+				$rules = array(
+					'title' => 'Required'
+				);
+			} else {
+				// Validation for existing post -> published
+				$rules = array(
+					'title' => 'Required',
+					'tagline_1' => 'Required',
+					'tagline_2' => 'Required',
+					'tagline_3' => 'Required',
+					'body' => 'Twothousand'
+				);
+			}
+			
 		}
 		
 		return Validator::make($input, $rules);

@@ -103,6 +103,17 @@ $(function() {
 				event.preventDefault();
 				$(this).siblings('.post-options').toggle();
 			});
+			// Close when click elsewhere
+			$(document).mouseup(function (e) {
+			    var container = $('.post-options');
+			    if (!container.is(e.target) // if the target of the click isn't the container...
+			        && container.has(e.target).length === 0) { // ... nor a descendant of the container
+			        container.hide();
+			    	// change back to delete if user clicked delete and not confirm
+			    	$(container).find('.post-delete').show();
+			    	$(container).find('.post-delete-confirm').hide();
+			    }
+			});
 
 //Feed Filter Renders
 		$('body').on('click', '.feed-controls a', function(event) {
@@ -174,7 +185,7 @@ $(function() {
 	//Delete Post
 	$('body').on('click', '.post-delete', function() {
 		$(this).fadeOut(function() {
-			$(this).siblings('.post-delete-confirm').fadeIn();
+			$(this).siblings('.post-delete-confirm').fadeIn().css('display', 'block');
 		});
 	});
 	$('body').on('click', '.post-delete-confirm', function() {

@@ -138,7 +138,7 @@
 				<div class="date col-md-2 col-sm-2 col-xs-12">
 					<span>{{date}}</span>
 				</div>
-				<a  href="{{site_url}}posts/{{draft.alias}}"
+				<a  href="{{site_url}}myprofile/editpost/{{draft.id}}"
 					class="image col-md-2 col-sm-3 col-xs-3"
 					style="background-image:url('{{site_url}}uploads/final_images/{{draft.image}}');">
 
@@ -146,7 +146,7 @@
 
 				<div class="text col-md-5 col-sm-5 col-xs-6">
 					<h3>
-						<a href="{{site_url}}posts/{{post.alias}}">
+						<a href="{{site_url}}myprofile/editpost/{{draft.id}}">
 							{{draft.title}}
 						</a>
 					</h3>
@@ -238,7 +238,7 @@
 
 
 <script type="text/x-handlebars-template" id="feature-item-template">
-	<div class="feature-item row">
+	<div class="feature-item row" id="post-{{post.id}}">
 		<div class="text feature-inner col-md-4 col-sm-4">
 			<h2>
 				<a href="{{site_url}}posts/{{post.alias}}">
@@ -259,5 +259,21 @@
 				class="image feature-inner col-md-8 col-sm-8"
 				style="background-image: url('{{site_url}}uploads/final_images/{{post.image}}');">
 		</a>
+
+		<div class="options-link"> </div>
+		<div class="post-options">
+			{{#ifCond editable true}}
+				<a class="post-edit" href="{{site_url}}myprofile/editpost/{{post.id}}">
+					Edit
+				</a>
+			{{/ifCond}}
+
+			<a class="post-delete">
+				Delete
+			</a>
+			<a class="post-delete-confirm" data-id="{{post.id}}">
+				Confirm Delete?
+			</a>
+		</div>
 	</div>
 </script>
