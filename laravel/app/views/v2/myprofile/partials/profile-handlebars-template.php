@@ -132,7 +132,7 @@
 
 <!--Below is used for Drafts-->
 <script type="text/x-handlebars-template" id="drafts-template">
-	<div class="container">
+	<div class="container" id="draft-container-{{draft.id}}">
 		<div class="drafts-box">
 			<div class="row">
 				<div class="date col-md-2 col-sm-2 col-xs-12">

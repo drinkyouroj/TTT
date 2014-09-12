@@ -197,6 +197,12 @@ $(function() {
 		profile.setRepostDelete( $(this).data('id') );
 	});
 
+	// Delete Draft
+	$('body').on('click', '.delete-draft', function(event) {
+		event.preventDefault();
+		profile.deleteDraft( $(this).data('id') );
+	});
+
 
 //Saves Actions
 	//Remove Saved
@@ -290,7 +296,7 @@ function ProfileActions() {
 	};
 
 	//Actual Content Rendering routes
-	this.viewRender = function(init) {		
+	this.viewRender = function(init) {
 		if(this.filter) {
 			this.viewClear();
 		}
@@ -301,7 +307,7 @@ function ProfileActions() {
 				if(init) {					
 					this.renderComments();					
 				}
-				if((init || this.type == 'all') && window.featured_id && this.page == 1 ) {
+				if((init || this.type == 'all' || this.type == 'post') && window.featured_id && this.page == 1 ) {
 					this.renderFeatured();//only renders when the person has a featured article.
 				}
 				break;
@@ -366,6 +372,16 @@ function ProfileActions() {
 		} else {
 			this.url = base_url + this.page;
 		}
+	};
+
+	// Delete draft
+	this.deleteDraft = function ( post_id ) {
+		var url = window.site_url + 'rest/profile/post/' + post_id;
+		this.getData( url, function ( data ) {
+			if ( data.success ) {
+				$('#draft-container-' + post_id).remove();
+			}
+		});
 	};
 
 
