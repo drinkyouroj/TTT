@@ -251,6 +251,10 @@ class SheepRepository implements UserRepository {
 		return false;
 	}
 
+	public function usernamesPerEmailCount( $email ) {
+		return $this->user->where( 'email', $email )->count();
+	}
+
 	public function getUserCount() {
 		return $this->user->where( 'banned', 0 )->count();
 	}

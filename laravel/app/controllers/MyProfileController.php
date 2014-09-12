@@ -9,8 +9,8 @@ class MyProfileController extends BaseController {
 							RepostRepository $repost,
 							PostRepository $post,
 							FollowRepository $follow,
-							CommentRepository $comment
-							) {
+							CommentRepository $comment,
+							UserRepository $user ) {
 		$this->not = $not;
 		$this->feed = $feed;
 		$this->profilepost = $profilepost;
@@ -19,6 +19,7 @@ class MyProfileController extends BaseController {
 		$this->post = $post;
 		$this->follow = $follow;
 		$this->comment = $comment;
+		$this->user = $user;
 	}
 
 	protected $paginate = 12;
@@ -114,26 +115,40 @@ class MyProfileController extends BaseController {
 	 *	Update a users email
 	 */
 	public function postUpdateEmail() {
+		$user = Auth::user();
 		$password = Input::has('password') ? Input::get('password') : false;
 		$new_email = Input::has('new_email') ? Input::get('new_email') : false;
-
+		$error_message = '';
+		$success = false;
+		// Check for missing fields
 		if ( !$password || !$new_email ) {
-			return Response::json( array( 'error' => 'Oops! You are missing a required field.' ), 200 );
+			$error_message = 'Oops! We are missing a field.';
+		// Check for valid email format
 		} else if ( !filter_var($new_email, FILTER_VALIDATE_EMAIL) ) {
-			// Check for valid email format
-			return Response::json( array( 'error' => 'It looks like you have provided an invalid email.' ), 200 );
-		} else {
-			$user_id = Auth::user()->id;
-
-			if ( Auth::validate(array( 'id' => $user_id, 'password' => $password )) ) {
-				// User provided correct password, proceed to update email process
-				// TODO
-
-				return Response::json( array( 'success' => true ), 200 );
+			$error_message = 'It looks like you have provided an invalid email.';
+		// Check that the User provided correct password.
+		} else if ( Auth::validate(array( 'id' => $user->id, 'password' => $password )) ) {
+			// Check that email is not their existing email.
+			if ( $user->email == $new_email ) {
+				$error_message = 'The email provided matches your current email.';
+			// Check that the email does not already have three usernames attached.
+			} else if ( $this->user->usernamesPerEmailCount( $new_email ) > 2 ) {
+				$error_message = 'The provided email cannot be used for another account.';
+			// We are good!
 			} else {
-				// Wrong password
-				return Response::json( array( 'error' => 'Incorrect password! Try again.' ), 200 );
+				$success = true;
+				// TODO	
 			}
+		// Wrong password
+		} else {
+			$error_message = 'Incorrect password! Try again.';
+		}
+		
+
+		if ( $success ) {
+			return Response::json( array( 'success' => true ), 200 );
+		} else {
+			return Response::json( array( 'error' => $error_message ), 200 );
 		}
 	}
 

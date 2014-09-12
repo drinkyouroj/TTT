@@ -54,6 +54,11 @@ interface UserRepository {
 	 */
 	public function resetPassword($id);
 
+	/**
+	 *	Get the number of usernames attached to the given email.
+	 */
+	public function usernamesPerEmailCount( $email );
+
 	public function getUserCount();
 	public function getConfirmedUserCount();
 	public function getUserCreatedTodayCount();
