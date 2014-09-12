@@ -14,6 +14,7 @@ return array(
 
 	'debug' => true,
 	'stack' => true,//errors automatically redirects to a specified location.
+	'email_send' => false,
 
 	/*
 	|--------------------------------------------------------------------------

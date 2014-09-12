@@ -21,7 +21,9 @@ class HomeController extends BaseController {
 	 */
 	public function getIndex()
 	{
+		return Redirect::to('categories/all');
 		//This page will get hit the hardest.  It has caching.
+		/*
 		if(Cache::has('featured') && !Session::get('admin') ) {
 			$featured = Cache::get('featured');
 		} else {
@@ -43,6 +45,7 @@ class HomeController extends BaseController {
 		}
 
 		return $view;
+		*/
 	}
 	
 	//This is a little weird fix to the invitation system since it posts to the Index and needs to be redirected.
