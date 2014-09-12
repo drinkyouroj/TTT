@@ -3,8 +3,34 @@
 @include post_listing(0);
 
 .featured-page {
+	.main-wrapper {
+		background:$dark;
+		.featured-item {
+			.text {
+				h2, p {
+					color:$lightgray;
+				}
+			}
+			.image {
+				height:0px;
+				padding-top:43%;
+				background-repeat:no-repeat;
+				background-size:cover;
+				background-position:center center;
+			}
+		}
+	}
 	.middle-wrapper {
-
+		margin-top:50px;
+		.post-container {
+			width:350px;
+			height:370px;
+			.post-image {
+				width:100%;
+				height:0px;
+				padding-top:63%;
+			}
+		}
 		
 	}
 }
