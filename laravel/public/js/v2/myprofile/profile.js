@@ -456,11 +456,15 @@ function ProfileActions() {
 	this.renderFeatured = function() {
 		var feature_item_template = this.feature_item_template;
 		var target = this.target;
+		var editCheck = this.editCheck;
 		this.urlConstructor();
 		this.getData(this.feature_url,function(data) {
+			var editable = data.featured ? editCheck(data.featured.published_at) : false;
 			view_data = {
 				site_url: window.site_url,
-				post: data.featured
+				post: data.featured,
+				user_id : window.user_id,
+				editable: editable
 			}
 			$('#collection-content',target).prepend( feature_item_template(view_data) );
 

@@ -260,21 +260,24 @@
 				class="image feature-inner col-md-8 col-sm-8"
 				style="background-image: url('{{site_url}}uploads/final_images/{{post.image}}');">
 		</a>
+		{{#ifCond myprofile true }}
+			{{#ifCond post.user.id user_id }}
+				<div class="options-link"> </div>
+				<div class="post-options">
+					{{#ifCond editable true}}
+						<a class="post-edit" href="{{site_url}}myprofile/editpost/{{post.id}}">
+							Edit
+						</a>
+					{{/ifCond}}
 
-		<div class="options-link"> </div>
-		<div class="post-options">
-			{{#ifCond editable true}}
-				<a class="post-edit" href="{{site_url}}myprofile/editpost/{{post.id}}">
-					Edit
-				</a>
+					<a class="post-delete">
+						Delete
+					</a>
+					<a class="post-delete-confirm" data-id="{{post.id}}">
+						Confirm Delete?
+					</a>
+				</div>
 			{{/ifCond}}
-
-			<a class="post-delete">
-				Delete
-			</a>
-			<a class="post-delete-confirm" data-id="{{post.id}}">
-				Confirm Delete?
-			</a>
-		</div>
+		{{/ifCond}}
 	</div>
 </script>
