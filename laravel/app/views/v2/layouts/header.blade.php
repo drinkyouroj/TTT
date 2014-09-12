@@ -154,7 +154,7 @@
 			<div id="itemTwo" class="collapse in">
 				<ul class="list-unstyled">
 					<li>
-						<a href="{{ URL::to('categories/featured') }}">Featured</a>
+						<a href="{{ URL::to('featured') }}">Featured</a>
 					</li>
 					<li class="category-all">
 						<a href="{{ URL::to('categories/all') }}">All</a>
