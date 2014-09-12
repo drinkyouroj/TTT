@@ -22,7 +22,7 @@ class HomeController extends BaseController {
 	public function getIndex()
 	{
 		//This page will get hit the hardest.  It has caching.
-		if(Cache::has('featured')) {
+		if(Cache::has('featured') && !Session::get('admin') ) {
 			$featured = Cache::get('featured');
 		} else {
 			$featured = $this->featured->findFront();
