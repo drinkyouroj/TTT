@@ -80,6 +80,7 @@ Route::group(array('prefix'=>'rest'), function() {
 	Route::get( 'profile', 'ProfileController@getRestProfile');
 
 	//Auto Load of for featured.
+	Route::get( 'featured/{page}', 'HomeController@getRestFeatured');
 	Route::get( 'featured', 'HomeController@getRestFeatured');
 	
 });

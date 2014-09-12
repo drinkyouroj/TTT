@@ -10,6 +10,8 @@ interface FeaturedRepository {
 
 	public function find($paginate, $page, $rest, $front);
 
+	public function findFront();
+
 	public function findByPostId($post_id);
 
 	public function delete($post_id);
