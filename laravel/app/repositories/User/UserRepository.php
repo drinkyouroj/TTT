@@ -54,6 +54,12 @@ interface UserRepository {
 	 */
 	public function resetPassword($id);
 
+	/**
+	 * Reset the password for a user who has an e-mail address.
+	 * @return an array with the same return from resetPassword.
+	 */
+	public function forgotPassword($email,$username);
+
 	public function getUserCount();
 	public function getConfirmedUserCount();
 	public function getUserCreatedTodayCount();

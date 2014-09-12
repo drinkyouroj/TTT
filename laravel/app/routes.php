@@ -134,8 +134,12 @@ Route::group(array('prefix'=> 'user'), function() {
 	Route::get('confirm/{code}', 'UserController@getConfirm');
 	Route::get('reset/{token}', 'UserController@getReset');
 	Route::get('restore/{id}', 'UserController@getRestore');
+	
 	Route::get('check', 'UserController@getUserCheck');
+	
 	Route::get('forgot', 'UserController@getForgot');
+	Route::post('forgot', 'UserController@postForgot');
+
 	Route::controller( '/', 'UserController');
 });
 
@@ -147,7 +151,6 @@ Route::group(array('prefix'=>'categories'),function() {
 	Route::get( '{alais}', 'CategoryController@getCategory');	
 });
 
-
 //Posts routes
 Route::get( 'posts/{alias}', 'PostController@getPost');
 Route::get( 'posts', 'PostController@getIndex');//grabs a random post
@@ -156,40 +159,6 @@ Route::get( 'posts', 'PostController@getIndex');//grabs a random post
 Route::get('search', 'SearchController@getSearchPage');
 Route::get('search/{term}', 'SearchController@getResult');//Might turn into a rest system later
 Route::post('search', 'SearchController@postResult');
-
-
-
-//Protected Profile routes
-Route::group(array('prefix'=> 'profile', 'before'=> 'profile|auth'), function() 
-{
-	/*
-	Route::get( 'editpost/{id}', 'PostController@getPostForm');
-	Route::get( 'newpost', 'PostController@getPostForm');
-	
-	Route::post( 'submitpost', 'PostController@postPostForm');
-	
-	//All Notifications
-	Route::get( 'notifications', 'ProfileController@getNotifications');
-	
-	//My Posts
-	Route::get( 'myposts', 'ProfileController@getMyPosts');
-	
-	//My Settings
-	Route::get( 'settings', 'ProfileController@getSettings');
-	
-	//Comments
-	Route::get( 'commentform/{post_id}/{reply_id}', 'CommentController@getCommentForm');//This is for getting the reply forms.
-	Route::post( 'comment/{post_id}', 'CommentController@postCommentForm');
-	
-	//Messages
-	Route::get( 'replymessage/{reply_id}', 'MessageController@getMessageReplyForm');
-	Route::get( 'newmessage/{user_id}', 'MessageController@getMessageForm');
-	Route::get( 'newmessage', 'MessageController@getMessageForm');
-	
-	Route::post( 'submitmessage', 'MessageController@postMessageForm');
-	Route::get( 'messages', 'MessageController@getMessageInbox');
-	*/
-});
 
 //Not protected profile routes
 Route::group(array('before'=>'profile'), function() {

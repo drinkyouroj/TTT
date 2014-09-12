@@ -51,7 +51,7 @@ class UserController extends BaseController {
             //Auto Login on Creation.
             $user = $this->user->login($data);
             //Gotta send out email
-            if(!empty($data['email']) && Config::get('app.email_send') ) {
+            if(!empty($data['email']) ) {
                 $data['confirm'] = $user->confirmation_code;
                 $email_data = array(
                     'from' => 'no_reply@twothousandtimes.com',
@@ -227,7 +227,7 @@ class UserController extends BaseController {
      */
     public function getForgot()
     {
-    	return View::make('user.forgot');
+    	return View::make('v2/users/forgot');
     }
 
     /**
@@ -236,18 +236,60 @@ class UserController extends BaseController {
      */
     public function postForgot()
     {
-        if( Confide::forgotPassword( Input::get( 'email' ) ) )
-        {
-            $notice_msg = Lang::get('confide::confide.alerts.password_forgot');
-                        return Redirect::to('user/login')
-                            ->with( 'notice', $notice_msg );
-        }
-        else
-        {
-            $error_msg = Lang::get('confide::confide.alerts.wrong_password_forgot');
-                        return Redirect::to('user/forgot')
-                            ->withInput()
-                			->with( 'error', $error_msg );
+        $email = Request::get('email');
+        $username = Request::get('username');
+        //Gotta run an e-mail validation first.
+        $validator = Validator::make(
+                        array(
+                            'email' => $email,
+                            'username' => $username
+                            ),
+                        array(
+                            'email' => 'required|email',
+                            'username' => 'required'
+                            )
+                        );
+
+        if($validator->passes() ){
+            $pass = $this->user->forgotPassword($email, $username);
+            if( $pass )
+            {
+                $user = $pass['user'];
+                $new_pass = $pass['new_password'];
+                $plain = View::make('v2/emails/forgot_plain')
+                            ->with('user', $user)
+                            ->with('new_pass', $new_pass)
+                            ->render();
+
+                $html = View::make('v2/emails/forgot_html')
+                            ->with('user', $user)
+                            ->with('new_pass', $new_pass)
+                            ->render();
+
+                //send them the email
+                $email_data = array(
+                    'from' => 'no_reply@twothousandtimes.com',
+                    'to' => array($user->email),
+                    'subject' => "Here's your new credentials for Two Thousand Times.",
+                    'plaintext' => $plain,
+                    'html'  => $html
+                    );
+
+                $this->email->create($email_data);
+
+                $notice_msg = 'Please check your e-mail.';
+                            return Redirect::to('user/login')
+                                ->with( 'notice', $notice_msg );
+            } else {
+                $error_msg = 'Sorry, but your username/email combo does not have a match';
+                            return Redirect::to('user/forgot')
+                                ->withInput()
+                    			->with( 'error', $error_msg );
+            }
+        } else {
+            return Redirect::to('user/forgot')
+                ->withInput()
+                ->with( 'error', $validator->messages() );
         }
     }
 

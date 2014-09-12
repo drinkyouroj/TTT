@@ -16,7 +16,7 @@ class SheepRepository implements UserRepository {
 	public function __construct(
 					User $user,
 					CommentRepository $comment,
-					PostRepository $post ) {
+					PostRepository $post) {
 		$this->user = $user;
 		$this->comment = $comment;
 		$this->post = $post;
@@ -151,8 +151,17 @@ class SheepRepository implements UserRepository {
 			Session::put('featured', $user->featured);
 			Session::put('first', $user->first);
 
-			if($user->first) {
-				$user->first = false;
+			
+			//update set (bunched so we don't have to )
+			//first login?
+			if($user->first || $user->forgot_pass) {
+				if($user->first) {
+					$user->first = false;
+				}
+				if($user->forgot_pass) {
+					$user->forgot_pass = false;
+					$user->verified = true;//when the user forgets their pass and resets it, we know that its verified for sure.
+				}
 				$user->update();
 			}
 
@@ -248,6 +257,21 @@ class SheepRepository implements UserRepository {
 				'user' => $user
 				);
 		}
+		return false;
+	}
+
+	public function forgotPassword($email, $username) {
+		$user = $this->user->where('email', $email)
+							->where('username', $username)
+							->first();
+
+		if($user instanceof User) {
+			//have to mark as true.
+			$user->forgot_pass = true;
+			$user->update();
+			return $this->resetPassword($user->id);//I know this isn't the most efficient, but it works.
+		}
+
 		return false;
 	}
 
