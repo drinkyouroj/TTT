@@ -11,6 +11,8 @@ interface FeedRepository {
 	public function exists($user_id, $post_id, $feed_type, $count);
 
 	public function find($user_id, $paginate, $page, $rest);
+	
+	public function findOne($user_id, $type);
 
 	public function delete($data);
 

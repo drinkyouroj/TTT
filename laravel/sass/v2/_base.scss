@@ -571,6 +571,42 @@ textarea {
   }
 }
 
+// Styling for the follow/follower and user search listings
+@mixin user_listing {
+  position:relative;
+  display:block;
+  float: left;
+  width: 270px;
+  margin: 10px 10px;
+  height: 170px;
+  text-align:center;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  .user-avatar {
+    width:120px;
+    height:120px;
+    margin: 0 auto;
+    overflow:hidden;
+    @include border-radius(60px);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .user-name {
+    position:relative;
+    width:100%;
+    min-height:99px;
+    padding:5px 10px;
+    color:$blue;
+    span {
+      @include montserrat;
+      font-size:18px;
+      @include word-break(break-all);
+    }
+  }
+}
+
 
 //Photo Selection
 @mixin photo_selection {

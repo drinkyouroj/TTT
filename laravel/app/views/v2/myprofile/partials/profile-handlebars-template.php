@@ -167,9 +167,10 @@
 	<a 
 		class="follow user"
 		href="{{site_url}}profile/{{username}}"
-		style="background-image:url('{{site_url}}rest/profileimage/{{user_id}}');"
 		>
-		<div class="follow-name">
+		<div class="user-avatar" style="background-image:url('{{site_url}}rest/profileimage/{{user_id}}');">
+		</div>
+		<div class="user-name">
 			<span>{{username}}</span>
 		</div>
 	</a>
