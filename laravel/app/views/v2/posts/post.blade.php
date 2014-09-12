@@ -98,14 +98,9 @@
 									</a>
 								</div>
 							@endif
-								<div class="col-md-2 col-xs-3 comment-container">
-									<a class="comment-button action-comment" href="#">Comment</a>
-								</div>
-							@if ( $is_author && $is_editable )
-								<div class="col-md-3">
-									<a class="btn-flat-white-borderless" href="{{ URL::to( 'profile/editpost/'.$post->id ) }}">Edit Post</a>
-								</div>
-							@endif
+							<div class="col-md-2 col-xs-3 comment-container">
+								<a class="comment-button action-comment" href="#">Comment</a>
+							</div>
 						</div>
 					</div>
 				</div>

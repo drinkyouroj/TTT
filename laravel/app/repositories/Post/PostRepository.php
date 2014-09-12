@@ -65,4 +65,8 @@ interface PostRepository {
 
 	public function deleteAllByUserId($id);
 	public function restoreAllByUserId($id);
+
+	public function getPublishedCount();
+	public function getPublishedTodayCount();
+	public function getDraftsTodayCount();
 }
