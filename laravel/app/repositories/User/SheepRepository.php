@@ -38,6 +38,7 @@ class SheepRepository implements UserRepository {
 		//Run Validation.
 		if($json) {
 			unset($user->captcha);
+			$user->reserved = 1;//if JSON call then its a reserve.
 			$validation = $user->validateJSON($user->toArray());
 		}else {
 			$validation = $user->validate($user->toArray());

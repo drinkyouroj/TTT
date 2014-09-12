@@ -52,12 +52,13 @@ class UserController extends BaseController {
             $user = $this->user->login($data);
             //Gotta send out email
             if(!empty($data['email'])) {
+                
                 $email_data = array(
                     'from' => 'no_reply@twothousandtimes.com',
                     'to' => array($data['email']),
                     'subject' => 'Thanks for Joining Two Thousand Times!',
-                    'plaintext' => View::make('v2/emails/new_user_plain')->with('data', $data),
-                    'html'  => View::make('v2/emails/new_user_html')->with('data',$data)
+                    'plaintext' => View::make('v2/emails/new_user_plain')->with('data', $data)->render(),
+                    'html'  => View::make('v2/emails/new_user_html')->with('data',$data)->render()
                     );
 
                 $this->email->create($email_data);
@@ -141,6 +142,12 @@ class UserController extends BaseController {
 					->with('user',$user);
 			}
 			
+            //For verififying users on login from a reserved account.
+            if( $user->reserved ) {
+                $user->verified = 1;
+                $user->save();
+            }
+
             // If the session 'loginRedirect' is set, then redirect
             // to that route. Otherwise redirect to '/'
             $r = Session::get('loginRedirect');
@@ -256,7 +263,6 @@ class UserController extends BaseController {
 
 	/**
 	 * Password reset from the backend while you're logged in.
-	 * This function kind of sucks (had to mix confide and our own wants)
 	 */
 	public function postNewpass() {
 
