@@ -111,6 +111,33 @@ class MyProfileController extends BaseController {
 	}
 
 	/**
+	 *	Update a users email
+	 */
+	public function postUpdateEmail() {
+		$password = Input::has('password') ? Input::get('password') : false;
+		$new_email = Input::has('new_email') ? Input::get('new_email') : false;
+
+		if ( !$password || !$new_email ) {
+			return Response::json( array( 'error' => 'Oops! You are missing a required field.' ), 200 );
+		} else if ( !filter_var($new_email, FILTER_VALIDATE_EMAIL) ) {
+			// Check for valid email format
+			return Response::json( array( 'error' => 'It looks like you have provided an invalid email.' ), 200 );
+		} else {
+			$user_id = Auth::user()->id;
+
+			if ( Auth::validate(array( 'id' => $user_id, 'password' => $password )) ) {
+				// User provided correct password, proceed to update email process
+				// TODO
+
+				return Response::json( array( 'success' => true ), 200 );
+			} else {
+				// Wrong password
+				return Response::json( array( 'error' => 'Incorrect password! Try again.' ), 200 );
+			}
+		}
+	}
+
+	/**
 	 *	Get the users notification.
 	 *	returns 200:
 	 *		notifications => array (array of notifications),
