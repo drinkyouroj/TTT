@@ -659,40 +659,11 @@ a:focus {
 							}
 						}
 					}
-
 					&.following, &.followers {
-						a.follow {
-							position:relative;
-							display:block;
-							float: left;
-							width: 270px;
-							margin: 10px 10px;
-							height: 170px;
-							background-position: center center;
-							background-repeat: no-repeat;
-							background-size: cover;
-							background-color:#ccc;//DELETE
-							.follow-name {
-							position:absolute;
-							width:100%;
-							min-height:99px;
-							top:0px;
-							left:0px;
-							padding:5px 10px;
-							color:$white;
-							background-image:url('../../../../images/categories/post-image-overlay.png');
-        					background-position:top;
-        					background-repeat:repeat-x;
-								span {
-									@include montserrat;
-									letter-spacing:1px;
-									font-size:18px;
-									@include word-break(break-all);
-								}
-							}
-						}
+					    a.follow {
+					    	@include user_listing;
+					    }
 					}
-
 					&.settings {
 						.avatar {
 							margin-top:20px;
