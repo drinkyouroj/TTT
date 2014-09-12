@@ -132,10 +132,14 @@
 
 									<ul>
 										{? $checked = ''; ?}
+										<?php
+											$unserialized = unserialize($post->category);
+											$unserialized = is_array($unserialized) ? $unserialized : array();
+										?>
 										@foreach($categories as $category)
 											<li class="col-md-6">
 												@if($edit)
-													@if(in_array($category->id, unserialize($post->category) ) )
+													@if( in_array($category->id, $unserialized ) )
 													{? $checked = 'checked'?}
 													@else
 													{? $checked = '' ?}
@@ -185,17 +189,17 @@
 							<div class="tags">
 								<div class="tag {{$errors->first('tagline_1') ? 'has-error' : '' }}">
 									
-									{{ Form::text('tagline_1', $tagline_1, array('class'=>'form-control', 'required', 'maxlength' => '20', 'placeholder'=>'Tag 1') ) }}
+									{{ Form::text('tagline_1', $tagline_1, array('class'=>'form-control', 'maxlength' => '20', 'placeholder'=>'Tag 1') ) }}
 									<span class="error">{{ $errors->first('tagline_1') }}</span>
 								</div>
 					
 								<div class="tag {{$errors->first('tagline_2') ? 'has-error' : '' }}">
-									{{ Form::text('tagline_2', $tagline_2, array('class'=>'form-control', 'required', 'maxlength' => '20', 'placeholder'=>'Tag 2')) }}
+									{{ Form::text('tagline_2', $tagline_2, array('class'=>'form-control', 'maxlength' => '20', 'placeholder'=>'Tag 2')) }}
 									<span class="error">{{ $errors->first('tagline_2') }}</span>
 								</div>
 					
 								<div class="tag {{$errors->first('tagline_3') ? 'has-error' : '' }}">
-									{{ Form::text('tagline_3', $tagline_3, array('class'=>'form-control', 'required', 'maxlength' => '20', 'placeholder'=>'Tag 3')) }}
+									{{ Form::text('tagline_3', $tagline_3, array('class'=>'form-control', 'maxlength' => '20', 'placeholder'=>'Tag 3')) }}
 									<span class="error">{{ $errors->first('tagline_3') }}</span>
 								</div>
 								<br/>
@@ -211,7 +215,7 @@
 							@endif
 							>
 							{{--Select your image --}}
-							<div class="image-select">
+							<div class="image-select <?php if ( $post->draft ) { echo 'hidden'; } ?>">
 								<a href="#image" class="image-select-modal" data-toggle="modal" data-target="#imageModal">
 									<img src="{{Config::get('app.url')}}/images/posts/add-image.png">
 									<br/>
@@ -221,7 +225,7 @@
 								</a>
 							</div>
 
-							<div class="image-edit">
+							<div class="image-edit" <?php if ( $post->draft ) { echo 'style="display:block"'; } ?>>
 								<a href="#image" class="image-select-modal btn-flat-white" data-toggle="modal" data-target="#imageModal">
 									Edit Image
 								</a>
@@ -298,8 +302,8 @@
 					<div class="modal-body">
 						
 					</div><!--End of Modal Body-->
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default btn-flat-white" data-dismiss="modal">OK</button>
+					<div class="modal-footer hidden">
+						<button type="button" class="btn btn-default btn-flat-white pull-right" data-dismiss="modal">OK</button>
 					</div>
 				</div>
 			</div>

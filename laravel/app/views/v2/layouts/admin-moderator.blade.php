@@ -55,14 +55,36 @@
 			</div>
 		</li>
 
-		{{-- Post Admin/Mod controls. Only visible at the post page --}}
-		@if ( isset( $is_post_page ) )
+		{{-- Stats --}}
 		<li class="admin-sidebar-option">
 			<a href="#adminItemThree" data-toggle="collapse" data-parent="#admin-accordion">
-				Post Controls
+				Stats
 				<span class="glyphicon glyphicon-plus pull-right"></span>
 			</a>
 			<div id="adminItemThree" class="collapse">
+				<h5>User Stats</h5>
+				<ul class="list-unstyled">
+					<li>Total Users: {{ $num_users }}</li>
+					<li>Total Confirmed Users: {{ $num_confirmed_users }}</li>
+					<li>Users Created Today: {{ $num_users_created_today }}</li>
+				</ul>
+				<h5>Post Stats</h5>
+				<ul class="list-unstyled">
+					<li>Total Published Posts: {{ $num_published_posts }}</li>
+					<li>Posts Published Today: {{ $num_published_posts_today }}</li>
+					<li>Posts Drafted Today: {{ $num_drafts_today }}</li>
+				</ul>
+			</div>
+		</li>
+
+		{{-- Post Admin/Mod controls. Only visible at the post page --}}
+		@if ( isset( $is_post_page ) )
+		<li class="admin-sidebar-option">
+			<a href="#adminItemFour" data-toggle="collapse" data-parent="#admin-accordion">
+				Post Controls
+				<span class="glyphicon glyphicon-plus pull-right"></span>
+			</a>
+			<div id="adminItemFour" class="collapse">
 				@yield('admin-mod-post-controls')	
 			</div>
 		</li>
@@ -70,11 +92,11 @@
 
 		@if ( isset( $is_profile_page ) )
 		<li class="admin-sidebar-option">
-			<a href="#adminItemFour" data-toggle="collapse" data-parent="#admin-accordion">
+			<a href="#adminItemFive" data-toggle="collapse" data-parent="#admin-accordion">
 				User Controls
 				<span class="glyphicon glyphicon-plus pull-right"></span>
 			</a>
-			<div id="adminItemFour" class="collapse">
+			<div id="adminItemFive" class="collapse">
 				@yield('admin-mod-user-controls')	
 			</div>
 		</li>

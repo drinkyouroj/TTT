@@ -234,5 +234,20 @@ class EloquentPostRepository implements PostRepository {
 	public function restoreAllByUserId($id) {
 		$this->post->where( 'user_id', $id )->withTrashed()->restore();
 	}
+
+
+	public function getPublishedCount() {
+		return $this->post->where( 'published', 1 )->count();
+	}
+	public function getPublishedTodayCount() {
+		return $this->post->where( 'published', 1 )
+				   ->where( 'created_at', '>=', new \DateTime('today') )
+				   ->count();
+	}
+	public function getDraftsTodayCount() {
+		return $this->post->where( 'draft', 1 )
+						  ->where( 'created_at', '>=', new \DateTime('today') )
+						  ->count();
+	}
 	
 }

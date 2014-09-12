@@ -5,7 +5,7 @@ $(function() {
 
 	//gotta call the validation system here.
 	save_post.form = $('form.post_input');
-	save_post.form.validate(save_post.validate_options);
+	// save_post.form.validate(save_post.validate_options);
 	
 	save_post.form.on('submit',function(event) {
 		event.preventDefault;
@@ -168,6 +168,15 @@ var save_post = new function() {
 			return false;
 		}
 	};
+	this.validate_options_draft = {
+		debug: true,
+		rules: {
+			title: {
+				required: true,
+				minlength: 5
+			}
+		}
+	};
 
 	//States
 	this.draft = 0;
@@ -216,7 +225,14 @@ var save_post = new function() {
 			data = this.editable.html();
 			this.textarea.html( data );//load in the data into the textarea.
 		}
-		return this.form.valid(this.validate_options);
+		
+		if (this.draft) {
+			this.form.validate(this.validate_options_draft);
+			return this.form.valid();
+		} else {
+			this.form.validate(this.validate_options);
+			return this.form.valid();
+		}
 	};
 
 	//this function grabs existing data and runs validation

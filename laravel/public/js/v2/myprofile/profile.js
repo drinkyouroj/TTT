@@ -103,6 +103,17 @@ $(function() {
 				event.preventDefault();
 				$(this).siblings('.post-options').toggle();
 			});
+			// Close when click elsewhere
+			$(document).mouseup(function (e) {
+			    var container = $('.post-options');
+			    if (!container.is(e.target) // if the target of the click isn't the container...
+			        && container.has(e.target).length === 0) { // ... nor a descendant of the container
+			        container.hide();
+			    	// change back to delete if user clicked delete and not confirm
+			    	$(container).find('.post-delete').show();
+			    	$(container).find('.post-delete-confirm').hide();
+			    }
+			});
 
 //Feed Filter Renders
 		$('body').on('click', '.feed-controls a', function(event) {
@@ -174,7 +185,7 @@ $(function() {
 	//Delete Post
 	$('body').on('click', '.post-delete', function() {
 		$(this).fadeOut(function() {
-			$(this).siblings('.post-delete-confirm').fadeIn();
+			$(this).siblings('.post-delete-confirm').fadeIn().css('display', 'block');
 		});
 	});
 	$('body').on('click', '.post-delete-confirm', function() {
@@ -184,6 +195,12 @@ $(function() {
 	//Remove Repost.
 	$('body').on('click', '.remove-repost',function() {
 		profile.setRepostDelete( $(this).data('id') );
+	});
+
+	// Delete Draft
+	$('body').on('click', '.delete-draft', function(event) {
+		event.preventDefault();
+		profile.deleteDraft( $(this).data('id') );
 	});
 
 
@@ -279,7 +296,7 @@ function ProfileActions() {
 	};
 
 	//Actual Content Rendering routes
-	this.viewRender = function(init) {		
+	this.viewRender = function(init) {
 		if(this.filter) {
 			this.viewClear();
 		}
@@ -290,7 +307,7 @@ function ProfileActions() {
 				if(init) {					
 					this.renderComments();					
 				}
-				if((init || this.type == 'all') && window.featured_id && this.page == 1 ) {
+				if((init || this.type == 'all' || this.type == 'post') && window.featured_id && this.page == 1 ) {
 					this.renderFeatured();//only renders when the person has a featured article.
 				}
 				break;
@@ -355,6 +372,16 @@ function ProfileActions() {
 		} else {
 			this.url = base_url + this.page;
 		}
+	};
+
+	// Delete draft
+	this.deleteDraft = function ( post_id ) {
+		var url = window.site_url + 'rest/profile/post/' + post_id;
+		this.getData( url, function ( data ) {
+			if ( data.success ) {
+				$('#draft-container-' + post_id).remove();
+			}
+		});
 	};
 
 
@@ -626,7 +653,7 @@ function ProfileActions() {
 		$('#default-content', this.target).append(this.settings_template(view_data));
 		
 		if(this.photo_init == false) {
-			photo_input = new PhotoInput;
+			photo_input = new PhotoInput();
 			this.photo_init = true;
 
 			photo_input.target = $('#photoModal .modal-body');

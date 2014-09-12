@@ -20,7 +20,7 @@
 					<div class="col-md-12 col-sm-12 processor-container">
 						<div class="photo-processor" style="display:none;">
 							<h4>Choose a Filter</h4>
-							<img src="{{site_url}}/img/photos/nofilter.png" data-process="nofilter"/>
+							<img src="{{site_url}}/img/photos/nofilter.png" data-process="nofilter" class="active"/>
 							<img src="{{site_url}}/img/photos/gotham.png" data-process="Gotham"/>
 							<img src="{{site_url}}/img/photos/toaster.png" data-process="Toaster"/>
 							<img src="{{site_url}}/img/photos/nashville.png" data-process="Nashville"/>

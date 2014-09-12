@@ -53,5 +53,8 @@ interface UserRepository {
 	 * @return an array containing the user and new password
 	 */
 	public function resetPassword($id);
-	
+
+	public function getUserCount();
+	public function getConfirmedUserCount();
+	public function getUserCreatedTodayCount();
 }
