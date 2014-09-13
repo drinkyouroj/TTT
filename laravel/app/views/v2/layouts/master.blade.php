@@ -123,6 +123,9 @@
 					<div class="login-form">
 						<h4>Login</h4>
 						{{ View::make('v2.users.forms.login') }}
+						<div class="login-disclaimer">
+				            Read our guidelines on <a href="{{Config::get('app.url')}}/etiquette">Community Etiquette</a>.
+				        </div>
 					</div>
 			      </div>
 			    </div>

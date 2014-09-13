@@ -9,11 +9,17 @@
 							<div class="featured-item row">
 								<div class="text col-md-4">
 									<h2>{{$main->title}}</h2>
+									<div class="line"></div>
+									<ul class="post-taglines list-inline">
+										<li> {{ $main->tagline_1 }} </li>
+										<li> {{ $main->tagline_2 }} </li>
+										<li> {{ $main->tagline_3 }} </li>
+									</ul>
 									<p>
-										{{substr($main->body, 0,300)}}
+										{{substr($main->body, 0,200)}}
 										<br/>
 										<br/>
-										<a href="">Read More</a>
+										<a class="read-more" href="">Read More</a>
 									</p>
 								</div>
 								<div class="image col-md-8" style="background-image: url({{Config::get('app.imageurl')}}/{{$main->image}} )">
@@ -28,9 +34,7 @@
 	</div>
 
 	<div class="middle-wrapper">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
+		
 					@foreach($featured as $k=>$f)
 						
 						@if($k == 3)
@@ -40,8 +44,24 @@
 								@include('v2.partials.featured-listing', array('post'=> $from_feed->post))
 							@else
 								{{--Signup box thing--}}
-								<div class="post-container weird max thing">
-									SIGNUP BOX THING
+								<div class="post-container">
+									<div class="signup-box">
+										<div class="signup-top">
+										</div>
+										<div class="signup-content">
+											<img class="join-community" src="{{ URL::to('images/featured/join-community.png') }}" alt="Join the Community">
+											<div class="line"></div>
+											<a class="btn-flat-blue" href="">Create An Account</a>
+											<ul class="account-bullets">
+												<li>post your own stories</li>
+												<li>follow users</li>
+												<li>save stories</li>
+												<li>comment and join the discussion</li>
+											</ul>
+										</div>
+										<div class="signup-bottom">
+										</div>
+									</div>
 								</div>
 							@endif
 							<!--Feed Listing or Signup-->
@@ -56,7 +76,5 @@
 							<?php break;?>
 						@endif
 					@endforeach
-				</div>
-			</div>
-		</div>
+		<div class="clearfix"></div>
 	</div>

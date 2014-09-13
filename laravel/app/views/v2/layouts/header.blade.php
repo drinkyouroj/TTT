@@ -135,17 +135,6 @@
 			</li>
 		@endif
 
-		<li class="sidebar-option feed {{ $is_guest ? 'disabled' : '' }}">
-			@if ( $is_guest )
-			<a href="#" data-toggle="modal" data-target="#guestSignup">	
-			@else
-			<a href="{{ URL::to( 'myprofile' ) }}#feed">
-			@endif
-				MY FEED
-				<span class="glyphicon glyphicon-align-right pull-right"></span>
-			</a>
-		</li>
-
 		<li class="sidebar-option categories">
 			<a href="#itemTwo" data-toggle="collapse" data-parent="#accordion">
 				CATEGORIES
@@ -164,6 +153,17 @@
 					@endforeach
 				</ul>
 			</div>
+		</li>
+
+		<li class="sidebar-option feed {{ $is_guest ? 'disabled' : '' }}">
+			@if ( $is_guest )
+			<a href="#" data-toggle="modal" data-target="#guestSignup">	
+			@else
+			<a href="{{ URL::to( 'myprofile' ) }}#feed">
+			@endif
+				MY FEED
+				<span class="glyphicon glyphicon-align-right pull-right"></span>
+			</a>
 		</li>
 
 		@if ( $is_guest )

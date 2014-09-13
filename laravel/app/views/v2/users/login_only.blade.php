@@ -1,7 +1,7 @@
 @extends('v2.layouts.master')
 
 @section('css')
-	<link href="{{Config::get('app.url')}}/css/views/user.css" rel="stylesheet" media="screen">
+	<link href="{{Config::get('app.url')}}/css/compiled/v2/users/signup_login.css" rel="stylesheet" media="screen">
 @stop
 
 @section('js')
@@ -14,11 +14,19 @@
 @stop
 
 @section('content')
-	<div class="col-md-4 col-md-offset-4 login-container">
-		<div class="login-form">
-			<h2>Login</h2>
-			{{ View::make('v2.users.forms.login') }}
+	<div class="container">
+		<div class="col-md-8 col-md-offset-2 login-container">
+			<div class="login-form">
+				<h2>Login</h2>
+				{{ View::make('v2.users.forms.login') }}
+				 <div class="redirect-other">
+		            Don't have an account? <a href="">Sign up now</a>
+		        </div>
+		        <div class="login-disclaimer">
+		            Read our guidelines on <a href="{{Config::get('app.url')}}/etiquette">Community Etiquette</a>.
+		        </div>
+			</div>
+			<div class="clearfix"></div>
 		</div>
-		<div class="clearfix"></div>
 	</div>
 @stop

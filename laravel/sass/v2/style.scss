@@ -37,7 +37,6 @@ a {
 	color:$blue;
 	&:hover {
 		text-decoration:none;
-		color:$dark;
 	}
 }
 
@@ -314,8 +313,9 @@ input, textarea, button:focus {outline: none !important;}
 			li input.search-input {
 				width:98%;
 				height:30px;
-				padding:5px 10px;
+				padding:0px 10px;
 				margin:10px 0 10px 2%;
+				@include border-radius(60px);
 				@include montserrat(normal);
 				font-size:12px;
 			}
@@ -771,17 +771,16 @@ input, textarea, button:focus {outline: none !important;}
 			button.close {
 				position:absolute;
 				top:0px;
-				right:0px;
+				right:-10px;
 				font-size:100px;
 				color:$dark;
 			}
 		}
 		.modal-body {
 			input {
-				border:solid 1px #ddd;
 				@include montserrat();
-				font-size:12px;
-				height:41px;
+				font-size:16px;
+				height:50px;
 			}
 		}
 		.modal-footer {
@@ -809,19 +808,22 @@ input, textarea, button:focus {outline: none !important;}
 		.signup-form, .login-form {
 			position:relative;
 			display:inline-block;
-			width:47%;
-			margin:0 1%;
+			width:45%;
+			margin:0 2%;
 			float:left;
 
 			fieldset {
 				input {
 					width:100%;
 					margin-bottom:5px;
-					padding:5px;
-					box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+					padding:5px 20px;
 				}
 				.forgot-pw {
-					text-align:right;
+					margin-top:10px;
+					text-align:center;
+					a {
+						font-size:16px;
+					}
 				}
 				.form-actions {
 					margin-top:20px;
@@ -838,23 +840,40 @@ input, textarea, button:focus {outline: none !important;}
 					text-align:center;
 				}
 			}
-
-			@media (max-width: 768px) {
+			@media (max-width:$break-sm) {
 				width:90%;
-				margin:30px 0 0 0;
+				margin:30px 5% 0 5%;
+			}
+			@media (max-width:$break-xs) {
+				width:100%;
+				margin:30px 0;
 			}
 		}
 
 		.signup-form {
-			padding-right:2%;
+			padding-right:4%;
 			border-right:solid 1px $gray;
-			@media (max-width: 768px) {
+			@media (max-width: $break-sm) {
 				border-right:0px;
+				padding-right:0%;
+				margin-bottom:0px;
+			}
+			.captcha-numbers {
+				background: $lightgray;
+				@include montserrat(normal);
+				text-align:center;
+				padding:10px 10px;
+				margin-top:10px;
+				margin-bottom:0px;
 			}
 		}
 		.login-form {
 			form {
 				margin-bottom:10px;
+			}
+			@media (max-width:$break-sm) {
+				padding-top:30px;
+				border-top:solid 2px $dark;
 			}
 		}
 	}
