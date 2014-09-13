@@ -16,3 +16,4 @@ Artisan::add(new NotificationMigrationCommand);
 Artisan::add(new CommentMigrationCommand);
 Artisan::add(new CommentSortingCommand);
 Artisan::add(new LaunchEmailCommand);
+Artisan::add(new ESReindexCommand);
