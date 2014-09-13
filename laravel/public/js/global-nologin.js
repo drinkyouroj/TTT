@@ -1,16 +1,8 @@
 $(function() {
 	$('.system-share a, a.follow, .follow-container a').on('click', function(event){
 		event.preventDefault();
-		
-		$('#guestSignup').modal('toggle');
+		window.location.replace(window.site_url+'user/signup');
 	});
-	
-	// This makes sure that the sidebar is closed in the event that the signup modal comes up
-	$('#guestSignup').on('show.bs.modal', function (e) {
-		$.sidr('close', 'offcanvas-sidebar', function() {
-        });
-	});
-
 
 	$('.signup-form .email-please').on('click', function() {
 		$(this).fadeOut('slow',function(){
@@ -18,16 +10,19 @@ $(function() {
 		});
 	});
 	
-	$('.comments-listing').on('click', '.flag-comment', function() {
-		$('#guestSignup').modal('toggle');
-	});
-	$('.comments-listing').on('click', '.like-comment', function() {
-		$('#guestSignup').modal('toggle');
+	$('.comments-listing').on('click', '.flag-comment, .like-comment, .reply', function() {
+		window.location.replace(window.site_url+'user/signup');
 	});
 
 	$('.comment-reply').submit(function(event) {
 		event.preventDefault();
-		$('#guestSignup').modal('toggle');
+		window.location.replace(window.site_url+'user/signup');
+	});
+
+
+	$('.sidebar-option.feed a, .sidebar-option.save a').click(function(event) {
+		event.preventDefault();
+		window.location.replace(window.site_url+'user/signup');
 	});
 
 });

@@ -1,7 +1,6 @@
 <?php
 
-//PostRepository is just an interface!  Change it in the service provider if we ever need to.
-//use AppStorage\Post\PostRepository;
+use \Carbon\Carbon;
 
 class PostController extends BaseController {
 
@@ -43,7 +42,15 @@ class PostController extends BaseController {
      */
     public function getPost ( $alias )
     {
-        $post = $this->post->findByAlias( $alias );
+    	if(Cache::has($alias) && !Session::get('admin') ) {
+        	$post = Cache::get($alias);
+        } else {
+        	//real query
+        	$post = $this->post->findByAlias( $alias );
+
+        	$expiresAt = Carbon::now()->addMinutes(10);
+			Cache::put($alias,$post,$expiresAt);
+        }
 		
 		$user_id = false;
         if(Auth::check()) {
@@ -146,11 +153,12 @@ class PostController extends BaseController {
 					->with('edit', true);
 		} else {
 			//Gotta put in a query here to see if the user submitted something in the last 10 minutes
-			$post = $this->post->lastPostUserId(Auth::user()->id);
+			$post = $this->post->lastPostUserId(Auth::user()->id,1);
 			
 			if(isset($post->id)) {
 				//not an admin and 10min has not passed since your last post.
 				if(!Session::get('admin') && strtotime(date('Y-m-d H:i:s', strtotime('-10 minutes'))) <= strtotime($post->created_at)  ){
+
 					//Gotta make a new view for that.
 					return View::make('v2/errors/post-limit-error');
 				}
@@ -228,7 +236,7 @@ class PostController extends BaseController {
 				//New Post.
 				$new = true;
 				//Checking to see if this is an new post being applied by a punk
-				$last_post = $this->post->lastPostUserId(Auth::user()->id);
+				$last_post = $this->post->lastPostUserId(Auth::user()->id, 1);
 				
 				if( isset($last_post->id) && 
 					$new && 

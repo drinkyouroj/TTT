@@ -14,7 +14,7 @@
 					</button>
 
 					@if( $is_guest )
-						<a class="post-btn btn-flat-blue" data-toggle="modal" data-target="#guestSignup">POST</a>
+						<a class="post-btn btn-flat-blue" href="{{ URL::to( 'user/signup' ) }}">POST</a>
 					@else
 						@if(Route::current()->uri() != 'myprofile/newpost')
 							<a class="post-btn btn-flat-blue" href="{{Config::get('app.url')}}/myprofile/newpost">POST</a>
@@ -28,15 +28,15 @@
 							THE
 							<br>
 							<span>TWO THOUSAND TIMES</span>
-						</a>
+						</a> 
 					</div>
 				</div>
 
 				<div class="col-sm-4 col-xs-2 col-right">
 						@if( $is_guest )
-							@if(Request::segment(1) != 'user')
-								<a class="btn-outline-blue signup hidden-xs" data-toggle="modal" data-target="#guestSignup">Signup</a>
-							@endif
+							
+							<a class="btn-outline-blue signup hidden-xs" href="{{ URL::to( 'user/signup' ) }}">Signup</a>
+							
 							<a class="login-btn login hidden-xs" href="{{ URL::to( 'user/login' ) }}">LOG IN</a>
 						@else
 						<div class="action">
@@ -127,7 +127,7 @@
 		</li>
 		@if( $is_guest )
 			<li class="sidebar-option post-btn-mobile visible-xs">
-				<a data-toggle="modal" data-target="#guestSignup">POST</a>
+				<a href="{{ URL::to( 'user/signup' ) }}">POST</a>
 			</li>
 		@else
 			<li class="sidebar-option post-btn-mobile visible-xs">
@@ -137,9 +137,9 @@
 
 		<li class="sidebar-option feed {{ $is_guest ? 'disabled' : '' }}">
 			@if ( $is_guest )
-			<a href="#" data-toggle="modal" data-target="#guestSignup">	
+				<a href="{{ URL::to( 'user/signup' ) }}">	
 			@else
-			<a href="{{ URL::to( 'myprofile' ) }}#feed">
+				<a href="{{ URL::to( 'myprofile' ) }}#feed">
 			@endif
 				MY FEED
 				<span class="glyphicon glyphicon-align-right pull-right"></span>
@@ -168,7 +168,7 @@
 
 		@if ( $is_guest )
 			<li class="sidebar-option saves disabled">
-				<a href="#" data-toggle="modal" data-target="#guestSignup">
+				<a href="#" href="{{ URL::to( 'user/signup' ) }}">
 					SAVES
 					<span class="glyphicon glyphicon-plus pull-right"></span>
 				</a>
@@ -209,7 +209,7 @@
 		@endif
 
 		<li class="sidebar-option signup-mobile visible-xs">
-			<a data-toggle="modal" data-target="#guestSignup">Signup</a>
+			<a href="{{ URL::to( 'user/signup' ) }}">Signup</a>
 		</li>
 		<li class="sidebar-option login-mobile visible-xs">
 			<a href="{{ URL::to( 'user/login' ) }}">Log in</a>

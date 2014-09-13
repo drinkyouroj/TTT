@@ -79,6 +79,8 @@ class EloquentPostRepository implements PostRepository {
 	
 	public function lastPostUserId($user_id, $published = true) {
 		$post = $this->post->where('user_id', $user_id)
+					->where('draft', 0)
+					->where('published',1)
 					->orderBy('created_at', 'DESC');
 		return self::count_check($post, $published, array());
 	}
