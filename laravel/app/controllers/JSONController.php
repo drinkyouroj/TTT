@@ -48,6 +48,8 @@ class JSONController extends BaseController {
 				$like = $this->like->create($user_id, $post_id);
 
 				$this->post->incrementLike(Request::segment(3));
+
+				NotificationLogic::like($post_id);
 				
 				if($like->id) {
 					return Response::json(
@@ -60,6 +62,8 @@ class JSONController extends BaseController {
 				$this->like->delete($user_id, $post_id);
 				
 				$this->post->decrementLike(Request::segment(3));
+
+				NotificationLogic::unlike($post_id);
 				
 				return Response::json(
 					array('result'=>'deleted'),

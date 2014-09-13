@@ -37,7 +37,14 @@
 				<span class="notification-post-title">{{#substring notification.post_title}}{{/substring}}</span>
 			</a>
 		{{/ifCond}}
-			
+		
+		{{#ifCond notification.notification_type 'like'}}
+			<a href="{{site_url}}posts/{{notification.post_alias}}">
+				<span class="action-user">{{ notification.users.[0] }}</span> liked your post: 
+				<span class="notification-post-title">{{#substring notification.post_title}}{{/substring}}</span>
+			</a>
+		{{/ifCond}}
+
 	</div>
 </script>
 
