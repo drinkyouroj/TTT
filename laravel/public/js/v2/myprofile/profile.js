@@ -150,6 +150,12 @@ $(function() {
 		profile.changePassword();
 	});
 
+	//update email
+	$('body').on('submit', '#email-update-form', function(event) {
+		event.preventDefault();
+		profile.updateEmail( $(this) );
+	});
+
 	//We'll just leave this as is for now.
 	$('#deleteModal').on('click','.btn.delete-account', function() {
 		var password = $('.delete-account-password').val();
@@ -705,6 +711,33 @@ function ProfileActions() {
 		        $errors.show();
 		    }
 		}
+
+	this.updateEmail = function( form ) {
+		// Fetch fields
+		var data = {
+			password: $(form).find('input.current-password').val(),
+			new_email: $(form).find('input.new-email').val()
+		};
+		// Send Request
+		$.ajax({
+			url: window.site_url + 'rest/profile/email/update',
+			type: 'post',
+			data: data,
+			success: function ( data ) {
+				if ( data.success ) {
+					$(form).fadeOut( function() {
+						$(this).siblings('.email-update-success').removeClass('hidden');
+						$(this).siblings('.email-update-error').remove();
+						$(this).remove();
+					});
+				} else if ( data.error ) {
+					$(form).siblings('.email-update-error').html( data.error ).removeClass('hidden');
+					$(form).find('input.current-password').val('');
+				}
+			}
+		});
+		// Handle Response
+	}
 
 	this.changePassword = function() {
 		$('form#changePassword').ajaxForm({

@@ -5,4 +5,5 @@ class Motification extends Eloquent {
 		
 	protected $connection = 'mongodb';
 	protected $collection = 'notifications';
+	protected $fillable = array('published');
 }

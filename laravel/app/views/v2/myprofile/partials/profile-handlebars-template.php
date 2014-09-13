@@ -194,7 +194,7 @@
 	        </div>
 		</div>
 	</div>
-	<div class="col-md-8 change-password">
+	<div class="col-md-4 change-password">
 		<h2>Change Your Password</h2>
 		<div class="password-message">
 			
@@ -202,19 +202,19 @@
 		<div class="reset-pass">
 			<form role="form" class="form-horizontal" id="changePassword" method="post" action="{{this.site_url}}rest/profile/password">
 				<div class="form-group">
-					<div class="col-sm-8">
+					<div class="col-sm-12">
 						<input type="password" name="current_password" class="current_password" placeholder="current password">
 					</div>
 				</div>
 
 				<div class="form-group">
-					<div class="col-sm-8">
+					<div class="col-sm-12">
 						<input type="password" name="password" class="password" placeholder="new password">
 					</div>
 				</div>
 
 				<div class="form-group">
-					<div class="col-sm-8">
+					<div class="col-sm-12">
 						<input type="password" name="password_confirmation" class="password_confirmation" placeholder="confirm new password">
 					</div>
 				</div>
@@ -225,6 +225,27 @@
 			</form>
 
 		</div>
+	</div>
+	<div class="col-md-4">
+		<h2>Update Your Email</h2>
+		<form role="form" class="form-horizontal" id="email-update-form" method="post" action="{{this.site_url}}/rest/profile/email/update">
+			<div class="form-group">
+				<div class="col-sm-12">
+					<input type="email" name="email" class="new-email" placeholder="new email">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<input type="password" name="password" class="current-password" placeholder="password">
+				</div>
+			</div>
+			<button class="btn btn-default btn-flat-dark-gray">Change Email</button>
+		</form>
+		<p class="email-update-success hidden">
+			Thank you! Please check your email for a verification link.
+		</p>
+		<p class="email-update-error hidden">
+		</p>
 	</div>
 
 	<div class="col-md-12 del-acc">

@@ -136,22 +136,27 @@ class UserController extends BaseController {
 			//Gotta redirect to an acknowledge page if the user happens to have softDeleted their account
 			if(!is_null($user->deleted_at)) {
 				$rando_string = str_random(40);
-				Session::put('restore_string', $rando_string);
-				return View::make('user/undelete')
-					->with('restore_string', $rando_string)
+                $user->restore_confirm = $rando_string;
+                $user->save();
+
+                $email_data = array(
+                    'from' => 'no_reply@twothousandtimes.com',
+                    'to' => array($user->email),
+                    'subject' => 'Welcome back to Two Thousand Times!',
+                    'plaintext' => View::make('v2/emails/restore_user_plain')->with('user', $user)->render(),
+                    'html'  => View::make('v2/emails/restore_user_html')->with('user', $user)->render()
+                    );
+
+                $this->email->create($email_data);
+
+				return View::make('v2/users/undelete')
 					->with('user',$user);
 			}
-			
-            //For verififying users on login from a reserved account.
-            if( $user->reserved ) {
-                $user->verified = 1;
-                $user->save();
-            }
 
             // If the session 'loginRedirect' is set, then redirect
             // to that route. Otherwise redirect to '/'
             $r = Session::get('loginRedirect');
-            if (!empty($r))
+            if (!empty($r) && strpos($r, '/rest/') === false)
             {
                 Session::forget('loginRedirect');
                 return Redirect::to($r);
@@ -183,18 +188,12 @@ class UserController extends BaseController {
 		 * User has to acknowledge that the person will be 
 		 */
 		public function getRestore() {
-			$id = Request::segment(3);
-			$rando_string = Request::segment(4);
-			if($rando_string == Session::get('restore_string')) {
-                //User Restore
-				$this->user->restore($id);
-				//Post Restore
-				$this->post->restore($id);//Might want to think about this a bit more.
-				return Redirect::to('user/loginonly');
+			if($this->user->restoreByConfirmation(Request::segment(3))) {
+				return Redirect::to('user/loginonly')
+                                ->with('notice', 'Your account has been restored!');
 			} else {
 				return Redirect::to('featured');
 			}
-			
 		}
 
 
@@ -205,7 +204,6 @@ class UserController extends BaseController {
      */
     public function getConfirm( $code )
     {
-        
         if ( $this->user->confirm( $code ) )
         {
             $notice_msg = 'Your user is confirmed.';
@@ -218,7 +216,16 @@ class UserController extends BaseController {
                         return Redirect::to('user/login')
                             ->with( 'error', $error_msg );
         }
-        
+    }
+
+
+    public function getEmailUpdate($confirm = false) {
+        if($this->user->updateEmail($confirm) ) {
+            return Redirect::to('user/loginonly')
+                            ->with('notice', 'Your email has been updated.');
+        } else {
+            return Redirect::to('featured');
+        }
     }
 
     /**

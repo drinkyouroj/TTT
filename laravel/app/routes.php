@@ -26,6 +26,7 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 		Route::post( 'featured/{post_id}', 'MyProfileController@postRestFeatured');
 		Route::post( 'image/upload', 'MyProfileController@postAvatar');
 		Route::post( 'password', 'UserController@postNewpass'); //I know its not in myprofile!
+		Route::post( 'email/update', 'MyProfileController@postUpdateEmail');
 	});
 
 	//Profile Image for the Follower/Following buttons.
@@ -134,6 +135,7 @@ Route::group(array('prefix'=> 'user'), function() {
 	Route::get('confirm/{code}', 'UserController@getConfirm');
 	Route::get('reset/{token}', 'UserController@getReset');
 	Route::get('restore/{id}', 'UserController@getRestore');
+	Route::get('emailupdate/{token}', 'UserController@getEmailUpdate');
 	
 	Route::get('check', 'UserController@getUserCheck');
 	
