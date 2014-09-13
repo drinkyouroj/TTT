@@ -1,15 +1,31 @@
-<form method="POST" action="{{ (Confide::checkAction('UserController@do_forgot_password')) ?: URL::to('/user/forgot') }}" accept-charset="UTF-8">
+<form method="POST" action="{{{ URL::to('/user/forgot') }}}" accept-charset="UTF-8">
     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
 
-    <label for="email">{{{ Lang::get('confide::confide.e_mail') }}}</label>
-    <div class="input-append">
-        <input placeholder="{{{ Lang::get('confide::confide.e_mail') }}}" type="text" name="email" id="email" value="{{{ Input::old('email') }}}">
+    
 
-        <input class="btn" type="submit" value="{{{ Lang::get('confide::confide.forgot.submit') }}}">
+    <div class="input-append">
+        
+        <label for="username">Username</label>
+        <input placeholder="Username" type="text" name="username" id="username" value="{{{ Input::old('username') }}}">
+
+        <label for="email">Email</label>
+        <input placeholder="Email" type="text" name="email" id="email" value="{{{ Input::old('email') }}}">
+
+        <input class="btn" type="submit" value="Submit">
     </div>
 
     @if ( Session::get('error') )
-        <div class="alert alert-error">{{{ Session::get('error') }}}</div>
+        <div class="alert alert-error">
+            @if(is_string(Session::get('error')))
+                {{{ Session::get('error') }}}
+            @else
+                <ul>
+                @foreach(Session::get('error')->all() as $message)
+                    <li>{{$message}}</li>
+                @endforeach
+                </ul>
+            @endif
+        </div>
     @endif
 
     @if ( Session::get('notice') )

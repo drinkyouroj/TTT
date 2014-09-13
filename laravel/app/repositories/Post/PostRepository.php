@@ -35,6 +35,8 @@ interface PostRepository {
 
 	public function allDraftsByUserId($user_id, $paginate, $page, $rest);
 	
+	public function allByPostIds($post_ids, $published = true);
+	
 	//Count
 	public function countPublished();
 	

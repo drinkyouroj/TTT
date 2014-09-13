@@ -258,11 +258,21 @@ class MongoCommentRepository implements CommentRepository {
 		$comment->save();
 	}
 
+		public function publishAllByUser($user_id) {
+			$this->comment->where('author.user_id',$user_id)
+						->update(array('published' => 1));
+		}
+
 	public function unpublish ( $comment_id ) {
 		$comment = MongoComment::where( '_id', $comment_id )->get()->first();
 		$comment->published = 0;
 		$comment->save();
 	}
+
+		public function unpublishAllByUser($user_id) {
+			$this->comment->where('author.user_id',$user_id)
+						->update(array('published' => 0));
+		}
 	
 
 		/**

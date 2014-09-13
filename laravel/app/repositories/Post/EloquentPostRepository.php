@@ -146,6 +146,12 @@ class EloquentPostRepository implements PostRepository {
 		}
 	}
 
+	public function allByPostIds($post_ids, $published = true) {
+		return $this->post->whereIn('id',$post_ids)
+						->where('published', $published)
+						->get();
+	}
+
 	//Count
 	public function countPublished() {
 		return $this->post->where('published', 1)->count();

@@ -317,6 +317,7 @@ class JSONController extends BaseController {
 		}
 	}
 
+	//Delete Users
 	public function postUserdelete() {
 		$id = Input::has('id') ? Input::get('id') : null;
 		$password = Input::has('password') ? Input::get('password') : null;

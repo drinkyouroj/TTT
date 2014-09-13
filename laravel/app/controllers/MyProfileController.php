@@ -9,8 +9,9 @@ class MyProfileController extends BaseController {
 							RepostRepository $repost,
 							PostRepository $post,
 							FollowRepository $follow,
-							CommentRepository $comment
-							) {
+							CommentRepository $comment,
+							UserRepository $user,
+							EmailRepository $email ) {
 		$this->not = $not;
 		$this->feed = $feed;
 		$this->profilepost = $profilepost;
@@ -19,6 +20,8 @@ class MyProfileController extends BaseController {
 		$this->post = $post;
 		$this->follow = $follow;
 		$this->comment = $comment;
+		$this->user = $user;
+		$this->email = $email;
 	}
 
 	protected $paginate = 12;
@@ -108,6 +111,62 @@ class MyProfileController extends BaseController {
 					//->with('featured', $featured)			//Featured Post
 					//->with('collection', $collection)		//Actual posts and reposts.
 					;
+	}
+
+	/**
+	 *	Update a users email
+	 */
+	public function postUpdateEmail() {
+		$user = Auth::user();
+		$password = Input::has('password') ? Input::get('password') : false;
+		$new_email = Input::has('new_email') ? Input::get('new_email') : false;
+		$error_message = '';
+		$success = false;
+		// Check for missing fields
+		if ( !$password || !$new_email ) {
+			$error_message = 'Oops! We are missing a field.';
+		// Check for valid email format
+		} else if ( !filter_var($new_email, FILTER_VALIDATE_EMAIL) ) {
+			$error_message = 'It looks like you have provided an invalid email.';
+		// Check that the User provided correct password.
+		} else if ( Auth::validate(array( 'id' => $user->id, 'password' => $password )) ) {
+			// Check that email is not their existing email.
+			if ( $user->email == $new_email ) {
+				$error_message = 'The email provided matches your current email.';
+			// Check that the email does not already have three usernames attached.
+			} else if ( $this->user->usernamesPerEmailCount( $new_email ) > 2 ) {
+				$error_message = 'The provided email cannot be used for another account.';
+			// We are good!
+			} else {
+				$success = true;
+				
+				//Update with the new email
+				$user->updated_email = $new_email;
+				$user->update_confirm = md5(date('YMDHiS').$new_email.rand(1,10));
+				$user->save();
+
+				//Send email to the new email.
+				$email_data = array(
+                    'from' => 'no_reply@twothousandtimes.com',
+                    'to' => array($user->email),
+                    'subject' => 'Change Your Email Address | Two Thousand Times!',
+                    'plaintext' => View::make('v2/emails/change_email_plain')->with('user', $user)->render(),
+                    'html'  => View::make('v2/emails/change_email_html')->with('user',$user)->render()
+                    );
+
+				$this->email->create($email_data);
+			}
+		// Wrong password
+		} else {
+			$error_message = 'Incorrect password! Try again.';
+		}
+		
+
+		if ( $success ) {
+			return Response::json( array( 'success' => true ), 200 );
+		} else {
+			return Response::json( array( 'error' => $error_message ), 200 );
+		}
 	}
 
 	/**
