@@ -16,7 +16,7 @@
 	@section('content')
 
 		<section class="category-header">
-			<img class="corner-icon" src="/images/global/ttt-icon.png">
+			<img class="corner-icon" src="{{ URL::to('images/global/ttt-icon.png') }}">
 			<h1 class="category-title">
 				{{ $cat_title }}
 			</h1>
@@ -25,7 +25,7 @@
 		<section class="filters" data-current-category="{{$current_category}}" data-current-filter="{{$current_filter}}">
 
 			<div class="category-filter-container">
-				<div class="category-filter-title">
+				<div class="category-filter-title cat-container">
 					<span class="category-title">
 						{{ $cat_title }}
 					</span>
@@ -44,7 +44,7 @@
 			</div>
 
 			<div class="category-filter-container">
-				<div class="category-filter-title">
+				<div class="category-filter-title sort-container">
 					@foreach ( $filters as $filter => $filter_title )
 						@if ( $filter == $current_filter )
 							<span class="sortby-title"> {{ $filter_title }} </span>

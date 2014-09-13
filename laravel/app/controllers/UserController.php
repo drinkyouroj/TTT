@@ -15,7 +15,7 @@ class UserController extends BaseController {
 	 * Signup
 	 */
 	public function getSignup(){
-		return View::make('user/signup');
+		return View::make('v2/users/signup_only');
 	}
 
     /**

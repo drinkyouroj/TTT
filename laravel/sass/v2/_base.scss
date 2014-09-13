@@ -7,6 +7,7 @@ $red: #f74141;
 $dark_gray: #333;
 $gray: #ccc;
 $lightgray: #eee;
+$gray_text:#bbb;//for text over a dark background
 $beige: #fff9f0;
 $cream: #fff8ee;
 $dark_cream: #dbd3ca;
@@ -83,6 +84,11 @@ $post_actionbar_height: 69px;
 input,textarea, select {
 	outline: none;
 	@include border-radius(0);
+  @include montserrat;
+  padding:5px;
+  border:solid 1px $gray;
+  box-shadow: rgba(0, 0, 0, 0.0745098) 0px 2px 2px 0px inset;
+  background:#fdfdfd;
 }
 
 textarea {
@@ -135,7 +141,7 @@ textarea {
       border-bottom:solid 1px $dark_gray;
       &.disabled {
         a {
-          color: $gray;
+          color: #525252;
         }
       }
 
@@ -153,10 +159,6 @@ textarea {
         @include montserrat(normal);
         font-size:12px;
         letter-spacing:2px;
-        
-        &:hover {
-          color:$blue;
-        }
       }
 
       &:nth-child(odd) {
@@ -171,8 +173,74 @@ textarea {
   }
 }
 
-//===Nav sidebar:end===
 
+//==========Signup/Login==========
+@mixin signup_login {
+  .login-container, .signup-container {
+    background-color:$white;
+    margin-top:15px;
+    padding-top:30px;
+    padding-bottom:50px;
+    border:solid 1px $lightgray;
+    .login-form, .signup-form {
+      text-align:center;
+      h2 {
+        margin-top:10px;
+      }
+      form {
+        margin-top:20px;
+        input {
+          width:40%;
+          height:50px;
+          margin-bottom:10px;
+          padding-left:20px;
+          font-size:16px;
+          @media (max-width:$break-sm) and (min-width:$break-sm-min) {
+            width:70%;
+          }
+
+          @media (max-width:$break-xs) {
+            width:90%;
+          }
+        }
+        .form-actions {
+          margin-top:10px;
+          margin-bottom:10px;
+        }
+        .forgot-pw {
+         
+        }
+      }
+      .login-disclaimer, .terms-agree {
+          margin-top:30px;
+          padding-top:20px;
+          border-top:solid 1px $lightgray;
+          font-size:12px;
+        }
+    }
+    .signup-form {
+      input {
+        width:90% !important;
+      }
+      .email-subtext {
+        margin-bottom:10px;
+      }
+      .captcha-numbers {
+        width:90%;
+        margin:0 5%;
+        background:$lightgray;
+        @include montserrat;
+        padding:10px;
+      }
+    }
+  }
+  .redirect-other {
+      a {
+        @include montserrat;
+        font-size:12px;
+      }
+    }
+}
 
 
 
@@ -726,7 +794,7 @@ textarea {
 //Modal Mods
 //below is straight off from the landing page.  Modify if need be.
 .modal-backdrop.in {
-	opacity: 0.95 !important;
+	opacity: .98 !important;
 }
 .modal-dialog {
   width: 80%;

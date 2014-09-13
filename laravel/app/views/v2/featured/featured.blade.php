@@ -44,13 +44,9 @@
 	@include('v2.featured.featured-cached')
 
 	<div class="trending-wrapper">
-		<div class="container">
-			<div class="row">
-				<h2>Trending</h2>
-				<div class="col-md-12 trending-content">
+		<h2>Trending</h2>
+		<div class="trending-content">
 
-				</div>
-			</div>
 		</div>
 	</div>
 

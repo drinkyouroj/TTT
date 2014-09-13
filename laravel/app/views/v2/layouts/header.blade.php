@@ -135,6 +135,7 @@
 			</li>
 		@endif
 
+
 		<li class="sidebar-option feed {{ $is_guest ? 'disabled' : '' }}">
 			@if ( $is_guest )
 				<a href="{{ URL::to( 'user/signup' ) }}">	
@@ -145,6 +146,7 @@
 				<span class="glyphicon glyphicon-align-right pull-right"></span>
 			</a>
 		</li>
+
 
 		<li class="sidebar-option categories">
 			<a href="#itemTwo" data-toggle="collapse" data-parent="#accordion">
