@@ -396,7 +396,7 @@ class JSONController extends BaseController {
 		}
 	}
 
-	public function getSaveRead($post_id) {
+	public function getRead($post_id) {
 		if(Auth::check()) {
 			$user = Auth::user();
 			$this->favorite->read($user->id, $post_id);

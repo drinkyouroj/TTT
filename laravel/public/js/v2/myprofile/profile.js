@@ -206,7 +206,21 @@ $(function() {
 	// Delete Draft
 	$('body').on('click', '.delete-draft', function(event) {
 		event.preventDefault();
-		profile.deleteDraft( $(this).data('id') );
+		post_id = $(this).data('id');
+		$('#removeDraftModal button.delete').data('post',post_id);
+		$('#removeDraftModal').modal('show');
+	});
+
+	$('#removeDraftModal button.delete').click(function(event) {
+		event.preventDefault();
+
+		console.log($(this).data('post'));
+
+		if(typeof $(this).data('post') != 'undefined') {
+			post_id = $(this).data('post');
+			profile.deleteDraft( post_id );
+		}
+		$('#removeDraftModal').modal('hide');
 	});
 
 

@@ -38,7 +38,7 @@
 		<div class="right-col">
 			<div class="user">
 				{{#ifEqual comment.published 1 }}
-					<a href="{{ profile_url }}{{ comment.author.username }}"> {{ comment.author.username }} </a>
+					<a href="{{site_url}}profile/{{ comment.author.username }}"> {{ comment.author.username }} </a>
 					<span class="published-date"> - {{formatDate comment.created_at}}</span>
 					{{#if comment.edited}}
 						<span class="edited-date">(edited {{formatDate comment.updated_at}})</span>

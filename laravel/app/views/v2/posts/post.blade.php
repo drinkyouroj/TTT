@@ -60,8 +60,10 @@
 							$is_author = Auth::check() && $post->user->id == Auth::user()->id;
 						?>
 							@if( !$is_author )
-								<div class="col-md-3 hidden-sm hidden-xs utility-container">
-									<a data-action="read" class="read">Mark as Read</a>
+								<div class="col-md-3 hidden hidden-sm hidden-xs utility-container">
+									@if($favorited)
+										<a data-action="read" class="read">Mark as Read</a>
+									@endif
 									<a data-action="flag" class="flag-button flag glyphicon glyphicon-flag">
 										Flag</a>
 								</div>

@@ -51,10 +51,12 @@ class EloquentFavoriteRepository implements FavoriteRepository {
 		$favorite->save();
 	}
 
+	//Note this one gets unread stuff where as exists gets everything
 	public function has_favorited($user_id, $post_id) {
 		return $this->favorite
 						->where('user_id', $user_id)
 						->where('post_id', $post_id)
+						->where('read', false)
 						->count();
 	}
 
