@@ -81,7 +81,7 @@ class UserController extends BaseController {
         }
         else
         {
-            return View::make('v2/users/signup_login');
+            return View::make('v2/users/login_only');
         }
     }
 	

@@ -165,38 +165,6 @@ Route::post('search', 'SearchController@postResult');
 Route::get('search/users/{term}/{page}', 'SearchController@searchUsers');
 Route::get('search/posts/{term}/{page}', 'SearchController@searchPosts');
 
-//Protected Profile routes
-Route::group(array('prefix'=> 'profile', 'before'=> 'profile|auth'), function() 
-{
-	/*
-	Route::get( 'editpost/{id}', 'PostController@getPostForm');
-	Route::get( 'newpost', 'PostController@getPostForm');
-	
-	Route::post( 'submitpost', 'PostController@postPostForm');
-	
-	//All Notifications
-	Route::get( 'notifications', 'ProfileController@getNotifications');
-	
-	//My Posts
-	Route::get( 'myposts', 'ProfileController@getMyPosts');
-	
-	//My Settings
-	Route::get( 'settings', 'ProfileController@getSettings');
-	
-	//Comments
-	Route::get( 'commentform/{post_id}/{reply_id}', 'CommentController@getCommentForm');//This is for getting the reply forms.
-	Route::post( 'comment/{post_id}', 'CommentController@postCommentForm');
-	
-	//Messages
-	Route::get( 'replymessage/{reply_id}', 'MessageController@getMessageReplyForm');
-	Route::get( 'newmessage/{user_id}', 'MessageController@getMessageForm');
-	Route::get( 'newmessage', 'MessageController@getMessageForm');
-	
-	Route::post( 'submitmessage', 'MessageController@postMessageForm');
-	Route::get( 'messages', 'MessageController@getMessageInbox');
-	*/
-});
-
 //Not protected profile routes
 Route::group(array('before'=>'profile'), function() {
 	//General Posts
