@@ -14,6 +14,7 @@ interface UserRepository {
 	public function find($id);
 
 	public function all();
+	public function allByIds( $user_ids );
 
 //Update
 	public function update($input);

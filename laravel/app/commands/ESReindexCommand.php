@@ -78,7 +78,7 @@ class ESReindexCommand extends Command {
 		    $post = $posts[$i];
 		    $params['body'][] = array(
 		        'update' => array(
-		            '_id' => $i
+		            '_id' => $post->id
 		        )
 		    );
 
@@ -122,7 +122,7 @@ class ESReindexCommand extends Command {
 		    $user = $users[$i];
 		    $params['body'][] = array(
 		        'update' => array(
-		            '_id' => $i
+		            '_id' => $user->id
 		        )
 		    );
 
@@ -161,7 +161,7 @@ class ESReindexCommand extends Command {
     protected function getArguments()
     {
         return array(
-            array('data', InputArgument::REQUIRED, 'Name of the data type: posts or users'),
+            array('data', InputArgument::REQUIRED, 'Name of the data type: posts, users, delete-posts, delete-users'),
         );
     }
  

@@ -48,7 +48,7 @@
 					<div id="posts-results" class="posts-listing tab-pane active">
 						<h3 class="search-type">Posts</h3>
 						<div class="generic-listing">
-							@if(!is_string($posts))
+							@if( count( $posts ) )
 								
 								@foreach($posts as $k => $post)
 									@if(isset($post->id) && isset($post->user->username))
@@ -67,7 +67,7 @@
 					<div id ="users-results" class="users-listing tab-pane">
 						<h3 class="search-type">Users</h3>
 						<div class="generic-listing">
-							@if(!is_string($users))
+							@if(count ($users))
 								<div class="row">
 								@foreach($users as $k => $user)
 									@if(isset($user->id))

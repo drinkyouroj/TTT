@@ -93,6 +93,12 @@ class SheepRepository implements UserRepository {
 		//probably don't need it at all.
 	}
 
+	public function allByIds( $user_ids ) {
+		return $this->user->whereIn('id', $user_ids)
+						->where('banned', 0)
+						->get();
+	}
+
 	public function update($data) {
 		
 	}

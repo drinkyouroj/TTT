@@ -157,8 +157,8 @@ Route::get( 'posts', 'PostController@getIndex');//grabs a random post
 Route::get('search', 'SearchController@getSearchPage');
 Route::get('search/{term}', 'SearchController@getResult');//Might turn into a rest system later
 Route::post('search', 'SearchController@postResult');
-
-
+Route::get('search/users/{term}/{page}', 'SearchController@searchUsers');
+Route::get('search/posts/{term}/{page}', 'SearchController@searchPosts');
 
 //Protected Profile routes
 Route::group(array('prefix'=> 'profile', 'before'=> 'profile|auth'), function() 
