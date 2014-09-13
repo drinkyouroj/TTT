@@ -51,7 +51,7 @@ class UserController extends BaseController {
             //Auto Login on Creation.
             $user = $this->user->login($data);
             //Gotta send out email
-            if(!empty($data['email']) && Config::get('app.email_send') ) {
+            if(!empty($data['email']) ) {
                 $data['confirm'] = $user->confirmation_code;
                 $email_data = array(
                     'from' => 'no_reply@twothousandtimes.com',
@@ -136,22 +136,27 @@ class UserController extends BaseController {
 			//Gotta redirect to an acknowledge page if the user happens to have softDeleted their account
 			if(!is_null($user->deleted_at)) {
 				$rando_string = str_random(40);
-				Session::put('restore_string', $rando_string);
-				return View::make('user/undelete')
-					->with('restore_string', $rando_string)
+                $user->restore_confirm = $rando_string;
+                $user->save();
+
+                $email_data = array(
+                    'from' => 'no_reply@twothousandtimes.com',
+                    'to' => array($user->email),
+                    'subject' => 'Welcome back to Two Thousand Times!',
+                    'plaintext' => View::make('v2/emails/restore_user_plain')->with('user', $user)->render(),
+                    'html'  => View::make('v2/emails/restore_user_html')->with('user', $user)->render()
+                    );
+
+                $this->email->create($email_data);
+
+				return View::make('v2/users/undelete')
 					->with('user',$user);
 			}
-			
-            //For verififying users on login from a reserved account.
-            if( $user->reserved ) {
-                $user->verified = 1;
-                $user->save();
-            }
 
             // If the session 'loginRedirect' is set, then redirect
             // to that route. Otherwise redirect to '/'
             $r = Session::get('loginRedirect');
-            if (!empty($r))
+            if (!empty($r) && strpos($r, '/rest/') === false)
             {
                 Session::forget('loginRedirect');
                 return Redirect::to($r);
@@ -183,18 +188,12 @@ class UserController extends BaseController {
 		 * User has to acknowledge that the person will be 
 		 */
 		public function getRestore() {
-			$id = Request::segment(3);
-			$rando_string = Request::segment(4);
-			if($rando_string == Session::get('restore_string')) {
-                //User Restore
-				$this->user->restore($id);
-				//Post Restore
-				$this->post->restore($id);//Might want to think about this a bit more.
-				return Redirect::to('user/loginonly');
+			if($this->user->restoreByConfirmation(Request::segment(3))) {
+				return Redirect::to('user/loginonly')
+                                ->with('notice', 'Your account has been restored!');
 			} else {
 				return Redirect::to('featured');
 			}
-			
 		}
 
 
@@ -205,7 +204,6 @@ class UserController extends BaseController {
      */
     public function getConfirm( $code )
     {
-        
         if ( $this->user->confirm( $code ) )
         {
             $notice_msg = 'Your user is confirmed.';
@@ -218,7 +216,16 @@ class UserController extends BaseController {
                         return Redirect::to('user/login')
                             ->with( 'error', $error_msg );
         }
-        
+    }
+
+
+    public function getEmailUpdate($confirm = false) {
+        if($this->user->updateEmail($confirm) ) {
+            return Redirect::to('user/loginonly')
+                            ->with('notice', 'Your email has been updated.');
+        } else {
+            return Redirect::to('featured');
+        }
     }
 
     /**
@@ -227,7 +234,7 @@ class UserController extends BaseController {
      */
     public function getForgot()
     {
-    	return View::make('user.forgot');
+    	return View::make('v2/users/forgot');
     }
 
     /**
@@ -236,18 +243,60 @@ class UserController extends BaseController {
      */
     public function postForgot()
     {
-        if( Confide::forgotPassword( Input::get( 'email' ) ) )
-        {
-            $notice_msg = Lang::get('confide::confide.alerts.password_forgot');
-                        return Redirect::to('user/login')
-                            ->with( 'notice', $notice_msg );
-        }
-        else
-        {
-            $error_msg = Lang::get('confide::confide.alerts.wrong_password_forgot');
-                        return Redirect::to('user/forgot')
-                            ->withInput()
-                			->with( 'error', $error_msg );
+        $email = Request::get('email');
+        $username = Request::get('username');
+        //Gotta run an e-mail validation first.
+        $validator = Validator::make(
+                        array(
+                            'email' => $email,
+                            'username' => $username
+                            ),
+                        array(
+                            'email' => 'required|email',
+                            'username' => 'required'
+                            )
+                        );
+
+        if($validator->passes() ){
+            $pass = $this->user->forgotPassword($email, $username);
+            if( $pass )
+            {
+                $user = $pass['user'];
+                $new_pass = $pass['new_password'];
+                $plain = View::make('v2/emails/forgot_plain')
+                            ->with('user', $user)
+                            ->with('new_pass', $new_pass)
+                            ->render();
+
+                $html = View::make('v2/emails/forgot_html')
+                            ->with('user', $user)
+                            ->with('new_pass', $new_pass)
+                            ->render();
+
+                //send them the email
+                $email_data = array(
+                    'from' => 'no_reply@twothousandtimes.com',
+                    'to' => array($user->email),
+                    'subject' => "Here's your new credentials for Two Thousand Times.",
+                    'plaintext' => $plain,
+                    'html'  => $html
+                    );
+
+                $this->email->create($email_data);
+
+                $notice_msg = 'Please check your e-mail.';
+                            return Redirect::to('user/login')
+                                ->with( 'notice', $notice_msg );
+            } else {
+                $error_msg = 'Sorry, but your username/email combo does not have a match';
+                            return Redirect::to('user/forgot')
+                                ->withInput()
+                    			->with( 'error', $error_msg );
+            }
+        } else {
+            return Redirect::to('user/forgot')
+                ->withInput()
+                ->with( 'error', $validator->messages() );
         }
     }
 

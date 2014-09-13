@@ -135,8 +135,13 @@ Route::group(array('prefix'=> 'user'), function() {
 	Route::get('confirm/{code}', 'UserController@getConfirm');
 	Route::get('reset/{token}', 'UserController@getReset');
 	Route::get('restore/{id}', 'UserController@getRestore');
+	Route::get('emailupdate/{token}', 'UserController@getEmailUpdate');
+	
 	Route::get('check', 'UserController@getUserCheck');
+	
 	Route::get('forgot', 'UserController@getForgot');
+	Route::post('forgot', 'UserController@postForgot');
+
 	Route::controller( '/', 'UserController');
 });
 
@@ -148,7 +153,6 @@ Route::group(array('prefix'=>'categories'),function() {
 	Route::get( '{alais}', 'CategoryController@getCategory');	
 });
 
-
 //Posts routes
 Route::get( 'posts/{alias}', 'PostController@getPost');
 Route::get( 'posts', 'PostController@getIndex');//grabs a random post
@@ -157,6 +161,7 @@ Route::get( 'posts', 'PostController@getIndex');//grabs a random post
 Route::get('search', 'SearchController@getSearchPage');
 Route::get('search/{term}', 'SearchController@getResult');//Might turn into a rest system later
 Route::post('search', 'SearchController@postResult');
+
 Route::get('search/users/{term}/{page}', 'SearchController@searchUsers');
 Route::get('search/posts/{term}/{page}', 'SearchController@searchPosts');
 

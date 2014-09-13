@@ -10,7 +10,8 @@ class MyProfileController extends BaseController {
 							PostRepository $post,
 							FollowRepository $follow,
 							CommentRepository $comment,
-							UserRepository $user ) {
+							UserRepository $user,
+							EmailRepository $email ) {
 		$this->not = $not;
 		$this->feed = $feed;
 		$this->profilepost = $profilepost;
@@ -20,6 +21,7 @@ class MyProfileController extends BaseController {
 		$this->follow = $follow;
 		$this->comment = $comment;
 		$this->user = $user;
+		$this->email = $email;
 	}
 
 	protected $paginate = 12;
@@ -137,7 +139,22 @@ class MyProfileController extends BaseController {
 			// We are good!
 			} else {
 				$success = true;
-				// TODO	
+				
+				//Update with the new email
+				$user->updated_email = $new_email;
+				$user->update_confirm = md5(date('YMDHiS').$new_email.rand(1,10));
+				$user->save();
+
+				//Send email to the new email.
+				$email_data = array(
+                    'from' => 'no_reply@twothousandtimes.com',
+                    'to' => array($user->email),
+                    'subject' => 'Change Your Email Address | Two Thousand Times!',
+                    'plaintext' => View::make('v2/emails/change_email_plain')->with('user', $user)->render(),
+                    'html'  => View::make('v2/emails/change_email_html')->with('user',$user)->render()
+                    );
+
+				$this->email->create($email_data);
 			}
 		// Wrong password
 		} else {

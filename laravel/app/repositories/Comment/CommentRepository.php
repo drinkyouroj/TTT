@@ -24,6 +24,8 @@ interface CommentRepository {
 	public function unflag( $user_id, $comment_id );
 	
 	public function publish($comment_id);
+	public function publishAllByUser($user_id);
 	public function unpublish($comment_id);
+	public function unpublishAllByUser($user_id);
 	
 }
