@@ -39,14 +39,12 @@
 	<script>
 		@if(App::environment('local') || App::environment('sharktopus'))
 			window.site_url = '/tt/';//has trailing slash
-			window.image_url = '/tt/uploads/final_images';//no trailing on the image url
 		@elseif(App::environment('web'))
 			window.site_url = '/';//has trailing slash
-			window.image_url = '{{ Config::get('app.imageurl') }}';//no trailing on the image url
 		@else
 			window.site_url = '/';//has trailing slash
-			window.image_url = '/uploads/final_images';//no trailing on the image url
 		@endif
+			window.image_url = '{{ Config::get('app.imageurl') }}';
 	</script>
 	
 	@if($have_user)

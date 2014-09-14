@@ -24,7 +24,7 @@
 	Handlebars.registerHelper('userImage', function(v1, v2, options) {
 			//v2 is site url
 			if(v1) {
-				return window.site_url + 'uploads/final_images/' + v1;
+				return window.image_url + '/' + v1;
 			}else {
 				return window.site_url + 'images/profile/avatar-default.png';
 			}
@@ -92,7 +92,7 @@
 		
 		<a class="image-link" href="{{ site_url }}posts/{{ post.alias }}">
 			<div class="top-fade"> </div>
-				<div class="post-image" style="background-image:url('{{ site_url }}uploads/final_images/{{ post.image }}')">
+				<div class="post-image" style="background-image:url('{{ image_url }}/{{ post.image }}')">
 
 					</div>
 		</a>

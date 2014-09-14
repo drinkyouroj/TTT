@@ -425,7 +425,8 @@ function ProfileActions() {
 					$.each(data.notifications, function(idx, val) {
 						view_data = {
 							notification: val,
-							site_url: window.site_url
+							site_url: window.site_url,
+							image_url: window.image_url
 						};
 						$('#default-content',target).append(notification_item_template(view_data));
 					});
@@ -458,7 +459,8 @@ function ProfileActions() {
 							editable: editable,
 							featured_id: window.featured_id,
 							post_type: val.post_type,
-							myprofile: window.myprofile
+							myprofile: window.myprofile,
+							image_url: window.image_url
 						};
 						$('#collection-content',target).append(post_item_template(view_data));
 					}
@@ -486,7 +488,8 @@ function ProfileActions() {
 				post: data.featured,
 				user_id : window.user_id,
 				editable: editable,
-				myprofile: window.myprofile
+				myprofile: window.myprofile,
+							image_url: window.image_url
 			}
 			$('#collection-content',target).prepend( feature_item_template(view_data) );
 
@@ -534,7 +537,8 @@ function ProfileActions() {
 			$.each(data.comments,function(idx, val) {
 				view_data = {
 					site_url: window.site_url,
-					comment: val
+					comment: val,
+					image_url: window.image_url
 				}
 				$('#comment-content',target).append(comment_item_template(view_data));
 			});
@@ -556,7 +560,8 @@ function ProfileActions() {
 						site_url: window.site_url,
 						post: val.post,
 						feed_type: val.feed_type,
-						users: val.users
+						users: val.users,
+						image_url: window.image_url
 					};
 					$('#default-content',target).append(post_item_template(view_data));
 				});
@@ -578,7 +583,8 @@ function ProfileActions() {
 					view_data = {
 						site_url: window.site_url,
 						save: val.post,
-						date: val.created_at
+						date: val.created_at,
+						image_url: window.image_url
 					};
 					$('#default-content',target).append(saves_item_template(view_data));
 				});
@@ -610,7 +616,8 @@ function ProfileActions() {
 					view_data = {
 						site_url: window.site_url,
 						draft: val,
-						date: draftDate(val.updated_at)
+						date: draftDate(val.updated_at),
+						image_url: window.image_url
 					};
 					$('#default-content',target).append(drafts_item_template(view_data));
 				});
@@ -638,7 +645,8 @@ function ProfileActions() {
 				view_data = {
 					site_url: window.site_url,
 					username: val.followers.username,
-					user_id:  val.follower_id
+					user_id:  val.follower_id,
+					image_url: window.image_url
 				};
 				$('#default-content', target).append(follow_template(view_data));
 			});
@@ -655,7 +663,8 @@ function ProfileActions() {
 				view_data = {
 					site_url: window.site_url,
 					username: val.following.username,
-					user_id:  val.user_id
+					user_id:  val.user_id,
+					image_url: window.image_url
 				};
 				$('#default-content', target).append(follow_template(view_data));
 			});
@@ -675,7 +684,8 @@ function ProfileActions() {
 		view_data = {
 			site_url: this.site_url,
 			user_image: user_image,
-			email: window.email
+			email: window.email,
+			image_url: window.image_url
 		};
 		$('#default-content', this.target).append(this.settings_template(view_data));
 		

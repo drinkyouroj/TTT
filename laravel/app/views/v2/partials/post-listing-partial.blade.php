@@ -5,8 +5,8 @@
 	
 	<div class="post-image-overlay">
 		<a href="{{ URL::to('profile/'.$post->user->username ) }}">
-			<?php $user_image = $post->user->image ? 'uploads/final_images/'.$post->user->image : 'images/profile/avatar-default.png' ;?>
-			<img class="post-author-avatar" src="{{Config::get('app.url')}}/{{$user_image}}">
+			<?php $user_image = $post->user->image ? Config::get('app.imageurl').'/'.$post->user->image : Config::get('app.url').'/images/profile/avatar-default.png' ;?>
+			<img class="post-author-avatar" src="{{$user_image}}">
 		</a>
 		{{$post->story_type}} by <a href="{{ URL::to('profile/'.$post->user->username ) }}"> {{ $post->user->username }} </a>
 
@@ -31,7 +31,7 @@
 
 	<a class="image-link" href="{{ URL::to('posts/'.$post->alias) }}">
 		<div class="top-fade"> </div>
-			<div class="post-image" style="background-image:url('{{ URL::to('uploads/final_images/'.$post->image) }}')">
+			<div class="post-image" style="background-image:url('{{ Config::get('app.imageurl').'/'.$post->image }}')">
 
 			</div>
 	</a>

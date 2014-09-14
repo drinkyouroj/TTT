@@ -13,13 +13,13 @@ class ProfileImageRestController extends \BaseController {
 			
 			if($user->image) {
 				//We'll need to put in enviro detect here for CDN.
-				return Redirect::to('/uploads/final_images/'.$user->image);
+				return Redirect::to(Config::get('app.imageurl').'/'.$user->image);
 				//return Response::download(public_path().'/uploads/final_images/'.$post->image);
 			} else {
 				return Redirect::to('/images/profile/avatar-default.png');
 			}
 		} else {
-			return Redirect::to('/img/profile/default-profile.jpg');
+			return Redirect::to('/images/profile/avatar-default.png');
 		}
 	}
 }

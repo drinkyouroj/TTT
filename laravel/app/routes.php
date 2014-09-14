@@ -98,7 +98,6 @@ Route::group( array('prefix'=>'myprofile', 'before' => 'auth' ), function() {
 	Route::get('/{alias}', 'MyProfileController@getPublicProfile');
 
 	Route::get('/', 'MyProfileController@getMyProfile');
-	//Route::controller( 'myprofile', 'MyProfileController' );
 });
 
 //Admin area
@@ -111,9 +110,6 @@ Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
 	Route::get('restore/user/{user_id}', 'AdminController@restoreUser');
 	Route::get('reset/user/{user_id}', 'AdminController@resetUser');
 	Route::post('post/edit', 'AdminController@editPost');
-
-	//Route::get('solr', 'AdminController@getResetSolr');//this updates the users on solr
-	//Route::get('resetnot/{batch}', 'AdminController@getResetNotifications');//this updates the users on solr
 	Route::controller('/','AdminController');
 });
 
@@ -124,10 +120,6 @@ Route::group(array('prefix'=> 'mod', 'before'=> 'mod'), function() {
 	Route::get('delete/post/{post_id}/category/{category_id}', 'ModController@deletePostCategory');
 	Route::get('ban/user/{user_id}', 'ModController@banUser');
 	Route::get('unban/user/{user_id}', 'ModController@unbanUser');
-
-	// Route::get('delcomment/{id}','ModController@getDelComment');
-	// Route::get('ban/{id}','ModController@getBan');
-	// Route::get('/','ModController@getIndex');
 });
 
 /********************The Authentication Routes  (Confide routes)************************/

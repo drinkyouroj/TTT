@@ -53,8 +53,13 @@ $(function() {
 			// add new feed items to DOM
 			posts.forEach( function ( post, index ) {
 				// Render the html
-				site_url = window.site_url;  // send this to template for url's
-				var post = feed_item_template( { post: post, site_url: site_url, users: undefined } );
+				view_data = { 
+					post: post, 
+					site_url: window.site_url,
+					image_url: window.image_url,
+					users: undefined 
+				};
+				var post = feed_item_template( view_data );
 				// Add it to DOM
 				$('.feed-container').append( post );
 				// Fade in

@@ -115,7 +115,7 @@
 				<div class="image-container col-md-3 col-sm-3">
 					<a 	href="{{site_url}}posts/{{save.alias}}"
 						class="image"
-						style="background-image:url('{{site_url}}uploads/final_images/{{save.image}}');">
+						style="background-image:url('{{image_url}}/{{save.image}}');">
 
 					</a>
 				</div>
@@ -128,7 +128,7 @@
 					</h3>
 					<p>{{save.tagline_1}} | {{save.tagline_2}} | {{save.tagline_3}}</p>
 					<p class="author">
-						<a href="{{site_url}}profile/{{save.user.username}}" style="background-image: url('{{site_url}}uploads/final_images/{{save.user.image}}');">
+						<a href="{{site_url}}profile/{{save.user.username}}" style="background-image: url('{{image_url}}/{{save.user.image}}');">
 							{{save.user.username}}
 						</a>
 					</p>
@@ -152,7 +152,7 @@
 				</div>
 				<a  href="{{site_url}}myprofile/editpost/{{draft.id}}"
 					class="image col-md-2 col-sm-3 col-xs-3"
-					style="background-image:url('{{site_url}}uploads/final_images/{{draft.image}}');">
+					style="background-image:url('{{image_url}}/{{draft.image}}');">
 
 				</a>
 
@@ -195,7 +195,7 @@
 
 			<form id="uploadAvatar" method="post" action="{{this.site_url}}rest/profile/image/upload">
 	            <input type="hidden" name="image" class="image">
-	            <div class="thumb-container" style="background-image:url('{{site_url}}uploads/final_images/{{user_image}}');">
+	            <div class="thumb-container" style="background-image:url('{{image_url}}/{{user_image}}');">
 	            </div>
 			</form>
 			<a class="btn-flat-light-gray avatar-modal">Choose an Avatar</a>
@@ -298,7 +298,7 @@
 
 		<a  href="{{site_url}}posts/{{post.alias}}"
 				class="image feature-inner col-md-8 col-sm-8"
-				style="background-image: url('{{site_url}}uploads/final_images/{{post.image}}');">
+				style="background-image: url('{{image_url}}/{{post.image}}');">
 		</a>
 		{{#ifCond myprofile true }}
 			{{#ifCond post.user.id user_id }}
