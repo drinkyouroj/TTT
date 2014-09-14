@@ -674,7 +674,8 @@ function ProfileActions() {
 		
 		view_data = {
 			site_url: this.site_url,
-			user_image: user_image
+			user_image: user_image,
+			email: window.email
 		};
 		$('#default-content', this.target).append(this.settings_template(view_data));
 		

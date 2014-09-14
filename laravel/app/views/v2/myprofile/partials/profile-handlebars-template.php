@@ -239,7 +239,14 @@
 		</div>
 	</div>
 	<div class="col-md-4">
+		
+		{{#ifCond email 1}}
 		<h2>Update Your Email</h2>
+		{{/ifCond}}
+
+		{{#ifCond email 0}}
+		<h2>Verify Your Email</h2>
+		{{/ifCond}}
 		<form role="form" class="form-horizontal" id="email-update-form" method="post" action="{{this.site_url}}/rest/profile/email/update">
 			<div class="form-group">
 				<div class="col-sm-12">

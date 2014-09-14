@@ -140,6 +140,13 @@ class MyProfileController extends BaseController {
 			} else {
 				$success = true;
 				
+				if(strlen($user->email)) {
+					$send_to = $user->email;
+				} else {
+					//no email to begin with.
+					$send_to = $new_email;
+				}
+
 				//Update with the new email
 				$user->updated_email = $new_email;
 				$user->update_confirm = md5(date('YMDHiS').$new_email.rand(1,10));
@@ -148,7 +155,7 @@ class MyProfileController extends BaseController {
 				//Send email to the new email.
 				$email_data = array(
                     'from' => 'no_reply@twothousandtimes.com',
-                    'to' => array($user->email),
+                    'to' => array($send_to),
                     'subject' => 'Change Your Email Address | Two Thousand Times!',
                     'plaintext' => View::make('v2/emails/change_email_plain')->with('user', $user)->render(),
                     'html'  => View::make('v2/emails/change_email_html')->with('user',$user)->render()

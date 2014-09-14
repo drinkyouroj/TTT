@@ -24,6 +24,12 @@
 				window.post = false;
 			@endif
 
+			@if(strlen($profile_user->email))
+				window.email = 1;
+			@else
+				window.email = 0;
+			@endif
+
 		@endif
 	</script>
 
