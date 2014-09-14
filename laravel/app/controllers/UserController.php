@@ -187,6 +187,24 @@ class UserController extends BaseController {
                 ->with( 'error', $err_msg );
         }
     }
+
+        public function getCaptcha() {
+            $num1 = rand(1,9);
+            $num2 = rand(1,9);
+            Session::put('signup_num1', $num1 );
+            Session::put('signup_num2', $num2 );
+            $img =  Image::canvas(100,40, '#fffff');
+            $img->text($num1.' + '.$num2. ' = ??', 40,20, function($font) {
+                $font->file(3);
+                $font->size(50);
+                $font->color('#000000');
+                $font->align('center');
+            });
+
+            return $img->response('jpg');
+        }
+
+
 		/**
 		 * This has to do with undeleting the user.
 		 * User has to acknowledge that the person will be 

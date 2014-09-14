@@ -367,7 +367,8 @@ class PostController extends BaseController {
 					//Creates a new post
 					$post = $this->post->instance();
 					//alias can't be changed ever after initial submit.
-					$post->alias = preg_replace('/[^A-Za-z0-9]/', '', $query['title'] ).'-'.str_random(5).'-'.date('m-d-Y');//makes alias.  Maybe it should exclude other bits too...
+					$alias = str_replace(' ', '-', $query['title']);
+					$post->alias = preg_replace('/[^A-Za-z0-9\-]/', '', $alias).'-'.str_random(5).'-'.date('m-d-Y');//makes alias.  Maybe it should exclude other bits too...
 				}
 				$post->user_id = Auth::user()->id;
 				

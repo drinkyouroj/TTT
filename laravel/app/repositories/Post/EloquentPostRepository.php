@@ -32,8 +32,9 @@ class EloquentPostRepository implements PostRepository {
 			$post = self::instance();
 			$post->user_id = Auth::user()->id;
 			
+			$alias = str_replace(' ', '-', Request::get('title'));
 			//Gotta make sure to make the alias only alunum.  Don't change alias on the update.  We don't want to have to track this change.
-			$post->alias = preg_replace('/[^A-Za-z0-9]/', '', Request::get('title')).'-'.str_random(5).'-'.date('m-d-Y');//makes alias.  Maybe it should exclude other bits too...
+			$post->alias = preg_replace('/[^A-Za-z0-9\-]/', '', $alias).'-'.str_random(5).'-'.date('m-d-Y');//makes alias.  Maybe it should exclude other bits too...
 			$post->story_type = Request::get('story_type');
 			
 			$post->category = serialize(Request::get('category'));

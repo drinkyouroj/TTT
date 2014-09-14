@@ -146,7 +146,11 @@ return array(
 		'AppStorage\FlaggedContentStorageServiceProvider',
 		'AppStorage\PostFlaggedStorageServiceProvider',
 		'AppStorage\PhotoStorageServiceProvider',
-		'AppStorage\SearchStorageServiceProvider'
+		'AppStorage\SearchStorageServiceProvider',
+
+
+		//Image system for when we make our captcha.
+		'Intervention\Image\ImageServiceProvider'
 	),
 
 	/*
@@ -213,6 +217,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Confide'    => 'Zizaco\Confide\ConfideFacade',
 		'Entrust'    => 'Zizaco\Entrust\EntrustFacade',
+		'Image' => 'Intervention\Image\Facades\Image',
 		
 		//Note, below: Original Eloquent has been overridden by Jessenger's Eloquent.
 		//This allows us to relate Mongo Data to MySQL data through the ORM.
