@@ -40,12 +40,16 @@ class BetaImageMigrateCommand extends Command {
 	{
 		//up to 327
 		$this->line('migrating beta featured image data to users');
-		$users = User::where('featured', '!=', 0)
-					->where('last_logged_in', '<=', Carbon::createFromDate(2014, 8, 1)->format('d/m/Y H:i:s') )
+		$users = User::where('featured', '!=', 0)//Where the user has a featured item.
+					->where('id', '<=', 327)//327 before we started accepthing more folks through the landing page.
+					->where('last_logged_in', '<=', Carbon::createFromDate(2014, 8, 1)->format('d/m/Y H:i:s') )//logged in earlier than this date.
 					->take(327)//total number of beta users.
 					->get();
 		foreach($users as $k => $user) {
-			if(isset($user->featured->image)) {
+			if(
+				isset($user->featured->image) &&
+				( !isset($user->image) || $user->image == 0 || !strlen($user->image) )
+				  ) {
 				$user->image = $user->featured->image;
 				$user->save();
 			}

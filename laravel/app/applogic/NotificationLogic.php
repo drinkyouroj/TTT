@@ -36,7 +36,7 @@ class NotificationLogic {
 	
 	public function like($post_id) {
 		$post = $this->post->findById($post_id);
-
+		
 		$not_params = array(
 				'post_id' => $post->id,
 				'post_title' => $post->title,
@@ -44,6 +44,7 @@ class NotificationLogic {
 				'user_id'	=> $post->user->id,
 				'notification_type' => 'like'
 			);
+
 		$this->not->create( $not_params, Auth::user()->username );
 	}
 
@@ -71,6 +72,7 @@ class NotificationLogic {
 			'user_id' => $post->user->id,
 			'notification_type' => 'favorite'
 		);
+
 		// Create the notification
 		$this->not->create( $not_params, Auth::user()->username );
 	}

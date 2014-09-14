@@ -76,7 +76,7 @@ $(function() {
 		});
 	});
 
-	$('.close-category a').click(function(event) {
+	$('.close-category>a').click(function(event) {
 		event.preventDefault();
 		$('.category-wrapper').slideToggle('fast');
 	});
@@ -154,7 +154,7 @@ var save_post = new function() {
 				//Category or Story Type issues.
 				if(	$(value.element).hasClass('category') ) {
 					if($('.category-wrapper').css('display') == 'none') {
-						$('a.categorization').click();
+						$('.categorization').click();
 					}
 				}
 				//image issue.

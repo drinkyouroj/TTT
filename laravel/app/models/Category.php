@@ -4,7 +4,20 @@ class Category extends Eloquent {
 	//Just to be sure!
 	protected $table = 'categories';
 	
-	
+	public function __construct() {
+		$this->select = array(
+
+									'user_id',
+									'title',
+									'alias',
+									'tagline_1',
+									'tagline_2',
+									'tagline_3',
+									'story_type',
+									'image',
+									'published_at'
+								);
+	}
 	
 	public function posts()
     {
@@ -29,11 +42,11 @@ class Category extends Eloquent {
 	
 	public function postspopular()
 	{
-		$select = array('alias','body','category', 'featured', 'image', 'like_count', 'published', 'story_type', 'tagline_1', 'tagline_2', 'tagline_3', 'title', 'user_id');	
+		//$select = array('alias','featured', 'image', 'like_count', 'published', 'story_type', 'tagline_1', 'tagline_2', 'tagline_3', 'title', 'user_id');	
 		return $this->belongsToMany('Post', 'category_post')
 					->where('published',1)
 					->orderBy('like_count','DESC')
-					->select($select)//Currently not possible. FUCK!
+					//->select($select)//Currently not possible. FUCK!
 					;
 	}
 	
@@ -62,6 +75,7 @@ class Category extends Eloquent {
 	{
 		return $this->belongsToMany('Post', 'category_post')
 					->where('published',1)
+					->select($this->select)
 					->orderBy('created_at','DESC');
 	}
 

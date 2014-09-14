@@ -4,8 +4,6 @@ use \Carbon\Carbon;
 
 class PostController extends BaseController {
 
-	protected $softDelete = true;
-
 	public function __construct(
 							PostRepository $post,
 							RepostRepository $repost,

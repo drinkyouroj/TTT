@@ -82,6 +82,7 @@
 				</div>
 			{{/ifCond}}
 			{{#ifCond post_type 'repost' }}
+				<div class="options-link"> </div>
 				<div class="post-options">
 					<a class="remove-repost" data-id="{{post.id}}">
 						Remove Repost

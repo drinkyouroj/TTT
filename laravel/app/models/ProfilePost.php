@@ -3,13 +3,15 @@
  * Profile Post is the user's "My Posts" or "Other People's Activity" piece
  * Also known as "Activity"
  */
-
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
 class ProfilePost extends Eloquent {
-		
+	use SoftDeletingTrait;
+
 	//Just to be sure!
 	protected $table = 'profile_posts';
 	protected $softDelete = true;
-
+	protected $dates = ['deleted_at'];
+	
 	public function user() {
 		return $this->belongsTo('User');
 	}
@@ -17,6 +19,7 @@ class ProfilePost extends Eloquent {
 	public function post() {
 		return $this->belongsTo('Post')
 					->select(
+						array(
 							'id',
 							'user_id',
 							'title',
@@ -28,6 +31,7 @@ class ProfilePost extends Eloquent {
 							'image',
 							'published_at'
 							)
+						)
 					;
 	}
 	

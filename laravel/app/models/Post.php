@@ -1,13 +1,16 @@
 <?php 
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
 class Post extends Eloquent {
-	
+	use SoftDeletingTrait;
 	//Just to be sure!
 	protected $table = 'posts';
 	protected $connection = 'mysql';
 	protected $softDelete = true;
 	protected $with = array('user');
+	protected $dates = ['deleted_at'];
 	
 	public function __construct() {
+		parent::__construct();
 		Validator::extend('Twothousand', function($attribute, $value, $parameters)
 		{		
 		    if(!is_null($value)) {//make sure its not empty.
