@@ -34,16 +34,18 @@
 	</div>
 
 	<div class="middle-wrapper">
-		
-					@foreach($featured as $k=>$f)
-						
-						@if($k == 3)
-							{{--if this is the third item--}}
-							@if(Auth::check() && is_object($from_feed))
-								{{--Somethign from the user's feed--}}
-								@include('v2.partials.featured-listing', array('post'=> $from_feed->post))
-							@else
-								{{--Signup box thing--}}
+		<div class="container">
+			<div class="row">
+				@foreach($featured as $k=>$f)
+					
+					@if($k == 3)
+						{{--if this is the third item--}}
+						@if(Auth::check() && is_object($from_feed))
+							{{--Somethign from the user's feed--}}
+							@include('v2.partials.featured-listing', array('post'=> $from_feed->post))
+						@else
+							{{--Signup box thing--}}
+							<div class="col-md-4 col-sm-6">
 								<div class="post-container">
 									<div class="signup-box">
 										<div class="signup-top">
@@ -63,18 +65,22 @@
 										</div>
 									</div>
 								</div>
-							@endif
-							<!--Feed Listing or Signup-->
-							<div class="bar"></div>
+							</div>
 						@endif
-						
-						{{--Under normal circumstances...--}}
+						<!--Feed Listing or Signup-->
+						<div class="bar"></div>
+					@endif
+					
+					{{--Under normal circumstances...--}}
+					<div class="col-md-4 col-sm-6">
 						@include('v2.partials.featured-listing', array('post'=> $f->post))
 						<!--{{$f->position}}-->
-
+					</div>
 						@if($k == 5)
 							<?php break;?>
 						@endif
-					@endforeach
+				@endforeach
+			</div>
+		</div>
 		<div class="clearfix"></div>
 	</div>

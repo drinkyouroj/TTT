@@ -29,14 +29,6 @@
 			<div class="row">
 				<div class="col-md-12 heading-title">
 					<h1>Two Thousand Times</h1>
-					<div class="date-circle">
-						<span class="month">
-							December
-						</span>
-						<span class="day">
-							30
-						</span>
-					</div>
 				</div>
 				<div class="col-md-12 cat-selector">
 					<section class="filters">
@@ -52,6 +44,16 @@
 							</ul>
 						</div>
 					</section>
+				</div>
+				<div class="col-md-12 date">
+					<div class="date-circle">
+						<span class="month">
+							December
+						</span>
+						<span class="day">
+							30
+						</span>
+					</div>
 				</div>
 			</div>
 		</div>

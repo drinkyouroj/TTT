@@ -78,8 +78,7 @@ input, textarea, button:focus {outline: none !important;}
 		z-index: 9999;
 
 		background-color: white;
-		box-shadow: 0 2px 2px 0px lightgrey;
-
+		border-bottom:solid 1px $lightgray;
 		.header-container {
 			height: $navbar_height;
 			
