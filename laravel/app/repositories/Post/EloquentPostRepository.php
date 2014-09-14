@@ -284,7 +284,7 @@ class EloquentPostRepository implements PostRepository {
 	}
 
 	public function allDeletedByUserId($user_id){
-		
+		return $this->post->onlyTrashed()->where('user_id', $user_id)->get();
 	}
 
 

@@ -188,6 +188,10 @@ class SheepRepository implements UserRepository {
 							->where('username', $data['username'])
 							->first();
 
+		if ( !($user instanceof User) ) {
+			return false;
+		}
+
 		$check = Auth::attempt(array('username' => $data['username'], 'password' => $data['password']));
 		
 		if( $check ) {
