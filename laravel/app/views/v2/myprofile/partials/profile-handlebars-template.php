@@ -127,6 +127,11 @@
 						</a>
 					</h3>
 					<p>{{save.tagline_1}} | {{save.tagline_2}} | {{save.tagline_3}}</p>
+					<p class="author">
+						<a href="{{site_url}}profile/{{save.user.username}}" style="background-image: url('{{site_url}}uploads/final_images/{{save.user.image}}');">
+							{{save.user.username}}
+						</a>
+					</p>
 				</div>
 
 				<div class="controls col-md-2 col-sm-2">

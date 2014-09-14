@@ -1,4 +1,6 @@
 <?php
+use \Carbon\Carbon;
+
 class UserController extends BaseController {
 
 	public function __construct(
@@ -152,6 +154,8 @@ class UserController extends BaseController {
 				return View::make('v2/users/undelete')
 					->with('user',$user);
 			}
+            $user->last_logged_in = Carbon::now();
+            $user->save();
 
             // If the session 'loginRedirect' is set, then redirect
             // to that route. Otherwise redirect to '/'

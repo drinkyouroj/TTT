@@ -3,7 +3,8 @@ $(function() {
 
 //Non user specific code
 	var user_action = new UserAction;
-	$('div.follow a.follow').click(function() {
+	$('div.follow-container a.follow').click(function(event) {
+		event.preventDefault();
 		user_action.user_id = window.user_id;
 		user_action.action = 'follow';
 
@@ -128,7 +129,7 @@ $(function() {
 
 
 //View renders for settings/follow
-	$('.header-right a, a#settings').click(function(event) {
+	$('.fing-fer a, a#settings').click(function(event) {
 		//event.preventDefault();
 		$('.section-selectors a').removeAttr('class');//gets rid of the class.
 		profile.view = $(this).prop('id');
@@ -484,7 +485,8 @@ function ProfileActions() {
 				site_url: window.site_url,
 				post: data.featured,
 				user_id : window.user_id,
-				editable: editable
+				editable: editable,
+				myprofile: window.myprofile
 			}
 			$('#collection-content',target).prepend( feature_item_template(view_data) );
 

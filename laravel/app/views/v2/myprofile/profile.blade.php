@@ -70,7 +70,7 @@
 						</div>
 						<div class="col-md-7 follow-container">
 							<div class="row">
-								<div class="col-md-12 col-sm-12 col-xs-12">
+								<div class="col-md-12 col-sm-12 col-xs-12 fing-fer">
 									<a href="#followers" class="followers" id="followers">
 										<span class="count">{{$follower_count}}</span>
 										<span class="text">Followers</span>
