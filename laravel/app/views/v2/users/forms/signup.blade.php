@@ -40,7 +40,7 @@
           <button type="submit" class="btn btn-flat-gray">Submit</button>
         </div>
         <div class="redirect-other">
-	        Already have an account? <a href="">Login now</a>
+	        Already have an account? <a href="{{Config::get('app.url')}}/user/login">Login now</a>
 	    </div>
         <div class="terms-agree">
 			By creating an account you agree to our <a class="terms" href="{{Config::get('app.url')}}/terms">Terms Of Use</a> and <a class="terms" href="{{Config::get('app.url')}}/privacy">Privacy Policy</a>.
