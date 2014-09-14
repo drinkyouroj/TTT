@@ -113,6 +113,7 @@ return array(
 		'Way\Console\GuardLaravelServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'Jenssegers\Mongodb\MongodbServiceProvider',
+		'Jenssegers\Agent\AgentServiceProvider',
 		'Mews\Captcha\CaptchaServiceProvider',
 		'Thomaswelton\LaravelRackspaceOpencloud\LaravelRackspaceOpencloudServiceProvider',
 		
@@ -178,6 +179,7 @@ return array(
 	*/
 
 	'aliases' => array(
+		'Agent'            => 'Jenssegers\Agent\Facades\Agent',
 		'App'             => 'Illuminate\Support\Facades\App',
 		'Artisan'         => 'Illuminate\Support\Facades\Artisan',
 		'Auth'            => 'Illuminate\Support\Facades\Auth',
