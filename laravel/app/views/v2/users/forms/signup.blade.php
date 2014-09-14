@@ -20,13 +20,7 @@
 
         <input placeholder="Password Confirmation" type="password" name="password_confirmation" id="password_confirmation" minlength="6" >
 		<br/>
-		<?php 
-		$num1 = rand(1,9);
-		$num2 = rand(1,9);
-		Session::put('signup_num1', $num1 );
-		Session::put('signup_num2', $num2 );
-		?>
-		<p class="captcha-numbers">{{$num1}} + {{$num2}} = ??</p>
+		<img src="{{Config::get('app.url')}}/user/captcha">		
 		<input type="text" name="captcha" placeholder="What's the answer above?">
 
 

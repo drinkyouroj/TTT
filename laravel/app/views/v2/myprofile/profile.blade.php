@@ -24,6 +24,12 @@
 				window.post = false;
 			@endif
 
+			@if(strlen($profile_user->email))
+				window.email = 1;
+			@else
+				window.email = 0;
+			@endif
+
 		@endif
 	</script>
 
@@ -70,7 +76,7 @@
 						</div>
 						<div class="col-md-7 follow-container">
 							<div class="row">
-								<div class="col-md-12 col-sm-12 col-xs-12">
+								<div class="col-md-12 col-sm-12 col-xs-12 fing-fer">
 									<a href="#followers" class="followers" id="followers">
 										<span class="count">{{$follower_count}}</span>
 										<span class="text">Followers</span>
@@ -312,6 +318,18 @@
 			<br>
 			<button class="admin-user-reset btn btn-xs btn-warning">Reset User Password</button>
 			<br>
+			
+			@if ( count( $deleted_posts ) )
+				<hr>
+				<p>{{$profile_user->username}}'s Deleted Posts</p>
+				<ul class="list-unstyled">
+					@foreach( $deleted_posts as $post )
+						<li>
+							{{ $post->title }}
+						</li>
+					@endforeach
+				</ul>
+			@endif
 		@endif	
 	@endif
 	</div>

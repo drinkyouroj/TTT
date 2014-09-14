@@ -113,6 +113,7 @@ return array(
 		'Way\Console\GuardLaravelServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'Jenssegers\Mongodb\MongodbServiceProvider',
+		'Jenssegers\Agent\AgentServiceProvider',
 		'Mews\Captcha\CaptchaServiceProvider',
 		'Thomaswelton\LaravelRackspaceOpencloud\LaravelRackspaceOpencloudServiceProvider',
 		
@@ -146,7 +147,11 @@ return array(
 		'AppStorage\FlaggedContentStorageServiceProvider',
 		'AppStorage\PostFlaggedStorageServiceProvider',
 		'AppStorage\PhotoStorageServiceProvider',
-		'AppStorage\SearchStorageServiceProvider'
+		'AppStorage\SearchStorageServiceProvider',
+
+
+		//Image system for when we make our captcha.
+		'Intervention\Image\ImageServiceProvider'
 	),
 
 	/*
@@ -174,6 +179,7 @@ return array(
 	*/
 
 	'aliases' => array(
+		'Agent'            => 'Jenssegers\Agent\Facades\Agent',
 		'App'             => 'Illuminate\Support\Facades\App',
 		'Artisan'         => 'Illuminate\Support\Facades\Artisan',
 		'Auth'            => 'Illuminate\Support\Facades\Auth',
@@ -213,6 +219,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Confide'    => 'Zizaco\Confide\ConfideFacade',
 		'Entrust'    => 'Zizaco\Entrust\EntrustFacade',
+		'Image' => 'Intervention\Image\Facades\Image',
 		
 		//Note, below: Original Eloquent has been overridden by Jessenger's Eloquent.
 		//This allows us to relate Mongo Data to MySQL data through the ORM.

@@ -57,6 +57,12 @@ class MyProfileController extends BaseController {
 			} else {
 				$mutual = false;
 			}
+
+			if ( $user->hasRole('Admin') ) {
+				// If admin, attach deleted posts of the current user to admin sidebar
+				$deleted_posts = $this->post->allDeletedByUserId( $profile_user->id );
+			}
+
 		} else {
 			//load in the defaults anyway since we have to use with().
 			$is_following = false;
@@ -71,6 +77,8 @@ class MyProfileController extends BaseController {
 			$featured = false;
 		}
 
+		
+		$deleted_posts = isset( $deleted_posts ) ? $deleted_posts : array();
 
 		//Follower/Following count
 		$follower_count = $this->follow->follower_count($profile_user->id);
@@ -86,7 +94,7 @@ class MyProfileController extends BaseController {
 
 					->with('following_count', $following_count)//Number of people this user is following
 					->with('follower_count', $follower_count)//Number of people following this user
-
+					->with('deleted_posts', $deleted_posts)
 					//->with('featured', $featured)			//Featured Post
 					//->with('collection', $collection)		//Actual posts and reposts.
 					;
@@ -140,6 +148,13 @@ class MyProfileController extends BaseController {
 			} else {
 				$success = true;
 				
+				if(strlen($user->email)) {
+					$send_to = $user->email;
+				} else {
+					//no email to begin with.
+					$send_to = $new_email;
+				}
+
 				//Update with the new email
 				$user->updated_email = $new_email;
 				$user->update_confirm = md5(date('YMDHiS').$new_email.rand(1,10));
@@ -148,7 +163,7 @@ class MyProfileController extends BaseController {
 				//Send email to the new email.
 				$email_data = array(
                     'from' => 'no_reply@twothousandtimes.com',
-                    'to' => array($user->email),
+                    'to' => array($send_to),
                     'subject' => 'Change Your Email Address | Two Thousand Times!',
                     'plaintext' => View::make('v2/emails/change_email_plain')->with('user', $user)->render(),
                     'html'  => View::make('v2/emails/change_email_html')->with('user',$user)->render()

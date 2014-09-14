@@ -37,7 +37,14 @@
 				<span class="notification-post-title">{{#substring notification.post_title}}{{/substring}}</span>
 			</a>
 		{{/ifCond}}
-			
+		
+		{{#ifCond notification.notification_type 'like'}}
+			<a href="{{site_url}}posts/{{notification.post_alias}}">
+				<span class="action-user">{{ notification.users.[0] }}</span> liked your post: 
+				<span class="notification-post-title">{{#substring notification.post_title}}{{/substring}}</span>
+			</a>
+		{{/ifCond}}
+
 	</div>
 </script>
 
@@ -120,6 +127,11 @@
 						</a>
 					</h3>
 					<p>{{save.tagline_1}} | {{save.tagline_2}} | {{save.tagline_3}}</p>
+					<p class="author">
+						<a href="{{site_url}}profile/{{save.user.username}}" style="background-image: url('{{site_url}}uploads/final_images/{{save.user.image}}');">
+							{{save.user.username}}
+						</a>
+					</p>
 				</div>
 
 				<div class="controls col-md-2 col-sm-2">
@@ -227,7 +239,14 @@
 		</div>
 	</div>
 	<div class="col-md-4">
+		
+		{{#ifCond email 1}}
 		<h2>Update Your Email</h2>
+		{{/ifCond}}
+
+		{{#ifCond email 0}}
+		<h2>Verify Your Email</h2>
+		{{/ifCond}}
 		<form role="form" class="form-horizontal" id="email-update-form" method="post" action="{{this.site_url}}/rest/profile/email/update">
 			<div class="form-group">
 				<div class="col-sm-12">

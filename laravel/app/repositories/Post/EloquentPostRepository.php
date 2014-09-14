@@ -1,13 +1,16 @@
 <?php namespace AppStorage\Post;
 
-use Post, DB, Request, Auth, Session, FeaturedRepository;
+use Post, DB, Request, Auth, Session, FeaturedRepository, SearchRepository;
 
 class EloquentPostRepository implements PostRepository {
 
-	public function __construct(Post $post, FeaturedRepository $featured)
+	public function __construct(Post $post, 
+		          FeaturedRepository $featured,
+		          SearchRepository $search )
 	{
 		$this->post = $post;
 		$this->featured = $featured;
+		$this->search = $search;
 	}
 
 	//Instance
@@ -32,8 +35,9 @@ class EloquentPostRepository implements PostRepository {
 			$post = self::instance();
 			$post->user_id = Auth::user()->id;
 			
+			$alias = str_replace(' ', '-', Request::get('title'));
 			//Gotta make sure to make the alias only alunum.  Don't change alias on the update.  We don't want to have to track this change.
-			$post->alias = preg_replace('/[^A-Za-z0-9]/', '', Request::get('title')).'-'.str_random(5).'-'.date('m-d-Y');//makes alias.  Maybe it should exclude other bits too...
+			$post->alias = preg_replace('/[^A-Za-z0-9\-]/', '', $alias).'-'.str_random(5).'-'.date('m-d-Y');//makes alias.  Maybe it should exclude other bits too...
 			$post->story_type = Request::get('story_type');
 			
 			$post->category = serialize(Request::get('category'));
@@ -183,8 +187,14 @@ class EloquentPostRepository implements PostRepository {
 	
 	
 	public function publish($id) {
-		$this->post->where('id', $id)
-					->update(array('published'=>0));
+		// update published field
+		$post = $this->post->where('id', $id)->first();
+		if ( $post instanceof Post ) {
+			$post->published = 1;
+			$post->save();
+			// update search db
+			$this->search->updatePost( $post );
+		}
 	}
 	
 	public function unpublish($id) {
@@ -192,15 +202,29 @@ class EloquentPostRepository implements PostRepository {
 					->update(array('published'=>0));
 		// IMPORTANT! Make sure we remove from the featured page (if applicable)
 		$this->featured->delete( $id );
+		// update search db
+		$this->search->deletePost( $id );
 	}
 	
 	//restores All User posts
 	public function restore($user_id) {
-		$this->post->where('user_id', $user_id)->update(array('published'=>1));
+		$posts = $this->post->where('user_id', $user_id)->get();
+		foreach ($posts as $key => $post) {
+			$post->published = 1;
+			$post->save();
+			// Add back to search db
+			$this->search->updatePost( $post );
+		}
 	}
 	
 	public function archive($user_id) {
-		$this->post->where('user_id', $user_id)->update(array('published'=>0));
+		$posts = $this->post->where('user_id', $user_id)->get();
+		foreach ($posts as $key => $post) {
+			$post->published = 0;
+			$post->save();
+			// Add back to search db
+			$this->search->deletePost( $post->id );
+		}
 	}
 	
 	public function incrementView($id) {
@@ -226,10 +250,19 @@ class EloquentPostRepository implements PostRepository {
 		$this->post->where('id', $id)->delete();//remember that the Eloquent model has softdelete.
 		// IMPORTANT! Make sure we remove from the featured page (if applicable)
 		$this->featured->delete( $id );
+		// Remvoe from search db
+		$this->search->deletePost( $id );
 	}
 	
 	public function undelete($id) {
-		$this->post->where('id', $id)->withTrashed()->restore();
+		$post = $this->post->where('id', $id)->withTrashed()->first();
+		if ( $post instanceof Post ) {
+			$post->restore();
+			if ( $post->published ) {
+				// Add back to search database
+				$this->search->updatePost( $post );
+			}
+		}
 	}
 
 	public function deleteAllByUserId ( $id ) {
@@ -240,7 +273,18 @@ class EloquentPostRepository implements PostRepository {
 	}
 
 	public function restoreAllByUserId($id) {
-		$this->post->where( 'user_id', $id )->withTrashed()->restore();
+		$posts = $this->post->where( 'user_id', $id )->withTrashed();
+		foreach ($posts as $key => $post) {
+			$post->restore();
+			if ( $post->published ) {
+				// Add back to search database
+				$this->search->updatePost( $post );
+			}
+		}
+	}
+
+	public function allDeletedByUserId($user_id){
+		return $this->post->onlyTrashed()->where('user_id', $user_id)->get();
 	}
 
 

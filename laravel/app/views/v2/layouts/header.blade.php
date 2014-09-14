@@ -1,5 +1,6 @@
 <?php
 	$is_guest = Auth::guest();
+	$is_mobile = Agent::isMobile();
 ?>
 
 <div class="header-wrapper">
@@ -51,7 +52,7 @@
 						@endif
 					
 
-					{{ Form::open(array('url'=> 'search', 'class' => 'form-search pull-right', 'role'=>'search' )) }}
+					{{ Form::open(array('url'=> 'search', 'class' => 'form-search pull-right', 'role'=>'search', 'method'=>'get' )) }}
 						<input class="search-input" autocomplete="off" name="search" id="search-input" type="text">
 						<label class="glyphicon glyphicon-search hidden-xs" for="search-input">
 						</label>
@@ -118,7 +119,7 @@
 <div id="offcanvas-sidebar">
 	<ul class="list-unstyled sidebar-options" id="accordion">
 		<li class="visible-xs">
-			{{ Form::open(array('url'=> 'search', 'class' => 'form-search', 'role'=>'search' )) }}
+			{{ Form::open(array('url'=> 'search', 'class' => 'form-search', 'role'=>'search', 'method'=>'get' )) }}
 				<input class="search-input" autocomplete="off" name="search" id="search-input" type="text" placeholder="search">
 				</label>
 				<input type="submit" value="Search" class="hidden" >
@@ -151,9 +152,9 @@
 		<li class="sidebar-option categories">
 			<a href="#itemTwo" data-toggle="collapse" data-parent="#accordion">
 				CATEGORIES
-				<span class="glyphicon glyphicon-minus pull-right"></span>
+				<span class="glyphicon glyphicon-<?php echo $is_mobile ? 'plus' : 'minus' ?> pull-right"></span>
 			</a>
-			<div id="itemTwo" class="collapse in">
+			<div id="itemTwo" class="collapse <?php echo $is_mobile ? '' : 'in' ?>">
 				<ul class="list-unstyled">
 					<li>
 						<a href="{{ URL::to('featured') }}">Featured</a>

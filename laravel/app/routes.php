@@ -114,7 +114,7 @@ Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
 
 	//Route::get('solr', 'AdminController@getResetSolr');//this updates the users on solr
 	//Route::get('resetnot/{batch}', 'AdminController@getResetNotifications');//this updates the users on solr
-	Route::controller('/','AdminController');	
+	Route::controller('/','AdminController');
 });
 
 //Mod area
@@ -159,9 +159,7 @@ Route::get( 'posts', 'PostController@getIndex');//grabs a random post
 
 //Search routes
 Route::get('search', 'SearchController@getSearchPage');
-Route::get('search/{term}', 'SearchController@getResult');//Might turn into a rest system later
-Route::post('search', 'SearchController@postResult');
-
+// Rest routes for searching users/posts (currently not used)
 Route::get('search/users/{term}/{page}', 'SearchController@searchUsers');
 Route::get('search/posts/{term}/{page}', 'SearchController@searchPosts');
 

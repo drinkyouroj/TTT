@@ -8,7 +8,8 @@ use User,
 	Session,
 	SolariumHelper,
 	CommentRepository,
-	PostRepository
+	PostRepository,
+	SearchRepository
 	;
  
 class SheepRepository implements UserRepository {
@@ -16,10 +17,12 @@ class SheepRepository implements UserRepository {
 	public function __construct(
 					User $user,
 					CommentRepository $comment,
-					PostRepository $post) {
+					PostRepository $post,
+					SearchRepository $search ) {
 		$this->user = $user;
 		$this->comment = $comment;
 		$this->post = $post;
+		$this->search = $search;
 	}
 
 	public function instance() {
@@ -61,8 +64,9 @@ class SheepRepository implements UserRepository {
 			$user->password = Hash::make($user->password);
 			$user->save();
 
-			//Gotta add the new user to SOLR
-        	//SolariumHelper::updateUser($user);
+			//Gotta add the new user to search database
+			$this->search->updateUser( $user );
+
 			$result = array();
 			$result['user'] = $user;
 			$result['validation'] = false;
@@ -136,6 +140,9 @@ class SheepRepository implements UserRepository {
 		foreach ($comments as $comment) {
 			$this->comment->unpublish( $comment->_id );
 		}
+
+		// Remove user from search database
+		$this->search->deleteUser( $id );
 		
 	}
 
@@ -154,7 +161,7 @@ class SheepRepository implements UserRepository {
 		
 	}
 
-		public function restoreGeneric($user) {
+		private function restoreGeneric($user) {
 			if ( $user instanceof User ) {
 				$user->restore();
 				// Restore all their posts
@@ -166,6 +173,9 @@ class SheepRepository implements UserRepository {
 				foreach ($comments as $comment) {
 					$this->comment->publish( $comment->_id );
 				}
+
+				// Update the search db
+				$this->search->updateUser( $user );
 				
 				return true;
 			}
@@ -177,6 +187,10 @@ class SheepRepository implements UserRepository {
 		$user = $this->user->withTrashed()
 							->where('username', $data['username'])
 							->first();
+
+		if ( !($user instanceof User) ) {
+			return false;
+		}
 
 		$check = Auth::attempt(array('username' => $data['username'], 'password' => $data['password']));
 		

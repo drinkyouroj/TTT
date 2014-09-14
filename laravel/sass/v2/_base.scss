@@ -177,7 +177,7 @@ textarea {
 
 //==========Signup/Login==========
 @mixin signup_login {
-  .login-container, .signup-container {
+  .login-container, .signup-container, .search-container {
     background-color:$white;
     margin-top:15px;
     padding-top:30px;
