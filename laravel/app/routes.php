@@ -159,9 +159,7 @@ Route::get( 'posts', 'PostController@getIndex');//grabs a random post
 
 //Search routes
 Route::get('search', 'SearchController@getSearchPage');
-Route::get('search/{term}', 'SearchController@getResult');//Might turn into a rest system later
-Route::post('search', 'SearchController@postResult');
-
+// Rest routes for searching users/posts (currently not used)
 Route::get('search/users/{term}/{page}', 'SearchController@searchUsers');
 Route::get('search/posts/{term}/{page}', 'SearchController@searchPosts');
 

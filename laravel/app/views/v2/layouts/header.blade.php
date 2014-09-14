@@ -1,5 +1,6 @@
 <?php
 	$is_guest = Auth::guest();
+	$is_mobile = Agent::isMobile();
 ?>
 
 <div class="header-wrapper">
@@ -153,7 +154,7 @@
 				CATEGORIES
 				<span class="glyphicon glyphicon-minus pull-right"></span>
 			</a>
-			<div id="itemTwo" class="collapse in">
+			<div id="itemTwo" class="collapse <?php echo $is_mobile ? '' : 'in' ?>">
 				<ul class="list-unstyled">
 					<li>
 						<a href="{{ URL::to('featured') }}">Featured</a>

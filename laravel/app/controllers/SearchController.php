@@ -75,33 +75,4 @@ class SearchController extends BaseController {
 			return $results;
 		}
 	
-	/**
-	 * Async listing for the top search bar
-	 * @param string $term String that you're searching for.
-	 */
-	public function getResult($term) {
-		$results = SolariumHelper::searchSolr($term, true);//returns title and taglines
-		
-		//Below couple of lines kind of blows, but the data structure is as such.
-		$posts = $results['posts']->getData();
-		$users = $results['users']->getData();
-		
-		$result_array = array();
-		$result_array['posts'] = $posts['response']['docs'];
-		$result_array['users'] = $users['response']['docs'];
-		
-		if(count($posts['response']['docs']) || 
-		   count($users['response']['docs'])){
-			return Response::json(
-				$result_array,
-				200//response is OK!
-			);
-		} else {
-			return Response::json(
-				0,
-				200
-			);
-		}
-	}
-	
 }
