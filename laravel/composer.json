@@ -23,7 +23,8 @@
 		"phpunit/phpunit": "4.2.*",
 		"aws/aws-sdk-php": "2.*",
 		"elasticsearch/elasticsearch": "~1.0",
-		"intervention/image": "2.*"
+		"intervention/image": "2.*",
+		"jenssegers/agent": "~2.0"
 	},
 	"autoload": {
 		"classmap": [

@@ -15,7 +15,7 @@ class ESReindexCommand extends Command {
      */
     protected $name = 'elasticsearch:reindex';
 
-	protected $timeout = null; 
+	protected $timeout = null;
     /**
      * The console command description.
      *
@@ -31,7 +31,7 @@ class ESReindexCommand extends Command {
     public function fire()
     {
         $this->line('Welcome to ES reindexer');
-		$data_type = $this->argument('data');//user or posts
+		$data_type = $this->argument('data');  //user or posts
 		
 		switch($data_type){
 			case 'posts':
@@ -69,7 +69,7 @@ class ESReindexCommand extends Command {
 			);
 		$client->indices()->create( $indexParams );
 		// Fetch the existing posts data
-		$posts = Post::all();
+		$posts = Post::where('published', 1)->get();
 		$params = array();
 		$params['index'] = 'posts';
 		$params['type'] = 'post';
@@ -130,8 +130,7 @@ class ESReindexCommand extends Command {
 		        'doc_as_upsert' => 'true',
 		        'doc' => array(
 		            'id' => $user->id,
-		            'username' => $user->username,
-		            'bio' => $user->bio
+		            'username' => $user->username
 		        )
 		    );
 		}

@@ -9,7 +9,7 @@ class ElasticSearchRepository implements SearchRepository {
 		$this->client = new Elasticsearch\Client();
 	}
 
-	public function searchPosts( $search_string, $page = 1, $paginate = 10 ) {
+	public function searchPosts( $search_string, $page = 1, $paginate = 12 ) {
 		$params['index'] = 'posts';
 		$params['type']  = 'post';
 		// Only get the ids
@@ -27,7 +27,7 @@ class ElasticSearchRepository implements SearchRepository {
 		return $results['hits']['hits'];
 	}
 
-	public function searchUsers( $search_string, $page = 1, $paginate = 10 ) {
+	public function searchUsers( $search_string, $page = 1, $paginate = 12 ) {
 		$params['index'] = 'users';
 		$params['type']  = 'user';
 		// Only get ids
@@ -36,6 +36,7 @@ class ElasticSearchRepository implements SearchRepository {
 		$fuzzy = array();
 		$fuzzy['fields'] = array('username');
 		$fuzzy['like_text'] = $search_string;
+		$fuzzy['fuzziness'] = 0.3; // Lower number = more results
 		$params['body']['query']['fuzzy_like_this'] = $fuzzy;
 		// Pagination
 		$params['body']['from'] = ($page - 1) * $paginate;
@@ -74,19 +75,19 @@ class ElasticSearchRepository implements SearchRepository {
 		return $this->client->index( $params );  // This will update if post with id already exists.
 	}
 
-	public function deletePost( $post ) {
+	public function deletePost( $post_id ) {
 		$params = array();
 		$params['index'] = 'posts';
 		$params['type'] = 'post';
-		$params['id'] = $post->id;
+		$params['id'] = $post_id;
 		return $this->client->delete( $params );
 	}
 
-	public function deleteUser( $user ) {
+	public function deleteUser( $user_id ) {
 		$params = array();
 		$params['index'] = 'users';
 		$params['type'] = 'user';
-		$params['id'] = $user->id;
+		$params['id'] = $user_id;
 		return $this->client->delete( $params );
 	}
 

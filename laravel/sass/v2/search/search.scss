@@ -1,5 +1,25 @@
 @import '../_base';
 
+// This is used for the blank search page with input
+@include signup_login();
+.search-container {
+	max-width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+
+	h2 {
+		text-align: center;
+	}
+
+	form.search-form {
+		input {
+			width: 50%;
+			margin-left: 25%;
+		}
+	}
+}
+
+// Below is the actual search results page
 .results-header {
 	@include feed_container_widths;
 	ul.nav-tabs {
@@ -23,10 +43,22 @@
 				}
 			}
 		}
-	padding-bottom:5px;
-	border-bottom:solid 3px $dark !important;
+		padding-bottom:5px;
+		border-bottom:solid 3px $dark !important;
+	}
+	form.search-form {
+		margin-right: 15px;
 	}
 }
+.search-results {
+	.generic-listing {
+		overflow: hidden;
+	}
+	.pagination-container {
+		text-align: center;
+	}
+}
+
 .posts-listing {
 	@include feed_container_widths;
 	@include post_listing( false );
