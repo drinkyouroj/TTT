@@ -60,8 +60,10 @@
 							$is_author = Auth::check() && $post->user->id == Auth::user()->id;
 						?>
 							@if( !$is_author )
-								<div class="col-md-3 hidden-sm hidden-xs utility-container">
-									<a data-action="read" class="read">Mark as Read</a>
+								<div class="col-md-3 hidden hidden-sm hidden-xs utility-container">
+									@if($favorited)
+										<a data-action="read" class="read">Mark as Read</a>
+									@endif
 									<a data-action="flag" class="flag-button flag glyphicon glyphicon-flag">
 										Flag</a>
 								</div>
@@ -206,7 +208,7 @@
 						<input name="post_id" type="hidden" value="{{ $post->id }}">
 						<input name="reply_id" type="hidden" value="">
 							<div class="form-group comment-form ">
-							<label for="body" class="control-label">Comments ({{ $post->comments->count() }})</label>
+							<label for="body" class="control-label">Comments ({{ count($post->comments) }})</label>
 							<textarea class="form-control" required="required" minlength="5" name="body" cols="50" rows="10" id="body"></textarea>
 							<span class="error"></span>
 						</div>

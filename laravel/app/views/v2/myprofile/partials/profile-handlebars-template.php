@@ -37,7 +37,14 @@
 				<span class="notification-post-title">{{#substring notification.post_title}}{{/substring}}</span>
 			</a>
 		{{/ifCond}}
-			
+		
+		{{#ifCond notification.notification_type 'like'}}
+			<a href="{{site_url}}posts/{{notification.post_alias}}">
+				<span class="action-user">{{ notification.users.[0] }}</span> liked your post: 
+				<span class="notification-post-title">{{#substring notification.post_title}}{{/substring}}</span>
+			</a>
+		{{/ifCond}}
+
 	</div>
 </script>
 
@@ -120,6 +127,11 @@
 						</a>
 					</h3>
 					<p>{{save.tagline_1}} | {{save.tagline_2}} | {{save.tagline_3}}</p>
+					<p class="author">
+						<a href="{{site_url}}profile/{{save.user.username}}" style="background-image: url('{{site_url}}uploads/final_images/{{save.user.image}}');">
+							{{save.user.username}}
+						</a>
+					</p>
 				</div>
 
 				<div class="controls col-md-2 col-sm-2">
@@ -155,7 +167,7 @@
 
 				<div class="controls col-md-3 col-sm-2 col-xs-12">
 					<a class="edit-draft icon-button" href="{{site_url}}myprofile/editpost/{{draft.id}}" >Edit</a>
-					<a class="delete-draft icon-link" data-id="{{draft.id}}" data-toggle="tooltip" data-placement="bottom" title="Delete Forever!">Delete</a>
+					<a class="delete-draft icon-link" data-id="{{draft.id}}" data-toggle="modal" data-target="#draftRemove">Remove</a>
 				</div>
 			</div>
 		</div>
@@ -292,10 +304,10 @@
 					{{/ifCond}}
 
 					<a class="post-delete">
-						Delete
+						Remove
 					</a>
 					<a class="post-delete-confirm" data-id="{{post.id}}">
-						Confirm Delete?
+						Confirm Removal?
 					</a>
 				</div>
 			{{/ifCond}}

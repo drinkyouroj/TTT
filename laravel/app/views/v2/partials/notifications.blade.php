@@ -24,6 +24,8 @@
 			{{--Laravel, you don't have switch and you suck.--}}
 			@if($not->notification_type == 'post')
 				submitted a new post
+			@elseif($not->notification_type == 'like')
+				liked
 			@elseif($not->notification_type == 'favorite')
 				favorited post
 			@elseif($not->notification_type == 'repost')
@@ -35,9 +37,9 @@
 			@endif
 			
 			@if(isset($not->post_title))
-			<span class="post-title">
-				{{$not->post_title}}
-			</span>
+				<span class="post-title">
+					{{$not->post_title}}
+				</span>
 			@endif
 			
 			{{--Make sure to never use $user as a variable.  Stupid things happen--}}

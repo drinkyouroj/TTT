@@ -1,7 +1,7 @@
 <?php
 
 App::missing(function($exception) {
-	return Response::view('missing',array(), 404);
+	return Response::view('v2.layouts.missing',array(), 404);
 });
 
 /*

@@ -70,7 +70,7 @@
 						</div>
 						<div class="col-md-7 follow-container">
 							<div class="row">
-								<div class="col-md-12 col-sm-12 col-xs-12">
+								<div class="col-md-12 col-sm-12 col-xs-12 fing-fer">
 									<a href="#followers" class="followers" id="followers">
 										<span class="count">{{$follower_count}}</span>
 										<span class="text">Followers</span>
@@ -148,38 +148,41 @@
 
 	
 	@if($myprofile)
+	{{--Contains modals for My Profile --}}
+
+
 	{{--This is for the User Delete scenario--}}
-		<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" id="myModalLabel">Account Deletion</h4>
-		      </div>
-		      <div class="modal-body">
-		        Are you absolutely sure? This step is irreversible.
-		      </div>
-		      <div class="modal-footer">
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="myModalLabel">Account Deletion</h4>
+	      </div>
+	      <div class="modal-body">
+	        Are you absolutely sure? This step is irreversible.
+	      </div>
+	      <div class="modal-footer">
 
-		        <div class="input-group col-md-8 col-md-offset-2">
-			      <input type="password" placeholder="Password" class="form-control delete-account-password">
-			      <span class="input-group-btn">
-			        <button type="button" class="btn btn-danger delete-account" data-user="{{$profile_user->id}}">
-			        	Delete The Account Already!
-			        </button>
-			        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-			      </span>
-			    </div>
-
-			    <div class="delete-account-error col-md-12">
-
-			    </div>
-		        
-		      </div>
+	        <div class="input-group col-md-8 col-md-offset-2">
+		      <input type="password" placeholder="Password" class="form-control delete-account-password">
+		      <span class="input-group-btn">
+		        <button type="button" class="btn btn-danger delete-account" data-user="{{$profile_user->id}}">
+		        	Delete The Account Already!
+		        </button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		      </span>
 		    </div>
-		  </div>
-		</div>
-	@endif
+
+		    <div class="delete-account-error col-md-12">
+
+		    </div>
+	        
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
 
 	{{--Publish Modal--}}
 	<div class="modal fade" id="publishModal" tabindex="-1" role="dialog" aria-labelledby="publishModalLabel" aria-hidden="true">
@@ -230,7 +233,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-					<h4 class="modal-title" id="draftsModalLabel">
+					<h4 class="modal-title" id="photoModalLabel">
 						Choose an Avatar
 					</h4>
 				</div>
@@ -244,6 +247,32 @@
 		</div>
 	</div>
 
+	<div class="modal fade" id="removeDraftModal" tabindex="-1" role="dialog" aria-labelledby="removeDraftModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title" id="removeDraftModalModalLabel">
+						Are you sure you want to remove this draft?
+					</h4>
+				</div>
+				<div class="modal-body">
+					<div class="input-group col-md-8 col-md-offset-2">
+				      <span class="input-group-btn">
+				        <button type="button" class="btn btn-danger delete" >
+				        	Remove The Draft.
+				        </button>
+				      </span>
+				    </div>
+				</div><!--End of Modal Body-->
+				<div class="modal-footer hidden">
+					<button class="btn-flat-blue pull-right" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	@endif
 
 @stop
 

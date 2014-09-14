@@ -97,7 +97,7 @@ function UserAction () {
 	this.ajaxRead = function ( callback ) {
 		if ( this.action == 'read' && this.post_id ) {
 			$.ajax({
-				url: window.site_url + 'rest/read/' + this.user_id,
+				url: window.site_url + 'rest/read/' + this.post_id,
 				success: function ( data ) {
 					callback( data );
 				}
