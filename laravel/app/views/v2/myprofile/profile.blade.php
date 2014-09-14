@@ -312,6 +312,18 @@
 			<br>
 			<button class="admin-user-reset btn btn-xs btn-warning">Reset User Password</button>
 			<br>
+			
+			@if ( count( $deleted_posts ) )
+				<hr>
+				<p>{{$profile_user->username}}'s Deleted Posts</p>
+				<ul class="list-unstyled">
+					@foreach( $deleted_posts as $post )
+						<li>
+							{{ $post->title }}
+						</li>
+					@endforeach
+				</ul>
+			@endif
 		@endif	
 	@endif
 	</div>
