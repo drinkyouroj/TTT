@@ -51,7 +51,7 @@
 						@endif
 					
 
-					{{ Form::open(array('url'=> 'search', 'class' => 'form-search pull-right', 'role'=>'search' )) }}
+					{{ Form::open(array('url'=> 'search', 'class' => 'form-search pull-right', 'role'=>'search', 'method'=>'get' )) }}
 						<input class="search-input" autocomplete="off" name="search" id="search-input" type="text">
 						<label class="glyphicon glyphicon-search hidden-xs" for="search-input">
 						</label>

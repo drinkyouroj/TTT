@@ -114,7 +114,7 @@ Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
 
 	//Route::get('solr', 'AdminController@getResetSolr');//this updates the users on solr
 	//Route::get('resetnot/{batch}', 'AdminController@getResetNotifications');//this updates the users on solr
-	Route::controller('/','AdminController');	
+	Route::controller('/','AdminController');
 });
 
 //Mod area

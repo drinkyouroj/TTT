@@ -26,31 +26,45 @@ class SearchController extends BaseController {
 		return Response::json( array( 'posts' => $posts ), 200 );
 	}
 
-	public function getSearchPage() {
-		return View::make('v2.search.search')
-			->with('default', true);
-	}
 	/**
 	 * Grabs Results in a page for both Posts and Users
 	 * @param string $term String that you're searching for.
 	 */
-	public function postResult() {
-		$term = Input::has('search') ? Input::get('search') : '';
-		$page = Input::has('page') ? Input::get('page') : 1;
-		// Fetch results
-		$user_results = $this->search->searchUsers( $term, $page );
-		$post_results = $this->search->searchPosts( $term, $page );
-		// Get array of ids
-		$post_ids = self::reduceToIds( $post_results );
-		$user_ids = self::reduceToIds( $user_results );
+	public function getSearchPage() {
 		
-		$posts = count( $post_ids ) ? $this->post->allByPostIds($post_ids, 1) : array();
-		$users = count( $user_ids ) ? $this->user->allByIds($user_ids) : array();
+		if ( Input::has('search') ) {
+			$term = Input::has('search') ? Input::get('search') : '';
+			$page = Input::has('page') ? intval( Input::get('page') ) : 1;
+			$filter = Input::has('filter') ? Input::get('filter') : 'posts';
+			if ( !$filter == 'posts' || !$filter == 'users' ) {
+				$filter = 'posts';
+			}
+			$page = $page < 1 ? 1 : $page;
+			// Fetch results
+			$user_results = $this->search->searchUsers( $term, $page );
+			$post_results = $this->search->searchPosts( $term, $page );
+			// Get counts for paginate
+			$user_count = count ( $user_results );
+			$post_count = count ( $post_results );
+			// Get array of ids
+			$post_ids = self::reduceToIds( $post_results );
+			$user_ids = self::reduceToIds( $user_results );
+			
+			$posts = count( $post_ids ) ? $this->post->allByPostIds($post_ids, 1) : array();
+			$users = count( $user_ids ) ? $this->user->allByIds($user_ids) : array();
 
-		return View::make('v2.search.search')
-				   ->with('posts', $posts)
-				   ->with('users', $users)
-				   ->with('term', $term);
+			return View::make('v2.search.search')
+					   ->with('posts', $posts)
+					   ->with('users', $users)
+					   ->with('post_count', $post_count)
+					   ->with('user_count', $user_count)
+					   ->with('page', $page)
+					   ->with('filter', $filter)
+					   ->with('term', $term);
+		} else {
+			return View::make('v2.search.search')
+						->with('default', true);
+		}
 	}
 
 		private function reduceToIds( $content ) {

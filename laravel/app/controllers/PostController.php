@@ -17,7 +17,8 @@ class PostController extends BaseController {
 							ActivityRepository $activity,
 							CommentRepository $comment,
 							FeedRepository $feed,
-							FeaturedRepository $featured
+							FeaturedRepository $featured,
+							SearchRepository $search
 							) {
 		$this->post = $post;
 		$this->repost = $repost;
@@ -30,6 +31,7 @@ class PostController extends BaseController {
 		$this->comment = $comment;
 		$this->feed = $feed;
 		$this->featured = $featured;
+		$this->search = $search;
 	}
 
 	public function getIndex() {
@@ -326,7 +328,8 @@ class PostController extends BaseController {
 									)
 								);
 
-					SolariumHelper::updatePost($post);//Let's add the data to solarium (Apache Solr)
+					// Add to search db
+					$this->search->updatePost( $post );
 				}
 
 				if($new) {

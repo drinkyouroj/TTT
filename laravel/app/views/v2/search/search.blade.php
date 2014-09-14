@@ -5,11 +5,6 @@
 @stop
 
 @section('js')
-	<script type="text/javascript">
-		window.category = '{{Request::segment(2)}}';
-		window.filter = '{{Request::segment(3)}}';
-	</script>
-	
 	
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/handlebars-v1.3.0.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/generic-listing.js"></script>
@@ -18,34 +13,44 @@
 	@include( 'v2/partials/post-listing-template' )
 @stop
 
-@if(isset($cat_title))
-	{? $title =  $cat_title ?}
-@else
-	{? $title =  'Search' ?}
-@endif
-
-
 @section('title')
-	{{$title}} | The Twothousand Times 
+	Search | The Twothousand Times
 @stop
 
 @section('content')
 	
 	@if ( isset($default))
-	<h2>Default</h2>
+		<div class="search-container">
+			<h2>Search <small>Find users and content</small></h2>
+			<form class="search-form" action="{{Config::get('app.url')}}/search" method="get">
+				<input type="text" name="search" placeholder="Search">
+			</form>
+		</div>
+
+
 	@else
+		<script type="text/javascript">
+			window.search_term = '{{ $term }}';
+			window.search_post_count = {{ count( $posts ) }};
+			window.search_user_count = {{ count( $users ) }};
+		</script>
 
 		<div class="results-container search-results">
 			<div class="results-header">
-				<h2 class="search-term">Search for: <span>{{$term}}</span></h2>
+				<h2 class="search-term">Search results for: <span>{{$term}}</span></h2>
 				<ul class="nav nav-tabs">
-					<li class="active"><a href="#posts-results" data-toggle="tab">Posts</a></li>
-					<li><a href="#users-results" data-toggle="tab">Users</a></li>
+					<li class="<?php echo $filter == 'posts' ? 'active' : '' ?>"><a href="#posts-results" data-toggle="tab">Posts</a></li>
+					<li class="<?php echo $filter == 'users' ? 'active' : '' ?>"><a href="#users-results" data-toggle="tab">Users</a></li>
+					<li class="pull-right">
+						<form class="search-form" action="{{Config::get('app.url')}}/search" method="get">
+							<input type="text" name="search" placeholder="Search">
+						</form>
+					</li>
 				</ul>
 			</div>
 			<div class="row">
 				<div class="tab-content">
-					<div id="posts-results" class="posts-listing tab-pane active">
+					<div id="posts-results" class="posts-listing tab-pane <?php echo $filter == 'posts' ? 'active' : '' ?>">
 						<h3 class="search-type">Posts</h3>
 						<div class="generic-listing">
 							@if( count( $posts ) )
@@ -58,13 +63,32 @@
 								
 							@else
 								<div class="col-md-12">
-									No Posts Match the Search Term
+									@if( $page == 1 )
+										No posts match the search term: {{$term}}
+									@else
+										No more results were found for the search: {{$term}}
+									@endif
 								</div>
 							@endif
 						</div>
+						<div class="pagination-container">
+							
+							@if ( $page > 1 )
+								{{-- Display prev page button --}}
+								<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$page - 1}}&filter=posts">Prev Page</a>
+							@endif
+							@if ( $post_count == 12 )
+								{{-- We have a full page of search results, display next page button --}}
+								<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$page + 1}}&filter=posts">Next Page</a>
+							@else
+								<a class="btn btn-flat-gray disabled" href="#">Next Page</a>
+							@endif
+
+
+						</div>
 					</div>
 					
-					<div id ="users-results" class="users-listing tab-pane">
+					<div id ="users-results" class="users-listing tab-pane <?php echo $filter == 'users' ? 'active' : '' ?>">
 						<h3 class="search-type">Users</h3>
 						<div class="generic-listing">
 							@if(count ($users))
@@ -77,13 +101,35 @@
 								</div>
 							@else
 								<div class="col-md-12">
-									No Users Match the Search Term
+									@if( $page == 1 )
+										No users match the search: {{$term}}
+									@else
+										No more users were found for the search: {{$term}}
+									@endif
 								</div>
 							@endif
 						</div>
-					</div>
-				</div>
+					
+						<div class="pagination-container">
+							
+							@if ( $page > 1 )
+								{{-- Display prev page button --}}
+								<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$page - 1}}&filter=users">Prev Page</a>
+							@endif
+							@if ( $user_count == 12 )
+								{{-- We have a full page of search results, display next page button --}}
+								<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$page + 1}}&filter=users">Next Page</a>
+							@else
+								<a class="btn btn-flat-gray disabled" href="#">Next Page</a>
+							@endif
 
+						</div>
+
+					</div>
+
+
+
+				</div>
 			</div>
 		</div>
 	@endif
