@@ -283,6 +283,10 @@ class EloquentPostRepository implements PostRepository {
 		}
 	}
 
+	public function allDeletedByUserId($user_id){
+		
+	}
+
 
 	public function getPublishedCount() {
 		return $this->post->where( 'published', 1 )->count();
