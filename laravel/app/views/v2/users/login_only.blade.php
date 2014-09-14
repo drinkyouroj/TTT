@@ -20,7 +20,7 @@
 				<h2>Login</h2>
 				{{ View::make('v2.users.forms.login') }}
 				 <div class="redirect-other">
-		            Don't have an account? <a href="">Sign up now</a>
+		            Don't have an account? <a href="{{Config::get('app.url')}}/user/signup">Sign up now</a>
 		        </div>
 		        <div class="login-disclaimer">
 		            Read our guidelines on <a href="{{Config::get('app.url')}}/etiquette">Community Etiquette</a>.
