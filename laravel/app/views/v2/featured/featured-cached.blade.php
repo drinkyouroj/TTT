@@ -6,8 +6,8 @@
 					@if(isset($featured{0}))
 						<?php $main = $featured{0}->post; ?>
 						@if(is_object($main))
-							<div class="featured-item row">
-								<div class="text col-md-4">
+							<div class="featured-item">
+								<div class="text col-md-5">
 									<h2>{{$main->title}}</h2>
 									<div class="line"></div>
 									<ul class="post-taglines list-inline">
@@ -15,14 +15,14 @@
 										<li> {{ $main->tagline_2 }} </li>
 										<li> {{ $main->tagline_3 }} </li>
 									</ul>
-									<p>
+									<p class="excerpt">
 										{{substr($main->body, 0,200)}}
 										<br/>
 										<br/>
 										<a class="read-more" href="">Read More</a>
 									</p>
 								</div>
-								<div class="image col-md-8" style="background-image: url({{Config::get('app.imageurl')}}/{{$main->image}} )">
+								<div class="image col-md-7" style="background-image: url({{Config::get('app.imageurl')}}/{{$main->image}} )">
 								</div>
 							</div>
 							<?php unset($featured{0});?>

@@ -25,16 +25,33 @@
 @section('content')
 <div class="featured-page">
 	<div class="top-wrapper">
-		<div classs="container">
+		<div class="container">
 			<div class="row">
-				<div class="col-md-4">
-					Category selector
+				<div class="col-md-12 heading-title">
+					<h1>Two Thousand Times</h1>
+					<div class="date-circle">
+						<span class="month">
+							December
+						</span>
+						<span class="day">
+							30
+						</span>
+					</div>
 				</div>
-				<div class="col-md-4">
-					<h1>The Two Thousand Times</h1>
-				</div>
-				<div class="col-md-4">
-					date
+				<div class="col-md-12 cat-selector">
+					<section class="filters">
+						<div class="category-filter-container">
+							<div class="category-filter-title cat-container">
+								Categories
+							</div>
+							<ul class="filter-dropdown list-unstyled">
+								{{-- I dont display the active category in the dropdown list --}}
+								@foreach ( $categories as $category )
+									<li><a href="{{ URL::to('categories/'.$category->alias) }}" class="filter filter-category" data-category-filter="{{$category->alias}}">{{$category->title}}</a></li>
+								@endforeach
+							</ul>
+						</div>
+					</section>
 				</div>
 			</div>
 		</div>

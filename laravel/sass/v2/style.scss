@@ -33,6 +33,13 @@ html, body {
 	position: relative;
 }
 
+//bootstrap overwrite
+.container {
+	@media (min-width: 1200px) {
+		width:1200px !important;
+	}
+}
+
 a {
 	color:$blue;
 	&:hover {
