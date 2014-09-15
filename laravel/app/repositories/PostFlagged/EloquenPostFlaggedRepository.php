@@ -18,7 +18,7 @@ class EloquentPostFlaggedRepository implements PostFlaggedRepository {
 		$flag->user_id = $user_id;
 		$flag->post_id = $post_id;
 		$flag->save();
-		return $view;
+		return $flag;
 	}
 
 	public function count($post_id) {

@@ -35,6 +35,9 @@ class CategoryLogic {
 	    	//(note, we're using the instance for now, but we'll move this to the repository in the future)
 	    	$cat_instance = $this->category->instance();
 	    	$cat = $cat_instance->where('alias', $alias)->first();
+	    	if(!isset($cat->id)) {
+	    		return false;
+	    	}
 			$cat_title = $cat->title;
 			
 			if(!strlen($request)) {
@@ -56,9 +59,8 @@ class CategoryLogic {
 			//set the model
 			$model = $this->post->instance();
 		}
-		
-		switch($request) {
-			default:
+
+		switch($request) {			
 			case 'recent':
 				$posts = $model->recent();
 			break;
@@ -76,13 +78,14 @@ class CategoryLogic {
 			break; 
 			case 'shortest':
 				$posts = $model->shortest();
-			break;  
+			break; 
+			default:
+				return false;
 		}
 		
 		$posts = $posts->skip(($page-1)*$paginate)
 						->select(
 								array(
-
 									'user_id',
 									'title',
 									'alias',
