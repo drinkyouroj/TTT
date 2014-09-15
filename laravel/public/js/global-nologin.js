@@ -1,4 +1,6 @@
 $(function() {
+	window.logged_in = false;
+
 	$('.system-share a, a.follow, .follow-container a').on('click', function(event){
 		event.preventDefault();
 		window.location.href = window.site_url+'user/signup';
@@ -19,8 +21,12 @@ $(function() {
 		window.location.href = window.site_url+'user/signup';
 	});
 
+	$('.post-action-bar a').click(function(event) {
+		event.preventDefault();
+		window.location.href = window.site_url+'user/signup';
+	});
 
-	$('.sidebar-option.feed a, .sidebar-option.save a').click(function(event) {
+	$('.sidebar-option.feed a, .sidebar-option.saves a').click(function(event) {
 		event.preventDefault();
 		window.location.href = window.site_url+'user/signup';
 	});
