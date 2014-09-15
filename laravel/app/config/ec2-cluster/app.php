@@ -1,4 +1,11 @@
 <?php
+
+define('APP_HOST', 'http://janus00-483730696.us-west-2.elb.amazonaws.com'); #push all through load balancer
+#define('APP_HOST', 'http://'.$_SERVER['REMOTE_ADDR']); #my internal IP -- no go
+#define('APP_HOST', ''); #relative
+#define('APP_HOST', 'http://54.68.96.139'); #my External IP -- means direct traffic to box, not through LB. also cross-origin problem, and specific config per box required.
+
+ 
 return array(
 
 	/*
@@ -25,8 +32,10 @@ return array(
 	|
 	*/
 
-	'url' => 'http://beta.twothousandtimes.com',
-	'imageurl' => 'http://beta.twothousandtimes.com/uploads/final_images',
+	#'url' => '54.68.161.235', #my personal external ip, requires security 80 access
+	#'url' => 'http://janus00-483730696.us-west-2.elb.amazonaws.com', #the load balancer
+	'url' => APP_HOST, #the constant
+	'imageurl' => APP_HOST.'/uploads/final_images',
 	/*
 	|--------------------------------------------------------------------------
 	| Application Timezone
