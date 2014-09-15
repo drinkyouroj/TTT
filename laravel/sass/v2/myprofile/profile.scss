@@ -273,10 +273,10 @@ a:focus {
 							.post-repost-image {
 								position:absolute;
 								display:block;
-								top:0px;
+								top:30px;
 								right:0px;
 								background: url('../../../../images/global/blue-75.png');
-								z-index:100;
+								z-index:3;
 								&:hover .post-options {
 									display:block !important;
 								}
@@ -565,7 +565,9 @@ a:focus {
 								display:block;
 								width:150px;
 								height:103px;
-								background:#333;
+								background-size:cover;
+								background-position:center center;
+								background-repeat:no-repeat;
 								@media (max-width:$break-sm) {
 									width:33%;
 									float:left;

@@ -8,10 +8,11 @@
 	</div>
 
 	<a class="image-link" href="{{ URL::to('posts/'.$post->alias) }}">
-		<div class="top-fade"> </div>
-			<div class="post-image" style="background-image:url('{{ URL::to('uploads/final_images/'.$post->image) }}')">
+		<div class="top-fade"> 
+		</div>
+		<div class="post-image" style="background-image:url('{{ URL::to('uploads/final_images/'.$post->image) }}')">
 
-			</div>
+		</div>
 	</a>
 
 	<p class="post-title"> 
@@ -19,10 +20,13 @@
 			{{ $post->title }}
 		</a>
 	</p>
+	<div class="line"></div>
 	<ul class="post-taglines list-inline">
 		<li> {{ $post->tagline_1 }} </li>
 		<li> {{ $post->tagline_2 }} </li>
 		<li> {{ $post->tagline_3 }} </li>
 	</ul>
-	
+	<div class="author">
+		{{$post->story_type}} by <a href="{{ URL::to('profile/'.$post->user->username ) }}"> {{ $post->user->username }} </a>
+	</div>
 </div>

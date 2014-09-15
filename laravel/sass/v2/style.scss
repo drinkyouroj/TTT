@@ -107,7 +107,7 @@ input, textarea, button:focus {outline: none !important;}
 
 			.col-middle {
 				.header-logo {
-					margin-top: 12px;
+					margin-top: 9px;
 					text-align: center;
 					a {
 						font-size: 21px;
@@ -120,7 +120,7 @@ input, textarea, button:focus {outline: none !important;}
 						}
 					}
 					@media (max-width:$break-sm) {
-						margin-top: 15px;
+						margin-top: 12px;
 					}
 				}
 			}
@@ -134,9 +134,9 @@ input, textarea, button:focus {outline: none !important;}
 					padding-left:0px !important;
 				}
 				.action {
-					height: 35px;
-					width: 35px;
-					margin-top: 2px;
+					height: 40px;
+					width: 40px;
+					margin-top: 0px;
 					margin-left: 10px;
 					position: relative;
 					text-align: center;
@@ -149,20 +149,21 @@ input, textarea, button:focus {outline: none !important;}
 							margin-top: 4px;
 						}
 						&.avatar {
+							border:solid 1px $lightgray;
 							border-radius: 50%;
 							background-color: #aaa;	
 						}
 					}
 				}
 				label.glyphicon-search {
-					margin-top: 7px;
+					margin-top: 9px;
 					margin-right: 3px;
 					font-size: 20px;
 					cursor:pointer;
 				}
 				input.search-input {
 					background-color: transparent !important;
-					margin-top:5px;
+					margin-top:7px;
 					border-style: solid;
 					border-width: 0px 0px 2px 0px;
 					border-color: black;

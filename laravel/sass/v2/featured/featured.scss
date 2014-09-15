@@ -16,7 +16,6 @@
 	.top-wrapper {
 		background:$white;
 		padding:0px 0 35px 0;
-		border-bottom:solid 5px $dark;
 		@media (max-width:$break-md) { 
    			padding:0px 0 5px 0; 
  		}
@@ -128,6 +127,8 @@
 	}
 	.main-wrapper {
 		background:$dark;
+		border-top:solid 3px $dark;
+		border-bottom:solid 3px $dark;
 		@media (max-width:$break-md) and (min-width:$break-sm-min) {
 			padding:0 0 20px 0;
 		}
@@ -135,37 +136,63 @@
 			.text {
 				text-align:center;
 				padding:40px 50px;
+				@media (max-width:$break-lg) { 
+					padding:20px 20px 20px 0;
+	 			}
 				@media (max-width:$break-xs) { 
 					padding:20px 20px;
 	 			}				
-				h2, li, p {
+				h2, ul, p {
 					color:$gray_text;
 					@include word-break(break-all);
 				}
+				a {
+					&:hover h2 {
+						color:$white !important;
+					}
+					&:hover ul {
+						color:$white !important;
+					}
+				}
+
 				h2 {
 					font-size:24px;
 					letter-spacing:2px;
 					@media (max-width:$break-xs) {
 						font-size:17px;
 					}
+					
 				}
 				.line {
 					width:20px;
-					margin:20px auto;
+					margin:10px auto;
 					border-top:solid 1px $gray_text;
 				}
 				ul.post-taglines {
+					margin-bottom:20px;
 					li {
 						@include tagline_listing;
 						border-right:solid 1px $gray_text;
-						margin-bottom:20px;
+						margin-bottom:0px;
 						letter-spacing:1px;
 						@media (max-width:$break-sm) {
 							margin-bottom:0px;
 						}
 					}
 				}
-				p.excerpt {
+				.author {
+					color:$gray_text;
+					margin-bottom:20px;
+					a {
+						@include montserrat;
+						font-size:14px;
+						letter-spacing:1px;
+						&:hover {
+							color:$white !important;
+						}
+					}
+				}
+				.excerpt, .excerpt p {
 					text-align:justify;
 					font-size:17px;
 					line-height:150%;
@@ -178,6 +205,9 @@
 					text-transform:uppercase;
 					font-size:12px;
 					letter-spacing:1px;
+					&:hover {
+						color:$white !important;
+					}
 				}
 				@media (max-width:$break-md) and (min-width:$break-sm-min) {
 					width:70%;
@@ -213,8 +243,28 @@
 		 
 		.post-container {
 			width:100%;
-			height:400px;
+			height:430px;
 			margin:0px;
+			.post-title {
+				margin-top:20px;
+				a {
+					font-size:21px;
+				}
+			}
+			.line {
+				border-top:solid 2px $dark;
+				width:20px;
+				margin:5px auto;
+			}
+			.author {
+				font-size:14px;
+				text-align:center;
+				color:$gray;
+				a {
+					@include montserrat(normal);
+					font-size:14px;
+				}
+			}
 			.post-image {
 				width:100%;
 				height:0px;

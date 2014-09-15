@@ -153,6 +153,12 @@ $(function() {
 		profile.viewInit($(this).prop('id'));//new view has to be rendered out of this scenario
 	});
 
+	//Catching when someone does the settings from the dropdown.
+	$('.additional-user-actions a').click(function(event) {
+		console.log('test');
+		$('.header-container .col-right div.action').click();
+	});
+
 	//image upload code.
 	$('body').on('change', '#uploadAvatar input.image', function() {
 		profile.avatarUpload();

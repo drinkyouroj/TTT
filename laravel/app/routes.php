@@ -157,10 +157,9 @@ Route::get('search/posts/{term}/{page}', 'SearchController@searchPosts');
 
 //Not protected profile routes
 Route::group(array('before'=>'profile'), function() {
-	//General Posts
+	//General Profile
 	Route::get( 'profile/{alias}', 'MyProfileController@getPublicProfile');
 	Route::get( 'profile', 'MyProfileController@getPublicProfile');
-	
 });
 
 //For Error Logging if the user wishes to contribute.

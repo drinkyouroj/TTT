@@ -63,6 +63,13 @@ Route::filter('auth', function()
     }
 });
 
+Route::filter('force_ssl',function() {
+	if( ! Request::secure() && Config::get('app.enable_ssl') )
+    {
+        return Redirect::secure(Request::path());
+    }
+});
+
 
 Route::filter('auth.basic', function()
 {

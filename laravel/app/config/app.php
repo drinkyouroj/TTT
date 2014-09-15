@@ -15,6 +15,7 @@ return array(
 	'debug' => true,
 	'stack' => true,//errors automatically redirects to a specified location.
 	'email_send' => false,
+	'enable_ssl' => false,//enables SSL force on the user and myprofile routes.
 
 	/*
 	|--------------------------------------------------------------------------
@@ -42,8 +43,6 @@ return array(
 	*/
 
 	'timezone' => 'America/Los_Angeles',
-
-
 
 	/*Encryption*/
 	'cipher' => MCRYPT_RIJNDAEL_256,//Needed for upgrade to Laravel 4.2
