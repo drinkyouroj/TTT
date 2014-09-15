@@ -88,6 +88,12 @@ $(function() {
 		profile.viewInit($(this).prop('id'));//new view has to be rendered out of this scenario
 	});
 
+	//Just to catch the sidebar feed button
+	$('.sidebar-option.feed').click(function(event) {
+		//event.preventDefault();
+
+	});
+
 //Collection Renders
 		$('body').on('click','.collection-controls a', function(event) {
 			event.preventDefault();
@@ -214,9 +220,6 @@ $(function() {
 
 	$('#removeDraftModal button.delete').click(function(event) {
 		event.preventDefault();
-
-		console.log($(this).data('post'));
-
 		if(typeof $(this).data('post') != 'undefined') {
 			post_id = $(this).data('post');
 			profile.deleteDraft( post_id );
@@ -266,10 +269,8 @@ $(function() {
 		profile.view = view.substring(1);
 		//profile.viewInit(profile.view);//Render initial view.
 	}
-
-	$(window).load(function() {
-		profile.viewInit(profile.view);//Render initial view.
-	});
+	profile.viewInit(profile.view);//Render initial view.
+	
 
 	window.page_processing = false;
 	window.comment_page_processing = false;
@@ -451,13 +452,11 @@ function ProfileActions() {
 		var editCheck = this.editCheck;
 
 		this.urlConstructor();
-		console.log(this.url);
 		this.getData(this.url, function(data) {
 
 			if ( data.no_content ) {
 				$('#collection-content',target).append( no_content_template( {section: 'collection'} ) );
 			} else {
-				console.log(data);
 				$.each(data.collection, function(idx, val) {
 					if ( val.post && val.post.id != window.featured_id ) {
 						var editable = val.post ? editCheck(val.post.published_at) : false;
@@ -606,7 +605,7 @@ function ProfileActions() {
 			$('#save-'+post_id).fadeOut().remove();
 			url = window.site_url + 'rest/profile/saves/delete/' + post_id;
 			this.getData(url, function(data) {
-				console.log(data);
+
 			});
 		};
 
@@ -833,7 +832,6 @@ function ProfileActions() {
 
 //Pagination Code
 	this.paginate = function() {
-
 		if(!window.page_processing && !window.finished_pagination) {
 			//If we did start processing.
 			window.page_processing = true;
