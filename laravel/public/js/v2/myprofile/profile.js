@@ -310,26 +310,21 @@ function ProfileActions() {
 		window.finished_pagination = false;
 		//fade in fade out scenario
 		var that = this;//JS scope is fun... not.
-		this.target.fadeOut(100,function() {
-			
-		});
+		this.target.fadeOut(100);
 		this.target.html('');
-		this.viewRenderContainer(function() {
-			
-		});
+		this.viewRenderContainer();
 		this.viewRender(true);
 		this.target.fadeIn(100);
 	};
 
 	//Container init
-	this.viewRenderContainer = function(callback) {
+	this.viewRenderContainer = function() {
 		if(this.view == 'collection') {
 			//collection has a different outer template
 			this.target.html(this.collection_template());
 		} else {
 			this.target.html(this.default_template({view: this.view}));
 		}
-		callback();
 	};
 
 	//Actual Content Rendering routes
@@ -444,7 +439,6 @@ function ProfileActions() {
 		var no_content_template = this.no_content_template;
 		// TODO
 		var target = this.target;
-		this.urlConstructor();
 		this.getData(this.url,function(data) {
 			if ( data.no_content ) {
 				$('#default-content',target).append( no_content_template( {section: 'notifications'} ) );
@@ -474,7 +468,6 @@ function ProfileActions() {
 		var target = this.target;
 		var editCheck = this.editCheck;
 
-		this.urlConstructor();
 		this.getData(this.url, function(data) {
 
 			if ( data.no_content ) {
@@ -511,7 +504,7 @@ function ProfileActions() {
 		var feature_item_template = this.feature_item_template;
 		var target = this.target;
 		var editCheck = this.editCheck;
-		this.urlConstructor();
+
 		this.getData(this.feature_url,function(data) {
 			var editable = data.featured ? editCheck(data.featured.published_at) : false;
 			view_data = {
@@ -563,7 +556,7 @@ function ProfileActions() {
 		//scope issues
 		var comment_item_template = this.comment_item_template;
 		var target = this.target;
-		this.urlConstructor();
+
 		this.getData(this.comment_url, function(data) {
 			$.each(data.comments,function(idx, val) {
 				view_data = {
@@ -581,7 +574,7 @@ function ProfileActions() {
 		var post_item_template = this.post_item_template;
 		var no_content_template = this.no_content_template;
 		var target = this.target;
-		this.urlConstructor();
+
 		this.getData(this.url,function(data) {
 			if ( data.no_content ) {
 				$('#default-content',target).append( no_content_template( {section: 'feed'} ) );
@@ -605,7 +598,7 @@ function ProfileActions() {
 		var saves_item_template = this.saves_item_template;
 		var no_content_template = this.no_content_template;
 		var target = this.target;
-		this.urlConstructor();
+
 		this.getData(this.url,function(data) {
 			if ( data.no_content ) {
 				$('#default-content',target).append( no_content_template( {section: 'saves'} ) );
@@ -637,7 +630,7 @@ function ProfileActions() {
 		var drafts_item_template = this.drafts_item_template;
 		var no_content_template = this.no_content_template;
 		var target = this.target;
-		this.urlConstructor();
+
 		draftDate = this.draftDate;
 		this.getData(this.url,function(data) {		
 			if ( data.no_content ) {
@@ -670,7 +663,7 @@ function ProfileActions() {
 	this.renderFollowers = function() {
 		var follow_template = this.follow_template;
 		var target = this.target;
-		this.urlConstructor();
+
 		this.getData(this.url, function(data) {
 			$.each(data.follow, function(idx, val) {
 				view_data = {
@@ -688,7 +681,7 @@ function ProfileActions() {
 	this.renderFollowing = function() {
 		var follow_template = this.follow_template;
 		var target = this.target;
-		this.urlConstructor();
+
 		this.getData(this.url, function(data) {
 			$.each(data.follow, function(idx, val) {
 				view_data = {
@@ -868,7 +861,6 @@ function ProfileActions() {
 		if(!window.comment_page_processing) {
 			window.comment_page_processing = true;
 			this.comment_page = this.page + 1;
-			this.urlConstructor();
 			this.renderComments();
 		}
 	};
