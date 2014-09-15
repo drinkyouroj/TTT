@@ -255,6 +255,9 @@
 				margin-top:20px;
 				a {
 					font-size:21px;
+					@media (max-width:$break-xs) {
+						font-size:17px;
+					}
 				}
 			}
 			.line {
