@@ -16,5 +16,7 @@ interface FeaturedRepository {
 
 	public function delete($post_id);
 
+	public function deleteByUserId( $user_id );
+
 	public function swapFeaturedItems ( $post_id, $target_position );
 }

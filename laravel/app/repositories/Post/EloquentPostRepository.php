@@ -1,16 +1,22 @@
 <?php namespace AppStorage\Post;
 
-use Post, DB, Request, Auth, Session, FeaturedRepository, SearchRepository;
+use Post, DB, Request, Auth, Session,
+ 				  FeaturedRepository, 
+ 				    SearchRepository,
+ 			   ProfilePostRepository,
+ 				     		   Cache;
 
 class EloquentPostRepository implements PostRepository {
 
 	public function __construct(Post $post, 
 		          FeaturedRepository $featured,
-		          SearchRepository $search )
+		          SearchRepository $search,
+		          ProfilePostRepository $profile_post )
 	{
 		$this->post = $post;
 		$this->featured = $featured;
 		$this->search = $search;
+		$this->profile_post = $profile_post;
 	}
 
 	//Instance
@@ -29,7 +35,7 @@ class EloquentPostRepository implements PostRepository {
 	 * @param object $post Post object (for updates)
 	 */
 	public function input($new = false,$post = false)
-	{	
+	{
 		if($new) {
 			//Creates a new post
 			$post = self::instance();
@@ -206,7 +212,7 @@ class EloquentPostRepository implements PostRepository {
 		$this->search->deletePost( $id );
 	}
 	
-	//restores All User posts
+	// restores All User posts
 	public function restore($user_id) {
 		$posts = $this->post->where('user_id', $user_id)->get();
 		foreach ($posts as $key => $post) {
@@ -246,22 +252,31 @@ class EloquentPostRepository implements PostRepository {
 	}
 	
 	//Delete
-	public function delete($id) {
+	public function delete( $id ) {
 		$this->post->where('id', $id)->delete();//remember that the Eloquent model has softdelete.
 		// IMPORTANT! Make sure we remove from the featured page (if applicable)
 		$this->featured->delete( $id );
 		// Remvoe from search db
 		$this->search->deletePost( $id );
+		// Remove from ProfilePost
+		$this->profile_post->deleteAllByPostId( $id );
+		// Clear featured cache
+		Cache::forget('featured');
+
 	}
 	
 	public function undelete($id) {
 		$post = $this->post->where('id', $id)->withTrashed()->first();
 		if ( $post instanceof Post ) {
+			// Restore the actual post
 			$post->restore();
+			// If published, add back to search database
 			if ( $post->published ) {
 				// Add back to search database
 				$this->search->updatePost( $post );
 			}
+			// Restore any ProfilePost's related to this post
+			$this->profile_post->restoreAllByPostId( $id );
 		}
 	}
 

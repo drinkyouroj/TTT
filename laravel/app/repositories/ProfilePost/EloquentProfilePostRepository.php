@@ -68,6 +68,15 @@ class EloquentProfilePostRepository implements ProfilePostRepository {
 						->delete();
 	}
 
+	public function deleteAllByPostId($post_id) {
+		$this->profilepost->where('post_id', '=', $post_id)->delete();
+	}
+	public function restoreAllByPostId($post_id) {
+		$this->profilepost->onlyTrashed()
+						  ->where('post_id', '=', $post_id)
+						  ->restore();
+	}
+
 	//This correspondes to teh post unpublish scenario .
 	public function publish($user_id, $post_id) {
 		$this->profilepost->onlyTrashed()
