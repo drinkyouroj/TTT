@@ -1,7 +1,7 @@
 $(function() {
 
 	// Sidebar
-	$('#offcanvas-placeholder').sidr({
+	$('.toggle-sidebar').sidr({
     	name: 'offcanvas-sidebar',
     	side: 'left',
     	speed: 300,

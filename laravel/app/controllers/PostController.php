@@ -51,13 +51,20 @@ class PostController extends BaseController {
         	$expiresAt = Carbon::now()->addMinutes(10);
 			Cache::put($alias,$post,$expiresAt);
         }
+        // Check that the post even exists (includes soft deleted).
+		if ( !is_object($post) ) {
+			return Redirect::to('/');
+		}
 		
-		$user_id = false;
-        if(Auth::check()) {
-        	$user_id = Auth::user()->id;
-        }
-
-		if ( is_object($post) && ($post->published || $post->user_id == $user_id) ) {
+		$user = Auth::check() ? Auth::user() : false;
+		$user_id = $user != false ? $user->id : false;
+		$is_mod = $user != false ? $user->hasRole('Moderator') : false;
+		$is_admin = $user != false ? $user->hasRole('Admin') : false;
+		
+		// 1. admin can view any post (deleted or not)
+		// 2. user may view a post that is published
+		// 3. user may view post that is draft => only if they are the author
+		if (  $is_admin || (!$post->trashed() && ($post->published || $post->user_id == $user_id)) ) {
 			//Post exists and (is published OR draft is owned by appropriate user)
 						
 			if( !isset($post->user->username) ) {
@@ -68,7 +75,7 @@ class PostController extends BaseController {
 			}
 			
 			//Logged in.
-			if( Auth::check() ) {
+			if( $user != false ) {
 				
 				$my_id = Auth::user()->id;//My user ID
 				$is_following = $this->follow->is_following($my_id,$user_id);
@@ -76,9 +83,6 @@ class PostController extends BaseController {
 				$liked = $this->like->has_liked($my_id, $post->id);
 				$favorited = $this->favorite->has_favorited($my_id, $post->id);
 				$reposted = $this->repost->has_reposted($my_id, $post->id);
-				// Admin shit
-				$is_mod = Session::get('mod');
-				$is_admin = Session::get('admin');
 
 			} else {
 				//DEFAULTS for not logged in users
@@ -88,8 +92,6 @@ class PostController extends BaseController {
 				$liked = false;
 				$favorited = false;
 				$reposted = false;
-				$is_mod = false;
-				$is_admin = false;
 			}
 			
 			//Add the fact that the post has been viewed if you're not the owner and you're logged in.

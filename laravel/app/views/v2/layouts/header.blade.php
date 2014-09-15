@@ -9,16 +9,18 @@
 			<div class="row">
 				<div class="col-sm-4 col-xs-2 col-left">
 					<button class="read-button toggle-sidebar">
-						<span>
+						<span class="glyphicon glyphicon-align-justify">
+						</span>
+						<span class="text">
 							READ
 						</span>
 					</button>
 
 					@if( $is_guest )
-						<a class="post-btn btn-flat-blue" href="{{ URL::to( 'user/signup' ) }}">POST</a>
+						<a class="post-btn post-button" href="{{ URL::to( 'user/signup' ) }}">POST</a>
 					@else
 						@if(Route::current()->uri() != 'myprofile/newpost')
-							<a class="post-btn btn-flat-blue" href="{{Config::get('app.url')}}/myprofile/newpost">POST</a>
+							<a class="post-btn post-button" href="{{Config::get('app.url')}}/myprofile/newpost">POST</a>
 						@endif
 					@endif
 

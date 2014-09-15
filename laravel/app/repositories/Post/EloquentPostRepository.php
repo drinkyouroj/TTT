@@ -67,7 +67,7 @@ class EloquentPostRepository implements PostRepository {
 	}
 	
 	public function findByAlias($alias, $published = true) {
-		$post = $this->post->where('alias', $alias);
+		$post = $this->post->withTrashed()->where('alias', $alias);
 		return self::count_check($post, $published, array());
 	}
 	

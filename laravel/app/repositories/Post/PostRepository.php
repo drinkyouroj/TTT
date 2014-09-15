@@ -14,6 +14,9 @@ interface PostRepository {
 	//Read
 	public function findById($id, $published = true, $replationships = array());
 	
+	/**
+	 * Finds a given post by alias. NOTE: includes trashed (soft deleted) posts.
+	 */
 	public function findByAlias($alias, $published = true);
 	
 	public function findByUserId($user_id, $published = true);
