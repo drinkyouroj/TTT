@@ -159,7 +159,7 @@ Route::get('search/posts/{term}/{page}', 'SearchController@searchPosts');
 Route::group(array('before'=>'profile'), function() {
 	//General Posts
 	Route::get( 'profile/{alias}', 'MyProfileController@getPublicProfile');
-	Route::get( 'profile', 'ProfileController@getProfile');
+	Route::get( 'profile', 'MyProfileController@getPublicProfile');
 	
 });
 

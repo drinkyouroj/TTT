@@ -90,8 +90,14 @@ $(function() {
 
 	//Just to catch the sidebar feed button
 	$('.sidebar-option.feed').click(function(event) {
-		//event.preventDefault();
-
+		event.preventDefault();
+		$.sidr('close', 'offcanvas-sidebar');
+		$('.section-selectors a').removeAttr('class');//gets rid of active state.
+		$('.section-selectors a#feed').prop('class','active');
+		profile.view = 'feed';
+		profile.type = 'all';//default
+		profile.page = 1;
+		profile.viewInit(profile.view);
 	});
 
 //Collection Renders
@@ -333,7 +339,7 @@ function ProfileActions() {
 			default:
 			case 'collection':
 				this.renderCollection();
-				if(init) {					
+				if(init) {
 					this.renderComments();					
 				}
 				if((init || this.type == 'all' || this.type == 'post') && window.featured_id && this.page == 1 ) {
