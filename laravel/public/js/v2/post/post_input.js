@@ -140,6 +140,9 @@ var save_post = new function() {
 				required: true,
 				minlength: 400,
 				maxlength: 14000,//This is generalized.
+			},
+			story_type: {
+				required: true
 			}
 		},
 		messages: {
@@ -152,9 +155,9 @@ var save_post = new function() {
 			$.each(validator.errorList, function(idx,value) {
 
 				//Category or Story Type issues.
-				if(	$(value.element).hasClass('category') ) {
+				if(	$(value.element).hasClass('category') || $(value.element).hasClass('story-type') ) {
 					if($('.category-wrapper').css('display') == 'none') {
-						$('.categorization').click();
+						$('.category-wrapper').slideDown('fast');
 					}
 				}
 				//image issue.

@@ -11,7 +11,7 @@ class ProfileImageRestController extends \BaseController {
 		if($id) {
 			$user = User::where('id', $id)->select('image')->first();
 			
-			if($user->image) {
+			if($user->image && $image->image != '0') {
 				//We'll need to put in enviro detect here for CDN.
 				return Redirect::to(Config::get('app.imageurl').'/'.$user->image);
 				//return Response::download(public_path().'/uploads/final_images/'.$post->image);

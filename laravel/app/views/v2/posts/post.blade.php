@@ -208,7 +208,7 @@
 						<input name="post_id" type="hidden" value="{{ $post->id }}">
 						<input name="reply_id" type="hidden" value="">
 							<div class="form-group comment-form ">
-							<label for="body" class="control-label">Comments ({{ count($post->comments) }})</label>
+							<label for="body" class="control-label">Comments ({{ $post->comment_count }})</label>
 							<textarea class="form-control" required="required" minlength="5" name="body" cols="50" rows="10" id="body"></textarea>
 							<span class="error"></span>
 						</div>
