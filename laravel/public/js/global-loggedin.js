@@ -1,4 +1,6 @@
 $(function() {
+	window.logged_in = true;
+	
 	$('.system-share a').on('click', function(event){
 		event.preventDefault();
 	});
