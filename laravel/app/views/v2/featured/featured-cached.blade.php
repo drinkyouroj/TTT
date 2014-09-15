@@ -8,22 +8,30 @@
 						@if(is_object($main))
 							<div class="featured-item">
 								<div class="text col-md-5">
-									<h2>{{$main->title}}</h2>
-									<div class="line"></div>
-									<ul class="post-taglines list-inline">
-										<li> {{ $main->tagline_1 }} </li>
-										<li> {{ $main->tagline_2 }} </li>
-										<li> {{ $main->tagline_3 }} </li>
-									</ul>
-									<p class="excerpt">
+									<a href="{{Config::get('app.url')}}/posts/{{$main->alias}}">
+										<h2>{{$main->title}}</h2>
+										<div class="line"></div>
+										<ul class="post-taglines list-inline">
+											<li> {{ $main->tagline_1 }} </li>
+											<li> {{ $main->tagline_2 }} </li>
+											<li> {{ $main->tagline_3 }} </li>
+										</ul>
+									</a>
+									<div class="author">
+										{{$main->story_type}} by 
+										<a href="{{Config::get('app.url')}}/profile/{{$main->user->username}}"> {{ $main->user->username }} </a>
+									</div>
+									<div class="excerpt">
 										{{substr($main->body, 0,200)}}
 										<br/>
-										<br/>
-										<a class="read-more" href="">Read More</a>
-									</p>
+										<a class="read-more" href="{{Config::get('app.url')}}/posts/{{$main->alias}}">Read More</a>
+										</a>
+									</div>
 								</div>
-								<div class="image col-md-7" style="background-image: url({{Config::get('app.imageurl')}}/{{$main->image}} )">
-								</div>
+								<a href="{{Config::get('app.url')}}/posts/{{$main->alias}}">
+									<div class="image col-md-7" style="background-image: url({{Config::get('app.imageurl')}}/{{$main->image}} )">
+									</div>
+								</a>
 							</div>
 							<?php unset($featured{0});?>
 						@endif
