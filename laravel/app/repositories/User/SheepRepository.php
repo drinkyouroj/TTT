@@ -147,7 +147,7 @@ class SheepRepository implements UserRepository {
 	}
 
 	public function restore($id) {
-		$user =	$this->user->onlyTrashed()->where('id', $id)->first(); 
+		$user =	$this->user->withTrashed()->where('id', $id)->first(); 
 		return self::restoreGeneric($user);
 	}
 

@@ -5,6 +5,7 @@
 	$have_user = Auth::check();
 	$is_mod = Session::get('mod');
 	$is_admin = Session::get('admin');
+	$is_mobile = Agent::isMobile();
 
 ?>
 
@@ -84,6 +85,11 @@
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/handlebars/handlebars.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/sidr/jquery.sidr.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/header.js"></script>
+	@if ( $is_mobile )
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/touch-swipe/jquery.touchSwipe.min.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/header-swipe.js"></script>
+	@endif
+	
 	
 	@if( $have_user )
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/global-loggedin.js"></script>

@@ -273,9 +273,13 @@ class EloquentPostRepository implements PostRepository {
 	}
 
 	public function restoreAllByUserId($id) {
-		$posts = $this->post->where( 'user_id', $id )->withTrashed();
+		$this->post->withTrashed()
+					->where( 'user_id', $id )
+					->restore();
+		
+		$posts = $this->post->where( 'user_id', $id )->get();
+
 		foreach ($posts as $key => $post) {
-			$post->restore();
 			if ( $post->published ) {
 				// Add back to search database
 				$this->search->updatePost( $post );
