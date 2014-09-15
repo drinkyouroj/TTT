@@ -5,7 +5,7 @@
 
 <div class="header-wrapper">
 	<div class="header-inner-wrapper">
-		<div class="header-container container">
+		<div class="header-container">
 			<div class="row">
 				<div class="col-sm-4 col-xs-2 col-left">
 					<button class="read-button toggle-sidebar">
@@ -91,9 +91,9 @@
 								</div>
 
 								<div class="additional-user-actions">
-									<a href="{{Config::get('app.url')}}/myprofile#settings" class="profile-settings">ACCOUNT SETTINGS</a>
+									<a href="{{Config::get('app.url')}}/myprofile#settings">ACCOUNT SETTINGS</a>
 									<br>
-									<a href="{{Config::get('app.url')}}/user/logout" class="logout">SIGN OUT</a>
+									<a href="{{Config::get('app.url')}}/user/logout">SIGN OUT</a>
 								</div>
 								
 								<div class="additional-actions">
