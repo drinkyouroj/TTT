@@ -87,11 +87,6 @@ input, textarea, button:focus {outline: none !important;}
 			.col-left {
 				margin-top: 0px;
 				button.read-button {
-					@media (max-width:$break-sm) {
-						position:absolute;
-						top:0px;
-						left:0px;
-					}
 					span.text {
 						@media (max-width:$break-sm) {
 							display:none;

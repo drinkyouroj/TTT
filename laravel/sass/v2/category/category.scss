@@ -61,7 +61,6 @@
 	@include feed_container_widths;
 	overflow: hidden;
 	@include post_listing( false );
-	padding-bottom: 500px;
 	.post-container {
 		@media screen and (max-width: 630px){
 			height:auto;
