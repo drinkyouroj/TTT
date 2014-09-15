@@ -37,6 +37,10 @@ $env = $app->detectEnvironment(array(
 	'ec2-staging' => array('staging*'),
 	'ec2-testing' => array('testing*'),
 	
+	//Cluster production
+	'ec2-cluster' => array('web0*'),
+
+
 	//Multi server production. Note: You need Redis, Memcached, Mongo, Solr and SQL in a separate server.  Note, HHVMtest is a prototyping server for HHVM.
 	'web' => array('web*','hhvmtest','RESCUE-hhvmtest','rescue-hhvmtest'),//sometimes the hhvm server sucks and goes into stupid mode.
 	

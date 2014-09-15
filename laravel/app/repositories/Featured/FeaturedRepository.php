@@ -12,6 +12,8 @@ interface FeaturedRepository {
 
 	public function findFront();
 
+	public function random();
+
 	public function findByPostId($post_id);
 
 	public function delete($post_id);

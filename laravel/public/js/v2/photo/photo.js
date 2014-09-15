@@ -138,7 +138,7 @@ function PhotoInput() {
 		this.getData(url, {}, function(data) {			
 			$(photo_results).html('');//clear it out.
 			photos = data.photos.photo;//actual photo array
-
+			image_counter = 0;
 			$.each(photos,function(index, value) {
 				view_data = {
 					id: value.id,
@@ -149,6 +149,10 @@ function PhotoInput() {
 				$(photo_results).append(newImage);
 				image_counter = index;
 			});
+
+			if(image_counter == 0) {
+				$(photo_results).append('No images were found with the keyword');
+			}
 
 			next_page = photo_search_page + 1;
 			console.log('next_page: ' + next_page);

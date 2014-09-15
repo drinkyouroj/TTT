@@ -96,7 +96,10 @@ class EloquentPostRepository implements PostRepository {
 	}
 	
 	public function random() {
-		$post = $this->post->orderBy(DB::raw('RAND()'));
+		$post = $this->post
+					->where('published', 1)
+					->where('draft', 0)
+					->orderBy(DB::raw('RAND()'));
 		return self::count_check($post);
 	}
 	

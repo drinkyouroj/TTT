@@ -4,7 +4,7 @@
 	height: $post_actionbar_height;
 
 	@media (max-width:$break-sm) {
-		height:45px;
+		height:35px;
 	}
 
 	.post-action-bar {
@@ -16,12 +16,15 @@
 		padding: 15px;
 
 		@media (max-width:$break-sm) {
-			height:45px;
+			height:35px;
 			padding: 5px 15px;
 		}
 
 		.actions-container, .comment-container {
 			margin-top:5px;
+			@media (max-width:$break-sm) {
+				margin-top:0px;
+			}
 		}
 		.utility-container {
 			padding-top:7px;
@@ -57,9 +60,6 @@
 				@media (max-width: $break-xs) {
 					padding-left:0px;
 				}
-			}
-			@media (max-width: $break-xs) {
-				margin-top:7px;
 			}
 		}
 		.comment-container {
