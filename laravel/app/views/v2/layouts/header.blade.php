@@ -91,9 +91,9 @@
 								</div>
 
 								<div class="additional-user-actions">
-									<a href="{{Config::get('app.url')}}/myprofile#settings">ACCOUNT SETTINGS</a>
+									<a href="{{Config::get('app.url')}}/myprofile#settings" class="profile-settings">ACCOUNT SETTINGS</a>
 									<br>
-									<a href="{{Config::get('app.url')}}/user/logout">SIGN OUT</a>
+									<a href="{{Config::get('app.url')}}/user/logout" class="logout">SIGN OUT</a>
 								</div>
 								
 								<div class="additional-actions">
