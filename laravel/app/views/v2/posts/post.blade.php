@@ -261,8 +261,8 @@
 			<button class="admin-edit-post btn btn-xs btn-warning">Edit Post</button>
 			<button class="admin-edit-post-submit btn btn-xs btn-success hidden">Submit Changes</button>
 		@endif
-		<button class="mod-post-delete btn btn-xs btn-danger {{ $post ? '' : 'hidden' }}">Delete This Post</button>
-		<button class="mod-post-undelete btn btn-xs btn-default {{ $post ? 'hidden' : '' }}">Un-delete This Post</button>
+		<button class="mod-post-delete btn btn-xs btn-danger {{ $post->trashed() ? 'hidden' : '' }}">Delete This Post</button>
+		<button class="mod-post-undelete btn btn-xs btn-default {{ $post->trashed() ? '' : 'hidden' }}">Un-delete This Post</button>
 		<hr>
 		<p class="post-categories-title">Categories</p>
 		<ul class="list-unstyled">

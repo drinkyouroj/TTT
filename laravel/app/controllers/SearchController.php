@@ -40,8 +40,18 @@ class SearchController extends BaseController {
 				$filter = 'posts';
 			}
 			$page = $page < 1 ? 1 : $page;
+			if ( $filter == 'posts' ) {
+				$users_page = 1;	
+			} else if ( $filter == 'users' ) {
+				$users_page = $page;
+				$page = 1;
+			}
+			
+			// Basically, if we are filtering for posts, then we want the users tab to
+			// be on page 1!
+			$other_page = 1;
 			// Fetch results
-			$user_results = $this->search->searchUsers( $term, $page );
+			$user_results = $this->search->searchUsers( $term, $users_page );
 			$post_results = $this->search->searchPosts( $term, $page );
 			// Get counts for paginate
 			$user_count = count ( $user_results );
@@ -59,6 +69,7 @@ class SearchController extends BaseController {
 					   ->with('post_count', $post_count)
 					   ->with('user_count', $user_count)
 					   ->with('page', $page)
+					   ->with('users_page', $users_page)
 					   ->with('filter', $filter)
 					   ->with('term', $term);
 		} else {

@@ -325,7 +325,7 @@
 				<ul class="list-unstyled">
 					@foreach( $deleted_posts as $post )
 						<li>
-							{{ $post->title }}
+							<a href="{{ URL::to('posts/'.$post->alias) }}">{{ $post->title }}</a>
 						</li>
 					@endforeach
 				</ul>
