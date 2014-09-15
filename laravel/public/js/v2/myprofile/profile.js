@@ -156,7 +156,8 @@ $(function() {
 	//Catching when someone does the settings from the dropdown.
 	$('.additional-user-actions a.profile-settings').click(function(event) {
 		event.preventDefault();
-		$('.header-container .col-right .navbar-dropdown-toggle').click();
+		$('.section-selectors a').removeAttr('class');		
+		$('.header-container .col-right .navbar-dropdown-toggle').click();		
 		profile.view = 'settings';
 		profile.page = 1;
 		profile.viewInit(profile.view);
