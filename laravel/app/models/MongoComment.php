@@ -17,8 +17,8 @@ class MongoComment extends Eloquent {
 				'full_slug_desc' => 'required',
 				'author' => 'required',
 				'depth' => 'required|integer|min:0',
-				'likes' => 'required|array',
-				'flags' => 'required|array'
+				'likes' => 'array',
+				'flags' => 'array'
 		);
 		return Validator::make( $input, $rules );
 	}

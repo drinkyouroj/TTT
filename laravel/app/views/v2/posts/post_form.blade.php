@@ -118,9 +118,11 @@
 									<div class="{{$errors->first('story_type') ? 'has-error' : '' }}">
 									{{ Form::label('story_type','Post Type', array('class'=>'control-label', 'required')) }}
 									<a href="#" data-toggle="tooltip" title="Choose the type of story">?</a>
-									{{ Form::select('story_type', array( 'story'=>'Story',
+									{{ Form::select('story_type', array( 
+																	''=>'(Pick One)',
+																	'story'=>'Story',
 																	'advice'=>'Advice',
-																	'thought'=>'Thought'), $story_type, array('class'=>'form-control')) }}
+																	'thought'=>'Thought'), $story_type, array('class'=>'story-type form-control')) }}
 									<span class="error">{{ $errors->first('story_type') }}</span>
 								</div>
 								</div>

@@ -111,15 +111,16 @@ class Post extends Eloquent {
 			if ($input['draft']) {
 				// Validation for new post that is a draft (fewer required fields)
 				$rules = array(
-					'title' => 'Required'
+					'title' => 'required'
 				);
 			} else {
 				// Validation for new post -> published
 				$rules = array(
-					'title' => 'Required',
-					'tagline_1' => 'Required',
-					'tagline_2' => 'Required',
-					'tagline_3' => 'Required',
+					'title' => 'required',
+					'story_type' => 'required|in:story,advice,thought',
+					'tagline_1' => 'required',
+					'tagline_2' => 'required',
+					'tagline_3' => 'required',
 					'body' => 'Twothousand',
 					'image' => 'required'
 				);
@@ -129,15 +130,15 @@ class Post extends Eloquent {
 			if ($input['draft']) {
 				// Validation for existing post -> save as draft
 				$rules = array(
-					'title' => 'Required'
+					'title' => 'required'
 				);
 			} else {
 				// Validation for existing post -> published
 				$rules = array(
-					'title' => 'Required',
-					'tagline_1' => 'Required',
-					'tagline_2' => 'Required',
-					'tagline_3' => 'Required',
+					'title' => 'required',
+					'tagline_1' => 'required',
+					'tagline_2' => 'required',
+					'tagline_3' => 'required',
 					'body' => 'Twothousand'
 				);
 			}
