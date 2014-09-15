@@ -41,7 +41,9 @@ class HomeController extends BaseController {
 		if(Auth::check()) {
 			$user = Auth::user();
 			$from_feed = $this->feed->findOne($user->id, 'post');
-			if(is_object($from_feed) && $from_feed->post->deleted_at ) {
+			if(	isset($from_feed->post) &&
+				$from_feed->post->deleted_at 
+				) {
 				$view->with('from_feed', $from_feed->post );
 			} else {
 				$random = $this->post->random();
