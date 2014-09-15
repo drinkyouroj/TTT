@@ -43,6 +43,11 @@ return array(
 
 	'timezone' => 'America/Los_Angeles',
 
+
+
+	/*Encryption*/
+	'cipher' => MCRYPT_RIJNDAEL_256,//Needed for upgrade to Laravel 4.2
+
 	/*
 	|--------------------------------------------------------------------------
 	| Application Locale Configuration

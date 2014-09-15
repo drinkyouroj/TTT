@@ -24,7 +24,7 @@ class MoloquentNotificationRepository implements NotificationRepository {
 	 *	@param $action_user: the user performing the action -> favoriting, reposting, etc...
 	 * 	@return The notification object.
 	 */
-	public function create ( $data, $action_user ) {
+	public function create ( $data, $action_user ) {		
 		$not = self::find( $data['post_id'], $data['user_id'], $data['notification_type'] );
 
 		// If the notification does not already exist, create one.
@@ -65,7 +65,13 @@ class MoloquentNotificationRepository implements NotificationRepository {
 	public function find( $post_id, $user_id, $type ) {
 		$not = $this->not->where('post_id', $post_id)//Post id
 					->where('user_id', $user_id)//person getting notified
-					->where('notification_type', $type);
+					;
+					if($type == 'like') {
+						$not = $not->where('notification_type', '=',$type);
+					} else {
+						$not = $not->where('notification_type', $type);
+					}
+					
 		return self::count_check($not);
 	}
 	

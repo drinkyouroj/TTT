@@ -288,7 +288,7 @@ class MyProfileController extends BaseController {
 		if($post_id) {
 			$user = Auth::user();
 			$data = array(
-					'user_id' => $user->id,
+					'profile_id' => $user->id,//get rid of this repost from this user's profile
 					'post_id' => $post_id,
 					'post_type' => 'repost'
 				);

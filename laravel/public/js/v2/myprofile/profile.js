@@ -27,7 +27,7 @@ $(function() {
 
 //Initialize Profile class
 	var profile = new ProfileActions;
-
+	
 //Let's Compile the handlebars source.
 	//Collection container
 	var collection_source = $('#collection-template').html();
@@ -249,7 +249,8 @@ $(function() {
 		window.location.hash = 'collection';
 		profile.view = 'collection';
 		profile.type = 'all';
-		profile.viewInit('collection');//Render initial view.
+		profile.page = 0;
+		//profile.viewInit(profile.view);//Render initial view.	
 	} else {
 		view = window.location.hash;
 		// Prevent a jump to anchor
@@ -261,10 +262,14 @@ $(function() {
 		if ( view == '#followers' || view == '#following' ) {
 			profile.type = window.user_id;
 		}
-
+		profile.page = 0;
 		profile.view = view.substring(1);
-		profile.viewInit(profile.view);//Render initial view.
+		//profile.viewInit(profile.view);//Render initial view.
 	}
+
+	$(window).load(function() {
+		profile.viewInit(profile.view);//Render initial view.
+	});
 
 	window.page_processing = false;
 	window.comment_page_processing = false;
@@ -300,20 +305,22 @@ function ProfileActions() {
 		var that = this;//JS scope is fun... not.
 		this.target.fadeOut(100,function() {
 			that.target.html('');
-			that.viewRenderContainer();
-			that.viewRender(true);
+			that.viewRenderContainer(function() {
+				that.viewRender(true);
+			});
 			that.target.fadeIn(100);
 		});
 	};
 
 	//Container init
-	this.viewRenderContainer = function() {
+	this.viewRenderContainer = function(callback) {
 		if(this.view == 'collection') {
 			//collection has a different outer template
 			this.target.html(this.collection_template());
 		} else {
 			this.target.html(this.default_template({view: this.view}));
 		}
+		callback();
 	};
 
 	//Actual Content Rendering routes
@@ -444,11 +451,13 @@ function ProfileActions() {
 		var editCheck = this.editCheck;
 
 		this.urlConstructor();
+		console.log(this.url);
 		this.getData(this.url, function(data) {
 
 			if ( data.no_content ) {
 				$('#collection-content',target).append( no_content_template( {section: 'collection'} ) );
 			} else {
+				console.log(data);
 				$.each(data.collection, function(idx, val) {
 					if ( val.post && val.post.id != window.featured_id ) {
 						var editable = val.post ? editCheck(val.post.published_at) : false;

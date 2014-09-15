@@ -82,6 +82,7 @@
 				</div>
 			{{/ifCond}}
 			{{#ifCond post_type 'repost' }}
+				<div class="options-link"> </div>
 				<img class="post-repost-image" src="{{ site_url }}images/global/repost-single.png" width="30px" height="30px">
 				<div class="post-options">
 					<a class="remove-repost" data-id="{{post.id}}">

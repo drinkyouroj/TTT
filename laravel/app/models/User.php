@@ -2,16 +2,20 @@
 use Zizaco\Entrust\HasRole;
 use Illuminate\Auth\UserInterface;
 
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
+
 //We've totally taken Confide out of this.
 class User extends Eloquent implements UserInterface {
-
+	use SoftDeletingTrait;
 	use HasRole;
 
 	protected $table = 'users';
-
 	protected $softDelete = true;
+	protected $dates = ['deleted_at'];
 
     public function __construct() {
+    	parent::__construct();
+    	
     	Validator::extend('reservation_cap', function($attribute, $value, $parameters) {
 		    $cap = $parameters[0];
 		    if(strlen($value)) {
