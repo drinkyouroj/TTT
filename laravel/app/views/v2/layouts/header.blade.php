@@ -26,9 +26,7 @@
 				<div class="col-sm-4 col-xs-8 col-middle">
 					<div class="header-logo">
 						<a  href="{{Config::get('app.url')}}">
-							THE
-							<br>
-							<span>TWO THOUSAND TIMES</span>
+							TWO THOUSAND TIMES
 						</a> 
 					</div>
 				</div>

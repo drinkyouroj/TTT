@@ -21,7 +21,7 @@ class HomeController extends BaseController {
 	 */
 	public function getIndex()
 	{
-		return Redirect::to('categories/all');
+		//return Redirect::to('categories/all');
 		//This page will get hit the hardest.  It has caching.
 		
 		if(Cache::has('featured') && !Session::get('admin') ) {

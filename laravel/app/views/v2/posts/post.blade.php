@@ -68,7 +68,7 @@
 										Flag</a>
 								</div>
 
-								<div class="col-md-3 col-xs-9 actions-container">
+								<div class="col-md-3 col-xs-8 actions-container">
 									<ul class="actions">
 										<li class="like">
 											<a data-action="like" class="like-button {{ $liked ? 'active' : '' }}" href="#" title="{{ $like_tooltip }}" data-toggle="tooltip" data-placement="bottom">
@@ -100,7 +100,7 @@
 									</a>
 								</div>
 							@endif
-							<div class="col-md-2 col-xs-3 comment-container">
+							<div class="col-md-2 col-xs-4 comment-container">
 								<a class="comment-button action-comment" href="#">Comment</a>
 							</div>
 						</div>

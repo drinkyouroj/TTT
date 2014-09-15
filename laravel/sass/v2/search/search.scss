@@ -20,42 +20,71 @@
 }
 
 // Below is the actual search results page
-.results-header {
+.results-container {
 	@include feed_container_widths;
-	ul.nav-tabs {
-		li {
-			a {
-				@include montserrat(bold);
+	.results-header {
+		margin:40px 15px 15px 15px;
+		.search-term {
+			text-align:center;
+			font-size:16px;
+			text-transform:none;
+			span {
+				font-size:32px;
 				text-transform:uppercase;
-				font-size:12px;
-				letter-spacing:1px;
-				color:$gray;
-				padding:5px 10;
-				border:solid 0px !important;
-				background-color:transparent !important;
-				&:hover, &:focus {
-					color:$dark !important;
+			}
+		}
+		ul.nav-tabs {
+			li {
+				a {
+					@include montserrat(bold);
+					text-transform:uppercase;
+					font-size:14px;
+					letter-spacing:1px;
+					color:$gray;
+					padding:5px 10;
+					border:solid 0px !important;
+					background-color:transparent !important;
+					&:hover, &:focus {
+						color:$dark !important;
+					}
+				}
+				&.active {
+					a {
+						color:$dark !important;
+					}
 				}
 			}
-			&.active {
-				a {
-					color:$dark !important;
+			padding-bottom:5px;
+			border-bottom:solid 3px $dark !important;
+		}
+		li.pull-right {
+			@media (max-width:$break-xs) {
+				width:100%;
+			}
+			form.search-form {
+				input {
+					width:100%;
 				}
 			}
 		}
-		padding-bottom:5px;
-		border-bottom:solid 3px $dark !important;
 	}
-	form.search-form {
-		margin-right: 15px;
-	}
-}
-.search-results {
-	.generic-listing {
-		overflow: hidden;
+	.search-results {
+		.generic-listing {
+			overflow: hidden;
+		}
 	}
 	.pagination-container {
+		position:relative;
+		display:block;
+		margin-bottom:50px;
 		text-align: center;
+		a.btn {
+			display:inline-block;
+			font-size:10px;
+		}
+		a.btn.disabled {
+			display:none;
+		}
 	}
 }
 
@@ -65,4 +94,8 @@
 }
 .users-listing {
 	@include feed_container_widths;
+	.generic-item {
+		@include user_listing;
+	}
 }
+

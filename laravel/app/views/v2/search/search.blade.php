@@ -48,88 +48,83 @@
 					</li>
 				</ul>
 			</div>
-			<div class="row">
-				<div class="tab-content">
-					<div id="posts-results" class="posts-listing tab-pane <?php echo $filter == 'posts' ? 'active' : '' ?>">
-						<h3 class="search-type">Posts</h3>
-						<div class="generic-listing">
-							@if( count( $posts ) )
-								
-								@foreach($posts as $k => $post)
-									@if(isset($post->id) && isset($post->user->username))
-										@include( 'v2/partials/post-listing-partial' )
-									@endif
-								@endforeach
-								
-							@else
-								<div class="col-md-12">
-									@if( $page == 1 )
-										No posts match the search term: {{$term}}
-									@else
-										No more results were found for the search: {{$term}}
-									@endif
-								</div>
-							@endif
-						</div>
-						<div class="pagination-container">
+
+			<div class="tab-content">
+				<div id="posts-results" class="posts-listing tab-pane <?php echo $filter == 'posts' ? 'active' : '' ?>">
+					<div class="generic-listing">
+						@if( count( $posts ) )
 							
-							@if ( $page > 1 )
-								{{-- Display prev page button --}}
-								<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$page - 1}}&filter=posts">Prev Page</a>
-							@endif
-							@if ( $post_count == 12 )
-								{{-- We have a full page of search results, display next page button --}}
-								<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$page + 1}}&filter=posts">Next Page</a>
-							@else
-								<a class="btn btn-flat-gray disabled" href="#">Next Page</a>
-							@endif
-
-
-						</div>
+							@foreach($posts as $k => $post)
+								@if(isset($post->id) && isset($post->user->username))
+									@include( 'v2/partials/post-listing-partial' )
+								@endif
+							@endforeach
+							
+						@else
+							<div class="col-md-12">
+								@if( $page == 1 )
+									No posts match the search term: {{$term}}
+								@else
+									No more results were found for the search: {{$term}}
+								@endif
+							</div>
+						@endif
 					</div>
-					
-					<div id ="users-results" class="users-listing tab-pane <?php echo $filter == 'users' ? 'active' : '' ?>">
-						<h3 class="search-type">Users</h3>
-						<div class="generic-listing">
-							@if(count ($users))
-								<div class="row">
-								@foreach($users as $k => $user)
-									@if(isset($user->id))
-										@include('partials/user-item')
-									@endif
-								@endforeach
-								</div>
-							@else
-								<div class="col-md-12">
-									@if( $page == 1 )
-										No users match the search: {{$term}}
-									@else
-										No more users were found for the search: {{$term}}
-									@endif
-								</div>
-							@endif
-						</div>
-					
-						<div class="pagination-container">
-							
-							@if ( $page > 1 )
-								{{-- Display prev page button --}}
-								<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$page - 1}}&filter=users">Prev Page</a>
-							@endif
-							@if ( $user_count == 12 )
-								{{-- We have a full page of search results, display next page button --}}
-								<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$page + 1}}&filter=users">Next Page</a>
-							@else
-								<a class="btn btn-flat-gray disabled" href="#">Next Page</a>
-							@endif
-
-						</div>
+					<div class="pagination-container">
+						
+						@if ( $page > 1 )
+							{{-- Display prev page button --}}
+							<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$page - 1}}&filter=posts">&#8592; Prev Page</a>
+						@endif
+						@if ( $post_count == 12 )
+							{{-- We have a full page of search results, display next page button --}}
+							<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$page + 1}}&filter=posts">Next Page &#8594;</a>
+						@else
+							<a class="btn btn-flat-gray disabled" href="#">Next Page</a>
+						@endif
 
 					</div>
-
-
-
+				<div class="clearfix"></div>
 				</div>
+				
+				<div id ="users-results" class="users-listing tab-pane <?php echo $filter == 'users' ? 'active' : '' ?>">
+					<div class="generic-listing">
+						@if(count ($users))
+							<div class="user-container">
+							@foreach($users as $k => $user)
+								@if(isset($user->id))
+									@include('partials/user-item')
+								@endif
+							@endforeach
+							</div>
+						@else
+							<div class="col-md-12">
+								@if( $page == 1 )
+									No users match the search: {{$term}}
+								@else
+									No more users were found for the search: {{$term}}
+								@endif
+							</div>
+						@endif
+					</div>
+				
+					<div class="pagination-container">
+						
+						@if ( $page > 1 )
+							{{-- Display prev page button --}}
+							<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$page - 1}}&filter=users">&#8592; Prev Page</a>
+						@endif
+						@if ( $user_count == 12 )
+							{{-- We have a full page of search results, display next page button --}}
+							<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$page + 1}}&filter=users">Next Page &#8594;</a>
+						@else
+							<a class="btn btn-flat-gray disabled" href="#">Next Page</a>
+						@endif
+
+					</div>
+				<div class="clearfix"></div>
+				</div>
+
 			</div>
 		</div>
 	@endif
