@@ -50,7 +50,9 @@
 						{{--if this is the third item--}}
 						@if(Auth::check() && is_object($from_feed))
 							{{--Somethign from the user's feed--}}
-							@include('v2.partials.featured-listing', array('post'=> $from_feed->post))
+							<div class="col-md-4 col-sm-6">
+							@include('v2.partials.featured-listing', array('post'=> $from_feed))
+							</div>
 						@else
 							{{--Signup box thing--}}
 							<div class="col-md-4 col-sm-6">

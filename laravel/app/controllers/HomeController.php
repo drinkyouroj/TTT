@@ -9,11 +9,13 @@ class HomeController extends BaseController {
 	public function __construct(
 							FeaturedRepository $featured,
 							FeedRepository $feed,
-							EmailRepository $email
+							EmailRepository $email,
+							PostRepository $post
 							){
 		$this->featured = $featured;
 		$this->feed = $feed;
 		$this->email = $email;
+		$this->post = $post;
 	}
 
 	/**
@@ -39,7 +41,15 @@ class HomeController extends BaseController {
 		if(Auth::check()) {
 			$user = Auth::user();
 			$from_feed = $this->feed->findOne($user->id, 'post');
-			$view->with('from_feed', $from_feed);
+			if(	isset($from_feed->post) &&
+				$from_feed->post->deleted_at 
+				) {
+				$view->with('from_feed', $from_feed->post );
+			} else {
+				$random = $this->post->random();
+				$view->with('from_feed', $random);
+			}
+			
 		} else {
 			$view->with('from_feed', false);
 		}

@@ -80,7 +80,7 @@ class MongoFeedRepository implements FeedRepository {
 
 	public function findOne($user_id, $type) {
 		$query = $this->feed
-						->where('user_id', $user_id)
+						->where('user_id', '!=',$user_id)
 						->where('feed_type','post')
 						->orderBy('updated_at', 'DESC')
 						->first();
