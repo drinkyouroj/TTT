@@ -87,6 +87,13 @@ input, textarea, button:focus {outline: none !important;}
 			.col-left {
 				margin-top: 0px;
 				button.read-button {
+					@media (max-width:$break-sm) {
+						background:none;
+						color:$dark;
+						border:0px;
+						font-size:15px;
+						padding:12px 14px;
+					}
 					span.text {
 						@media (max-width:$break-sm) {
 							display:none;
@@ -122,6 +129,7 @@ input, textarea, button:focus {outline: none !important;}
 
 			.col-right {
 				margin-top: 2px;
+				padding-right:25px;
 				&>*, &>form>* {
 					float: right;
 				}
@@ -135,6 +143,11 @@ input, textarea, button:focus {outline: none !important;}
 					margin-left: 10px;
 					position: relative;
 					text-align: center;
+					@media (max-width:$break-sm) {
+						height: 27px;
+						width: 27px;
+						margin-top: 7px;
+					}
 					.navbar-dropdown-toggle {
 						height: 100%;
 						width: 100%;
@@ -176,15 +189,15 @@ input, textarea, button:focus {outline: none !important;}
 				.navbar-dropdown {
 					position: absolute;
 					top: $navbar_height;
-					right: 0;
+					right: 25px;
 					margin-top:-3px;
 					min-width: $navbar_dropdown_menu_min_width;
 					max-width: $navbar_dropdown_menu_max_width;
 					background-color: $white;
 					display: none;
 					padding-bottom:10px;
-					border-top: 1px solid lightgray;
-					@include drop_shadow;
+					@include secondary_drop_shadow();
+					border:solid 1px $lightgray;
 					.dropdown-wrapper {
 						&>*, ul.notifications > li {
 						}

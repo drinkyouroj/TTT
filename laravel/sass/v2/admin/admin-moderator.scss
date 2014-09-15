@@ -55,12 +55,12 @@
 
 #offcanvas-admin-placeholder {
 	position: fixed;
-	top: 50px; 
+	top: 50%; 
 	right: 0;
-	width: 30px;
+	width: 22px;
 	height: 100px;
-	background-color: $dark;
-	z-index: 10000;
+	background-color: $gray;
+	z-index: 5;
 
 	&.sidebar-open {
 		right: inherit;
