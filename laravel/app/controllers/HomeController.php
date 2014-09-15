@@ -47,8 +47,8 @@ class HomeController extends BaseController {
 			   ) {
 				$view->with('from_feed', $from_feed->post );
 			} else {
-				$random = $this->post->random();
-				$view->with('from_feed', $random);
+				$random = $this->featured->random();
+				$view->with('from_feed', $random->post);
 			}
 			
 		} else {

@@ -66,6 +66,14 @@ class EloquentFeaturedRepository implements FeaturedRepository {
 		return $query->get();
 	}
 
+	public function random() {
+		$query = $this->featured
+						->where('front', false)
+						->orderBy(DB::raw('RAND()'))
+						->first();
+		return $query;
+	}
+
 	public function findByPostId ( $post_id ) {
 		$result = $this->featured->where( 'post_id', $post_id )->get()->first();
 		if ( $result instanceof Featured ) {
