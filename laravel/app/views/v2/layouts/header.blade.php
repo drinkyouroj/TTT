@@ -220,8 +220,10 @@
 
 <div id="offcanvas-placeholder">
 	<div class="toggle-sidebar">
-		<div class="circle"></div>
-		<div class="circle"></div>
-		<div class="circle"></div>
+		<div class="toggle-icon">
+			<div class="circle"></div>
+			<div class="circle"></div>
+			<div class="circle"></div>
+		</div>
 	</div>
 </div>

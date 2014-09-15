@@ -298,9 +298,7 @@ input, textarea, button:focus {outline: none !important;}
 	}
 }
 #offcanvas-admin-placeholder { //Temporary DELETE!!!
-@media (max-width:$break-xs) {
-		display:none;
-	}
+
 }
 
 #offcanvas-sidebar {
@@ -412,10 +410,12 @@ input, textarea, button:focus {outline: none !important;}
 #offcanvas-placeholder {
 	position: fixed;
 	top: 0; left: 0;
-	width: 22px;
+	width: 15px;
 	height: 100%;
 	background-color: $black;
+	border-right:solid 1px #2a2a2a;
 	z-index: 10000;
+	cursor: pointer;
 	@media (max-width:$break-sm) {
 		display:none !important;
 	}
@@ -428,14 +428,12 @@ input, textarea, button:focus {outline: none !important;}
 		position: absolute;
 		top: 50%;
 		margin-top: -50%;
-		cursor: pointer;
-
 		.circle {
 			height: 6px;
 			width: 6px;
 			background-color: white;
 			border-radius: 50%;
-			margin: 8px;
+			margin: 8px 5px;
 		}
 	}
 }
