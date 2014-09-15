@@ -80,6 +80,21 @@ class CategoryLogic {
 		}
 		
 		$posts = $posts->skip(($page-1)*$paginate)
+						->select(
+								array(
+
+									'user_id',
+									'title',
+									'alias',
+									'tagline_1',
+									'tagline_2',
+									'tagline_3',
+									'story_type',
+									'image',
+									'published_at'
+								)
+							)
+
 						->take($paginate)
 						->get();
 		

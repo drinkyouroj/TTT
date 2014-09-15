@@ -1,42 +1,43 @@
 <?php
 	$is_guest = Auth::guest();
+	$is_mobile = Agent::isMobile();
 ?>
 
 <div class="header-wrapper">
 	<div class="header-inner-wrapper">
-		<div class="header-container container">
+		<div class="header-container">
 			<div class="row">
-				<div class="col-sm-4 col-xs-3 col-left">
+				<div class="col-sm-4 col-xs-2 col-left">
 					<button class="read-button toggle-sidebar">
-						<span>
+						<span class="glyphicon glyphicon-align-justify">
+						</span>
+						<span class="text">
 							READ
 						</span>
 					</button>
 
 					@if( $is_guest )
-						<a class="post-btn btn-flat-blue" data-toggle="modal" data-target="#guestSignup">POST</a>
+						<a class="post-btn post-button" href="{{ URL::to( 'user/signup' ) }}">POST</a>
 					@else
 						@if(Route::current()->uri() != 'myprofile/newpost')
-							<a class="post-btn btn-flat-blue" href="{{Config::get('app.url')}}/myprofile/newpost">POST</a>
+							<a class="post-btn post-button" href="{{Config::get('app.url')}}/myprofile/newpost">POST</a>
 						@endif
 					@endif
 
 				</div>
-				<div class="col-sm-4 col-xs-6 col-middle">
+				<div class="col-sm-4 col-xs-8 col-middle">
 					<div class="header-logo">
 						<a  href="{{Config::get('app.url')}}">
-							THE
-							<br>
-							<span>TWO THOUSAND TIMES</span>
-						</a>
+							TWO THOUSAND TIMES
+						</a> 
 					</div>
 				</div>
 
-				<div class="col-sm-4 col-xs-3 col-right">
+				<div class="col-sm-4 col-xs-2 col-right">
 						@if( $is_guest )
-							@if(Request::segment(1) != 'user')
-								<a class="btn-outline-blue signup hidden-xs" data-toggle="modal" data-target="#guestSignup">Signup</a>
-							@endif
+							
+							<a class="btn-outline-blue signup hidden-xs" href="{{ URL::to( 'user/signup' ) }}">Signup</a>
+							
 							<a class="login-btn login hidden-xs" href="{{ URL::to( 'user/login' ) }}">LOG IN</a>
 						@else
 						<div class="action">
@@ -51,9 +52,9 @@
 						@endif
 					
 
-					{{ Form::open(array('url'=> 'search', 'class' => 'form-search pull-right', 'role'=>'search' )) }}
+					{{ Form::open(array('url'=> 'search', 'class' => 'form-search pull-right', 'role'=>'search', 'method'=>'get' )) }}
 						<input class="search-input" autocomplete="off" name="search" id="search-input" type="text">
-						<label class="glyphicon glyphicon-search" for="search-input">
+						<label class="glyphicon glyphicon-search hidden-xs" for="search-input">
 						</label>
 						<input type="submit" value="Search" class="hidden" >
 						<div class="result-box hidden"></div>
@@ -86,11 +87,11 @@
 								</ul>
 								
 								<div class="view-all">
-									<a class="btn-outline-blue" href="{{Config::get('app.url')}}/profile/notifications">VIEW ALL</a>
+									<a class="btn-outline-blue" href="{{Config::get('app.url')}}/myprofile#notifications">VIEW ALL</a>
 								</div>
 
 								<div class="additional-user-actions">
-									<a href="{{Config::get('app.url')}}/myprofile#settings">ACCOUNT SETTINGS</a>
+									<a href="{{Config::get('app.url')}}/myprofile#settings" class="profile-settings">ACCOUNT SETTINGS</a>
 									<br>
 									<a href="{{Config::get('app.url')}}/user/logout">SIGN OUT</a>
 								</div>
@@ -117,27 +118,46 @@
 {{-- ============ OFFCANVAS SIDEBAR ============= --}}
 <div id="offcanvas-sidebar">
 	<ul class="list-unstyled sidebar-options" id="accordion">
+		<li class="visible-xs">
+			{{ Form::open(array('url'=> 'search', 'class' => 'form-search', 'role'=>'search', 'method'=>'get' )) }}
+				<input class="search-input" autocomplete="off" name="search" id="search-input" type="text" placeholder="search">
+				</label>
+				<input type="submit" value="Search" class="hidden" >
+				<div class="result-box hidden"></div>
+			{{ Form::close() }}
+		</li>
+		@if( $is_guest )
+			<li class="sidebar-option post-btn-mobile visible-xs">
+				<a href="{{ URL::to( 'user/signup' ) }}">POST</a>
+			</li>
+		@else
+			<li class="sidebar-option post-btn-mobile visible-xs">
+				<a href="{{Config::get('app.url')}}/myprofile/newpost">POST</a>
+			</li>
+		@endif
+
 
 		<li class="sidebar-option feed {{ $is_guest ? 'disabled' : '' }}">
 			@if ( $is_guest )
-			<a href="#" data-toggle="modal" data-target="#guestSignup">	
+				<a href="{{ URL::to( 'user/signup' ) }}">	
 			@else
-			<a href="{{ URL::to( 'myprofile' ) }}#feed">
+				<a href="{{ URL::to( 'myprofile' ) }}#feed">
 			@endif
 				MY FEED
 				<span class="glyphicon glyphicon-align-right pull-right"></span>
 			</a>
 		</li>
 
+
 		<li class="sidebar-option categories">
 			<a href="#itemTwo" data-toggle="collapse" data-parent="#accordion">
 				CATEGORIES
-				<span class="glyphicon glyphicon-plus pull-right"></span>
+				<span class="glyphicon glyphicon-<?php echo $is_mobile ? 'plus' : 'minus' ?> pull-right"></span>
 			</a>
-			<div id="itemTwo" class="collapse">
+			<div id="itemTwo" class="collapse <?php echo $is_mobile ? '' : 'in' ?>">
 				<ul class="list-unstyled">
 					<li>
-						<a href="{{ URL::to('categories/featured') }}">Featured</a>
+						<a href="{{ URL::to('featured') }}">Featured</a>
 					</li>
 					<li class="category-all">
 						<a href="{{ URL::to('categories/all') }}">All</a>
@@ -151,7 +171,7 @@
 
 		@if ( $is_guest )
 			<li class="sidebar-option saves disabled">
-				<a href="#" data-toggle="modal" data-target="#guestSignup">
+				<a href="#" href="{{ URL::to( 'user/signup' ) }}">
 					SAVES
 					<span class="glyphicon glyphicon-plus pull-right"></span>
 				</a>
@@ -191,18 +211,8 @@
 			</li>
 		@endif
 
-		@if( $is_guest )
-			<li class="sidebar-option post-btn-mobile visible-xs">
-				<a data-toggle="modal" data-target="#guestSignup">POST</a>
-			</li>
-		@else
-			<li class="sidebar-option post-btn-mobile visible-xs">
-				<a href="{{Config::get('app.url')}}/myprofile/newpost">POST</a>
-			</li>
-		@endif
-
 		<li class="sidebar-option signup-mobile visible-xs">
-			<a data-toggle="modal" data-target="#guestSignup">Signup</a>
+			<a href="{{ URL::to( 'user/signup' ) }}">Signup</a>
 		</li>
 		<li class="sidebar-option login-mobile visible-xs">
 			<a href="{{ URL::to( 'user/login' ) }}">Log in</a>
@@ -212,8 +222,10 @@
 
 <div id="offcanvas-placeholder">
 	<div class="toggle-sidebar">
-		<div class="circle"></div>
-		<div class="circle"></div>
-		<div class="circle"></div>
+		<div class="toggle-icon">
+			<div class="circle"></div>
+			<div class="circle"></div>
+			<div class="circle"></div>
+		</div>
 	</div>
 </div>

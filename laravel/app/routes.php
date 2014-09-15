@@ -16,7 +16,8 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 		Route::get( 'feed/{feed_type}/{page}', 'MyProfileController@getRestFeed' );
 		Route::get( 'saves/delete/{post_id}', 'MyProfileController@getRestSaveDelete' );
 		Route::get( 'saves/{page}', 'MyProfileController@getRestSaves' );
-		
+		Route::get( 'notifications/{page}', 'MyProfileController@getRestNotifications' );
+
 		Route::get( 'drafts/{page}', 'MyProfileController@getRestDrafts' );
 		//below 2 are delete functions
 		Route::get( 'repost/{id}', 'MyProfileController@getRestRepostDelete' );
@@ -25,6 +26,7 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 		Route::post( 'featured/{post_id}', 'MyProfileController@postRestFeatured');
 		Route::post( 'image/upload', 'MyProfileController@postAvatar');
 		Route::post( 'password', 'UserController@postNewpass'); //I know its not in myprofile!
+		Route::post( 'email/update', 'MyProfileController@postUpdateEmail');
 	});
 
 	//Profile Image for the Follower/Following buttons.
@@ -79,6 +81,7 @@ Route::group(array('prefix'=>'rest'), function() {
 	Route::get( 'profile', 'ProfileController@getRestProfile');
 
 	//Auto Load of for featured.
+	Route::get( 'featured/{page}', 'HomeController@getRestFeatured');
 	Route::get( 'featured', 'HomeController@getRestFeatured');
 	
 });
@@ -95,7 +98,6 @@ Route::group( array('prefix'=>'myprofile', 'before' => 'auth' ), function() {
 	Route::get('/{alias}', 'MyProfileController@getPublicProfile');
 
 	Route::get('/', 'MyProfileController@getMyProfile');
-	//Route::controller( 'myprofile', 'MyProfileController' );
 });
 
 //Admin area
@@ -107,10 +109,8 @@ Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
 	Route::get('delete/user/{user_id}', 'AdminController@deleteUser');
 	Route::get('restore/user/{user_id}', 'AdminController@restoreUser');
 	Route::get('reset/user/{user_id}', 'AdminController@resetUser');
-
-	//Route::get('solr', 'AdminController@getResetSolr');//this updates the users on solr
-	//Route::get('resetnot/{batch}', 'AdminController@getResetNotifications');//this updates the users on solr
-	Route::controller('/','AdminController');	
+	Route::post('post/edit', 'AdminController@editPost');
+	Route::controller('/','AdminController');
 });
 
 //Mod area
@@ -120,10 +120,6 @@ Route::group(array('prefix'=> 'mod', 'before'=> 'mod'), function() {
 	Route::get('delete/post/{post_id}/category/{category_id}', 'ModController@deletePostCategory');
 	Route::get('ban/user/{user_id}', 'ModController@banUser');
 	Route::get('unban/user/{user_id}', 'ModController@unbanUser');
-
-	// Route::get('delcomment/{id}','ModController@getDelComment');
-	// Route::get('ban/{id}','ModController@getBan');
-	// Route::get('/','ModController@getIndex');
 });
 
 /********************The Authentication Routes  (Confide routes)************************/
@@ -131,8 +127,13 @@ Route::group(array('prefix'=> 'user'), function() {
 	Route::get('confirm/{code}', 'UserController@getConfirm');
 	Route::get('reset/{token}', 'UserController@getReset');
 	Route::get('restore/{id}', 'UserController@getRestore');
+	Route::get('emailupdate/{token}', 'UserController@getEmailUpdate');
+	
 	Route::get('check', 'UserController@getUserCheck');
+	
 	Route::get('forgot', 'UserController@getForgot');
+	Route::post('forgot', 'UserController@postForgot');
+
 	Route::controller( '/', 'UserController');
 });
 
@@ -144,55 +145,25 @@ Route::group(array('prefix'=>'categories'),function() {
 	Route::get( '{alais}', 'CategoryController@getCategory');	
 });
 
-
 //Posts routes
 Route::get( 'posts/{alias}', 'PostController@getPost');
 Route::get( 'posts', 'PostController@getIndex');//grabs a random post
 
 //Search routes
-Route::get('search/{term}', 'SearchController@getResult');//Might turn into a rest system later
-Route::post('search', 'SearchController@postResult');
-
-
-//Protected Profile routes
-Route::group(array('prefix'=> 'profile', 'before'=> 'profile|auth'), function() 
-{
-	/*
-	Route::get( 'editpost/{id}', 'PostController@getPostForm');
-	Route::get( 'newpost', 'PostController@getPostForm');
-	
-	Route::post( 'submitpost', 'PostController@postPostForm');
-	
-	//All Notifications
-	Route::get( 'notifications', 'ProfileController@getNotifications');
-	
-	//My Posts
-	Route::get( 'myposts', 'ProfileController@getMyPosts');
-	
-	//My Settings
-	Route::get( 'settings', 'ProfileController@getSettings');
-	
-	//Comments
-	Route::get( 'commentform/{post_id}/{reply_id}', 'CommentController@getCommentForm');//This is for getting the reply forms.
-	Route::post( 'comment/{post_id}', 'CommentController@postCommentForm');
-	
-	//Messages
-	Route::get( 'replymessage/{reply_id}', 'MessageController@getMessageReplyForm');
-	Route::get( 'newmessage/{user_id}', 'MessageController@getMessageForm');
-	Route::get( 'newmessage', 'MessageController@getMessageForm');
-	
-	Route::post( 'submitmessage', 'MessageController@postMessageForm');
-	Route::get( 'messages', 'MessageController@getMessageInbox');
-	*/
-});
+Route::get('search', 'SearchController@getSearchPage');
+// Rest routes for searching users/posts (currently not used)
+Route::get('search/users/{term}/{page}', 'SearchController@searchUsers');
+Route::get('search/posts/{term}/{page}', 'SearchController@searchPosts');
 
 //Not protected profile routes
 Route::group(array('before'=>'profile'), function() {
-	//General Posts
+	//General Profile
 	Route::get( 'profile/{alias}', 'MyProfileController@getPublicProfile');
-	Route::get( 'profile', 'ProfileController@getProfile');
-	
+	Route::get( 'profile', 'MyProfileController@getPublicProfile');
 });
+
+//For Error Logging if the user wishes to contribute.
+Route::get('error/form', 'HomeController@getErrorForm');
 
 //For banned users to see when try try to log in.
 Route::get('banned', 'UserController@getBanned');

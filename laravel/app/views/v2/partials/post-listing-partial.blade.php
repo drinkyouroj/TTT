@@ -5,23 +5,24 @@
 	
 	<div class="post-image-overlay">
 		<a href="{{ URL::to('profile/'.$post->user->username ) }}">
-			<?php $user_image = $post->user->image ? 'uploads/final_images/'.$post->user->image : 'images/profile/avatar-default.png' ;?>
-			<img class="post-author-avatar" src="{{Config::get('app.url')}}/{{$user_image}}">
+			<?php $user_image = $post->user->image ? Config::get('app.imageurl').'/'.$post->user->image : Config::get('app.url').'/images/profile/avatar-default.png' ;?>
+			<img class="post-author-avatar" src="{{$user_image}}">
 		</a>
 		{{$post->story_type}} by <a href="{{ URL::to('profile/'.$post->user->username ) }}"> {{ $post->user->username }} </a>
 
 		@if ( isset( $feed_type ) && $feed_type == 'repost' )
 			<div class="post-repost-container">
-				<img class="post-repost-image" src="{{ URL::to('img/icons/repost-single.png') }}">
+				<img class="post-repost-image" src="{{ URL::to('images/global/repost-single.png') }}" width="30px" height="30px">
 				<div class="post-repost-count-container"> x 
 					<span class="post-repost-count">{{ count( $users ) }} </span>
 				</div>
 				<ul class="post-repost-user-dropdown list-unstyled fade in out">
 					@foreach ( $users as $user )
-						<li> 
-							<a href="{{ URL::to('profile/'.$user) }}"> {{ $user }} </a> 
+						<li>
+							<a href="{{ URL::to('profile/'.$user) }}"> {{ $user }} </a>
 						</li>
 					@endforeach
+						<li class="reposted-label">reposted this post.</li>
 				</ul>
 			</div>
 		@endif
@@ -30,7 +31,7 @@
 
 	<a class="image-link" href="{{ URL::to('posts/'.$post->alias) }}">
 		<div class="top-fade"> </div>
-			<div class="post-image" style="background-image:url('{{ URL::to('uploads/final_images/'.$post->image) }}')">
+			<div class="post-image" style="background-image:url('{{ Config::get('app.imageurl').'/'.$post->image }}')">
 
 			</div>
 	</a>

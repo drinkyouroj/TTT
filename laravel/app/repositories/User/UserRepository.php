@@ -14,10 +14,14 @@ interface UserRepository {
 	public function find($id);
 
 	public function all();
+	public function allByIds( $user_ids );
 
 //Update
 	public function update($input);
 	
+	public function updatePassword($user, $password);
+
+	public function updateEmail($confirm_code);
 	/**
 	 *	Soft Delete a user. This method has the cascading effect
 	 *	of soft deleting all posts authored by this user, as well
@@ -30,6 +34,7 @@ interface UserRepository {
 	 *	restores the user's posts and re-publishes their comments.
 	 */
 	public function restore($id);
+	public function restoreByConfirmation($restore_confirm);
 
 //Credentials
 	public function login($data);
@@ -53,5 +58,20 @@ interface UserRepository {
 	 * @return an array containing the user and new password
 	 */
 	public function resetPassword($id);
-	
+
+	/**
+	 * Reset the password for a user who has an e-mail address.
+	 * @return an array with the same return from resetPassword.
+	 */
+	public function forgotPassword($email,$username);
+
+	/**
+	 *	Get the number of usernames attached to the given email.
+	 */
+	public function usernamesPerEmailCount( $email );
+
+
+	public function getUserCount();
+	public function getConfirmedUserCount();
+	public function getUserCreatedTodayCount();
 }

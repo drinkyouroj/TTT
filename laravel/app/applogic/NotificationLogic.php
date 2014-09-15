@@ -34,6 +34,28 @@ class NotificationLogic {
 		
 	}
 	
+	public function like($post_id) {
+		$post = $this->post->findById($post_id);
+		
+		$not_params = array(
+				'post_id' => $post->id,
+				'post_title' => $post->title,
+				'post_alias' => $post->alias,
+				'user_id'	=> $post->user->id,
+				'notification_type' => 'like'
+			);
+
+		$this->not->create( $not_params, Auth::user()->username );
+	}
+
+	public function unlike($post_id) {
+		$post = $this->post->findById($post_id);
+
+		$not = $this->not->find($post->id, $post->user->id, 'like');
+
+		$this->not->pullUsers($not, Auth::user()->username);
+	}
+
 	/**
 	 * 	Favorites Notifications.
 	 * 	@param $post_id: The post being favorited
@@ -50,6 +72,7 @@ class NotificationLogic {
 			'user_id' => $post->user->id,
 			'notification_type' => 'favorite'
 		);
+
 		// Create the notification
 		$this->not->create( $not_params, Auth::user()->username );
 	}

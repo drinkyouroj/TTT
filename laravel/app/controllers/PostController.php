@@ -1,11 +1,8 @@
 <?php
 
-//PostRepository is just an interface!  Change it in the service provider if we ever need to.
-//use AppStorage\Post\PostRepository;
+use \Carbon\Carbon;
 
 class PostController extends BaseController {
-
-	protected $softDelete = true;
 
 	public function __construct(
 							PostRepository $post,
@@ -18,7 +15,8 @@ class PostController extends BaseController {
 							ActivityRepository $activity,
 							CommentRepository $comment,
 							FeedRepository $feed,
-							FeaturedRepository $featured
+							FeaturedRepository $featured,
+							SearchRepository $search
 							) {
 		$this->post = $post;
 		$this->repost = $repost;
@@ -31,6 +29,7 @@ class PostController extends BaseController {
 		$this->comment = $comment;
 		$this->feed = $feed;
 		$this->featured = $featured;
+		$this->search = $search;
 	}
 
 	public function getIndex() {
@@ -43,14 +42,29 @@ class PostController extends BaseController {
      */
     public function getPost ( $alias )
     {
-        $post = $this->post->findByAlias( $alias );
-		
-		$user_id = false;
-        if(Auth::check()) {
-        	$user_id = Auth::user()->id;
-        }
+    	if(Cache::has($alias) && !Session::get('admin') ) {
+        	$post = Cache::get($alias);
+        } else {
+        	//real query
+        	$post = $this->post->findByAlias( $alias );
 
-		if ( is_object($post) && ($post->published || $post->user_id == $user_id) ) {
+        	$expiresAt = Carbon::now()->addMinutes(10);
+			Cache::put($alias,$post,$expiresAt);
+        }
+        // Check that the post even exists (includes soft deleted).
+		if ( !is_object($post) ) {
+			return Redirect::to('/');
+		}
+		
+		$user = Auth::check() ? Auth::user() : false;
+		$user_id = $user != false ? $user->id : false;
+		$is_mod = $user != false ? $user->hasRole('Moderator') : false;
+		$is_admin = $user != false ? $user->hasRole('Admin') : false;
+		
+		// 1. admin can view any post (deleted or not)
+		// 2. user may view a post that is published
+		// 3. user may view post that is draft => only if they are the author
+		if (  $is_admin || (!$post->trashed() && ($post->published || $post->user_id == $user_id)) ) {
 			//Post exists and (is published OR draft is owned by appropriate user)
 						
 			if( !isset($post->user->username) ) {
@@ -61,7 +75,7 @@ class PostController extends BaseController {
 			}
 			
 			//Logged in.
-			if( Auth::check() ) {
+			if( $user != false ) {
 				
 				$my_id = Auth::user()->id;//My user ID
 				$is_following = $this->follow->is_following($my_id,$user_id);
@@ -69,9 +83,6 @@ class PostController extends BaseController {
 				$liked = $this->like->has_liked($my_id, $post->id);
 				$favorited = $this->favorite->has_favorited($my_id, $post->id);
 				$reposted = $this->repost->has_reposted($my_id, $post->id);
-				// Admin shit
-				$is_mod = Session::get('mod');
-				$is_admin = Session::get('admin');
 
 			} else {
 				//DEFAULTS for not logged in users
@@ -81,8 +92,6 @@ class PostController extends BaseController {
 				$liked = false;
 				$favorited = false;
 				$reposted = false;
-				$is_mod = false;
-				$is_admin = false;
 			}
 			
 			//Add the fact that the post has been viewed if you're not the owner and you're logged in.
@@ -146,13 +155,14 @@ class PostController extends BaseController {
 					->with('edit', true);
 		} else {
 			//Gotta put in a query here to see if the user submitted something in the last 10 minutes
-			$post = $this->post->lastPostUserId(Auth::user()->id);
+			$post = $this->post->lastPostUserId(Auth::user()->id,1);
 			
 			if(isset($post->id)) {
 				//not an admin and 10min has not passed since your last post.
 				if(!Session::get('admin') && strtotime(date('Y-m-d H:i:s', strtotime('-10 minutes'))) <= strtotime($post->created_at)  ){
+
 					//Gotta make a new view for that.
-					return View::make('generic/post-error');
+					return View::make('v2/errors/post-limit-error');
 				}
 			}
 					
@@ -228,7 +238,7 @@ class PostController extends BaseController {
 				//New Post.
 				$new = true;
 				//Checking to see if this is an new post being applied by a punk
-				$last_post = $this->post->lastPostUserId(Auth::user()->id);
+				$last_post = $this->post->lastPostUserId(Auth::user()->id, 1);
 				
 				if( isset($last_post->id) && 
 					$new && 
@@ -256,7 +266,7 @@ class PostController extends BaseController {
 					$post->save();
 								
 					//no featured for this user? set this new post as featured.
-					if($user->featured == false) {
+					if($user->featured == false && $post->draft == false) {
 						User::where('id', Auth::user()->id)
 							->update(array('featured' => $post->id));
 					}
@@ -274,13 +284,14 @@ class PostController extends BaseController {
 					$file = OpenCloud::upload('Images', public_path().'/uploads/final_images/'.$post->image, $post->image);
 				}
 				*/
-
-				//Gotta save the categories pivot
-				foreach(Input::get('category') as $k => $category) {
-					if($k <= 1) {//This will ensure that no more than 2 are added at a time.
-						$post->categories()->attach($category);
-					} else {
-						break;//let's not waste processes
+				if (Input::has('category')) {
+					//Gotta save the categories pivot
+					foreach(Input::get('category') as $k => $category) {
+						if($k <= 1) {//This will ensure that no more than 2 are added at a time.
+							$post->categories()->attach($category);
+						} else {
+							break;//let's not waste processes
+						}
 					}
 				}
 
@@ -317,7 +328,8 @@ class PostController extends BaseController {
 									)
 								);
 
-					SolariumHelper::updatePost($post);//Let's add the data to solarium (Apache Solr)
+					// Add to search db
+					$this->search->updatePost( $post );
 				}
 
 				if($new) {
@@ -358,23 +370,24 @@ class PostController extends BaseController {
 					//Creates a new post
 					$post = $this->post->instance();
 					//alias can't be changed ever after initial submit.
-					$post->alias = preg_replace('/[^A-Za-z0-9]/', '', $query['title'] ).'-'.str_random(5).'-'.date('m-d-Y');//makes alias.  Maybe it should exclude other bits too...
+					$alias = str_replace(' ', '-', $query['title']);
+					$post->alias = preg_replace('/[^A-Za-z0-9\-]/', '', $alias).'-'.str_random(5).'-'.date('m-d-Y');//makes alias.  Maybe it should exclude other bits too...
 				}
 				$post->user_id = Auth::user()->id;
 				
 				//Gotta make sure to make the alias only alunum.  Don't change alias on the update.  We don't want to have to track this change.
-				$post->story_type = $query['story_type'];
+				$post->story_type = isset($query['story_type']) ? $query['story_type'] : '';
 				
-				$post->category = serialize ($query['category'] );
-				$post->image = $query['image'];//If 0, then it means no photo.
+				$post->category = isset($query['category']) ? serialize ( $query['category'] ) : '';
+				$post->image = isset($query['image']) ? $query['image'] : 0;//If 0, then it means no photo.
 				
 				
 				$post->title = $query['title'];
-				$post->tagline_1 = $query['tagline_1'];
-				$post->tagline_2 = $query['tagline_2'];
-				$post->tagline_3 = $query['tagline_3'];
+				$post->tagline_1 = isset($query['tagline_1']) ? $query['tagline_1'] : '';
+				$post->tagline_2 = isset($query['tagline_2']) ? $query['tagline_2'] : '';
+				$post->tagline_3 = isset($query['tagline_3']) ? $query['tagline_3'] : '';
 				
-				$post->body = strip_tags($query['body'], '<p><i><b>');//Body is the only updatable thing in an update scenario.
+				$post->body = isset($query['body']) ? trim( strip_tags($query['body'], '<p><i><b>') ) : '';//Body is the only updatable thing in an update scenario.
 
 				//if the post is becoming published.
 				if( $query['published'] ) {

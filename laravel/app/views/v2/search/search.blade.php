@@ -1,79 +1,132 @@
 @extends('v2.layouts.master')
 
 @section('css')
-	<link href="{{Config::get('app.url')}}/css/views/search.css" rel="stylesheet" media="screen">
+	<link href="{{Config::get('app.url')}}/css/compiled/v2/search/search.css" rel="stylesheet" media="screen">
 @stop
 
 @section('js')
-	<script type="text/javascript">
-		window.category = '{{Request::segment(2)}}';
-		window.filter = '{{Request::segment(3)}}';
-	</script>
-	
 	
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/handlebars-v1.3.0.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/generic-listing.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/search/search.js"></script>
 	
-	@include('partials/generic-handlebar-item')
+	@include( 'v2/partials/post-listing-template' )
 @stop
-
-@section('filters')
-	@include('partials/generic-filter')
-@stop
-
-@if(isset($cat_title))
-	{? $title =  $cat_title ?}
-@else
-	{? $title =  'Search' ?}
-@endif
-
 
 @section('title')
-	{{$title}} | The Twothousand Times 
+	Search | The Twothousand Times
 @stop
 
 @section('content')
-	<div class="container search-results">
-		<h2 class="search-term">Search for: <span>{{$term}}</span></h2>
-		<div class="row">
-			<div class="col-md-9 posts-listing">
-				<h3 class="search-type">Posts</h3>
-				<div class="generic-listing">
-					@if(!is_string($posts))
-						<div class="row">
-						@foreach($posts as $k => $post)
-							@if(isset($post->id) && isset($post->user->username))
-								@include('partials/generic-item')
-							@endif
-						@endforeach
-						</div>
-					@else
-						<div class="col-md-12">
-							No Posts Match the Search Term
-						</div>
-					@endif
-				</div>
+	
+	@if ( isset($default))
+		<div class="search-container">
+			<h2>Search <small>Find users and content</small></h2>
+			<form class="search-form" action="{{Config::get('app.url')}}/search" method="get">
+				<input type="text" name="search" placeholder="Search">
+			</form>
+		</div>
+
+
+	@else
+		<script type="text/javascript">
+			window.search_term = '{{ $term }}';
+			window.search_post_count = {{ count( $posts ) }};
+			window.search_user_count = {{ count( $users ) }};
+		</script>
+
+		<div class="results-container search-results">
+			<div class="results-header">
+				<h2 class="search-term">Search results for: <span>{{$term}}</span></h2>
+				<ul class="nav nav-tabs">
+					<li class="<?php echo $filter == 'posts' ? 'active' : '' ?>"><a href="#posts-results" data-toggle="tab">Posts</a></li>
+					<li class="<?php echo $filter == 'users' ? 'active' : '' ?>"><a href="#users-results" data-toggle="tab">Users</a></li>
+					<li class="pull-right">
+						<form class="search-form" action="{{Config::get('app.url')}}/search" method="get">
+							<input type="text" name="search" placeholder="Search">
+						</form>
+					</li>
+				</ul>
 			</div>
-			<div class="col-md-3 users-listing">
-				<h3 class="search-type">Users</h3>
-				<div class="generic-listing">
-					@if(!is_string($users))
-						<div class="row">
-						@foreach($users as $k => $user)
-							@if(isset($user->id))
-								@include('partials/user-item')
-							@endif
-						@endforeach
-						</div>
-					@else
-						<div class="col-md-12">
-							No Users Match the Search Term
-						</div>
-					@endif
+
+			<div class="tab-content">
+				<div id="posts-results" class="posts-listing tab-pane <?php echo $filter == 'posts' ? 'active' : '' ?>">
+					<div class="generic-listing">
+						@if( count( $posts ) )
+							
+							@foreach($posts as $k => $post)
+								@if(isset($post->id) && isset($post->user->username))
+									@include( 'v2/partials/post-listing-partial' )
+								@endif
+							@endforeach
+							
+						@else
+							<div class="col-md-12">
+								@if( $page == 1 )
+									No posts match the search term: {{$term}}
+								@else
+									No more results were found for the search: {{$term}}
+								@endif
+							</div>
+						@endif
+					</div>
+					<div class="pagination-container">
+						
+						@if ( $page > 1 )
+							{{-- Display prev page button --}}
+							<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$page - 1}}&filter=posts">&#8592; Prev Page</a>
+						@endif
+						@if ( $post_count == 12 )
+							{{-- We have a full page of search results, display next page button --}}
+							<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$page + 1}}&filter=posts">Next Page &#8594;</a>
+						@else
+							<a class="btn btn-flat-gray disabled" href="#">Next Page</a>
+						@endif
+
+					</div>
+				<div class="clearfix"></div>
 				</div>
+				
+				<div id ="users-results" class="users-listing tab-pane <?php echo $filter == 'users' ? 'active' : '' ?>">
+					<div class="generic-listing">
+						@if(count ($users))
+							<div class="user-container">
+							@foreach($users as $k => $user)
+								@if(isset($user->id))
+									@include('partials/user-item')
+								@endif
+							@endforeach
+							</div>
+						@else
+							<div class="col-md-12">
+								@if( $users_page == 1 )
+									No users match the search: {{$term}}
+								@else
+									No more users were found for the search: {{$term}}
+								@endif
+							</div>
+						@endif
+					</div>
+				
+					<div class="pagination-container">
+						
+						@if ( $users_page > 1 )
+							{{-- Display prev page button --}}
+							<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$users_page - 1}}&filter=users">&#8592; Prev Page</a>
+						@endif
+						@if ( $user_count == 12 )
+							{{-- We have a full page of search results, display next page button --}}
+							<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$users_page + 1}}&filter=users">Next Page &#8594;</a>
+						@else
+							<a class="btn btn-flat-gray disabled" href="#">Next Page</a>
+						@endif
+
+					</div>
+				<div class="clearfix"></div>
+				</div>
+
 			</div>
 		</div>
-	</div>
-
+	@endif
 	
 @stop

@@ -25,7 +25,7 @@
 		font-size:50px;
 		letter-spacing:2px;
 		@media (max-width:$break-sm) {
-			font-size:21px;
+			font-size:32px;
 		}
 	}
 }
@@ -34,11 +34,25 @@
 	@include feed_container_widths;
 	@include catfilter;
 	margin-bottom:20px;
-	.category-filter-container {
-		@media (max-width:$break-sm) {
-			width:48%;
-			float:left;
-			margin:0 .5% 20px .5%;
+	.filters-container {
+		margin:0 15px;
+		.category-filter-container {
+			@media (max-width:$break-sm) {
+				width:48%;
+				min-width:0px;
+				float:left;
+				margin:0 0 10px 0;
+			}
+			.category-filter-title {
+				@media (max-width:$break-xs) {
+					font-size:12px;
+				}
+			}
+			&.cat-container {
+				@media (max-width:$break-md) {
+					margin-right:4%;
+				}
+			}
 		}
 	}
 }
@@ -47,5 +61,10 @@
 	@include feed_container_widths;
 	overflow: hidden;
 	@include post_listing( false );
-	padding-bottom: 500px;
+	.post-container {
+		@media screen and (max-width: 630px){
+			height:auto;
+			margin-bottom:20px;
+		}
+	}
 }

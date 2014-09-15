@@ -16,53 +16,54 @@
 	@section('content')
 
 		<section class="category-header">
-			<img class="corner-icon" src="/images/global/ttt-icon.png">
+			<img class="corner-icon" src="{{ URL::to('images/global/ttt-icon.png') }}">
 			<h1 class="category-title">
 				{{ $cat_title }}
 			</h1>
 		</section>
 
 		<section class="filters" data-current-category="{{$current_category}}" data-current-filter="{{$current_filter}}">
-
-			<div class="category-filter-container">
-				<div class="category-filter-title">
-					<span class="category-title">
-						{{ $cat_title }}
-					</span>
+			<div class="filters-container">
+				<div class="category-filter-container cat-container">
+					<div class="category-filter-title">
+						<span class="category-title">
+							{{ $cat_title }}
+						</span>
+					</div>
+					<ul class="filter-dropdown list-unstyled">
+						{{-- I dont display the active category in the dropdown list --}}
+						@foreach ( $categories as $category )
+							<?php
+								$is_active = $category->alias == $current_category;
+							?>
+							@if ( !$is_active )
+								<li><a href="{{ URL::to('categories/'.$category->alias) }}" class="filter filter-category" data-category-filter="{{$category->alias}}">{{$category->title}}</a></li>
+							@endif
+						@endforeach
+					</ul>
 				</div>
-				<ul class="filter-dropdown list-unstyled">
-					{{-- I dont display the active category in the dropdown list --}}
-					@foreach ( $categories as $category )
-						<?php
-							$is_active = $category->alias == $current_category;
-						?>
-						@if ( !$is_active )
-							<li><a href="{{ URL::to('categories/'.$category->alias) }}" class="filter filter-category" data-category-filter="{{$category->alias}}">{{$category->title}}</a></li>
-						@endif
-					@endforeach
-				</ul>
-			</div>
 
-			<div class="category-filter-container">
-				<div class="category-filter-title">
-					@foreach ( $filters as $filter => $filter_title )
-						@if ( $filter == $current_filter )
-							<span class="sortby-title"> {{ $filter_title }} </span>
-						@endif
-					@endforeach
+				<div class="category-filter-container sort-container">
+					<div class="category-filter-title">
+						@foreach ( $filters as $filter => $filter_title )
+							@if ( $filter == $current_filter )
+								<span class="sortby-title"> {{ $filter_title }} </span>
+							@endif
+						@endforeach
+					</div>
+					<ul class="filter-dropdown list-unstyled">
+						@foreach ( $filters as $filter => $filter_title )
+							<?php 
+								$is_active = $filter == $current_filter; 
+							?>
+							@if ( !$is_active )
+								<li><a href="{{ URL::to('categories/'.$current_category.'/'.$filter) }}" class="filter filter-sortby" data-sortby-filter="{{$filter}}">{{$filter_title}}</a></li>
+							@endif
+						@endforeach
+					</ul>
 				</div>
-				<ul class="filter-dropdown list-unstyled">
-					@foreach ( $filters as $filter => $filter_title )
-						<?php 
-							$is_active = $filter == $current_filter; 
-						?>
-						@if ( !$is_active )
-							<li><a href="{{ URL::to('categories/'.$current_category.'/'.$filter) }}" class="filter filter-sortby" data-sortby-filter="{{$filter}}">{{$filter_title}}</a></li>
-						@endif
-					@endforeach
-				</ul>
 			</div>
-
+		<div class="clearfix"></div>
 		</section>
 		
 

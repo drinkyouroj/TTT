@@ -13,6 +13,9 @@ return array(
 	*/
 
 	'debug' => true,
+	'stack' => true,//errors automatically redirects to a specified location.
+	'email_send' => false,
+	'enable_ssl' => false,//enables SSL force on the user and myprofile routes.
 
 	/*
 	|--------------------------------------------------------------------------
@@ -27,6 +30,7 @@ return array(
 
 	'url' => 'http://localhost/tt',
 	'imageurl' => 'http://localhost/tt/uploads/final_images',
+	'cdn_upload' => false,//set to true if you want your images to go to S3.
 	/*
 	|--------------------------------------------------------------------------
 	| Application Timezone
@@ -39,6 +43,9 @@ return array(
 	*/
 
 	'timezone' => 'America/Los_Angeles',
+
+	/*Encryption*/
+	'cipher' => MCRYPT_RIJNDAEL_256,//Needed for upgrade to Laravel 4.2
 
 	/*
 	|--------------------------------------------------------------------------
@@ -110,6 +117,7 @@ return array(
 		'Way\Console\GuardLaravelServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
 		'Jenssegers\Mongodb\MongodbServiceProvider',
+		'Jenssegers\Agent\AgentServiceProvider',
 		'Mews\Captcha\CaptchaServiceProvider',
 		'Thomaswelton\LaravelRackspaceOpencloud\LaravelRackspaceOpencloudServiceProvider',
 		
@@ -142,7 +150,12 @@ return array(
 		'AppStorage\UserStorageServiceProvider',
 		'AppStorage\FlaggedContentStorageServiceProvider',
 		'AppStorage\PostFlaggedStorageServiceProvider',
-		'AppStorage\PhotoStorageServiceProvider'
+		'AppStorage\PhotoStorageServiceProvider',
+		'AppStorage\SearchStorageServiceProvider',
+
+
+		//Image system for when we make our captcha.
+		'Intervention\Image\ImageServiceProvider'
 	),
 
 	/*
@@ -170,6 +183,7 @@ return array(
 	*/
 
 	'aliases' => array(
+		'Agent'            => 'Jenssegers\Agent\Facades\Agent',
 		'App'             => 'Illuminate\Support\Facades\App',
 		'Artisan'         => 'Illuminate\Support\Facades\Artisan',
 		'Auth'            => 'Illuminate\Support\Facades\Auth',
@@ -209,6 +223,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Confide'    => 'Zizaco\Confide\ConfideFacade',
 		'Entrust'    => 'Zizaco\Entrust\EntrustFacade',
+		'Image' => 'Intervention\Image\Facades\Image',
 		
 		//Note, below: Original Eloquent has been overridden by Jessenger's Eloquent.
 		//This allows us to relate Mongo Data to MySQL data through the ORM.

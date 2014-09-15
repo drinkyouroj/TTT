@@ -14,6 +14,9 @@ interface PostRepository {
 	//Read
 	public function findById($id, $published = true, $replationships = array());
 	
+	/**
+	 * Finds a given post by alias. NOTE: includes trashed (soft deleted) posts.
+	 */
 	public function findByAlias($alias, $published = true);
 	
 	public function findByUserId($user_id, $published = true);
@@ -34,6 +37,8 @@ interface PostRepository {
 	public function allByUserIds($user_ids, $published = true);
 
 	public function allDraftsByUserId($user_id, $paginate, $page, $rest);
+	
+	public function allByPostIds($post_ids, $published = true);
 	
 	//Count
 	public function countPublished();
@@ -65,4 +70,11 @@ interface PostRepository {
 
 	public function deleteAllByUserId($id);
 	public function restoreAllByUserId($id);
+
+	// Get all deleted posts for a given user
+	public function allDeletedByUserId($user_id);
+	// Admin stats
+	public function getPublishedCount();
+	public function getPublishedTodayCount();
+	public function getDraftsTodayCount();
 }

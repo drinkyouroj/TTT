@@ -2,7 +2,7 @@
 
 
 @section('css')
-	<link href="{{Config::get('app.url')}}/css/views/user.css" rel="stylesheet" media="screen">
+	<link href="{{Config::get('app.url')}}/css/compiled/v2/users/signup_login.css" rel="stylesheet" media="screen">
 @stop
 
 @section('js')
@@ -16,11 +16,14 @@ Sign up!
 
 
 @section('content')
-	<div class="col-md-4 col-md-offset-4 signup-container">
-		<div class="signup-form">
-		{{ View::make('v2.users.forms.signup') }}
+	<div class="container">
+		<div class="col-md-6 col-md-offset-3 signup-container">
+			<div class="signup-form">
+				<h2>Signup</h2>
+				{{ View::make('v2.users.forms.signup') }}
+			</div>
+			
+		<div class="clearfix"></div>
 		</div>
-		
-	<div class="clearfix"></div>
 	</div>
 @stop

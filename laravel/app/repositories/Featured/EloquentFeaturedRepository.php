@@ -55,7 +55,15 @@ class EloquentFeaturedRepository implements FeaturedRepository {
 		} else {
 			return $query->get();
 		}
-			
+	}
+
+	public function findFront() {
+		$query = $this->featured
+						->where('front', true)
+						->orderBy('position', 'ASC');
+
+		//incase we have to JSONify this thing.
+		return $query->get();
 	}
 
 	public function findByPostId ( $post_id ) {

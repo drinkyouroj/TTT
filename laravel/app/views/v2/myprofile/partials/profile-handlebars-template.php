@@ -1,3 +1,53 @@
+<!-- Notification template -->
+<script type="text/javascript">
+	Handlebars.registerHelper('substring', function(v1) {
+		if ( v1.length > 25 )
+			return v1.substring(0,25) + '...';
+		else
+			return v1;
+	});
+</script>
+<script type="text/x-handlebars-template" id="notifications-template">
+	<div class="notification-container col-md-12">
+	
+		{{#ifCond notification.notification_type 'follow'}}
+		
+		{{/ifCond}}
+		{{#ifCond notification.notification_type 'post'}}
+			<a class="post" href="{{site_url}}posts/{{notification.post_alias}}">
+				<span class="action-user">{{ notification.users.[0] }}</span> submitted a new post:
+				<span class="notification-post-title">{{ notification.post_title }}</span>
+			</a>
+		{{/ifCond}}
+		{{#ifCond notification.notification_type 'repost'}}
+			<a class="repost" href="{{site_url}}posts/{{notification.post_alias}}">
+				<span class="action-user">{{ notification.users.[0] }}</span> reposted: 
+				<span class="notification-post-title">{{ notification.post_title }}</span>
+			</a>
+		{{/ifCond}}
+		{{#ifCond notification.notification_type 'comment'}}
+			<a class="comment" href="{{site_url}}posts/{{notification.post_alias}}#comment-{{notification.comment_id}}">
+				<span class="action-user">{{ notification.users.[0] }}</span> commented on your post: 
+				<span class="notification-post-title">{{ notification.post_title }}</span>
+			</a>
+		{{/ifCond}}
+		{{#ifCond notification.notification_type 'reply'}}
+			<a class="reply" href="{{site_url}}posts/{{notification.post_alias}}#comment-{{notification.comment_id}}">
+				<span class="action-user">{{ notification.users.[0] }}</span> replyed to your commment: 
+				<span class="notification-post-title">{{#substring notification.post_title}}{{/substring}}</span>
+			</a>
+		{{/ifCond}}
+		
+		{{#ifCond notification.notification_type 'like'}}
+			<a class="like" href="{{site_url}}posts/{{notification.post_alias}}">
+				<span class="action-user">{{ notification.users.[0] }}</span> liked your post: 
+				<span class="notification-post-title">{{#substring notification.post_title}}{{/substring}}</span>
+			</a>
+		{{/ifCond}}
+
+	</div>
+</script>
+
 <!--Note that this is the collection tempalte for holding the collection together-->
 <!--Below is used for the front page.-->
 <script type="text/x-handlebars-template" id="collection-template">
@@ -65,7 +115,7 @@
 				<div class="image-container col-md-3 col-sm-3">
 					<a 	href="{{site_url}}posts/{{save.alias}}"
 						class="image"
-						style="background-image:url('{{site_url}}uploads/final_images/{{save.image}}');">
+						style="background-image:url('{{image_url}}/{{save.image}}');">
 
 					</a>
 				</div>
@@ -77,6 +127,11 @@
 						</a>
 					</h3>
 					<p>{{save.tagline_1}} | {{save.tagline_2}} | {{save.tagline_3}}</p>
+					<p class="author">
+						<a href="{{site_url}}profile/{{save.user.username}}" style="background-image: url('{{image_url}}/{{save.user.image}}');">
+							{{save.user.username}}
+						</a>
+					</p>
 				</div>
 
 				<div class="controls col-md-2 col-sm-2">
@@ -89,21 +144,21 @@
 
 <!--Below is used for Drafts-->
 <script type="text/x-handlebars-template" id="drafts-template">
-	<div class="container">
+	<div class="container" id="draft-container-{{draft.id}}">
 		<div class="drafts-box">
 			<div class="row">
 				<div class="date col-md-2 col-sm-2 col-xs-12">
 					<span>{{date}}</span>
 				</div>
-				<a  href="{{site_url}}posts/{{draft.alias}}"
+				<a  href="{{site_url}}myprofile/editpost/{{draft.id}}"
 					class="image col-md-2 col-sm-3 col-xs-3"
-					style="background-image:url('{{site_url}}uploads/final_images/{{draft.image}}');">
+					style="background-image:url('{{image_url}}/{{draft.image}}');">
 
 				</a>
 
 				<div class="text col-md-5 col-sm-5 col-xs-6">
 					<h3>
-						<a href="{{site_url}}posts/{{post.alias}}">
+						<a href="{{site_url}}myprofile/editpost/{{draft.id}}">
 							{{draft.title}}
 						</a>
 					</h3>
@@ -112,7 +167,7 @@
 
 				<div class="controls col-md-3 col-sm-2 col-xs-12">
 					<a class="edit-draft icon-button" href="{{site_url}}myprofile/editpost/{{draft.id}}" >Edit</a>
-					<a class="delete-draft icon-link" data-id="{{draft.id}}" data-toggle="tooltip" data-placement="bottom" title="Delete Forever!">Delete</a>
+					<a class="delete-draft icon-link" data-id="{{draft.id}}" data-toggle="modal" data-target="#draftRemove">Remove</a>
 				</div>
 			</div>
 		</div>
@@ -124,10 +179,11 @@
 	<a 
 		class="follow user"
 		href="{{site_url}}profile/{{username}}"
-		style="background-image:url('{{site_url}}rest/profileimage/{{user_id}}');"
 		>
-		<div class="follow-name">
-			<span>{{username}}</span>
+		<div class="user-avatar" style="background-image:url('{{site_url}}rest/profileimage/{{user_id}}');">
+		</div>
+		<div class="user-name">
+			{{username}}
 		</div>
 	</a>
 </script>
@@ -139,10 +195,10 @@
 
 			<form id="uploadAvatar" method="post" action="{{this.site_url}}rest/profile/image/upload">
 	            <input type="hidden" name="image" class="image">
-	            <div class="thumb-container" style="background-image:url('{{site_url}}uploads/final_images/{{user_image}}');">
+	            <div class="thumb-container" style="background-image:url('{{image_url}}/{{user_image}}');">
 	            </div>
 			</form>
-			<a class="btn-flat-blue avatar-modal">Choose an Avatar</a>
+			<a class="btn-flat-light-gray avatar-modal">Choose an Avatar</a>
 
 			<div id="avatarErrors"></div>
 
@@ -150,7 +206,7 @@
 	        </div>
 		</div>
 	</div>
-	<div class="col-md-8 change-password">
+	<div class="col-md-4 change-password">
 		<h2>Change Your Password</h2>
 		<div class="password-message">
 			
@@ -158,19 +214,19 @@
 		<div class="reset-pass">
 			<form role="form" class="form-horizontal" id="changePassword" method="post" action="{{this.site_url}}rest/profile/password">
 				<div class="form-group">
-					<div class="col-sm-8">
+					<div class="col-sm-12">
 						<input type="password" name="current_password" class="current_password" placeholder="current password">
 					</div>
 				</div>
 
 				<div class="form-group">
-					<div class="col-sm-8">
+					<div class="col-sm-12">
 						<input type="password" name="password" class="password" placeholder="new password">
 					</div>
 				</div>
 
 				<div class="form-group">
-					<div class="col-sm-8">
+					<div class="col-sm-12">
 						<input type="password" name="password_confirmation" class="password_confirmation" placeholder="confirm new password">
 					</div>
 				</div>
@@ -181,6 +237,34 @@
 			</form>
 
 		</div>
+	</div>
+	<div class="col-md-4">
+		
+		{{#ifCond email 1}}
+		<h2>Update Your Email</h2>
+		{{/ifCond}}
+
+		{{#ifCond email 0}}
+		<h2>Verify Your Email</h2>
+		{{/ifCond}}
+		<form role="form" class="form-horizontal" id="email-update-form" method="post" action="{{this.site_url}}/rest/profile/email/update">
+			<div class="form-group">
+				<div class="col-sm-12">
+					<input type="email" name="email" class="new-email" placeholder="new email">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<input type="password" name="password" class="current-password" placeholder="password">
+				</div>
+			</div>
+			<button class="btn btn-default btn-flat-dark-gray">Change Email</button>
+		</form>
+		<p class="email-update-success hidden">
+			Thank you! Please check your email for a verification link.
+		</p>
+		<p class="email-update-error hidden">
+		</p>
 	</div>
 
 	<div class="col-md-12 del-acc">
@@ -195,8 +279,8 @@
 
 
 <script type="text/x-handlebars-template" id="feature-item-template">
-	<div class="feature-item row">
-		<div class="text feature-inner col-md-5 col-sm-5">
+	<div class="feature-item row" id="post-{{post.id}}">
+		<div class="text feature-inner col-md-4 col-sm-4">
 			<h2>
 				<a href="{{site_url}}posts/{{post.alias}}">
 					{{post.title}}
@@ -213,8 +297,27 @@
 		</div>
 
 		<a  href="{{site_url}}posts/{{post.alias}}"
-				class="image feature-inner col-md-7 col-sm-7"
-				style="background-image: url('{{site_url}}uploads/final_images/{{post.image}}');">
+				class="image feature-inner col-md-8 col-sm-8"
+				style="background-image: url('{{image_url}}/{{post.image}}');">
 		</a>
+		{{#ifCond myprofile true }}
+			{{#ifCond post.user.id user_id }}
+				<div class="options-link"> </div>
+				<div class="post-options">
+					{{#ifCond editable true}}
+						<a class="post-edit" href="{{site_url}}myprofile/editpost/{{post.id}}">
+							Edit
+						</a>
+					{{/ifCond}}
+
+					<a class="post-delete">
+						Remove
+					</a>
+					<a class="post-delete-confirm" data-id="{{post.id}}">
+						Confirm Removal?
+					</a>
+				</div>
+			{{/ifCond}}
+		{{/ifCond}}
 	</div>
 </script>

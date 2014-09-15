@@ -1,31 +1,62 @@
 <?php
 
+use \Carbon\Carbon;
+
 class HomeController extends BaseController {
 	
 	private $paginate = 8;//pagination for the front page is set to 8 since it worked out better with the packery blocks.
 	
 	public function __construct(
 							FeaturedRepository $featured,
-							EmailRepository $email
+							FeedRepository $feed,
+							EmailRepository $email,
+							PostRepository $post
 							){
 		$this->featured = $featured;
+		$this->feed = $feed;
 		$this->email = $email;
+		$this->post = $post;
 	}
-
 
 	/**
 	 * The featured page.
 	 */
 	public function getIndex()
 	{
-		/*
-		$featured = $featured = $this->featured->find($this->paginate, 1, false);
+		//return Redirect::to('categories/all');
+		//This page will get hit the hardest.  It has caching.
 		
-		return View::make('v2/featured/featured')
-					->with('featured',$featured);
-		*/
-		return Redirect::to('categories/all');
-		//return View::make('v2.static.beta');
+		if(Cache::has('featured') && !Session::get('admin') ) {
+			$featured = Cache::get('featured');
+		} else {
+			$featured = $this->featured->findFront();
+
+			$expiresAt = Carbon::now()->addMinutes(10);
+
+			Cache::put('featured',$featured,$expiresAt);
+		}
+		$view = View::make('v2/featured/featured')
+						->with('featured', $featured);
+
+		if(Auth::check()) {
+			$user = Auth::user();
+			$from_feed = $this->feed->findOne($user->id, 'post');
+			if(	
+				isset($from_feed->post) &&
+				$from_feed->post->deleted_at 
+			   ) {
+				$view->with('from_feed', $from_feed->post );
+			} else {
+				$random = $this->post->random();
+				$view->with('from_feed', $random);
+			}
+			
+		} else {
+			$view->with('from_feed', false);
+		}
+
+		return $view;
+		
 	}
 	
 	//This is a little weird fix to the invitation system since it posts to the Index and needs to be redirected.
@@ -38,18 +69,10 @@ class HomeController extends BaseController {
 	/**
 	 * The featured page autoload. 
 	 */
-	public function getRestFeatured() 
+	public function getRestFeatured($page = 1 )
 	{
 		
-		//set the default if page is not passed to you.
-		if(Request::get('page')) {
-			$page = abs(Request::get('page'));//just to be sure.
-		} else {
-			$page = 1;
-		}
-		
-		$featured = $this->featured->find($this->paginate, $page, true);
-		
+		$featured = $this->featured->find(6, $page, true);
 		
 		if(!count($featured)) {
 			return Response::json(
@@ -64,6 +87,13 @@ class HomeController extends BaseController {
 		}
 	}
 	
+	/**
+	* Error Form
+	*/
+	public function getErrorForm()
+	{
+		return View::make('v2.errors.form');
+	}
 
 	/**
 	 * Static Pages below

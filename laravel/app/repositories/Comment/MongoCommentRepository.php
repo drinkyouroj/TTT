@@ -36,7 +36,7 @@ class MongoCommentRepository implements CommentRepository {
 									->get();
 		if ( count( $last_comment ) ) {
 			// User has commented in the last 10 seconds!
-			return null;
+			return 'You must wait at least 10 seconds before commenting';
 		}
 
 		// Step 1: generate the unique portions of the slug and full slug.
@@ -45,7 +45,7 @@ class MongoCommentRepository implements CommentRepository {
 		$full_slug_part = $created_at->format('Y.m.d.H.i.s').':'.$slug_part;
 		// Step 2: check if this comment is a reply to another
 		if ( $reply_id ) {
-			$parent_comment = MongoComment::find( $reply_id );
+			$parent_comment = $this->findById( $reply_id );
 			// TODO: double check that we actually have the parent comment! (ie: we were given a valid reply_id)
 			$slug = $parent_comment->slug.'/'.$slug_part;
 			$full_slug_asc = $parent_comment->full_slug_asc.'/'.$full_slug_part;
@@ -75,19 +75,19 @@ class MongoCommentRepository implements CommentRepository {
 		$new_comment->body = trim( strip_tags( $comment_body ) );
 		$new_comment->likes = array();
 		$new_comment->flags = array();
-
 		// Step 4: Run the validate to make sure all fields are actually valid
 		$validation = $new_comment->validate( $new_comment->toArray() );
 
 		if ( $validation->fails() ) {
-			return null;
+			dd($validation->messages());
+			return 'Invalid comment';
 		} else {
 			// Step 5: Save the beast
 			$new_comment->save();	
 			if ( $new_comment->id ) {
 				return $new_comment;
 			} else {
-				return null;
+				return 'Failed to save. Internal error.';
 			}
 		}
 	}
@@ -97,7 +97,7 @@ class MongoCommentRepository implements CommentRepository {
 	}
 
 	public function editBody($comment_id, $body) {
-		$comment = $this->comment->find( $comment_id );
+		$comment = $this->findById( $comment_id );
 		if ($comment instanceof MongoComment) {
 			if ( $comment->edited > 1 ) {
 				// Imposed a limit of 2 edits 
@@ -112,7 +112,7 @@ class MongoCommentRepository implements CommentRepository {
 	}
 
 	public function delete ( $id ) {
-		$comment = MongoComment::find( $id );
+		$comment = $this->findById( $id );
 		if ( $comment instanceof MongoComment ) {
 			$comment->delete();
 		}
@@ -122,7 +122,7 @@ class MongoCommentRepository implements CommentRepository {
 	 *	Find a comment by its id (the actual _id field given to it by mongo)
 	 */
 	public function findById( $id ) {
-		return MongoComment::find( $id );
+		return MongoComment::where( '_id', '=', $id )->first();
 	}
 
 	/**
@@ -171,7 +171,7 @@ class MongoCommentRepository implements CommentRepository {
 	public function findByCommentAndPostId ( $comment_id, $post_id, $paginate = 10 ) {
 		$post_id = intval( $post_id );
 		// Step 1. First query for the comment by id.
-		$target_comment = MongoComment::find( $comment_id );
+		$target_comment = $this->findById( $comment_id );
 		if ( $target_comment instanceof MongoComment ) {
 			// Step 2. Then query the number of comments up until that comment
 			$number_of_comments = MongoComment::where( 'post_id', $post_id )
@@ -258,11 +258,21 @@ class MongoCommentRepository implements CommentRepository {
 		$comment->save();
 	}
 
+		public function publishAllByUser($user_id) {
+			$this->comment->where('author.user_id',$user_id)
+						->update(array('published' => 1));
+		}
+
 	public function unpublish ( $comment_id ) {
 		$comment = MongoComment::where( '_id', $comment_id )->get()->first();
 		$comment->published = 0;
 		$comment->save();
 	}
+
+		public function unpublishAllByUser($user_id) {
+			$this->comment->where('author.user_id',$user_id)
+						->update(array('published' => 0));
+		}
 	
 
 		/**

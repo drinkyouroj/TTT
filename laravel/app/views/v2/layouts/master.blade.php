@@ -5,6 +5,7 @@
 	$have_user = Auth::check();
 	$is_mod = Session::get('mod');
 	$is_admin = Session::get('admin');
+	$is_mobile = Agent::isMobile();
 
 ?>
 
@@ -39,14 +40,12 @@
 	<script>
 		@if(App::environment('local') || App::environment('sharktopus'))
 			window.site_url = '/tt/';//has trailing slash
-			window.image_url = '/tt/uploads/final_images';//no trailing on the image url
 		@elseif(App::environment('web'))
 			window.site_url = '/';//has trailing slash
-			window.image_url = '{{ Config::get('app.imageurl') }}';//no trailing on the image url
 		@else
 			window.site_url = '/';//has trailing slash
-			window.image_url = '/uploads/final_images';//no trailing on the image url
 		@endif
+			window.image_url = '{{ Config::get('app.imageurl') }}';
 	</script>
 	
 	@if($have_user)
@@ -86,6 +85,11 @@
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/handlebars/handlebars.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/sidr/jquery.sidr.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/header.js"></script>
+	@if ( $is_mobile )
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/touch-swipe/jquery.touchSwipe.min.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/header-swipe.js"></script>
+	@endif
+	
 	
 	@if( $have_user )
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/global-loggedin.js"></script>
@@ -104,32 +108,6 @@
 	<!--Extra Javascript-->
 	@yield('js')
     
-    
-    @if(Request::segment(1) != 'user')
-		@if( !$have_user )
-			<div class="modal fade" id="guestSignup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			  <div class="modal-dialog">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			        <h4 class="modal-title" id="myModalLabel"></h4>
-			      </div>
-			      <div class="modal-body">
-			        <div class="signup-form">
-			        	<h4>Signup</h4>
-				        {{ View::make('v2.users.forms.signup') }}
-					</div>
-					
-					<div class="login-form">
-						<h4>Login</h4>
-						{{ View::make('v2.users.forms.login') }}
-					</div>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-		@endif
-	@endif
 	@if($app->environment() == 'ec2-beta')
     	<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -142,20 +120,6 @@
 
 		</script>
 	@endif
-	{{--
-    <script>
-    	
-    	/*
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-	
-	  ga('create', 'UA-15172874-37', 'twothousandtimes.com');
-	  ga('send', 'pageview');
-		*/
-	</script>
-    --}}
     
   </body>
 </html>

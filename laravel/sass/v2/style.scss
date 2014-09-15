@@ -33,6 +33,13 @@ html, body {
 	position: relative;
 }
 
+//bootstrap overwrite
+.container {
+	@media (min-width: 1200px) {
+		width:1200px !important;
+	}
+}
+
 a {
 	color:$blue;
 	&:hover {
@@ -72,23 +79,24 @@ input, textarea, button:focus {outline: none !important;}
 		z-index: 9999;
 
 		background-color: white;
-		box-shadow: 0 2px 2px 0px lightgrey;
-
+		border-bottom:solid 1px $lightgray;
 		.header-container {
 			height: $navbar_height;
 			
 
 			.col-left {
-				margin-top: 3px;
+				margin-top: 0px;
 				button.read-button {
 					@media (max-width:$break-sm) {
-						padding:0px;
-						height:40px;
-						width:42px;
+						background:none;
+						color:$dark;
+						border:0px;
+						font-size:15px;
+						padding:12px 14px;
 					}
-					span {
+					span.text {
 						@media (max-width:$break-sm) {
-							visibility:hidden;
+							display:none;
 						}
 					}
 				}
@@ -101,34 +109,27 @@ input, textarea, button:focus {outline: none !important;}
 
 			.col-middle {
 				.header-logo {
-					margin-top: 5px;
+					margin-top: 9px;
 					text-align: center;
-					font-size: 10px;
-					font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-					@media (max-width:$break-sm) {
-						margin-top: 10px;
-						font-size: 7px;
-					}
 					a {
+						font-size: 21px;
+						@include fjalla;
+						letter-spacing:2px;
 						color:$dark;
-						span {
-							font-size: 21px;
-							line-height: 19px;
-							@include fjalla;
-							letter-spacing:2px;
-
-							@media (max-width:$break-sm) {
-								font-size: 14px;
-								line-height: 15px;
-								letter-spacing:1px;
-							}
+						@media (max-width:$break-sm) {
+							font-size: 16px;
+							letter-spacing:1px;
 						}
+					}
+					@media (max-width:$break-sm) {
+						margin-top: 12px;
 					}
 				}
 			}
 
 			.col-right {
-				margin-top: 3px;
+				margin-top: 2px;
+				padding-right:25px;
 				&>*, &>form>* {
 					float: right;
 				}
@@ -136,12 +137,17 @@ input, textarea, button:focus {outline: none !important;}
 					padding-left:0px !important;
 				}
 				.action {
-					height: 35px;
-					width: 35px;
-					margin-top: 2px;
+					height: 40px;
+					width: 40px;
+					margin-top: 0px;
 					margin-left: 10px;
 					position: relative;
 					text-align: center;
+					@media (max-width:$break-sm) {
+						height: 27px;
+						width: 27px;
+						margin-top: 7px;
+					}
 					.navbar-dropdown-toggle {
 						height: 100%;
 						width: 100%;
@@ -151,20 +157,21 @@ input, textarea, button:focus {outline: none !important;}
 							margin-top: 4px;
 						}
 						&.avatar {
+							border:solid 1px $lightgray;
 							border-radius: 50%;
 							background-color: #aaa;	
 						}
 					}
 				}
 				label.glyphicon-search {
-					margin-top: 7px;
+					margin-top: 9px;
 					margin-right: 3px;
 					font-size: 20px;
 					cursor:pointer;
 				}
 				input.search-input {
 					background-color: transparent !important;
-					margin-top:5px;
+					margin-top:7px;
 					border-style: solid;
 					border-width: 0px 0px 2px 0px;
 					border-color: black;
@@ -182,15 +189,15 @@ input, textarea, button:focus {outline: none !important;}
 				.navbar-dropdown {
 					position: absolute;
 					top: $navbar_height;
-					right: 0;
+					right: 25px;
 					margin-top:-3px;
 					min-width: $navbar_dropdown_menu_min_width;
 					max-width: $navbar_dropdown_menu_max_width;
 					background-color: $white;
 					display: none;
 					padding-bottom:10px;
-					border-top: 1px solid lightgray;
-					@include drop_shadow;
+					@include secondary_drop_shadow();
+					border:solid 1px $lightgray;
 					.dropdown-wrapper {
 						&>*, ul.notifications > li {
 						}
@@ -300,14 +307,24 @@ input, textarea, button:focus {outline: none !important;}
 	}
 }
 #offcanvas-admin-placeholder { //Temporary DELETE!!!
-@media (max-width:$break-xs) {
-		display:none;
-	}
+
 }
 
 #offcanvas-sidebar {
 	@include offcanvas-sidebar( left, $offcanvas_sidebar_width );
+	@media (max-width:$break-sm) {
+		border-right:solid 10px $black;
+	}
 		ul#accordion.sidebar-options {
+			li input.search-input {
+				width:98%;
+				height:30px;
+				padding:0px 10px;
+				margin:10px 0 10px 2%;
+				@include border-radius(60px);
+				@include montserrat(normal);
+				font-size:12px;
+			}
 			li.sidebar-option {
 				&.feed {
 
@@ -336,11 +353,16 @@ input, textarea, button:focus {outline: none !important;}
 
 				}
 				&.saves {
+					ul {
+						li {
+							margin-bottom:20px;
+						}
+					}
 					.post-image-anchor {
 						.post-image {
 							display: inline-block;
-							width: 110px;
-							height: 70px;
+							width: 90px;
+							height: 57px;
 							margin-left: 0;
 							background-size: cover;
 							background-position: center center;
@@ -348,21 +370,26 @@ input, textarea, button:focus {outline: none !important;}
 					}
 					.post-info {
 						display: inline-block;
-						width: 134px;
+						width: 100%;
 						vertical-align: top;
-						margin-left: 10px;
 
 						.post-title {
 							display: block;
 							padding:0px;
 							color:$lightgray;
 							@include montserrat(normal);
-							font-size:12px;
+							font-size:11px;
+							text-transform:uppercase;
 							letter-spacing:1px;
+							@include word-break(break-all);
+						}
+						span {
+							font-size:10px;
 						}
 						.post-author {
 							@include montserrat(normal);
 							font-size:12px;
+							@include word-break(break-all);
 						}
 						// This is the 'by: ' text
 						span {
@@ -390,12 +417,15 @@ input, textarea, button:focus {outline: none !important;}
 }
 
 #offcanvas-placeholder {
+	display:none;
 	position: fixed;
 	top: 0; left: 0;
-	width: 22px;
+	width: 15px;
 	height: 100%;
 	background-color: $black;
+	border-right:solid 1px #2a2a2a;
 	z-index: 10000;
+	cursor: pointer;
 	@media (max-width:$break-sm) {
 		display:none !important;
 	}
@@ -408,14 +438,12 @@ input, textarea, button:focus {outline: none !important;}
 		position: absolute;
 		top: 50%;
 		margin-top: -50%;
-		cursor: pointer;
-
 		.circle {
 			height: 6px;
 			width: 6px;
 			background-color: white;
 			border-radius: 50%;
-			margin: 8px;
+			margin: 8px 5px;
 		}
 	}
 }
@@ -482,7 +510,7 @@ input, textarea, button:focus {outline: none !important;}
 	@include montserrat(normal);
 	color: $dark;
 	font-size: 12px;
-	background: white;
+	background: $white;
 	padding: 10px 15px;
 	text-decoration: none;
 	text-transform:uppercase;
@@ -629,23 +657,50 @@ input, textarea, button:focus {outline: none !important;}
 
 .read-button {
 	display:inline-block;
+	float:left;
 	@include montserrat(normal);
 	text-transform:uppercase;
-	color: $dark;
+	color: $white;
 	font-size: 12px;
 	letter-spacing:2px;
-	background: none;
-	padding: 10px 15px 10px 50px;
+	background: $dark;
+	padding: 12px 15px;
 	text-decoration: none;
-	border: 2px solid $dark;
+	border-top: 2px solid $dark;
+	border-right: 0;
+	border-left: 0;
+	border-bottom:solid 3px $dark_gray;
 	cursor: pointer;
-	background-image:url('../../../images/global/read.png');
-	background-repeat: no-repeat;
-	background-position:left center;
-	background-size:38px 38px;
 	&:hover {
 		// background-color: $gray;
-		background-color: $lightgray;
+		border-top: 2px solid $black;
+		border-bottom:solid 3px $black;
+		background-color: $black;
+	}
+
+}
+.post-button {
+	display:inline-block;
+	@include montserrat(normal);
+	float:left;
+	color: white;
+	font-size: 12px;
+	background: $blue;
+	padding: 12px 15px;
+	text-decoration: none;
+	text-transform:uppercase;
+	border-top: 2px solid $blue;
+	border-right: 0;
+	border-left: 0;
+	border-bottom:solid 3px $blue_dark;
+	cursor: pointer;
+	&:hover {
+		// background-color: $gray;
+		color: white;
+		text-decoration: none;	
+		border-top: 2px solid $blue_dark;
+		border-bottom:solid 3px $blue_dark;
+		background-color: $blue_dark;
 	}
 }
 
@@ -712,25 +767,6 @@ input, textarea, button:focus {outline: none !important;}
 	}
 }
 
-
-.post-button {
-	display:inline-block;
-	@include montserrat(normal);
-	color: white;
-	font-size: 12px;
-	background: $blue;
-	padding: 10px 15px;
-	text-decoration: none;
-	text-transform:uppercase;
-	border: 2px solid $blue;
-	cursor: pointer;
-	&:hover {
-		// background-color: $gray;
-		color: white;
-		text-decoration: none;	
-	}
-}
-
 //generic modal styling
 .modal {
 	text-align:center;
@@ -744,24 +780,39 @@ input, textarea, button:focus {outline: none !important;}
 			font-size:32px;
 			text-transform:uppercase;
 			letter-spacing:1px;
+	        @media (max-width:$break-xs) {
+	          	font-size:16px;
+	        }
 		}
 		.modal-header {
 			position:relative;
 			button.close {
 				position:absolute;
 				top:0px;
-				right:0px;
+				right:-5px;
 				font-size:100px;
 				color:$dark;
+				@media (max-width:$break-xs) {
+	          		top:-40px;
+	          		font-size:50px;
+	        	}
 			}
+			@media (max-width:$break-xs) {
+	          	padding:0 15px;
+	        }
 		}
 		.modal-body {
 			input {
-				border:solid 1px #ddd;
 				@include montserrat();
-				font-size:12px;
-				height:41px;
+				font-size:16px;
+				height:50px;
+				@media (max-width:$break-xs) {
+	          		height:30px;
+	        	}
 			}
+		@media (max-width:$break-xs) {
+          	padding:5px 15px;
+        }
 		}
 		.modal-footer {
 			border-top:solid 1px $lightgray;
@@ -788,19 +839,22 @@ input, textarea, button:focus {outline: none !important;}
 		.signup-form, .login-form {
 			position:relative;
 			display:inline-block;
-			width:47%;
-			margin:0 1%;
+			width:45%;
+			margin:0 2%;
 			float:left;
 
 			fieldset {
 				input {
 					width:100%;
 					margin-bottom:5px;
-					padding:5px;
-					box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+					padding:5px 20px;
 				}
 				.forgot-pw {
-					text-align:right;
+					margin-top:10px;
+					text-align:center;
+					a {
+						font-size:16px;
+					}
 				}
 				.form-actions {
 					margin-top:20px;
@@ -817,23 +871,40 @@ input, textarea, button:focus {outline: none !important;}
 					text-align:center;
 				}
 			}
-
-			@media (max-width: 768px) {
+			@media (max-width:$break-sm) {
 				width:90%;
-				margin:30px 0 0 0;
+				margin:30px 5% 0 5%;
+			}
+			@media (max-width:$break-xs) {
+				width:100%;
+				margin:30px 0;
 			}
 		}
 
 		.signup-form {
-			padding-right:2%;
+			padding-right:4%;
 			border-right:solid 1px $gray;
-			@media (max-width: 768px) {
+			@media (max-width: $break-sm) {
 				border-right:0px;
+				padding-right:0%;
+				margin-bottom:0px;
+			}
+			.captcha-numbers {
+				background: $lightgray;
+				@include montserrat(normal);
+				text-align:center;
+				padding:10px 10px;
+				margin-top:10px;
+				margin-bottom:0px;
 			}
 		}
 		.login-form {
 			form {
 				margin-bottom:10px;
+			}
+			@media (max-width:$break-sm) {
+				padding-top:30px;
+				border-top:solid 2px $dark;
 			}
 		}
 	}

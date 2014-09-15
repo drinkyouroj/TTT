@@ -53,7 +53,14 @@ Log::useDailyFiles(storage_path().'/logs/'.$logFile);
 
 App::error(function(Exception $exception, $code)
 {
-	Log::error($exception);
+	if(Config::get('app.stack')) {
+		Log::error($exception);
+	} else {
+		//Figure out if we want to have a form to put up.
+		Log::error($exception);
+		return Redirect::to('error/form');
+	}
+
 });
 
 /*

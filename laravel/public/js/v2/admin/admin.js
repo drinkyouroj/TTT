@@ -106,4 +106,39 @@ $(function() {
             }
         });
     });
+    // Post edit
+    $('#offcanvas-admin-sidebar .admin-edit-post').click( function() {
+        // Toggle all the editable fields
+        $('.post-heading h2').toggleClass('hidden');
+        $('ul.post-taglines li').toggleClass('hidden');
+        $('.post-content-container').toggleClass('hidden');
+        $(this).addClass('hidden');
+        $(this).siblings('.admin-edit-post-submit').removeClass('hidden');
+    });
+    $('#offcanvas-admin-sidebar .admin-edit-post-submit').click( function() {
+        // Gather data
+        var post_id = $('.post-action-bar').data('post-id');
+        var body = $('.admin-post-body').val();
+        var title = $('.admin-post-title').val();
+        var tagline_1 = $('.admin-post-tagline-1').val();
+        var tagline_2 = $('.admin-post-tagline-2').val();
+        var tagline_3 = $('.admin-post-tagline-3').val();
+
+        $.ajax({
+            url: window.site_url + 'admin/post/edit',
+            type: 'POST',
+            data: {
+                post_id: post_id,
+                body: body,
+                title: title,
+                tagline_1: tagline_1,
+                tagline_2: tagline_2,
+                tagline_3: tagline_3
+            },
+            success: function() {
+                // Check response and reload page accordingly
+                location.reload();
+            }
+        })
+    });
 });

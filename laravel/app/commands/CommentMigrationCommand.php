@@ -87,7 +87,7 @@ class CommentMigrationCommand extends Command {
 			$full_slug_part = $created_at->format('Y.m.d.H.i.s').':'.$slug_part;
 			// Step 2: check if this comment is a reply to another
 			if ( $mongo_parent_comment_id != null ) {
-				$parent_comment = MongoComment::find( $mongo_parent_comment_id );
+				$parent_comment = MongoComment::where( '_id', '=', $mongo_parent_comment_id )->first();
 				// TODO: double check that we actually have the parent comment! (ie: we were given a valid reply_id)
 				$slug = $parent_comment->slug.'/'.$slug_part;
 				$full_slug = $parent_comment->full_slug.'/'.$full_slug_part;

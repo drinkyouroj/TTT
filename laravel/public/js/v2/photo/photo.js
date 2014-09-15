@@ -51,13 +51,18 @@ function photoInit(photoInput) {
 		photoInput.process = 'nofilter';
 		photoInput.applyProcess();
 
-
+		// Clear any previous filters
+		$(photoInput.photo_processor+' img').removeClass('active').first().addClass('active');
 		
+		// Show the 'OK' button
+		$('.modal-footer.hidden').removeClass('hidden');
+
 	});//Loads in the chosen photos	
 
 	$('body').on('click', photoInput.photo_processor+' img',function() {		
 		photoInput.process = $(this).data('process');
-
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
 		//make sure we have all values.
 		if(photoInput.selected_image.length && photoInput.process.length) {
 			photoInput.applyProcess();
@@ -128,9 +133,10 @@ function PhotoInput() {
 		photo_template = this.photo_item_template;
 		pager_template = this.photo_pager_template;
 		photo_results = this.photo_results;
+		photo_search_page = this.photo_search_page;
 
 		this.getData(url, {}, function(data) {			
-			$(photo_results).html('test');//clear it out.
+			$(photo_results).html('');//clear it out.
 			photos = data.photos.photo;//actual photo array
 
 			$.each(photos,function(index, value) {
@@ -144,20 +150,20 @@ function PhotoInput() {
 				image_counter = index;
 			});
 
-			next_page = this.photo_search_page + 1;
-			
+			next_page = photo_search_page + 1;
+			console.log('next_page: ' + next_page);
 			if(next_page > 2 || image_counter >= 29) {
 				$(photo_results).append('<br>');
 			}
 
 			if(next_page > 2) {
-				prev_page = this.photo_search_page -1;
+				prev_page = photo_search_page -1;
 				view_data = {
 					class: 'previous',
-					html: '&#60 Prev',
+					html: '< Prev',
 					page: prev_page
 				}
-
+				console.log('prev');
 				previous = pager_template(view_data);
 				$(photo_results).append(previous);
 			}
@@ -165,7 +171,7 @@ function PhotoInput() {
 			if(image_counter >= 29) {
 				view_data = {
 					class: 'more',
-					html: 'More &#62',
+					html: 'More >',
 					page: next_page
 				}
 				more = pager_template(view_data);

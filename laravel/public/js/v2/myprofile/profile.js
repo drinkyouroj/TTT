@@ -3,7 +3,8 @@ $(function() {
 
 //Non user specific code
 	var user_action = new UserAction;
-	$('div.follow a.follow').click(function() {
+	$('div.follow-container a.follow').click(function(event) {
+		event.preventDefault();
 		user_action.user_id = window.user_id;
 		user_action.action = 'follow';
 
@@ -26,7 +27,7 @@ $(function() {
 
 //Initialize Profile class
 	var profile = new ProfileActions;
-
+	
 //Let's Compile the handlebars source.
 	//Collection container
 	var collection_source = $('#collection-template').html();
@@ -63,6 +64,9 @@ $(function() {
 	var follow_template = $('#follow-template').html();
 	profile.follow_template = Handlebars.compile(follow_template);
 
+	var notification_item_template = $('#notifications-template').html();
+	profile.notification_item_template = Handlebars.compile(notification_item_template);
+
 	// No Content Template
 	var no_content_template = $('#no-content-template').html();
 	profile.no_content_template = Handlebars.compile(no_content_template);
@@ -84,7 +88,30 @@ $(function() {
 		profile.viewInit($(this).prop('id'));//new view has to be rendered out of this scenario
 	});
 
-	//Collection Renders
+	//Just to catch the sidebar feed button
+	$('.sidebar-option.feed').click(function(event) {
+		event.preventDefault();
+		$.sidr('close', 'offcanvas-sidebar');
+		$('.section-selectors a').removeAttr('class');//gets rid of active state.
+		$('.section-selectors a#feed').prop('class','active');
+		profile.view = 'feed';
+		profile.type = 'all';//default
+		profile.page = 1;
+		profile.viewInit(profile.view);
+	});
+
+	//Catching the Notification on the top dropdown
+	$('.dropdown-wrapper .view-all a').click(function(event) {
+		event.preventDefault();
+		$('.header-container .col-right .navbar-dropdown-toggle').click();
+		$('.section-selectors a').removeAttr('class');//gets rid of active state.
+		$('.section-selectors a#notifications').prop('class','active');
+		profile.view = 'notifications';
+		profile.page = 1;
+		profile.viewInit(profile.view);
+	});
+
+//Collection Renders
 		$('body').on('click','.collection-controls a', function(event) {
 			event.preventDefault();
 			$('.collection-controls a').removeAttr('class');
@@ -95,7 +122,24 @@ $(function() {
 			profile.viewRender();
 		});
 
-	//Feed Filter Renders
+		//Collection options-link
+			$('body').on('click', '#collection-content .options-link',function(event) {
+				event.preventDefault();
+				$(this).siblings('.post-options').toggle();
+			});
+			// Close when click elsewhere
+			$(document).mouseup(function (e) {
+			    var container = $('.post-options');
+			    if (!container.is(e.target) // if the target of the click isn't the container...
+			        && container.has(e.target).length === 0) { // ... nor a descendant of the container
+			        container.hide();
+			    	// change back to delete if user clicked delete and not confirm
+			    	$(container).find('.post-delete').show();
+			    	$(container).find('.post-delete-confirm').hide();
+			    }
+			});
+
+//Feed Filter Renders
 		$('body').on('click', '.feed-controls a', function(event) {
 			event.preventDefault();
 			$('.feed-controls a').removeAttr('class');
@@ -108,7 +152,7 @@ $(function() {
 
 
 //View renders for settings/follow
-	$('.header-right a, a#settings').click(function(event) {
+	$('.fing-fer a, a#settings').click(function(event) {
 		//event.preventDefault();
 		$('.section-selectors a').removeAttr('class');//gets rid of the class.
 		profile.view = $(this).prop('id');
@@ -118,6 +162,16 @@ $(function() {
 		}
 
 		profile.viewInit($(this).prop('id'));//new view has to be rendered out of this scenario
+	});
+
+	//Catching when someone does the settings from the dropdown.
+	$('.additional-user-actions a.profile-settings').click(function(event) {
+		event.preventDefault();
+		$('.section-selectors a').removeAttr('class');		
+		$('.header-container .col-right .navbar-dropdown-toggle').click();		
+		profile.view = 'settings';
+		profile.page = 1;
+		profile.viewInit(profile.view);
 	});
 
 	//image upload code.
@@ -130,15 +184,32 @@ $(function() {
 		profile.changePassword();
 	});
 
+	//update email
+	$('body').on('submit', '#email-update-form', function(event) {
+		event.preventDefault();
+		profile.updateEmail( $(this) );
+	});
+
 	//We'll just leave this as is for now.
 	$('#deleteModal').on('click','.btn.delete-account', function() {
-		id = $(this).data('user');
+		var password = $('.delete-account-password').val();
+		if ( !password )
+			return;
+		var id = $(this).data('user');
 		if(id) {
 			$.ajax({
-				url: window.site_url+'rest/userdelete/'+id,
-				type:"GET",//previously delete
+				url: window.site_url+'rest/userdelete',
+				type:"POST",
+				data: {
+					id: id,
+					password: password
+				},
 				success: function(data) {
-					window.location.href = window.site_url+'user/logout';
+					if ( data.error ) {
+						$('.delete-account-error').html( data.error );
+					} else if ( data.success ) {
+						window.location.href = window.site_url+'user/logout';	
+					}
 				}
 			});
 		}
@@ -153,12 +224,34 @@ $(function() {
 
 	//Delete Post
 	$('body').on('click', '.post-delete', function() {
+		$(this).fadeOut(function() {
+			$(this).siblings('.post-delete-confirm').fadeIn().css('display', 'block');
+		});
+	});
+	$('body').on('click', '.post-delete-confirm', function() {
 		profile.setPostDelete( $(this).data('id') );
 	});
 
 	//Remove Repost.
 	$('body').on('click', '.remove-repost',function() {
 		profile.setRepostDelete( $(this).data('id') );
+	});
+
+	// Delete Draft
+	$('body').on('click', '.delete-draft', function(event) {
+		event.preventDefault();
+		post_id = $(this).data('id');
+		$('#removeDraftModal button.delete').data('post',post_id);
+		$('#removeDraftModal').modal('show');
+	});
+
+	$('#removeDraftModal button.delete').click(function(event) {
+		event.preventDefault();
+		if(typeof $(this).data('post') != 'undefined') {
+			post_id = $(this).data('post');
+			profile.deleteDraft( post_id );
+		}
+		$('#removeDraftModal').modal('hide');
 	});
 
 
@@ -170,7 +263,7 @@ $(function() {
 
 //Pagination detection.
 	$(window).scroll(function() {
-		if(profile.view != 'settings') {
+		if(profile.view != 'settings' && !window.finished_pagination && !window.page_processing) {
 			if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
 				profile.paginate();
 			}
@@ -186,7 +279,8 @@ $(function() {
 		window.location.hash = 'collection';
 		profile.view = 'collection';
 		profile.type = 'all';
-		profile.viewInit('collection');//Render initial view.
+		profile.page = 0;
+		//profile.viewInit(profile.view);//Render initial view.	
 	} else {
 		view = window.location.hash;
 		// Prevent a jump to anchor
@@ -198,13 +292,16 @@ $(function() {
 		if ( view == '#followers' || view == '#following' ) {
 			profile.type = window.user_id;
 		}
-
+		profile.page = 0;
 		profile.view = view.substring(1);
-		profile.viewInit(profile.view);//Render initial view.
+		//profile.viewInit(profile.view);//Render initial view.
 	}
+	profile.viewInit(profile.view);//Render initial view.
+	
 
 	window.page_processing = false;
 	window.comment_page_processing = false;
+	window.finished_pagination = false;
 
 	//figure out which modals to show.
 	if(window.post) {
@@ -229,15 +326,16 @@ function ProfileActions() {
 		//Everytime a view is rendered the page count should be reset.
 		this.page = 1;
 		this.comment_page = 1;//this only pertains to the collection page
-		this.view = view
+		this.view = view;
+		window.page_processing = false;
+		window.finished_pagination = false;
 		//fade in fade out scenario
 		var that = this;//JS scope is fun... not.
-		this.target.fadeOut(100,function() {
-			that.target.html('');
-			that.viewRenderContainer();
-			that.viewRender(true);
-			that.target.fadeIn(100);
-		});
+		this.target.fadeOut(100);
+		this.target.html('');
+		this.viewRenderContainer();
+		this.viewRender(true);
+		this.target.fadeIn(100);
 	};
 
 	//Container init
@@ -251,43 +349,60 @@ function ProfileActions() {
 	};
 
 	//Actual Content Rendering routes
-	this.viewRender = function(init) {		
+	this.viewRender = function(init) {
 		if(this.filter) {
 			this.viewClear();
 		}
+
+		base_url = window.site_url + 'rest/profile/' + this.view + '/';
+
 		switch(this.view) {
 			default:
 			case 'collection':
+				this.url = base_url + this.type + '/' + window.user_id + '/' + this.page;
+				this.feature_url = window.site_url + 'rest/profile/featured/' + window.featured_id;
+				this.comment_url = window.site_url + 'rest/profile/comments/' + window.user_id + '/' + this.comment_page;
 				this.renderCollection();
-				if(init) {					
+				if(init) {
 					this.renderComments();					
 				}
-				if((init || this.type == 'all') && window.featured_id && this.page == 1 ) {
+				if((init || this.type == 'all' || this.type == 'post') && window.featured_id && this.page == 1 ) {
 					this.renderFeatured();//only renders when the person has a featured article.
 				}
 				break;
 
 			case 'feed':
+				this.url = base_url + this.type + '/' + this.page;
 				this.renderFeed();
 				break;
 
 			case 'saves':
+				this.url = base_url + this.page;
 				this.renderSaves();
 				break;
 
 			case 'drafts':
+				this.url = base_url + this.page;
 				this.renderDrafts();
 				break;
 
 			case 'settings':
+				this.url = base_url + this.page;
 				this.renderSettings();
 				break;
 
+			case 'notifications':
+				this.url = base_url + this.page;
+				this.renderNotifications();
+				break;
+
 			case 'followers':
+				this.url = base_url + this.type + '/' + this.page;
 				this.renderFollowers();
 				break;
 
 			case 'following':
+				this.url = base_url + this.type + '/' + this.page;
 				this.renderFollowing();
 				break;
 		}
@@ -306,6 +421,7 @@ function ProfileActions() {
 
 	//URL constructor
 	this.urlConstructor = function() {
+		/*
 		base_url = window.site_url + 'rest/profile/' + this.view + '/';
 
 		var viewArray = ['collection', 'feed', 'following', 'followers'];
@@ -323,10 +439,48 @@ function ProfileActions() {
 		} else {
 			this.url = base_url + this.page;
 		}
+		*/
+	};
+
+	// Delete draft
+	this.deleteDraft = function ( post_id ) {
+		var url = window.site_url + 'rest/profile/post/' + post_id;
+		this.getData( url, function ( data ) {
+			if ( data.success ) {
+				$('#draft-container-' + post_id).remove();
+			}
+		});
 	};
 
 
 //Specific Render methods
+
+	this.renderNotifications = function () {
+		var notification_item_template = this.notification_item_template;
+		var no_content_template = this.no_content_template;
+		// TODO
+		var target = this.target;
+		this.getData(this.url,function(data) {
+			if ( data.no_content ) {
+				$('#default-content',target).append( no_content_template( {section: 'notifications'} ) );
+				window.finished_pagination = true;
+			} else {
+				if ( data.notifications && data.notifications.length == 0 ) {
+					window.finished_pagination = true; // no more notifications
+				} else {
+					$.each(data.notifications, function(idx, val) {
+						view_data = {
+							notification: val,
+							site_url: window.site_url,
+							image_url: window.image_url
+						};
+						$('#default-content',target).append(notification_item_template(view_data));
+					});
+				}
+			}
+		});
+
+	};
 
 	this.renderCollection = function() {
 		//below has to be done to pass through the scope of both getData and $.each
@@ -335,24 +489,26 @@ function ProfileActions() {
 		var target = this.target;
 		var editCheck = this.editCheck;
 
-		this.urlConstructor();
 		this.getData(this.url, function(data) {
 
 			if ( data.no_content ) {
 				$('#collection-content',target).append( no_content_template( {section: 'collection'} ) );
 			} else {
 				$.each(data.collection, function(idx, val) {
-					var editable = editCheck(val.post.published_at);
-					view_data = {
-						site_url: window.site_url,
-						post: val.post,
-						user_id: window.user_id,
-						editable: editable,
-						featured_id: window.featured_id,
-						post_type: val.post_type,
-						myprofile: window.myprofile
-					};
-					$('#collection-content',target).append(post_item_template(view_data));
+					if ( val.post && val.post.id != window.featured_id ) {
+						var editable = val.post ? editCheck(val.post.published_at) : false;
+						view_data = {
+							site_url: window.site_url,
+							post: val.post,
+							user_id: window.user_id,
+							editable: editable,
+							featured_id: window.featured_id,
+							post_type: val.post_type,
+							myprofile: window.myprofile,
+							image_url: window.image_url
+						};
+						$('#collection-content',target).append(post_item_template(view_data));
+					}
 				});
 			}
 		});
@@ -368,11 +524,17 @@ function ProfileActions() {
 	this.renderFeatured = function() {
 		var feature_item_template = this.feature_item_template;
 		var target = this.target;
-		this.urlConstructor();
+		var editCheck = this.editCheck;
+
 		this.getData(this.feature_url,function(data) {
+			var editable = data.featured ? editCheck(data.featured.published_at) : false;
 			view_data = {
 				site_url: window.site_url,
-				post: data.featured
+				post: data.featured,
+				user_id : window.user_id,
+				editable: editable,
+				myprofile: window.myprofile,
+							image_url: window.image_url
 			}
 			$('#collection-content',target).prepend( feature_item_template(view_data) );
 
@@ -384,7 +546,7 @@ function ProfileActions() {
 		//Set a post as featured.
 		this.setFeatured = function(id) {
 			$('#collection-content .feature-item',target).fadeOut().remove();
-
+			$('#collection-content #post-' + id).fadeOut().remove();
 			featured_url = window.site_url + 'rest/profile/featured/' + id;
 			var target = this.target;
 			this.setData(featured_url, function(data) {
@@ -415,12 +577,13 @@ function ProfileActions() {
 		//scope issues
 		var comment_item_template = this.comment_item_template;
 		var target = this.target;
-		this.urlConstructor();
+
 		this.getData(this.comment_url, function(data) {
 			$.each(data.comments,function(idx, val) {
 				view_data = {
 					site_url: window.site_url,
-					comment: val
+					comment: val,
+					image_url: window.image_url
 				}
 				$('#comment-content',target).append(comment_item_template(view_data));
 			});
@@ -432,7 +595,7 @@ function ProfileActions() {
 		var post_item_template = this.post_item_template;
 		var no_content_template = this.no_content_template;
 		var target = this.target;
-		this.urlConstructor();
+
 		this.getData(this.url,function(data) {
 			if ( data.no_content ) {
 				$('#default-content',target).append( no_content_template( {section: 'feed'} ) );
@@ -442,7 +605,8 @@ function ProfileActions() {
 						site_url: window.site_url,
 						post: val.post,
 						feed_type: val.feed_type,
-						users: val.users
+						users: val.users,
+						image_url: window.image_url
 					};
 					$('#default-content',target).append(post_item_template(view_data));
 				});
@@ -455,7 +619,7 @@ function ProfileActions() {
 		var saves_item_template = this.saves_item_template;
 		var no_content_template = this.no_content_template;
 		var target = this.target;
-		this.urlConstructor();
+
 		this.getData(this.url,function(data) {
 			if ( data.no_content ) {
 				$('#default-content',target).append( no_content_template( {section: 'saves'} ) );
@@ -464,7 +628,8 @@ function ProfileActions() {
 					view_data = {
 						site_url: window.site_url,
 						save: val.post,
-						date: val.created_at
+						date: val.created_at,
+						image_url: window.image_url
 					};
 					$('#default-content',target).append(saves_item_template(view_data));
 				});
@@ -477,7 +642,7 @@ function ProfileActions() {
 			$('#save-'+post_id).fadeOut().remove();
 			url = window.site_url + 'rest/profile/saves/delete/' + post_id;
 			this.getData(url, function(data) {
-				console.log(data);
+
 			});
 		};
 
@@ -486,7 +651,7 @@ function ProfileActions() {
 		var drafts_item_template = this.drafts_item_template;
 		var no_content_template = this.no_content_template;
 		var target = this.target;
-		this.urlConstructor();
+
 		draftDate = this.draftDate;
 		this.getData(this.url,function(data) {		
 			if ( data.no_content ) {
@@ -496,7 +661,8 @@ function ProfileActions() {
 					view_data = {
 						site_url: window.site_url,
 						draft: val,
-						date: draftDate(val.updated_at)
+						date: draftDate(val.updated_at),
+						image_url: window.image_url
 					};
 					$('#default-content',target).append(drafts_item_template(view_data));
 				});
@@ -518,13 +684,14 @@ function ProfileActions() {
 	this.renderFollowers = function() {
 		var follow_template = this.follow_template;
 		var target = this.target;
-		this.urlConstructor();
+
 		this.getData(this.url, function(data) {
 			$.each(data.follow, function(idx, val) {
 				view_data = {
 					site_url: window.site_url,
 					username: val.followers.username,
-					user_id:  val.follower_id
+					user_id:  val.follower_id,
+					image_url: window.image_url
 				};
 				$('#default-content', target).append(follow_template(view_data));
 			});
@@ -535,13 +702,14 @@ function ProfileActions() {
 	this.renderFollowing = function() {
 		var follow_template = this.follow_template;
 		var target = this.target;
-		this.urlConstructor();
+
 		this.getData(this.url, function(data) {
 			$.each(data.follow, function(idx, val) {
 				view_data = {
 					site_url: window.site_url,
 					username: val.following.username,
-					user_id:  val.user_id
+					user_id:  val.user_id,
+					image_url: window.image_url
 				};
 				$('#default-content', target).append(follow_template(view_data));
 			});
@@ -560,12 +728,14 @@ function ProfileActions() {
 		
 		view_data = {
 			site_url: this.site_url,
-			user_image: user_image
+			user_image: user_image,
+			email: window.email,
+			image_url: window.image_url
 		};
 		$('#default-content', this.target).append(this.settings_template(view_data));
 		
 		if(this.photo_init == false) {
-			photo_input = new PhotoInput;
+			photo_input = new PhotoInput();
 			this.photo_init = true;
 
 			photo_input.target = $('#photoModal .modal-body');
@@ -613,6 +783,33 @@ function ProfileActions() {
 		        $errors.show();
 		    }
 		}
+
+	this.updateEmail = function( form ) {
+		// Fetch fields
+		var data = {
+			password: $(form).find('input.current-password').val(),
+			new_email: $(form).find('input.new-email').val()
+		};
+		// Send Request
+		$.ajax({
+			url: window.site_url + 'rest/profile/email/update',
+			type: 'post',
+			data: data,
+			success: function ( data ) {
+				if ( data.success ) {
+					$(form).fadeOut( function() {
+						$(this).siblings('.email-update-success').removeClass('hidden');
+						$(this).siblings('.email-update-error').remove();
+						$(this).remove();
+					});
+				} else if ( data.error ) {
+					$(form).siblings('.email-update-error').html( data.error ).removeClass('hidden');
+					$(form).find('input.current-password').val('');
+				}
+			}
+		});
+		// Handle Response
+	}
 
 	this.changePassword = function() {
 		$('form#changePassword').ajaxForm({
@@ -672,7 +869,7 @@ function ProfileActions() {
 
 //Pagination Code
 	this.paginate = function() {
-		if(!window.page_processing) {
+		if(!window.page_processing && !window.finished_pagination) {
 			//If we did start processing.
 			window.page_processing = true;
 			this.page = this.page + 1;
@@ -685,7 +882,6 @@ function ProfileActions() {
 		if(!window.comment_page_processing) {
 			window.comment_page_processing = true;
 			this.comment_page = this.page + 1;
-			this.urlConstructor();
 			this.renderComments();
 		}
 	};

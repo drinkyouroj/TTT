@@ -114,11 +114,9 @@ class CommentController extends BaseController {
 		$comment_body = Input::has('body') ? Input::get('body') : null;
 
 		$comment = $this->comment->create( $user->id, $user->username, $reply_id, $post_id, $comment_body );
-		if ( $comment == null ) {
-			// Could not comment due to time time restrictions
-			// NOTE: $comment == null could mean several things (invalid comment, failed save)
+		if ( is_string( $comment ) ) {
 			return Response::json( array(
-					'error' => 'You must wait at least 10 seconds before commenting'
+					'error' => $comment
 				), 200);
 		} else {
 			// Proceed to increment comment count for the given post

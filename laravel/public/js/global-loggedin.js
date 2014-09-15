@@ -1,4 +1,6 @@
 $(function() {
+	window.logged_in = true;
+	
 	$('.system-share a').on('click', function(event){
 		event.preventDefault();
 	});
@@ -8,12 +10,6 @@ $(function() {
 	$('.profile-options .follow').on('click', function(event) {
 		event.preventDefault();
 		follow($(this).data('user'),'profile');
-	});
-	
-	$('.follow-container .follow').on('click', function(event) {
-		event.preventDefault();
-		follow($(this).data('user'),'post');
-		$(this).fadeOut();
 	});
 	
 		//See the followers list

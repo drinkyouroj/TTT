@@ -1,7 +1,7 @@
 <?php
 
 App::missing(function($exception) {
-	return Response::view('missing',array(), 404);
+	return Response::view('v2.layouts.missing',array(), 404);
 });
 
 /*
@@ -22,8 +22,15 @@ Blade::extend(function($value) {
 
 App::before(function($request)
 {	
+	if(Auth::check() && Auth::user()->deleted_at) {
+		Auth::logout();
+		Session::flush();
+		Session::regenerate();
+		return Redirect::to('user/logout');
+	}
 	if (Auth::check() && !Session::has('user_id'))
 	{
+
 	   return Redirect::to('user/logout');
 	}
 });
@@ -60,6 +67,13 @@ Route::filter('auth', function()
 
         // Redirect back to user login
         return Redirect::to( '/' );
+    }
+});
+
+Route::filter('force_ssl',function() {
+	if( ! Request::secure() && Config::get('app.enable_ssl') )
+    {
+        return Redirect::secure(Request::path());
     }
 });
 
@@ -238,10 +252,20 @@ View::composer('*', function($view) {
 	if ( $is_mod || $is_admin ) {
 
 		$flagged = App::make('AppStorage\FlaggedContent\FlaggedContentRepository');
+		$users_rep = App::make('AppStorage\User\UserRepository');
+		$post_rep = App::make('AppStorage\Post\PostRepository');
 		// Include the flagged content
 		$flagged_post_content = $flagged->getFlaggedOfType( 'post' );
 		$flagged_comment_content = $flagged->getFlaggedOfType( 'comment' );
-		
+		// Include some stats
+		$num_users = $users_rep->getUserCount();
+		$num_confirmed_users = $users_rep->getConfirmedUserCount();
+		$num_users_created_today = $users_rep->getUserCreatedTodayCount();
+
+		$num_published_posts = $post_rep->getPublishedCount();
+		$num_published_posts_today = $post_rep->getPublishedTodayCount();
+		$num_drafts_today = $post_rep->getDraftsTodayCount();
+
 		// Check if we are on user and/or post page (additional functionalities will be given)
 		$seg = Request::segment(1);
 		if( $seg == 'profile') {
@@ -250,8 +274,14 @@ View::composer('*', function($view) {
 			$view->with( 'is_post_page', true );
 		}
 		$view->with( 'flagged_post_content', $flagged_post_content )
-			 ->with( 'flagged_comment_content', $flagged_comment_content );
-	
+			 ->with( 'flagged_comment_content', $flagged_comment_content )
+			 ->with( 'num_users', $num_users )
+			 ->with( 'num_confirmed_users', $num_confirmed_users )
+			 ->with( 'num_users_created_today', $num_users_created_today )
+			 ->with( 'num_published_posts', $num_published_posts )
+			 ->with( 'num_published_posts_today', $num_published_posts_today )
+			 ->with( 'num_drafts_today', $num_drafts_today );
+
 
 	}
 	

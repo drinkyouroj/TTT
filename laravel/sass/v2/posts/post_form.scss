@@ -3,6 +3,63 @@
 $border_color: #eee;
 
 @include photo_selection;
+#image-error {
+	display:none !important;//are we trying to do something with this?
+}
+
+@mixin draftPublishButtons() {
+	text-align: right;
+	a {
+		text-align: center;
+		display:inline-block;
+		width: 130px;
+		padding: 12px 0;
+		background: $blue;
+
+		@include montserrat(normal);
+		text-transform: uppercase;
+		font-size: 11px;
+		color:#fff;
+		@media (max-width:$break-md) {
+			width:auto;
+			padding: 12px 15px;
+		}
+		@media (max-width:$break-sm) {
+			padding: 5px 5px;
+			font-size: 10px;
+		}
+		&.save-draft {
+			margin-right: 7px;
+			background: #a4a4a4;
+			@media (max-width:$break-sm) {
+				margin-right: 1px;
+			}
+		}
+	}
+}
+
+@mixin categoriesLink() {
+	display:inline-block;
+	// width: 192px;
+	text-align:left;
+	margin-top: 5px;
+	padding: 5px 15px 3px 0px;
+	color:$lightgray;
+
+	cursor: pointer;
+    @include montserrat(normal);
+    text-transform:uppercase;
+    font-size:13px;
+    background-image:url('../../../../images/posts/cat-arrow-white.png');
+    background-position:right center;
+    background-repeat:no-repeat;
+    background-size:10px 7px;
+    @media (max-width:$break-sm) {
+    	margin-top:0px;
+		font-size: 8px;
+		padding: 5px 15px 3px 0px;
+	}
+}
 
 //Top Controls Fixed (Post Type, Category, Drafe, Publish)
 .controls-wrapper {
@@ -23,46 +80,59 @@ $border_color: #eee;
 		}
 		.post-category {
 			text-align: center;
-			a {
-				display:inline-block;
-				width: 192px;
-				text-align:left;
-				margin-top: 5px;
-				padding: 5px 15px 3px 0px;
-				color:$lightgray;
-
-				cursor: pointer;
-		        @include montserrat(normal);
-		        text-transform:uppercase;
-		        font-size:13px;
-		        background-image:url('../../../../images/posts/cat-arrow-white.png');
-		        background-position:right center;
-		        background-repeat:no-repeat;
-		        background-size:10px 7px;
+			a.categorization {
+				@include categoriesLink();
 			}
 		}
 		.draft-publish {
-			text-align: right;
-			a {
-				text-align: center;
-				display:inline-block;
-				width: 130px;
-				padding: 12px 0;
-				background: $blue;
-
-				@include montserrat(normal);
-				text-transform: uppercase;
-				font-size: 11px;
-				color:#fff;
-				
-				&.save-draft {
-					margin-right: 7px;
-					background: #a4a4a4;
-				}
-			}
+			@include draftPublishButtons();
+		}
+		@media (max-width:$break-sm) {
+			padding:3px 15px;
 		}
 	}
 }
+
+.bottom-controls-container {
+	padding-bottom: 100px;
+	text-align:center;
+	.info {
+		text-align:center;
+		position:relative;
+		margin-bottom:50px;
+		label {
+			@include label;
+			position:absolute;
+			bottom:-30px;
+			right:40%;
+			margin-top: 8px;
+			margin-right: 1px;
+			&:after {
+				@include label_arrow_top();
+				top:-13px;
+			}
+		}
+		a.categorization {
+			@include categoriesLink();
+			color: $dark;
+			border:solid 2px $dark;
+			font-size:11px;
+			padding:5px 10px !important;
+			margin-right:10px;
+		}	
+	}
+	.draft-publish {
+		display:block;
+		padding-top:10px;
+		border-top:1px solid $dark;
+		@include draftPublishButtons();
+		a {
+			cursor: pointer;
+		}
+	}
+
+}
+
 
 .category-wrapper {	
 	z-index: 3;
@@ -72,6 +142,10 @@ $border_color: #eee;
 	display:none;
 	padding-top: 30px;
 	padding-bottom: 50px;
+	@media (max-width:$break-sm) {
+		top:99px;
+		padding-top:0px;
+	}
 	.category-container {
 		label {
 			color:#eee;
@@ -83,16 +157,24 @@ $border_color: #eee;
 			@include montserrat(normal);
 		}
 		.story-type-box {
-
+			select.form-control {
+				@media (max-width:$break-md) and (min-width:$break-sm-min) {
+					width:33%;
+				}
+			}
 		}
 		.category-box {
 			color:$lightgray;
 			ul {
+				position:relative;
 				display:inline-block;
 				list-style: none;
 				margin: 0;
 				padding: 15px 0px 15px 15px;
 				border:solid 1px  #525252;
+				@media (max-width:$break-xs) {
+					padding: 10px 0px 10px 10px;
+				}
 				li {
 					margin: 0;
 					padding: 0;
@@ -103,11 +185,38 @@ $border_color: #eee;
 						font-size:16px;
 						letter-spacing:1px;
 						@include garamond-italic;
+						@media (max-width:$break-xs) {
+							font-size:12px;
+						}
 					}
 					label.error {
+						display:none;
+					}
+					label.error {
+						position:absolute;
 						width:100%;
+						display:block;
+						top:-50px;
+						left:300px;
+						font-size:11px;
+						color:$red;
+						@include montserrat;
+						line-height:50px;
+						@media (max-width:$break-lg) {
+							left:200px;
+						}
+						@media (max-width:$break-md) {
+							left:300px;
+						}
+						@media (max-width:$break-xs) {
+							left:200px;
+						}
+
 					}
 				}
+			}
+			@media (max-width:$break-md) {
+				margin-top:20px;
 			}
 		}
 		.close-category {
@@ -115,12 +224,20 @@ $border_color: #eee;
 			margin-top:30px;
 			padding-top:30px;
 			text-align:center;
+			@media (max-width:$break-xs) {
+				margin-bottom:150px;
+			}
 			a {
 				background:none;
 				&:hover {
 					color:$blue;
 					border: solid 2px $blue;
 				}
+			}
+			@media (max-width:$break-sm) {
+				margin:0px;
+				padding:0px;
+				border-top: 0px;
 			}
 		}
 	}
@@ -129,14 +246,20 @@ $border_color: #eee;
 .top-submit-wrapper {
 	background:$lightgray;
 	border-bottom:solid 1px $lightgray;
+	@media (max-width:$break-md) {
+		background:$white;
+	}
 	.top-submit-container {
 		position: relative;
-		width: 100%;
-		max-width: 1400px;		
 		margin-top: 69px;
-		padding-left:0px;
-		padding-right:0px;
-		height: 500px;//Change Min-height value based on the window.
+		@media (min-width: $break-lg-min) {
+			width: 100%;
+			padding-left:0px;
+			padding-right:0px;
+		}
+		@media (max-width:$break-sm) {
+			margin-top: 31px;
+		}
 		@media screen and (min-width: 992px) {
 			display: table;
 			-moz-box-sizing: border-box;
@@ -155,7 +278,7 @@ $border_color: #eee;
 		.error {
 			background:$white;
 			color:$red;
-			padding:5px 5px !important;
+			text-transform:none;
 			margin-bottom: 8px;
 			&:after {
 				content:none !important;
@@ -202,6 +325,12 @@ $border_color: #eee;
 					color:$dark;
 					line-height:49.5px;
 					margin-left:0px;
+					@media (max-width: $break-lg) and (min-width: $break-lg-min) {
+						font-size:32px
+					}
+					@media (max-width: $break-xs) {
+						font-size:24px;
+					}
 				}
 			}
 
@@ -232,26 +361,56 @@ $border_color: #eee;
 					padding:2px 6px 1px 6px;
 				}
 			}
+			@media (max-width: $break-sm) {
+				padding-top:0px;
+			}
 		}
 		.image-system {
 			position:relative;
-			height: 500px;
+			height:0px;
+			padding-top:42%;
 			background-size: cover;
 			background-repeat: no-repeat;
 			background-position: center;
+			@media (max-width:$break-md) {
+	        	width: 100%;
+	        	height:0px;
+	        	padding-top:63%;
+	        	margin:5px auto 0 auto;
+	        }
 
 			.image-select {
 				position:absolute;
 				left:0px;
-				top:170px;
+				top:35%;
 				text-align: center;
 				
 				margin: 0px 0;//This determines the height of the image.
 
 				width: 100%;
+				label {
+					position:absolute;
+					top:-40px;
+					right:40%;
+					margin-top: 8px;
+					margin-right: 1px;
+					font-size: 12px;
+					&:after {
+						@include label_arrow_bottom();
+						left: -45px;
+					}
+					@media (max-width:$break-md) and (min-width:$break-sm-min) {
+						right:40%;
+					}
+					@media (max-width:$break-xs) {
+						right:30%;
+					}
+
+				}
 				a {
 					img {
-						margin-bottom: 20px;
+						width:10%;
+						margin-bottom: 2%;
 					}
 					span {
 						@include montserrat(normal);
@@ -272,6 +431,9 @@ $border_color: #eee;
 					&:hover {
 						color:#000;
 					}
+					@media (max-width:$break-sm) {
+	          			font-size:11px;
+	        		}
 				}
 			}
 		}
@@ -283,14 +445,29 @@ $border_color: #eee;
 	top: -10px;
 	.body-submit-container {
 		padding-top: 55px;
-		padding-bottom: 55px;
+		padding-bottom: 8px;
 		.story {
+			position:relative;
 			label {
 				@include label;
 				float: right;
 				margin-top: -33px;
 				&:after {
 					@include label_arrow_bottom();
+				}
+			}
+			label.error {
+				position:absolute;
+				background:none;
+				top:-5px;
+				left:0px;
+				font-size:11px;
+				color:$red;
+				text-transform:none;
+				@include montserrat;
+				line-height:50px;
+				&:after {
+					content:none;
 				}
 			}
 			textarea {

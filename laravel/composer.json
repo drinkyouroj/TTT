@@ -10,18 +10,21 @@
 	],
 	"require": {
 		"patchwork/utf8": "1.1.*",
-		"laravel/framework": "4.1.x",
-		"zizaco/entrust": "dev-master",
+		"laravel/framework": "~4.2",
+		"zizaco/entrust": "1.2.*@dev",
 		"zizaco/confide": "1.0.x",
 		"way/guard-laravel": "dev-master",
-		"way/generators": "dev-master",
+		"way/generators": "~2.0",
 		"solarium/solarium": "dev-develop",
 		"pda/pheanstalk": "2.0.*",
-		"jenssegers/mongodb": "*",
+		"jenssegers/mongodb": "~2.0",
 		"mews/captcha": "dev-master",
 		"thomaswelton/laravel-rackspace-opencloud": "dev-master",
 		"phpunit/phpunit": "4.2.*",
-		"aws/aws-sdk-php": "2.*"
+		"aws/aws-sdk-php": "2.*",
+		"elasticsearch/elasticsearch": "~1.0",
+		"intervention/image": "2.*",
+		"jenssegers/agent": "~2.0"
 	},
 	"autoload": {
 		"classmap": [

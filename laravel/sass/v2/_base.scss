@@ -3,16 +3,19 @@
 
 //Colors
 $blue: #32b1c6;
+$blue_dark:#2c9ca8;
 $red: #f74141;
 $dark_gray: #333;
 $gray: #ccc;
 $lightgray: #eee;
+$gray_text:#bbb;//for text over a dark background
 $beige: #fff9f0;
 $cream: #fff8ee;
 $dark_cream: #dbd3ca;
 $dark: #181919;//color that's not black, but looks like black.
 $black: #000;
 $white: #fff;
+$white_hover: #f9f9f9;
 
 //Media Queries
 $break-lg: 1199px;
@@ -27,8 +30,8 @@ $break-sm-min: 480px;
 
 
 //Navbar*****
-$navbar_height: 50px;
-$offcanvas_sidebar_width: 300px;
+$navbar_height: 46px;
+$offcanvas_sidebar_width: 250px;
 $navbar_dropdown_menu_min_width: 250px;
 $navbar_dropdown_menu_max_width: 350px;
 
@@ -60,6 +63,7 @@ $post_actionbar_height: 69px;
 @mixin fjalla() {
   font-family: 'Fjalla One';
   text-transform:uppercase;
+  font-weight: 400;
 }
 
 //Title and tagline typography
@@ -83,6 +87,11 @@ $post_actionbar_height: 69px;
 input,textarea, select {
 	outline: none;
 	@include border-radius(0);
+  @include montserrat;
+  padding:5px;
+  border:solid 1px $gray;
+  box-shadow: rgba(0, 0, 0, 0.0745098) 0px 2px 2px 0px inset;
+  background:#fdfdfd;
 }
 
 textarea {
@@ -135,7 +144,7 @@ textarea {
       border-bottom:solid 1px $dark_gray;
       &.disabled {
         a {
-          color: $gray;
+          color: #525252;
         }
       }
 
@@ -153,10 +162,6 @@ textarea {
         @include montserrat(normal);
         font-size:12px;
         letter-spacing:2px;
-        
-        &:hover {
-          color:$blue;
-        }
       }
 
       &:nth-child(odd) {
@@ -171,8 +176,74 @@ textarea {
   }
 }
 
-//===Nav sidebar:end===
 
+//==========Signup/Login==========
+@mixin signup_login {
+  .login-container, .signup-container, .search-container {
+    background-color:$white;
+    margin-top:15px;
+    padding-top:30px;
+    padding-bottom:50px;
+    border:solid 1px $lightgray;
+    .login-form, .signup-form {
+      text-align:center;
+      h2 {
+        margin-top:10px;
+      }
+      form {
+        margin-top:20px;
+        input {
+          width:40%;
+          height:50px;
+          margin-bottom:10px;
+          padding-left:20px;
+          font-size:16px;
+          @media (max-width:$break-sm) and (min-width:$break-sm-min) {
+            width:70%;
+          }
+
+          @media (max-width:$break-xs) {
+            width:90%;
+          }
+        }
+        .form-actions {
+          margin-top:10px;
+          margin-bottom:10px;
+        }
+        .forgot-pw {
+         
+        }
+      }
+      .login-disclaimer, .terms-agree {
+          margin-top:30px;
+          padding-top:20px;
+          border-top:solid 1px $lightgray;
+          font-size:12px;
+        }
+    }
+    .signup-form {
+      input {
+        width:90% !important;
+      }
+      .email-subtext {
+        margin-bottom:10px;
+      }
+      .captcha-numbers {
+        width:90%;
+        margin:0 5%;
+        background:$lightgray;
+        @include montserrat;
+        padding:10px;
+      }
+    }
+  }
+  .redirect-other {
+      a {
+        @include montserrat;
+        font-size:12px;
+      }
+    }
+}
 
 
 
@@ -199,8 +270,10 @@ textarea {
          background-size:15px 35px;
          height:17px;
          padding-left:17px;
-         background-position:left 0px;
         &:hover {
+          background-position:left -18px;
+        }
+        &.active {
           background-position:left -18px;
         }
       }
@@ -208,14 +281,14 @@ textarea {
   span {
       display: inline-block;
       height:25px;
-      &:hover {
-        background-position:left -26px;
-      }
       @include montserrat;
       font-size:10px;
       letter-spacing:1px;
       text-transform:uppercase;
       line-height:45px;
+      &:hover {
+        background-position:left -26px;
+      }
       @media (max-width: $break-xs) {
         margin-top:-5px;
       }
@@ -264,18 +337,24 @@ textarea {
 @mixin post_page_tagline {
   @include garamond-italic;
   font-size:17px;
-  text-transform:capitalize;
+  text-transform:lowercase;
   color:$dark;
   @include word-break(break-all);
 }
 
 
 
-//shadow for notifications and dropdowns
+//shadow for nav elements
 @mixin drop_shadow() {
--moz-box-shadow:    0px 1px 1px 0px #525252;
-  -webkit-box-shadow: 0px 1px 1px 0px #525252;
-  box-shadow:         0px 1px 1px 0px #525252;
+-moz-box-shadow:    0px 1px 2px 0px #525252;
+  -webkit-box-shadow: 0px 1px 2px 0px #525252;
+  box-shadow:         0px 1px 2px 0px #525252;
+}
+//shadow for secondary dropdowns
+@mixin secondary_drop_shadow() {
+-moz-box-shadow:    0px 1px 1px 0px #999;
+  -webkit-box-shadow: 0px 1px 1px 0px #999;
+  box-shadow:         0px 1px 1px 0px #999;
 }
 
 @mixin notifications_arrow_top() {
@@ -336,7 +415,7 @@ textarea {
 //Styling for category and sortby dropdowns
 @mixin catfilter {
   .category-filter-container {
-    width: 150px;
+    min-width:150px;
     display: inline-block;
     margin: 10px;
     margin-left: 15px;
@@ -352,7 +431,6 @@ textarea {
       background-image:url('../../../../images/categories/filter-arrow.png');
       background-position:right center;
       background-repeat:no-repeat;
-
     }
 
     ul.filter-dropdown {
@@ -392,6 +470,30 @@ textarea {
     }
   }
 }
+
+//dropdowns for reposts and post options
+@mixin profile-dropdowns {
+  position:absolute;
+  right:0px;
+  display:none;
+  min-width:120px;
+  margin-top:7px;
+  text-align:right;
+  background: url('../../../../images/global/white-95.png');
+  padding:5px 10px;
+  border:solid 1px $lightgray;
+  z-index: 3;
+  @include secondary_drop_shadow();
+  &::before {
+    content: url('../../../../images/profile/repost-arrow.png');
+    position: absolute;
+    top: -14px;
+    right: 10px;
+    width: 7px;
+    height: 10px;
+  }
+}
+
 // Styling for the post (and repost) listings. $isFeed just tells whether or not to
 // include the css for reposts (only used in profile feed).
 @mixin post_listing( $isFeed ) {
@@ -403,7 +505,6 @@ textarea {
     height: 302px;
     margin-left: 15px;
     margin-right: 15px;
-    
     .image-container {
       position: relative;
       width: 100%;
@@ -541,9 +642,93 @@ textarea {
   }
 }
 
+@mixin notifications_style {
+  .notification-container {
+
+    a {
+      display:inline-block;
+      width:100%;
+      padding:15px 15px 15px 30px; 
+      background:$white;
+      border-bottom:solid 1px $lightgray;
+      border-left:solid 1px $lightgray;
+      border-right:solid 1px $lightgray;
+      color:$dark;
+      background-position:center left;
+      background-repeat:no-repeat;
+      background-size:30px 19px;
+      &.post {
+        background-image:url('../../../../images/notifications/post-notifications.png');
+      }
+       &.repost {
+        background-image:url('../../../../images/notifications/repost-notifications.png');
+      }
+       &.comment {
+        background-image:url('../../../../images/notifications/comment-notifications.png');
+      }
+       &.reply {
+        background-image:url('../../../../images/notifications/reply-notifications.png');
+      }
+       &.like {
+        background-image:url('../../../../images/notifications/like-notifications.png');
+      }
+      span {
+        @include montserrat (normal);
+        color:$blue;
+        &.notification-post-title {
+          text-transform:uppercase;
+        }
+      }
+      &:hover {
+        background-color:$white_hover;
+      }
+    }
+  }
+}
+
+// Styling for the follow/follower and user search listings
+@mixin user_listing {
+  position:relative;
+  display:inline-block;
+  float: left;
+  width: 270px;
+  margin: 10px 10px;
+  height: 170px;
+  text-align:center;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  .user-avatar {
+    width:120px;
+    height:120px;
+    margin: 0 auto;
+    overflow:hidden;
+    @include border-radius(60px);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .user-name {
+    position:relative;
+    width:100%;
+    padding:5px 10px;
+    color:$blue;
+    @include montserrat;
+    font-size:18px;
+    @include word-break(break-all);
+  }
+}
+
 
 //Photo Selection
 @mixin photo_selection {
+  .modal-dialog {
+    @media (max-width:$break-xs) {
+      padding:5px 5px;
+      width: 100%;
+      margin: 10px 0% 30px 0%;
+    }
+  }
   .photos {
     .photo-system {
       .input-append {
@@ -560,26 +745,39 @@ textarea {
           box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
           -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
           transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+          @media (max-width:$break-sm) {
+            width:74%;
+            max-width:700px;
+            margin-right:1%;
+            float:left;
+          }
         }
         .activate-search {
+          padding:15px 15px;
+          @media (max-width:$break-sm) {
+            width:25%;
+            float:left;
+          }
+          @media (max-width:$break-xs) {
+            padding:5px 5px;
+            font-size: 10px;
+          }
         }
         .reset-search {
+          padding:15px 15px;
+          @media (max-width:$break-sm) {
+            width:25%;
+            float:right;
+            margin-top:2px;
+          }
+          @media (max-width:$break-xs) {
+            padding:5px 5px;
+            font-size: 10px;
+          }
         }
       }
       .chosen {
         margin-top:30px;
-      }
-
-      h4 {
-        font-family: 'bebas';
-      }
-
-      .chosen-label {
-        font-family: 'bebas';
-      }
-
-      .processed-label {
-        font-family: 'bebas';
       }
 
       .photo-results {
@@ -631,17 +829,19 @@ textarea {
               width: 14.28%;
               opacity: 0.5;
               cursor: pointer;
-              &:hover, &.selected {
+              &:hover, &.active {
                 opacity: 1;
               }
-              &.selected {
+              &.active {
                 cursor: default;
               }
             }
           }
         }
         .photo-chosen {
-          height: 400px;
+          width:100%;
+          height:0px;
+          padding-top:63%;
           overflow: hidden;
           background-size: cover;
           background-position: center center;
@@ -660,15 +860,15 @@ textarea {
 //Modal Mods
 //below is straight off from the landing page.  Modify if need be.
 .modal-backdrop.in {
-	opacity: 0.95 !important;
+	opacity: .98 !important;
 }
 .modal-dialog {
   width: 80%;
   margin: 30px 10% 30px 10%; }
   @media (max-width: 479px) {
     .modal-dialog {
-      width: 90%;
-      margin: 10px 5% 30px 5%; } }
+      width: 98%;
+      margin: 10px 1% 30px 1%; } }
   @media (min-width: 480px) and (max-width: 767px) {
     .modal-dialog {
       width: 90%;

@@ -24,6 +24,12 @@
 				window.post = false;
 			@endif
 
+			@if(strlen($profile_user->email))
+				window.email = 1;
+			@else
+				window.email = 0;
+			@endif
+
 		@endif
 	</script>
 
@@ -41,8 +47,9 @@
 	
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment/moment.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment-timezone/moment-timezone-with-data.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/photo/photo.js"></script>	
+	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/photo/photo.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/myprofile/profile.js"></script>
+	
 @stop
 
 @section('content')
@@ -67,9 +74,9 @@
 						<div class="col-md-5">
 
 						</div>
-						<div class="col-md-7 follow">
+						<div class="col-md-7 follow-container">
 							<div class="row">
-								<div class="col-md-12">
+								<div class="col-md-12 col-sm-12 col-xs-12 fing-fer">
 									<a href="#followers" class="followers" id="followers">
 										<span class="count">{{$follower_count}}</span>
 										<span class="text">Followers</span>
@@ -80,7 +87,7 @@
 										<span class="text">Following</span>
 									</a>
 								</div>
-								<div class="col-md-12 follow-btn-container">
+								<div class="col-md-12 col-sm-12 col-xs-12 follow-btn-container">
 									@if($myprofile)
 										<div class="settings">
 											<a class="icon-button" href="#settings" id="settings">
@@ -120,6 +127,9 @@
 							<a href="#drafts" id="drafts">
 								Drafts
 							</a>
+							<a href="#notifications" id="notifications">
+								Notifications
+							</a>
 						@endif
 					</div>
 				</div>
@@ -144,27 +154,41 @@
 
 	
 	@if($myprofile)
+	{{--Contains modals for My Profile --}}
+
+
 	{{--This is for the User Delete scenario--}}
-		<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-		      </div>
-		      <div class="modal-body">
-		        Are you absolutely sure???
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title" id="myModalLabel">Account Deletion</h4>
+	      </div>
+	      <div class="modal-body">
+	        Are you absolutely sure? This step is irreversible.
+	      </div>
+	      <div class="modal-footer">
+
+	        <div class="input-group col-md-8 col-md-offset-2">
+		      <input type="password" placeholder="Password" class="form-control delete-account-password">
+		      <span class="input-group-btn">
 		        <button type="button" class="btn btn-danger delete-account" data-user="{{$profile_user->id}}">
 		        	Delete The Account Already!
 		        </button>
-		      </div>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		      </span>
 		    </div>
-		  </div>
-		</div>
-	@endif
+
+		    <div class="delete-account-error col-md-12">
+
+		    </div>
+	        
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
 
 	{{--Publish Modal--}}
 	<div class="modal fade" id="publishModal" tabindex="-1" role="dialog" aria-labelledby="publishModalLabel" aria-hidden="true">
@@ -215,17 +239,46 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-					<h4 class="modal-title" id="draftsModalLabel">
+					<h4 class="modal-title" id="photoModalLabel">
 						Choose an Avatar
 					</h4>
 				</div>
 				<div class="modal-body">
 					
 				</div><!--End of Modal Body-->
+				<div class="modal-footer hidden">
+					<button class="btn-flat-blue pull-right" data-dismiss="modal">Ok</button>
+				</div>
 			</div>
 		</div>
 	</div>
 
+	<div class="modal fade" id="removeDraftModal" tabindex="-1" role="dialog" aria-labelledby="removeDraftModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title" id="removeDraftModalModalLabel">
+						Are you sure you want to remove this draft?
+					</h4>
+				</div>
+				<div class="modal-body">
+					<div class="input-group col-md-8 col-md-offset-2">
+				      <span class="input-group-btn">
+				        <button type="button" class="btn btn-danger delete" >
+				        	Remove The Draft.
+				        </button>
+				      </span>
+				    </div>
+				</div><!--End of Modal Body-->
+				<div class="modal-footer hidden">
+					<button class="btn-flat-blue pull-right" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	@endif
 
 @stop
 
@@ -265,6 +318,18 @@
 			<br>
 			<button class="admin-user-reset btn btn-xs btn-warning">Reset User Password</button>
 			<br>
+			
+			@if ( count( $deleted_posts ) )
+				<hr>
+				<p>{{$profile_user->username}}'s Deleted Posts</p>
+				<ul class="list-unstyled">
+					@foreach( $deleted_posts as $post )
+						<li>
+							<a href="{{ URL::to('posts/'.$post->alias) }}">{{ $post->title }}</a>
+						</li>
+					@endforeach
+				</ul>
+			@endif
 		@endif	
 	@endif
 	</div>

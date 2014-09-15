@@ -4,7 +4,7 @@
 	height: $post_actionbar_height;
 
 	@media (max-width:$break-sm) {
-		height:45px;
+		height:35px;
 	}
 
 	.post-action-bar {
@@ -16,12 +16,15 @@
 		padding: 15px;
 
 		@media (max-width:$break-sm) {
-			height:45px;
+			height:35px;
 			padding: 5px 15px;
 		}
 
 		.actions-container, .comment-container {
 			margin-top:5px;
+			@media (max-width:$break-sm) {
+				margin-top:0px;
+			}
 		}
 		.utility-container {
 			padding-top:7px;
@@ -50,36 +53,51 @@
 				li {
 					float:left;
 					@include post_actions;
-					
 					a.active {
 						color: $blue;
 					}
 				}
-			}
-			@media (max-width: $break-xs) {
-				margin-top:7px;
+				@media (max-width: $break-xs) {
+					padding-left:0px;
+				}
 			}
 		}
 		.comment-container {
 			.comment-button {
 				@include post_actions_label;
 				background-image:url('../../../../images/global/comment.png');
-				 @media (max-width: $break-xs) {
-				 	font-size:9px;
-			         background-size:15px 35px;
-			         height:17px;
-			         padding-left:19px;
-			         background-position:left 0px;
+				@media (max-width: $break-xs) {
+					font-size:9px;
+			    	background-size:15px 35px;
+			    	height:17px;
+			        padding-left:19px;
+			        background-position:left 0px;
 			        &:hover {
 			          background-position:left -18px;
 			        }
+			        @media (max-width: $break-xs) {
+      					font-size:7px;
+      					float:right;
+      					padding-right:0px;
+    				}
 			      }
+			}
+			@media (max-width: $break-xs) {
+				padding-right:0px;
 			}
 		}
 		.follow-container {
 			float:right;
 			.follow {
 				float:right;
+
+				&.active {
+					background-image: none;
+					background: none;
+					border: 0;
+					color: $lightgray;
+					cursor: default;
+				}
 			}
 		}
 	}
@@ -97,14 +115,12 @@
 		position: relative;
 		@media (min-width: $break-lg-min) {
 			width: 100%;
-			max-width: 1400px;
 			padding-left:0px;
 			padding-right:0px;
 			display: table;
 			-moz-box-sizing: border-box;
 		    box-sizing: border-box;
 		    .row {
-		    	height: 100%;
 				display: table-row;
 				.post-heading, .post-image {
 					display: table-cell;
@@ -116,17 +132,17 @@
 
 		.row {
 			.post-heading {
-				position:relative;
+				vertical-align:middle;
 				text-align: center;
 				background-color: #fff;
 				padding-left:25px;
 				padding-right:25px;
 				h2 {
 					@include post_page_title;
-					padding-top:75px;
-					@media (max-width: $break-md) {
-						margin-top: 50px;
-						padding-top:0px;
+					margin-top:-100px;
+					font-size:32px;
+					@media (max-width: $break-md) and (min-width: $break-sm-min) {
+						margin-top:50px;
 					}
 					@media (max-width: $break-xs) {
 						margin-top: 25px;
@@ -149,12 +165,16 @@
 
 				ul.post-taglines {
 					@include post_page_tagline;
-					margin-bottom: 25px;
+					margin-bottom: 20px;
 					li {
 						line-height: 12px;
 					}
 					li:nth-child(1), li:nth-child(2) {
 						border-right: 1px solid $dark;
+					}
+					@media (max-width: $break-lg) and (min-width: $break-lg-min) {
+						font-size:14px;
+						margin-bottom: 10px;
 					}
 					@media (max-width: $break-xs) {
 						margin-bottom: 20px;
@@ -173,7 +193,7 @@
 				ul.post-categories {
 					position: absolute;
 					width:100%;
-					bottom:10px;
+					bottom:5px;
 					left:0px;
 					margin-top: 100px;
 					margin-bottom: 0px;
@@ -200,7 +220,8 @@
 				}
 			}
 			.post-image {
-				height: 500px;
+				height: 0;
+				padding-top:42%;
 				background-color:#000;//temporary DELETE
 				-webkit-background-size: cover;
 		        -moz-background-size: cover;

@@ -79,13 +79,13 @@
 								Link to Post
 							</a>
 						</div>
-						<div class="col-sm-4 post-category">
+						<div class="col-sm-4 col-xs-6 post-category">
 							<a class="categorization">
 								Post Type / Categories
 							</a>
 						</div>
 
-						<div class="col-sm-4 draft-publish">
+						<div class="col-sm-4 col-xs-6 draft-publish">
 							
 							{{--Prevent users from being able to set something published as draft--}}
 							@if( !($edit && $published) ) {{--Note the encasing of edit and published--}}
@@ -118,9 +118,11 @@
 									<div class="{{$errors->first('story_type') ? 'has-error' : '' }}">
 									{{ Form::label('story_type','Post Type', array('class'=>'control-label', 'required')) }}
 									<a href="#" data-toggle="tooltip" title="Choose the type of story">?</a>
-									{{ Form::select('story_type', array( 'story'=>'Story',
+									{{ Form::select('story_type', array( 
+																	''=>'(Pick One)',
+																	'story'=>'Story',
 																	'advice'=>'Advice',
-																	'thought'=>'Thought'), $story_type, array('class'=>'form-control')) }}
+																	'thought'=>'Thought'), $story_type, array('class'=>'story-type form-control')) }}
 									<span class="error">{{ $errors->first('story_type') }}</span>
 								</div>
 								</div>
@@ -132,10 +134,16 @@
 
 									<ul>
 										{? $checked = ''; ?}
+										<?php
+											if($edit) {
+												$unserialized = unserialize($post->category);
+												$unserialized = is_array($unserialized) ? $unserialized : array();
+											}
+										?>
 										@foreach($categories as $category)
-											<li class="col-md-6">
+											<li class="col-md-6 col-xs-6">
 												@if($edit)
-													@if(in_array($category->id, unserialize($post->category) ) )
+													@if( in_array($category->id, $unserialized ) )
 													{? $checked = 'checked'?}
 													@else
 													{? $checked = '' ?}
@@ -168,9 +176,7 @@
 			{{--Wrapper is to be set as 100% and background black--}}
 			<div class="top-submit-wrapper">
 				{{--The big container so that we can assign the images to it. max-width 1440 or something like that--}}
-				<div class="top-submit-container container" 
-					
-					>
+				<div class="top-submit-container container">
 					<div class="row">
 						<div class="col-md-4 form-heading">
 							{{--Title Input--}}
@@ -185,17 +191,17 @@
 							<div class="tags">
 								<div class="tag {{$errors->first('tagline_1') ? 'has-error' : '' }}">
 									
-									{{ Form::text('tagline_1', $tagline_1, array('class'=>'form-control', 'required', 'maxlength' => '20', 'placeholder'=>'Tag 1') ) }}
+									{{ Form::text('tagline_1', $tagline_1, array('class'=>'form-control', 'maxlength' => '20', 'placeholder'=>'Tag 1') ) }}
 									<span class="error">{{ $errors->first('tagline_1') }}</span>
 								</div>
 					
 								<div class="tag {{$errors->first('tagline_2') ? 'has-error' : '' }}">
-									{{ Form::text('tagline_2', $tagline_2, array('class'=>'form-control', 'required', 'maxlength' => '20', 'placeholder'=>'Tag 2')) }}
+									{{ Form::text('tagline_2', $tagline_2, array('class'=>'form-control', 'maxlength' => '20', 'placeholder'=>'Tag 2')) }}
 									<span class="error">{{ $errors->first('tagline_2') }}</span>
 								</div>
 					
 								<div class="tag {{$errors->first('tagline_3') ? 'has-error' : '' }}">
-									{{ Form::text('tagline_3', $tagline_3, array('class'=>'form-control', 'required', 'maxlength' => '20', 'placeholder'=>'Tag 3')) }}
+									{{ Form::text('tagline_3', $tagline_3, array('class'=>'form-control', 'maxlength' => '20', 'placeholder'=>'Tag 3')) }}
 									<span class="error">{{ $errors->first('tagline_3') }}</span>
 								</div>
 								<br/>
@@ -210,8 +216,16 @@
 								style="background-image: url('{{Config::get('app.url')}}/uploads/final_images/{{$image}}');"
 							@endif
 							>
+							<?php 
+								if($edit) {
+									$draft = $post->draft;
+								} else {
+									$draft = false;
+								}
+							?>
 							{{--Select your image --}}
-							<div class="image-select">
+							<div class="image-select <?php if ( $draft ) { echo 'hidden'; } ?>">
+								{{ Form::label('image','Image') }}
 								<a href="#image" class="image-select-modal" data-toggle="modal" data-target="#imageModal">
 									<img src="{{Config::get('app.url')}}/images/posts/add-image.png">
 									<br/>
@@ -221,7 +235,7 @@
 								</a>
 							</div>
 
-							<div class="image-edit">
+							<div class="image-edit" <?php if ( $draft ) { echo 'style="display:block"'; } ?>>
 								<a href="#image" class="image-select-modal btn-flat-white" data-toggle="modal" data-target="#imageModal">
 									Edit Image
 								</a>
@@ -256,6 +270,34 @@
 			</div>
 
 		{{ Form::close() }}
+		<div class="bottom-controls-container container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					<div class="info">
+						{{ Form::label('info','Info') }}
+						<a class="categorization">
+							Post Type / Categories
+						</a>
+					</div>
+					<span class="draft-publish">
+						{{--Prevent users from being able to set something published as draft--}}
+						@if( !($edit && $published) ) {{--Note the encasing of edit and published--}}
+						<a class="save-draft">
+							Draft
+						</a>
+						@endif
+					
+						<a class="submit-post">
+							@if(!$edit)
+								Publish
+							@else
+								Update
+							@endif
+						</a>
+					</span>
+				</div>
+			</div>
+		</div>
 
 
 		{{--Modal for the image selection system should go here--}}
@@ -272,8 +314,8 @@
 					<div class="modal-body">
 						
 					</div><!--End of Modal Body-->
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default btn-flat-white" data-dismiss="modal">OK</button>
+					<div class="modal-footer hidden">
+						<button type="button" class="btn btn-default btn-flat-white pull-right" data-dismiss="modal">OK</button>
 					</div>
 				</div>
 			</div>

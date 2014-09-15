@@ -8,7 +8,8 @@ use User,
 	Session,
 	SolariumHelper,
 	CommentRepository,
-	PostRepository
+	PostRepository,
+	SearchRepository
 	;
  
 class SheepRepository implements UserRepository {
@@ -16,10 +17,12 @@ class SheepRepository implements UserRepository {
 	public function __construct(
 					User $user,
 					CommentRepository $comment,
-					PostRepository $post ) {
+					PostRepository $post,
+					SearchRepository $search ) {
 		$this->user = $user;
 		$this->comment = $comment;
 		$this->post = $post;
+		$this->search = $search;
 	}
 
 	public function instance() {
@@ -38,6 +41,7 @@ class SheepRepository implements UserRepository {
 		//Run Validation.
 		if($json) {
 			unset($user->captcha);
+			$user->reserved = 1;//if JSON call then its a reserve.
 			$validation = $user->validateJSON($user->toArray());
 		}else {
 			$validation = $user->validate($user->toArray());
@@ -60,8 +64,9 @@ class SheepRepository implements UserRepository {
 			$user->password = Hash::make($user->password);
 			$user->save();
 
-			//Gotta add the new user to SOLR
-        	//SolariumHelper::updateUser($user);
+			//Gotta add the new user to search database
+			$this->search->updateUser( $user );
+
 			$result = array();
 			$result['user'] = $user;
 			$result['validation'] = false;
@@ -92,6 +97,12 @@ class SheepRepository implements UserRepository {
 		//probably don't need it at all.
 	}
 
+	public function allByIds( $user_ids ) {
+		return $this->user->whereIn('id', $user_ids)
+						->where('banned', 0)
+						->get();
+	}
+
 	public function update($data) {
 		
 	}
@@ -101,36 +112,85 @@ class SheepRepository implements UserRepository {
 		$user->save();
 	}
 
+	public function updateEmail($confirm_code) {
+		if($confirm_code) {
+			$user = $this->user->where('update_confirm',$confirm_code)->first();
+			if($user->updated_email) {
+				$user->email = $user->updated_email;
+				$user->updated_email = '';
+				$user->update_confirm = '';
+				$user->save();
+				return true;
+			}
+			
+			return false;
+		} else {
+			return false;
+		}
+	}
+
 	public function delete($id) {
 		$this->user->where('id', $id)->delete();
 		// Soft delete users posts
 		$this->post->deleteAllByUserId( $id );
 		// Unpublish comments by this user
+		//$this->comment->unpublishAllByUser($id);
+		
 		$comments = $this->comment->findAllByUserId( $id );
 		foreach ($comments as $comment) {
 			$this->comment->unpublish( $comment->_id );
 		}
+
+		// Remove user from search database
+		$this->search->deleteUser( $id );
+		
 	}
 
 	public function restore($id) {
-		$user =	$this->user->onlyTrashed()->where('id', $id)->first(); 
-		if ( $user instanceof User ) {
-			$user->restore();
-			// Restore all their posts
-			$this->post->restoreAllByUserId( $id );
-			// Restore all their comments
-			$comments = $this->comment->findAllByUserId( $id );
-			foreach ($comments as $comment) {
-				$this->comment->publish( $comment->_id );
-			}
-			return true;
-		}
-		return false;
+		$user =	$this->user->withTrashed()->where('id', $id)->first(); 
+		return self::restoreGeneric($user);
 	}
 
+	public function restoreByConfirmation($restore_confirm = false) {
+		if($restore_confirm) {
+			$user = $this->user->onlyTrashed()->where('restore_confirm',$restore_confirm)->first();
+			return self::restoreGeneric($user);
+		} else {
+			return false;
+		}
+		
+	}
+
+		private function restoreGeneric($user) {
+			if ( $user instanceof User ) {
+				$user->restore();
+				// Restore all their posts
+				$this->post->restoreAllByUserId( $user->id );
+				// Restore all their comments
+				//$this->comment->publishAllByUser($id);//need to work on these guys.
+				
+				$comments = $this->comment->findAllByUserId( $user->id );
+				foreach ($comments as $comment) {
+					$this->comment->publish( $comment->_id );
+				}
+
+				// Update the search db
+				$this->search->updateUser( $user );
+				
+				return true;
+			}
+			return false;
+		}
+
 	public function login($data) {
-		$user = $this->user->where('username', $data['username'])
+		//Below is withTrashed so that we can set it up against
+		$user = $this->user->withTrashed()
+							->where('username', $data['username'])
 							->first();
+
+		if ( !($user instanceof User) ) {
+			return false;
+		}
 
 		$check = Auth::attempt(array('username' => $data['username'], 'password' => $data['password']));
 		
@@ -150,8 +210,32 @@ class SheepRepository implements UserRepository {
 			Session::put('featured', $user->featured);
 			Session::put('first', $user->first);
 
-			if($user->first) {
-				$user->first = false;
+			
+			//update set (bunched so we don't have to )
+			if($user->first || $user->reserved || $user->forgot_pass || $user->restore_confirm) {
+				
+				//first login
+				if($user->first) {
+					$user->first = false;
+				}
+
+				//Folks from the landing page
+				if($user->reserved) {
+					$user->verified = true;
+				}
+
+				//used email to retrieve forgotten password
+				if($user->forgot_pass) {
+					$user->forgot_pass = false;
+					$user->verified = true;//when the user forgets their pass and resets it, we know that its verified for sure.
+				}
+
+				//user is restoring their account
+				if($user->restore_confirm) {
+					$user->restore_confirm = '';
+					$user->verified = true;
+				}
+
 				$user->update();
 			}
 
@@ -170,6 +254,9 @@ class SheepRepository implements UserRepository {
 				Session::put('mod', 0);
 			}
 			
+			return $user;
+		} elseif( !is_null($user->deleted_at) && !$user->banned ) {
+			//if the user is trashed, we need to let them undelete themselves before they can login.
 			return $user;
 		} else {
 			//Bad News bears.
@@ -201,8 +288,15 @@ class SheepRepository implements UserRepository {
 
 	}
 
-	public function confirm($data) {
-
+	public function confirm($code) {
+		$user = $this->user->where('confirmation_code',$code)->first();
+		if($user instanceof User) {
+			$user->verified = 1;
+			$user->save();
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function register($data) {
@@ -241,6 +335,37 @@ class SheepRepository implements UserRepository {
 				);
 		}
 		return false;
+	}
+
+
+	public function forgotPassword($email, $username) {
+		$user = $this->user->where('email', $email)
+							->where('username', $username)
+							->first();
+
+		if($user instanceof User) {
+			//have to mark as true.
+			$user->forgot_pass = true;
+			$user->update();
+			return $this->resetPassword($user->id);//I know this isn't the most efficient, but it works.
+		}
+
+		return false;
+	}
+	
+	public function usernamesPerEmailCount( $email ) {
+		return $this->user->where( 'email', $email )->count();
+
+	}
+
+	public function getUserCount() {
+		return $this->user->where( 'banned', 0 )->count();
+	}
+	public function getConfirmedUserCount() {
+		return $this->user->where( 'banned', 0 )->where( 'confirmed', 1 )->count();
+	}
+	public function getUserCreatedTodayCount() {
+		return $this->user->where( 'created_at', '>=', new \DateTime('today') )->count();
 	}
 
 		/**

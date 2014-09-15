@@ -58,9 +58,12 @@ class EloquentProfilePostRepository implements ProfilePostRepository {
 
 	//Delete (this is a soft delete)
 	public function delete($data) {
-		$this->profilepost->where('profile_id', $data['user_id'])
+		// Quick workaround, since 'post' has same profile_id/user_id
+		if ( $data['post_type'] == 'post' ) {
+			$data['profile_id'] = $data['user_id'];
+		}
+		$this->profilepost->where('profile_id', $data['profile_id'])
 						->where('post_id', $data['post_id'])
-						//->where('user_id', $data['user_id']) //Doesn't matter anymore the way the data is being used.
 						->where('post_type', $data['post_type'])
 						->delete();
 	}

@@ -30,7 +30,7 @@
 	}
 
 	.mod-post-controls {
-		.mod-post-delete, .mod-post-undelete {
+		.mod-post-delete, .mod-post-undelete, .admin-edit-post, .admin-edit-post-submit {
 			width: 50%;
 			height: 35px;
 			margin-left: 25%;
@@ -55,21 +55,23 @@
 
 #offcanvas-admin-placeholder {
 	position: fixed;
-	top: 0; right: 0;
+	top: 50%; 
+	right: 0;
 	width: 22px;
-	height: 100%;
-	background-color: $dark;
-	z-index: 10000;
+	height: 100px;
+	background-color: $gray;
+	z-index: 5;
 
 	&.sidebar-open {
 		right: inherit;
 	}
 
 	.toggle-admin-sidebar {
-		position: absolute;
+		@include fjalla;
+		font-size:12px;
+		position: relative;
 		width: 100%;
-		top: 50%;
-		margin-top: -100%;
+		padding-top: 5px;
 		cursor: pointer;
 		color: white;
 		text-align: center;

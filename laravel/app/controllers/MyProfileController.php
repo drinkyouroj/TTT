@@ -9,8 +9,9 @@ class MyProfileController extends BaseController {
 							RepostRepository $repost,
 							PostRepository $post,
 							FollowRepository $follow,
-							CommentRepository $comment
-							) {
+							CommentRepository $comment,
+							UserRepository $user,
+							EmailRepository $email ) {
 		$this->not = $not;
 		$this->feed = $feed;
 		$this->profilepost = $profilepost;
@@ -19,13 +20,15 @@ class MyProfileController extends BaseController {
 		$this->post = $post;
 		$this->follow = $follow;
 		$this->comment = $comment;
+		$this->user = $user;
+		$this->email = $email;
 	}
 
 	protected $paginate = 12;
 
 
 	//Normal Profile
-	public function getPublicProfile($alias) {
+	public function getPublicProfile($alias = false) {
 		//First check to make sure that the profile doesn't belong to a logged in user.
 		if( !Auth::guest() && Auth::user()->username == $alias) {
 			//just redirect this user.
@@ -54,6 +57,12 @@ class MyProfileController extends BaseController {
 			} else {
 				$mutual = false;
 			}
+
+			if ( $user->hasRole('Admin') ) {
+				// If admin, attach deleted posts of the current user to admin sidebar
+				$deleted_posts = $this->post->allDeletedByUserId( $profile_user->id );
+			}
+
 		} else {
 			//load in the defaults anyway since we have to use with().
 			$is_following = false;
@@ -68,6 +77,8 @@ class MyProfileController extends BaseController {
 			$featured = false;
 		}
 
+		
+		$deleted_posts = isset( $deleted_posts ) ? $deleted_posts : array();
 
 		//Follower/Following count
 		$follower_count = $this->follow->follower_count($profile_user->id);
@@ -83,7 +94,7 @@ class MyProfileController extends BaseController {
 
 					->with('following_count', $following_count)//Number of people this user is following
 					->with('follower_count', $follower_count)//Number of people following this user
-
+					->with('deleted_posts', $deleted_posts)
 					//->with('featured', $featured)			//Featured Post
 					//->with('collection', $collection)		//Actual posts and reposts.
 					;
@@ -111,11 +122,101 @@ class MyProfileController extends BaseController {
 	}
 
 	/**
+	 *	Update a users email
+	 */
+	public function postUpdateEmail() {
+		$user = Auth::user();
+		$password = Input::has('password') ? Input::get('password') : false;
+		$new_email = Input::has('new_email') ? Input::get('new_email') : false;
+		$error_message = '';
+		$success = false;
+		// Check for missing fields
+		if ( !$password || !$new_email ) {
+			$error_message = 'Oops! We are missing a field.';
+		// Check for valid email format
+		} else if ( !filter_var($new_email, FILTER_VALIDATE_EMAIL) ) {
+			$error_message = 'It looks like you have provided an invalid email.';
+		// Check that the User provided correct password.
+		} else if ( Auth::validate(array( 'id' => $user->id, 'password' => $password )) ) {
+			// Check that email is not their existing email.
+			if ( $user->email == $new_email ) {
+				$error_message = 'The email provided matches your current email.';
+			// Check that the email does not already have three usernames attached.
+			} else if ( $this->user->usernamesPerEmailCount( $new_email ) > 2 ) {
+				$error_message = 'The provided email cannot be used for another account.';
+			// We are good!
+			} else {
+				$success = true;
+				
+				if(strlen($user->email)) {
+					$send_to = $user->email;
+				} else {
+					//no email to begin with.
+					$send_to = $new_email;
+				}
+
+				//Update with the new email
+				$user->updated_email = $new_email;
+				$user->update_confirm = md5(date('YMDHiS').$new_email.rand(1,10));
+				$user->save();
+
+				//Send email to the new email.
+				$email_data = array(
+                    'from' => 'no_reply@twothousandtimes.com',
+                    'to' => array($send_to),
+                    'subject' => 'Change Your Email Address | Two Thousand Times!',
+                    'plaintext' => View::make('v2/emails/change_email_plain')->with('user', $user)->render(),
+                    'html'  => View::make('v2/emails/change_email_html')->with('user',$user)->render()
+                    );
+
+				$this->email->create($email_data);
+			}
+		// Wrong password
+		} else {
+			$error_message = 'Incorrect password! Try again.';
+		}
+		
+
+		if ( $success ) {
+			return Response::json( array( 'success' => true ), 200 );
+		} else {
+			return Response::json( array( 'error' => $error_message ), 200 );
+		}
+	}
+
+	/**
+	 *	Get the users notification.
+	 *	returns 200:
+	 *		notifications => array (array of notifications),
+	 *		no_content => boolean (only true if there are no notifications on page 1)	
+	 */
+	public function getRestNotifications ( $page ) {
+		$user = Auth::user();
+		$page = $page;
+		$paginate = 20;
+		$notifications = $this->not->getByUserId( $user->id, $page, $paginate, false );
+		$count = count( $notifications );
+		if ( $count > 0 ) {
+			return Response::json( array( 'notifications' => $notifications->toArray(), 'page' => $page, 'paginate' => $paginate), 200);
+		} else {
+
+			if ( $page == 1 ) {
+				// page 1 and 0 notifications => ie: no content at all
+				return Response::json( array( 'no_content' => true ), 200);
+			} else {
+				// No more notifications -> reached the end
+				return Response::json( array( 'notifications' => array() ), 200);
+			}
+
+		}
+	}
+
+	/**
 	 *	Get the users Collection feed.
 	 *	returns 200:
 	 *		collection => array (the actual collection data),
 	 *		error => string (invalid request parameters),
-	 *		no_content => string (message to be displayed if there is nothing in collection)
+	 *		no_content => boolean (only true if there is no content to be returned on page 1)
 	 */
 	public function getRestCollection ($type = 'all', $user_id = 0, $page = 1) {
 		if(!$user_id) {
@@ -187,7 +288,7 @@ class MyProfileController extends BaseController {
 		if($post_id) {
 			$user = Auth::user();
 			$data = array(
-					'user_id' => $user->id,
+					'profile_id' => $user->id,//get rid of this repost from this user's profile
 					'post_id' => $post_id,
 					'post_type' => 'repost'
 				);

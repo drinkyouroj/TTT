@@ -22,14 +22,11 @@
             <input tabindex="4" type="checkbox" name="remember" id="remember" value="1">
         </label>
         --}}
-        <div class="forgot-pw">
-            <a href="{{Config::get('app.url')}}/user/forgot">forget your password?</a>
-        </div>
         <div class="form-actions">
             <button tabindex="3" type="submit" class="btn btn-flat-gray">Login</button> 
         </div>
-        <div class="login-disclaimer">
-            Read our guidelines on <a href="{{Config::get('app.url')}}/etiquette">Community Etiquette</a>.
+        <div class="forgot-pw">
+            <a href="{{Config::get('app.url')}}/user/forgot">forget your password?</a>
         </div>
     </fieldset>
 </form>

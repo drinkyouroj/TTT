@@ -51,7 +51,14 @@ $(function() {
             $icon.removeClass('glyphicon-minus');
         }
     });
-    // $('#accordion').on('show.bs.collapse', function () {
-    //     $('.sidebar-option .in')
-    // });
+    
+    // Click outside of sidebar closes sidebar
+    $(document).mouseup(function (e) {
+        var container = $('#offcanvas-sidebar');
+        if (!container.is(e.target) // if the target of the click isn't the container...
+            && container.has(e.target).length === 0) { // ... nor a descendant of the container
+            // Close sidr
+            $.sidr('close', 'offcanvas-sidebar');
+        }
+    });
 });

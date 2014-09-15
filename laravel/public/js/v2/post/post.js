@@ -8,30 +8,48 @@ $(function() {
 	var edit_comment_form_template = Handlebars.compile( edit_comment_form_source );
 
 	// ======================== ACTION BAR ACTIONS ========================
-	// Scroll to comment form
-	$(".action-comment").click(function() {
-	    $('html, body').animate({
-	        scrollTop: $(".comments > form.comment-reply").offset().top - 110
-	    }, 750);
-	    $('.comment-form textarea').focus();
-	});
+	
 	// Tooltips
 	$('.post-action-bar a').tooltip();
-	$('.post-action-bar a').click(function(event) {
-		event.preventDefault();
-		var $action = $(this);
-		var Action = new UserAction();
-		Action.action = $action.data('action');
-		Action.user_id = $('.post-action-bar').data('user-id');
-		Action.post_id = $('.post-action-bar').data('post-id');
-		Action.send( function ( data ) {
-			if ( data && data.result == 'fail') {
-				// TODO: notify of failure?
-			} else {
-				$action.find('> span').toggleClass('hidden');
-				$action.toggleClass('active');
-			}
+	// Actions
+	if ( window.logged_in ) {
+		// Scroll to comment form
+		$(".action-comment").click(function() {
+		    $('html, body').animate({
+		        scrollTop: $(".comments > form.comment-reply").offset().top - 110
+		    }, 750);
+		    $('.comment-form textarea').focus();
 		});
+		// Actions (like, flag, etc...)
+		$('.post-action-bar a').click(function(event) {
+			event.preventDefault();
+			var $action = $(this);
+			var Action = new UserAction();
+			Action.action = $action.data('action');
+			if ( Action.action == 'follow' && $action.hasClass('active') ) {
+				return;	// Hotfix: disabled unfollow from the post page
+			}
+			Action.user_id = $('.post-action-bar').data('user-id');
+			Action.post_id = $('.post-action-bar').data('post-id');
+			Action.send( function ( data ) {
+				if ( data && data.result == 'fail') {
+					// TODO: notify of failure?
+				} else {
+					$action.find('> span').toggleClass('hidden');
+					$action.toggleClass('active');
+				}
+			});
+		});
+	}
+	// ==================== Show Flagged and Mark as Read ==================
+	utilities = $('.post-comment-wrapper').position();
+	window.show_utilities = utilities.top -150;
+	
+	$(window).scroll(function(event) {
+		current = $(window).scrollTop();
+		if(current > window.show_utilities) {
+			$('.utility-container').removeClass('hidden').fadeIn();
+		}
 	});
 
 	// ========================== LOAD COMMENTS ===========================
@@ -137,6 +155,7 @@ $(function() {
 						{ comment: comment, 
 						   is_mod: data.is_mod, 
 				   active_user_id: data.active_user_id,
+				   site_url: window.site_url,
 				   target_comment: is_target} );
 
 				$('.comments-listing').append( rendered_comment );

@@ -24,7 +24,7 @@
 	Handlebars.registerHelper('userImage', function(v1, v2, options) {
 			//v2 is site url
 			if(v1) {
-				return window.site_url + 'uploads/final_images/' + v1;
+				return window.image_url + '/' + v1;
 			}else {
 				return window.site_url + 'images/profile/avatar-default.png';
 			}
@@ -44,7 +44,7 @@
 
 		{{#ifCond feed_type 'repost' }}
 			<div class="post-repost-container">
-				<img class="post-repost-image" src="{{ site_url }}img/icons/repost-single.png">
+				<img class="post-repost-image" src="{{ site_url }}images/global/repost-single.png" width="30px" height="30px">
 				<div class="post-repost-count-container"> x 
 					<span class="post-repost-count">{{ users.length }} </span>
 				</div>
@@ -54,6 +54,7 @@
 							<a href="{{ ../site_url }}profile/{{ this }}"> {{ this }} </a> 
 						</li>
 					{{/each}}
+					<li class="reposted-label">reposted this post.</li>
 				</ul>
 			</div>
 		{{/ifCond}}
@@ -61,24 +62,28 @@
 			{{#ifCond post.user.id user_id }}
 				<div class="options-link"> </div>
 				<div class="post-options">
+					{{#ifNotCond featured_id post.id}}
+						<a class="set-featured" data-id="{{post.id}}">
+							Feature
+						</a>
+					{{/ifNotCond }}
 					{{#ifCond editable true}}
 						<a class="post-edit" href="{{site_url}}myprofile/editpost/{{post.id}}">
 							Edit
 						</a>
 					{{/ifCond}}
 
-						<a class="post-delete" data-id="{{post.id}}">
+						<a class="post-delete">
 							Delete
 						</a>
-
-					{{#ifNotCond featured_id post.id}}
-						<a class="set-featured" data-id="{{post.id}}">
-							Feature
+						<a class="post-delete-confirm" data-id="{{post.id}}">
+							Confirm Delete?
 						</a>
-					{{/ifNotCond }}
 				</div>
 			{{/ifCond}}
 			{{#ifCond post_type 'repost' }}
+				<div class="options-link"> </div>
+				<img class="post-repost-image" src="{{ site_url }}images/global/repost-single.png" width="30px" height="30px">
 				<div class="post-options">
 					<a class="remove-repost" data-id="{{post.id}}">
 						Remove Repost
@@ -89,7 +94,7 @@
 		
 		<a class="image-link" href="{{ site_url }}posts/{{ post.alias }}">
 			<div class="top-fade"> </div>
-				<div class="post-image" style="background-image:url('{{ site_url }}uploads/final_images/{{ post.image }}')">
+				<div class="post-image" style="background-image:url('{{ image_url }}/{{ post.image }}')">
 
 					</div>
 		</a>

@@ -1,13 +1,16 @@
 <?php 
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
 class Post extends Eloquent {
-	
+	use SoftDeletingTrait;
 	//Just to be sure!
 	protected $table = 'posts';
 	protected $connection = 'mysql';
 	protected $softDelete = true;
 	protected $with = array('user');
+	protected $dates = ['deleted_at'];
 	
 	public function __construct() {
+		parent::__construct();
 		Validator::extend('Twothousand', function($attribute, $value, $parameters)
 		{		
 		    if(!is_null($value)) {//make sure its not empty.
@@ -103,24 +106,43 @@ class Post extends Eloquent {
 	 */
 	public function validate($input, $id = false)
 	{
-		//If id is false its a new situation.
+		// New Post
 		if($id == false) {
-			$rules = array(
-				'title' => 'Required',
-				'tagline_1' => 'Required',
-				'tagline_2' => 'Required',
-				'tagline_3' => 'Required',
-				'body' => 'Twothousand',
-				'image' => 'required'
-			);
+			if ($input['draft']) {
+				// Validation for new post that is a draft (fewer required fields)
+				$rules = array(
+					'title' => 'required'
+				);
+			} else {
+				// Validation for new post -> published
+				$rules = array(
+					'title' => 'required',
+					'story_type' => 'required|in:story,advice,thought',
+					'tagline_1' => 'required',
+					'tagline_2' => 'required',
+					'tagline_3' => 'required',
+					'body' => 'Twothousand',
+					'image' => 'required'
+				);
+			}
+		// Existing Post
 		} else {
-			$rules = array(
-				'title' => 'Required',
-				'tagline_1' => 'Required',
-				'tagline_2' => 'Required',
-				'tagline_3' => 'Required',
-				'body' => 'Twothousand'
-		);
+			if ($input['draft']) {
+				// Validation for existing post -> save as draft
+				$rules = array(
+					'title' => 'required'
+				);
+			} else {
+				// Validation for existing post -> published
+				$rules = array(
+					'title' => 'required',
+					'tagline_1' => 'required',
+					'tagline_2' => 'required',
+					'tagline_3' => 'required',
+					'body' => 'Twothousand'
+				);
+			}
+			
 		}
 		
 		return Validator::make($input, $rules);

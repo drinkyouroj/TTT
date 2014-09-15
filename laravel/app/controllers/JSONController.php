@@ -48,6 +48,8 @@ class JSONController extends BaseController {
 				$like = $this->like->create($user_id, $post_id);
 
 				$this->post->incrementLike(Request::segment(3));
+
+				NotificationLogic::like($post_id);
 				
 				if($like->id) {
 					return Response::json(
@@ -60,6 +62,8 @@ class JSONController extends BaseController {
 				$this->like->delete($user_id, $post_id);
 				
 				$this->post->decrementLike(Request::segment(3));
+
+				NotificationLogic::unlike($post_id);
 				
 				return Response::json(
 					array('result'=>'deleted'),
@@ -71,15 +75,6 @@ class JSONController extends BaseController {
 			array('result'=>'fail'),
 			200//response is OK!
 		);
-	}
-
-	// Pull notifications ( rest/notifications/{page}/{paginate} )
-	public function getNotifications () {
-		$user = Auth::user();
-		$page = Request::segment(3);
-		$paginate = Request::segment(4);
-		$notifications = $this->not->getByUserId( $user->id, $page, $paginate );
-		return Response::json( array( 'notifications' => $notifications->toArray(), 'page' => $page, 'paginate' => $paginate), 200);
 	}
 
 	//Mark as Read
@@ -253,7 +248,6 @@ class JSONController extends BaseController {
 					200//response is OK!
 				);
 			} elseif ( $exists ) {  //Relationship already exists
-				
 				// Delete the repost!
 				$this->repost->delete( $user_id, $post_id );
 				
@@ -327,19 +321,31 @@ class JSONController extends BaseController {
 		}
 	}
 
-	public function getUserdelete($id) {
+	//Delete Users
+	public function postUserdelete() {
+		$id = Input::has('id') ? Input::get('id') : null;
+		$password = Input::has('password') ? Input::get('password') : null;
 		//Was the ID passed and is it the Authenticated user?
 		if ( $id && Auth::user()->id == $id ) {
+			// TODO: make sure user password is correct before delete.
 
-			$this->user->delete( $id );
+			if ( Auth::validate(array( 'id' => $id, 'password' => $password )) ) {
+				$this->user->delete( $id );	
+				return Response::json(
+					array('success'=>true),
+					200//response is OK!
+				);
+			} else {
+				// Invalid password
+				return Response::json(
+					array('error'=>'Incorrect password.'),
+					200//response is OK!
+				);
+			}
 			
-			return Response::json(
-				array('result'=>'success'),
-				200//response is OK!
-			);
 		} else {
 			return Response::json(
-				array('result'=>'failed'),
+				array('error'=>'Invalid permissions to perform this action.'),
 				200//response is OK!
 			);
 		}
@@ -394,7 +400,7 @@ class JSONController extends BaseController {
 		}
 	}
 
-	public function getSaveRead($post_id) {
+	public function getRead($post_id) {
 		if(Auth::check()) {
 			$user = Auth::user();
 			$this->favorite->read($user->id, $post_id);

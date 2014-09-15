@@ -5,7 +5,7 @@ $(function() {
 
 	//gotta call the validation system here.
 	save_post.form = $('form.post_input');
-	save_post.form.validate(save_post.validate_options);
+	// save_post.form.validate(save_post.validate_options);
 	
 	save_post.form.on('submit',function(event) {
 		event.preventDefault;
@@ -68,7 +68,7 @@ $(function() {
 	save_post.editor = window.editor;
 
 	//Controls.
-	$('.controls-wrapper .categorization').click(function(event) {
+	$('.categorization').click(function(event) {
 		event.preventDefault();
 		$('.category-wrapper').slideToggle('fast',function() {
 			//Gotta figure out if we want to have a white bg.
@@ -76,16 +76,16 @@ $(function() {
 		});
 	});
 
-	$('.close-category a').click(function(event) {
+	$('.close-category>a').click(function(event) {
 		event.preventDefault();
 		$('.category-wrapper').slideToggle('fast');
 	});
 
-	$('.controls-wrapper .save-draft').click(function() {
+	$('.save-draft').click(function() {
 		save_post.sendDraft(window.editor);
 	});
 
-	$('.controls-wrapper .submit-post').click(function() {
+	$('.submit-post').click(function() {
 		save_post.sendPublish(window.editor);
 	});
 
@@ -140,6 +140,9 @@ var save_post = new function() {
 				required: true,
 				minlength: 400,
 				maxlength: 14000,//This is generalized.
+			},
+			story_type: {
+				required: true
 			}
 		},
 		messages: {
@@ -152,9 +155,9 @@ var save_post = new function() {
 			$.each(validator.errorList, function(idx,value) {
 
 				//Category or Story Type issues.
-				if(	$(value.element).hasClass('category') ) {
+				if(	$(value.element).hasClass('category') || $(value.element).hasClass('story-type') ) {
 					if($('.category-wrapper').css('display') == 'none') {
-						$('a.categorization').click();
+						$('.category-wrapper').slideDown('fast');
 					}
 				}
 				//image issue.
@@ -166,6 +169,15 @@ var save_post = new function() {
 		},
 		submitHandler: function(form) {
 			return false;
+		}
+	};
+	this.validate_options_draft = {
+		debug: true,
+		rules: {
+			title: {
+				required: true,
+				minlength: 5
+			}
 		}
 	};
 
@@ -216,7 +228,14 @@ var save_post = new function() {
 			data = this.editable.html();
 			this.textarea.html( data );//load in the data into the textarea.
 		}
-		return this.form.valid(this.validate_options);
+		
+		if (this.draft) {
+			this.form.validate(this.validate_options_draft);
+			return this.form.valid();
+		} else {
+			this.form.validate(this.validate_options);
+			return this.form.valid();
+		}
 	};
 
 	//this function grabs existing data and runs validation
