@@ -79,13 +79,13 @@
 								Link to Post
 							</a>
 						</div>
-						<div class="col-sm-4 post-category">
+						<div class="col-sm-4 col-xs-6 post-category">
 							<a class="categorization">
 								Post Type / Categories
 							</a>
 						</div>
 
-						<div class="col-sm-4 draft-publish">
+						<div class="col-sm-4 col-xs-6 draft-publish">
 							
 							{{--Prevent users from being able to set something published as draft--}}
 							@if( !($edit && $published) ) {{--Note the encasing of edit and published--}}
@@ -139,7 +139,7 @@
 											}
 										?>
 										@foreach($categories as $category)
-											<li class="col-md-6">
+											<li class="col-md-6 col-xs-6">
 												@if($edit)
 													@if( in_array($category->id, $unserialized ) )
 													{? $checked = 'checked'?}
@@ -174,9 +174,7 @@
 			{{--Wrapper is to be set as 100% and background black--}}
 			<div class="top-submit-wrapper">
 				{{--The big container so that we can assign the images to it. max-width 1440 or something like that--}}
-				<div class="top-submit-container container" 
-					
-					>
+				<div class="top-submit-container container">
 					<div class="row">
 						<div class="col-md-4 form-heading">
 							{{--Title Input--}}
@@ -225,6 +223,7 @@
 							?>
 							{{--Select your image --}}
 							<div class="image-select <?php if ( $draft ) { echo 'hidden'; } ?>">
+								{{ Form::label('image','Image') }}
 								<a href="#image" class="image-select-modal" data-toggle="modal" data-target="#imageModal">
 									<img src="{{Config::get('app.url')}}/images/posts/add-image.png">
 									<br/>
@@ -272,10 +271,12 @@
 		<div class="bottom-controls-container container">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
-					
-					<a class="categorization">
-						Post Type / Categories
-					</a>
+					<div class="info">
+						{{ Form::label('info','Info') }}
+						<a class="categorization">
+							Post Type / Categories
+						</a>
+					</div>
 					<span class="draft-publish">
 						{{--Prevent users from being able to set something published as draft--}}
 						@if( !($edit && $published) ) {{--Note the encasing of edit and published--}}

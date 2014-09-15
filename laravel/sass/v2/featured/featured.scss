@@ -6,7 +6,7 @@
 	.header-logo {
 		display:none;
 		@media (max-width:$break-xs) { 
-			display:block;
+			
 		}
 	}
 
@@ -18,13 +18,13 @@
 		padding:0px 0 35px 0;
 		border-bottom:solid 5px $dark;
 		@media (max-width:$break-md) { 
-   			padding:35px 0 5px 0; 
+   			padding:0px 0 5px 0; 
  		}
  		@media (max-width:$break-sm) { 
-   			padding:35px 0 10px 0; 
+   			padding:0px 0 10px 0; 
  		}
  		@media (max-width:$break-xs) { 
-   			padding:0 0 25px 0;
+   			padding:0;
  		}
 		.heading-title {
 			position:relative;
@@ -40,11 +40,12 @@
 				@media (max-width:$break-lg) { 
 		   			font-size:60px; 
 		 		}
-		 		@media (max-width:$break-sm) { 
-		   			font-size:50px; 
+		 		@media (max-width:$break-md) { 
+		   			font-size:40px; 
 		 		}
 		 		@media (max-width:$break-xs) { 
-		   			display:none;
+		   			font-size:27px; 
+		   			letter-spacing:2px;
 		 		}
 			}
 		}
@@ -83,10 +84,11 @@
 					bottom:-20px;
 		 		}
 		 		@media (max-width:$break-sm) { 
-					bottom:-80px;
+					bottom:-30px;
 		 		}
 		 		@media (max-width:$break-xs) { 
-					bottom:-80px;
+					bottom:-25px;
+					right:10px;
 		 		}
 			}
 		}
@@ -94,6 +96,7 @@
 		.cat-selector {
 			position:relative;
 			@include catfilter;
+			padding-bottom:5px;
 			.filters {
 				.category-filter-container {
 					position:absolute;
@@ -142,6 +145,9 @@
 				h2 {
 					font-size:24px;
 					letter-spacing:2px;
+					@media (max-width:$break-xs) {
+						font-size:17px;
+					}
 				}
 				.line {
 					width:20px;
@@ -298,7 +304,7 @@
 		font-size:50px;
 		letter-spacing:2px;
 		@media (max-width:$break-sm) {
-			
+			font-size:32px;
 		}
 	}
 	.trending-content {

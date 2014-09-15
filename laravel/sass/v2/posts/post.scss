@@ -50,10 +50,12 @@
 				li {
 					float:left;
 					@include post_actions;
-					
 					a.active {
 						color: $blue;
 					}
+				}
+				@media (max-width: $break-xs) {
+					padding-left:0px;
 				}
 			}
 			@media (max-width: $break-xs) {
@@ -64,16 +66,24 @@
 			.comment-button {
 				@include post_actions_label;
 				background-image:url('../../../../images/global/comment.png');
-				 @media (max-width: $break-xs) {
-				 	font-size:9px;
-			         background-size:15px 35px;
-			         height:17px;
-			         padding-left:19px;
-			         background-position:left 0px;
+				@media (max-width: $break-xs) {
+					font-size:9px;
+			    	background-size:15px 35px;
+			    	height:17px;
+			        padding-left:19px;
+			        background-position:left 0px;
 			        &:hover {
 			          background-position:left -18px;
 			        }
+			        @media (max-width: $break-xs) {
+      					font-size:7px;
+      					float:right;
+      					padding-right:0px;
+    				}
 			      }
+			}
+			@media (max-width: $break-xs) {
+				padding-right:0px;
 			}
 		}
 		.follow-container {
@@ -105,7 +115,6 @@
 		position: relative;
 		@media (min-width: $break-lg-min) {
 			width: 100%;
-			max-width: 1400px;
 			padding-left:0px;
 			padding-right:0px;
 			display: table;
@@ -124,7 +133,6 @@
 
 		.row {
 			.post-heading {
-				position:relative;
 				text-align: center;
 				background-color: #fff;
 				padding-left:25px;

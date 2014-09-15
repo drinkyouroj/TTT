@@ -269,7 +269,19 @@ a:focus {
 							margin-right:0%;
 							margin-bottom:30px;
 						}
-
+						&.repost {
+							.post-repost-image {
+								position:absolute;
+								display:block;
+								top:0px;
+								right:0px;
+								background: url('../../../../images/global/blue-75.png');
+								z-index:100;
+								&:hover .post-options {
+									display:block !important;
+								}
+							}
+						}
 						.post-image {
 							position:relative;
 							width:100% !important;
@@ -660,6 +672,9 @@ a:focus {
 								}
 							}
 						}
+					}
+					&.notifications {
+						@include notifications_style;
 					}
 					&.following, &.followers {
 					    a.follow {

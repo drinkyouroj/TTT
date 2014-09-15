@@ -249,6 +249,7 @@ $(function() {
 		window.location.hash = 'collection';
 		profile.view = 'collection';
 		profile.type = 'all';
+		profile.page = 0;
 		//profile.viewInit(profile.view);//Render initial view.	
 	} else {
 		view = window.location.hash;
@@ -261,7 +262,7 @@ $(function() {
 		if ( view == '#followers' || view == '#following' ) {
 			profile.type = window.user_id;
 		}
-
+		profile.page = 0;
 		profile.view = view.substring(1);
 		//profile.viewInit(profile.view);//Render initial view.
 	}
@@ -450,11 +451,13 @@ function ProfileActions() {
 		var editCheck = this.editCheck;
 
 		this.urlConstructor();
+		console.log(this.url);
 		this.getData(this.url, function(data) {
 
 			if ( data.no_content ) {
 				$('#collection-content',target).append( no_content_template( {section: 'collection'} ) );
 			} else {
+				console.log(data);
 				$.each(data.collection, function(idx, val) {
 					if ( val.post && val.post.id != window.featured_id ) {
 						var editable = val.post ? editCheck(val.post.published_at) : false;

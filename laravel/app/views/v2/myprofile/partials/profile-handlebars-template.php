@@ -8,38 +8,38 @@
 	});
 </script>
 <script type="text/x-handlebars-template" id="notifications-template">
-	<div class="notification-container">
+	<div class="notification-container col-md-12">
 	
 		{{#ifCond notification.notification_type 'follow'}}
 		
 		{{/ifCond}}
 		{{#ifCond notification.notification_type 'post'}}
-			<a href="{{site_url}}posts/{{notification.post_alias}}">
+			<a class="post" href="{{site_url}}posts/{{notification.post_alias}}">
 				<span class="action-user">{{ notification.users.[0] }}</span> submitted a new post:
 				<span class="notification-post-title">{{ notification.post_title }}</span>
 			</a>
 		{{/ifCond}}
 		{{#ifCond notification.notification_type 'repost'}}
-			<a href="{{site_url}}posts/{{notification.post_alias}}">
+			<a class="repost" href="{{site_url}}posts/{{notification.post_alias}}">
 				<span class="action-user">{{ notification.users.[0] }}</span> reposted: 
 				<span class="notification-post-title">{{ notification.post_title }}</span>
 			</a>
 		{{/ifCond}}
 		{{#ifCond notification.notification_type 'comment'}}
-			<a href="{{site_url}}posts/{{notification.post_alias}}#comment-{{notification.comment_id}}">
+			<a class="comment" href="{{site_url}}posts/{{notification.post_alias}}#comment-{{notification.comment_id}}">
 				<span class="action-user">{{ notification.users.[0] }}</span> commented on your post: 
 				<span class="notification-post-title">{{ notification.post_title }}</span>
 			</a>
 		{{/ifCond}}
 		{{#ifCond notification.notification_type 'reply'}}
-			<a href="{{site_url}}posts/{{notification.post_alias}}#comment-{{notification.comment_id}}">
+			<a class="reply" href="{{site_url}}posts/{{notification.post_alias}}#comment-{{notification.comment_id}}">
 				<span class="action-user">{{ notification.users.[0] }}</span> replyed to your commment: 
 				<span class="notification-post-title">{{#substring notification.post_title}}{{/substring}}</span>
 			</a>
 		{{/ifCond}}
 		
 		{{#ifCond notification.notification_type 'like'}}
-			<a href="{{site_url}}posts/{{notification.post_alias}}">
+			<a class="like" href="{{site_url}}posts/{{notification.post_alias}}">
 				<span class="action-user">{{ notification.users.[0] }}</span> liked your post: 
 				<span class="notification-post-title">{{#substring notification.post_title}}{{/substring}}</span>
 			</a>
@@ -183,7 +183,7 @@
 		<div class="user-avatar" style="background-image:url('{{site_url}}rest/profileimage/{{user_id}}');">
 		</div>
 		<div class="user-name">
-			<span>{{username}}</span>
+			{{username}}
 		</div>
 	</a>
 </script>

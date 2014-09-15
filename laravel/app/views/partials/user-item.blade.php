@@ -1,14 +1,13 @@
-<div class="animated fadeIn col-md-12 user-id-{{$user->id}}">
+<div class="animated fadeIn user-id-{{$user->id}}">
 	<div class="generic-item">
-		<header>
-			<h3>{{ link_to('profile/'.$user->username, $user->username) }}</h3>
-		</header>
 		<section>
-			<div class="the-image">
-				<a href="{{ URL::to('profile/'.$user->username) }}" style="background-image: url('{{Config::get('app.url')}}/rest/profileimage/{{$user->id}}');">
-				
-				</a>
-			</div>
+			<a href="{{ URL::to('profile/'.$user->username) }}">
+				<div class="the-image user-avatar" style="background-image: url('{{Config::get('app.url')}}/rest/profileimage/{{$user->id}}');">
+				</div>
+			</a>
 		</section>
+		<header>
+			<h3 class="user-name">{{ link_to('profile/'.$user->username, $user->username) }}</h3>
+		</header>
 	</div>
 </div>

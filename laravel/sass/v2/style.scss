@@ -44,6 +44,7 @@ a {
 	color:$blue;
 	&:hover {
 		text-decoration:none;
+		color:$dark;
 	}
 }
 
@@ -106,28 +107,20 @@ input, textarea, button:focus {outline: none !important;}
 
 			.col-middle {
 				.header-logo {
-					margin-top: 5px;
+					margin-top: 12px;
 					text-align: center;
-					font-size: 10px;
-					font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-					@media (max-width:$break-sm) {
-						margin-top: 10px;
-						font-size: 7px;
-					}
 					a {
+						font-size: 21px;
+						@include fjalla;
+						letter-spacing:2px;
 						color:$dark;
-						span {
-							font-size: 21px;
-							line-height: 19px;
-							@include fjalla;
-							letter-spacing:2px;
-
-							@media (max-width:$break-sm) {
-								font-size: 14px;
-								line-height: 15px;
-								letter-spacing:1px;
-							}
+						@media (max-width:$break-sm) {
+							font-size: 16px;
+							letter-spacing:1px;
 						}
+					}
+					@media (max-width:$break-sm) {
+						margin-top: 15px;
 					}
 				}
 			}
@@ -509,7 +502,7 @@ input, textarea, button:focus {outline: none !important;}
 	@include montserrat(normal);
 	color: $dark;
 	font-size: 12px;
-	background: white;
+	background: $white;
 	padding: 10px 15px;
 	text-decoration: none;
 	text-transform:uppercase;
@@ -771,23 +764,39 @@ input, textarea, button:focus {outline: none !important;}
 			font-size:32px;
 			text-transform:uppercase;
 			letter-spacing:1px;
+	        @media (max-width:$break-xs) {
+	          	font-size:16px;
+	        }
 		}
 		.modal-header {
 			position:relative;
 			button.close {
 				position:absolute;
 				top:0px;
-				right:-10px;
+				right:-5px;
 				font-size:100px;
 				color:$dark;
+				@media (max-width:$break-xs) {
+	          		top:-40px;
+	          		font-size:50px;
+	        	}
 			}
+			@media (max-width:$break-xs) {
+	          	padding:0 15px;
+	        }
 		}
 		.modal-body {
 			input {
 				@include montserrat();
 				font-size:16px;
 				height:50px;
+				@media (max-width:$break-xs) {
+	          		height:30px;
+	        	}
 			}
+		@media (max-width:$break-xs) {
+          	padding:5px 15px;
+        }
 		}
 		.modal-footer {
 			border-top:solid 1px $lightgray;
