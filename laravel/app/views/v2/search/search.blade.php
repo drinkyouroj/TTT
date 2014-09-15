@@ -99,7 +99,7 @@
 							</div>
 						@else
 							<div class="col-md-12">
-								@if( $page == 1 )
+								@if( $users_page == 1 )
 									No users match the search: {{$term}}
 								@else
 									No more users were found for the search: {{$term}}
@@ -110,13 +110,13 @@
 				
 					<div class="pagination-container">
 						
-						@if ( $page > 1 )
+						@if ( $users_page > 1 )
 							{{-- Display prev page button --}}
-							<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$page - 1}}&filter=users">&#8592; Prev Page</a>
+							<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$users_page - 1}}&filter=users">&#8592; Prev Page</a>
 						@endif
 						@if ( $user_count == 12 )
 							{{-- We have a full page of search results, display next page button --}}
-							<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$page + 1}}&filter=users">Next Page &#8594;</a>
+							<a class="btn btn-flat-gray" href="{{URL::to('search')}}?search={{$term}}&page={{$users_page + 1}}&filter=users">Next Page &#8594;</a>
 						@else
 							<a class="btn btn-flat-gray disabled" href="#">Next Page</a>
 						@endif
