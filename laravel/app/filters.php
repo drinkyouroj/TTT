@@ -22,8 +22,15 @@ Blade::extend(function($value) {
 
 App::before(function($request)
 {	
+	if(Auth::check() && Auth::user()->deleted_at) {
+		Auth::logout();
+		Session::flush();
+		Session::regenerate();
+		return Redirect::to('user/logout');
+	}
 	if (Auth::check() && !Session::has('user_id'))
 	{
+
 	   return Redirect::to('user/logout');
 	}
 });
