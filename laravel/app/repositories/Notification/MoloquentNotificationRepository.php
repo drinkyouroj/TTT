@@ -65,12 +65,8 @@ class MoloquentNotificationRepository implements NotificationRepository {
 	public function find( $post_id, $user_id, $type ) {
 		$not = $this->not->where('post_id', $post_id)//Post id
 					->where('user_id', $user_id)//person getting notified
+					->where('notification_type', '=',$type)
 					;
-					if($type == 'like') {
-						$not = $not->where('notification_type', '=',$type);
-					} else {
-						$not = $not->where('notification_type', $type);
-					}
 					
 		return self::count_check($not);
 	}

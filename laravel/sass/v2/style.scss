@@ -85,16 +85,16 @@ input, textarea, button:focus {outline: none !important;}
 			
 
 			.col-left {
-				margin-top: 3px;
+				margin-top: 0px;
 				button.read-button {
 					@media (max-width:$break-sm) {
-						padding:0px;
-						height:40px;
-						width:42px;
+						position:absolute;
+						top:0px;
+						left:0px;
 					}
-					span {
+					span.text {
 						@media (max-width:$break-sm) {
-							visibility:hidden;
+							display:none;
 						}
 					}
 				}
@@ -126,7 +126,7 @@ input, textarea, button:focus {outline: none !important;}
 			}
 
 			.col-right {
-				margin-top: 3px;
+				margin-top: 2px;
 				&>*, &>form>* {
 					float: right;
 				}
@@ -304,7 +304,7 @@ input, textarea, button:focus {outline: none !important;}
 #offcanvas-sidebar {
 	@include offcanvas-sidebar( left, $offcanvas_sidebar_width );
 	@media (max-width:$break-sm) {
-		border-right:solid 10px $dark;
+		border-right:solid 10px $black;
 	}
 		ul#accordion.sidebar-options {
 			li input.search-input {
@@ -408,6 +408,7 @@ input, textarea, button:focus {outline: none !important;}
 }
 
 #offcanvas-placeholder {
+	display:none;
 	position: fixed;
 	top: 0; left: 0;
 	width: 15px;
@@ -647,23 +648,50 @@ input, textarea, button:focus {outline: none !important;}
 
 .read-button {
 	display:inline-block;
+	float:left;
 	@include montserrat(normal);
 	text-transform:uppercase;
-	color: $dark;
+	color: $white;
 	font-size: 12px;
 	letter-spacing:2px;
-	background: none;
-	padding: 10px 15px 10px 50px;
+	background: $dark;
+	padding: 12px 15px;
 	text-decoration: none;
-	border: 2px solid $dark;
+	border-top: 2px solid $dark;
+	border-right: 0;
+	border-left: 0;
+	border-bottom:solid 3px $dark_gray;
 	cursor: pointer;
-	background-image:url('../../../images/global/read.png');
-	background-repeat: no-repeat;
-	background-position:left center;
-	background-size:38px 38px;
 	&:hover {
 		// background-color: $gray;
-		background-color: $lightgray;
+		border-top: 2px solid $black;
+		border-bottom:solid 3px $black;
+		background-color: $black;
+	}
+
+}
+.post-button {
+	display:inline-block;
+	@include montserrat(normal);
+	float:left;
+	color: white;
+	font-size: 12px;
+	background: $blue;
+	padding: 12px 15px;
+	text-decoration: none;
+	text-transform:uppercase;
+	border-top: 2px solid $blue;
+	border-right: 0;
+	border-left: 0;
+	border-bottom:solid 3px $blue_dark;
+	cursor: pointer;
+	&:hover {
+		// background-color: $gray;
+		color: white;
+		text-decoration: none;	
+		border-top: 2px solid $blue_dark;
+		border-bottom:solid 3px $blue_dark;
+		background-color: $blue_dark;
 	}
 }
 
@@ -727,25 +755,6 @@ input, textarea, button:focus {outline: none !important;}
 	&:hover {
 		// background-color: $gray;
 		background-color: $lightgray;
-	}
-}
-
-
-.post-button {
-	display:inline-block;
-	@include montserrat(normal);
-	color: white;
-	font-size: 12px;
-	background: $blue;
-	padding: 10px 15px;
-	text-decoration: none;
-	text-transform:uppercase;
-	border: 2px solid $blue;
-	cursor: pointer;
-	&:hover {
-		// background-color: $gray;
-		color: white;
-		text-decoration: none;	
 	}
 }
 

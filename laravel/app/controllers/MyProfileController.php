@@ -28,7 +28,7 @@ class MyProfileController extends BaseController {
 
 
 	//Normal Profile
-	public function getPublicProfile($alias) {
+	public function getPublicProfile($alias = false) {
 		//First check to make sure that the profile doesn't belong to a logged in user.
 		if( !Auth::guest() && Auth::user()->username == $alias) {
 			//just redirect this user.

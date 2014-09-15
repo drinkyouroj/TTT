@@ -88,6 +88,18 @@ $(function() {
 		profile.viewInit($(this).prop('id'));//new view has to be rendered out of this scenario
 	});
 
+	//Just to catch the sidebar feed button
+	$('.sidebar-option.feed').click(function(event) {
+		event.preventDefault();
+		$.sidr('close', 'offcanvas-sidebar');
+		$('.section-selectors a').removeAttr('class');//gets rid of active state.
+		$('.section-selectors a#feed').prop('class','active');
+		profile.view = 'feed';
+		profile.type = 'all';//default
+		profile.page = 1;
+		profile.viewInit(profile.view);
+	});
+
 //Collection Renders
 		$('body').on('click','.collection-controls a', function(event) {
 			event.preventDefault();
@@ -214,9 +226,6 @@ $(function() {
 
 	$('#removeDraftModal button.delete').click(function(event) {
 		event.preventDefault();
-
-		console.log($(this).data('post'));
-
 		if(typeof $(this).data('post') != 'undefined') {
 			post_id = $(this).data('post');
 			profile.deleteDraft( post_id );
@@ -266,10 +275,8 @@ $(function() {
 		profile.view = view.substring(1);
 		//profile.viewInit(profile.view);//Render initial view.
 	}
-
-	$(window).load(function() {
-		profile.viewInit(profile.view);//Render initial view.
-	});
+	profile.viewInit(profile.view);//Render initial view.
+	
 
 	window.page_processing = false;
 	window.comment_page_processing = false;
@@ -303,24 +310,21 @@ function ProfileActions() {
 		window.finished_pagination = false;
 		//fade in fade out scenario
 		var that = this;//JS scope is fun... not.
-		this.target.fadeOut(100,function() {
-			that.target.html('');
-			that.viewRenderContainer(function() {
-				that.viewRender(true);
-			});
-			that.target.fadeIn(100);
-		});
+		this.target.fadeOut(100);
+		this.target.html('');
+		this.viewRenderContainer();
+		this.viewRender(true);
+		this.target.fadeIn(100);
 	};
 
 	//Container init
-	this.viewRenderContainer = function(callback) {
+	this.viewRenderContainer = function() {
 		if(this.view == 'collection') {
 			//collection has a different outer template
 			this.target.html(this.collection_template());
 		} else {
 			this.target.html(this.default_template({view: this.view}));
 		}
-		callback();
 	};
 
 	//Actual Content Rendering routes
@@ -328,11 +332,17 @@ function ProfileActions() {
 		if(this.filter) {
 			this.viewClear();
 		}
+
+		base_url = window.site_url + 'rest/profile/' + this.view + '/';
+
 		switch(this.view) {
 			default:
 			case 'collection':
+				this.url = base_url + this.type + '/' + window.user_id + '/' + this.page;
+				this.feature_url = window.site_url + 'rest/profile/featured/' + window.featured_id;
+				this.comment_url = window.site_url + 'rest/profile/comments/' + window.user_id + '/' + this.comment_page;
 				this.renderCollection();
-				if(init) {					
+				if(init) {
 					this.renderComments();					
 				}
 				if((init || this.type == 'all' || this.type == 'post') && window.featured_id && this.page == 1 ) {
@@ -341,30 +351,37 @@ function ProfileActions() {
 				break;
 
 			case 'feed':
+				this.url = base_url + this.type + '/' + this.page;
 				this.renderFeed();
 				break;
 
 			case 'saves':
+				this.url = base_url + this.page;
 				this.renderSaves();
 				break;
 
 			case 'drafts':
+				this.url = base_url + this.page;
 				this.renderDrafts();
 				break;
 
 			case 'settings':
+				this.url = base_url + this.page;
 				this.renderSettings();
 				break;
 
 			case 'notifications':
+				this.url = base_url + this.page;
 				this.renderNotifications();
 				break;
 
 			case 'followers':
+				this.url = base_url + this.type + '/' + this.page;
 				this.renderFollowers();
 				break;
 
 			case 'following':
+				this.url = base_url + this.type + '/' + this.page;
 				this.renderFollowing();
 				break;
 		}
@@ -383,6 +400,7 @@ function ProfileActions() {
 
 	//URL constructor
 	this.urlConstructor = function() {
+		/*
 		base_url = window.site_url + 'rest/profile/' + this.view + '/';
 
 		var viewArray = ['collection', 'feed', 'following', 'followers'];
@@ -400,6 +418,7 @@ function ProfileActions() {
 		} else {
 			this.url = base_url + this.page;
 		}
+		*/
 	};
 
 	// Delete draft
@@ -420,7 +439,6 @@ function ProfileActions() {
 		var no_content_template = this.no_content_template;
 		// TODO
 		var target = this.target;
-		this.urlConstructor();
 		this.getData(this.url,function(data) {
 			if ( data.no_content ) {
 				$('#default-content',target).append( no_content_template( {section: 'notifications'} ) );
@@ -450,14 +468,11 @@ function ProfileActions() {
 		var target = this.target;
 		var editCheck = this.editCheck;
 
-		this.urlConstructor();
-		console.log(this.url);
 		this.getData(this.url, function(data) {
 
 			if ( data.no_content ) {
 				$('#collection-content',target).append( no_content_template( {section: 'collection'} ) );
 			} else {
-				console.log(data);
 				$.each(data.collection, function(idx, val) {
 					if ( val.post && val.post.id != window.featured_id ) {
 						var editable = val.post ? editCheck(val.post.published_at) : false;
@@ -489,7 +504,7 @@ function ProfileActions() {
 		var feature_item_template = this.feature_item_template;
 		var target = this.target;
 		var editCheck = this.editCheck;
-		this.urlConstructor();
+
 		this.getData(this.feature_url,function(data) {
 			var editable = data.featured ? editCheck(data.featured.published_at) : false;
 			view_data = {
@@ -541,7 +556,7 @@ function ProfileActions() {
 		//scope issues
 		var comment_item_template = this.comment_item_template;
 		var target = this.target;
-		this.urlConstructor();
+
 		this.getData(this.comment_url, function(data) {
 			$.each(data.comments,function(idx, val) {
 				view_data = {
@@ -559,7 +574,7 @@ function ProfileActions() {
 		var post_item_template = this.post_item_template;
 		var no_content_template = this.no_content_template;
 		var target = this.target;
-		this.urlConstructor();
+
 		this.getData(this.url,function(data) {
 			if ( data.no_content ) {
 				$('#default-content',target).append( no_content_template( {section: 'feed'} ) );
@@ -583,7 +598,7 @@ function ProfileActions() {
 		var saves_item_template = this.saves_item_template;
 		var no_content_template = this.no_content_template;
 		var target = this.target;
-		this.urlConstructor();
+
 		this.getData(this.url,function(data) {
 			if ( data.no_content ) {
 				$('#default-content',target).append( no_content_template( {section: 'saves'} ) );
@@ -606,7 +621,7 @@ function ProfileActions() {
 			$('#save-'+post_id).fadeOut().remove();
 			url = window.site_url + 'rest/profile/saves/delete/' + post_id;
 			this.getData(url, function(data) {
-				console.log(data);
+
 			});
 		};
 
@@ -615,7 +630,7 @@ function ProfileActions() {
 		var drafts_item_template = this.drafts_item_template;
 		var no_content_template = this.no_content_template;
 		var target = this.target;
-		this.urlConstructor();
+
 		draftDate = this.draftDate;
 		this.getData(this.url,function(data) {		
 			if ( data.no_content ) {
@@ -648,7 +663,7 @@ function ProfileActions() {
 	this.renderFollowers = function() {
 		var follow_template = this.follow_template;
 		var target = this.target;
-		this.urlConstructor();
+
 		this.getData(this.url, function(data) {
 			$.each(data.follow, function(idx, val) {
 				view_data = {
@@ -666,7 +681,7 @@ function ProfileActions() {
 	this.renderFollowing = function() {
 		var follow_template = this.follow_template;
 		var target = this.target;
-		this.urlConstructor();
+
 		this.getData(this.url, function(data) {
 			$.each(data.follow, function(idx, val) {
 				view_data = {
@@ -833,7 +848,6 @@ function ProfileActions() {
 
 //Pagination Code
 	this.paginate = function() {
-
 		if(!window.page_processing && !window.finished_pagination) {
 			//If we did start processing.
 			window.page_processing = true;
@@ -847,7 +861,6 @@ function ProfileActions() {
 		if(!window.comment_page_processing) {
 			window.comment_page_processing = true;
 			this.comment_page = this.page + 1;
-			this.urlConstructor();
 			this.renderComments();
 		}
 	};
