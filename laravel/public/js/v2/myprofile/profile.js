@@ -311,12 +311,14 @@ function ProfileActions() {
 		//fade in fade out scenario
 		var that = this;//JS scope is fun... not.
 		this.target.fadeOut(100,function() {
-			that.target.html('');
-			that.viewRenderContainer(function() {
-				that.viewRender(true);
-			});
-			that.target.fadeIn(100);
+			
 		});
+		this.target.html('');
+		this.viewRenderContainer(function() {
+			
+		});
+		this.viewRender(true);
+		this.target.fadeIn(100);
 	};
 
 	//Container init
@@ -335,9 +337,15 @@ function ProfileActions() {
 		if(this.filter) {
 			this.viewClear();
 		}
+
+		base_url = window.site_url + 'rest/profile/' + this.view + '/';
+
 		switch(this.view) {
 			default:
 			case 'collection':
+				this.url = base_url + this.type + '/' + window.user_id + '/' + this.page;
+				this.feature_url = window.site_url + 'rest/profile/featured/' + window.featured_id;
+				this.comment_url = window.site_url + 'rest/profile/comments/' + window.user_id + '/' + this.comment_page;
 				this.renderCollection();
 				if(init) {
 					this.renderComments();					
@@ -348,30 +356,37 @@ function ProfileActions() {
 				break;
 
 			case 'feed':
+				this.url = base_url + this.type + '/' + this.page;
 				this.renderFeed();
 				break;
 
 			case 'saves':
+				this.url = base_url + this.page;
 				this.renderSaves();
 				break;
 
 			case 'drafts':
+				this.url = base_url + this.page;
 				this.renderDrafts();
 				break;
 
 			case 'settings':
+				this.url = base_url + this.page;
 				this.renderSettings();
 				break;
 
 			case 'notifications':
+				this.url = base_url + this.page;
 				this.renderNotifications();
 				break;
 
 			case 'followers':
+				this.url = base_url + this.type + '/' + this.page;
 				this.renderFollowers();
 				break;
 
 			case 'following':
+				this.url = base_url + this.type + '/' + this.page;
 				this.renderFollowing();
 				break;
 		}
@@ -390,6 +405,7 @@ function ProfileActions() {
 
 	//URL constructor
 	this.urlConstructor = function() {
+		/*
 		base_url = window.site_url + 'rest/profile/' + this.view + '/';
 
 		var viewArray = ['collection', 'feed', 'following', 'followers'];
@@ -407,6 +423,7 @@ function ProfileActions() {
 		} else {
 			this.url = base_url + this.page;
 		}
+		*/
 	};
 
 	// Delete draft
