@@ -87,7 +87,7 @@
 								</ul>
 								
 								<div class="view-all">
-									<a class="btn-outline-blue" href="{{Config::get('app.url')}}/profile/notifications">VIEW ALL</a>
+									<a class="btn-outline-blue" href="{{Config::get('app.url')}}/myprofile#notifications">VIEW ALL</a>
 								</div>
 
 								<div class="additional-user-actions">

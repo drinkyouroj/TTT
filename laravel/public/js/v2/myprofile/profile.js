@@ -100,6 +100,17 @@ $(function() {
 		profile.viewInit(profile.view);
 	});
 
+	//Catching the Notification on the top dropdown
+	$('.dropdown-wrapper .view-all a').click(function(event) {
+		event.preventDefault();
+		$('.header-container .col-right .navbar-dropdown-toggle').click();
+		$('.section-selectors a').removeAttr('class');//gets rid of active state.
+		$('.section-selectors a#notifications').prop('class','active');
+		profile.view = 'notifications';
+		profile.page = 1;
+		profile.viewInit(profile.view);
+	});
+
 //Collection Renders
 		$('body').on('click','.collection-controls a', function(event) {
 			event.preventDefault();
