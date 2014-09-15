@@ -337,7 +337,7 @@ textarea {
 @mixin post_page_tagline {
   @include garamond-italic;
   font-size:17px;
-  text-transform:capitalize;
+  text-transform:lowercase;
   color:$dark;
   @include word-break(break-all);
 }
