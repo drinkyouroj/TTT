@@ -8,7 +8,7 @@
 				<a class="btn reset-search btn-flat-blue hidden">Reset</a>
 				<br/>
 				<br/>
-				*must be more than 3 characters.
+
 			</div>
 			
 			<div class="photo-results">
