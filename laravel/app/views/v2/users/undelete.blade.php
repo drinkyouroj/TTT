@@ -18,8 +18,10 @@ Restore your user.
     <div class="col-md-4 col-md-offset-4 signup-container undelete-container">
         <div class="signup-form">
             <h2>Welcome back {{$user->username}}!</h2>
-            <p>We've sent you an e-mail to let you restore the user.  It should arrive in a few minutes.</p>
-            <p>If you don't receive an e-mail, check your junk box.</p>
+            <p>Your account has been restored.  Enjoy!</p>
+            <p>
+                <a href="{{Config::get('app.url')}}/myprofile#feed">Take me to my Feed!</a>
+            </p>
         </div>
     <div class="clearfix"></div>
     </div>

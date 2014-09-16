@@ -1,15 +1,37 @@
 @import 'base';
-
+html, body {
+	background-color:transparent !important;
+}
+body {
+	background-image:url('../../../images/global/blur-lights.jpg');
+	background-size:cover;
+	background-repeat: no-repeat;
+	background-position:center center;
+	background-attachment: fixed;
+}
 .info-container {
-	margin-top:50px;
+	margin-top:20px;
 	margin-bottom:50px;
+	padding:10px 70px 30px 70px;
+	background:$white;
+	border:solid 1px $lightgray;
+	@media (max-width:$break-sm) {
+		padding:10px 20px 30px 20px;
+		margin-left:15px;
+		margin-right:15px;
+	}
 }
 h1 {
-	@include fjalla;
+	@include montserrat();
 	letter-spacing:3px;
 	text-transform:uppercase;
-	margin-bottom:50px;
+	margin-top:30px;
+	margin-bottom:20px;
 	text-align:center;
+	@media (max-width:$break-xs) {
+		font-size:24px;
+		letter-spacing:1px;
+	}
 }
 h2 {
 	@include fjalla;
@@ -17,16 +39,54 @@ h2 {
 	text-transform:uppercase;
 }
 h3 {
-	text-transform: uppercase;
 	@include montserrat;
-	margin-top:60px;
+	text-transform: capitalize;
+	margin-top:30px;
 	padding-bottom:10px;
 	border-bottom:solid 1px $dark;
+	@media (max-width:$break-xs) {
+		font-size:18px;
+		letter-spacing:1px;
+		text-align:center;
+	}
+}
+h4 {
+	@include montserrat();
+	font-size:14px;
 }
 p {
-	text-align:justify !important;
+	text-align:justify;
 	strong {
 		text-transform: uppercase;
 		@include montserrat;
 	}
 }
+
+.contact {
+	padding:20px 70px 80px 70px;
+	h1 {
+		@include montserrat(bold);
+	}
+	p {
+		font-size:16px;
+		text-align:center;
+	}
+	.emails {
+		margin-top:20px;
+		padding-top:20px;
+		border-top:solid 1px $lightgray;
+		p {
+			@include montserrat;
+			text-transform:uppercase;
+			font-size:12px;
+			letter-spacing:1px;
+			a {
+				@include montserrat;
+				color:$blue;
+				text-transform:none;
+				font-size:14px;
+			}
+		}
+	}
+}
+

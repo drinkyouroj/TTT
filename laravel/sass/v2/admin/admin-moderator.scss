@@ -9,9 +9,19 @@
 	.post-title {
 		text-align: center;
 	}
-	a.flagged-comment {
-		display: block;
+	a.flagged-comment, a.flagged-post-title {
 		width: 100%;
+
+		&:hover {
+			color: gray;
+		}
+
+		.flagged-comment-body {
+			word-wrap: break-word;
+		}
+	}
+	button.mod-remove-flagged-post, button.mod-remove-flagged-comment {
+		margin-left: 15px;
 	}
 
 	.admin-post-featured-controls {
@@ -74,6 +84,14 @@
 		padding-top: 5px;
 		cursor: pointer;
 		color: white;
+		text-align: center;
+	}
+}
+
+.category-description {
+
+	input {
+		width: 70%;
 		text-align: center;
 	}
 }

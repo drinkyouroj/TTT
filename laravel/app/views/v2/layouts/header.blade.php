@@ -11,9 +11,6 @@
 					<button class="read-button toggle-sidebar">
 						<span class="glyphicon glyphicon-align-justify">
 						</span>
-						<span class="text">
-							READ
-						</span>
 					</button>
 
 					@if( $is_guest )
@@ -97,6 +94,10 @@
 								</div>
 								
 								<div class="additional-actions">
+									<a href="{{ URL::to('contact') }}">contact</a>
+									|
+									<a href="{{ URL::to('etiquette') }}">etiquette</a>
+									|
 									<a href="{{ URL::to('privacy') }}">privacy policy</a>
 									|
 									<a href="{{ URL::to('terms') }}">terms of use</a>
@@ -136,19 +137,6 @@
 			</li>
 		@endif
 
-
-		<li class="sidebar-option feed {{ $is_guest ? 'disabled' : '' }}">
-			@if ( $is_guest )
-				<a href="{{ URL::to( 'user/signup' ) }}">	
-			@else
-				<a href="{{ URL::to( 'myprofile' ) }}#feed">
-			@endif
-				MY FEED
-				<span class="glyphicon glyphicon-align-right pull-right"></span>
-			</a>
-		</li>
-
-
 		<li class="sidebar-option categories">
 			<a href="#itemTwo" data-toggle="collapse" data-parent="#accordion">
 				CATEGORIES
@@ -167,6 +155,17 @@
 					@endforeach
 				</ul>
 			</div>
+		</li>
+
+		<li class="sidebar-option feed {{ $is_guest ? 'disabled' : '' }}">
+			@if ( $is_guest )
+				<a href="{{ URL::to( 'user/signup' ) }}">	
+			@else
+				<a href="{{ URL::to( 'myprofile' ) }}#feed">
+			@endif
+				MY FEED
+				<span class="glyphicon glyphicon-align-right pull-right"></span>
+			</a>
 		</li>
 
 		@if ( $is_guest )

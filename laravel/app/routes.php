@@ -88,6 +88,7 @@ Route::group(array('prefix'=>'rest'), function() {
 
 //Note, below JSONController route has to be below the abouve REST route Group.
 Route::group(array('before' => 'auth'), function() {
+	Route::get('rest/flag/post/{post_id}', 'JSONController@flagPost');
 	Route::controller('rest','JSONController');
 });
 
@@ -110,6 +111,7 @@ Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
 	Route::get('restore/user/{user_id}', 'AdminController@restoreUser');
 	Route::get('reset/user/{user_id}', 'AdminController@resetUser');
 	Route::post('post/edit', 'AdminController@editPost');
+	Route::post('category/description', 'AdminController@editCategoryDescription');
 	Route::controller('/','AdminController');
 });
 
@@ -120,6 +122,9 @@ Route::group(array('prefix'=> 'mod', 'before'=> 'mod'), function() {
 	Route::get('delete/post/{post_id}/category/{category_id}', 'ModController@deletePostCategory');
 	Route::get('ban/user/{user_id}', 'ModController@banUser');
 	Route::get('unban/user/{user_id}', 'ModController@unbanUser');
+	Route::get('remove/flagged/comment/{flagged_id}', 'ModController@removeFlaggedComment');
+	Route::get('remove/flagged/post/{flagged_id}', 'ModController@removeFlaggedPost');
+
 });
 
 /********************The Authentication Routes  (Confide routes)************************/

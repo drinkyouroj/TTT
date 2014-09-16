@@ -15,11 +15,16 @@ class CategoryController extends BaseController {
     {
     	//Grab the data.
 		$data = CategoryLogic::data($alias, $request, abs(Request::get('page')), $this->paginate);  //pull the data.
-		
+		if(!$data) {
+			return Redirect::to('categories/all');
+		}
+
 		$posts = $data['posts'];
 				
 		return View::make('v2/category/category')
 					->with('cat_title', $data['cat_title'])  //Need the title when forming the actual page.
+					->with('cat_desc', $data['cat_desc'])
+					->with('cat_alias', $alias)
 					->with('posts', $posts)
 					->with('current_filter', $data['filter'])
 					->with('current_category', $alias);

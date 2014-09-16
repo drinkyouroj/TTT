@@ -38,9 +38,9 @@
     
     <!--{{App::environment()}}-->
 	<script>
-		@if(App::environment('local') || App::environment('sharktopus'))
+		@if(App::environment('local') )
 			window.site_url = '/tt/';//has trailing slash
-		@elseif(App::environment('web'))
+		@elseif(App::environment('web') || App::environment('sharktopus'))
 			window.site_url = '/';//has trailing slash
 		@else
 			window.site_url = '/';//has trailing slash
@@ -85,10 +85,10 @@
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/handlebars/handlebars.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/sidr/jquery.sidr.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/header.js"></script>
-	@if ( $is_mobile )
+	<!-- @if ( $is_mobile )
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/touch-swipe/jquery.touchSwipe.min.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/header-swipe.js"></script>
-	@endif
+	@endif -->
 	
 	
 	@if( $have_user )

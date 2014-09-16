@@ -2,8 +2,8 @@
 
 use DB,
 	Featured,
-	Post
-	;
+	Post,
+	Cache;
 
 class EloquentFeaturedRepository implements FeaturedRepository {
 
@@ -66,6 +66,14 @@ class EloquentFeaturedRepository implements FeaturedRepository {
 		return $query->get();
 	}
 
+	public function random() {
+		$query = $this->featured
+						->where('front', false)
+						->orderBy(DB::raw('RAND()'))
+						->first();
+		return $query;
+	}
+
 	public function findByPostId ( $post_id ) {
 		$result = $this->featured->where( 'post_id', $post_id )->get()->first();
 		if ( $result instanceof Featured ) {
@@ -76,6 +84,14 @@ class EloquentFeaturedRepository implements FeaturedRepository {
 
 	public function delete($post_id) {
 		$this->featured->where('post_id', intval( $post_id ) )->delete();
+		// TODO: maybe replcae the current position on the featured page with other content?
+
+		// Clear the featured cache (refresh its contents)
+		Cache::forget('featured');
+	}
+
+	public function deleteByUserId( $user_id ) {
+		$this->featured->where('user_id', '=', intval( $user_id ) )->delete();
 	}
 
 	/**

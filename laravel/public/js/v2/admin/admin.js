@@ -1,6 +1,42 @@
 // Note: function getPostId() is located in moderator.js (loaded before admin.js)
 $(function() {
 
+    // ========================= ADMIN CATEGORY FUNCTIONS ===============================
+    $('#offcanvas-admin-sidebar .admin-edit-category-description').click(function() {
+        // Replace the description with input field
+        var description = $('.category-description').html().trim();
+        $('.category-description').html('<input type="text" value="' + description + '">');
+    
+        // Toggle the button
+        $('#offcanvas-admin-sidebar .admin-edit-category-description-submit').removeClass('hidden');
+        $('#offcanvas-admin-sidebar .admin-edit-category-description').addClass('hidden');
+    });
+    $('#offcanvas-admin-sidebar .admin-edit-category-description-submit').click(function() {
+        // Replace the description with input field
+        var new_description = $('.category-description > input').val().trim();
+        var category_alias = $('.category-description').data('category-alias');
+
+        $.ajax({
+            url: window.site_url + 'admin/category/description',
+            type: 'POST',
+            data: {
+                category_alias: category_alias,
+                new_description: new_description,
+            },
+            success: function ( data ) {
+                if ( data.success ) {
+                    console.log('success');
+                    // Remove the input fields and replace with new text
+                    $('.category-description').html( new_description );
+                    // Toggle the button
+                    $('#offcanvas-admin-sidebar .admin-edit-category-description-submit').addClass('hidden');
+                    $('#offcanvas-admin-sidebar .admin-edit-category-description').removeClass('hidden');            
+                }
+            }
+        })
+        
+    });
+
 
     // ========================== ADMIN POST FUNCTIONALITIES ============================
 	// Set post as featured

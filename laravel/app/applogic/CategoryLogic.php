@@ -35,7 +35,11 @@ class CategoryLogic {
 	    	//(note, we're using the instance for now, but we'll move this to the repository in the future)
 	    	$cat_instance = $this->category->instance();
 	    	$cat = $cat_instance->where('alias', $alias)->first();
+	    	if(!isset($cat->id)) {
+	    		return false;
+	    	}
 			$cat_title = $cat->title;
+			$cat_desc = $cat->description;
 			
 			if(!strlen($request)) {
 				$request = 'recent';//set default filter
@@ -48,7 +52,7 @@ class CategoryLogic {
 		} else {
 			//Set the category title
 			$cat_title = 'All';
-			
+			$cat_desc = false;
 			if(!strlen($request)) {
 				$request = 'popular';//set default filter
 			}
@@ -56,9 +60,8 @@ class CategoryLogic {
 			//set the model
 			$model = $this->post->instance();
 		}
-		
-		switch($request) {
-			default:
+
+		switch($request) {			
 			case 'recent':
 				$posts = $model->recent();
 			break;
@@ -76,13 +79,14 @@ class CategoryLogic {
 			break; 
 			case 'shortest':
 				$posts = $model->shortest();
-			break;  
+			break; 
+			default:
+				return false;
 		}
 		
 		$posts = $posts->skip(($page-1)*$paginate)
 						->select(
 								array(
-
 									'user_id',
 									'title',
 									'alias',
@@ -102,6 +106,7 @@ class CategoryLogic {
 		return  array(
 					'posts' => $posts,
 					'cat_title' => $cat_title,
+					'cat_desc' => $cat_desc,
 					'filter' => $request
 				);
 	}

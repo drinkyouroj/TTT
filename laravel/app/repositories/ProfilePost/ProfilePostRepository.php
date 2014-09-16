@@ -13,6 +13,8 @@ interface ProfilePostRepository {
 
 	//Delete
 	public function delete($data);
+	public function deleteAllByPostId($post_id);
+	public function restoreAllByPostId($post_id);
 
 	public function publish($user_id, $post_id);
 }

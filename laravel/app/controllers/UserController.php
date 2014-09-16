@@ -136,7 +136,9 @@ class UserController extends BaseController {
         {
 			
 			//Gotta redirect to an acknowledge page if the user happens to have softDeleted their account
-			if(!is_null($user->deleted_at)) {
+			if(Session::get('restored')) {
+                /*
+                //Below is the code for restore by e-mail incase we go back to that at some point.
 				$rando_string = str_random(40);
                 $user->restore_confirm = $rando_string;
                 $user->save();
@@ -150,6 +152,8 @@ class UserController extends BaseController {
                     );
 
                 $this->email->create($email_data);
+                */
+                $this->user->restore($user->id);
 
 				return View::make('v2/users/undelete')
 					->with('user',$user);

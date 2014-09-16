@@ -5,13 +5,35 @@ class ModController extends Controller {
 								UserRepository $user,
 								PostRepository $post,
 								CommentRepository $comment,
-								CategoryRepository $category
+								CategoryRepository $category,
+								FlaggedContentRepository $flagged
 								) {
 		$this->user = $user;
 		$this->post = $post;
 		$this->comment = $comment;
+		$this->flagged = $flagged;
 	}
 
+
+	/**
+	 *	Remove flagged post from admin sidebar
+	 */
+	function removeFlaggedPost ( $flagged_id ) {
+		$this->flagged->delete( $flagged_id );
+		return Response::json(
+				array( 'success' => true ),
+				200 );
+	}
+
+	/**
+	 *	Remove flagged comment from admin sidebar
+	 */
+	function removeFlaggedComment ( $flagged_id ) {
+		$this->flagged->delete( $flagged_id );
+		return Response::json(
+				array( 'success' => true ),
+				200 );
+	}
 
 	/**
 	 *	Delete a given post

@@ -273,14 +273,16 @@ input, textarea, button:focus {outline: none !important;}
 							}
 						}
 						.additional-actions {
-							margin-top: 10px;
-							padding:0px 20px;
+							margin-top: 20px;
+							padding:5px 20px 0px 20px;
+							border-top:solid 1px $lightgray;
 							float:right;
+							line-height:11px;
 							color:$lightgray !important;
 							a {
 								@include garamond;
 								font-size:12px;
-								letter-spacing:1px;
+								letter-spacing:0px;
 								color:$gray;
 								&:hover {
 									color:$dark;
@@ -661,10 +663,10 @@ input, textarea, button:focus {outline: none !important;}
 	@include montserrat(normal);
 	text-transform:uppercase;
 	color: $white;
-	font-size: 12px;
+	font-size: 21px;
 	letter-spacing:2px;
 	background: $dark;
-	padding: 12px 15px;
+	padding: 6px 15px;
 	text-decoration: none;
 	border-top: 2px solid $dark;
 	border-right: 0;
@@ -692,7 +694,7 @@ input, textarea, button:focus {outline: none !important;}
 	border-top: 2px solid $blue;
 	border-right: 0;
 	border-left: 0;
-	border-bottom:solid 3px $blue_dark;
+	border-bottom:solid 3px $blue;
 	cursor: pointer;
 	&:hover {
 		// background-color: $gray;

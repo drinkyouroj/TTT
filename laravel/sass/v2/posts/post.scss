@@ -35,6 +35,9 @@
 				background-image:url('../../../../images/posts/mark-read.png');
 				cursor:pointer;
 				margin-right:20px;
+				&.active {
+					 background-position: left 0 top -26px;
+				}
 			}
 			a.flag {
 				@include post_actions_label;

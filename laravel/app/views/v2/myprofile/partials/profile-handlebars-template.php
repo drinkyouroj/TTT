@@ -11,7 +11,9 @@
 	<div class="notification-container col-md-12">
 	
 		{{#ifCond notification.notification_type 'follow'}}
-		
+			<a class="follow" href="{{site_url}}profile/{{notification.user}}">
+				<span class="action-user">{{ notification.users.[0] }}</span> follow you!
+			</a>
 		{{/ifCond}}
 		{{#ifCond notification.notification_type 'post'}}
 			<a class="post" href="{{site_url}}posts/{{notification.post_alias}}">
