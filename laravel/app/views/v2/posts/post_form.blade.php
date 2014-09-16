@@ -95,11 +95,7 @@
 							@endif
 						
 							<a class="submit-post">
-								@if(!$edit)
-									Publish
-								@else
-									Update
-								@endif
+								Publish
 							</a>
 							
 						</div>
@@ -117,19 +113,17 @@
 								<div class="col-md-4 story-type-box">
 									<div class="{{$errors->first('story_type') ? 'has-error' : '' }}">
 									{{ Form::label('story_type','Post Type', array('class'=>'control-label', 'required')) }}
-									<a href="#" data-toggle="tooltip" title="Choose the type of story">?</a>
 									{{ Form::select('story_type', array( 
-																	''=>'(Pick One)',
+																	''=>'(Choose One)',
 																	'story'=>'Story',
-																	'advice'=>'Advice',
-																	'thought'=>'Thought'), $story_type, array('class'=>'story-type form-control')) }}
+																	'thought'=>'Thought',
+																	'advice'=>'Advice'), $story_type, array('class'=>'story-type form-control')) }}
 									<span class="error">{{ $errors->first('story_type') }}</span>
 								</div>
 								</div>
 								<div class="col-md-8 category-box">
 									{{ Form::label('category','Post Category', array('class'=>'control-label')) }}
-									<a href="#" data-toggle="tooltip" title="Choose 2 categories that this story might fit in.">?</a>
-									<br/>
+									<span>(choose up to 2)</span>
 									<div class="warning hidden">You can only select up to 2 categories.</div>
 
 									<ul>
@@ -191,21 +185,21 @@
 							<div class="tags">
 								<div class="tag {{$errors->first('tagline_1') ? 'has-error' : '' }}">
 									
-									{{ Form::text('tagline_1', $tagline_1, array('class'=>'form-control', 'maxlength' => '20', 'placeholder'=>'Tag 1') ) }}
+									{{ Form::text('tagline_1', $tagline_1, array('class'=>'form-control', 'maxlength' => '20', 'placeholder'=>'Gist 1') ) }}
 									<span class="error">{{ $errors->first('tagline_1') }}</span>
 								</div>
 					
 								<div class="tag {{$errors->first('tagline_2') ? 'has-error' : '' }}">
-									{{ Form::text('tagline_2', $tagline_2, array('class'=>'form-control', 'maxlength' => '20', 'placeholder'=>'Tag 2')) }}
+									{{ Form::text('tagline_2', $tagline_2, array('class'=>'form-control', 'maxlength' => '20', 'placeholder'=>'Gist 2')) }}
 									<span class="error">{{ $errors->first('tagline_2') }}</span>
 								</div>
 					
 								<div class="tag {{$errors->first('tagline_3') ? 'has-error' : '' }}">
-									{{ Form::text('tagline_3', $tagline_3, array('class'=>'form-control', 'maxlength' => '20', 'placeholder'=>'Tag 3')) }}
+									{{ Form::text('tagline_3', $tagline_3, array('class'=>'form-control', 'maxlength' => '20', 'placeholder'=>'Gist 3')) }}
 									<span class="error">{{ $errors->first('tagline_3') }}</span>
 								</div>
 								<br/>
-								{{ Form::label('tagline_1','Tags', array('class'=>'control-label')) }}
+								{{ Form::label('tagline_1','The Gist', array('class'=>'control-label')) }}
 								<a class="tags-tooltip" href="#" data-toggle="tooltip" title="Tags define what your story might be in less than 3 words per tag">?</a>
 							</div>
 						</div>
@@ -256,7 +250,7 @@
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2">
 							<div class="story {{$errors->first('body') ? 'has-error' : '' }}">
-								{{ Form::label('body','Story', array('class'=>'control-label')) }}
+								{{ Form::label('body','Post', array('class'=>'control-label')) }}
 								{{ Form::textarea('body', $body, array('class'=>'form-control normal-input', 'required', 'minlength' =>'5')) }}
 								<div class="text-input editable" name="body" required>
 									@if($edit) {{$body}} @endif

@@ -11,7 +11,7 @@
 @section('content')
 
 
-<div class="col-md-6 col-md-offset-3 info-container">
+<div class="col-md-8 col-md-offset-2 info-container">
 	<h1>Website Terms of Use</h1>
 	<p>Version 1.0</p>
 	<p>Last revised on: August 12, 2014</p>
