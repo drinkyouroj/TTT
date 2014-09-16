@@ -6,6 +6,7 @@ $(function() {
 	paginate.response_name = 'featured';
 	paginate.array_name = 'post';
 	paginate.target = '.trending-content';
+	paginate.loading_gif_target = '.loading-container img';
 
 	template_src = $('#post-item-template').html();
 	paginate.template = Handlebars.compile(template_src);
@@ -45,6 +46,8 @@ function Paginate() {
 	this.template = undefined;
 	this.array_name = undefined;
 	this.target = undefined;
+	this.loading_gif_target = undefined;
+	this.no_more_results = false;
 
 	this.view_data = {
 		site_url: window.site_url,
@@ -55,19 +58,25 @@ function Paginate() {
 	//renders views and stuff.
 	this.viewRender = function() {
 		var url = this.url + this.page;
-		console.log(url);
 		var view_data = this.view_data;
 		var array_name = this.array_name;
 		var response_name = this.response_name;
 		var template = this.template;
 		var target = this.target;
 
+		var parent = this;
+
 		this.getData(url, function(data) {
-			$.each(data[response_name], function(idx, val) {
-				view_data[array_name] = val[array_name];
-				console.log(view_data);
-				$(target).append(template(view_data));
-			})
+			if ( data[response_name] && data[response_name].length ) {
+				$.each(data[response_name], function(idx, val) {
+					view_data[array_name] = val[array_name];
+					console.log(view_data);
+					$(target).append(template(view_data));
+				});
+			} else {
+				parent.no_more_results = true;
+				$(parent.loading_gif_target).fadeOut();
+			}
 		});
 	}
 
@@ -87,7 +96,7 @@ function Paginate() {
 	}
 
 	this.paginate = function() {
-		if(!window.page_processing) {
+		if(!window.page_processing && !this.no_more_results) {
 			//If we did start processing.
 			window.page_processing = true;
 			this.page = this.page + 1;
