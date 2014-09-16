@@ -23,7 +23,7 @@
 			@if(!$cat_desc)
 				<p class="category-description">All | Description | We'll add this to admin later</p>
 			@else
-				<p class="category-description" data-category-alias="{{$category->alias}}">{{$cat_desc}}</p>
+				<p class="category-description" data-category-alias="{{$cat_title}}">{{$cat_desc}}</p>
 			@endif
 		</section>
 
