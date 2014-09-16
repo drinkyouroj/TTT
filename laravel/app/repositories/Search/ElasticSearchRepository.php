@@ -1,12 +1,12 @@
 <?php
 namespace AppStorage\Search;
 
-use Elasticsearch;
+use Elasticsearch, Config;
 
 class ElasticSearchRepository implements SearchRepository {
 
 	public function __construct() {
-		$this->client = new Elasticsearch\Client();
+		$this->client = new Elasticsearch\Client(Config::get('elastic'));
 	}
 
 	public function searchPosts( $search_string, $page = 1, $paginate = 12 ) {
