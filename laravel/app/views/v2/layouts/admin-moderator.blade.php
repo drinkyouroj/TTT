@@ -103,6 +103,18 @@
 			</div>
 		</li>
 		@endif
+
+		@if ( isset( $is_categories_page ) )
+		<li class="admin-sidebar-option">
+			<a href="#adminItemSix" data-toggle="collapse" data-parent="#admin-accordion">
+				Category
+				<span class="glyphicon glyphicon-plus pull-right"></span>
+			</a>
+			<div id="adminItemSix" class="collapse">
+				@yield('admin-mod-category-controls')	
+			</div>
+		</li>
+		@endif
 	</ul>
 
 </div>

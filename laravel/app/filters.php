@@ -272,6 +272,8 @@ View::composer('*', function($view) {
 			$view->with( 'is_profile_page', true );
 		} else if ( $seg == 'posts') {
 			$view->with( 'is_post_page', true );
+		} else if ( $seg == 'categories' ) {
+			$view->with( 'is_categories_page', true );
 		}
 		$view->with( 'flagged_post_content', $flagged_post_content )
 			 ->with( 'flagged_comment_content', $flagged_comment_content )

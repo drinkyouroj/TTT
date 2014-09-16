@@ -21,9 +21,9 @@
 				{{ $cat_title }}
 			</h1>
 			@if(!$cat_desc)
-				<p>All | Description | We'll add this to admin later</p>
+				<p class="category-description">All | Description | We'll add this to admin later</p>
 			@else
-				<p>{{$cat_desc}}</p>
+				<p class="category-description" data-category-alias="{{$cat_title}}">{{$cat_desc}}</p>
 			@endif
 		</section>
 
@@ -81,5 +81,11 @@
 				<h2>Oops! No posts were found in this category...</h2>
 			@endif
 		</section>		
-
 	@stop
+
+	@if ( $cat_desc )
+		@section('admin-mod-category-controls')
+			<button class="btn admin-edit-category-description">Edit Category Description</button>
+			<button class="btn admin-edit-category-description-submit hidden">Submit Changes</button>
+		@stop
+	@endif

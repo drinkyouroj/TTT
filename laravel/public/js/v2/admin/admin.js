@@ -1,6 +1,35 @@
 // Note: function getPostId() is located in moderator.js (loaded before admin.js)
 $(function() {
 
+    // ========================= ADMIN CATEGORY FUNCTIONS ===============================
+    $('#offcanvas-admin-sidebar .admin-edit-category-description').click(function() {
+        // Replace the description with input field
+        var description = $('.category-description').html();
+        $('.category-description').html('<input type="text" value="' + description + '">');
+        // Toggle the button
+        $('#offcanvas-admin-sidebar .admin-edit-category-description-submit').removeClass('hidden');
+        $('#offcanvas-admin-sidebar .admin-edit-category-description').addClass('hidden');
+    });
+    $('#offcanvas-admin-sidebar .admin-edit-category-description').click(function() {
+        // Replace the description with input field
+        var new_description = $('.category-description > input').val();
+        var category_alias = $('.category-description').data('category-alias');
+        $.ajax({
+            url: window.site_url + 'admin/category/description',
+            type: 'POST',
+            data: {
+                category_alias: category_alias,
+                description: new_description
+            },
+            success: function ( data ) {
+                // TODO:
+            }
+        })
+        // Toggle the button
+        $('#offcanvas-admin-sidebar .admin-edit-category-description-submit').removeClass('hidden');
+        $('#offcanvas-admin-sidebar .admin-edit-category-description').addClass('hidden');
+    });
+
 
     // ========================== ADMIN POST FUNCTIONALITIES ============================
 	// Set post as featured
