@@ -126,4 +126,4 @@
 	@endif
 </body>
 </html>
-<!-- {{ $app->environment() }} -->
+<!-- {{ $app->environment() }}  {{$_SERVER['SERVER_ADDR']}}-->
