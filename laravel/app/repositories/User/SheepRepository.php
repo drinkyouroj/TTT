@@ -263,7 +263,10 @@ class SheepRepository implements UserRepository {
 			return $user;
 		} elseif( !is_null($user->deleted_at) && !$user->banned ) {
 			//if the user is trashed, we need to let them undelete themselves before they can login.
-			return $user;
+			$user->restore($user->id);
+			Session::put('restored',1);
+			//login again
+			return self::login($data);
 		} else {
 			//Bad News bears.
 			//Maybe add to a session variable and enable throttling for later.
