@@ -64,7 +64,7 @@
 									@if($favorited)
 										<a data-action="read" class="read">Mark as Read</a>
 									@endif
-									<a data-action="flag" class="flag-button flag glyphicon glyphicon-flag">
+									<a data-action="flag" class="flag-button flag <?php echo $has_flagged ? 'active' : ''; ?>">
 										Flag</a>
 								</div>
 

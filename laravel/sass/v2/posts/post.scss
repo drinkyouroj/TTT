@@ -36,7 +36,9 @@
 				cursor:pointer;
 				margin-right:20px;
 				&.active {
-					 background-position: left 0 top -26px;
+					background-position: left 0 top -26px;
+					color: $blue;
+					cursor: default;
 				}
 			}
 			a.flag {
@@ -45,6 +47,11 @@
 				cursor:pointer;
 				&:hover {
 					color:$red;
+				}
+				&.active {
+					background-position: left 0 top -26px;
+					color:$red;
+					cursor: default;
 				}
 			}
 		}

@@ -262,7 +262,6 @@ class SheepRepository implements UserRepository {
 			//if the user is trashed, we need to let them undelete themselves before they can login.
 			
 			$this->restore( $user->id );
-			// $user->restore($user->id);  Bad ryuhei! 
 			Session::put('restored',1);
 			//login again
 			return self::login($data);

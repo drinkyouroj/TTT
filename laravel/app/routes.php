@@ -111,6 +111,7 @@ Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
 	Route::get('restore/user/{user_id}', 'AdminController@restoreUser');
 	Route::get('reset/user/{user_id}', 'AdminController@resetUser');
 	Route::post('post/edit', 'AdminController@editPost');
+	Route::post('category/description', 'AdminController@editCategoryDescription');
 	Route::controller('/','AdminController');
 });
 

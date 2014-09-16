@@ -7,12 +7,36 @@ class AdminController extends Controller {
 						PostRepository $post,
 						CommentRepository $comment,
 						FeaturedRepository $featured,
-						EmailRepository $email ) {
+						EmailRepository $email,
+						CategoryRepository $category ) {
 		$this->user = $user;
 		$this->post = $post;
 		$this->comment = $comment;
 		$this->featured = $featured;
 		$this->email = $email;
+		$this->category = $category;
+	}
+
+	/**
+	 *	Edit a category description
+	 */
+	function editCategoryDescription () {
+		$category_alias = Input::has('category_alias') ? Input::get('category_alias') : false;
+		$new_description = Input::has('new_description') ? Input::get('new_description') : false;
+		$new_title = Input::has('new_title') ? Input::get('new_title') : false;
+		if ( $category_alias && ($new_description || $new_title) ) {
+			$input = array( 'category_alias' => $category_alias );
+			if ( $new_description ) {
+				$input['new_description'] = $new_description;
+			}
+			if ( $new_title ) {
+				$input['new_title'] = $new_title;
+			}
+			$result = $this->category->update( $input );
+			return Response::json( array( 'success' => $result ), 200 );
+		} else {
+			return Response::json( array( 'success' => false ), 200 );
+		}
 	}
 
 	/**

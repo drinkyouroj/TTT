@@ -21,7 +21,8 @@ class ESReindexCommand extends Command {
      *
      * @var string
      */
-    protected $description = "Fuck shit up. Oh, and reindex es ;)";
+    protected $description = "Setup or drop the collections (indexes) in
+ElasticSearch, from the MySQL tables.";
  
     /**
      * Execute the console command.
@@ -53,10 +54,11 @@ class ESReindexCommand extends Command {
  	 *	Rebuild the post command
  	 */
  	private function rebuildPost() {
-		$client = new Elasticsearch\Client();
+		$client = new Elasticsearch\Client(Config::get('elastic'));
 		// Create the index
 		$indexParams = array();
 		$indexParams['index'] = 'posts';
+
 		$indexParams['body']['mappings']['post'] = 
 			array(
 				'properties' => array(
@@ -99,10 +101,11 @@ class ESReindexCommand extends Command {
  	}
  
 	private function rebuildUser() {
-		$client = new Elasticsearch\Client();
+		$client = new Elasticsearch\Client(Config::get('elastic'));
 		// Create the index
 		$indexParams = array();
 		$indexParams['index'] = 'users';
+
 		$indexParams['body']['mappings']['user'] = 
 			array(
 				'properties' => array(
@@ -140,16 +143,18 @@ class ESReindexCommand extends Command {
 	}
 
 	private function deletePosts() {
-		$client = new Elasticsearch\Client();
+		$client = new Elasticsearch\Client(Config::get('elastic'));
 		$deleteParams = array();
 		$deleteParams['index'] = 'posts';
 		$client->indices()->delete( $deleteParams );
+		$this->line('Posts index deleted.');
 	}
 	private function deleteUsers() {
-		$client = new Elasticsearch\Client();
+		$client = new Elasticsearch\Client(Config::get('elastic'));
 		$deleteParams = array();
 		$deleteParams['index'] = 'users';
 		$client->indices()->delete( $deleteParams );
+		$this->line('Users index deleted.');
 	}
  
 	/**
