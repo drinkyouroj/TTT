@@ -13,21 +13,21 @@
 		height: $post_actionbar_height;
 		z-index: 999;
 		background-image:url('../../../../images/posts/black-90.png');
-		padding: 15px;
+		padding: 3px 15px;
 
 		@media (max-width:$break-sm) {
 			height:35px;
-			padding: 5px 15px;
+			padding: 0px 15px;
 		}
 
 		.actions-container, .comment-container {
-			margin-top:5px;
+			padding-top:3px;
 			@media (max-width:$break-sm) {
-				margin-top:0px;
+				padding-top:5px;
 			}
 		}
 		.utility-container {
-			padding-top:7px;
+			padding-top:3px;
 			padding-bottom:10px;
 			border-right:solid 1px #525252;
 			a.read {
@@ -36,7 +36,9 @@
 				cursor:pointer;
 				margin-right:20px;
 				&.active {
-					 background-position: left 0 top -26px;
+					background-position: left 0 top -26px;
+					color: $blue;
+					cursor: default;
 				}
 			}
 			a.flag {
@@ -46,6 +48,11 @@
 				&:hover {
 					color:$red;
 				}
+				&.active {
+					background-position: left 0 top -26px;
+					color:$red;
+					cursor: default;
+				}
 			}
 		}
 		.actions-container {
@@ -53,6 +60,7 @@
 				display:inline-block;
 				list-style:none;
 				text-align:right;
+				margin-bottom:0px;
 				li {
 					float:left;
 					@include post_actions;
@@ -93,6 +101,8 @@
 			float:right;
 			.follow {
 				float:right;
+				font-size:11px;
+				padding:9px 15px 9px 50px;
 
 				&.active {
 					background-image: none;
@@ -278,7 +288,14 @@
 
 					}
 				}
-
+				@media (max-width:$break-lg) and (min-width:$break-md-min) {
+					font-size:18px;
+					line-height:150%;
+				}
+				@media (max-width:$break-md) and (min-width:$break-md-min) {
+					padding-left:20px;
+					padding-right:20px;
+				}
 				@media (max-width:$break-sm) {
 					-moz-column-gap:0px; /* Firefox */
 					-webkit-column-gap:0px; /* Safari and Chrome */
@@ -310,7 +327,6 @@
 	background-color: $beige;
 
 	.post-comment-container {
-		padding-bottom:200px;
 		.comments {
 			textarea, .comment-body {
 				font-size:16px;

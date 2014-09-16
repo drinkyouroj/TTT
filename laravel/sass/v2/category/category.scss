@@ -4,7 +4,7 @@
 	position: relative;
 	width:100%;
 	max-width:1200px;
-	margin-top: 30px;
+	margin-top: 0px;
 	margin-left:auto;
 	margin-right:auto;
 	padding: 10px 10px 0px 10px;
@@ -24,9 +24,14 @@
 		@include fjalla();
 		font-size:50px;
 		letter-spacing:2px;
+		margin-bottom:0px;
 		@media (max-width:$break-sm) {
 			font-size:32px;
 		}
+	}
+	p {
+		@include garamond-italic;
+		font-size:17px;
 	}
 }
 

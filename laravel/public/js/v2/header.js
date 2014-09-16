@@ -60,5 +60,10 @@ $(function() {
             // Close sidr
             $.sidr('close', 'offcanvas-sidebar');
         }
+        var dropdown = $('.navbar-dropdown');
+        var dropdown_toggle = $('.navbar-dropdown-toggle');
+        if (!dropdown.is(e.target) && !dropdown_toggle.is(e.target) && dropdown.has(e.target).length === 0) {
+            $(dropdown).hide();
+        }
     });
 });

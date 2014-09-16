@@ -130,7 +130,9 @@ $(function() {
 			// Close when click elsewhere
 			$(document).mouseup(function (e) {
 			    var container = $('.post-options');
+			    var container_toggle = $('.options-link');
 			    if (!container.is(e.target) // if the target of the click isn't the container...
+			    	&& !container_toggle.is(e.target)
 			        && container.has(e.target).length === 0) { // ... nor a descendant of the container
 			        container.hide();
 			    	// change back to delete if user clicked delete and not confirm

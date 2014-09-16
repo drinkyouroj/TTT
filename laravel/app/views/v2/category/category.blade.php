@@ -23,7 +23,7 @@
 			@if(!$cat_desc)
 				<p class="category-description">All | Description | We'll add this to admin later</p>
 			@else
-				<p class="category-description" data-category-alias="{{$cat_title}}">{{$cat_desc}}</p>
+				<p class="category-description" data-category-alias="{{$cat_alias}}">{{$cat_desc}}</p>
 			@endif
 		</section>
 
@@ -86,6 +86,6 @@
 	@if ( $cat_desc )
 		@section('admin-mod-category-controls')
 			<button class="btn admin-edit-category-description">Edit Category Description</button>
-			<button class="btn admin-edit-category-description-submit hidden">Submit Changes</button>
+			<button class="btn btn-success admin-edit-category-description-submit hidden">Submit Changes</button>
 		@stop
 	@endif

@@ -742,7 +742,20 @@ a:focus {
 
 				}
 			}
-
+			.empty-content {
+				padding:30px 50px;
+				border:solid 1px $darker_cream;
+				p {
+					font-size:21px;
+					letter-spacing:1px;
+					color:$darker_cream;
+					text-align:center;
+					span {
+						@include fjalla;
+						font-size:21px;
+					}
+				}
+			}
 
 		}
 	}

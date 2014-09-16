@@ -16,8 +16,8 @@ class PostController extends BaseController {
 							CommentRepository $comment,
 							FeedRepository $feed,
 							FeaturedRepository $featured,
-							SearchRepository $search
-							) {
+							SearchRepository $search,
+							PostFlaggedRepository $post_flagged ) {
 		$this->post = $post;
 		$this->repost = $repost;
 		$this->favorite = $favorite;
@@ -30,6 +30,7 @@ class PostController extends BaseController {
 		$this->feed = $feed;
 		$this->featured = $featured;
 		$this->search = $search;
+		$this->post_flagged = $post_flagged;
 	}
 
 	public function getIndex() {
@@ -62,7 +63,7 @@ class PostController extends BaseController {
 		$is_admin = $user != false ? $user->hasRole('Admin') : false;
 		
 		// 1. admin can view any post (deleted or not)
-		// 2. user may view a post that is published
+		// 2. anyone may view a post that is published
 		// 3. user may view post that is draft => only if they are the author
 		if (  $is_admin || (!$post->trashed() && ($post->published || $post->user_id == $user_id)) ) {
 			//Post exists and (is published OR draft is owned by appropriate user)
@@ -83,7 +84,7 @@ class PostController extends BaseController {
 				$liked = $this->like->has_liked($my_id, $post->id);
 				$favorited = $this->favorite->has_favorited($my_id, $post->id);
 				$reposted = $this->repost->has_reposted($my_id, $post->id);
-
+				$has_flagged = $this->post_flagged->exists( $my_id, $post->id );
 			} else {
 				//DEFAULTS for not logged in users
 				$my_id = false;
@@ -92,6 +93,7 @@ class PostController extends BaseController {
 				$liked = false;
 				$favorited = false;
 				$reposted = false;
+				$has_flagged = false;
 			}
 			
 			//Add the fact that the post has been viewed if you're not the owner and you're logged in.
@@ -118,6 +120,7 @@ class PostController extends BaseController {
 						->with('liked', $liked)
 						->with('favorited', $favorited)
 						->with('reposted', $reposted)
+						->with('has_flagged', $has_flagged)
 						->with('is_editable', $this->post->checkEditable($post->published_at))
 						;
 

@@ -164,7 +164,6 @@ class SheepRepository implements UserRepository {
 		} else {
 			return false;
 		}
-		
 	}
 
 		private function restoreGeneric($user) {
@@ -173,15 +172,13 @@ class SheepRepository implements UserRepository {
 				// Restore all their posts
 				$this->post->restoreAllByUserId( $user->id );
 				// Restore all their comments
-				//$this->comment->publishAllByUser($id);//need to work on these guys.
-				
 				$comments = $this->comment->findAllByUserId( $user->id );
 				foreach ($comments as $comment) {
 					$this->comment->publish( $comment->_id );
 				}
-
 				// Update the search db
 				$this->search->updateUser( $user );
+
 				
 				return true;
 			}
@@ -263,7 +260,8 @@ class SheepRepository implements UserRepository {
 			return $user;
 		} elseif( !is_null($user->deleted_at) && !$user->banned ) {
 			//if the user is trashed, we need to let them undelete themselves before they can login.
-			$user->restore($user->id);
+			
+			$this->restore( $user->id );
 			Session::put('restored',1);
 			//login again
 			return self::login($data);
