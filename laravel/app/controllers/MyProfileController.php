@@ -445,6 +445,11 @@ class MyProfileController extends BaseController {
 				array('follow' => $followers->toArray()),
 				200
 				);
+		} else {
+			return Response::json(
+				array('follow' => array() ),
+				200
+				);
 		}
 	}
 
@@ -454,6 +459,11 @@ class MyProfileController extends BaseController {
 		if(count($following)) {
 			return Response::json(
 				array('follow' => $following->toArray()),
+				200
+				);
+		} else {
+			return Response::json(
+				array('follow' => array() ),
 				200
 				);
 		}

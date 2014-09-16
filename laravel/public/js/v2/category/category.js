@@ -36,18 +36,21 @@ $(function() {
 		// currently fetching content
 		if ( !no_additional_content && !is_fetching_next_page ) {
 			//If 100px near the bottom load more stuff.
-			if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+			if($(window).scrollTop() + $(window).height() > $(document).height() - 150) {
 				feedTheFeedOnScroll();
 			}
 		}
 	});
+	// Just incase the window height is not scrollable
+	if ( $(window).height() >= $(document).height() ) {
+		feedTheFeedOnScroll();
+	}
 
 	/**
 	 *	This function fetches more content for the feed, used when the user reaches the bottom
 	 *	of the feed.
 	 */
 	function feedTheFeedOnScroll ( ) {
-		console.log('Feed the Feed!');
 		// fetch more content
 		fetchContentForFeed( function ( posts ) {
 			// add new feed items to DOM
@@ -66,7 +69,6 @@ $(function() {
 				if ( index === posts.length - 1 ) {
 					$('.feed-container .post-container').fadeIn();		
 				}
-				console.log('Should have appended');
 			});
 		}, true );
 	}
@@ -87,7 +89,6 @@ $(function() {
 			url: window.site_url + 'rest/categories/' + current_category + '/' + current_sortby + '/' + current_page,
 			success: function ( data ) {
 				if ( data.error ) {
-					console.log( data.error );
 					if ( advance_page )
 						current_page--;
 					no_additional_content = true;
@@ -95,6 +96,12 @@ $(function() {
 					if ( data.posts.length == 0 )
 						no_additional_content = true;
 					callback( data.posts );
+				}
+
+				if ( no_additional_content ) {
+					$('.loading-container img').fadeOut();
+				} else if ( $(window).height() >= $(document).height() ) {
+					feedTheFeedOnScroll();
 				}
 			},
 			complete: function () {

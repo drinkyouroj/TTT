@@ -858,6 +858,15 @@ textarea {
   }
 }
 
+// Loading container for loading gif seen on the featured, categories, comments, and myprofile pages
+.loading-container {
+  height: 200px;
+  text-align: center;
+  img {
+    height: 100%;
+  }
+}
+
 
 //Modal Mods
 //below is straight off from the landing page.  Modify if need be.
