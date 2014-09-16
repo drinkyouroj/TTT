@@ -1,3 +1,14 @@
 @import '../base';
 
 @include signup_login;
+
+html, body {
+	background-color:transparent !important;
+}
+body {
+	background-image:url('../../../../images/global/blur-lights.jpg');
+	background-size:cover;
+	background-repeat: no-repeat;
+	background-position:center center;
+	background-attachment: fixed;
+}
