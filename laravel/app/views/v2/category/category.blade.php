@@ -20,6 +20,11 @@
 			<h1 class="category-title">
 				{{ $cat_title }}
 			</h1>
+			@if(!$cat_desc)
+				<p>All | Description | We'll add this to admin later</p>
+			@else
+				<p>{{$cat_desc}}</p>
+			@endif
 		</section>
 
 		<section class="filters" data-current-category="{{$current_category}}" data-current-filter="{{$current_filter}}">

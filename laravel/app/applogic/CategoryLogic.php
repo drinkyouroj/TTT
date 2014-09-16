@@ -39,6 +39,7 @@ class CategoryLogic {
 	    		return false;
 	    	}
 			$cat_title = $cat->title;
+			$cat_desc = $cat->description;
 			
 			if(!strlen($request)) {
 				$request = 'recent';//set default filter
@@ -51,7 +52,7 @@ class CategoryLogic {
 		} else {
 			//Set the category title
 			$cat_title = 'All';
-			
+			$cat_desc = false;
 			if(!strlen($request)) {
 				$request = 'popular';//set default filter
 			}
@@ -105,6 +106,7 @@ class CategoryLogic {
 		return  array(
 					'posts' => $posts,
 					'cat_title' => $cat_title,
+					'cat_desc' => $cat_desc,
 					'filter' => $request
 				);
 	}

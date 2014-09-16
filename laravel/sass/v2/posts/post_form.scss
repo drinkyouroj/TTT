@@ -24,7 +24,7 @@ $border_color: #eee;
 			width:auto;
 			padding: 12px 15px;
 		}
-		@media (max-width:$break-sm) {
+		@media (max-width:$break-xs) {
 			padding: 5px 5px;
 			font-size: 10px;
 		}
@@ -54,7 +54,7 @@ $border_color: #eee;
     background-position:right center;
     background-repeat:no-repeat;
     background-size:10px 7px;
-    @media (max-width:$break-sm) {
+    @media (max-width:$break-xs) {
     	margin-top:0px;
 		font-size: 8px;
 		padding: 5px 15px 3px 0px;
@@ -87,8 +87,14 @@ $border_color: #eee;
 		.draft-publish {
 			@include draftPublishButtons();
 		}
-		@media (max-width:$break-sm) {
+		@media (max-width:$break-xs) {
 			padding:3px 15px;
+		}
+
+		.preview {//until we finalize this feature
+			.preview-button, .article-link {
+				display:none;
+			}
 		}
 	}
 }
@@ -142,9 +148,9 @@ $border_color: #eee;
 	display:none;
 	padding-top: 30px;
 	padding-bottom: 50px;
-	@media (max-width:$break-sm) {
-		top:99px;
-		padding-top:0px;
+	@media (max-width:$break-xs) {
+		top:77px;
+		padding-top:20px;
 	}
 	.category-container {
 		label {
@@ -157,11 +163,23 @@ $border_color: #eee;
 			@include montserrat(normal);
 		}
 		.story-type-box {
+			position:relative;
 			select.form-control {
 				@media (max-width:$break-md) and (min-width:$break-sm-min) {
 					width:33%;
 				}
 			}
+			label.error {
+				font-size:11px;
+				color:$red;
+				@include montserrat;
+				@media (max-width:$break-xs) {
+					position:absolute;
+					left:15px;
+					top:-15px;
+				}
+			}				
+
 		}
 		.category-box {
 			color:$lightgray;
@@ -200,16 +218,18 @@ $border_color: #eee;
 						left:300px;
 						font-size:11px;
 						color:$red;
+						letter-spacing:0px;
 						@include montserrat;
 						line-height:50px;
 						@media (max-width:$break-lg) {
-							left:200px;
+							left:250px;
 						}
 						@media (max-width:$break-md) {
 							left:300px;
 						}
 						@media (max-width:$break-xs) {
-							left:200px;
+							left:-15px;
+							top:-65px;
 						}
 
 					}
@@ -257,7 +277,7 @@ $border_color: #eee;
 			padding-left:0px;
 			padding-right:0px;
 		}
-		@media (max-width:$break-sm) {
+		@media (max-width:$break-xs) {
 			margin-top: 31px;
 		}
 		@media screen and (min-width: 992px) {
@@ -356,6 +376,7 @@ $border_color: #eee;
 					}
 				}
 				a.tags-tooltip {
+					display:none;
 					font-size:12px;
 					border:solid 2px $blue;
 					padding:2px 6px 1px 6px;

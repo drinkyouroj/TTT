@@ -11,7 +11,7 @@
 @section('content')
 
 
-<div class="col-md-6 col-md-offset-3 info-container">
+<div class="col-md-8 col-md-offset-2 info-container">
 	<h1>PRIVACY POLICY</h1>
 	<p>Last Updated: August 12, 2014</p>
 
