@@ -25,6 +25,6 @@ return array(
 	|
 	*/
 
-	'url' => 'http://192.168.9.149/tt',
-	'imageurl' => 'http://192.168.9.149/tt/uploads/final_images',
+	'url' => 'http://192.168.9.149',
+	'imageurl' => 'http://192.168.9.149/uploads/final_images',
 );
