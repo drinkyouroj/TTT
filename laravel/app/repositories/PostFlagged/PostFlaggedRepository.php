@@ -7,6 +7,7 @@ interface PostFlaggedRepository {
 	public function instance();
 
 	public function create($user_id, $post_id);
+	public function delete($user_id, $post_id);
 
 	public function count($post_id);
 

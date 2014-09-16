@@ -414,7 +414,13 @@ class JSONController extends BaseController {
 	public function flagPost($post_id) {
 		if( Auth::check() ) {
 			$user = Auth::user();
-			$this->postFlagged->create($user->id, $post_id);
+			// If the flag exists, delete it, otherwise create it
+			if ( $this->postFlagged->exists($user->id, $post_id) ) {
+				$this->postFlagged->delete($user->id, $post_id);
+			} else {
+				$this->postFlagged->create($user->id, $post_id);	
+			}
+			
 
 			if($this->postFlagged->count($post_id) > 1) {
 				$this->flaggedContent->create('post', $post_id);
