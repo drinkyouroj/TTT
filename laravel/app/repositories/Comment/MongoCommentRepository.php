@@ -1,7 +1,7 @@
 <?php
 namespace AppStorage\Comment;
 
-use MongoComment, DateTime, Request, DB;
+use MongoComment, DateTime, Request, DB, FlaggedContentRepository;
 
 /**
  *	http://docs.mongodb.org/ecosystem/use-cases/storing-comments/
@@ -9,9 +9,11 @@ use MongoComment, DateTime, Request, DB;
 
 class MongoCommentRepository implements CommentRepository {
 
-	public function __construct(MongoComment $comment)
+	public function __construct(MongoComment $comment,
+								FlaggedContentRepository $flagged)
 	{
 		$this->comment = $comment;
+		$this->flagged = $flagged;
 	}
 
 	//Instance
@@ -231,8 +233,9 @@ class MongoCommentRepository implements CommentRepository {
 		if ( $comment instanceof MongoComment ) {
 			$comment->push('flags', $user_id, true);
 
-			if ( count( $comment->flags ) > 4 ) {
-				// TODO: so many flags!!! somebody should probably intervene.
+			if ( count( $comment->flags ) > 1 ) {
+				// This is where the admins are notified of flagged comments
+				$this->flagged->create('comment', $comment->id);
 			}
 			return true;
 		} else {

@@ -17,8 +17,9 @@
 					@if ( count( $flagged_post_content ) )
 						@foreach ( $flagged_post_content as $content )
 							@if ( $content->post )
-								<li data-flagged-post-id="{{ $content->post->id }}">
+								<li data-flagged-content-id="{{ $content['_id'] }}">
 									<a class="flagged-post-title" href="{{ URL::to('posts/'.$content->post->alias ) }}" target="_blank">{{ $content->post->title }}</a>
+									<button class="mod-remove-flagged-post btn btn-xs btn-warning">x</button>
 								</li>
 							@endif
 						@endforeach
@@ -39,12 +40,13 @@
 					@if ( count( $flagged_comment_content ) )
 						@foreach ( $flagged_comment_content as $content )
 							@if ( $content->comment )
-								<li data-flagged-comment-id="{{ $content->comment->id }}">
+								<li data-flagged-content-id="{{ $content['_id'] }}">
 									<a class="flagged-comment" href="{{ URL::to('posts/'.$content->comment->post->alias.'#comment-'.$content->comment->id ) }}" target="_blank">
-										<span class="flagged-comment-body">{{ $content->comment->body }}</span>
-										<br>
+										<span class="flagged-comment-body">{{ substr( $content->comment->body, 0, 40 ) }}...</span>
+										<span>  by: </span>
 										<span class="flagged-comment-author">{{ $content->comment->author['username'] }}</span>
 									</a>
+									<button class="mod-remove-flagged-comment btn btn-xs btn-warning">x</button>
 								</li>
 							@endif
 						@endforeach

@@ -411,12 +411,12 @@ class JSONController extends BaseController {
 		}
 	}
 
-	public function getPostFlag($post_id) {
+	public function flagPost($post_id) {
 		if( Auth::check() ) {
 			$user = Auth::user();
 			$this->postFlagged->create($user->id, $post_id);
 
-			if($this->postFlagged->count($post_id) >= 5) {
+			if($this->postFlagged->count($post_id) > 1) {
 				$this->flaggedContent->create('post', $post_id);
 			}
 
