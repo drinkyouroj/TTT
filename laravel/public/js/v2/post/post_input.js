@@ -82,10 +82,12 @@ $(function() {
 	});
 
 	$('.save-draft').click(function() {
+		save_post.autosave = false;
 		save_post.sendDraft(window.editor);
 	});
 
 	$('.submit-post').click(function() {
+		save_post.autosave = false;
 		save_post.sendPublish(window.editor);
 	});
 
@@ -105,6 +107,41 @@ $(function() {
 	       $('.category-box .warning').removeClass('hidden');
 	   }
 	});
+
+	$('textarea.title').on('change', function(event) {
+		console.log($(this).val().length);
+		if($(this).val().length >= 5) {
+			start_save();
+		} else if($(this).val().length < 5) {
+			stop_save();
+		}
+	});
+
+	if(save_post.post_id != 0) {
+		start_save();
+	}
+
+	function start_save() {
+		if(save_post.autosave_started == false) {
+			console.log('auto save started!');
+			save_post.autosave = true;
+			save_post.sendDraft();//send draft the moment this system starts.
+			save_post.autoSaveInterval = setInterval(function() {
+				save_post.sendDraft();
+				$('.draft-publish .save-draft').text('Saving...');
+				setTimeout(function() {
+					$('.draft-publish .save-draft').text('Draft');
+				}, 1000);
+				
+			}, 20000);//saves every 10 seconds.
+			save_post.autosave_started = true;
+		}
+	}
+
+	function stop_save() {
+		console.log('auto save cleared!');
+		clearInterval(save_post.autoSaveInterval);
+	}
 
 });
 
@@ -180,6 +217,8 @@ var save_post = new function() {
 			}
 		}
 	};
+
+	this.autosave_started = false;
 
 	//States
 	this.draft = 0;
@@ -291,10 +330,10 @@ var save_post = new function() {
 					category: this.category,
 					story_type: this.story_type,
 					body: this.body,
-					image: this.image
+					image: this.image,
+					autosave: this.autosave
 				},//uses the data function to get 
 			success: function(data) {
-				console.log('testing');
 				console.log(data);
 
 				switch(data.result) {
@@ -336,6 +375,9 @@ var save_post = new function() {
 
 	this.sendDraft = function() {
 		//gotta set the states
+		if(this.autosave) {
+			console.log('another autosave');
+		}
 		this.draft = 1;
 		this.published = 0;
 		this.grabData();//grab data automatically sends out the data via "send function"
@@ -370,7 +412,6 @@ var save_post = new function() {
 	this.updateAfter = function(data) {
 		this.alias = data.alias;
 		this.sharedAfter();
-		
 	};
 
 	//This one updates and sets the 
@@ -382,12 +423,15 @@ var save_post = new function() {
 			a_link = $('.article-link');
 			a_link.prop('href',article_link);
 		}
-
-		if(this.draft) {
-			window.location.replace(window.site_url+'myprofile#drafts');
-		} else {
-			window.location.replace(window.site_url+'myprofile#collection');
+		if(this.autosave == false) {
+			if(this.draft ) {
+				window.location.replace(window.site_url+'myprofile#drafts');
+			} else {
+				window.location.replace(window.site_url+'myprofile#collection');
+			}
 		}
 	}
-	
+
+
+
 }

@@ -194,6 +194,7 @@ class PostController extends BaseController {
 		//Below assumes that the validation has passed.  It can be used to update or to save the post.
 		private function savePost($rest=false) {			
 			$request = Request::all();
+			$autosave = isset($request['autosave']) ? $request['autosave'] : false ;
 			$check_post = false;
 			$previously_published = false;
 
@@ -342,10 +343,12 @@ class PostController extends BaseController {
 				}
 
 				//this is to let the profile page know what happened after the redirect.
-				if($post->draft) {
-					Session::put('post','draft');
-				} else {
-					Session::put('post','published');
+				if($autosave == false) {
+					if($post->draft) {
+						Session::put('post','draft');
+					} else {
+						Session::put('post','published');
+					}
 				}
 				
 
