@@ -64,7 +64,7 @@
     <![endif]-->
   </head>
 <body>
-
+<div class="content-wrapper">
 @include('v2.layouts.header')
 
 @if ( $is_mod )
@@ -76,8 +76,9 @@
 
 
 @yield('content','Fudge no content defined.')
-    
- 
+
+@include('v2.layouts.footer')
+ </div>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/bootstrap.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/jquery.scrolltofixed.min.js"></script>
@@ -120,7 +121,6 @@
 
 		</script>
 	@endif
-    
-  </body>
+</body>
 </html>
 <!-- {{ $app->environment() }} -->
