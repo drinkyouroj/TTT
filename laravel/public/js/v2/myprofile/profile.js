@@ -344,9 +344,9 @@ function ProfileActions() {
 	this.viewRenderContainer = function() {
 		if(this.view == 'collection') {
 			//collection has a different outer template
-			this.target.html(this.collection_template());
+			this.target.html(this.collection_template({site_url: window.site_url}));
 		} else {
-			this.target.html(this.default_template({view: this.view}));
+			this.target.html(this.default_template({site_url: window.site_url, view: this.view}));
 		}
 	};
 
@@ -595,14 +595,16 @@ function ProfileActions() {
 
 				if ( data.feed && data.feed.length ) {
 					$.each(data.feed, function(idx, val) {
-						view_data = {
-							site_url: window.site_url,
-							post: val.post,
-							feed_type: val.feed_type,
-							users: val.users,
-							image_url: window.image_url
-						};
-						$('#default-content',parent.target).append(post_item_template(view_data));
+						if(val.post) {
+							view_data = {
+								site_url: window.site_url,
+								post: val.post,
+								feed_type: val.feed_type,
+								users: val.users,
+								image_url: window.image_url
+							};
+							$('#default-content',parent.target).append(post_item_template(view_data));
+						}
 					});
 					parent.checkBodyHeight();
 				} else {
@@ -610,6 +612,7 @@ function ProfileActions() {
 					parent.finished_pagination = true;
 					$('.loading-container img').fadeOut();
 				}
+
 			}
 		});
 	};
