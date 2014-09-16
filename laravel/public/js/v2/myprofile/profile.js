@@ -516,7 +516,7 @@ function ProfileActions() {
 		var target = this.target;
 		var editCheck = this.editCheck;
 
-		this.getData(this.feature_url,function(data) {
+		this.getData(this.feature_url, function(data) {
 			var editable = data.featured ? editCheck(data.featured.published_at) : false;
 			view_data = {
 				site_url: window.site_url,
@@ -535,15 +535,23 @@ function ProfileActions() {
 	//Collection Actions
 		//Set a post as featured.
 		this.setFeatured = function(id) {
-			$('#collection-content .feature-item',target).fadeOut().remove();
-			$('#collection-content #post-' + id).fadeOut().remove();
+			
 			featured_url = window.site_url + 'rest/profile/featured/' + id;
-			var target = this.target;
+			var parent = this;
 			this.setData(featured_url, function(data) {
-				
+				if ( data.success ) {
+					$('#collection-content .feature-item', parent.target).fadeOut(function() {
+						$(this).remove();
+					});
+					$('#collection-content #post-' + id).fadeOut( function() {
+						$(this).remove();
+					});
+					window.featured_id = id;//make the window remember the featured id.
+					parent.feature_url = window.site_url + 'rest/profile/featured/' + window.featured_id;
+					parent.renderFeatured();
+				}
 			});
-			window.featured_id = id;//make the window remember the featured id.
-			this.renderFeatured();
+			
 		}
 
 		this.setPostDelete = function(id) {
@@ -767,7 +775,7 @@ function ProfileActions() {
 			image_url: window.image_url
 		};
 		$('#default-content', this.target).append(this.settings_template(view_data));
-		
+		$('.loading-container img').fadeOut();
 		if(this.photo_init == false) {
 			photo_input = new PhotoInput();
 			this.photo_init = true;
