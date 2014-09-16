@@ -12,6 +12,14 @@
 
 @section('css')
 	<link rel="stylesheet" media="screen" href="{{Config::get('app.url')}}/css/compiled/v2/posts/post.css">
+
+	{{--CSS and heading is the same so its not an issue to put that stuff here.--}}
+	<meta property="og:title" content="{{$post->title}}" />
+	<meta property="og:description" content="{{substr(strip_tags($post->body), 0, 500) }}" />
+	<meta property="og:image" content="{{ Config::get('app.imageurl') }}/{{$post->image}}" />
+	<meta property="og:type" content="article" />
+
+	
 @stop
 
 @section('js')
@@ -47,7 +55,7 @@
 		$follow_term_active = 'Following';
 		$follow_term = 'Follow';
 	?>
-	
+<article itemscope itemtype="http://schema.org/Article">
 	<section class="post-action-bar-wrapper">
 		<div class="post-action-bar" data-post-id="{{ $post->id }}" data-user-id="{{ $post->user->id }}">
 			<div class="container">
@@ -114,7 +122,7 @@
 		<div class="post-heading-container container">
 			<div class="row">
 				<div class="post-heading col-md-4">
-					<h2>{{ $post->title }}</h2>
+					<h2 itemprop="name" content="{{ $post->title }}">{{ $post->title }}</h2>
 					{{-- Admin edit capabilities --}}
 					@if ( $is_admin )	
 						<h2 class="hidden">
@@ -122,7 +130,7 @@
 						</h2>
 					@endif
 					<div class="line"></div>
-					<ul class="post-taglines list-inline">
+					<ul class="post-taglines list-inline" itemprop="description">
 						<li> {{ $post->tagline_1 }} </li>
 						<li> {{ $post->tagline_2 }} </li>
 						<li> {{ $post->tagline_3 }} </li>
@@ -134,7 +142,7 @@
 						@endif
 					</ul>
 
-					<div class="author">
+					<div class="author" itemprop="author" content="{{$post->user->username}}">
 						<a href="{{ URL::to('profile/'.$post->user->username ) }}">
 							<img class="post-author-avatar" src="">
 						</a>
@@ -153,7 +161,9 @@
 					</ul>
 
 				</div>
-				<div class="post-image col-md-8" style="background-image: url('{{Config::get('app.imageurl')}}/{{$post->image}}');"></div>
+				<div class="post-image col-md-8" style="background-image: url('{{Config::get('app.imageurl')}}/{{$post->image}}');">
+						<img class="hidden" itemprop="image" src="{{Config::get('app.imageurl')}}/{{$post->image}}">
+				</div>
 			</div>
 		</div>
 	</section>
@@ -230,6 +240,7 @@
 			</div>
 		</div>
 	</section>
+</article>
 @stop
 
 

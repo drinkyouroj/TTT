@@ -601,14 +601,16 @@ function ProfileActions() {
 				$('#default-content',target).append( no_content_template( {section: 'feed'} ) );
 			} else {
 				$.each(data.feed, function(idx, val) {
-					view_data = {
-						site_url: window.site_url,
-						post: val.post,
-						feed_type: val.feed_type,
-						users: val.users,
-						image_url: window.image_url
-					};
-					$('#default-content',target).append(post_item_template(view_data));
+					if(val.post) {
+						view_data = {
+							site_url: window.site_url,
+							post: val.post,
+							feed_type: val.feed_type,
+							users: val.users,
+							image_url: window.image_url
+						};
+						$('#default-content',target).append(post_item_template(view_data));
+					}
 				});
 			}
 		});
