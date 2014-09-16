@@ -85,10 +85,10 @@
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/handlebars/handlebars.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/sidr/jquery.sidr.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/header.js"></script>
-	@if ( $is_mobile )
+	<!-- @if ( $is_mobile )
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/touch-swipe/jquery.touchSwipe.min.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/header-swipe.js"></script>
-	@endif
+	@endif -->
 	
 	
 	@if( $have_user )

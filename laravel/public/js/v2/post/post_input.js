@@ -47,7 +47,7 @@ $(function() {
 			cleanPastedHTML: true,
 			forcePlainText: true,
 			disableDoubleReturn: true,
-			placeholder: 'Write Your Story Here.'
+			placeholder: 'Write Your Post Here.'
 		});
 		save_post.editable=true;
 		//hide the textarea

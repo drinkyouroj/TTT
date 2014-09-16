@@ -9,7 +9,8 @@ use User,
 	SolariumHelper,
 	CommentRepository,
 	PostRepository,
-	SearchRepository
+	SearchRepository,
+	FeaturedRepository
 	;
  
 class SheepRepository implements UserRepository {
@@ -18,11 +19,13 @@ class SheepRepository implements UserRepository {
 					User $user,
 					CommentRepository $comment,
 					PostRepository $post,
-					SearchRepository $search ) {
+					SearchRepository $search,
+					FeaturedRepository $featured ) {
 		$this->user = $user;
 		$this->comment = $comment;
 		$this->post = $post;
 		$this->search = $search;
+		$this->featured = $featured;
 	}
 
 	public function instance() {
@@ -143,6 +146,9 @@ class SheepRepository implements UserRepository {
 
 		// Remove user from search database
 		$this->search->deleteUser( $id );
+
+		// Remove any posts from the featured page...
+		$this->featured->deleteByUserId( $id );
 		
 	}
 
