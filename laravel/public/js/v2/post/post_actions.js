@@ -110,7 +110,7 @@ function UserAction () {
 	this.ajaxFlag = function ( callback ) {
 		if ( this.action == 'flag' && this.post_id ) {
 			$.ajax({
-				url: window.site_url + 'rest/flag/' + this.user_id,
+				url: window.site_url + 'rest/flag/post/' + this.post_id,
 				success: function ( data ) {
 					callback( data );
 				}

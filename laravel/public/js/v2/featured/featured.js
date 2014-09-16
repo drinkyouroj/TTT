@@ -11,10 +11,21 @@ $(function() {
 	paginate.template = Handlebars.compile(template_src);
 
 	$(window).scroll(function() {
-		if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+		// Pagination for content
+		var scrollTop = $(window).scrollTop(); 
+		var windowHeight = $(window).height();
+		var documentHeight = $(document).height();
+		if(scrollTop + windowHeight > documentHeight - 100) {
 			paginate.paginate();
 		}
+		if ( scrollTop > 50 ) {
+			$('.header-inner-wrapper').addClass('active');
+		} else {
+			$('.header-inner-wrapper').removeClass('active');
+		}
 	});
+
+	// Toggle the header title depending on position of scroll
 
 });
 

@@ -12,6 +12,34 @@ $(function() {
     	}
     });
 
+    //============================== FLAGGED CONTENT FUNCTIONS ==========================
+    $('#offcanvas-admin-sidebar .mod-remove-flagged-comment').click( function() {
+        var $li = $(this).closest('li');
+        var flagged_content_id = $li.data('flagged-content-id');
+        $.ajax({
+            url: window.site_url + 'mod/remove/flagged/comment/' + flagged_content_id,
+            type: 'GET',
+            success: function ( data ) {
+                if ( data.success ) {
+                    $li.remove();
+                }
+            }
+        })
+    });
+    $('#offcanvas-admin-sidebar .mod-remove-flagged-post').click( function() {
+        var $li = $(this).closest('li');
+        var flagged_content_id = $li.data('flagged-content-id');
+        $.ajax({
+            url: window.site_url + 'mod/remove/flagged/post/' + flagged_content_id,
+            type: 'GET',
+            success: function ( data ) {
+                if ( data.success ) {
+                    $li.remove();
+                }
+            }
+        })
+    });
+
     //================================= POST RELATED FUNCTIONS ==========================
 
     // Soft delete post

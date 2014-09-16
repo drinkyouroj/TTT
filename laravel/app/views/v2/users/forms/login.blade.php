@@ -1,10 +1,6 @@
 <form method="POST" action="{{{ URL::to('/user/login') }}}" accept-charset="UTF-8">
 	
-	    @if( isset($error) )
-            <div class="alert alert-error">
-            		{? var_dump($error)  ?}
-        	</div>
-        @endif
+	   
 
         @if ( Session::get('notice') )
             <div class="alert alert-yes">{{ Session::get('notice') }}</div>
@@ -22,6 +18,13 @@
             <input tabindex="4" type="checkbox" name="remember" id="remember" value="1">
         </label>
         --}}
+
+        @if( Session::get('error') )
+            <div class="alert alert-error">
+                {{Session::get('error')}}
+            </div>
+        @endif
+        
         <div class="form-actions">
             <button tabindex="3" type="submit" class="btn btn-flat-gray">Login</button> 
         </div>

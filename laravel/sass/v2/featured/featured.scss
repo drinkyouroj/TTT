@@ -2,13 +2,22 @@
 
 @include post_listing(0);
 .header-wrapper .header-inner-wrapper {
+
 	border-bottom:0px;
+	@include transition (border, 0, linear, 0);
 	.header-logo {
-		display:none;
-		@media (max-width:$break-xs) { 
-			
+		opacity:0;
+		@include transition (opacity, 0, linear, 0);
+	}
+	
+	&.active {
+		border-bottom: solid 1px #eeeeee;
+		.header-logo {
+			opacity: 1;
+			@include transition (opacity, 1s, linear, 0);
 		}
 	}
+	
 
 }
 

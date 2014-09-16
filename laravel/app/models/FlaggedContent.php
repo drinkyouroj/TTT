@@ -37,7 +37,7 @@ class FlaggedContent extends Eloquent {
 	}
 
 	public function validate ( $content ) {
-		return Validator::make( $content, $rules );
+		return Validator::make( $content, self::$rules );
 	}
 	
 }
