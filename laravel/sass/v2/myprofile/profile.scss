@@ -375,6 +375,7 @@ a:focus {
 								text-align:justify;
 								font-size:14px;
 								line-height:150%;
+								@include word-break(break-all);
 								@media (max-width:$break-lg) and (min-width:$break-lg-min)  {
 									font-size:13px;
 								}
