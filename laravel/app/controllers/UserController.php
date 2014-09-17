@@ -11,6 +11,16 @@ class UserController extends BaseController {
 		$this->post = $post;
         $this->user = $user;
         $this->email = $email;
+
+        //check 
+        $this->beforeFilter('csrf', 
+                                array('only' =>
+                                    array(
+                                    'postIndex',
+                                    'postLogin'
+                                    )
+                                )
+                            );
 	}
 
 	/**
