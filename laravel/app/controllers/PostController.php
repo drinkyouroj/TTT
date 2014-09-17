@@ -143,10 +143,14 @@ class PostController extends BaseController {
 	 */
 	public function getPostForm($id=false) {
 		Session::put('post','');
+		
 		if($id) {
 			//EditPost
 			$post = $this->post->findById($id);
 
+			if ( !($post instanceof Post) || Auth::user()->id != $post->user_id ) {
+				return View::make('v2/errors/error');
+			}
 			if($post->published) {
 				if(!$this->post->checkEditable($post->published_at)) {
 					return View::make('v2/errors/error');
@@ -204,6 +208,11 @@ class PostController extends BaseController {
 
 			//The post exists.
 			if(!empty($check_post->id) ) {
+
+				// FIRST THINGS FIRST! Is the logged in user the author of the post?
+				if ( Auth::user()->id != $check_post->user_id ) {
+					return Response::json( array('error' => 'You put your fingers in the wrong hole...'), 405 );
+				}
 
 				//If the post exists, let's save its previous published state.
 				$previously_published = $check_post->published;

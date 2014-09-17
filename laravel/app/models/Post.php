@@ -9,10 +9,9 @@ class Post extends Eloquent {
 	protected $with = array('user');
 	protected $dates = ['deleted_at'];
 	
-	public function __construct() {
+	public function __construct( ) {
 		parent::__construct();
-		Validator::extend('Twothousand', function($attribute, $value, $parameters)
-		{		
+		Validator::extend('Twothousand', function($attribute, $value, $parameters) {		
 		    if(!is_null($value)) {//make sure its not empty.
 		    	if(strlen($value) <= 11500) {
 		    		//currently only includes alphanumeric.
@@ -29,6 +28,20 @@ class Post extends Eloquent {
 		    } else {
 		    	return false;//no value
 		    }
+		});
+		
+		// Validator for post categories (make sure valid categories)
+		Validator::extend('categories', function($attribute, $value, $parameters) {		
+		    $categories = unserialize( $value );
+		    $category_repo = App::make('AppStorage\Category\CategoryRepository');
+		    // Make sure each category is in the categories db
+		    foreach ($categories as $key => $category_id) {
+		    	$category = $category_repo->findById( $category_id );
+		    	if ( !($category instanceof Category) ) {
+		    		return false;
+		    	}
+		    }
+			return true;
 		});
 	}
 	
@@ -118,6 +131,7 @@ class Post extends Eloquent {
 				$rules = array(
 					'title' => 'required',
 					'story_type' => 'required|in:story,advice,thought',
+					'category' => 'categories',
 					'tagline_1' => 'required',
 					'tagline_2' => 'required',
 					'tagline_3' => 'required',
@@ -136,10 +150,13 @@ class Post extends Eloquent {
 				// Validation for existing post -> published
 				$rules = array(
 					'title' => 'required',
+					'story_type' => 'required|in:story,advice,thought',
+					'category' => 'categories',
 					'tagline_1' => 'required',
 					'tagline_2' => 'required',
 					'tagline_3' => 'required',
-					'body' => 'Twothousand'
+					'body' => 'Twothousand',
+					'image' => 'required'
 				);
 			}
 			
