@@ -35,20 +35,6 @@ class UserAction {
 			//process notification for each follower
 			foreach($followers as $follower) {
 				
-				// Create the notification
-				/*  Notifications are no longer sent on 
-				$not_data = array(
-					'post_id' => $data['post_id'],
-					'post_title' => $post->title,
-					'post_alias' => $post->alias,
-					'user_id'    => $follower->follower_id,
-					'noticed'    => 0,
-					'notification_type' => 'repost'
-					);
-				$not = $this->not->create($not_data, $action_user->username);
-				*/
-				
-				
 				//below statement is to ensure that the user who owns the content doesn't get the repost.
 				if($follower->follower_id != $post->user->id) {
 					$activity = array(

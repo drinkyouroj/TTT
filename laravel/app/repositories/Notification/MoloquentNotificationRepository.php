@@ -29,7 +29,6 @@ class MoloquentNotificationRepository implements NotificationRepository {
 
 		// If the notification does not already exist, create one.
 		if ( !$not ) {
-
 			$not = self::instance();
 			$not->notification_type = (!empty($data['notification_type'])) ? $data['notification_type'] : 'none';
 			$not->post_id = (!empty($data['post_id'])) ? $data['post_id'] : 0;
