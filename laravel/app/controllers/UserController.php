@@ -264,7 +264,9 @@ class UserController extends BaseController {
             return Redirect::to('user/loginonly')
                             ->with('notice', 'Your email has been updated.');
         } else {
-            return Redirect::to('featured');
+            // We should make a better distinction later
+            return Redirect::to('user/loginonly')
+                            ->with('notice', 'Your email has already been updated.');;
         }
     }
 
