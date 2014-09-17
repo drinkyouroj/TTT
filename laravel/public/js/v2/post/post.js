@@ -10,7 +10,9 @@ $(function() {
 	// ======================== ACTION BAR ACTIONS ========================
 	
 	// Tooltips
-	$('.post-action-bar a').tooltip();
+	if ($(window).width() > 479) {
+	   $('.post-action-bar a').tooltip();
+	}
 	// Actions
 	if ( window.logged_in ) {
 		// Scroll to comment form
