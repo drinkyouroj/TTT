@@ -202,7 +202,7 @@ class SheepRepository implements UserRepository {
 
 			//check to see if this user has been banned.
 			if($user->banned) {
-				return false;
+				return $user;//this will need to be caught on the otherside.
 			}
 
 			//We're not really using these anymore, but just in case for now.

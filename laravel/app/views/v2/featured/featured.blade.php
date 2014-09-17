@@ -66,9 +66,12 @@
 		<div class="trending-content">
 
 		</div>
-	<div class="clearfix"></div>
+		<div class="clearfix"></div>
 	</div>
 
+	<div class="loading-container">
+		<img src="{{ URL::to('images/posts/comment-loading.gif') }}">
+	</div>
 </div>
 @stop
 

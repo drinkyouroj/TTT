@@ -93,7 +93,7 @@
 							<div class="user-container">
 							@foreach($users as $k => $user)
 								@if(isset($user->id))
-									@include('partials/user-item')
+									@include('v2/partials/user-item')
 								@endif
 							@endforeach
 							</div>

@@ -23,7 +23,7 @@ class EloquentCategoryRepository implements CategoryRepository {
 
 	//Read
 	public function findById($id) {
-
+		return $this->category->where('id', '=', $id)->first();
 	}
 	
 	//Read Multi

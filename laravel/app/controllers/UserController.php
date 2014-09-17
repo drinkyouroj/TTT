@@ -134,7 +134,11 @@ class UserController extends BaseController {
 
         if ( is_object($user) ) 
         {
-			
+            if($user->banned) {
+                $this->user->logout();
+                return Redirect::to('user/banned');
+            }
+
 			//Gotta redirect to an acknowledge page if the user happens to have softDeleted their account
 			if(Session::get('restored')) {
                 /*

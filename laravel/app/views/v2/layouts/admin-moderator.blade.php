@@ -16,7 +16,7 @@
 				<ul class="list-unstyled">
 					@if ( count( $flagged_post_content ) )
 						@foreach ( $flagged_post_content as $content )
-							@if ( $content->post )
+							@if ( is_object( $content->post ) )
 								<li data-flagged-content-id="{{ $content['_id'] }}">
 									<a class="flagged-post-title" href="{{ URL::to('posts/'.$content->post->alias ) }}" target="_blank">{{ $content->post->title }}</a>
 									<button class="mod-remove-flagged-post btn btn-xs btn-warning">x</button>
@@ -39,7 +39,7 @@
 				<ul class="list-unstyled">
 					@if ( count( $flagged_comment_content ) )
 						@foreach ( $flagged_comment_content as $content )
-							@if ( $content->comment )
+							@if ( is_object( $content->comment ) )
 								<li data-flagged-content-id="{{ $content['_id'] }}">
 									<a class="flagged-comment" href="{{ URL::to('posts/'.$content->comment->post->alias.'#comment-'.$content->comment->id ) }}" target="_blank">
 										<span class="flagged-comment-body">{{ substr( $content->comment->body, 0, 40 ) }}...</span>

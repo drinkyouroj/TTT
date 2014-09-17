@@ -263,15 +263,6 @@ $(function() {
 		profile.setSaveDelete( $(this).data('id') );		
 	});
 
-//Pagination detection.
-	$(window).scroll(function() {
-		if(profile.view != 'settings' && !window.finished_pagination && !window.page_processing) {
-			if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-				profile.paginate();
-			}
-		}
-	});
-
 
 //System INIT.
 	profile.target = $('#profile-content');
@@ -314,6 +305,15 @@ $(function() {
 		}
 	}
 
+//Pagination detection.
+	$(window).scroll(function() {
+		if(profile.view != 'settings' && !window.page_processing) {
+			if($(window).scrollTop() + $(window).height() > $(document).height() - 150) {
+				profile.paginate();
+			}
+		}
+	});
+
 });
 
 //The User Profile functions.
@@ -330,7 +330,6 @@ function ProfileActions() {
 		this.comment_page = 1;//this only pertains to the collection page
 		this.view = view;
 		window.page_processing = false;
-		window.finished_pagination = false;
 		//fade in fade out scenario
 		var that = this;//JS scope is fun... not.
 		this.target.fadeOut(100);
@@ -338,15 +337,16 @@ function ProfileActions() {
 		this.viewRenderContainer();
 		this.viewRender(true);
 		this.target.fadeIn(100);
+		this.finished_pagination = false;  // Used to stop pagination.
 	};
 
 	//Container init
 	this.viewRenderContainer = function() {
 		if(this.view == 'collection') {
 			//collection has a different outer template
-			this.target.html(this.collection_template());
+			this.target.html(this.collection_template({site_url: window.site_url}));
 		} else {
-			this.target.html(this.default_template({view: this.view}));
+			this.target.html(this.default_template({site_url: window.site_url, view: this.view}));
 		}
 	};
 
@@ -421,29 +421,6 @@ function ProfileActions() {
 		this.filter = false;
 	}
 
-	//URL constructor
-	this.urlConstructor = function() {
-		/*
-		base_url = window.site_url + 'rest/profile/' + this.view + '/';
-
-		var viewArray = ['collection', 'feed', 'following', 'followers'];
-		
-		if( viewArray.indexOf(this.view) != -1) {
-			
-			if(this.view == 'collection') {
-				this.url = base_url + this.type + '/' + window.user_id + '/' + this.page;
-				this.feature_url = window.site_url + 'rest/profile/featured/' + window.featured_id;
-				this.comment_url = window.site_url + 'rest/profile/comments/' + window.user_id + '/' + this.comment_page;
-			} else {
-				this.url = base_url + this.type + '/' + this.page;
-			}
-
-		} else {
-			this.url = base_url + this.page;
-		}
-		*/
-	};
-
 	// Delete draft
 	this.deleteDraft = function ( post_id ) {
 		var url = window.site_url + 'rest/profile/post/' + post_id;
@@ -460,15 +437,17 @@ function ProfileActions() {
 	this.renderNotifications = function () {
 		var notification_item_template = this.notification_item_template;
 		var no_content_template = this.no_content_template;
-		// TODO
-		var target = this.target;
+		var parent = this;
+
 		this.getData(this.url,function(data) {
 			if ( data.no_content ) {
-				$('#default-content',target).append( no_content_template( {section: 'notifications'} ) );
-				window.finished_pagination = true;
+				$('#default-content',parent.target).append( no_content_template( {section: 'notifications'} ) );
+				$('.loading-container img').hide();
+				parent.finished_pagination = true;
 			} else {
 				if ( data.notifications && data.notifications.length == 0 ) {
-					window.finished_pagination = true; // no more notifications
+					parent.finished_pagination = true; // no more notifications
+					$('.loading-container img').fadeOut();
 				} else {
 					$.each(data.notifications, function(idx, val) {
 						view_data = {
@@ -476,8 +455,9 @@ function ProfileActions() {
 							site_url: window.site_url,
 							image_url: window.image_url
 						};
-						$('#default-content',target).append(notification_item_template(view_data));
+						$('#default-content',parent.target).append(notification_item_template(view_data));
 					});
+					parent.checkBodyHeight();
 				}
 			}
 		});
@@ -488,30 +468,38 @@ function ProfileActions() {
 		//below has to be done to pass through the scope of both getData and $.each
 		var post_item_template = this.post_item_template;
 		var no_content_template = this.no_content_template;
-		var target = this.target;
+		var parent = this;
 		var editCheck = this.editCheck;
 
 		this.getData(this.url, function(data) {
 
 			if ( data.no_content ) {
-				$('#collection-content',target).append( no_content_template( {section: 'collection'} ) );
+				$('#collection-content',parent.target).append( no_content_template( {section: 'collection'} ) );
+				$('.loading-container img').hide();
+				parent.finished_pagination = true;
 			} else {
-				$.each(data.collection, function(idx, val) {
-					if ( val.post && val.post.id != window.featured_id ) {
-						var editable = val.post ? editCheck(val.post.published_at) : false;
-						view_data = {
-							site_url: window.site_url,
-							post: val.post,
-							user_id: window.user_id,
-							editable: editable,
-							featured_id: window.featured_id,
-							post_type: val.post_type,
-							myprofile: window.myprofile,
-							image_url: window.image_url
-						};
-						$('#collection-content',target).append(post_item_template(view_data));
-					}
-				});
+				if ( data.collection && data.collection.length ) {
+					$.each(data.collection, function(idx, val) {
+						if ( val.post && val.post.id != window.featured_id ) {
+							var editable = val.post ? editCheck(val.post.published_at) : false;
+							view_data = {
+								site_url: window.site_url,
+								post: val.post,
+								user_id: window.user_id,
+								editable: editable,
+								featured_id: window.featured_id,
+								post_type: val.post_type,
+								myprofile: window.myprofile,
+								image_url: window.image_url
+							};
+							$('#collection-content',parent.target).append(post_item_template(view_data));
+						}
+					});
+					parent.checkBodyHeight();
+				} else {
+					parent.finished_pagination = true;
+					$('.loading-container img').fadeOut();
+				}
 			}
 		});
 		
@@ -528,7 +516,7 @@ function ProfileActions() {
 		var target = this.target;
 		var editCheck = this.editCheck;
 
-		this.getData(this.feature_url,function(data) {
+		this.getData(this.feature_url, function(data) {
 			var editable = data.featured ? editCheck(data.featured.published_at) : false;
 			view_data = {
 				site_url: window.site_url,
@@ -547,15 +535,23 @@ function ProfileActions() {
 	//Collection Actions
 		//Set a post as featured.
 		this.setFeatured = function(id) {
-			$('#collection-content .feature-item',target).fadeOut().remove();
-			$('#collection-content #post-' + id).fadeOut().remove();
+			
 			featured_url = window.site_url + 'rest/profile/featured/' + id;
-			var target = this.target;
+			var parent = this;
 			this.setData(featured_url, function(data) {
-				
+				if ( data.success ) {
+					$('#collection-content .feature-item', parent.target).fadeOut(function() {
+						$(this).remove();
+					});
+					$('#collection-content #post-' + id).fadeOut( function() {
+						$(this).remove();
+					});
+					window.featured_id = id;//make the window remember the featured id.
+					parent.feature_url = window.site_url + 'rest/profile/featured/' + window.featured_id;
+					parent.renderFeatured();
+				}
 			});
-			window.featured_id = id;//make the window remember the featured id.
-			this.renderFeatured();
+			
 		}
 
 		this.setPostDelete = function(id) {
@@ -596,22 +592,35 @@ function ProfileActions() {
 		//scope issues
 		var post_item_template = this.post_item_template;
 		var no_content_template = this.no_content_template;
-		var target = this.target;
+		var parent = this;
 
 		this.getData(this.url,function(data) {
 			if ( data.no_content ) {
-				$('#default-content',target).append( no_content_template( {section: 'feed'} ) );
+				$('#default-content',parent.target).append( no_content_template( {section: 'feed'} ) );
+				$('.loading-container img').hide();
+				parent.finished_pagination = true;
 			} else {
-				$.each(data.feed, function(idx, val) {
-					view_data = {
-						site_url: window.site_url,
-						post: val.post,
-						feed_type: val.feed_type,
-						users: val.users,
-						image_url: window.image_url
-					};
-					$('#default-content',target).append(post_item_template(view_data));
-				});
+
+				if ( data.feed && data.feed.length ) {
+					$.each(data.feed, function(idx, val) {
+						if(val.post) {
+							view_data = {
+								site_url: window.site_url,
+								post: val.post,
+								feed_type: val.feed_type,
+								users: val.users,
+								image_url: window.image_url
+							};
+							$('#default-content',parent.target).append(post_item_template(view_data));
+						}
+					});
+					parent.checkBodyHeight();
+				} else {
+					// No more content in feed
+					parent.finished_pagination = true;
+					$('.loading-container img').fadeOut();
+				}
+
 			}
 		});
 	};
@@ -620,21 +629,30 @@ function ProfileActions() {
 		//scope issues
 		var saves_item_template = this.saves_item_template;
 		var no_content_template = this.no_content_template;
-		var target = this.target;
+		var parent = this;
 
 		this.getData(this.url,function(data) {
 			if ( data.no_content ) {
-				$('#default-content',target).append( no_content_template( {section: 'saves'} ) );
+				$('#default-content',parent.target).append( no_content_template( {section: 'saves'} ) );
+				$('.loading-container img').hide();
+				parent.finished_pagination = true;
 			} else {
-				$.each(data.saves, function(idx, val) {
-					view_data = {
-						site_url: window.site_url,
-						save: val.post,
-						date: val.created_at,
-						image_url: window.image_url
-					};
-					$('#default-content',target).append(saves_item_template(view_data));
-				});
+				if ( data.saves && data.saves.length ) {
+					$.each(data.saves, function(idx, val) {
+						view_data = {
+							site_url: window.site_url,
+							save: val.post,
+							date: val.created_at,
+							image_url: window.image_url
+						};
+						$('#default-content',parent.target).append(saves_item_template(view_data));
+					});
+					parent.checkBodyHeight();
+				} else {
+					// Finsished fetching all saves
+					parent.finished_pagination = true;
+					$('.loading-container img').fadeOut();
+				}
 			}
 		});
 
@@ -652,22 +670,31 @@ function ProfileActions() {
 		//scope issues
 		var drafts_item_template = this.drafts_item_template;
 		var no_content_template = this.no_content_template;
-		var target = this.target;
+		var parent = this;
 
 		draftDate = this.draftDate;
 		this.getData(this.url,function(data) {		
 			if ( data.no_content ) {
-				$('#default-content',target).append( no_content_template( {section: 'drafts'} ) );
-			} else {	
-				$.each(data.drafts, function(idx, val) {
-					view_data = {
-						site_url: window.site_url,
-						draft: val,
-						date: draftDate(val.updated_at),
-						image_url: window.image_url
-					};
-					$('#default-content',target).append(drafts_item_template(view_data));
-				});
+				$('#default-content',parent.target).append( no_content_template( {section: 'drafts'} ) );
+				$('.loading-container img').hide();
+				parent.finished_pagination = true;
+			} else {
+				if ( data.drafts && data.drafts.length ) {
+					$.each(data.drafts, function(idx, val) {
+						view_data = {
+							site_url: window.site_url,
+							draft: val,
+							date: draftDate(val.updated_at),
+							image_url: window.image_url
+						};
+						$('#default-content',parent.target).append(drafts_item_template(view_data));
+					});
+					parent.checkBodyHeight();
+				} else {
+					// No more drafts to load
+					parent.finished_pagination = true;
+					$('.loading-container img').fadeOut();
+				}
 			}
 		});
 
@@ -685,36 +712,49 @@ function ProfileActions() {
 
 	this.renderFollowers = function() {
 		var follow_template = this.follow_template;
-		var target = this.target;
+		var parent = this;
 
 		this.getData(this.url, function(data) {
-			$.each(data.follow, function(idx, val) {
-				view_data = {
-					site_url: window.site_url,
-					username: val.followers.username,
-					user_id:  val.follower_id,
-					image_url: window.image_url
-				};
-				$('#default-content', target).append(follow_template(view_data));
-			});
+			if ( data.follow && data.follow.length ) {
+				$.each(data.follow, function(idx, val) {
+					view_data = {
+						site_url: window.site_url,
+						username: val.followers.username,
+						user_id:  val.follower_id,
+						image_url: window.image_url
+					};
+					$('#default-content', parent.target).append(follow_template(view_data));
+				});
+				parent.checkBodyHeight();
+			} else {
+				// No more followers to load
+				parent.finished_pagination = true;
+				$('.loading-container img').fadeOut();
+			}
 		});
 
 	}
 
 	this.renderFollowing = function() {
 		var follow_template = this.follow_template;
-		var target = this.target;
+		var parent = this;
 
 		this.getData(this.url, function(data) {
-			$.each(data.follow, function(idx, val) {
-				view_data = {
-					site_url: window.site_url,
-					username: val.following.username,
-					user_id:  val.user_id,
-					image_url: window.image_url
-				};
-				$('#default-content', target).append(follow_template(view_data));
-			});
+			if ( data.follow && data.follow.length ) {
+				$.each(data.follow, function(idx, val) {
+					view_data = {
+						site_url: window.site_url,
+						username: val.following ? val.following.username : 'nobody',
+						user_id:  val.user_id,
+						image_url: window.image_url
+					};
+					$('#default-content', parent.target).append(follow_template(view_data));
+				});
+				parent.checkBodyHeight();
+			} else {
+				parent.finished_pagination = true;
+				$('.loading-container img').fadeOut();
+			}
 		});
 	}
 
@@ -735,7 +775,7 @@ function ProfileActions() {
 			image_url: window.image_url
 		};
 		$('#default-content', this.target).append(this.settings_template(view_data));
-		
+		$('.loading-container img').fadeOut();
 		if(this.photo_init == false) {
 			photo_input = new PhotoInput();
 			this.photo_init = true;
@@ -871,7 +911,7 @@ function ProfileActions() {
 
 //Pagination Code
 	this.paginate = function() {
-		if(!window.page_processing && !window.finished_pagination) {
+		if(!window.page_processing && !this.finished_pagination) {
 			//If we did start processing.
 			window.page_processing = true;
 			this.page = this.page + 1;
@@ -887,4 +927,11 @@ function ProfileActions() {
 			this.renderComments();
 		}
 	};
+
+	// This continues pagination if the body is un-scrollable!
+	this.checkBodyHeight = function() {
+		if ( $(window).height() >= $(document).height() ) {
+			this.paginate();
+		}
+	}
 }

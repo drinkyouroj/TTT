@@ -80,7 +80,11 @@
 			@else
 				<h2>Oops! No posts were found in this category...</h2>
 			@endif
-		</section>		
+		</section>
+
+		<div class="loading-container">
+			<img src="{{ URL::to('images/posts/comment-loading.gif') }}">
+		</div>
 	@stop
 
 	@if ( $cat_desc )

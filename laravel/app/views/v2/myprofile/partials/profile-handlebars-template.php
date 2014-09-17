@@ -66,6 +66,10 @@
 		
 		<div id="collection-content" class="clearfix">
 		</div>
+
+		<div class="loading-container">
+			<img src="{{site_url}}images/posts/comment-loading.gif">
+		</div>
 	
 	</div>
 	<div class="comment-container">
@@ -88,6 +92,9 @@
 			</div>
 		{{/ifCond}}
 		<div class="row {{view}}" id="default-content">
+		</div>
+		<div class="loading-container">
+			<img src="{{site_url}}images/posts/comment-loading.gif">
 		</div>
 	</div>
 </script>

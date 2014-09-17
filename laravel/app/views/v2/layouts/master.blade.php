@@ -13,8 +13,6 @@
   <head>
     <title>@yield('title','Two Thousand Times')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       
-	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Fjalla+One' rel='stylesheet' type='text/css'>
     
     <link href="{{Config::get('app.url')}}/css/animate.css" rel="stylesheet" media="screen">
     
@@ -24,7 +22,7 @@
     <link href="{{Config::get('app.url')}}/css/compiled/v2/style.css" rel="stylesheet" media="screen">
 
     @if ( $is_mod )
-	<link href="{{Config::get('app.url')}}/css/compiled/v2/admin/admin-moderator.css" rel="stylesheet" media="screen">    
+	<link href="{{Config::get('app.url')}}/css/compiled/v2/admin/admin-moderator.css" rel="stylesheet" media="screen">
     @endif
 
     <!--Favicon-->
@@ -32,9 +30,7 @@
 	<link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     
     <!--Fonts-->
-    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
-    
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Fjalla+One' rel='stylesheet' type='text/css'>    
     
     <!--{{App::environment()}}-->
 	<script>
@@ -54,6 +50,13 @@
 	</script>
 	@endif
 	
+	{{--Generic Social stuff--}}
+	<meta property="og:site_name" content="Two Thousand Times" />
+	<meta property="og:url" content="{{Request::url()}}" />
+
+	
+	<meta itemprop="url" content="{{Request::url()}}" />
+
 	<!--Page Specific CSS-->
 	@yield('css')
 	
@@ -121,4 +124,4 @@
 	@endif
 </body>
 </html>
-<!-- {{ $app->environment() }} -->
+<!-- {{ $app->environment() }}  {{$_SERVER['SERVER_ADDR']}}-->

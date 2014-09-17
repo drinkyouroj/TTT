@@ -1,12 +1,15 @@
 DirectoryIndex index.php invite.php
 
 <Files "index.php">
-	AuthType Basic
-	AuthName "Website Site with Restriced Access"
-	AuthUserFile /var/www/html/2000/laravel/public/.htpasswd
-	AuthGroupFile /dev/null
-	require valid-user
+    AuthType Basic
+    AuthName "Website Site with Restriced Access"
+    AuthUserFile /var/www/2000/laravel/public/.htpasswd
+    AuthGroupFile /dev/null
+    require valid-user
     FileETag None
+    Order allow,deny
+    Allow from 54.68.185.170 172.31.41.88
+    satisfy any
     Header unset ETag
     Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
     Header set Pragma "no-cache"
