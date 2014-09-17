@@ -1,7 +1,14 @@
-<form method="POST" action="{{{ URL::to('/user/login') }}}" accept-charset="UTF-8">
-	
-	   
+<?php
+    if(!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
+        $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+        $form_url = secure_url('user/login');
+    } else {
+        $form_url = URL::to('user/login');
+    }
+?>
 
+<form method="POST" action="{{ $form_url }}" accept-charset="UTF-8">
+	
         @if ( Session::get('notice') )
             <div class="alert alert-yes">{{ Session::get('notice') }}</div>
         @endif

@@ -20,8 +20,8 @@ return array(
 
 	'debug' => true,
 	'stack' => true,//errors automatically redirects to a specified location.
-	'email_send' => false,
-	'enable_ssl' => false,//enables SSL force on the user and myprofile routes.
+	'email_send' => true,
+	'enable_ssl' => true,//enables SSL force on the user and myprofile routes.
 
 	/*
 	|--------------------------------------------------------------------------
@@ -35,8 +35,10 @@ return array(
 	*/
 	
 	'url' => APP_HOST, #constant defined at top
+	'secureurl' => 'https://internal.twothousandtimes.com',
 	'imageurl' => APP_HOST.'/uploads/final_images',
-	'cdn_upload' => false,//set to true if you want your images to go to S3.
+	'staticurl' => '//internal.twothousandtimes.com',
+	'cdn_upload' => true,//set to true if you want your images to go to S3.
 	/*
 	|--------------------------------------------------------------------------
 	| Application Timezone

@@ -1,4 +1,4 @@
-<form method="POST" action="{{{ URL::to('/user/forgot') }}}" accept-charset="UTF-8">
+<form method="POST" action="{{{ secure_url('/user/forgot') }}}" accept-charset="UTF-8">
     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
 
     

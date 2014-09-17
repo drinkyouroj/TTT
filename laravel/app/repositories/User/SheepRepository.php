@@ -95,6 +95,14 @@ class SheepRepository implements UserRepository {
 		return $this->user->find($id);
 	}
 
+	public function findByImage( $image, $with_trashed = false ) {
+		if ( $with_trashed ) {
+			return $this->user->withTrashed()->where( 'image', '=', $image )->first();
+		} else {
+			return $this->user->where( 'image', '=', $image )->first();
+		}
+		
+	}
 	
 	public function all() {
 		//probably don't need it at all.
@@ -118,12 +126,15 @@ class SheepRepository implements UserRepository {
 	public function updateEmail($confirm_code) {
 		if($confirm_code) {
 			$user = $this->user->where('update_confirm',$confirm_code)->first();
-			if($user->updated_email) {
-				$user->email = $user->updated_email;
-				$user->updated_email = '';
-				$user->update_confirm = '';
-				$user->save();
-				return true;
+
+			if($user instanceof User) {
+				if(strlen($user->updated_email)) {
+					$user->email = $user->updated_email;
+					$user->updated_email = '';
+					$user->update_confirm = '';
+					$user->save();
+					return true;
+				}
 			}
 			
 			return false;

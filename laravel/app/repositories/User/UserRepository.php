@@ -12,6 +12,11 @@ interface UserRepository {
 	public function exists($id);
 
 	public function find($id);
+	
+	/**
+	 *	Find a user by their image. Used for image sweep command!
+	 */
+	public function findByImage( $image, $with_trashed );
 
 	public function all();
 	public function allByIds( $user_ids );

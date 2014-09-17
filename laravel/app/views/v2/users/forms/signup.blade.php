@@ -1,4 +1,13 @@
-<form method="POST" action="{{{ (Confide::checkAction('UserController@store')) ?: URL::to('user')  }}}" accept-charset="UTF-8">
+<?php
+	if(!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
+		$_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+		$form_url = secure_url('user');
+	} else {
+		$form_url = URL::to('user');
+	}
+?>
+
+<form method="POST" action="{{ $form_url }}" accept-charset="UTF-8">
 	
 	@if ( Session::get('notice') )
 		<div class="alert alert-yes">{{ Session::get('notice') }}</div>

@@ -21,6 +21,7 @@ class UserController extends BaseController {
                                     )
                                 )
                             );
+        $this->beforeFilter('force_ssl');
 	}
 
 	/**
@@ -64,13 +65,12 @@ class UserController extends BaseController {
             $user = $this->user->login($data);
             //Gotta send out email
             if(!empty($data['email']) ) {
-                $data['confirm'] = $user->confirmation_code;
                 $email_data = array(
                     'from' => 'no_reply@twothousandtimes.com',
                     'to' => array($data['email']),
                     'subject' => 'Thanks for Joining Two Thousand Times!',
-                    'plaintext' => View::make('v2/emails/new_user_plain')->with('confirm', $confirm)->with('user', $user)->render(),
-                    'html'  => View::make('v2/emails/new_user_html')->with('confirm', $confirm)->with('user', $user)->render()
+                    'plaintext' => View::make('v2/emails/new_user_plain')->with('user', $user)->render(),
+                    'html'  => View::make('v2/emails/new_user_html')->with('user', $user)->render()
                     );
 
                 $this->email->create($email_data);
@@ -264,7 +264,9 @@ class UserController extends BaseController {
             return Redirect::to('user/loginonly')
                             ->with('notice', 'Your email has been updated.');
         } else {
-            return Redirect::to('featured');
+            // We should make a better distinction later
+            return Redirect::to('user/loginonly')
+                            ->with('notice', 'Your email has already been updated.');;
         }
     }
 

@@ -228,7 +228,7 @@ class JSONController extends BaseController {
 				// Repost!
 				$this->repost->create( $user_id, $post_id );
 
-				//Add to the profile
+				//Add to the profile Collection
 				$new_profilepost = array(
 						'post_id' => $post->id,
 						'profile_id' => $user_id,

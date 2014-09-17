@@ -35,8 +35,8 @@
     <!--{{App::environment()}}-->
 	<script>
 		@if(App::environment('local') )
-			window.site_url = '/tt/';//has trailing slash
-		@elseif(App::environment('web') || App::environment('sharktopus'))
+			window.site_url = '/';//has trailing slash
+		@elseif(App::environment('web') || App::environment('sharktopus') || App::environment('sneakyturtle'))
 			window.site_url = '/';//has trailing slash
 		@else
 			window.site_url = '/';//has trailing slash
@@ -47,6 +47,7 @@
 	@if($have_user)
 	<script>
 		window.cur_notifications = {{ json_encode($notifications_ids) }};
+		window.logged_in_user_id = {{ Auth::user()->id }};
 	</script>
 	@endif
 	
