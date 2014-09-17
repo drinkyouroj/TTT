@@ -76,7 +76,7 @@ Route::filter('force_ssl',function() {
 		!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
 		$_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https'
 		) {
-		return Request::path();//
+		return Redirect::to(Request::path());//
 	} else {
 		if( ! Request::secure() && Config::get('app.enable_ssl') )
 	    {
