@@ -35,9 +35,10 @@ return array(
 	*/
 	
 	'url' => APP_HOST, #constant defined at top
+	'secureurl' => 'https://internal.twothousandtimes.com',
 	'imageurl' => APP_HOST.'/uploads/final_images',
 	'staticurl' => '//internal.twothousandtimes.com',
-	'cdn_upload' => false,//set to true if you want your images to go to S3.
+	'cdn_upload' => true,//set to true if you want your images to go to S3.
 	/*
 	|--------------------------------------------------------------------------
 	| Application Timezone
