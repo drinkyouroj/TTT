@@ -69,8 +69,8 @@ class UserController extends BaseController {
                     'from' => 'no_reply@twothousandtimes.com',
                     'to' => array($data['email']),
                     'subject' => 'Thanks for Joining Two Thousand Times!',
-                    'plaintext' => View::make('v2/emails/new_user_plain')->with('data', $data)->render(),
-                    'html'  => View::make('v2/emails/new_user_html')->with('data',$data)->render()
+                    'plaintext' => View::make('v2/emails/new_user_plain')->with('confirm', $confirm)->with('user', $user)->render(),
+                    'html'  => View::make('v2/emails/new_user_html')->with('confirm', $confirm)->with('user', $user)->render()
                     );
 
                 $this->email->create($email_data);
