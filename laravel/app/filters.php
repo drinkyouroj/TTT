@@ -30,7 +30,6 @@ App::before(function($request)
 	}
 	if (Auth::check() && !Session::has('user_id'))
 	{
-
 	   return Redirect::to('user/logout');
 	}
 });
