@@ -1,4 +1,4 @@
-<form method="POST" action="{{{ URL::to('user/login') }}}" accept-charset="UTF-8">
+<form method="POST" action="{{ secure_url(URL::to('user/login')) }}" accept-charset="UTF-8">
 	
 	   
 

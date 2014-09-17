@@ -128,7 +128,7 @@ Route::group(array('prefix'=> 'mod', 'before'=> 'mod'), function() {
 });
 
 /********************The Authentication Routes  (Confide routes)************************/
-Route::group(array('prefix'=> 'user', 'https' => true), function() {
+Route::group(array('prefix'=> 'user', 'https' => Config::get('app.enable_ssl') ), function() {
 	Route::get('confirm/{code}', 'UserController@getConfirm');
 	Route::get('reset/{token}', 'UserController@getReset');
 	Route::get('restore/{id}', 'UserController@getRestore');
