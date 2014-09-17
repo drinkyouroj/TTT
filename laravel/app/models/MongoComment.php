@@ -27,7 +27,7 @@ class MongoComment extends Eloquent {
 	 *	Setup the relationship of a comment to a post
 	 */
 	public function post() {
-		return $this->belongsTo('Post', 'post_id')->select('id', 'title','user_id','alias');
+		return $this->belongsTo('Post', 'post_id')->withTrashed()->select('id', 'title','user_id','alias');
 	}
 
 }
