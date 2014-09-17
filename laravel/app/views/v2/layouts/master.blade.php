@@ -35,7 +35,7 @@
     <!--{{App::environment()}}-->
 	<script>
 		@if(App::environment('local') )
-			window.site_url = '/tt/';//has trailing slash
+			window.site_url = '/';//has trailing slash
 		@elseif(App::environment('web') || App::environment('sharktopus'))
 			window.site_url = '/';//has trailing slash
 		@else

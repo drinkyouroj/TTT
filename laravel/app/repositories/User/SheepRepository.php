@@ -95,6 +95,14 @@ class SheepRepository implements UserRepository {
 		return $this->user->find($id);
 	}
 
+	public function findByImage( $image, $with_trashed = false ) {
+		if ( $with_trashed ) {
+			return $this->user->withTrashed()->where( 'image', '=', $image )->first();
+		} else {
+			return $this->user->where( 'image', '=', $image )->first();
+		}
+		
+	}
 	
 	public function all() {
 		//probably don't need it at all.

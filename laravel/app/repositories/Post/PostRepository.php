@@ -22,13 +22,15 @@ interface PostRepository {
 	public function findByUserId($user_id, $published = true);
 	
 	public function findByTitle($title, $published = true);
+
+	public function findByImage( $image, $with_trashed );
 	
 	public function lastPostUserId($user_id, $published = true);
 	
 	public function random();
 	
 	//Read Multi
-	public function all();
+	public function all( $with_trashed );
 	
 	public function allFeatured();
 	

@@ -86,6 +86,14 @@ class EloquentPostRepository implements PostRepository {
 		$post = $this->post->where('title',$title);
 		return self::count_check($post, $published, array());
 	}
+
+	public function findByImage( $image, $with_trashed ) {
+		if ( $with_trashed ) {
+			return $this->post->withTrashed()->where('image', '=', $image)->first();
+		} else {
+			return $this->post->where('image', '=', $image)->first();	
+		}
+	}
 	
 	public function lastPostUserId($user_id, $published = true) {
 		$post = $this->post->where('user_id', $user_id)
@@ -122,8 +130,12 @@ class EloquentPostRepository implements PostRepository {
 		}
 	
 	//Read Multi
-	public function all() {
-		return $this->post->get();//unlikely
+	public function all ( $with_trashed = false ) {
+		if ( $with_trashed ) {
+			return $this->post->withTrashed()->get();
+		} else {
+			return $this->post->get();//unlikely
+		}
 	}
 	
 	public function allFeatured() {
