@@ -73,7 +73,7 @@ Route::filter('auth', function()
 Route::filter('force_ssl',function() {
 	//detect ec2 situation first.
 	if(App::environment() == 'ec2-cluster' && 
-		!empty($_SERVER['HTTP_X_FORWARDED_PROTO'] &&
+		!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
 		$_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https'
 
 			)) {
