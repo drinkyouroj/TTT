@@ -21,7 +21,7 @@ $(function() {
 		    $('.comment-form textarea').focus();
 		});
 		// Actions (like, flag, etc...)
-		$('.post-action-bar a').click(function(event) {
+		$('.post-action-bar a, .extra-actions a').click(function(event) {
 			event.preventDefault();
 			var $action = $(this);
 			var Action = new UserAction();
@@ -42,6 +42,7 @@ $(function() {
 		});
 	}
 	// ==================== Show Flagged and Mark as Read ==================
+	/*
 	utilities = $('.post-comment-wrapper').position();
 	window.show_utilities = utilities.top -150;
 	
@@ -51,7 +52,7 @@ $(function() {
 			$('.utility-container').removeClass('hidden').fadeIn();
 		}
 	});
-
+	*/
 	// ========================== LOAD COMMENTS ===========================
 
 	var post_id = $('.post-action-bar').data('post-id');

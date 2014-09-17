@@ -461,7 +461,7 @@ class UserController extends BaseController {
 	 */
 	public function getBanned()
 	{
-		return View::make('user.banned');
+		return View::make('v2.users.banned');
 	}
 
 }

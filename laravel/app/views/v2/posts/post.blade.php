@@ -69,11 +69,6 @@
 						?>
 							@if( !$is_author )
 								<div class="col-md-3 hidden hidden-sm hidden-xs utility-container">
-									@if($favorited)
-										<a data-action="read" class="read">Mark as Read</a>
-									@endif
-									<a data-action="flag" class="flag-button flag <?php echo $has_flagged ? 'active' : ''; ?>">
-										Flag</a>
 								</div>
 
 								<div class="col-md-3 col-xs-8 actions-container">
@@ -194,6 +189,19 @@
 					</div>
 				</div>
 			@endif
+			<div class="row">
+				<div class="col-md-10 col-md-offset-1 extra-actions">
+					@if( !$is_author )
+						<div class="col-md-3 utility-container">
+							@if($favorited)
+								<a data-action="read" class="read">Mark as Read</a>
+							@endif
+							<a data-action="flag" class="flag-button flag <?php echo $has_flagged ? 'active' : ''; ?>">
+								Flag</a>
+						</div>
+					@endif
+				</div>
+			</div>
 		</div>
 		{{-- Admin edit capabilities --}}
 		@if ( $is_admin )	

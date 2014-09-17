@@ -26,35 +26,6 @@
 				padding-top:5px;
 			}
 		}
-		.utility-container {
-			padding-top:3px;
-			padding-bottom:10px;
-			border-right:solid 1px #525252;
-			a.read {
-				@include post_actions_label;
-				background-image:url('../../../../images/posts/mark-read.png');
-				cursor:pointer;
-				margin-right:20px;
-				&.active {
-					background-position: left 0 top -26px;
-					color: $blue;
-					cursor: default;
-				}
-			}
-			a.flag {
-				@include post_actions_label;
-				background-image:url('../../../../images/posts/flag.png');
-				cursor:pointer;
-				&:hover {
-					color:$red;
-				}
-				&.active {
-					background-position: left 0 top -26px;
-					color:$red;
-					cursor: default;
-				}
-			}
-		}
 		.actions-container {
 			ul {
 				display:inline-block;
@@ -105,10 +76,11 @@
 				padding:9px 15px 9px 50px;
 
 				&.active {
+					margin-top:1px;
 					background-image: none;
 					background: none;
 					border: 0;
-					color: $lightgray;
+					color: #666;
 					cursor: default;
 				}
 			}
@@ -281,8 +253,10 @@
 
 				&#one {
 					&::first-letter {
-						font-size: 50px;
+						float:left;
+						font-size: 70px;
 						text-transform: uppercase;
+						margin:.2em .15em .1em 0;
 					}
 					&::first-line {
 
@@ -318,6 +292,41 @@
 			.page-count {
 				@include montserrat(bold);
 				float: right;
+			}
+		}
+
+		.extra-actions {
+			padding-top:5px;
+			padding-right:0px;
+			.utility-container {
+				float:right;
+				text-align:right;
+				padding-top:3px;
+				padding-bottom:3px;
+				a.read {
+					@include extra_actions_label;
+					background-image:url('../../../../images/posts/mark-read.png');
+					cursor:pointer;
+					margin-right:20px;
+					&.active {
+						background-position: left 0 top -26px;
+						color: $blue;
+						cursor: default;
+					}
+				}
+				a.flag {
+					@include extra_actions_label;
+					background-image:url('../../../../images/posts/flag.png');
+					cursor:pointer;
+					&:hover {
+						color:$red;
+					}
+					&.active {
+						background-position: left 0 top -26px;
+						color:$red;
+						cursor: default;
+					}
+				}
 			}
 		}
 	}
@@ -362,6 +371,8 @@
 							cursor: pointer;
 						}
 						.flag-comment {
+							float:right;
+							color:$gray;
 							&:hover {
 								color: $red;
 							}
@@ -423,15 +434,11 @@
 						text-align: center;
 						min-width: 40px;
 
-						.flag-comment, .like-comment {
+						.like-comment {
 							display: inline-block;
 							margin: 0px 0px 5px 0px;
 							font-size: 16px;
 							width: 100%;
-						}
-						.flag-comment {
-							text-align:right;
-							color:$gray;
 						}
 						.like-comment {
 							display:inline-block;

@@ -2,7 +2,7 @@
 
 
 @section('css')
-    <link href="{{Config::get('app.url')}}/css/views/user.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" media="screen" href="{{Config::get('app.url')}}/css/compiled/v2/static.css">
 @stop
 
 @section('js')
@@ -15,14 +15,17 @@ Restore your user.
 
 
 @section('content')
-    <div class="col-md-4 col-md-offset-4 signup-container undelete-container">
-        <div class="signup-form">
-            <h2>Welcome back {{$user->username}}!</h2>
-            <p>Your account has been restored.  Enjoy!</p>
-            <p>
-                <a href="{{Config::get('app.url')}}/myprofile#feed">Take me to my Feed!</a>
-            </p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 signup-container undelete-container info-container">
+                <h2>Welcome back {{$user->username}}!</h2>
+                <p>Your account has been restored.  Enjoy!</p>
+                <div class="line"></div>
+                <p>
+                    <a href="{{Config::get('app.url')}}/myprofile">Take me to my Profile!</a>
+                </p>
+        <div class="clearfix"></div>
         </div>
-    <div class="clearfix"></div>
     </div>
+</div>
 @stop
