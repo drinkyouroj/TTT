@@ -92,16 +92,6 @@
 									<br>
 									<a href="{{Config::get('app.url')}}/user/logout">SIGN OUT</a>
 								</div>
-								
-								<div class="additional-actions">
-									<a href="{{ URL::to('contact') }}">contact</a>
-									|
-									<a href="{{ URL::to('etiquette') }}">etiquette</a>
-									|
-									<a href="{{ URL::to('privacy') }}">privacy policy</a>
-									|
-									<a href="{{ URL::to('terms') }}">terms of use</a>
-								</div>
 							</div>
 						</div>
 

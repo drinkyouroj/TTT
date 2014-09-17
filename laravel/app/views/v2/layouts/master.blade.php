@@ -64,16 +64,14 @@
     <![endif]-->
   </head>
 <body>
-<div class="content-wrapper">
 @include('v2.layouts.header')
 
 @if ( $is_mod )
 	@include('v2.layouts.admin-moderator')
 @endif
 	
-
+<div class="content-wrapper">
 @yield('filters')
-
 
 @yield('content','Fudge no content defined.')
 

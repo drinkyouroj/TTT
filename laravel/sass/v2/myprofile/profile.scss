@@ -35,6 +35,9 @@ a:focus {
 							margin-bottom:3px;
 						}
 					}
+					&:hover {
+						color:$blue;
+					}
 				}
 				@media (max-width:$break-sm) {
 					font-size:13px;
@@ -716,13 +719,13 @@ a:focus {
 								border-top:solid 1px $dark;
 							}
 							.delete-button {
+								display:block;
 								margin-top:20px;
-								background: $red !important;
-								color:#fff !important;
-								border: 2px solid $red !important;
+								color:$red;
 								font-size:12px;
 								@include montserrat(normal);
 								text-transform:uppercase;
+								cursor:pointer;
 							}
 						}
 						h2 {
@@ -743,20 +746,49 @@ a:focus {
 				}
 			}
 			.empty-content {
-				padding:30px 50px;
-				border:solid 1px $darker_cream;
 				p {
+					padding:30px 50px;
+					border:solid 1px $darker_cream;
 					font-size:21px;
 					letter-spacing:1px;
 					color:$darker_cream;
 					text-align:center;
+					@media (max-width:$break-xs) {
+						padding:20px 30px;
+					}
 					span {
 						@include fjalla;
 						font-size:21px;
+						@media (max-width:$break-xs) {
+							font-size:18px;
+						}
+					}
+					@media (max-width:$break-xs) {
+						font-size:16px;
 					}
 				}
+				&.collection {
+					@media (max-width:$break-sm) {
+						padding-left:0px;
+						padding-right:0px;
+					}
+				}
+				&.feed {
+					margin-top:-20px;
+					@media (max-width:$break-md) {
+						margin-top:0px;
+					}
+				}
+				&.saves {
+					margin-top:20px;
+				}
+				&.drafts {
+					margin-top:20px;
+				}
+				&.notifications {
+					margin-top:20px;
+				}
 			}
-
 		}
 	}
 }

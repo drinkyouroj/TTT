@@ -270,12 +270,12 @@
 	</div>
 
 	<div class="col-md-12 del-acc">
-		<h2>Delete Your Account</h2>
+		<h2>Deactivate Your Account</h2>
 		<p>
-			This will delete your account from the system.  All of your content will be unpublished (but they will remain in place)
+			This will deactivate your account from the system.  All of your content will be unpublished (but they will remain in place)
 		</p>
 		<p>Should you decide to come back, all of your content will be republished and your user will re-appear.</p>
-		<button class="btn btn-flat-red delete-button" data-toggle="modal" data-target="#deleteModal">Delete My Account</button>
+		<a class="delete-button" data-toggle="modal" data-target="#deleteModal">Deactivate My Account</a>
 	</div>
 </script>
 
@@ -313,10 +313,10 @@
 					{{/ifCond}}
 
 					<a class="post-delete">
-						Remove
+						Delete
 					</a>
 					<a class="post-delete-confirm" data-id="{{post.id}}">
-						Confirm Removal?
+						Confirm Delete?
 					</a>
 				</div>
 			{{/ifCond}}

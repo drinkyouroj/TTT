@@ -31,8 +31,6 @@
 		<div class="left-col">
 			<span class="like-comment-count">{{comment.likes.length}}</span>
 			<span class="like-comment glyphicon glyphicon-thumbs-up {{#contains comment.likes active_user_id}}active{{/contains}}"></span>
-			<br>
-			<span class="flag-comment glyphicon glyphicon-flag {{#contains comment.flags active_user_id}}active{{/contains}}"></span>
 		</div>
 
 		<div class="right-col">
@@ -66,7 +64,7 @@
 						<a class="delete mod-del-comment" data-delid="{{ comment._id }}" title="Delete Comment" >Moderator Delete </a>
 					{{/ifEqual}}
 				{{/ifEqual}}
-
+				<span class="flag-comment glyphicon glyphicon-flag {{#contains comment.flags active_user_id}}active{{/contains}}"></span>
 				<div class="reply-box"></div>
 			</div>
 		</div>

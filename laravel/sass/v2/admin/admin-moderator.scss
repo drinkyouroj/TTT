@@ -68,9 +68,9 @@
 	top: 50%; 
 	right: 0;
 	width: 22px;
-	height: 100px;
+	height:160px;
 	background-color: $gray;
-	z-index: 5;
+	z-index:5;
 
 	&.sidebar-open {
 		right: inherit;

@@ -12,3 +12,13 @@ body {
 	background-position:center center;
 	background-attachment: fixed;
 }
+
+.errors {
+	background-color:$red !important;
+	ul {
+		li {
+			padding:0px;
+			color:$white;
+		}
+	}
+}

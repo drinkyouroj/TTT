@@ -2,7 +2,7 @@
 
 
 @section('css')
-    <link href="{{Config::get('app.url')}}/css/views/user.css" rel="stylesheet" media="screen">
+   <link href="{{Config::get('app.url')}}/css/compiled/v2/users/signup_login.css" rel="stylesheet" media="screen">
 @stop
 
 @section('js')

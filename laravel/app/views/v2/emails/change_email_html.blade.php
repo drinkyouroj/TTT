@@ -1,11 +1,16 @@
 @extends('v2.emails.email_layout')
 
 @section('content')
-	<h1>Hey {{$user->username}}, please confirm the updated email.</h1>
-	<p>Updated Email: {{$user->updated_email}}</p>
-	<p>
-		<a href="{{Config::get('app.url')}}/user/emailupdate/{{$user->update_confirm}}">Confirm</a>
-	</p>
-	<a href="http://twothousandtimes.com">Log Back in</a>
+	<h1 style="margin-top:50px; color:#000000; font-family:Helvetica Neue,Helvetica,Arial,sans-serif; font-weight:bold; font-size:21px;">Hi {{$user->username}},</h1>
+
+	<p style="color:#000000; font-family: Baskerville,Baskerville Old Face,Hoefler Text, Garamond,Times New Roman,Gerogia,serif; font-weight:normal; font-size:16px;">Your email has been updated.</p>
+
+	<p style="color:#000000; font-family: Baskerville,Baskerville Old Face,Hoefler Text, Garamond,Times New Roman,Gerogia,serif; font-weight:normal; font-size:16px;">Updated Email: <span style="color:#000000; text-decoration:none; font-family:Helvetica Neue,Helvetica,Arial,sans-serif; font-weight:bold; font-size:14px;">{{$user->updated_email}}</span></p>
+
+	<p style="color:#000000; font-family: Baskerville,Baskerville Old Face,Hoefler Text, Garamond,Times New Roman,Gerogia,serif; font-weight:normal; font-size:16px;">To verify your account or update your email address please visit the link below:</p>
+
+	<a href="{{Config::get('app.url')}}/user/emailupdate/{{$user->update_confirm}}" target="_blank" style="color:#32b1c6; text-decoration:none; font-family:Helvetica Neue,Helvetica,Arial,sans-serif; font-weight:bold; font-size:14px;">Email Update</a>
+
+	<p class="signature" style="margin-bottom:50px; color:#000000; font-family:Helvetica Neue,Helvetica,Arial,sans-serif; font-weight:bold; font-size:18px;">Thanks,<br/>TTT</p>
 
 @stop
