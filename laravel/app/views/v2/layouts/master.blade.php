@@ -47,6 +47,7 @@
 	@if($have_user)
 	<script>
 		window.cur_notifications = {{ json_encode($notifications_ids) }};
+		window.logged_in_user_id = {{ Auth::user()->id }};
 	</script>
 	@endif
 	

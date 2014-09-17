@@ -1,8 +1,22 @@
+<script type="text/javascript">
+	Handlebars.registerHelper('isOwner', function(options) {
+		if ( window.user_id === window.logged_in_user_id ) {
+			return options.fn(this);
+		} else {
+			return options.inverse(this);
+		}
+	});
+</script>
+
 <script type="text/x-handlebars-template" id="no-content-template">
 	<div class="col-md-12 {{section}} empty-content">
 	{{#ifCond section 'collection'}}
-		<p><span>Fill out your collection</span> by posting stories and reposting others. Your collection is visible to anyone viewing your profile. 
-		</p>
+		{{#isOwner}}
+			<p><span>Fill out your collection</span> by posting stories and reposting others. Your collection is visible to anyone viewing your profile. 
+			</p>
+		{{else}}
+			<p>This user does not have any content in their collection</p>
+		{{/isOwner}}
 	{{/ifCond}}
 
 	{{#ifCond section 'comment'}}
