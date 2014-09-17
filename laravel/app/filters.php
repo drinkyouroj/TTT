@@ -71,10 +71,19 @@ Route::filter('auth', function()
 });
 
 Route::filter('force_ssl',function() {
-	if( ! Request::secure() && Config::get('app.enable_ssl') )
-    {
-        return Redirect::secure(Request::path());
-    }
+	//detect ec2 situation first.
+	if(App::environment() == 'ec2-cluster' && 
+		!empty($_SERVER['HTTP_X_FORWARDED_PROTO'] &&
+		$_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https'
+
+			)) {
+		return Request::path();//
+	} else {
+		if( ! Request::secure() && Config::get('app.enable_ssl') )
+	    {
+	        return Redirect::secure(Request::path());
+	    }	
+	}
 });
 
 
