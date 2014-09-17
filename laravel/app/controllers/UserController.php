@@ -21,6 +21,7 @@ class UserController extends BaseController {
                                     )
                                 )
                             );
+        $this->beforeFilter('force_ssl');
 	}
 
 	/**
