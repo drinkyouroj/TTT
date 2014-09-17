@@ -13,6 +13,9 @@ return array(
 	*/
 
 	'debug' => true,
+	'stack' => true,//errors automatically redirects to a specified location.
+	'email_send' => false,
+	'enable_ssl' => false,//enables SSL force on the user and myprofile routes.
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,5 +29,8 @@ return array(
 	*/
 
 	'url' => 'http://192.168.9.117',
+	'secureurl' => 'https://192.168.9.117',
 	'imageurl' => 'http://192.168.9.117/uploads/final_images',
+	'staticurl' => '//192.168.9.117',
+	'cdn_upload' => false
 );

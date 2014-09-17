@@ -198,6 +198,10 @@ class MongoCommentRepository implements CommentRepository {
 		}
 	}
 
+	public function getCommentCount( $post_id ) {
+		return $this->comment->where('post_id', '=', $post_id)->count();	
+	}
+
 	/**
 	 *	Check whether a given user was the author of a given comment.
 	 *	@return boolean: owns or not

@@ -19,3 +19,4 @@ Artisan::add(new LaunchEmailCommand);
 Artisan::add(new ESReindexCommand);
 Artisan::add(new BetaImageMigrateCommand);
 Artisan::add(new ImageUploadSweepCommand);
+Artisan::add(new CommentRecountCommand);

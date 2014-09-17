@@ -36,7 +36,7 @@
 	<script>
 		@if(App::environment('local') )
 			window.site_url = '/';//has trailing slash
-		@elseif(App::environment('web') || App::environment('sharktopus'))
+		@elseif(App::environment('web') || App::environment('sharktopus') || App::environment('sneakyturtle'))
 			window.site_url = '/';//has trailing slash
 		@else
 			window.site_url = '/';//has trailing slash
