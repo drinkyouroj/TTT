@@ -9,9 +9,9 @@
 	@stop
 
 	@section('css')
-		<link rel="stylesheet" media="screen" href="{{Config::get('app.url')}}/css/compiled/v2/posts/post_form.css">
-		<link rel="stylesheet" media="screen" href="{{Config::get('app.url')}}/js/vendor/editor/css/medium-editor.min.css">
-		<link rel="stylesheet" media="screen" href="{{Config::get('app.url')}}/js/vendor/editor/css/themes/default.css">
+		<link rel="stylesheet" media="screen" href="{{Config::get('app.staticurl')}}/css/compiled/v2/posts/post_form.css">
+		<link rel="stylesheet" media="screen" href="{{Config::get('app.staticurl')}}/js/vendor/editor/css/medium-editor.min.css">
+		<link rel="stylesheet" media="screen" href="{{Config::get('app.staticurl')}}/js/vendor/editor/css/themes/default.css">
 	@stop
 
 	@section('js')
@@ -19,13 +19,13 @@
 		@include( 'v2/partials/photo-input' )
 
 		<!--New script-->
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/validation/jquery.validate.min.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/editor/js/medium-editor.min.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/validation/jquery.validate.min.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/editor/js/medium-editor.min.js"></script>
 		{{-- <script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/handlePaste.js"></script> --}}
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_input.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/photo/photo.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post_input.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/photo/photo.js"></script>
 		{{--
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_photo.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post_photo.js"></script>
 		--}}
 		
 		@if($edit)

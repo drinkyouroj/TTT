@@ -2,7 +2,7 @@
 
 @section('js')
 
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/featured/featured.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/featured/featured.js"></script>
 
 	@include('v2.partials.post-listing-template')
 
@@ -15,7 +15,7 @@
 @stop
 
 @section('css')
-	<link href="{{Config::get('app.url')}}/css/compiled/v2/featured/featured.css" rel="stylesheet" media="screen">
+	<link href="{{Config::get('app.staticurl')}}/css/compiled/v2/featured/featured.css" rel="stylesheet" media="screen">
 @stop
 
 @section('title')

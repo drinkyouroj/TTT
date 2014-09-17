@@ -2,12 +2,12 @@
 
 
 @section('css')
-   <link href="{{Config::get('app.url')}}/css/compiled/v2/users/signup_login.css" rel="stylesheet" media="screen">
+   <link href="{{Config::get('app.staticurl')}}/css/compiled/v2/users/signup_login.css" rel="stylesheet" media="screen">
 @stop
 
 @section('js')
-    <script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/validation/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/user/forgot.js"></script>
+    <script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/validation/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/user/forgot.js"></script>
 @stop
 
 @section('title')

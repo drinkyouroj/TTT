@@ -1,14 +1,14 @@
 @extends('v2.layouts.master')
 
 @section('css')
-	<link href="{{Config::get('app.url')}}/css/compiled/v2/search/search.css" rel="stylesheet" media="screen">
+	<link href="{{Config::get('app.staticurl')}}/css/compiled/v2/search/search.css" rel="stylesheet" media="screen">
 @stop
 
 @section('js')
 	
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/handlebars-v1.3.0.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/generic-listing.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/search/search.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/handlebars-v1.3.0.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/views/generic-listing.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/search/search.js"></script>
 	
 	@include( 'v2/partials/post-listing-template' )
 @stop
