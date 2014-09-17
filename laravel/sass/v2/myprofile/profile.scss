@@ -446,6 +446,7 @@ a:focus {
 						border:solid 1px $lightgray;
 						@include word-break(break-all);
 						span.date {
+							display:none;
 							color: $gray;
 							@include montserrat;
 							font-size:10px;

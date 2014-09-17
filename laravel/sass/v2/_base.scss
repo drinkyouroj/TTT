@@ -187,13 +187,22 @@ textarea {
     padding-top:30px;
     padding-bottom:50px;
     border:solid 1px $lightgray;
+    @media (max-width:$break-xs) {
+      padding:10px 10px 30px 10px;
+    }
     .login-form, .signup-form {
       text-align:center;
       h2 {
         margin-top:10px;
+        @media (max-width:$break-xs) {
+          font-size:21px !important;
+        }
       }
       form {
         margin-top:20px;
+        @media (max-width:$break-xs) {
+          margin-top:15px;
+        }
         input {
           width:40%;
           height:50px;
@@ -205,7 +214,12 @@ textarea {
           }
 
           @media (max-width:$break-xs) {
-            width:90%;
+            width:47%;
+            height:40px;
+            margin-bottom:5px;
+            padding-left:5px;
+            font-size:12px;
+            letter-spacing:0px;
           }
         }
         .form-actions {
@@ -215,12 +229,21 @@ textarea {
         .forgot-pw {
          
         }
+        .email-subtext {
+          @media (max-width:$break-xs) {
+            font-size:10px;
+            line-height:14px;
+          }
+        }
       }
       .login-disclaimer, .terms-agree {
           margin-top:30px;
           padding-top:20px;
           border-top:solid 1px $lightgray;
           font-size:12px;
+          @media (max-width:$break-xs) {
+            font-size:8px;
+          }
         }
     }
     .signup-form {
@@ -679,20 +702,24 @@ textarea {
       background-position:center left;
       background-repeat:no-repeat;
       background-size:30px 19px;
+      @include word-break(break-all);
       &.post {
         background-image:url('../../../../images/notifications/post-notifications.png');
       }
        &.repost {
         background-image:url('../../../../images/notifications/repost-notifications.png');
       }
-       &.comment {
+      &.comment {
         background-image:url('../../../../images/notifications/comment-notifications.png');
       }
        &.reply {
-        background-image:url('../../../../images/notifications/reply-notifications.png');
+        background-image:url('../../../../images/notifications/comment-notifications.png');
       }
        &.like {
         background-image:url('../../../../images/notifications/like-notifications.png');
+      }
+      &.follow {
+        background-image:url('../../../../images/notifications/follower-notifications.png');
       }
       span {
         @include montserrat (normal);

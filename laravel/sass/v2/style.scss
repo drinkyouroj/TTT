@@ -981,7 +981,7 @@ input, textarea, button:focus {outline: none !important;}
 
 
 // Signup/Sign In Errors
-fieldset .errors {
+fieldset .errors, fieldset .alert-error  {
 	background-color: lightcoral;
 	
 	ul {

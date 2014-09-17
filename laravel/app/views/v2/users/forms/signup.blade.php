@@ -8,9 +8,7 @@
     <fieldset>
         <input id="username" placeholder="{{{ Lang::get('confide::confide.username') }}}" type="text" name="username" id="username" value="{{{ Input::old('username') }}}" maxlength="15" minlength="3" required>
 		
-		<div class="email-group">
-	        <input placeholder="Email*" type="text" name="email" id="email" value="{{{ Input::old('email') }}}">
-		</div>
+	    <input placeholder="Email*" type="text" name="email" id="email" value="{{{ Input::old('email') }}}">
 
 		<div class="email-subtext">
 			*Emails are optional, you'll need it if you forget your password.
@@ -20,8 +18,10 @@
 
         <input placeholder="Password Confirmation" type="password" name="password_confirmation" id="password_confirmation" minlength="6" >
 		<br/>
-		<img src="{{Config::get('app.url')}}/user/captcha">		
-		<input type="text" name="captcha" placeholder="What's the answer above?">
+		<div class="captcha-equation">
+			<img src="{{Config::get('app.url')}}/user/captcha">
+		</div>		
+		<input type="text" name="captcha" id="captcha" placeholder="What's the answer above?">
 
 
         <div class="errors">

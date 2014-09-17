@@ -13,8 +13,9 @@ body {
 	background-attachment: fixed;
 }
 
-.errors {
+.errors, .alert-error {
 	background-color:$red !important;
+	color:$white;
 	ul {
 		li {
 			padding:0px;

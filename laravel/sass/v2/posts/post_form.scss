@@ -29,7 +29,6 @@ $border_color: #eee;
 			font-size: 10px;
 		}
 		&.save-draft {
-			margin-right: 7px;
 			background: #a4a4a4;
 			@media (max-width:$break-sm) {
 				margin-right: 1px;
@@ -332,19 +331,27 @@ $border_color: #eee;
 		.form-heading {
 			position:relative;
 			background-color: #fff;
-			padding-top: 30px;
-
+			@media (min-width: $break-lg-min) {
+				vertical-align:middle;
+			}
 			.title, .tags {
 				margin-left:15px;
 				margin-right:15px;
 			}
-
 			.title {
+				position:relative;
 				@include post_page_title;
+				@media (min-width: $break-lg-min) {
+					margin-top:-100px;
+				}
 				label {
 					margin-bottom: 8px;
 					&:after {
 						@include label_arrow_bottom();
+					}
+					@media (min-width: $break-lg-min) {
+						position:absolute;
+						top:-30px;
 					}
 				}
 				textarea {
@@ -479,8 +486,8 @@ $border_color: #eee;
 .body-submit-wrapper {
 	top: -10px;
 	.body-submit-container {
-		padding-top: 55px;
-		padding-bottom: 8px;
+		margin-top: 55px;
+		margin-bottom: 8px;
 		.story {
 			position:relative;
 			label {
