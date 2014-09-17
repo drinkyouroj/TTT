@@ -1,7 +1,7 @@
 @extends('v2.layouts.master')
 
 @section('css')
-	<link rel="stylesheet" media="screen" href="{{Config::get('app.url')}}/css/compiled/v2/static.css">
+	<link rel="stylesheet" media="screen" href="{{Config::get('app.staticurl')}}/css/compiled/v2/static.css">
 @stop
 
 @section('title')

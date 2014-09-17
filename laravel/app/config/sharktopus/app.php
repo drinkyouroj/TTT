@@ -26,5 +26,6 @@ return array(
 	*/
 
 	'url' => 'http://192.168.9.149',
+	'staticurl' => '//192.168.9.149',
 	'imageurl' => 'http://192.168.9.149/uploads/final_images',
 );

@@ -30,6 +30,7 @@ return array(
 
 	'url' => 'http://localhost/tt',
 	'imageurl' => 'http://localhost/tt/uploads/final_images',
+	'staticurl' => '//localhost/tt',
 	'cdn_upload' => false,//set to true if you want your images to go to S3.
 	/*
 	|--------------------------------------------------------------------------
