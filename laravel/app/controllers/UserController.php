@@ -65,7 +65,7 @@ class UserController extends BaseController {
             $user = $this->user->login($data);
             //Gotta send out email
             if(!empty($data['email']) ) {
-                $data['confirm'] = $user->confirmation_code;
+                $confirm = $user->confirmation_code;
                 $email_data = array(
                     'from' => 'no_reply@twothousandtimes.com',
                     'to' => array($data['email']),
