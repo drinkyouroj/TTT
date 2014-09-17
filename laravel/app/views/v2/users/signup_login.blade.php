@@ -1,12 +1,12 @@
 @extends('v2.layouts.master')
 
 @section('css')
-	<link href="{{Config::get('app.url')}}/css/views/user.css" rel="stylesheet" media="screen">
+	<link href="{{Config::get('app.staticurl')}}/css/views/user.css" rel="stylesheet" media="screen">
 @stop
 
 @section('js')
-<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/jquery.validate.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/views/signup-form.js"></script>
+<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/views/signup-form.js"></script>
 @stop
 
 @section('title')

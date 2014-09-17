@@ -12,7 +12,11 @@ return array(
 	|
 	*/
 
+	
 	'debug' => true,
+	'stack' => true,//errors automatically redirects to a specified location.
+	'email_send' => true,
+	'enable_ssl' => true,//enables SSL force on the user and myprofile routes.
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,5 +30,8 @@ return array(
 	*/
 
 	'url' => 'http://192.168.9.149',
+	'secureurl' => 'https://192.168.9.149',
+	'staticurl' => '//192.168.9.149',
 	'imageurl' => 'http://192.168.9.149/uploads/final_images',
+	'cdn_upload' => false,//set to true if you want your images to go to S3.
 );

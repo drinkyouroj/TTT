@@ -11,7 +11,7 @@
 	?>
 
 @section('css')
-	<link rel="stylesheet" media="screen" href="{{Config::get('app.url')}}/css/compiled/v2/posts/post.css">
+	<link rel="stylesheet" media="screen" href="{{Config::get('app.staticurl')}}/css/compiled/v2/posts/post.css">
 
 	{{--CSS and heading is the same so its not an issue to put that stuff here.--}}
 	<meta property="og:title" content="{{$post->title}}" />
@@ -26,11 +26,11 @@
 	@include( 'v2/posts/partials/comment-handlebars-template' )
 	@include( 'v2/posts/partials/comment-reply-handlebars-template' )
 	@include( 'v2/posts/partials/comment-edit-handlebars-template' )
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment/moment.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment-timezone/moment-timezone-with-data.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/comment-pagination.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_actions.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/moment/moment.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/moment-timezone/moment-timezone-with-data.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/comment-pagination.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post_actions.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post.js"></script>
 @stop
 
 @section('title')
@@ -69,11 +69,6 @@
 						?>
 							@if( !$is_author )
 								<div class="col-md-3 hidden hidden-sm hidden-xs utility-container">
-									@if($favorited)
-										<a data-action="read" class="read">Mark as Read</a>
-									@endif
-									<a data-action="flag" class="flag-button flag <?php echo $has_flagged ? 'active' : ''; ?>">
-										Flag</a>
 								</div>
 
 								<div class="col-md-3 col-xs-8 actions-container">
@@ -194,6 +189,19 @@
 					</div>
 				</div>
 			@endif
+			<div class="row">
+				<div class="col-md-10 col-md-offset-1 extra-actions">
+					@if( !$is_author )
+						<div class="col-md-3 utility-container">
+							@if($favorited)
+								<a data-action="read" class="read">Mark as Read</a>
+							@endif
+							<a data-action="flag" class="flag-button flag <?php echo $has_flagged ? 'active' : ''; ?>">
+								Flag</a>
+						</div>
+					@endif
+				</div>
+			</div>
 		</div>
 		{{-- Admin edit capabilities --}}
 		@if ( $is_admin )	

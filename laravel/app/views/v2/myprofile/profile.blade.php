@@ -5,7 +5,7 @@
 @stop
 
 @section('css')
-	<link rel="stylesheet" media="screen" href="{{Config::get('app.url')}}/css/compiled/v2/myprofile/profile.css">
+	<link rel="stylesheet" media="screen" href="{{Config::get('app.staticurl')}}/css/compiled/v2/myprofile/profile.css">
 @stop
 
 @section('js')
@@ -39,16 +39,16 @@
 	@include( 'v2/partials/photo-input' )
 
 	@if($myprofile)
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/form/jquery.form.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/form/jquery.form.js"></script>
 	@endif
 	{{--This is for the follow action--}}
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/post/post_actions.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post_actions.js"></script>
 	
 	
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment/moment.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/moment-timezone/moment-timezone-with-data.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/photo/photo.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/myprofile/profile.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/moment/moment.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/moment-timezone/moment-timezone-with-data.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/photo/photo.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/myprofile/profile.js"></script>
 	
 @stop
 
@@ -163,10 +163,10 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="modal-title" id="myModalLabel">Account Deletion</h4>
+	        <h4 class="modal-title" id="myModalLabel">Account deactivation</h4>
 	      </div>
 	      <div class="modal-body">
-	        Are you absolutely sure? This step is irreversible.
+	        Are you absolutely sure?
 	      </div>
 	      <div class="modal-footer">
 
@@ -174,7 +174,7 @@
 		      <input type="password" placeholder="Password" class="form-control delete-account-password">
 		      <span class="input-group-btn">
 		        <button type="button" class="btn btn-danger delete-account" data-user="{{$profile_user->id}}">
-		        	Delete The Account Already!
+		        	Deactivate The Account Already!
 		        </button>
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 		      </span>
@@ -202,9 +202,7 @@
 				</div>
 				<div class="modal-body">
 					<div class="text">
-						Thanks for Publishing your post.
-						You can continue to add to change your post for up to 72hrs.<br/>
-						Note: You can only make 1 post every 10 minutes.
+						Success! You have up to 72 hours to edit your post. Posts can be unpublished and republished at any time. You’ll be able to post again in a matter of minutes. 
 					</div>
 				</div><!--End of Modal Body-->
 			</div>
@@ -218,15 +216,11 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 					<h4 class="modal-title" id="draftsModalLabel">
-						Thanks for Posting.
 					</h4>
 				</div>
 				<div class="modal-body">
 					<div class="text">
-						Thanks for writing a draft!
-						You can continue to add to change your post for as long as you want.<br/>
-						If you publish your post, you can continue to add to change your post for up to 72hrs.<br/>
-						Note: You can only publish a post every 10 minutes.
+						Your unfinished post has been moved to the Drafts section in your profile. You can update and publish it at any time. 
 					</div>
 				</div><!--End of Modal Body-->
 			</div>

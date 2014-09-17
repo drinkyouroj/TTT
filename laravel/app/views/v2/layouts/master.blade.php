@@ -14,15 +14,15 @@
     <title>@yield('title','Two Thousand Times')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <link href="{{Config::get('app.url')}}/css/animate.css" rel="stylesheet" media="screen">
+    <link href="{{Config::get('app.staticurl')}}/css/animate.css" rel="stylesheet" media="screen">
     
-	<link href="{{Config::get('app.url')}}/css/compiled/v2/bs.css" rel="stylesheet" media="screen">
+	<link href="{{Config::get('app.staticurl')}}/css/compiled/v2/bs.css" rel="stylesheet" media="screen">
 
     <!--Application Shared CSS-->
-    <link href="{{Config::get('app.url')}}/css/compiled/v2/style.css" rel="stylesheet" media="screen">
+    <link href="{{Config::get('app.staticurl')}}/css/compiled/v2/style.css" rel="stylesheet" media="screen">
 
     @if ( $is_mod )
-	<link href="{{Config::get('app.url')}}/css/compiled/v2/admin/admin-moderator.css" rel="stylesheet" media="screen">
+	<link href="{{Config::get('app.staticurl')}}/css/compiled/v2/admin/admin-moderator.css" rel="stylesheet" media="screen">
     @endif
 
     <!--Favicon-->
@@ -30,7 +30,7 @@
 	<link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     
     <!--Fonts-->
-    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Fjalla+One' rel='stylesheet' type='text/css'>    
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700|Fjalla+One' rel='stylesheet' type='text/css'>    
     
     <!--{{App::environment()}}-->
 	<script>
@@ -62,51 +62,49 @@
 	
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="{{Config::get('app.url')}}/js/html5shiv.js"></script>
-      <script src="{{Config::get('app.url')}}/js/respond.min.js"></script>
+      <script src="{{Config::get('app.staticurl')}}/js/html5shiv.js"></script>
+      <script src="{{Config::get('app.staticurl')}}/js/respond.min.js"></script>
     <![endif]-->
   </head>
 <body>
-<div class="content-wrapper">
 @include('v2.layouts.header')
 
 @if ( $is_mod )
 	@include('v2.layouts.admin-moderator')
 @endif
 	
-
+<div class="content-wrapper">
 @yield('filters')
-
 
 @yield('content','Fudge no content defined.')
 
 @include('v2.layouts.footer')
  </div>
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/bootstrap.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/libs/jquery.scrolltofixed.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/global.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/handlebars/handlebars.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/sidr/jquery.sidr.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/header.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/jquery.scrolltofixed.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/global.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/handlebars/handlebars.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/sidr/jquery.sidr.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/header.js"></script>
 	<!-- @if ( $is_mobile )
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/vendor/touch-swipe/jquery.touchSwipe.min.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/header-swipe.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/touch-swipe/jquery.touchSwipe.min.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/header-swipe.js"></script>
 	@endif -->
 	
 	
 	@if( $have_user )
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/global-loggedin.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/global-loggedin.js"></script>
 	@else
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/global-nologin.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/global-nologin.js"></script>
 	@endif
 
 	@if( $is_mod )
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/admin/moderator.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/admin/moderator.js"></script>
 	@endif
 
 	@if( $is_admin )
-		<script type="text/javascript" src="{{Config::get('app.url')}}/js/v2/admin/admin.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/admin/admin.js"></script>
 	@endif
 	
 	<!--Extra Javascript-->

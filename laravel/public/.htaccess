@@ -1,20 +1,20 @@
 DirectoryIndex index.php invite.php
 
-<Files "index.php">
-    AuthType Basic
-    AuthName "Website Site with Restriced Access"
-    AuthUserFile /var/www/2000/laravel/public/.htpasswd
-    AuthGroupFile /dev/null
-    require valid-user
-    FileETag None
-    Order allow,deny
-    Allow from 54.68.185.170 172.31.41.88
-    satisfy any
-    Header unset ETag
-    Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
-    Header set Pragma "no-cache"
-    Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
-</Files>
+#<Files "index.php">
+#    AuthType Basic
+#    AuthName "Website Site with Restriced Access"
+#    AuthUserFile /var/www/2000/laravel/public/.htpasswd
+#    AuthGroupFile /dev/null
+#    require valid-user
+#    FileETag None
+#    Order allow,deny
+#    Allow from 54.68.185.170 172.31.41.88 172.31.33.51
+#    satisfy any
+#    Header unset ETag
+#    Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+#    Header set Pragma "no-cache"
+#    Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
+#</Files>
 
 <IfModule mod_rewrite.c>
     Options -MultiViews

@@ -14,7 +14,7 @@ return array(
 
 	'debug' => true,
 	'stack' => true,//errors automatically redirects to a specified location.
-	'email_send' => false,
+	'email_send' => true,
 	'enable_ssl' => false,//enables SSL force on the user and myprofile routes.
 
 	/*
@@ -29,7 +29,9 @@ return array(
 	*/
 
 	'url' => 'http://localhost/tt',
+	'secureurl' => 'https://localhost/tt',
 	'imageurl' => 'http://localhost/tt/uploads/final_images',
+	'staticurl' => '//localhost/tt',
 	'cdn_upload' => false,//set to true if you want your images to go to S3.
 	/*
 	|--------------------------------------------------------------------------

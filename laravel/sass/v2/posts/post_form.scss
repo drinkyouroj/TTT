@@ -66,29 +66,42 @@ $border_color: #eee;
 	position: fixed;
 	z-index: 4;
 	top: $navbar_height;
-	//height: 50px;//height of the Controls bar.
+	//height: 41px;//height of the Controls bar.
 	width: 100%;
+	height:41px;
 	background-image:url('../../../../images/posts/black-90.png');
+		@media (max-width:$break-xs) {
+			height:35px;
+		}	
 	.controls-container {
-		padding:15px 15px;
+		padding:3px 15px;
 		//button reset.
 		a {
 			border:none;
 			background:none;
 			cursor: pointer;
-			@include appearance(none);			
+			@include appearance(none);		
 		}
 		.post-category {
 			text-align: center;
 			a.categorization {
 				@include categoriesLink();
+				margin-top:3px;
 			}
 		}
 		.draft-publish {
 			@include draftPublishButtons();
+			a {
+				font-size:11px;
+				padding:9px 15px;
+				@media (max-width:$break-xs) {
+					font-size:8px;
+					padding:9px 10%;
+				}	
+			}
 		}
 		@media (max-width:$break-xs) {
-			padding:3px 15px;
+			padding:2px 3px;
 		}
 
 		.preview {//until we finalize this feature
@@ -120,10 +133,11 @@ $border_color: #eee;
 		}
 		a.categorization {
 			@include categoriesLink();
-			color: $dark;
+			color: $white;
+			background:$dark;
 			border:solid 2px $dark;
-			font-size:11px;
-			padding:5px 10px !important;
+			font-size:12px;
+			padding:10px 15px !important;
 			margin-right:10px;
 		}	
 	}
@@ -271,7 +285,7 @@ $border_color: #eee;
 	}
 	.top-submit-container {
 		position: relative;
-		margin-top: 69px;
+		margin-top: 41px;
 		@media (min-width: $break-lg-min) {
 			width: 100%;
 			padding-left:0px;

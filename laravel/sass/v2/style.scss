@@ -57,6 +57,13 @@ h1, h2, h3, h4, p {
 	color:$dark;
 }
 
+strong, b {
+	@include garamond-bold;
+}
+em, i {
+	@include garamond-italic;
+}
+
 body {
 	@include garamond;
 }
@@ -198,6 +205,14 @@ input, textarea, button:focus {outline: none !important;}
 					padding-bottom:10px;
 					@include secondary_drop_shadow();
 					border:solid 1px $lightgray;
+					&:before {
+						content: url("../../../../images/profile/repost-arrow.png");
+						position: absolute;
+						top: -14px;
+						right: 12px;
+						width: 14px;
+						height: 20px;
+					}
 					.dropdown-wrapper {
 						&>*, ul.notifications > li {
 						}
@@ -483,8 +498,10 @@ input, textarea, button:focus {outline: none !important;}
 	&:hover {
 		// background-color: $gray;
 		// border-color: $dark_gray;
-		color: white;
+		color: $white;
 		text-decoration: none;
+		background: $dark;
+		border: 2px solid $white;
 	}
 }
 
@@ -502,7 +519,7 @@ input, textarea, button:focus {outline: none !important;}
 	&:hover {
 		// background-color: $gray;
 		// border-color: $dark_gray;
-		color: white;
+		color: $white;
 		text-decoration: none;
 	}
 }

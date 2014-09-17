@@ -1,17 +1,18 @@
-<form method="POST" action="{{{ URL::to('/user/forgot') }}}" accept-charset="UTF-8">
+<form method="POST" action="{{{ secure_url('/user/forgot') }}}" accept-charset="UTF-8">
     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
 
     
 
     <div class="input-append">
         
-        <label for="username">Username</label>
         <input placeholder="Username" type="text" name="username" id="username" value="{{{ Input::old('username') }}}">
 
-        <label for="email">Email</label>
         <input placeholder="Email" type="text" name="email" id="email" value="{{{ Input::old('email') }}}">
 
-        <input class="btn" type="submit" value="Submit">
+        
+        <div class="form-actions">
+          <button type="submit" class="btn btn-flat-gray">Submit</button>
+        </div>
     </div>
 
     @if ( Session::get('error') )

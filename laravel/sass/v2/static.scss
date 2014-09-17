@@ -21,6 +21,23 @@ body {
 		margin-right:15px;
 	}
 }
+.undelete-container {
+	padding-top:40px;
+	padding-bottom:70px;
+	text-align:center;
+	.line {
+		width:20px;
+		margin:10px auto;
+		padding:0;
+		border-top:solid 1px $dark;
+	}
+	p {
+		text-align:center;
+	}
+	a {
+		@include montserrat;
+	}
+}
 h1 {
 	@include montserrat();
 	letter-spacing:3px;

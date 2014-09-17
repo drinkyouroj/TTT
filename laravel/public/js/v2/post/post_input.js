@@ -405,7 +405,7 @@ var save_post = new function() {
 			a_link.fadeIn();
 		}
 		//Make sure to change the "Submit to Update"
-		$('.submit-post').html('Update');
+		//$('.submit-post').html('Publish');
 
 	};
 
