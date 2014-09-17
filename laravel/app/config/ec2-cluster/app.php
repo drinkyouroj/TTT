@@ -36,6 +36,7 @@ return array(
 	
 	'url' => APP_HOST, #constant defined at top
 	'imageurl' => APP_HOST.'/uploads/final_images',
+	'staticurl' => APP_HOST,
 	'cdn_upload' => false,//set to true if you want your images to go to S3.
 	/*
 	|--------------------------------------------------------------------------
