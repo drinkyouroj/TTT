@@ -805,6 +805,11 @@ input, textarea, button:focus {outline: none !important;}
 		}
 		.modal-header {
 			position:relative;
+			h4.modal-title {
+            	@media (max-width:$break-sm) {
+           			font-size:16px;
+           		}
+            }
 			button.close {
 				position:absolute;
 				top:0px;
