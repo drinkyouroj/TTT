@@ -40,15 +40,19 @@ class LaunchEmailCommand extends Command {
 	public function fire()
 	{
 		//
-		$paginate = 1;//just to make sure that we only really do 1.
-		$page = 0;
+		$paginate = 50;//just to make sure that we only really do 1.
+		$page = empty(intval($this->argument('page'))) ? 0 : intval($this->argument('page'));
+
 		$reserved_users = $this->reservedQuery($paginate, $page);//initial pull
 
 		while ( count( $reserved_users ) > 0 ) {
 			foreach($reserved_users as $k=>$user) {
-				//reset and send out a password.
-				$reset = $this->user->resetPassword($user->id);
-				$this->sendEmail($user,$reset['new_password']);
+				if(is_object($user) && isset($user->email)) {
+					//reset and send out a password.
+					$reset = $this->user->resetPassword($user->id);					
+					$this->line($user->username. ' email sent');
+					$this->sendEmail($user,$reset['new_password']);
+				}
 			}
 			$page++;
 			$reserved_users = $this->reservedQuery($paginate, $page);
@@ -95,8 +99,8 @@ class LaunchEmailCommand extends Command {
 	protected function getArguments()
 	{
 		return array(
-			array('example', InputArgument::REQUIRED, 'An example argument.'),
-		);
+            array('page', InputOption::VALUE_OPTIONAL, 'What page are we processing from?'),
+        );
 	}
 
 	/**
