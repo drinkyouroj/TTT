@@ -213,7 +213,7 @@ function PhotoInput() {
 			$(that.processed_label).fadeIn();
 			$(that.photo_chosen).fadeIn();
 			$(that.photo_chosen).css('background-image', '');
-			image_url = window.site_url+'uploads/final_images/'+data;
+			image_url = window.image_url+'/'+data;
 			$(that.photo_chosen).css('background-image','url('+image_url+')' );
 
 			//for other applications than the post input page.
