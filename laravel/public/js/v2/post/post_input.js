@@ -116,7 +116,7 @@ $(function() {
 		// Otherwise, dont start autosaving until a title has been entered.
 		} else {
 			$('textarea.title').on('change', function(event) {
-				console.log($(this).val().length);
+				// console.log($(this).val().length);
 				if($(this).val().length >= 5) {
 					start_save();
 				} else if($(this).val().length < 5) {
@@ -128,7 +128,7 @@ $(function() {
 
 	function start_save() {
 		if(save_post.autosave_started == false) {
-			console.log('auto save started!');
+			// console.log('auto save started!');
 			save_post.autosave = true;
 			save_post.sendAutoSaveDraft();//send draft the moment this system starts.
 			save_post.autoSaveInterval = setInterval(function() {
@@ -144,7 +144,7 @@ $(function() {
 	}
 
 	function stop_save() {
-		console.log('auto save cleared!');
+		// console.log('auto save cleared!');
 		clearInterval(save_post.autoSaveInterval);
 	}
 
@@ -314,7 +314,7 @@ var save_post = new function() {
 
 	//Functions.
 	this.send = function() {
-		console.log(this.dataCompile());
+		// console.log(this.dataCompile());
 		save_post = this;
 		$.ajax({
 			type: "POST",
@@ -354,7 +354,7 @@ var save_post = new function() {
 				// console.log(xhr.status);
 			},
 			error: function(xhr, status) {
-				console.log(xhr.status);
+				// console.log(xhr.status);
 				switch(data.error) {
 					default:
 					case '72':
