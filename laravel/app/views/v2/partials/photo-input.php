@@ -8,7 +8,7 @@
 				<a class="btn reset-search btn-flat-blue hidden">Reset</a>
 				<br/>
 				<br/>
-
+			<div class="clearfix"></div>
 			</div>
 			
 			<div class="photo-results">
