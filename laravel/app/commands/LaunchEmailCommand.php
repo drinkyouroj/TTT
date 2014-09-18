@@ -47,7 +47,7 @@ class LaunchEmailCommand extends Command {
 
 		while ( count( $reserved_users ) > 0 ) {
 			foreach($reserved_users as $k=>$user) {
-				if(is_object($user) && isset($user->email)) {
+				if(is_object($user) && isset($user->email) && strlen($user->email) > 2 )  {
 					//reset and send out a password.
 					$reset = $this->user->resetPassword($user->id);					
 					$this->line($user->username. ' email sent');
@@ -62,8 +62,9 @@ class LaunchEmailCommand extends Command {
 
 		private function reservedQuery($paginate, $page) {
 			return User::where('reserved',1)
+						->where('id','>', 1438)
 						->whereNotNull('email')
-						->select('id','username', 'email','reserved')
+						->select('id','username', 'email','reserved')						
 						->skip( $paginate * $page )
 						->take( $paginate )
 						->get();
