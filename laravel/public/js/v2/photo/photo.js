@@ -205,20 +205,22 @@ function PhotoInput() {
 		}
 
 		that = this;
-
 		this.getData(url, data, function(data) {
+			
 			$('.loading-container').css('z-index', -1);  // hide loading
 			that.input.val('');//reset the input
 			$(that.chosen_label).fadeOut();
 			$(that.processed_label).fadeIn();
 			$(that.photo_chosen).fadeIn();
 			$(that.photo_chosen).css('background-image', '');
-			image_url = window.image_url+'/'+data;
-			$(that.photo_chosen).css('background-image','url('+image_url+')' );
+			
+			new_image_url = window.image_url+'/'+data;
+
+			$(that.photo_chosen).css('background-image','url('+new_image_url+')' );
 
 			//for other applications than the post input page.
 			if(that.image_dom.length) {
-				$(that.image_dom).css('background-image','url('+image_url+')' );
+				$(that.image_dom).css('background-image','url('+new_image_url+')' );
 			}
 
 			//Checks to see if this is the intial phase of image selection.
