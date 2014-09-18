@@ -78,7 +78,6 @@
 				span.month {
 					@include fjalla;
 					font-size:12px;
-					letter-spacing:1px;
 				}
 				span.day {
 					@include montserrat(bold);
