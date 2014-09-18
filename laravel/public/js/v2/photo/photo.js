@@ -28,6 +28,8 @@ function photoInit(photoInput) {
 		photoInput.photo_search_page = 1;
 		photoInput.keyword = $(photoInput.query_input).val();
 		photoInput.searchImages();
+		// Append loading gif
+		$(photoInput.photo_results).append('<div class="loading-container"><img src="' + window.site_url + 'images/posts/comment-loading.gif"></div>');
 	});
 
 	//Pager for the photo result sets
