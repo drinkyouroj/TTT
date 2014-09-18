@@ -47,11 +47,15 @@ class BetaImageMigrateCommand extends Command {
 					->get();
 		foreach($users as $k => $user) {
 			if(
-				isset($user->featured->image) &&
+				isset($user->featured) &&
 				( !isset($user->image) || $user->image == 0 || !strlen($user->image) )
 				  ) {
-				$user->image = $user->featured->image;
-				$user->save();
+				$post = Post::find($user->featured);
+				if($post instanceof Post && isset($post->image)) {
+					$user->image = $post->image;
+					$user->save();
+					$this->line($post->image);
+				}
 			}
 			$this->line($k. ' '.$user->username.' has been migrated');
 		}
