@@ -5,7 +5,6 @@
 			<div class="input-append">
 				<input type="text" class="span2 search-query" placeholder="Search Photos*">
 				<a class="btn activate-search btn-flat-gray">Search</a>
-				<a class="btn reset-search btn-flat-blue hidden">Reset</a>
 				<br/>
 				<br/>
 
