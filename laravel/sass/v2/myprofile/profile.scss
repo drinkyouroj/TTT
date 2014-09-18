@@ -301,6 +301,7 @@ a:focus {
 							}
 						}
 						.post-title {
+							@include word-break(break-all);
 							a {
 								@media (max-width:$break-sm) and (min-width:$break-sm-min) {
 									font-size:13px;
@@ -308,6 +309,7 @@ a:focus {
 							}
 						}
 						.post-taglines {
+							@include word-break(break-all);
 							li {
 								@media (max-width:$break-sm) and (min-width:$break-sm-min) {
 									font-size:13px;
@@ -586,9 +588,34 @@ a:focus {
 									@media (max-width:$break-sm) {
 										margin:10px 0 5px 0;
 									}
+									@media (max-width:$break-sm) {
+										font-size:13px;
+									}
 								}
 								p {
 									@include tagline_listing;
+								}
+								p.author {
+									a {
+										span {
+											display:inline-block;
+											vertical-align:middle;
+											width:30px;
+											height:30px;
+											border-radius: 50%;
+											background-position: center center;
+											background-size: cover;
+											background-repeat: no-repeat;
+											@media (max-width:$break-sm) {
+												width:25px;
+												height:25px;
+											}
+										}
+										@include montserrat;
+										@media (max-width:$break-sm) {
+											font-size:11px;
+										}
+									}
 								}
 								@media (max-width:$break-sm) {
 									width:65%;
@@ -603,10 +630,11 @@ a:focus {
 									background-image:url('../../../../images/global/remove.png');
 									@media (max-width:$break-sm) {
 										margin-top:10px;
-										font-size:10px;
+										font-size:8px;
 										background-size:25px 25px;
 										background-position:3px center;
 										padding:5px 5px 5px 30px;
+										border:solid 1px $dark;
 									}
 								}
 							}
