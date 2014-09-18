@@ -33,7 +33,11 @@
 					<div class="col-md-12 col-sm-12 ">
 						<div class="chosen-label"></div>
 						<div class="processed-label"></div>
-						<div class="photo-chosen"></div>
+						<div class="photo-chosen">
+							<div class="loading-container">
+								<img src="{{site_url}}images/posts/comment-loading.gif">
+							</div>
+						</div>
 					</div>
 					<div class="clearfix"></div>
 
