@@ -439,7 +439,7 @@ class MyProfileController extends BaseController {
 	}
 
 	public function getRestFollowers($user_id, $page = 1) {
-		$followers = $this->follow->restFollowers($user_id, 8,$page);
+		$followers = $this->follow->restFollowers($user_id, 24, $page);
 		if(count($followers)) {
 			return Response::json(
 				array('follow' => $followers->toArray()),
@@ -455,7 +455,7 @@ class MyProfileController extends BaseController {
 
 
 	public function getRestFollowing($user_id, $page = 1) {
-		$following = $this->follow->restFollowing($user_id, 8,$page);
+		$following = $this->follow->restFollowing($user_id, 24, $page);
 		if(count($following)) {
 			return Response::json(
 				array('follow' => $following->toArray()),
