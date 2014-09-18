@@ -87,7 +87,6 @@ $(function() {
 		} else {
 			location.hash = hash;
 		}
-		
 
 		$('.section-selectors a').removeAttr('class');//gets rid of active state.
 		$(this).prop('class','active');
@@ -165,7 +164,7 @@ $(function() {
 
 //View renders for settings/follow
 	$('.fing-fer a, a#settings').click(function(event) {
-		//event.preventDefault();
+		event.preventDefault();
 		$('.section-selectors a').removeAttr('class');//gets rid of the class.
 		profile.view = $(this).prop('id');
 
@@ -878,9 +877,9 @@ function ProfileActions() {
 		this.passResponse = function(response, statusText, xhr, $form) {
 			$('form#changePassword input').val('');//reset all values
 			if(response.success == false) {
-				$('form#changePassword .message-box').html('<p>'+response.message+'Please try again</p>');
+				$('form#changePassword .message-box').html('<p class="error">'+response.message+'Please try again</p>');
 			} else {
-				$('form#changePassword .message-box').html('<p>Success! Your password has been changed.</p>');
+				$('form#changePassword .message-box').html('<p class="success">Success! Your password has been changed.</p>');
 			}
 		}
 

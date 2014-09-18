@@ -57,7 +57,7 @@ class UserController extends BaseController {
 
         //If save goes well on the other side and passed validation, it will give the user object an ID.
         if(!$result['user']) {
-            return Redirect::to('user/create')
+            return Redirect::secure('user/create')
                 ->withInput(Input::except('password'))
                 ->withErrors($result['validation']);//returns validator if $user is not created.
         } else {
@@ -66,7 +66,7 @@ class UserController extends BaseController {
             //Gotta send out email
             if(!empty($data['email']) ) {
                 $email_data = array(
-                    'from' => 'no_reply@twothousandtimes.com',
+                    'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
                     'to' => array($data['email']),
                     'subject' => 'Thanks for Joining Two Thousand Times!',
                     'plaintext' => View::make('v2/emails/new_user_plain')->with('user', $user)->render(),
@@ -76,7 +76,7 @@ class UserController extends BaseController {
                 $this->email->create($email_data);
             }
 
-            return Redirect::to('myprofile');
+            return Redirect::secure('myprofile');
         }
     }
 
@@ -146,7 +146,7 @@ class UserController extends BaseController {
         {
             if($user->banned) {
                 $this->user->logout();
-                return Redirect::to('user/banned');
+                return Redirect::secure('user/banned');
             }
 
 			//Gotta redirect to an acknowledge page if the user happens to have softDeleted their account
@@ -200,7 +200,7 @@ class UserController extends BaseController {
                 $err_msg = 'Wrong Credentials';
             }
 
-            return Redirect::to('user/loginonly')
+            return Redirect::secure('user/loginonly')
                 ->withInput(Input::except('password'))
                 ->with( 'error', $err_msg );
         }
@@ -229,7 +229,7 @@ class UserController extends BaseController {
 		 */
 		public function getRestore() {
 			if($this->user->restoreByConfirmation(Request::segment(3))) {
-				return Redirect::to('user/loginonly')
+				return Redirect::secure('user/loginonly')
                                 ->with('notice', 'Your account has been restored!');
 			} else {
 				return Redirect::to('featured');
@@ -247,13 +247,13 @@ class UserController extends BaseController {
         if ( $this->user->confirm( $code ) )
         {
             $notice_msg = 'Your user is confirmed.';
-                        return Redirect::to('user/login')
+                        return Redirect::secure('user/login')
                             ->with( 'notice', $notice_msg );
         }
         else
         {
             $error_msg = 'Wrong Code Bro.';
-                        return Redirect::to('user/login')
+                        return Redirect::secure('user/login')
                             ->with( 'error', $error_msg );
         }
     }
@@ -261,11 +261,11 @@ class UserController extends BaseController {
 
     public function getEmailUpdate($confirm = false) {
         if($this->user->updateEmail($confirm) ) {
-            return Redirect::to('user/loginonly')
+            return Redirect::secure('user/loginonly')
                             ->with('notice', 'Your email has been updated.');
         } else {
             // We should make a better distinction later
-            return Redirect::to('user/loginonly')
+            return Redirect::secure('user/loginonly')
                             ->with('notice', 'Your email has already been updated.');;
         }
     }
@@ -317,7 +317,7 @@ class UserController extends BaseController {
 
                 //send them the email
                 $email_data = array(
-                    'from' => 'no_reply@twothousandtimes.com',
+                    'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
                     'to' => array($user->email),
                     'subject' => "Here's your new credentials for Two Thousand Times.",
                     'plaintext' => $plain,
@@ -327,16 +327,16 @@ class UserController extends BaseController {
                 $this->email->create($email_data);
 
                 $notice_msg = 'Please check your e-mail.';
-                            return Redirect::to('user/login')
+                            return Redirect::secure('user/login')
                                 ->with( 'notice', $notice_msg );
             } else {
                 $error_msg = 'Sorry, but your username/email combo does not have a match';
-                            return Redirect::to('user/forgot')
+                            return Redirect::secure('user/forgot')
                                 ->withInput()
                     			->with( 'error', $error_msg );
             }
         } else {
-            return Redirect::to('user/forgot')
+            return Redirect::secure('user/forgot')
                 ->withInput()
                 ->with( 'error', $validator->messages() );
         }
@@ -385,7 +385,7 @@ class UserController extends BaseController {
 			if($validator->fails()) {
 				//No good.  the passwords do not match
 				$failed = true;
-				$message = "The two passwords don't match!";
+				$message = "The two passwords don't match! ";
 				
 			} else {
 				//Actually update the damn passwords
@@ -396,7 +396,7 @@ class UserController extends BaseController {
         } else {
         	//need to return that auth failed.
         	$failed = true;
-			$message = 'Wrong current password';
+			$message = 'Wrong current password. ';
         }
 		
 		if($failed) {
@@ -435,13 +435,13 @@ class UserController extends BaseController {
         if( Confide::resetPassword( $input ) )
         {
             $notice_msg = Lang::get('confide::confide.alerts.password_reset');
-                        return Redirect::to('user/login')
+                        return Redirect::secure('user/login')
                             ->with( 'notice', $notice_msg );
         }
         else
         {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
-                        return Redirect::to('user/reset/'.$input['token'])
+                        return Redirect::secure('user/reset/'.$input['token'])
                             ->withInput()
                 ->with( 'error', $error_msg );
         }

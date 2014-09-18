@@ -61,7 +61,7 @@
 							@endforeach
 							
 						@else
-							<div class="col-md-12">
+							<div class="col-md-12 no-results">
 								@if( $page == 1 )
 									No posts match the search term: {{$term}}
 								@else
@@ -98,7 +98,7 @@
 							@endforeach
 							</div>
 						@else
-							<div class="col-md-12">
+							<div class="col-md-12 no-results">
 								@if( $users_page == 1 )
 									No users match the search: {{$term}}
 								@else

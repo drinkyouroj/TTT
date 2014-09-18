@@ -446,6 +446,4 @@ var save_post = new function() {
 		}
 	}
 
-
-
 }
