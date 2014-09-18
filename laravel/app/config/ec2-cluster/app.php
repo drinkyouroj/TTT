@@ -36,7 +36,7 @@ return array(
 	
 	'url' => APP_HOST, #constant defined at top
 	'secureurl' => 'https://twothousandtimes.com',
-	'imageurl' => APP_HOST.'/uploads/final_images',
+	'imageurl' => 'http://images.twothousandtimes.com',
 	'staticurl' => '//twothousandtimes.com',
 	'cdn_upload' => true,//set to true if you want your images to go to S3.
 	/*
