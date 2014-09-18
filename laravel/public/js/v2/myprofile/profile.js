@@ -1,3 +1,6 @@
+$(document).ready(function() {
+	window.scrollTo(0,0);
+})
 //Events in the Profile Page
 $(function() {
 
@@ -78,7 +81,16 @@ $(function() {
 
 //View renders based on the id selectors.
 	$('.section-selectors a').click(function(event) {
-		//event.preventDefault();
+		event.preventDefault();
+		// Update url accordingly
+		var hash = $(this).attr('href');
+		if(history.pushState) {
+    		history.replaceState(null, null, hash);
+		} else {
+			location.hash = hash;
+		}
+		
+
 		$('.section-selectors a').removeAttr('class');//gets rid of active state.
 		$(this).prop('class','active');
 		profile.view = $(this).prop('id');
