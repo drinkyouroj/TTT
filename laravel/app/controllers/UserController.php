@@ -200,7 +200,7 @@ class UserController extends BaseController {
                 $err_msg = 'Wrong Credentials';
             }
 
-            return Redirect::to('user/loginonly')
+            return Redirect::secure('user/loginonly')
                 ->withInput(Input::except('password'))
                 ->with( 'error', $err_msg );
         }
