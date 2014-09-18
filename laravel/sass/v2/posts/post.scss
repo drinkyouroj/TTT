@@ -169,6 +169,7 @@
 
 				.author {
 					letter-spacing:1px;
+					@include word-break(break-all);
 					.author-name {
 						@include montserrat(bold);
 						letter-spacing:1px;			
@@ -250,6 +251,7 @@
 				-webkit-column-count:2; /* Safari and Chrome */
 				column-count:2;
 				overflow: visible;
+				@include word-break(break-all);
 
 				&#one {
 					&::first-letter {
