@@ -302,7 +302,6 @@ $border_color: #eee;
 				display: table-row;
 				.form-heading, .image-system {
 					display: table-cell;
-					height: auto;
 					float: none;
 				}
 		    }
@@ -330,6 +329,7 @@ $border_color: #eee;
 
 		.form-heading {
 			position:relative;
+			height: auto;
 			background-color: #fff;
 			@media (min-width: $break-lg-min) {
 				vertical-align:middle;
@@ -360,7 +360,7 @@ $border_color: #eee;
 					@include border-radius(0);
 					background: none;
 					border-color: $border_color;
-					font-size: 45px;
+					font-size: 32px;
 					@include montserrat(bold);
 					text-transform:uppercase;
 					color:$dark;
@@ -414,13 +414,15 @@ $border_color: #eee;
 			background-size: cover;
 			background-repeat: no-repeat;
 			background-position: center;
+			@media (min-width: $break-lg-min) {
+				vertical-align:middle;
+			}
 			@media (max-width:$break-md) {
 	        	width: 100%;
 	        	height:0px;
 	        	padding-top:63%;
 	        	margin:5px auto 0 auto;
 	        }
-
 			.image-select {
 				position:absolute;
 				left:0px;
@@ -449,7 +451,7 @@ $border_color: #eee;
 					}
 
 				}
-				a {
+				.image-link {
 					img {
 						width:10%;
 						margin-bottom: 2%;
@@ -527,6 +529,7 @@ $border_color: #eee;
 				text-align:left;
 				padding: 25px;
 				outline: none;
+				@include word-break(break-all);
 				
 				&:after {
 					padding: 25px;

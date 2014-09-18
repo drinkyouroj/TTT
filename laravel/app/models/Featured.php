@@ -23,7 +23,8 @@ class Featured extends Eloquent {
 									'tagline_3',
 									'story_type',
 									'image',
-									'published_at'
+									'published_at',
+									'body'
 								)
 							);
 	}
