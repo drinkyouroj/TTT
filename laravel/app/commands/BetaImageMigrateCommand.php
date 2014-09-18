@@ -51,11 +51,11 @@ class BetaImageMigrateCommand extends Command {
 				( !isset($user->image) || $user->image == 0 || !strlen($user->image) )
 				  ) {
 				$image = Post::find($user->featured)->image;
-				echo $image;
-				echo 'test';
-				$user->image = $image;
-
-				$user->save();
+				$this->line($image);
+				if(stlen($image)) {
+					$user->image = $image;
+					$user->save();
+				}
 			}
 			$this->line($k. ' '.$user->username.' has been migrated');
 		}
