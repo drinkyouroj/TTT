@@ -435,7 +435,9 @@ function ProfileActions() {
 		var url = window.site_url + 'rest/profile/post/' + post_id;
 		this.getData( url, function ( data ) {
 			if ( data.success ) {
-				$('#draft-container-' + post_id).remove();
+				$('#draft-container-' + post_id).fadeOut(function() {
+					$(this).remove();
+				});
 			}
 		});
 	};
