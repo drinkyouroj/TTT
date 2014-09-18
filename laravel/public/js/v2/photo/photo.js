@@ -28,7 +28,7 @@ function photoInit(photoInput) {
 		photoInput.photo_search_page = 1;
 		photoInput.keyword = $(photoInput.query_input).val();
 		photoInput.searchImages();
-	})
+	});
 
 	//Pager for the photo result sets
 	$('body').on('click', photoInput.photo_results+' a.pager', function() {
@@ -38,11 +38,11 @@ function photoInit(photoInput) {
 
 	//Click on the photo results to select the image.
 	$('body').on('click',photoInput.photo_results+' img',function() {
-		$(photoInput.reset).removeClass('hidden');//Show the reset button
+		$('.loading-container').fadeIn(); // show loading gif. sometime it takes awhile.
 
 		photoInput.selected_image = $(this).data('image');//HTML5 rocks!
 
-		$(photoInput.photo_chosen).html('');//empty the image from the chosen pile.
+		// $(photoInput.photo_chosen).html('');//empty the image from the chosen pile.
 		$(photoInput.photo_results).fadeOut();//Hide the photo selection options
 		$(photoInput.photo_processor).fadeIn();//fade in the photo process options
 		$(photoInput.chosen_label).fadeIn();
@@ -63,6 +63,7 @@ function photoInit(photoInput) {
 		photoInput.process = $(this).data('process');
 		$(this).siblings().removeClass('active');
 		$(this).addClass('active');
+		$('.loading-container').css('z-index', 1); // Display loading
 		//make sure we have all values.
 		if(photoInput.selected_image.length && photoInput.process.length) {
 			photoInput.applyProcess();
@@ -100,7 +101,6 @@ function PhotoInput() {
 
 	//Buttons
 	this.search_button = '.activate-search';
-	this.reset = '.photo-system .reset-search';
 
 	//Labels
 	this.chosen_label = '.chosen-label';
@@ -205,6 +205,7 @@ function PhotoInput() {
 		that = this;
 
 		this.getData(url, data, function(data) {
+			$('.loading-container').css('z-index', -1);  // hide loading
 			that.input.val('');//reset the input
 			$(that.chosen_label).fadeOut();
 			$(that.processed_label).fadeIn();

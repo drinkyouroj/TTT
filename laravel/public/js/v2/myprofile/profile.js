@@ -1,3 +1,4 @@
+
 //Events in the Profile Page
 $(function() {
 
@@ -79,6 +80,14 @@ $(function() {
 //View renders based on the id selectors.
 	$('.section-selectors a').click(function(event) {
 		event.preventDefault();
+		// Update url accordingly
+		var hash = $(this).attr('href');
+		if(history.pushState) {
+    		history.replaceState(null, null, hash);
+		} else {
+			location.hash = hash;
+		}
+
 		$('.section-selectors a').removeAttr('class');//gets rid of active state.
 		$(this).prop('class','active');
 		profile.view = $(this).prop('id');
@@ -648,6 +657,10 @@ function ProfileActions() {
 						$('#default-content',parent.target).append(saves_item_template(view_data));
 					});
 					parent.checkBodyHeight();
+					// If we recieved fewer than expected, assume end of drafts and fade out loading gif
+					if ( data.saves.length < 12 ) {
+						$('.loading-container img').fadeOut();	
+					}
 				} else {
 					// Finsished fetching all saves
 					parent.finished_pagination = true;
@@ -690,6 +703,10 @@ function ProfileActions() {
 						$('#default-content',parent.target).append(drafts_item_template(view_data));
 					});
 					parent.checkBodyHeight();
+					// If we recieved fewer than expected, assume end of drafts and fade out loading gif
+					if ( data.drafts.length < 12 ) {
+						$('.loading-container img').fadeOut();	
+					}
 				} else {
 					// No more drafts to load
 					parent.finished_pagination = true;
@@ -726,13 +743,17 @@ function ProfileActions() {
 					$('#default-content', parent.target).append(follow_template(view_data));
 				});
 				parent.checkBodyHeight();
+				// Quick fix, if we loaded fewer than 20 users assume that we reached end of pagination visually
+				// by fading out loading gif (although we will still end up making another request on scroll).
+				if ( data.follow.length < 20 ) {
+					$('.loading-container img').fadeOut();
+				}
 			} else {
 				// No more followers to load
 				parent.finished_pagination = true;
 				$('.loading-container img').fadeOut();
 			}
 		});
-
 	}
 
 	this.renderFollowing = function() {
@@ -751,6 +772,11 @@ function ProfileActions() {
 					$('#default-content', parent.target).append(follow_template(view_data));
 				});
 				parent.checkBodyHeight();
+				// Quick fix, if we loaded fewer than 20 users assume that we reached end of pagination visually
+				// by fading out loading gif (although we will still end up making another request on scroll).
+				if ( data.follow.length < 20 ) {
+					$('.loading-container img').fadeOut();
+				}
 			} else {
 				parent.finished_pagination = true;
 				$('.loading-container img').fadeOut();
