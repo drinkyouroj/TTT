@@ -9,6 +9,9 @@
 
 	h2 {
 		text-align: center;
+		@media (max-width:$break-xs) {
+			font-size:14px !important;
+		}
 	}
 
 	form.search-form {

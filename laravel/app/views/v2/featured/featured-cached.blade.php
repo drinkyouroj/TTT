@@ -63,7 +63,7 @@
 										<div class="signup-content">
 											<img class="join-community" src="{{ URL::to('images/featured/join-community.png') }}" alt="Join the Community">
 											<div class="line"></div>
-											<a class="btn-flat-blue" href="">Create An Account</a>
+											<a href="{{ URL::to( 'user/signup' ) }}" class="btn-flat-blue" href="">Create An Account</a>
 											<ul class="account-bullets">
 												<li>post your own stories</li>
 												<li>follow users</li>

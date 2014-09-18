@@ -9,10 +9,13 @@
 @stop
 
 @section('content')
-
-<div class="col-md-6 col-md-offset-3 info-container">
-	<h2>We can't find what you are looking for</h2>
-	<p>Hey, maybe the link wasn't quite right.</p>
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3 info-container about-container nocontent-container">
+			<h1>We can’t find the content you’re looking for!</h1>
+			<p>You may have entered a broken link, double check and try again.</p>
+		</div>
+	</div>
 </div>
 	
 	

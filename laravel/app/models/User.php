@@ -78,12 +78,15 @@ class User extends Eloquent implements UserInterface {
 			array(
 		        'username' => 'required|min:3|max:15|alpha_dash|unique:users',
 		        'email' => 'email|reservation_cap:3',
-		        'password' => 'required|between:4,11|confirmed',
-		        'password_confirmation' => 'between:4,11',
+		        'password' => 'required|between:6,11|confirmed',
+		        'password_confirmation' => 'between:6,11',
 		        'captcha' => 'required|math_captcha',
     		), 
 			// Error messages
 			array(
+				'username.unique' => 'This username is taken.',
+				'email.reservation.cap' => "You can only create 3 usernames per email.",
+				'password.confirmed' => 'Your two passwords don’t match! Please try again.',
 				'captcha.required' => 'Let us know that you are a human: fill out the captcha!',
 				'captcha.math_captcha' => 'Are you a human? You got the captcha wrong!'
     		)

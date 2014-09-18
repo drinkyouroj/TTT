@@ -12,37 +12,37 @@
 	
 		{{#ifCond notification.notification_type 'follow'}}
 			<a class="follow" href="{{site_url}}profile/{{notification.user}}">
-				<span class="action-user">{{ notification.users.[0] }}</span> follow you!
+				<span class="action-user">{{ notification.users.[0] }}</span> started following you
 			</a>
 		{{/ifCond}}
 		{{#ifCond notification.notification_type 'post'}}
 			<a class="post" href="{{site_url}}posts/{{notification.post_alias}}">
-				<span class="action-user">{{ notification.users.[0] }}</span> submitted a new post:
+				<span class="action-user">{{ notification.users.[0] }}</span> submitted a new post
 				<span class="notification-post-title">{{ notification.post_title }}</span>
 			</a>
 		{{/ifCond}}
 		{{#ifCond notification.notification_type 'repost'}}
 			<a class="repost" href="{{site_url}}posts/{{notification.post_alias}}">
-				<span class="action-user">{{ notification.users.[0] }}</span> reposted: 
+				<span class="action-user">{{ notification.users.[0] }}</span> reposted your post 
 				<span class="notification-post-title">{{ notification.post_title }}</span>
 			</a>
 		{{/ifCond}}
 		{{#ifCond notification.notification_type 'comment'}}
 			<a class="comment" href="{{site_url}}posts/{{notification.post_alias}}#comment-{{notification.comment_id}}">
-				<span class="action-user">{{ notification.users.[0] }}</span> commented on your post: 
+				<span class="action-user">{{ notification.users.[0] }}</span> commented on your post 
 				<span class="notification-post-title">{{ notification.post_title }}</span>
 			</a>
 		{{/ifCond}}
 		{{#ifCond notification.notification_type 'reply'}}
 			<a class="reply" href="{{site_url}}posts/{{notification.post_alias}}#comment-{{notification.comment_id}}">
-				<span class="action-user">{{ notification.users.[0] }}</span> replyed to your commment: 
+				<span class="action-user">{{ notification.users.[0] }}</span> replied to your commment on 
 				<span class="notification-post-title">{{#substring notification.post_title}}{{/substring}}</span>
 			</a>
 		{{/ifCond}}
 		
 		{{#ifCond notification.notification_type 'like'}}
 			<a class="like" href="{{site_url}}posts/{{notification.post_alias}}">
-				<span class="action-user">{{ notification.users.[0] }}</span> liked your post: 
+				<span class="action-user">{{ notification.users.[0] }}</span> liked your post 
 				<span class="notification-post-title">{{#substring notification.post_title}}{{/substring}}</span>
 			</a>
 		{{/ifCond}}

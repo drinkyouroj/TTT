@@ -870,7 +870,7 @@ function ProfileActions() {
 			if(response.success == false) {
 				$('form#changePassword .message-box').html('<p>'+response.message+'Please try again</p>');
 			} else {
-				$('form#changePassword .message-box').html('<p>Smashing success! Your Password has been changed</p>');
+				$('form#changePassword .message-box').html('<p>Success! Your password has been changed.</p>');
 			}
 		}
 
