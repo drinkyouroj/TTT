@@ -82,12 +82,12 @@ $(function() {
 	});
 
 	$('.save-draft').click(function() {
-		save_post.autosave_started = false;
+		save_post.autosave = false;
 		save_post.sendDraft(window.editor);
 	});
 
 	$('.submit-post').click(function() {
-		save_post.autosave_started = false;
+		save_post.autosave = false;
 		save_post.sendPublish(window.editor);
 	});
 
@@ -108,31 +108,35 @@ $(function() {
 	   }
 	});
 
-	$('textarea.title').on('change', function(event) {
-		console.log($(this).val().length);
-		if($(this).val().length >= 5) {
-			save_post.autosave = true;
+	// Only start autosave on drafted posts
+	if ( !save_post.published ) {
+		// If the post hase been previously drafted, start autosaving right away
+		if ( save_post.draft && save_post.post_id != 0 ) {
 			start_save();
-		} else if($(this).val().length < 5) {
-			stop_save();
+		// Otherwise, dont start autosaving until a title has been entered.
+		} else {
+			$('textarea.title').on('change', function(event) {
+				// console.log($(this).val().length);
+				if($(this).val().length >= 5) {
+					start_save();
+				} else if($(this).val().length < 5) {
+					stop_save();
+				}
+			});
 		}
-	});
-
-	if(save_post.post_id != 0) {
-		start_save();
 	}
 
 	function start_save() {
 		if(save_post.autosave_started == false) {
-			console.log('auto save started!');
+			// console.log('auto save started!');
 			save_post.autosave = true;
-			save_post.sendDraft();//send draft the moment this system starts.
+			save_post.sendAutoSaveDraft();//send draft the moment this system starts.
 			save_post.autoSaveInterval = setInterval(function() {
-				save_post.sendDraft();
+				save_post.sendAutoSaveDraft();
 				$('.draft-publish .save-draft').text('Saving...');
 				setTimeout(function() {
 					$('.draft-publish .save-draft').text('Draft');
-				}, 1000);
+				}, 2000);
 				
 			}, 20000);//saves every 10 seconds.
 			save_post.autosave_started = true;
@@ -140,7 +144,7 @@ $(function() {
 	}
 
 	function stop_save() {
-		console.log('auto save cleared!');
+		// console.log('auto save cleared!');
 		clearInterval(save_post.autoSaveInterval);
 	}
 
@@ -269,21 +273,13 @@ var save_post = new function() {
 			this.textarea.html( data );//load in the data into the textarea.
 		}
 		
-		console.log(this.autosave);
-		console.log(this);
-
-		if(this.autosave_started == false) {
-			if (this.draft) {
-				this.form.validate(this.validate_options_draft);
-				return this.form.valid();
-			} else {
-				this.form.validate(this.validate_options);
-				return this.form.valid();
-			}
+		if (this.draft) {
+			this.form.validate(this.validate_options_draft);
+			return this.form.valid();
 		} else {
-			return true;
+			this.form.validate(this.validate_options);
+			return this.form.valid();
 		}
-
 	};
 
 	//this function grabs existing data and runs validation
@@ -314,14 +310,11 @@ var save_post = new function() {
 		this.image = $('input.processed-image',this.form).val();
 
 		//validate the data and if its working, we can just send it out.
-		if(this.validate()) {
-			this.send();
-		}
 	}
 
 	//Functions.
 	this.send = function() {
-		console.log(this.dataCompile());
+		// console.log(this.dataCompile());
 		save_post = this;
 		$.ajax({
 			type: "POST",
@@ -343,7 +336,7 @@ var save_post = new function() {
 					autosave: this.autosave
 				},//uses the data function to get 
 			success: function(data) {
-				console.log(data);
+				// console.log(data);
 
 				switch(data.result) {
 					default:
@@ -358,10 +351,10 @@ var save_post = new function() {
 				}
 			},
 			complete: function(xhr, status) {
-				console.log(xhr.status);
+				// console.log(xhr.status);
 			},
 			error: function(xhr, status) {
-				console.log(xhr.status);
+				// console.log(xhr.status);
 				switch(data.error) {
 					default:
 					case '72':
@@ -382,14 +375,22 @@ var save_post = new function() {
 		});
 	};
 
+	this.sendAutoSaveDraft = function () {
+		this.grabData();
+		this.autosave = true;
+		// skip frontend validation for autosave...
+		this.send();
+	}
+
 	this.sendDraft = function() {
 		//gotta set the states
-		if(this.autosave) {
-			console.log('another autosave');
-		}
 		this.draft = 1;
 		this.published = 0;
 		this.grabData();//grab data automatically sends out the data via "send function"
+		this.autosave = false;
+		if(this.validate()) {
+			this.send();
+		}
 	};
 
 	this.sendPublish = function() {
@@ -397,6 +398,10 @@ var save_post = new function() {
 		this.draft = 0;
 		this.published = 1;
 		this.grabData();
+		this.autosave = false;
+		if(this.validate()) {
+			this.send();
+		}
 	};
 
 	this.createAfter = function(data) {
@@ -434,13 +439,11 @@ var save_post = new function() {
 		}
 		if(this.autosave == false) {
 			if(this.draft ) {
-				window.location.replace(window.site_url+'myprofile#drafts');
+				window.location.href = window.site_url+'myprofile#drafts';
 			} else {
-				window.location.replace(window.site_url+'myprofile#collection');
+				window.location.href = window.site_url+'myprofile#collection';
 			}
 		}
 	}
-
-
 
 }
