@@ -1,8 +1,8 @@
 <!-- Notification template -->
 <script type="text/javascript">
-	Handlebars.registerHelper('substring', function(v1) {
-		if ( v1.length > 25 )
-			return v1.substring(0,25) + '...';
+	Handlebars.registerHelper('substring', function(v1, v2) {
+		if ( v1.length > v2 )
+			return v1.substring(0,v2) + '...';
 		else
 			return v1;
 	});
@@ -36,14 +36,14 @@
 		{{#ifCond notification.notification_type 'reply'}}
 			<a class="reply" href="{{site_url}}posts/{{notification.post_alias}}#comment-{{notification.comment_id}}">
 				<span class="action-user">{{ notification.users.[0] }}</span> replied to your commment on 
-				<span class="notification-post-title">{{#substring notification.post_title}}{{/substring}}</span>
+				<span class="notification-post-title">{{#substring notification.post_title 25}}{{/substring}}</span>
 			</a>
 		{{/ifCond}}
 		
 		{{#ifCond notification.notification_type 'like'}}
 			<a class="like" href="{{site_url}}posts/{{notification.post_alias}}">
 				<span class="action-user">{{ notification.users.[0] }}</span> liked your post 
-				<span class="notification-post-title">{{#substring notification.post_title}}{{/substring}}</span>
+				<span class="notification-post-title">{{#substring notification.post_title 25}}{{/substring}}</span>
 			</a>
 		{{/ifCond}}
 
@@ -108,7 +108,7 @@
 				Commented on <a href="{{site_url}}posts/{{comment.post.alias}}#comment-{{comment._id}}">{{comment.post.title}}</a>
 			</div>
 			<div class="comment">
-				{{comment.body}}
+				{{#substring comment.body 200}}{{/substring}}
 				<br/>
 				<a class="readmore" href="{{site_url}}posts/{{comment.post.alias}}#comment-{{comment._id}}"> Read more<a/>
 			</div>
