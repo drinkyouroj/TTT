@@ -42,11 +42,6 @@ class LaunchEmailCommand extends Command {
 		//
 		$paginate = 50;//just to make sure that we only really do 1.
 		$page = 0;//default;
-		if(empty(intval( $this->argument('page') ) ) ) {
-			$page = 0;
-		} else {
-			$page = intval( $this->argument('page') );
-		}
 
 		$reserved_users = $this->reservedQuery($paginate, $page);//initial pull
 
