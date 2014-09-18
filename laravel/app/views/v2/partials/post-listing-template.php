@@ -23,7 +23,7 @@
 	);
 	Handlebars.registerHelper('userImage', function(v1, v2, options) {
 			//v2 is site url
-			if(v1) {
+			if(v1 && v1 != 0 && v1 != '0') {
 				return window.image_url + '/' + v1;
 			}else {
 				return window.site_url + 'images/profile/avatar-default.png';
