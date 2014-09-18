@@ -200,7 +200,7 @@ class UserController extends BaseController {
                 $err_msg = 'Wrong Credentials';
             }
 
-            return Redirect::to('user/loginonly')
+            return Redirect::secure('user/loginonly')
                 ->withInput(Input::except('password'))
                 ->with( 'error', $err_msg );
         }
@@ -385,7 +385,7 @@ class UserController extends BaseController {
 			if($validator->fails()) {
 				//No good.  the passwords do not match
 				$failed = true;
-				$message = "The two passwords don't match!";
+				$message = "The two passwords don't match! ";
 				
 			} else {
 				//Actually update the damn passwords
@@ -396,7 +396,7 @@ class UserController extends BaseController {
         } else {
         	//need to return that auth failed.
         	$failed = true;
-			$message = 'Wrong current password';
+			$message = 'Wrong current password. ';
         }
 		
 		if($failed) {
