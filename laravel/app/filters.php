@@ -189,7 +189,7 @@ View::composer('*', function($view) {
 			$notification_ids[$k] = $nots->_id;
 		}
 		
-		$user_image = $user->image ? 'uploads/final_images/'.$user->image : 'images/profile/avatar-default.png';
+		$user_image = $user->image ? $user->image : false;
 
 		$view->with('categories',$categories)
 			 ->with('filters', $filters)
