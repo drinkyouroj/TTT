@@ -119,7 +119,7 @@ a {
 	}
 }
 
-//about
+//about and 404
 .about-wrapper {
 	overflow:hidden;
 }
@@ -155,6 +155,16 @@ a {
 			text-align:left;
 			margin-bottom:20px;
 		}
+	}
+}
+
+.nocontent-container {
+	padding:20px 50px 70px 50px;
+	@media (max-width:$break-sm) {
+		padding:10px 30px 30px 30px;
+	}
+	p {
+		text-align:center !important;
 	}
 }
 
