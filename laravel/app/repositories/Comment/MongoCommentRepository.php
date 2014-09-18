@@ -128,15 +128,15 @@ class MongoCommentRepository implements CommentRepository {
 	}
 
 	/**
-	 *	Fetch comments for a given post. Pagination is available by the 'highest' level
-	 *	comments (ie: comments with no parent, start of a comment thread, etc...).
+	 *	Fetch comments for a given post.
 	 */
 	public function findByPostId ( $post_id, $paginate = 10, $page = 1 ) {
 		return MongoComment::where( 'post_id', intval( $post_id ) )
 						   ->orderBy( 'full_slug_desc', 'desc' )
-						   // ->orderBy( 'full_slug_asc', 'asc' )
+						   // ->orderBy( 'full_slug_asc', 'asc' ) // Used for sorting in ascending order
 						   ->skip( ($page - 1) * $paginate )
 						   ->take( $paginate )
+						   // ->select( '_id', 'depth', 'published', )
 						   ->get();
 	}
 	

@@ -360,7 +360,7 @@ $border_color: #eee;
 					@include border-radius(0);
 					background: none;
 					border-color: $border_color;
-					font-size: 45px;
+					font-size: 32px;
 					@include montserrat(bold);
 					text-transform:uppercase;
 					color:$dark;
