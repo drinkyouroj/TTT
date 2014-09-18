@@ -33,10 +33,10 @@
 				<div class="col-md-12 date">
 					<div class="date-circle">
 						<span class="month">
-							December
+							{{date('F')}}
 						</span>
 						<span class="day">
-							30
+							{{date('j')}}
 						</span>
 					</div>
 				</div>
