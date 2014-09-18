@@ -80,6 +80,7 @@ class ElasticSearchRepository implements SearchRepository {
 		$params['index'] = 'posts';
 		$params['type'] = 'post';
 		$params['id'] = $post_id;
+		$params['ignore'] = 404;
 		return $this->client->delete( $params );
 	}
 
@@ -88,6 +89,7 @@ class ElasticSearchRepository implements SearchRepository {
 		$params['index'] = 'users';
 		$params['type'] = 'user';
 		$params['id'] = $user_id;
+		$params['ignore'] = 404;
 		return $this->client->delete( $params );
 	}
 
