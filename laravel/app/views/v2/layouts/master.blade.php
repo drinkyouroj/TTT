@@ -26,8 +26,8 @@
     @endif
 
     <!--Favicon-->
-    <link href="/favicon.ico" rel="icon" type="image/x-icon" />
-	<link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="{{Config::get('app.staticurl')}}/images/favicon.ico" rel="icon" type="image/x-icon" />
+	<link href="{{Config::get('app.staticurl')}}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     
     <!--Fonts-->
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700|Fjalla+One' rel='stylesheet' type='text/css'>    
