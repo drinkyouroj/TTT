@@ -1,7 +1,7 @@
 <?php
 
 #define('APP_HOST', 'http://janus00-483730696.us-west-2.elb.amazonaws.com'); #push all through load balancer
-define('APP_HOST', 'http://internal.twothousandtimes.com'); #push all through load balancer
+define('APP_HOST', 'http://twothousandtimes.com'); #push all through load balancer
 #define('APP_HOST', ''); #relative
 #define('APP_HOST', 'http://54.68.96.139'); #my External IP -- means direct traffic to box, not through LB. also cross-origin problem, and specific config per box required.
 
@@ -35,9 +35,9 @@ return array(
 	*/
 	
 	'url' => APP_HOST, #constant defined at top
-	'secureurl' => 'https://internal.twothousandtimes.com',
+	'secureurl' => 'https://twothousandtimes.com',
 	'imageurl' => APP_HOST.'/uploads/final_images',
-	'staticurl' => '//internal.twothousandtimes.com',
+	'staticurl' => '//twothousandtimes.com',
 	'cdn_upload' => true,//set to true if you want your images to go to S3.
 	/*
 	|--------------------------------------------------------------------------
