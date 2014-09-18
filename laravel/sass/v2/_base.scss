@@ -671,6 +671,7 @@ textarea {
     .post-title {
       margin-top:10px;
       margin-bottom: 3px;
+      @include word-break(break-all);
       a {
         @include title_listing;
       }
@@ -679,6 +680,9 @@ textarea {
     .post-taglines {
       li:nth-child(1), li:nth-child(2) {
         border-right: 1px solid gray;
+      }
+      li {
+        @include word-break(break-all);
       }
       @include tagline_listing;
     }

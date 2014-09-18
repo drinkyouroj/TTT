@@ -16,6 +16,12 @@
 
 @section('css')
 	<link href="{{Config::get('app.staticurl')}}/css/compiled/v2/featured/featured.css" rel="stylesheet" media="screen">
+
+	{{--CSS and heading is the same so its not an issue to put that stuff here.--}}
+	<meta property="og:title" content="Two Thousand Times" />
+	<meta property="og:description" content="Every life is a story waiting to be heard." />
+	<meta property="og:image" content="{{ Config::get('app.url').'/images/profile/avatar-default.png' }}" />
+	<meta property="og:type" content="article" />
 @stop
 
 @section('title')

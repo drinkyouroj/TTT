@@ -137,7 +137,13 @@
 					</h3>
 					<p>{{save.tagline_1}} | {{save.tagline_2}} | {{save.tagline_3}}</p>
 					<p class="author">
-						<a href="{{site_url}}profile/{{save.user.username}}" style="background-image: url('{{image_url}}/{{save.user.image}}');">
+						<a href="{{site_url}}profile/{{save.user.username}}">
+
+							{{#if save.user.image}}
+								<span class="avatar-image" style="background-image: url('{{image_url}}/{{save.user.image}}');"></span>
+							{{else}}
+								<span class="avatar-image" style="background-image:url('{{site_url}}images/profile/avatar-default.png');"></span>
+							{{/if}}
 							{{save.user.username}}
 						</a>
 					</p>

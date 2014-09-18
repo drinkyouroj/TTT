@@ -136,6 +136,7 @@
 				h2 {
 					font-size:24px;
 					letter-spacing:2px;
+					@include word-break(break-all);
 					@media (max-width:$break-xs) {
 						font-size:17px;
 					}
@@ -152,6 +153,7 @@
 						@include tagline_listing;
 						margin-bottom:0px;
 						letter-spacing:1px;
+						@include word-break(break-all);
 						@media (max-width:$break-sm) {
 							margin-bottom:0px;
 							letter-spacing:0px;
@@ -164,6 +166,7 @@
 				.author {
 					color:$gray_text;
 					margin-bottom:20px;
+					@include word-break(break-all);
 					a {
 						@include montserrat;
 						font-size:14px;
@@ -232,6 +235,7 @@
 			margin:0px;
 			.post-title {
 				margin-top:20px;
+				@include word-break(break-all);
 				a {
 					font-size:21px;
 					@media (max-width:$break-xs) {
@@ -244,10 +248,14 @@
 				width:20px;
 				margin:10px auto;
 			}
+			.post-taglines {
+				@include word-break(break-all);
+			}
 			.author {
 				font-size:14px;
 				text-align:center;
 				color:$darker_cream;
+				@include word-break(break-all);
 				a {
 					@include montserrat(normal);
 					font-size:14px;

@@ -50,7 +50,7 @@ class HomeController extends BaseController {
 				$random = $this->featured->random();
 				$view->with('from_feed', $random->post);
 			}
-			
+
 		} else {
 			$view->with('from_feed', false);
 		}
@@ -72,7 +72,7 @@ class HomeController extends BaseController {
 	public function getRestFeatured($page = 1 )
 	{
 		
-		$featured = $this->featured->find(6, $page, true);
+		$featured = $this->featured->find(8, $page, true);
 		
 		if(!count($featured)) {
 			return Response::json(
