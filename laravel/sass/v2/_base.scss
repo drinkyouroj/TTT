@@ -462,8 +462,6 @@ textarea {
   .category-filter-container {
     min-width:150px;
     display: inline-block;
-    margin: 10px;
-    margin-left: 15px;
     position: relative;
 
     .category-filter-title {
@@ -869,11 +867,9 @@ textarea {
         }
          a.pager{
           display:inline-block;
-          width:150px;
-          height:75px;
           vertical-align:top;
           margin: 10px 5px;
-          padding:30px 25px 10px 25px;
+          padding:10px 15px;
           cursor:pointer;
 
           @include montserrat;

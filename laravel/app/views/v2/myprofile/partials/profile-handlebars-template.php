@@ -298,7 +298,7 @@
 			<div class="line"></div>
 			<p class="tagline">{{post.tagline_1}} | {{post.tagline_2}} | {{post.tagline_3}}</p>
 			<p class="excerpt">
-				{{post.excerpt}}
+				{{post.excerpt}}...
 			</p>
 			<div class="read-more">
 				<a href="{{site_url}}posts/{{post.alias}}">Read More</a>
