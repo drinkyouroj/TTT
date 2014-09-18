@@ -248,7 +248,7 @@
 			.author {
 				font-size:14px;
 				text-align:center;
-				color:$gray;
+				color:$darker_cream;
 				a {
 					@include montserrat(normal);
 					font-size:14px;
@@ -370,6 +370,9 @@
 		}
 		.filter-dropdown {
 			@include drop_shadow();
+		}
+		@media (max-width:$break-md) {
+			margin-left:15px;
 		}
 	}
 	.trending-content {

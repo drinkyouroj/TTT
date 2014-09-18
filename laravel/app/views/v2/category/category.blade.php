@@ -21,7 +21,7 @@
 				{{ $cat_title }}
 			</h1>
 			@if(!$cat_desc)
-				<p class="category-description">All | Description | We'll add this to admin later</p>
+				<p class="category-description"></p>
 			@else
 				<p class="category-description" data-category-alias="{{$cat_alias}}">{{$cat_desc}}</p>
 			@endif
