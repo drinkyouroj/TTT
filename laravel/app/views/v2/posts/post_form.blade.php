@@ -31,6 +31,14 @@
 		@if($edit)
 			<script type="text/javascript">
 				save_post.post_id = {{$post->id}};
+				save_post.draft = {{$post->draft}};
+				save_post.published = {{$post->published}};
+			</script>
+		@else
+			<script type="text/javascript">
+				save_post.post_id = 0;
+				save_post.draft = 1;
+				save_post.published = 0;
 			</script>
 		@endif
 	@stop
