@@ -14,6 +14,22 @@ $(function() {
 		$(this).next().toggle();
 	});
 
+	$(document).mouseup(function (e) {
+		var container = $('.cat-container');
+		var category = $('.cat-container .category-filter-title');		
+		if(	!category.is(e.target) && container.has(e.target).length === 0) {
+			category.next().hide();
+		}
+	})
+
+	$(document).mouseup(function (e) {
+		var container = $('.sort-container');
+		var filter = $('.sort-container .category-filter-title');
+		if(	!filter.is(e.target) && container.has(e.target).length === 0 ) {
+			filter.next().hide();
+		}
+	})
+
 
 	// =========================== HANDLBARS TEMPLATE ===========================
 	// Add some logic to handlebars template
