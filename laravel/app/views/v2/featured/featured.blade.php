@@ -20,7 +20,7 @@
 	{{--CSS and heading is the same so its not an issue to put that stuff here.--}}
 	<meta property="og:title" content="Two Thousand Times" />
 	<meta property="og:description" content="Every life is a story waiting to be heard." />
-	<meta property="og:image" content="{{ Config::get('app.url').'/images/global/ttt-icon.png' }}" />
+	<meta property="og:image" content="{{ Config::get('app.url').'/images/global/TTT-logo-main.jpg' }}" />
 	<meta property="og:type" content="article" />
 @stop
 
