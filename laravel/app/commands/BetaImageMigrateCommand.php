@@ -52,7 +52,7 @@ class BetaImageMigrateCommand extends Command {
 				  ) {
 				$image = Post::find($user->featured)->image;
 				$this->line($image);
-				if(stlen($image)) {
+				if(strlen($image)) {
 					$user->image = $image;
 					$user->save();
 				}
