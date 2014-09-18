@@ -38,8 +38,11 @@
 							<a class="login-btn login hidden-xs" href="{{ URL::to( 'user/login' ) }}">LOG IN</a>
 						@else
 						<div class="action">
-							<img class="navbar-dropdown-toggle avatar" src="{{Config::get('app.url')}}/{{$user_image}}">
-							
+							@if($user_image)
+								<img class="navbar-dropdown-toggle avatar" src="{{Config::get('app.imageurl')}}/{{$user_image}}">
+							@else
+								<img class="navbar-dropdown-toggle avatar" src="{{Config::get('app.url')}}/images/profile/avatar-default.png">
+							@endif
 							@if ( count($notifications) )
 								<div class="notification-label">
 									{{ $notification_count > 10 ? '10+' : $notification_count }}
@@ -61,8 +64,12 @@
 						<div class="navbar-dropdown">
 							<div class="dropdown-wrapper">
 								<div class="user">
-									<a href="{{Config::get('app.url')}}/myprofile">										
-										<img class="avatar" src="{{Config::get('app.url')}}/{{$user_image}}">
+									<a href="{{Config::get('app.url')}}/myprofile">
+										@if($user_image)
+											<img class="avatar" src="{{Config::get('app.imageurl')}}/{{$user_image}}">
+										@else
+											<img class="avatar" src="{{Config::get('app.url')}}/images/profile/avatar-default.png">
+										@endif
 										{{ Session::get('username') }}
 									</a>
 								</div>
