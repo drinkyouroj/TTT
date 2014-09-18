@@ -3,7 +3,7 @@
 		<section>
 			<a href="{{ URL::to('profile/'.$user->username) }}">
 				<?php
-				$image = isset($user->image) && $user->image ? URL::to('uploads/final_images/'.$user->image) : URL::to('images/profile/avatar-default.png'); 
+				$image = isset($user->image) && $user->image ? Config::get('app.imageurl').'/'.$user->image : URL::to('images/profile/avatar-default.png');
 				?>
 				<div class="the-image user-avatar" style="background-image: url('{{$image}}');">
 				</div>
