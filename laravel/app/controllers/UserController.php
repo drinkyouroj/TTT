@@ -66,7 +66,7 @@ class UserController extends BaseController {
             //Gotta send out email
             if(!empty($data['email']) ) {
                 $email_data = array(
-                    'from' => 'no_reply@twothousandtimes.com',
+                    'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
                     'to' => array($data['email']),
                     'subject' => 'Thanks for Joining Two Thousand Times!',
                     'plaintext' => View::make('v2/emails/new_user_plain')->with('user', $user)->render(),
@@ -317,7 +317,7 @@ class UserController extends BaseController {
 
                 //send them the email
                 $email_data = array(
-                    'from' => 'no_reply@twothousandtimes.com',
+                    'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
                     'to' => array($user->email),
                     'subject' => "Here's your new credentials for Two Thousand Times.",
                     'plaintext' => $plain,

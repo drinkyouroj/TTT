@@ -78,7 +78,7 @@ $(function() {
 
 //View renders based on the id selectors.
 	$('.section-selectors a').click(function(event) {
-		//event.preventDefault();
+		event.preventDefault();
 		$('.section-selectors a').removeAttr('class');//gets rid of active state.
 		$(this).prop('class','active');
 		profile.view = $(this).prop('id');
@@ -155,7 +155,7 @@ $(function() {
 
 //View renders for settings/follow
 	$('.fing-fer a, a#settings').click(function(event) {
-		//event.preventDefault();
+		event.preventDefault();
 		$('.section-selectors a').removeAttr('class');//gets rid of the class.
 		profile.view = $(this).prop('id');
 

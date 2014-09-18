@@ -82,12 +82,12 @@ $(function() {
 	});
 
 	$('.save-draft').click(function() {
-		save_post.autosave = false;
+		save_post.autosave_started = false;
 		save_post.sendDraft(window.editor);
 	});
 
 	$('.submit-post').click(function() {
-		save_post.autosave = false;
+		save_post.autosave_started = false;
 		save_post.sendPublish(window.editor);
 	});
 
@@ -111,6 +111,7 @@ $(function() {
 	$('textarea.title').on('change', function(event) {
 		console.log($(this).val().length);
 		if($(this).val().length >= 5) {
+			save_post.autosave = true;
 			start_save();
 		} else if($(this).val().length < 5) {
 			stop_save();
@@ -268,13 +269,21 @@ var save_post = new function() {
 			this.textarea.html( data );//load in the data into the textarea.
 		}
 		
-		if (this.draft) {
-			this.form.validate(this.validate_options_draft);
-			return this.form.valid();
+		console.log(this.autosave);
+		console.log(this);
+
+		if(this.autosave_started == false) {
+			if (this.draft) {
+				this.form.validate(this.validate_options_draft);
+				return this.form.valid();
+			} else {
+				this.form.validate(this.validate_options);
+				return this.form.valid();
+			}
 		} else {
-			this.form.validate(this.validate_options);
-			return this.form.valid();
+			return true;
 		}
+
 	};
 
 	//this function grabs existing data and runs validation
