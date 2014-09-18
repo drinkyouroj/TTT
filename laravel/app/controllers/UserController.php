@@ -385,7 +385,7 @@ class UserController extends BaseController {
 			if($validator->fails()) {
 				//No good.  the passwords do not match
 				$failed = true;
-				$message = "The two passwords don't match!";
+				$message = "The two passwords don't match! ";
 				
 			} else {
 				//Actually update the damn passwords
@@ -396,7 +396,7 @@ class UserController extends BaseController {
         } else {
         	//need to return that auth failed.
         	$failed = true;
-			$message = 'Wrong current password';
+			$message = 'Wrong current password. ';
         }
 		
 		if($failed) {

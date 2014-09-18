@@ -31,6 +31,10 @@
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/comment-pagination.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post_actions.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post.js"></script>
+	
+	<!-- Go to www.addthis.com/dashboard to customize your tools -->
+	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53f22b3f69014ed4"></script>
+
 @stop
 
 @section('title')
@@ -191,6 +195,9 @@
 			@endif
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1 extra-actions">
+						<div class="sharing">
+							<div class="addthis_custom_sharing"></div>
+						</div>
 					@if( !$is_author )
 						<div class="col-md-3 utility-container">
 							@if($favorited)
