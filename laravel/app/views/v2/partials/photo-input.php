@@ -7,7 +7,7 @@
 				<a class="btn activate-search btn-flat-gray">Search</a>
 				<br/>
 				<br/>
-
+			<div class="clearfix"></div>
 			</div>
 			
 			<div class="photo-results">
