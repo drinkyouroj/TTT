@@ -60,7 +60,7 @@
 					<h2>
 						<a>
 							@if($profile_user->image)
-								<span class="avatar-image" style="background-image:url('{{Config::get('app.url')}}/uploads/final_images/{{$profile_user->image}}');"></span>
+								<span class="avatar-image" style="background-image:url('{{Config::get('app.imageurl')}}/{{$profile_user->image}}');"></span>
 							@else
 								<span class="avatar-image" style="background-image:url('{{Config::get('app.url')}}/images/profile/avatar-default.png');"></span>
 							@endif
