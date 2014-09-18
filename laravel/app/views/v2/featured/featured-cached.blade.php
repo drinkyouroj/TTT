@@ -22,7 +22,7 @@
 										<a href="{{Config::get('app.url')}}/profile/{{$main->user->username}}"> {{ $main->user->username }} </a>
 									</div>
 									<div class="excerpt">
-										{{substr($main->body, 0,200)}}
+										{{substr($main->body, 0,200)}}...
 										<br/>
 										<a class="read-more" href="{{Config::get('app.url')}}/posts/{{$main->alias}}">Read More</a>
 										</a>

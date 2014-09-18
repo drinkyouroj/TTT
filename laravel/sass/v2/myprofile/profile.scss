@@ -729,6 +729,11 @@ a:focus {
 								cursor:pointer;
 							}
 						}
+						.change-password {
+							@media (max-width:$break-md) {
+								margin-bottom:30px;
+							}
+						}
 						h2 {
 							font-size:17px;
 						}
@@ -739,8 +744,12 @@ a:focus {
 							width:100%;
 							margin-bottom:10px;
 							padding:5px;
+							background:$white;
 							box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
 							border:solid 1px $gray;
+							@media (max-width:$break-md) and (min-width:$break-sm-min) {
+								width:50%;
+							}
 						}
 					}
 
