@@ -136,12 +136,22 @@ class MongoCommentRepository implements CommentRepository {
 						   // ->orderBy( 'full_slug_asc', 'asc' ) // Used for sorting in ascending order
 						   ->skip( ($page - 1) * $paginate )
 						   ->take( $paginate )
-						   // ->select( '_id', 'depth', 'published', )
+						   ->select( '_id',
+						   			 'post_id',
+						   			 'depth',
+						   			 'published',
+						   			 'author',
+						   			 'created_at',
+						   			 'updated_at',
+						   			 'body',
+						   			 'likes',
+						   			 'flags'
+						   			 )
 						   ->get();
 	}
 	
 	/**
-	 *	Fetch comments by a given author
+	 *	Fetch comments by a given author.
 	 */
 	public function findByUserId ( $user_id, $paginate = 5, $page = 1, $rest = false ) {
 		$query = $this->comment->where( 'author.user_id', intval($user_id) )
@@ -152,7 +162,14 @@ class MongoCommentRepository implements CommentRepository {
 						   		;
 		
 		if($rest) {
-			return $query->with('post.user')->get();
+			return $query->with('post.user')
+						 ->select( '_id',
+						   		   'post_id',
+						   		   'depth',
+						   		   'published',
+						   		   'body'
+						   		  )
+						 ->get();
 		} else {
 			return $query->get();
 		}
