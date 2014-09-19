@@ -207,12 +207,14 @@
 			</li>
 		@endif
 
-		<li class="sidebar-option signup-mobile visible-xs">
-			<a href="{{ URL::to( 'user/signup' ) }}">Signup</a>
-		</li>
-		<li class="sidebar-option login-mobile visible-xs">
-			<a href="{{ URL::to( 'user/login' ) }}">Log in</a>
-		</li>
+		@if ( $is_guest )
+			<li class="sidebar-option signup-mobile visible-xs">
+				<a href="{{ URL::to( 'user/signup' ) }}">Signup</a>
+			</li>
+			<li class="sidebar-option login-mobile visible-xs">
+				<a href="{{ URL::to( 'user/login' ) }}">Log in</a>
+			</li>
+		@endif
 	</ul>
 </div>
 
