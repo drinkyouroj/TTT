@@ -1,3 +1,4 @@
+.gitver
 .project
 node_modules/*
 .sass-cache

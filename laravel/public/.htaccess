@@ -21,6 +21,14 @@ DirectoryIndex index.php invite.php
     Options +FollowSymLinks
     RewriteEngine On
 
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP_HOST} www.twothousandtimes.com$ [NC]
+    RewriteRule ^(.*)$  http://twothousandtimes.com/$1 [L]
+
+    RewriteCond %{HTTPS} on
+    RewriteCond %{HTTP_HOST} www.twothousandtimes.com$ [NC]
+    RewriteRule ^(.*)$  https://twothousandtimes.com/$1 [L]
+
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
