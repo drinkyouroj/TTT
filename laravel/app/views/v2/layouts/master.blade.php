@@ -15,13 +15,13 @@
     
     <link href="{{Config::get('app.staticurl')}}/css/animate.css" rel="stylesheet" media="screen">
     
-	<link href="{{Config::get('app.staticurl')}}/css/compiled/v2/bs.css" rel="stylesheet" media="screen">
+	<link href="{{Config::get('app.staticurl')}}/css/compiled/v2/bs.css?v={{$version}}" rel="stylesheet" media="screen">
 
     <!--Application Shared CSS-->
-    <link href="{{Config::get('app.staticurl')}}/css/compiled/v2/style.css" rel="stylesheet" media="screen">
+    <link href="{{Config::get('app.staticurl')}}/css/compiled/v2/style.css?v={{$version}}" rel="stylesheet" media="screen">
 
     @if ( $is_mod )
-		<link href="{{Config::get('app.staticurl')}}/css/compiled/v2/admin/admin-moderator.css" rel="stylesheet" media="screen">
+		<link href="{{Config::get('app.staticurl')}}/css/compiled/v2/admin/admin-moderator.css?v={{$version}}" rel="stylesheet" media="screen">
     @endif
 
     <!--Favicon-->
@@ -31,7 +31,7 @@
     <!--Fonts-->
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700|Fjalla+One' rel='stylesheet' type='text/css'>    
     
-    <!--{{App::environment()}}-->
+    <!--{{App::environment()}} {{$version}} -->
 	<script>
 		window.site_url = '/';//has trailing slash
 		window.image_url = '{{ Config::get('app.imageurl') }}';
@@ -85,10 +85,10 @@
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/bootstrap.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/jquery.scrolltofixed.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/global.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/global.js?v={{$version}}"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/handlebars/handlebars.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/sidr/jquery.sidr.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/header.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/header.js?v={{$version}}"></script>
 	<!-- @if ( $is_mobile )
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/touch-swipe/jquery.touchSwipe.min.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/header-swipe.js"></script>
@@ -96,17 +96,17 @@
 	
 	
 	@if( $have_user )
-		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/global-loggedin.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/global-loggedin.js?v={{$version}}"></script>
 	@else
-		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/global-nologin.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/global-nologin.js?v={{$version}}"></script>
 	@endif
 
 	@if( $is_mod )
-		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/admin/moderator.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/admin/moderator.js?v={{$version}}"></script>
 	@endif
 
 	@if( $is_admin )
-		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/admin/admin.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/admin/admin.js?v={{$version}}"></script>
 	@endif
 	
 	<!--Extra Javascript-->

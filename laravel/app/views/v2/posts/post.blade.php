@@ -11,7 +11,7 @@
 	?>
 
 @section('css')
-	<link rel="stylesheet" media="screen" href="{{Config::get('app.staticurl')}}/css/compiled/v2/posts/post.css">
+	<link rel="stylesheet" media="screen" href="{{Config::get('app.staticurl')}}/css/compiled/v2/posts/post.css?v={{$version}}">
 
 	<?php $excerpt = substr(strip_tags($post->body), 0, 500); ?>
 	{{--CSS and heading is the same so its not an issue to put that stuff here.--}}
@@ -35,9 +35,9 @@
 	@include( 'v2/posts/partials/comment-edit-handlebars-template' )
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/moment/moment.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/moment-timezone/moment-timezone-with-data.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/comment-pagination.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post_actions.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/comment-pagination.js?v={{$version}}"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post_actions.js?v={{$version}}"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post.js?v={{$version}}"></script>
 	
 	<!-- Go to www.addthis.com/dashboard to customize your tools -->
 	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53f22b3f69014ed4"></script>

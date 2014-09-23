@@ -5,7 +5,7 @@
 @stop
 
 @section('css')
-	<link rel="stylesheet" media="screen" href="{{Config::get('app.staticurl')}}/css/compiled/v2/myprofile/profile.css">
+	<link rel="stylesheet" media="screen" href="{{Config::get('app.staticurl')}}/css/compiled/v2/myprofile/profile.css?v={{$version}}">
 @stop
 
 @section('js')
@@ -42,13 +42,13 @@
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/form/jquery.form.js"></script>
 	@endif
 	{{--This is for the follow action--}}
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post_actions.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post_actions.js?v={{$version}}"></script>
 	
 	
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/moment/moment.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/moment-timezone/moment-timezone-with-data.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/photo/photo.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/myprofile/profile.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/photo/photo.js?v={{$version}}"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/myprofile/profile.js?v={{$version}}"></script>
 	
 @stop
 

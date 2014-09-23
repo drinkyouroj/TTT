@@ -2,7 +2,7 @@
 
 
 @section('css')
-    <link rel="stylesheet" media="screen" href="{{Config::get('app.staticurl')}}/css/compiled/v2/static.css">
+    <link rel="stylesheet" media="screen" href="{{Config::get('app.staticurl')}}/css/compiled/v2/static.css?v={{$version}}">
 @stop
 
 @section('js')

@@ -2,7 +2,7 @@
 
 @section('js')
 
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/featured/featured.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/featured/featured.js?v={{$version}}"></script>
 
 	@include('v2.partials.post-listing-template')
 
@@ -15,7 +15,7 @@
 @stop
 
 @section('css')
-	<link href="{{Config::get('app.staticurl')}}/css/compiled/v2/featured/featured.css" rel="stylesheet" media="screen">
+	<link href="{{Config::get('app.staticurl')}}/css/compiled/v2/featured/featured.css?v={{$version}}" rel="stylesheet" media="screen">
 
 	{{--CSS and heading is the same so its not an issue to put that stuff here.--}}
 	<meta name="description" content="Every life is a story waiting to be heard.">

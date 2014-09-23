@@ -293,11 +293,10 @@ View::composer('*', function($view) {
 			 ->with( 'num_published_posts_today', $num_published_posts_today )
 			 ->with( 'num_drafts_today', $num_drafts_today );
 	}
-
-	$view->with('is_admin', $is_admin)
-		->with('is_mod', $is_mod)
-		->with('is_mobile', Agent::isMobile() )
-		->with('have_user', Auth::check() );
+	
+	$contents = File::get(base_path().'/gitversion');
+	$version =str_replace("\n", "", $contents);//gotta get rid of the returns.
+	$view->with('version', $version);
 	
 });
 
