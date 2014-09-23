@@ -278,13 +278,16 @@ a:focus {
 							.post-repost-image {
 								position:absolute;
 								display:block;
-								top:30px;
+								top:0px;
 								right:0px;
 								background: url('../../../../images/global/blue-75.png');
 								z-index:3;
 								&:hover .post-options {
 									display:block !important;
 								}
+							}
+							.post-repost-image.mine {
+								top:30px;
 							}
 						}
 						.post-image {
