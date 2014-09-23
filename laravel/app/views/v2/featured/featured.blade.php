@@ -55,31 +55,9 @@
 	{{--We're caching the DB query right now for 10 minutes, but hopefully we'll get to caching the view--}}
 	@include('v2.featured.featured-cached')
 
-	<div class="trending-wrapper">
-		<h2>Trending</h2>
-		<section class="filters">
-			<div class="filters-container category-filter-container">
-				<div class="category-filter-title cat-container">
-					Categories
-				</div>
-				<ul class="filter-dropdown list-unstyled">
-					{{-- I dont display the active category in the dropdown list --}}
-					@foreach ( $categories as $category )
-						<li><a href="{{ URL::to('categories/'.$category->alias) }}" class="filter filter-category" data-category-filter="{{$category->alias}}">{{$category->title}}</a></li>
-					@endforeach
-				</ul>
-			</div>
-		<div class="clearfix"></div>
-		</section>
-		<div class="trending-content">
+	@include('v2.featured.featured-trending')
 
-		</div>
-		<div class="clearfix"></div>
-	</div>
-
-	<div class="loading-container">
-		<img src="{{ URL::to('images/posts/comment-loading.gif') }}">
-	</div>
+	
 </div>
 @stop
 
