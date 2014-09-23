@@ -135,8 +135,8 @@
 									<div class="warning hidden">You can only select up to 2 categories.</div>
 
 									<ul>
-										{? $checked = ''; ?}
 										<?php
+											$checked = '';
 											if($edit) {
 												$unserialized = unserialize($post->category);
 												$unserialized = is_array($unserialized) ? $unserialized : array();
@@ -146,9 +146,9 @@
 											<li class="col-md-6 col-xs-6">
 												@if($edit)
 													@if( in_array($category->id, $unserialized ) )
-													{? $checked = 'checked'?}
+													<?php $checked = 'checked'?>
 													@else
-													{? $checked = '' ?}
+													<?php $checked = '' ?>
 													@endif
 												@endif											
 												{{Form::checkbox('category[]', $category->id, 0, array('class'=>'category','id' => 'cat-'.$category->id, $checked ) ) }}

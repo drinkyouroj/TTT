@@ -111,6 +111,14 @@
 					display: table-cell;
 					height: auto;
 					float: none;
+					overflow: hidden;
+					img.no-show-image {
+						position: absolute;
+						top: 0;
+						left: 0;
+						width: 100%;
+						@include opacity(0);
+					}
 				}
 		    }
 		}

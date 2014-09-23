@@ -15,6 +15,9 @@
 
 	<?php $excerpt = substr(strip_tags($post->body), 0, 500); ?>
 	{{--CSS and heading is the same so its not an issue to put that stuff here.--}}
+
+	<meta name="description" content="{{$excerpt}}">
+
 	<meta property="og:title" content="{{$post->title}}" />
 	<meta property="og:description" content="{{$excerpt}}" />
 	<meta property="og:image" content="{{ Config::get('app.imageurl') }}/{{$post->image}}" />
@@ -165,7 +168,7 @@
 
 				</div>
 				<div class="post-image col-md-8" style="background-image: url('{{Config::get('app.imageurl')}}/{{$post->image}}');">
-						<img class="hidden" itemprop="image" src="{{Config::get('app.imageurl')}}/{{$post->image}}">
+					<img class="no-show-image" itemprop="image" src="{{Config::get('app.imageurl')}}/{{$post->image}}">
 				</div>
 			</div>
 		</div>
@@ -180,12 +183,12 @@
 				@foreach( $bodyarray as $c => $body )
 					<div class="row">
 						<div class="col-md-10 col-md-offset-1 post-content-page-wrapper">
-							<div class="post-content-page" id="{? echo $c ? '':'one' ?}">
+							<div class="post-content-page" id="<?php echo $c ? '':'one' ?>">
 								{{$body}}
 							</div>
 						</div>
 						<div class="col-md-10 col-md-offset-1 row-divider">
-							<span class="page-count">{? echo $c+1 ?}/{{$total}}</span>
+							<span class="page-count"><?php echo $c+1 ?>/{{$total}}</span>
 							<div class="clearfix"></div>
 						</div>
 					</div>

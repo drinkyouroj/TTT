@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html>
   <head>
     <title>@yield('title','Two Thousand Times')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

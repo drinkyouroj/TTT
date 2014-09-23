@@ -1,5 +1,5 @@
 @if(isset($not->notification_type))
-{? $not->users = array_reverse($not->users) ?}
+<?php $not->users = array_reverse($not->users) ?>
 <li class="notification-{{$not->notification_type}}">
 	{{--Decided to divide the Follow from the rest.--}}
 	@if($not->notification_type == 'follow')
