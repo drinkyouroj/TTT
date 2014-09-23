@@ -39,9 +39,9 @@
 						@else
 						<div class="action">
 							@if($user_image)
-								<img class="navbar-dropdown-toggle avatar" src="{{Config::get('app.imageurl')}}/{{$user_image}}">
+								<span class="navbar-dropdown-toggle avatar" style="background-image:url('{{Config::get('app.imageurl')}}/{{$user_image}}');"></span>
 							@else
-								<img class="navbar-dropdown-toggle avatar" src="{{Config::get('app.url')}}/images/profile/avatar-default.png">
+								<span class="navbar-dropdown-toggle avatar" style="background-image:url('{{Config::get('app.url')}}/images/profile/avatar-default.png');"></span>
 							@endif
 							@if ( count($notifications) )
 								<div class="notification-label">
@@ -66,9 +66,9 @@
 								<div class="user">
 									<a href="{{Config::get('app.url')}}/myprofile">
 										@if($user_image)
-											<img class="avatar" src="{{Config::get('app.imageurl')}}/{{$user_image}}">
+											<span class="avatar" style="background-image:url('{{Config::get('app.imageurl')}}/{{$user_image}}');"></span>
 										@else
-											<img class="avatar" src="{{Config::get('app.url')}}/images/profile/avatar-default.png">
+											<span class="avatar" style="background-image:url('{{Config::get('app.url')}}/images/profile/avatar-default.png');"></span>
 										@endif
 										{{ Session::get('username') }}
 									</a>

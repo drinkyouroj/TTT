@@ -77,6 +77,11 @@ $(function() {
 		$('.section-selectors a#collection').click();
 	});
 
+	// User avatar brings up avatar selection modal
+	$('.header-left h2 .avatar-image').click(function() {
+		profile.renderAvatarModal();
+	});
+
 //View renders based on the id selectors.
 	$('.section-selectors a').click(function(event) {
 		event.preventDefault();
@@ -331,6 +336,7 @@ function ProfileActions() {
 	this.view = 'collection';//set a default view
 	this.type = 'all';
 	this.filter = false; //this is if we're only changing the type and doing another pull
+	this.photo_init = false;  // we have not initialized the photo selection modal at this point
 
 	//View initialization for when you click on a new view.
 	this.viewInit = function(view) {
@@ -786,7 +792,20 @@ function ProfileActions() {
 		});
 	}
 
-	this.photo_init = false;
+	this.renderAvatarModal = function() {
+		// Make sure we dont render it more than once
+		if(this.photo_init == false) {
+			photo_input = new PhotoInput();
+			this.photo_init = true;
+
+			photo_input.target = $('#photoModal .modal-body');
+			photo_input.input = $('#uploadAvatar input.image');
+			photo_input.image_dom = '#uploadAvatar .thumb-container, .avatar-image, .header-container .avatar';
+			photoInit(photo_input);  // Found in photo.js
+			
+			photo_input.viewInit();
+		}
+	}
 
 	this.renderSettings = function() {
 		
@@ -804,17 +823,7 @@ function ProfileActions() {
 		};
 		$('#default-content', this.target).append(this.settings_template(view_data));
 		$('.loading-container img').fadeOut();
-		if(this.photo_init == false) {
-			photo_input = new PhotoInput();
-			this.photo_init = true;
-
-			photo_input.target = $('#photoModal .modal-body');
-			photo_input.input = $('#uploadAvatar input.image');
-			photo_input.image_dom = '#uploadAvatar .thumb-container';
-			photoInit(photo_input);
-			
-			photo_input.viewInit();
-		}
+		this.renderAvatarModal();
 
 		$('body').on('click', '.avatar-modal', function(event) {
 			event.preventDefault();			

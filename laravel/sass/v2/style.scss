@@ -158,15 +158,17 @@ input, textarea, button:focus {outline: none !important;}
 					.navbar-dropdown-toggle {
 						height: 100%;
 						width: 100%;
+						display: block;
+						background-position: center center;
+						background-size: cover;
+						background-repeat: no-repeat;
 						cursor: pointer;
 						&.glyphicon-cog {
 							font-size: 20px;
 							margin-top: 4px;
 						}
 						&.avatar {
-							border:solid 1px $lightgray;
 							border-radius: 50%;
-							background-color: #aaa;	
 						}
 					}
 				}
@@ -233,8 +235,12 @@ input, textarea, button:focus {outline: none !important;}
 								.avatar {
 									height: 25px;
 									width: 25px;
+									display: inline-block;
+									background-position: center center;
+									background-size: cover;
+									background-repeat: no-repeat;
 									border-radius: 50%;
-									background-color: #333;
+									vertical-align: bottom;
 								}
 								&:hover {
 									background-color:$lightgray;

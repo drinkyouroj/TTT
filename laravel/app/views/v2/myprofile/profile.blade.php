@@ -58,13 +58,12 @@
 			<div class="row">
 				<div class="col-md-6 col-xs-6 header-left">
 					<h2>
-						<a>
-							@if($profile_user->image)
-								<span class="avatar-image" style="background-image:url('{{Config::get('app.imageurl')}}/{{$profile_user->image}}');"></span>
-							@else
-								<span class="avatar-image" style="background-image:url('{{Config::get('app.url')}}/images/profile/avatar-default.png');"></span>
-							@endif
-							
+						@if($profile_user->image)
+							<span class="avatar-image" data-toggle="modal" data-target="#photoModal" style="background-image:url('{{Config::get('app.imageurl')}}/{{$profile_user->image}}');"></span>
+						@else
+							<span class="avatar-image" data-toggle="modal" data-target="#photoModal" style="background-image:url('{{Config::get('app.url')}}/images/profile/avatar-default.png');"></span>
+						@endif
+						<a>	
 							{{$profile_user->username}}
 						</a>
 					</h2>

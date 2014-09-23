@@ -17,28 +17,30 @@ a:focus {
 				text-transform:none;
 				vertical-align: middle;
 				@include word-break(break-all);
+				span.avatar-image {
+					display:inline-block;
+					vertical-align: middle;
+					width: 40px;
+					height: 40px;
+					cursor:pointer;
+					@include border-radius(20px);
+					background-position: center center;
+					background-size: cover;
+					background-repeat: no-repeat;
+					@include word-break(break-all);
+					@media (max-width:$break-sm) {
+						display:block;
+						clear:both;
+						margin-bottom:3px;
+					}
+				}
 				a {	
 					cursor:pointer;
-					span.avatar-image {
-						display:inline-block;
-						vertical-align: middle;
-						width: 40px;
-						height: 40px;
-						@include border-radius(20px);
-						background-position: center center;
-						background-size: cover;
-						background-repeat: no-repeat;
-						@include word-break(break-all);
-						@media (max-width:$break-sm) {
-							display:block;
-							clear:both;
-							margin-bottom:3px;
-						}
-					}
 					&:hover {
 						color:$blue;
 					}
 				}
+
 				@media (max-width:$break-sm) {
 					font-size:13px;
 					margin-top:0px;
