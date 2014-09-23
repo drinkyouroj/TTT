@@ -290,8 +290,6 @@ $(function() {
 		//profile.viewInit(profile.view);//Render initial view.	
 	} else {
 		view = window.location.hash;
-		// Prevent a jump to anchor
-		window.scrollTo(0,0);
 
 		$('.section-selectors a').removeClass('active');
 		$(view, '.section-selectors').prop('class', 'active');
@@ -304,7 +302,6 @@ $(function() {
 		//profile.viewInit(profile.view);//Render initial view.
 	}
 	profile.viewInit(profile.view);//Render initial view.
-	
 
 	window.page_processing = false;
 	window.comment_page_processing = false;
@@ -386,6 +383,7 @@ function ProfileActions() {
 				if((init || this.type == 'all' || this.type == 'post') && window.featured_id && this.page == 1 ) {
 					this.renderFeatured();//only renders when the person has a featured article.
 				}
+				window.scrollTo(0,0);
 				break;
 
 			case 'feed':
@@ -423,6 +421,7 @@ function ProfileActions() {
 				this.renderFollowing();
 				break;
 		}
+
 	};
 
 	//Clears the content before filters
@@ -594,14 +593,16 @@ function ProfileActions() {
 		var target = this.target;
 
 		this.getData(this.comment_url, function(data) {
-			$.each(data.comments,function(idx, val) {
-				view_data = {
-					site_url: window.site_url,
-					comment: val,
-					image_url: window.image_url
-				}
-				$('#comment-content',target).append(comment_item_template(view_data));
-			});
+			if ( data.comments && data.comments.length ) {
+				$.each(data.comments,function(idx, val) {
+					view_data = {
+						site_url: window.site_url,
+						comment: val,
+						image_url: window.image_url
+					}
+					$('#comment-content',target).append(comment_item_template(view_data));
+				});
+			}
 		});		
 	}
 
@@ -809,10 +810,10 @@ function ProfileActions() {
 
 	this.renderSettings = function() {
 		
-		if(window.user_image.length) {
-			user_image = window.user_image;
+		if( window.user_image.length > 1 ) {
+			user_image = window.image_url + '/' + window.user_image;
 		} else {
-			user_image = 'default.jpg';
+			user_image = '/images/profile/avatar-default.png';
 		}
 		
 		view_data = {

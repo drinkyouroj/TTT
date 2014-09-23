@@ -210,7 +210,7 @@
 
 			<form id="uploadAvatar" method="post" action="{{this.site_url}}rest/profile/image/upload">
 	            <input type="hidden" name="image" class="image">
-	            <div class="thumb-container" style="background-image:url('{{image_url}}/{{user_image}}');">
+	            <div class="thumb-container" style="background-image:url('{{user_image}}');">
 	            </div>
 			</form>
 			<a class="btn-flat-light-gray avatar-modal">Choose an Avatar</a>

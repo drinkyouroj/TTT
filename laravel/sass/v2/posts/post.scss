@@ -398,7 +398,7 @@
 
 						div.right-col {
 							.reply-links {
-								a.reply {
+								a.reply, a.edit {
 									color: $gray;
 									&:hover {
 										cursor: default;

@@ -17,7 +17,6 @@ function CommentPagination ( post_id ) {
 
 		if ( is_fetching_comments || no_more_comments || !this.post_id )
 			return undefined;
-		console.log('paginate: ' + pagination + ' page: ' + page);
 
 		is_fetching_comments = true;
 		$.ajax({
@@ -27,7 +26,6 @@ function CommentPagination ( post_id ) {
 				if ( data && data.comments && data.comments.length ) {
 					page++;
 					callback( data );
-					console.log(data.comments);
 				} else {
 					no_more_comments = true;
 					// Remove loading gif from view
