@@ -5,11 +5,7 @@
 @stop
 
 @section('title')
-	About
-@stop
-
-@section('title')
-	About | The Twothousand Times
+	About | Two Thousand Times
 @stop
 
 @section('content')

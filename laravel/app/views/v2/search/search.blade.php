@@ -14,7 +14,7 @@
 @stop
 
 @section('title')
-	Search | The Twothousand Times
+	Search: {{ $term }} | The Twothousand Times
 @stop
 
 @section('content')

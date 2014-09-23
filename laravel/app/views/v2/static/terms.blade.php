@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-	Terms of Use 
+	Terms of Use | Two Thousand Times
 @stop
 
 @section('content')

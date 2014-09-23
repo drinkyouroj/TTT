@@ -1,7 +1,7 @@
 @extends('v2.layouts.master')
 
 	@section('title')
-		Whoops! | Two Thousand Times
+		Whoops!
 	@stop
 
 	@section('css')

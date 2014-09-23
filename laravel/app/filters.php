@@ -205,6 +205,7 @@ View::composer('*', function($view) {
 			 ->with('filters', $filters);
 	}
 	
+	//do we need this anymore?
 	if(Request::segment(1) == 'profile') {
 		$alias = Request::segment(2);
 		
@@ -291,9 +292,12 @@ View::composer('*', function($view) {
 			 ->with( 'num_published_posts', $num_published_posts )
 			 ->with( 'num_published_posts_today', $num_published_posts_today )
 			 ->with( 'num_drafts_today', $num_drafts_today );
-
-
 	}
+
+	$view->with('is_admin', $is_admin)
+		->with('is_mod', $is_mod)
+		->with('is_mobile', Agent::isMobile() )
+		->with('have_user', Auth::check() );
 	
 });
 

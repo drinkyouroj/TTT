@@ -105,7 +105,6 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		
-		'Zizaco\Confide\ConfideServiceProvider',
 		'Zizaco\Entrust\EntrustServiceProvider',
 		'Way\Console\GuardLaravelServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
@@ -186,7 +185,7 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
-		'Confide'    => 'Zizaco\Confide\ConfideFacade',
+
 		'Entrust'    => 'Zizaco\Entrust\EntrustFacade',
 		'Moloquent'       => 'Jenssegers\Mongodb\Model',
 		'Captcha' => 'Mews\Captcha\Facades\Captcha',

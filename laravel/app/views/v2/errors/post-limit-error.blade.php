@@ -1,7 +1,7 @@
 @extends('v2.layouts.master')
 
 	@section('title')
-		Post Limit | Two Thousand Times
+		Post Limit
 	@stop
 
 	@section('css')

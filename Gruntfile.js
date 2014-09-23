@@ -13,7 +13,8 @@ module.exports = function(grunt) {
           dist: {
             options: {
               sassDir: 'laravel/sass/',
-              cssDir: 'laravel/public/css/compiled/'
+              cssDir: 'laravel/public/css/compiled/',
+              outputStyle: 'compressed'
             }
           }
         },

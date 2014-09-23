@@ -155,8 +155,6 @@ class NotificationLogic {
 	 */
 	public function unrepost ( $post_id ) {
 		//Should we get rid of the notification to the original?
-		
-
 		Queue::push('UserAction@delrepost', //maybe we need to rename one those these 2 methods to keep it consistent.
 							array(
 								'post_id' => $post_id,

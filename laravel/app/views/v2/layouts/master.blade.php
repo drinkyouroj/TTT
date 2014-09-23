@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-
 <?php
-
 	$have_user = Auth::check();
 	$is_mod = Session::get('mod');
 	$is_admin = Session::get('admin');
 	$is_mobile = Agent::isMobile();
-
 ?>
-
-<html ng-app>
+<html>
   <head>
-    <title>@yield('Two Thousand Times','Two Thousand Times')</title>
+    <title>
+    	@yield('title','Two Thousand Times')
+    </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     
     <link href="{{Config::get('app.staticurl')}}/css/animate.css" rel="stylesheet" media="screen">
     
@@ -22,7 +21,7 @@
     <link href="{{Config::get('app.staticurl')}}/css/compiled/v2/style.css" rel="stylesheet" media="screen">
 
     @if ( $is_mod )
-	<link href="{{Config::get('app.staticurl')}}/css/compiled/v2/admin/admin-moderator.css" rel="stylesheet" media="screen">
+		<link href="{{Config::get('app.staticurl')}}/css/compiled/v2/admin/admin-moderator.css" rel="stylesheet" media="screen">
     @endif
 
     <!--Favicon-->
@@ -34,14 +33,8 @@
     
     <!--{{App::environment()}}-->
 	<script>
-		@if(App::environment('local') )
-			window.site_url = '/';//has trailing slash
-		@elseif(App::environment('web') || App::environment('sharktopus') || App::environment('sneakyturtle'))
-			window.site_url = '/';//has trailing slash
-		@else
-			window.site_url = '/';//has trailing slash
-		@endif
-			window.image_url = '{{ Config::get('app.imageurl') }}';
+		window.site_url = '/';//has trailing slash
+		window.image_url = '{{ Config::get('app.imageurl') }}';
 	</script>
 	
 	@if($have_user)
@@ -51,12 +44,20 @@
 	</script>
 	@endif
 	
-	{{--Generic Social stuff--}}
+	{{--Opengraph--}}
 	<meta property="og:site_name" content="Two Thousand Times" />
 	<meta property="og:url" content="{{Request::url()}}" />
 
-	
+	{{--Schema.org--}}
 	<meta itemprop="url" content="{{Request::url()}}" />
+
+	{{--Pinterest domain verification--}}
+	<meta name="p:domain_verify" content="27cb8aea411ac7497efe2d433ced7114"/>
+
+	{{--Twitter--}}
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@twothousandx">
+
 
 	<!--Page Specific CSS-->
 	@yield('css')
