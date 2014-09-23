@@ -114,7 +114,6 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		
-		'Zizaco\Confide\ConfideServiceProvider',
 		'Zizaco\Entrust\EntrustServiceProvider',
 		'Way\Console\GuardLaravelServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
@@ -155,9 +154,12 @@ return array(
 		'AppStorage\PhotoStorageServiceProvider',
 		'AppStorage\SearchStorageServiceProvider',
 
-
 		//Image system for when we make our captcha.
-		'Intervention\Image\ImageServiceProvider'
+		'Intervention\Image\ImageServiceProvider',
+
+		//Compression of html
+		'Fitztrev\LaravelHtmlMinify\LaravelHtmlMinifyServiceProvider'
+
 	),
 
 	/*
@@ -223,7 +225,6 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
-		'Confide'    => 'Zizaco\Confide\ConfideFacade',
 		'Entrust'    => 'Zizaco\Entrust\EntrustFacade',
 		'Image' => 'Intervention\Image\Facades\Image',
 		

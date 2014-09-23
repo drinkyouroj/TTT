@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-	Contact
+	Contact | Two Thousand Times
 @stop
 
 @section('content')

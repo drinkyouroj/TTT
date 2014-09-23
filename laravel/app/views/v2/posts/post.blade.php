@@ -13,12 +13,16 @@
 @section('css')
 	<link rel="stylesheet" media="screen" href="{{Config::get('app.staticurl')}}/css/compiled/v2/posts/post.css">
 
+	<?php $excerpt = substr(strip_tags($post->body), 0, 500); ?>
 	{{--CSS and heading is the same so its not an issue to put that stuff here.--}}
 	<meta property="og:title" content="{{$post->title}}" />
-	<meta property="og:description" content="{{substr(strip_tags($post->body), 0, 500) }}" />
+	<meta property="og:description" content="{{$excerpt}}" />
 	<meta property="og:image" content="{{ Config::get('app.imageurl') }}/{{$post->image}}" />
 	<meta property="og:type" content="article" />
 
+	<meta name="twitter:title" content="{{$post->title}}">
+	<meta name="twitter:description" content="{{$excerpt}}">
+	<meta name="twitter:image:src" content="{{Config::get('app.imageurl')}}/{{$post->image}}">
 	
 @stop
 
@@ -38,7 +42,7 @@
 @stop
 
 @section('title')
-	{{ $post->title }}
+	{{ $post->title }} | Two Thousand Times
 @stop
 
 @section('content')

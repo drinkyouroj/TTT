@@ -1,7 +1,7 @@
 @extends('v2.layouts.master')
 
 	@section('title')
-		Can't edit that post! | Two Thousand Times
+		Can't edit that post!
 	@stop
 
 	@section('css')

@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-	Privacy Policy
+	Privacy Policy | Two Thousand Times
 @stop
 
 @section('content')

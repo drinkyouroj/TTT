@@ -49,7 +49,7 @@ class LaunchEmailCommand extends Command {
 			foreach($reserved_users as $k=>$user) {
 				if(is_object($user) && isset($user->email) && strlen($user->email) > 2 )  {
 					//reset and send out a password.
-					$reset = $this->user->resetPassword($user->id);					
+					$reset = $this->user->resetPassword($user->id);	
 					$this->line($user->username. ' email sent');
 					$this->sendEmail($user,$reset['new_password']);
 				}

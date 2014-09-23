@@ -10,7 +10,7 @@
 @stop
 
 @section('title')
-	Login or Signup
+	Login | Two Thousand Times
 @stop
 
 @section('content')

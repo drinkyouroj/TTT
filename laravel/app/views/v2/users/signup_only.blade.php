@@ -11,9 +11,8 @@
 @stop
 
 @section('title')
-Sign up!
+Sign up! | Two Thousand Times
 @stop
-
 
 @section('content')
 	<div class="container">

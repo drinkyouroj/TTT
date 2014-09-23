@@ -24,10 +24,6 @@
 	<meta property="og:type" content="article" />
 @stop
 
-@section('title')
-	The Two Thousand Times
-@stop
-
 @section('content')
 <div class="featured-page">
 	<div class="top-wrapper">

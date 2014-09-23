@@ -10,7 +10,7 @@
 @stop
 
 @section('title')
-Disabled
+Disabled | Two Thousand Times
 @stop
 
 

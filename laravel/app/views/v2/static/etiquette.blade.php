@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-	Community Etiquette
+	Community Etiquette | Two Thousand Times
 @stop
 
 @section('content')

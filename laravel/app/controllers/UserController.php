@@ -420,34 +420,6 @@ class UserController extends BaseController {
 	}
 
     /**
-     * Attempt change password of the user
-     *
-     */
-    public function postReset()
-    {
-        $input = array(
-            'token'=>Input::get( 'token' ),
-            'password'=>Input::get( 'password' ),
-            'password_confirmation'=>Input::get( 'password_confirmation' ),
-        );
-
-        // By passing an array with the token, password and confirmation
-        if( Confide::resetPassword( $input ) )
-        {
-            $notice_msg = Lang::get('confide::confide.alerts.password_reset');
-                        return Redirect::secure('user/login')
-                            ->with( 'notice', $notice_msg );
-        }
-        else
-        {
-            $error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
-                        return Redirect::secure('user/reset/'.$input['token'])
-                            ->withInput()
-                ->with( 'error', $error_msg );
-        }
-    }
-
-    /**
      * Log the user out of the application.
      *
      */

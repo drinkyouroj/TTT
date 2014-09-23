@@ -1,7 +1,7 @@
 @extends('v2.layouts.master')
 	
 	@section('title')
-		Categories | Two Thousand Times
+		{{$cat_title}} | Two Thousand Times
 	@stop
 
 	@section('css')

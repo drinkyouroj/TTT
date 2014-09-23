@@ -10,7 +10,7 @@
 @stop
 
 @section('title')
-Banned
+Banned | Two Thousand Times
 @stop
 
 

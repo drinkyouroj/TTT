@@ -2,17 +2,10 @@
 	"name": "laravel/laravel",
 	"description": "The Laravel Framework.",
 	"keywords": ["framework", "laravel"],
-	"repositories": [
-	    {
-		"type": "vcs",
-		"url": "https://github.com/Zizaco/ardent.git"
-	    }
-	],
 	"require": {
 		"patchwork/utf8": "1.1.*",
 		"laravel/framework": "~4.2",
 		"zizaco/entrust": "1.2.*@dev",
-		"zizaco/confide": "1.0.x",
 		"way/guard-laravel": "dev-master",
 		"way/generators": "~2.0",
 		"solarium/solarium": "dev-develop",
@@ -24,7 +17,8 @@
 		"aws/aws-sdk-php": "2.*",
 		"elasticsearch/elasticsearch": "~1.0",
 		"intervention/image": "2.*",
-		"jenssegers/agent": "~2.0"
+		"jenssegers/agent": "~2.0",
+		"fitztrev/laravel-html-minify": "1.*"
 	},
 	"autoload": {
 		"classmap": [

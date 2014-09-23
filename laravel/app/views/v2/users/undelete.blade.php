@@ -10,7 +10,7 @@
 @stop
 
 @section('title')
-Restore your user.
+Restored  | Two Thousand Times
 @stop
 
 
