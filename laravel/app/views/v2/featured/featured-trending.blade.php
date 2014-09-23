@@ -1,5 +1,5 @@
 	<div class="trending-wrapper">
-		<h2>Trending</h2>
+		<!--
 		<section class="filters">
 			<div class="filters-container category-filter-container">
 				<div class="category-filter-title cat-container">
@@ -14,6 +14,7 @@
 			</div>
 		<div class="clearfix"></div>
 		</section>
+		-->
 		<div class="trending-content">
 
 		</div>

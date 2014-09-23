@@ -162,7 +162,10 @@ return array(
 
 
 		//Image system for when we make our captcha.
-		'Intervention\Image\ImageServiceProvider'
+		'Intervention\Image\ImageServiceProvider',
+		
+		//Compression of html
+		'Fitztrev\LaravelHtmlMinify\LaravelHtmlMinifyServiceProvider'
 	),
 
 	/*
