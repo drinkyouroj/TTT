@@ -27,6 +27,8 @@
 		<li> {{ $post->tagline_3 }} </li>
 	</ul>
 	<div class="author">
-		{{$post->story_type}} by <a href="{{ URL::to('profile/'.$post->user->username ) }}"> {{ $post->user->username }} </a>
+		@if( isset($post->user->username) )
+			{{$post->story_type}} by <a href="{{ URL::to('profile/'.$post->user->username ) }}"> {{ $post->user->username }} </a>
+		@endif
 	</div>
 </div>
