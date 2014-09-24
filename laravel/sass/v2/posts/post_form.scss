@@ -529,7 +529,6 @@ $border_color: #eee;
 				text-align:left;
 				padding: 25px;
 				outline: none;
-				@include word-break(break-all);
 				
 				&:after {
 					padding: 25px;
