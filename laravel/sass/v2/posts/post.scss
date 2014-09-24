@@ -98,6 +98,15 @@
 
 	.post-heading-container {
 		position: relative;
+
+		img.no-show-image {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			@include opacity(0);
+		}
+		
 		@media (min-width: $break-lg-min) {
 			width: 100%;
 			padding-left:0px;
@@ -111,14 +120,7 @@
 					display: table-cell;
 					height: auto;
 					float: none;
-					overflow: hidden;
-					img.no-show-image {
-						position: absolute;
-						top: 0;
-						left: 0;
-						width: 100%;
-						@include opacity(0);
-					}
+					overflow: hidden;					
 				}
 		    }
 		}

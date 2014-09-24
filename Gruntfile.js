@@ -25,6 +25,33 @@ module.exports = function(grunt) {
               configuration: "laravel/phpunit.xml"
             }
         },
+        s3: {
+          options: {
+            accessKeyId: 'AKIAIYOYRS5RYNS6TBPQ',
+            secretAccessKey: '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',
+            bucket: 'ttt-statics-cdn'
+          },
+          images: {
+            cwd: 'laravel/public/images',
+            src: '**',
+            dest: 'images/'
+          },
+          css: {
+            cwd: 'laravel/public/css',
+            src: '**',
+            dest: 'css/'
+          },
+          js: {
+            cwd: 'laravel/public/js',
+            src: '**',
+            dest: 'js/'
+          },
+          fonts: {
+            cwd: 'laravel/public/fonts',
+            src: '**',
+            dest: 'fonts/'
+          }
+        },
         watch: {
           sass: {
             files: ['laravel/sass/**/*.scss'],
