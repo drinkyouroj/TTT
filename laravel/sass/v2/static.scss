@@ -20,6 +20,57 @@ body {
 		margin-left:15px;
 		margin-right:15px;
 	}
+	h1 {
+	@include montserrat(bold);
+	letter-spacing:3px;
+	text-transform:uppercase;
+	margin-top:30px;
+	margin-bottom:20px;
+	text-align:center;
+	@media (max-width:$break-xs) {
+		font-size:24px;
+		letter-spacing:1px;
+	}
+	}
+	h2 {
+		@include fjalla;
+		letter-spacing:3px;
+		text-transform:uppercase;
+	}
+	h3 {
+		@include montserrat;
+		text-transform: capitalize;
+		margin-top:30px;
+		padding-bottom:10px;
+		border-bottom:solid 1px $dark;
+		@media (max-width:$break-xs) {
+			font-size:18px;
+			letter-spacing:1px;
+			text-align:center;
+		}
+	}
+	h4 {
+		@include montserrat();
+		font-size:14px;
+	}
+	p {
+		text-align:justify;
+		strong {
+			text-transform: uppercase;
+			@include montserrat;
+		}
+	}
+	ul {
+		li {
+			margin-bottom:15px;
+			span {
+				@include montserrat(bold);
+			}
+		}
+	}
+	a {
+		@include montserrat(bold);
+	}
 }
 .undelete-container {
 	padding-top:40px;
@@ -37,57 +88,6 @@ body {
 	a {
 		@include montserrat;
 	}
-}
-h1 {
-	@include montserrat(bold);
-	letter-spacing:3px;
-	text-transform:uppercase;
-	margin-top:30px;
-	margin-bottom:20px;
-	text-align:center;
-	@media (max-width:$break-xs) {
-		font-size:24px;
-		letter-spacing:1px;
-	}
-}
-h2 {
-	@include fjalla;
-	letter-spacing:3px;
-	text-transform:uppercase;
-}
-h3 {
-	@include montserrat;
-	text-transform: capitalize;
-	margin-top:30px;
-	padding-bottom:10px;
-	border-bottom:solid 1px $dark;
-	@media (max-width:$break-xs) {
-		font-size:18px;
-		letter-spacing:1px;
-		text-align:center;
-	}
-}
-h4 {
-	@include montserrat();
-	font-size:14px;
-}
-p {
-	text-align:justify;
-	strong {
-		text-transform: uppercase;
-		@include montserrat;
-	}
-}
-ul {
-	li {
-		margin-bottom:15px;
-		span {
-			@include montserrat(bold);
-		}
-	}
-}
-a {
-	@include montserrat(bold);
 }
 
 //contact
