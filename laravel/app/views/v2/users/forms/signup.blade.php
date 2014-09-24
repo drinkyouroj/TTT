@@ -15,7 +15,7 @@
 	
     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
     <fieldset>
-        <input id="username" placeholder="{{{ Lang::get('confide::confide.username') }}}" type="text" name="username" id="username" value="{{{ Input::old('username') }}}" maxlength="15" minlength="3" required>
+        <input id="username" placeholder="Username" type="text" name="username" id="username" value="{{{ Input::old('username') }}}" maxlength="15" minlength="3" required>
 		
 	    <input placeholder="Email*" type="text" name="email" id="email" value="{{{ Input::old('email') }}}">
 
