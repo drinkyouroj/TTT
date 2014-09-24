@@ -525,7 +525,7 @@ textarea {
   background: url('../../../../images/global/white-95.png');
   padding:5px 10px;
   border:solid 1px $lightgray;
-  z-index: 3;
+  z-index: 5;
   @include secondary_drop_shadow();
   &::before {
     content: url('../../../../images/profile/repost-arrow.png');
