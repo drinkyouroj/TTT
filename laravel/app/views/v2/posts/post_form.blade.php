@@ -207,7 +207,7 @@
 									<span class="error">{{ $errors->first('tagline_3') }}</span>
 								</div>
 								<br/>
-								{{ Form::label('tagline_1','The Gist', array('class'=>'control-label')) }}
+								{{ Form::label('tagline_1','What&#39;s the Gist?', array('class'=>'control-label')) }}
 								<a class="tags-tooltip" href="#" data-toggle="tooltip" title="Tags define what your story might be in less than 3 words per tag">?</a>
 							</div>
 						</div>
