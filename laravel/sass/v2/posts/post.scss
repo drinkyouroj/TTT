@@ -43,6 +43,20 @@
 					padding-left:0px;
 				}
 			}
+			//actions when user's looking at their own post
+			ul.author {
+				li {
+					a {
+						cursor:default;
+						&:hover {
+        					background-position:left 0px;
+      					}
+					}
+				}
+				@media (max-width: $break-xs) {
+					padding-left:0px;
+				}
+			}
 		}
 		.comment-container {
 			.comment-button {

@@ -11,7 +11,7 @@ $(function() {
 	
 	// Tooltips
 	if ($(window).width() > 479) {
-	   $('.post-action-bar a').tooltip();
+	   $('.post-action-bar ul.reader a').tooltip();
 	}
 	// Actions
 	if ( window.logged_in ) {
