@@ -1,5 +1,5 @@
 <?php
-define('ES_HOST', 'internal-lb-data-1193680030.us-west-2.elb.amazonaws.com');
+define('ES_HOST', '172.31.16.78');
 return array(
 	'hosts' => array(
 		ES_HOST.":9200",
