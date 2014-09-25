@@ -193,17 +193,17 @@
 							<div class="tags">
 								<div class="tag {{$errors->first('tagline_1') ? 'has-error' : '' }}">
 									
-									{{ Form::text('tagline_1', $tagline_1, array('class'=>'form-control', 'maxlength' => '20', 'placeholder'=>'Gist 1') ) }}
+									{{ Form::text('tagline_1', $tagline_1, array('class'=>'form-control', 'maxlength' => '20', 'placeholder'=>'Dib 1') ) }}
 									<span class="error">{{ $errors->first('tagline_1') }}</span>
 								</div>
 					
 								<div class="tag {{$errors->first('tagline_2') ? 'has-error' : '' }}">
-									{{ Form::text('tagline_2', $tagline_2, array('class'=>'form-control', 'maxlength' => '20', 'placeholder'=>'Gist 2')) }}
+									{{ Form::text('tagline_2', $tagline_2, array('class'=>'form-control', 'maxlength' => '20', 'placeholder'=>'Dib 2')) }}
 									<span class="error">{{ $errors->first('tagline_2') }}</span>
 								</div>
 					
 								<div class="tag {{$errors->first('tagline_3') ? 'has-error' : '' }}">
-									{{ Form::text('tagline_3', $tagline_3, array('class'=>'form-control', 'maxlength' => '20', 'placeholder'=>'Gist 3')) }}
+									{{ Form::text('tagline_3', $tagline_3, array('class'=>'form-control', 'maxlength' => '20', 'placeholder'=>'Dib 3')) }}
 									<span class="error">{{ $errors->first('tagline_3') }}</span>
 								</div>
 								<br/>
