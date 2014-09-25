@@ -67,9 +67,15 @@ body {
 				@include montserrat(bold);
 			}
 		}
+		@media (max-width:$break-xs) {
+			padding-left:15px;
+		}
 	}
 	a {
 		@include montserrat(bold);
+		@media (max-width:$break-xs) {
+			font-size:12px;
+		}
 	}
 }
 .undelete-container {
