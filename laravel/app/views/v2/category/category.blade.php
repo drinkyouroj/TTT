@@ -48,6 +48,7 @@
 					</ul>
 				</div>
 
+				@if($current_category != 'new')
 				<div class="category-filter-container sort-container">
 					<div class="category-filter-title">
 						@foreach ( $filters as $filter => $filter_title )
@@ -67,6 +68,7 @@
 						@endforeach
 					</ul>
 				</div>
+				@endif
 			</div>
 		<div class="clearfix"></div>
 		</section>

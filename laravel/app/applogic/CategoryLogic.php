@@ -30,8 +30,26 @@ class CategoryLogic {
 		/**
 		 * The way the filters work we've unfortunately implemented the system this way.
 		 */
-		if($alias != 'all') {
-	    	//figure out the category id from alias	
+		if($alias == 'all' ) {
+	    	//Set the category title
+			$cat_title = 'All';
+			$cat_desc = false;
+			if(!strlen($request)) {
+				$request = 'popular';//set default filter
+			}
+			
+			//set the model
+			$model = $this->post->instance();
+
+		} elseif($alias == 'new') {
+			$cat_title = 'New';
+			$cat_desc = false;
+			$request = 'recent';//will be set statically.
+			$model = $this->post->instance();
+			
+		} else {
+			
+			//figure out the category id from alias	
 	    	//(note, we're using the instance for now, but we'll move this to the repository in the future)
 	    	$cat_instance = $this->category->instance();
 	    	$cat = $cat_instance->where('alias', $alias)->first();
@@ -47,18 +65,6 @@ class CategoryLogic {
 			
 			//set the model against the right category.
 			$model = $cat_instance->find($cat->id);
-			
-			
-		} else {
-			//Set the category title
-			$cat_title = 'All';
-			$cat_desc = false;
-			if(!strlen($request)) {
-				$request = 'popular';//set default filter
-			}
-			
-			//set the model
-			$model = $this->post->instance();
 		}
 
 		switch($request) {			

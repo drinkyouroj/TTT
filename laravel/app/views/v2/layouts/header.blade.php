@@ -144,8 +144,11 @@
 					<li>
 						<a href="{{ URL::to('featured') }}">Featured</a>
 					</li>
-					<li class="category-all">
+					<li>
 						<a href="{{ URL::to('categories/all') }}">All</a>
+					</li>
+					<li class="category-all">
+						<a href="{{ URL::to('categories/new') }}">New</a>
 					</li>
 					@foreach( $categories as $category )
 						<li> <a href="{{ URL::to('categories/'.$category->alias) }}">{{ $category->title }}</a> </li>

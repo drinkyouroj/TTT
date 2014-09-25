@@ -17,7 +17,7 @@
 					<div class="col-md-6 col-md-offset-3">
 						<h2>We had a whoops.</h2>
 						<div class="body">
-							Place a form here.
+							We're working on it! Sorry!
 						</div>
 					</div>
 			</div>
