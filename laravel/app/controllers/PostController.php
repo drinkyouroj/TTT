@@ -113,7 +113,6 @@ class PostController extends BaseController {
 
 			$view = View::make( 'v2/posts/post' )
 						->with('post', $post)
-						// ->with('comments', $comments)
 						->with('is_following', $is_following)//you are following this profile
 						->with('is_follower', $is_follower)//This profile follows you.
 						->with('bodyarray', PostLogic::divide_text($post->body, 1500))//This divides the body text into parts so that we can display them in multiple steps.
@@ -128,6 +127,12 @@ class PostController extends BaseController {
 			if ( $is_mod || $is_admin ) {
 				$featured = $this->featured->findByPostId( $post->id );
 				$view->with( 'featured', $featured );
+			}
+
+			// If this is a bot, display all the comments in the view for seo purposes
+			if ( $this->bot_detected() ) {
+				$comments = $this->comment->findAllByPostId( $post->id );
+				$view->with( 'comments', $comments );
 			}
 
 	        return $view;
@@ -412,5 +417,13 @@ class PostController extends BaseController {
 				$post->draft = $query['draft'];//default is 1 so that it won't accidentally get published.
 				return $post;
 			}
+
+		private function bot_detected() {
+			if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'])) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 		
 }

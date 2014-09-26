@@ -107,6 +107,45 @@
 						</div>
 						<div class=" comment-container">
 							<a class="comment-button action-comment" href="#">Comment</a>
+							
+							{{-- THE BELOW IS ONLY OUTPUT FOR SEARCH ENGINE BOTS/CRAWLERS FOR SEO PURPOSES --}}
+								@if ( isset( $comments ) )
+									@foreach ( $comments as $comment )
+										@if ( $comment['depth'] == 0 )
+											<div class="thread-parent-divider"></div>
+										@endif
+										<div id="comment-{{ $comment['_id'] }}" class="comment <?php echo $comment['published'] == 1 ? 'published' : 'deleted'; ?> <?php echo $comment['depth'] == 0 ? 'thread-parent' : ''; ?>" style="margin-left: {{ ($comment['depth'] * 5).'%' }}">
+											<div class="left-col">
+												<span class="like-comment-count"><?php echo count($comment['likes'])?></span>
+												<span class="like-comment glyphicon glyphicon-thumbs-up"></span>
+											</div>
+											<div class="right-col">
+												<div class="user">
+													@if ( $comment['published'] == 1 )
+														<a href="{{ URL::to('profile/'.$comment['author']['username'] ) }}"> {{ $comment['author']['username'] }} </a>
+														<span class="published-date"> - {{ $comment['created_at'] }}</span>
+													@else
+														<span class="deleted">Nobody</span>
+													@endif
+												</div>
+
+												<p class="comment-body">
+													@if ( $comment['published'] == 0 )
+														<span class="deleted">(This comment has been deleted)</span>
+													@else
+														{{ $comment['body'] }}
+													@endif
+												</p>
+												<div class="reply-links">
+													<a class="reply" data-replyid="{{ $comment['_id'] }}" data-postid="{{ $comment['post_id'] }}">Reply</a>
+													<div class="reply-box"></div>
+												</div>
+											</div>
+										</div>
+									@endforeach
+								@endif
+							{{-- END OF BOT/CRAWLER CONTENT --}}
+
 						</div>
 						@if( !$is_author )
 							<div class="hidden-sm hidden-xs follow-container">

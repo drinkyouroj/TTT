@@ -12,6 +12,7 @@ interface CommentRepository {
 
 	public function findById ( $id );
 	public function findByPostId ( $post_id, $paginate, $page );
+	public function findAllByPostId ( $post_id );
 	public function findByUserId($user_id, $paginate, $page, $rest);
 	public function findAllByUserId ( $user_id );
 	public function findByCommentAndPostId ( $comment_id, $post_id );

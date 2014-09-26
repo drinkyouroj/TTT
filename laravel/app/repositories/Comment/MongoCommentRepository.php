@@ -149,6 +149,26 @@ class MongoCommentRepository implements CommentRepository {
 						   			 )
 						   ->get();
 	}
+	/**
+	 *	Fetch comments for a given post.
+	 */
+	public function findAllByPostId ( $post_id ) {
+		return MongoComment::where( 'post_id', intval( $post_id ) )
+						   ->orderBy( 'full_slug_desc', 'desc' )
+						   // ->orderBy( 'full_slug_asc', 'asc' ) // Used for sorting in ascending order
+						   ->select( '_id',
+						   			 'post_id',
+						   			 'depth',
+						   			 'published',
+						   			 'author',
+						   			 'created_at',
+						   			 'updated_at',
+						   			 'body',
+						   			 'likes',
+						   			 'flags'
+						   			 )
+						   ->get();
+	}
 	
 	/**
 	 *	Fetch comments by a given author.
