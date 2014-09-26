@@ -19,7 +19,11 @@
 			height:35px;
 			padding: 0px 15px;
 		}
-		
+		.post-action-container {
+			width:100%;
+			max-width:1200px;
+			margin:0px auto;
+		}
 		.actions-container, .comment-container {
 			padding-top:3px;
 			@media (max-width:$break-sm) {
@@ -27,11 +31,13 @@
 			}
 		}
 		.actions-container {
+			float:left;
 			ul {
 				display:inline-block;
 				list-style:none;
 				text-align:right;
 				margin-bottom:0px;
+				padding-left:0px;
 				li {
 					float:left;
 					@include post_actions;
@@ -59,6 +65,8 @@
 			}
 		}
 		.comment-container {
+			float:left;
+			margin-left:10px;
 			.comment-button {
 				@include post_actions_label;
 				background-image:url('../../../../images/global/comment.png');
@@ -87,10 +95,9 @@
 			.follow {
 				float:right;
 				font-size:11px;
-				padding:9px 15px 9px 50px;
 
 				&.active {
-					margin-top:1px;
+					margin-top:2px;
 					background-image: none;
 					background: none;
 					border: 0;
@@ -321,15 +328,68 @@
 				float: right;
 			}
 		}
+		
 
 		.extra-actions {
-			padding-top:5px;
-			padding-right:0px;
+			padding:0px;
+
+
+			.banner-mid {
+				padding:0px;
+				background:$white;
+				img {
+					width:100%;
+					height:auto;
+					&.banner-mid-desktop {
+						@media (max-width:$break-sm) {
+							display:none;
+						}
+					}
+					&.banner-mid-mobile {
+						@media (min-width:$break-md-min) {
+							display:none;
+						}
+						@media (max-width:$break-md-min) and (min-width:$break-xs) {
+							width:70%;
+							margin:0px 15%;
+						}
+					}
+				}
+			}
+
+			.banner-bottom {
+				@media (max-width:700px) and (min-width:450px) {
+					background:$white;
+				}
+				img {
+					width:100%;
+					height:auto;
+					&.banner-bottom-desktop {
+						@media (max-width:699px) {
+							display:none;
+						}
+					}
+					&.banner-bottom-mobile {
+						@media (min-width:700px) {
+							display:none;
+						}
+						@media (max-width:700px) and (min-width:450px) {
+							width:70%;
+							margin:0px 15%;
+						}
+					}
+				}
+			}
+
+			.sharing {
+				padding-top:10px;
+				padding-bottom:10px;
+			}
 			.utility-container {
 				float:right;
 				text-align:right;
-				padding-top:3px;
-				padding-bottom:3px;
+				padding-top:10px;
+				padding-bottom:10px;
 				a.read {
 					@include extra_actions_label;
 					background-image:url('../../../../images/posts/mark-read.png');

@@ -33,9 +33,9 @@
 				<div class="col-sm-4 col-xs-2 col-right">
 						@if( $is_guest )
 							
-							<a class="btn-outline-blue signup hidden-xs" href="{{ URL::to( 'user/signup' ) }}">Signup</a>
+							<a class="btn-flat-blue signup" href="{{ URL::to( 'user/signup' ) }}">Signup</a>
 							
-							<a class="login-btn login hidden-xs" href="{{ URL::to( 'user/login' ) }}">LOG IN</a>
+							<a class="login-btn hidden-xs login" href="{{ URL::to( 'user/login' ) }}">Log in</a>
 						@else
 						<div class="action">
 							@if($user_image)
@@ -54,7 +54,7 @@
 
 					{{ Form::open(array('url'=> 'search', 'class' => 'form-search pull-right', 'role'=>'search', 'method'=>'get' )) }}
 						<input class="search-input" autocomplete="off" name="search" id="search-input" type="text">
-						<label class="glyphicon glyphicon-search hidden-xs" for="search-input">
+						<label class="glyphicon glyphicon-search hidden-sm hidden-xs" for="search-input">
 						</label>
 						<input type="submit" value="Search" class="hidden" >
 						<div class="result-box hidden"></div>
@@ -116,7 +116,7 @@
 {{-- ============ OFFCANVAS SIDEBAR ============= --}}
 <div id="offcanvas-sidebar">
 	<ul class="list-unstyled sidebar-options" id="accordion">
-		<li class="visible-xs">
+		<li class="visible-sm visible-xs">
 			{{ Form::open(array('url'=> 'search', 'class' => 'form-search', 'role'=>'search', 'method'=>'get' )) }}
 				<input class="search-input" autocomplete="off" name="search" id="search-input" type="text" placeholder="search">
 				</label>

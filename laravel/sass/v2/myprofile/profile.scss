@@ -61,6 +61,11 @@ a:focus {
 				}
 				.follow-btn-container {
 					margin-top:5px;
+					.follow {
+						@media (min-width:$break-md-min) {
+							padding:8px 30px 8px 90px
+						}
+					}
 				}
 				a {
 					display:inline-block;
