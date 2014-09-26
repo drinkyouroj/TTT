@@ -62,7 +62,7 @@ class LaunchEmailCommand extends Command {
 
 		private function reservedQuery($paginate, $page) {
 			return User::where('reserved',1)
-						->where('id','>', 1438)
+						->whereNull('last_logged_in')
 						->whereNotNull('email')
 						->select('id','username', 'email','reserved')						
 						->skip( $paginate * $page )

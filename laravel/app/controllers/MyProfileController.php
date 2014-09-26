@@ -251,12 +251,18 @@ class MyProfileController extends BaseController {
 	public function getRestFeatured ($post_id) {
 		if($post_id) {
 			$featured  = $this->post->findById($post_id, true, array('user'));
-			//Build the 
-			$featured->excerpt = substr(strip_tags($featured->body),0,100);
-			return Response::json(
-					array('featured' => $featured->toArray() ),
-					200
-				);
+			if(is_object($featured) && isset($featured->id)) {
+				$featured->excerpt = substr(strip_tags($featured->body),0,100);
+				return Response::json(
+						array('featured' => $featured->toArray() ),
+						200
+					);
+			} else {
+				return Response::json(
+						array('featured' => false),
+						200
+					);
+			}
 		} 
 	}
 
