@@ -242,8 +242,8 @@
 					@if( $is_guest )
 						<div class="banner-mid">
 							<a href="{{ URL::to( 'user/signup' ) }}">
-								<img class="banner-mid-desktop" src="{{ URL::to('images/posts/banner-mid.jpg') }}">
-								<img class="banner-mid-mobile" src="{{ URL::to('images/posts/banner-mid-mobile.jpg') }}">
+								<img class="banner-mid-desktop" src="{{ URL::to('images/posts/banner-mid.jpg') }}" alt="Join the community. Post your own stories, follow users, save stories, comment and join the discussion. Create an Account.">
+								<img class="banner-mid-mobile" src="{{ URL::to('images/posts/banner-mid-mobile.jpg') }}" alt="Join the community. Post your own stories, follow users, save stories, comment and join the discussion. Create an Account.">
 							</a>
 						</div>
 					@endif
