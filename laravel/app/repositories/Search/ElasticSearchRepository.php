@@ -18,6 +18,8 @@ class ElasticSearchRepository implements SearchRepository {
 		$fuzzy = array();
 		$fuzzy['fields'] = array('title', 'taglines', 'body');
 		$fuzzy['like_text'] = $search_string;
+		$fuzzy['fuzziness'] = 1;
+
 		$params['body']['query']['fuzzy_like_this'] = $fuzzy;
 		// Pagination
 		$params['body']['from'] = ($page - 1) * $paginate;
@@ -37,6 +39,8 @@ class ElasticSearchRepository implements SearchRepository {
 		$fuzzy['fields'] = array('username');
 		$fuzzy['like_text'] = $search_string;
 		$fuzzy['fuzziness'] = 0.3; // Lower number = more results
+
+
 		$params['body']['query']['fuzzy_like_this'] = $fuzzy;
 		// Pagination
 		$params['body']['from'] = ($page - 1) * $paginate;

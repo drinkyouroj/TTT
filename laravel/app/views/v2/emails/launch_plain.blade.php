@@ -6,6 +6,6 @@ Welcome {{$user->username}},
 
 	twothousandtimes.com
 
-	You only have 2 weeks to log in before your username goes back up for grabs. Enjoy!
+	You only have 1 week to log in before your username goes back up for grabs. Enjoy!
 
 	TTT
