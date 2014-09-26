@@ -14,7 +14,11 @@
 @stop
 
 @section('title')
-	Search: {{ $term }} | The Twothousand Times
+	@if ( isset($default) )
+		Search | Two Thousand Times
+	@else
+		Search: {{ $term }} | Two Thousand Times
+	@endif
 @stop
 
 @section('content')
@@ -39,11 +43,15 @@
 			<div class="results-header">
 				<h2 class="search-term">Search results for: <span>{{$term}}</span></h2>
 				<ul class="nav nav-tabs">
-					<li class="<?php echo $filter == 'posts' ? 'active' : '' ?>"><a href="#posts-results" data-toggle="tab">Posts</a></li>
-					<li class="<?php echo $filter == 'users' ? 'active' : '' ?>"><a href="#users-results" data-toggle="tab">Users</a></li>
+					<li class="<?php echo $filter == 'posts' ? 'active' : '' ?> posts-tab"><a href="#posts-results" data-toggle="tab">Posts</a></li>
+					<li class="<?php echo $filter == 'users' ? 'active' : '' ?> users-tab"><a href="#users-results" data-toggle="tab">Users</a></li>
 					<li class="pull-right">
+						<?php
+							$filter = isset($filter) ? $filter : 'posts';
+						?>
 						<form class="search-form" action="{{Config::get('app.url')}}/search" method="get">
 							<input type="text" name="search" placeholder="Search">
+							<input type="hidden" name="filter" value="{{$filter}}" class="search-filter">
 						</form>
 					</li>
 				</ul>
