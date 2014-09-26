@@ -32,16 +32,18 @@ class SearchController extends BaseController {
 	 */
 	public function getSearchPage() {
 		
-		if ( Input::has('search') ) {
+		if ( Input::has('search') && Input::get('search') != null ) {
 			$term = Input::has('search') ? Input::get('search') : '';
 			$page = Input::has('page') ? intval( Input::get('page') ) : 1;
 			$filter = Input::has('filter') ? Input::get('filter') : 'posts';
-			if ( !$filter == 'posts' || !$filter == 'users' ) {
+			if ( $filter == 'posts' || $filter == null ) {
 				$filter = 'posts';
+			} else {
+				$filter = 'users';
 			}
 			$page = $page < 1 ? 1 : $page;
 			if ( $filter == 'posts' ) {
-				$users_page = 1;	
+				$users_page = 1;
 			} else if ( $filter == 'users' ) {
 				$users_page = $page;
 				$page = 1;
