@@ -8,6 +8,7 @@
 			$is_admin = false;
 			$is_mod = false;
 		}
+		$is_guest = Auth::guest();
 	?>
 
 @section('css')
@@ -69,54 +70,52 @@
 <article itemscope itemtype="http://schema.org/Article">
 	<section class="post-action-bar-wrapper">
 		<div class="post-action-bar" data-post-id="{{ $post->id }}" data-user-id="{{ $post->user->id }}">
-			<div class="container">
+			<div class="post-action-container">
 				<div class="row">
 					<div class="col-md-12">
-						<div class="row">
-						{{-- Only display like, repost, save if not the author --}}
-						<?php
-							$is_logged_in = Auth::check();
-							$is_author = Auth::check() && $post->user->id == Auth::user()->id;
-						?>
-							<div class="col-md-3 hidden hidden-sm hidden-xs utility-container">
-							</div>
-
-							<div class="col-md-3 col-xs-8 actions-container">
-								<ul class="actions {{ $is_author ? 'author' : 'reader' }}">
-									<li class="like">
-										<a data-action="like" class="like-button {{ $liked ? 'active' : '' }}" href="#" title="{{ $like_tooltip }}" data-toggle="tooltip" data-placement="bottom">
-											<span class="{{ $liked ? 'hidden' : '' }}"> <span class="action-counts"> {{ $liked ? $post->likes->count() - 1 : $post->likes->count() }} </span> </span>
-											<span class="{{ $liked ? '' : 'hidden' }}"> <span class="action-counts"> {{ $liked ? $post->likes->count() : $post->likes->count() + 1 }} </span> </span>
-										</a>
-									</li>
-
-									<li class="repost">
-										<a data-action="repost" class="repost-button {{ $reposted ? 'active' : '' }}" href="#" title="{{ $repost_tooltip }}" data-toggle="tooltip" data-placement="bottom">
-											<span class="{{ $reposted ? 'hidden' : '' }}"> <span class="action-counts"> {{ $reposted ? $post->reposts->count() - 1 : $post->reposts->count() }} </span> </span>
-											<span class="{{ $reposted ? '' : 'hidden' }}"> <span class="action-counts"> {{ $reposted ? $post->reposts->count() : $post->reposts->count() + 1 }} </span> </span>
-										</a>
-									</li>
-
-									<li class="save">
-										<a data-action="save" class="save-button {{ $favorited ? 'active' : '' }}" href="#" title="{{ $save_tooltip }}" data-toggle="tooltip" data-placement="bottom">
-											<!-- <span class="{{ $favorited ? 'hidden' : ''}}"> <span class="action-counts"> {{ $favorited ? $post->favorites->count() - 1 : $post->favorites->count() }} </span> </span>
-											<span class="{{ $favorited ? '' : 'hidden'}}"> <span class="action-counts"> {{ $favorited ? $post->favorites->count() : $post->favorites->count() + 1 }} </span> </span> -->
-										</a>
-									</li>
-								<ul>
-							</div>
-							@if( !$is_author )
-								<div class="col-md-4 hidden-sm hidden-xs follow-container">
-									<a data-action="follow" class="follow-button follow {{ $is_following ? 'active' : '' }}" href="#">
-										<span class="{{ $is_following ? 'hidden' : '' }}"> {{ $follow_term }} {{ $post->user->username }} </span>
-										<span class="{{ $is_following ? '' : 'hidden' }}"> {{ $follow_term_active }} {{ $post->user->username }} </span>
-									</a>
-								</div>
-							@endif
-							<div class="col-md-2 col-xs-4 comment-container">
-								<a class="comment-button action-comment" href="#">Comment</a>
-							</div>
+					{{-- Only display like, repost, save if not the author --}}
+					<?php
+						$is_logged_in = Auth::check();
+						$is_author = Auth::check() && $post->user->id == Auth::user()->id;
+					?>
+						<div class=" hidden hidden-sm hidden-xs utility-container">
 						</div>
+
+						<div class=" actions-container">
+							<ul class="actions {{ $is_author ? 'author' : 'reader' }}">
+								<li class="like">
+									<a data-action="like" class="like-button {{ $liked ? 'active' : '' }}" href="#" title="{{ $like_tooltip }}" data-toggle="tooltip" data-placement="bottom">
+										<span class="{{ $liked ? 'hidden' : '' }}"> <span class="action-counts"> {{ $liked ? $post->likes->count() - 1 : $post->likes->count() }} </span> </span>
+										<span class="{{ $liked ? '' : 'hidden' }}"> <span class="action-counts"> {{ $liked ? $post->likes->count() : $post->likes->count() + 1 }} </span> </span>
+									</a>
+								</li>
+
+								<li class="repost">
+									<a data-action="repost" class="repost-button {{ $reposted ? 'active' : '' }}" href="#" title="{{ $repost_tooltip }}" data-toggle="tooltip" data-placement="bottom">
+										<span class="{{ $reposted ? 'hidden' : '' }}"> <span class="action-counts"> {{ $reposted ? $post->reposts->count() - 1 : $post->reposts->count() }} </span> </span>
+										<span class="{{ $reposted ? '' : 'hidden' }}"> <span class="action-counts"> {{ $reposted ? $post->reposts->count() : $post->reposts->count() + 1 }} </span> </span>
+									</a>
+								</li>
+
+								<li class="save">
+									<a data-action="save" class="save-button {{ $favorited ? 'active' : '' }}" href="#" title="{{ $save_tooltip }}" data-toggle="tooltip" data-placement="bottom">
+										<!-- <span class="{{ $favorited ? 'hidden' : ''}}"> <span class="action-counts"> {{ $favorited ? $post->favorites->count() - 1 : $post->favorites->count() }} </span> </span>
+										<span class="{{ $favorited ? '' : 'hidden'}}"> <span class="action-counts"> {{ $favorited ? $post->favorites->count() : $post->favorites->count() + 1 }} </span> </span> -->
+									</a>
+								</li>
+							<ul>
+						</div>
+						<div class=" comment-container">
+							<a class="comment-button action-comment" href="#">Comment</a>
+						</div>
+						@if( !$is_author )
+							<div class="hidden-sm hidden-xs follow-container">
+								<a data-action="follow" class="follow-button-white follow {{ $is_following ? 'active' : '' }}" href="#">
+									<span class="{{ $is_following ? 'hidden' : '' }}"> {{ $follow_term }} {{ $post->user->username }} </span>
+									<span class="{{ $is_following ? '' : 'hidden' }}"> {{ $follow_term_active }} {{ $post->user->username }} </span>
+								</a>
+							</div>
+						@endif
 					</div>
 				</div>
 			</div>
@@ -201,8 +200,25 @@
 			@endif
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1 extra-actions">
+					@if( $is_guest )
+						<div class="banner-mid">
+							<a href="{{ URL::to( 'user/signup' ) }}">
+								<img class="banner-mid-desktop" src="{{ URL::to('images/posts/banner-mid.jpg') }}">
+								<img class="banner-mid-mobile" src="{{ URL::to('images/posts/banner-mid-mobile.jpg') }}">
+							</a>
+						</div>
+					@endif
+					{{--@if( $is_guest )
+						<div class="banner-bottom">
+							<a href="{{ URL::to( 'user/signup' ) }}">
+								<img class="banner-bottom-desktop" src="{{ URL::to('images/posts/banner-bottom-desktop.jpg') }}">
+								<img class="banner-bottom-mobile" src="{{ URL::to('images/posts/banner-bottom-mobile.jpg') }}">
+							</a>
+						</div>
+					@endif--}}
 						<div class="sharing">
 							<div class="addthis_custom_sharing"></div>
+						<div class="clearfix"></div>
 						</div>
 					@if( !$is_author )
 						<div class="col-md-3 utility-container">

@@ -156,7 +156,7 @@ class MongoCommentRepository implements CommentRepository {
 	public function findByUserId ( $user_id, $paginate = 5, $page = 1, $rest = false ) {
 		$query = $this->comment->where( 'author.user_id', intval($user_id) )
 							   ->where('published', 1)
-							   ->orderBy( 'created_at', 'asc' )							   
+							   ->orderBy( 'created_at', 'desc' )							   
 							   ->skip( ($page - 1) * $paginate )
 							   ->take( $paginate )
 						   		;

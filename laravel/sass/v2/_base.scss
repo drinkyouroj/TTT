@@ -264,7 +264,7 @@ textarea {
   }
   .redirect-other {
       a {
-        @include montserrat;
+        @include montserrat(bold);
         font-size:12px;
       }
     }
@@ -280,7 +280,7 @@ textarea {
       display: inline-block;
       height:25px;
       color:#fff;
-      margin-left:20px;
+      margin-right:20px;
       padding-left:25px;
       background-repeat: no-repeat;
       background-position:left 0px;
