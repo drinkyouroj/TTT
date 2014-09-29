@@ -16,6 +16,8 @@ interface FeaturedRepository {
 
 	public function findByPostId($post_id);
 
+	public function allByRandom($paginate);
+
 	public function delete($post_id);
 
 	public function deleteByUserId( $user_id );

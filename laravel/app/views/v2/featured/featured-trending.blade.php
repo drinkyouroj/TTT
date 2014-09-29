@@ -1,12 +1,11 @@
 	<div class="trending-wrapper">
-		<!--
+		{{--
 		<section class="filters">
 			<div class="filters-container category-filter-container">
 				<div class="category-filter-title cat-container">
 					Categories
 				</div>
-				<ul class="filter-dropdown list-unstyled">
-					{{-- I dont display the active category in the dropdown list --}}
+				<ul class="filter-dropdown list-unstyled">					
 					@foreach ( $categories as $category )
 						<li><a href="{{ URL::to('categories/'.$category->alias) }}" class="filter filter-category" data-category-filter="{{$category->alias}}">{{$category->title}}</a></li>
 					@endforeach
@@ -14,13 +13,12 @@
 			</div>
 		<div class="clearfix"></div>
 		</section>
-		-->
+		--}}
 		<div class="trending-content">
-
+			@foreach($randoms as $featured)
+				<?php $post = $featured->post ?>
+				@include('v2.partials.post-listing-partial')
+			@endforeach
 		</div>
 		<div class="clearfix"></div>
-	</div>
-
-	<div class="loading-container">
-		<img src="{{ URL::to('images/posts/comment-loading.gif') }}">
 	</div>

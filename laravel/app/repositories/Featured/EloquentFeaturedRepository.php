@@ -82,6 +82,15 @@ class EloquentFeaturedRepository implements FeaturedRepository {
 		return false;
 	}
 
+	public function allByRandom($paginate) {
+		return $this->featured
+						->where('front',false)
+						->orderBy(DB::raw('RAND()'))
+						->take($paginate)
+						->get()
+						;
+	}
+
 	public function delete($post_id) {
 		$this->featured->where('post_id', intval( $post_id ) )->delete();
 		// TODO: maybe replcae the current position on the featured page with other content?

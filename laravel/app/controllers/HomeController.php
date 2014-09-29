@@ -35,6 +35,7 @@ class HomeController extends BaseController {
 
 			Cache::put('featured',$featured,$expiresAt);
 		}
+
 		$view = View::make('v2/featured/featured')
 						->with('featured', $featured);
 
@@ -50,10 +51,13 @@ class HomeController extends BaseController {
 				$random = $this->featured->random();
 				$view->with('from_feed', $random->post);
 			}
-
 		} else {
 			$view->with('from_feed', false);
 		}
+
+		//Get the randomized featured lis
+		$randoms = $this->featured->allByRandom(12);
+		$view->with('randoms',$randoms);
 
 		return $view;
 		

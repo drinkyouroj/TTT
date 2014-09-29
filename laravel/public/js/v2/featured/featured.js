@@ -1,4 +1,13 @@
 $(function() {
+	// Slide toggle for filter dropdowns
+	$('.category-filter-title').click(function(event) {
+		event.preventDefault();
+		$(this).next().toggle();
+	});
+});
+
+/*
+$(function() {
 	paginate = new Paginate;
 	paginate.page = 0;
 	window.page_processing = false;
@@ -29,15 +38,6 @@ $(function() {
 	// Toggle the header title depending on position of scroll
 
 });
-
-$(function() {
-	// Slide toggle for filter dropdowns
-	$('.category-filter-title').click(function(event) {
-		event.preventDefault();
-		$(this).next().toggle();
-	});
-});
-
 
 
 function Paginate() {
@@ -104,3 +104,4 @@ function Paginate() {
 		}
 	}
 }
+*/
