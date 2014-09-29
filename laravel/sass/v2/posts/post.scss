@@ -264,7 +264,6 @@
 	background-color: $beige;
 
 	.post-content-container {
-		padding-bottom: 30px;
 		@media (max-width:$break-xs) {
 			margin:0px 15px;
 		}
@@ -391,8 +390,10 @@
 			.utility-container {
 				float:right;
 				text-align:right;
-				padding-top:10px;
-				padding-bottom:10px;
+				padding:0 0 10px 0;
+				@media (max-width:$break-sm) {
+                	padding:0 0 20px 0;
+              	}
 				a.read {
 					@include extra_actions_label;
 					background-image:url('../../../../images/posts/mark-read.png');
@@ -422,9 +423,17 @@
 	}
 }
 
+.footer-cat-container {
+	.footer-cat {
+    	padding-left:0px;
+    	padding-right:0px;
+	}
+	@include footer-cat;
+}
+
 .post-comment-wrapper {
 	background-color: $beige;
-
+	padding-top:30px;
 	.post-comment-container {
 		.comments {
 			textarea, .comment-body {

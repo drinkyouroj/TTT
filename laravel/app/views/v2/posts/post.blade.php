@@ -105,6 +105,7 @@
 								</li>
 							<ul>
 						</div>
+
 						<div class=" comment-container">
 							<a class="comment-button action-comment" href="#">Comment</a>
 							
@@ -260,7 +261,7 @@
 						<div class="clearfix"></div>
 						</div>
 					@if( !$is_author )
-						<div class="col-md-3 utility-container">
+						<div class="col-md-12 utility-container">
 							@if($favorited)
 								<a data-action="read" class="read">Mark as Read</a>
 							@endif
@@ -284,6 +285,14 @@
 			</div>
 		@endif
 	</section>
+
+	<div class="footer-cat-container container">
+		<div class="row">
+			<div class="footer-cat col-md-10 col-md-offset-1">
+				@include( 'v2/partials/category-listing' )
+			</div>
+		</div>
+	</div>
 
 	<section class="post-comment-wrapper">
 		<div class="post-comment-container container">

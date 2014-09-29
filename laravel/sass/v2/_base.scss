@@ -387,8 +387,6 @@ textarea {
   @include word-break(break-all);
 }
 
-
-
 //shadow for nav elements
 @mixin drop_shadow() {
 -moz-box-shadow:    0px 1px 2px 0px #525252;
@@ -454,6 +452,130 @@ textarea {
   // 1 item per row
   @media screen and (max-width: 630px){  
     width: 300px; 
+  }
+}
+
+//category listing for footer
+@mixin footer-cat {
+  .footer-cat-listing {
+    width:100%;
+    float:left;
+    overflow:hidden;
+    position:relative;
+    label {
+      position:relative;
+      display:block;
+      width:100%;
+      margin-bottom:5px;
+      @include montserrat(bold);
+      text-transform:uppercase;
+      letter-spacing:2px;
+      font-size:14px;
+      color:$darker_cream;
+      @media (max-width:$break-sm) {
+        text-align:center;
+      }
+      @media (max-width:$break-xs) {
+        font-size:12px;
+      }
+    }
+    ul {
+      position:relative;
+      display:block;
+      width:100%;
+      list-style:none;
+      margin:0;
+      padding:0;
+      text-align:center;
+      li {
+        position:relative;
+        width:16.65%;
+        display:block;
+        float:left;
+        list-style:none;
+        margin:0;
+        padding:0;
+        @media (max-width:$break-sm) and (min-width:$break-sm-min)  {
+          width:25%;
+        }
+        @media (max-width:$break-xs) {
+          width:33.33%;
+        }
+        a {
+          position:relative;
+          display:block;
+          width:100%;
+          h4 {
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height: 45px;
+            margin:0px;
+            padding-top:7px;
+            text-align:center;
+
+            @include montserrat;
+            text-align:center;
+            text-transform:uppercase;
+            color:$white;
+            letter-spacing:2px;
+            font-size:9px;
+
+            z-index:1;
+            background-image: url("../../../../images/categories/post-image-overlay2.png");
+            background-position: top;
+            background-repeat: repeat-x;
+            background-size: 2px 45px;
+            @media (max-width:$break-xs) {
+              font-size:8px;
+            }
+          }
+          .cat-img {
+              height:0px;
+              padding:67% 0 0 0;
+              background-size:cover;
+              background-position:center center;
+            &.adversity {
+              background-image:url('../../../../images/cat-listing/adversity.jpg');
+            }
+            &.childhood {
+              background-image:url('../../../../images/cat-listing/childhood.jpg');
+            }
+            &.confession {
+              background-image:url('../../../../images/cat-listing/confession.jpg');
+            }
+            &.horror {
+              background-image:url('../../../../images/cat-listing/horror.jpg');
+            }
+            &.intoxicated {
+              background-image:url('../../../../images/cat-listing/intoxicated.jpg');
+            }
+            &.perspective {
+              background-image:url('../../../../images/cat-listing/perspective.jpg');
+            }
+            &.potpourri {
+              background-image:url('../../../../images/cat-listing/potpourri.jpg');
+            }
+            &.reality {
+              background-image:url('../../../../images/cat-listing/reality.jpg');
+            }
+            &.relationships {
+              background-image:url('../../../../images/cat-listing/relationships.jpg');
+            }
+            &.roaming {
+              background-image:url('../../../../images/cat-listing/roaming.jpg');
+            }
+            &.sex {
+              background-image:url('../../../../images/cat-listing/sex.jpg');
+            }
+             &.new {
+              background-image:url('../../../../images/cat-listing/new.jpg');
+            }
+          }
+        }        
+      }
+    }
   }
 }
 
