@@ -4,6 +4,18 @@ $(function() {
 		event.preventDefault();
 		$(this).next().toggle();
 	});
+
+	$(window).scroll(function() {
+		// Pagination for content
+		var scrollTop = $(window).scrollTop(); 
+		var windowHeight = $(window).height();
+		var documentHeight = $(document).height();
+		if ( scrollTop > 50 ) {
+			$('.header-inner-wrapper').addClass('active');
+		} else {
+			$('.header-inner-wrapper').removeClass('active');
+		}
+	});
 });
 
 /*
