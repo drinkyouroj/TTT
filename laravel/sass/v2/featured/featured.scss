@@ -344,7 +344,7 @@
 }
 
 .sectional-line {
-	margin:0px 15px 50px 15px;
+	margin:0px 15px 40px 15px;
 	border-bottom:solid 2px $dark_cream;
 }
 
@@ -362,6 +362,22 @@
 			font-size:32px;
 		}
 	}
+	h3 {
+      width:100%;
+      margin-bottom:15px;
+      padding:0 15px;
+      @include montserrat(bold);
+      text-transform:uppercase;
+      letter-spacing:2px;
+      font-size:14px;
+      color:$darker_cream;
+      @media (max-width:$break-sm) {
+        text-align:center;
+      }
+      @media (max-width:$break-xs) {
+        font-size:12px;
+      }
+    }
 	.filters {
 		position:relative;
 		@include catfilter;

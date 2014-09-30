@@ -94,8 +94,6 @@
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	<div class="container">
-		<div class="row">
-			<div class="sectional-line"></div>
-		</div>
-	</div>
+	
+	<div class="sectional-line"></div>
+		

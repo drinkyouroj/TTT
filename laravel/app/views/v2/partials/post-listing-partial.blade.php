@@ -1,6 +1,6 @@
 {{-- This is the partial template for a post and/or feed repost listing --}}
 {{-- PLEASE keep updated with the equivalent handlebars template! --}}
-
+@if(isset($post->user))
 <div class="post-container">
 	
 	<div class="post-image-overlay">
@@ -48,3 +48,4 @@
 	</ul>
 	
 </div>
+@endif
