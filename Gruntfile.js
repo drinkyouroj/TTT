@@ -69,7 +69,6 @@ module.exports = function(grunt) {
             files: ['laravel/app/applogic/*.php', 'laravel/app/controllers/*.php', 'laravel/app/models/*.php', 'laravel/app/repositories/*/*.php'],  //the task will run only when you save files in this location
             tasks: ['phpunit']
           }
-          
         }
       });
 
@@ -84,11 +83,15 @@ module.exports = function(grunt) {
       var done = this.async();
       console.log(grunt.config.data.meta.revision);
       var file = grunt.file.write('.gitver',grunt.config.data.meta.revision);
+
       done(true);
     });
 
     //just a compile and revision writer
     grunt.registerTask('compile',['revision','compass','writeRevision']);
+
+    //composer update
+    grunt.registerTask('fullUpdate',['revision']);
 
     //s3 deployment
     grunt.registerTask('deploy',['revision','compass','s3','writeRevision']);
