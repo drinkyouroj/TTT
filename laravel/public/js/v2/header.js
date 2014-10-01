@@ -69,8 +69,11 @@ $(function() {
 });
 
 $(window).load(function(){
-    $('#signupModal').modal('show');
+    var signup = $.cookie("signup");
+    console.log(signup);
+    if(typeof signup == 'undefined') {
+        $.cookie("signup", 1);        
+        $('#signupModal').modal('show');
+        $('.modal-backdrop.in').addClass('half');
+    }
 });
-
-
-

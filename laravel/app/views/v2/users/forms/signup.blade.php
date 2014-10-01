@@ -2,12 +2,14 @@
 	if(!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
 		$_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
 		$form_url = secure_url('user');
+		$captcha_url = Config::get('app.secureurl');
 	} else {
 		$form_url = URL::to('user');
+		$captcha_url = Config::get('app.url');
 	}
 ?>
 
-<form method="POST" action="{{ $form_url }}" accept-charset="UTF-8">
+<form method="POST" action="{{ $form_url }}" accept-charset="UTF-8" class="signup_form">
 	
 	@if ( Session::get('notice') )
 		<div class="alert alert-yes">{{ Session::get('notice') }}</div>
@@ -28,7 +30,7 @@
         <input placeholder="Password Confirmation" type="password" name="password_confirmation" id="password_confirmation" minlength="6" >
 		<br/>
 		<div class="captcha-equation">
-			<img src="{{Config::get('app.url')}}/user/captcha">
+			<img src="{{ $captcha_url }}/user/captcha">
 		</div>		
 		<input type="text" name="captcha" id="captcha" placeholder="What's the answer?">
 

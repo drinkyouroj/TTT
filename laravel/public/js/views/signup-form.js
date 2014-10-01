@@ -6,7 +6,7 @@ $(function() {
 		});
 	});*/
 	
-	$('.signup-form form').validate({
+	$('form.signup_form').validate({
 		ignore: [],
 		rules: {
 			username: {

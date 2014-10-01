@@ -1093,8 +1093,14 @@ textarea {
 //Modal Mods
 //below is straight off from the landing page.  Modify if need be.
 .modal-backdrop.in {
-	opacity: .98 !important;
+	opacity: .98;
 }
+
+.modal-backdrop.in.half {
+  opacity: 0.7;
+  background-color: #000;
+}
+
 .modal-dialog {
   width: 80%;
   margin: 30px 10% 30px 10%; }
