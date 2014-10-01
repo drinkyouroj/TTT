@@ -6,11 +6,13 @@
 
 	@include('v2.partials.post-listing-template')
 
-	@if(Auth::check())
-		<!--//user id is passed as a global variable-->
-		<script type="text/javascript">window.user_id = {{Auth::user()->id}};</script>
-	@endif
-
+	<script type="text/javascript">
+		@if(Auth::check())
+			window.user_id = {{Auth::user()->id}};
+		@endif
+		//signup script shouldn't run on the featured page.
+		window.disable_signup = 1;
+	</script>
 	
 @stop
 

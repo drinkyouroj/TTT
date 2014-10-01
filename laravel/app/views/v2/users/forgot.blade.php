@@ -8,6 +8,9 @@
 @section('js')
     <script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/validation/jquery.validate.min.js"></script>
     <script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/user/forgot.js?v={{$version}}"></script>
+    <script type="text/javascript">
+        window.disable_signup =1;
+    </script>
 @stop
 
 @section('title')
