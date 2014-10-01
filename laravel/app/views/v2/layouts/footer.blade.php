@@ -1,5 +1,4 @@
-{{--Modal for the image selection system should go here--}}
-
+@if(Request::segment(1) != 'user')
 <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -9,7 +8,7 @@
 					For the stories we tell.
 				</h3>
 				<h4 class="modal-subtitle" id="signupModalSublabel">
-					Sign up to post your stories, share and comment.
+					Sign up to post your stories, follow, and comment.
 				</h4>
 			</div>
 			<div class="modal-body hidden-xs">
@@ -26,17 +25,16 @@
 	   			 </div>
 			</div><!--End of Modal Body-->
 
-
 			<div class="modal-footer hidden-xs">
 				<div class="terms-agree">
 					By creating an account you agree to our <a class="terms" href="{{Config::get('app.url')}}/terms">Terms Of Use</a> and <a class="terms" href="{{Config::get('app.url')}}/privacy">Privacy Policy</a>.
-					<br/>
-		            Read our guidelines on <a href="{{Config::get('app.url')}}/etiquette">Community Etiquette</a>.
 		        </div>
 			</div>
 		</div>
 	</div>
 </div>
+@endif
+
 
 <div class="footer-container">
 	<div class="container">
