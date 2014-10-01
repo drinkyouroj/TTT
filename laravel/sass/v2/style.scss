@@ -1080,7 +1080,32 @@ input, textarea, button:focus {outline: none !important;}
 							margin-top:0px;
 						}
 					}
+					&.error {
+						width:100% !important;
+						margin-top:5px;
+						color:$dark;
+						background-color:#fc9595;
+						&::-webkit-input-placeholder {
+							color:$white;
+						}
+
+						&:-moz-placeholder { /* Firefox 18- */
+							color:$white; 
+						}
+
+						&::-moz-placeholder {  /* Firefox 19+ */
+							color:$white; 
+						}
+
+						&:-ms-input-placeholder {  
+							color:$white;
+						}
+					}
 				}
+				label.error {
+						width:100%;
+						color:$red;
+					}
 				.captcha-equation {
 					width:50%;
 					float:left;
