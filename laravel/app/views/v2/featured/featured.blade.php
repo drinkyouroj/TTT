@@ -42,7 +42,7 @@
 					<div class="date-circle">
 						<span class="month">
 							{{date('F')}}
-						</span>
+						</span><br/>
 						<span class="day">
 							{{date('j')}}
 						</span>

@@ -90,8 +90,8 @@ module.exports = function(grunt) {
     //just a compile and revision writer
     grunt.registerTask('compile',['revision','compass','writeRevision']);
 
-    //composer update
-    grunt.registerTask('fullUpdate',['revision']);
+    //composer update (to be built)
+    grunt.registerTask('fullUpdate',['revision','writeRevision']);
 
     //s3 deployment
     grunt.registerTask('deploy',['revision','compass','s3','writeRevision']);
