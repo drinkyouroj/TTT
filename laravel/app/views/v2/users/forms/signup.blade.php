@@ -3,6 +3,9 @@
 		$_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
 		$form_url = secure_url('user');
 		$captcha_url = Config::get('app.secureurl');
+	} elseif(Request::segment(1) != 'user') {
+		$form_url = secure_url('user');
+		$captcha_url = Config::get('app.url');
 	} else {
 		$form_url = URL::to('user');
 		$captcha_url = Config::get('app.url');
