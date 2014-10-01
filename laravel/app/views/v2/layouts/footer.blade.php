@@ -9,7 +9,7 @@
 					For the stories we tell.
 				</h3>
 				<h4 class="modal-subtitle" id="signupModalSublabel">
-					Sign up to post your stories, follow, share and comment.
+					Sign up to post your stories, share and comment.
 				</h4>
 			</div>
 			<div class="modal-body hidden-xs">
