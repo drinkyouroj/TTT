@@ -1,4 +1,7 @@
 <?php
+$file_path = base_path().'/gitversion';
+$version = str_replace("\n", "", fread(fopen($file_path, "r"), filesize($file_path)) );
+define('GIT_VER', $version);
 return array(
 
 	/*
@@ -32,6 +35,7 @@ return array(
 	'url' => 'http://192.168.9.149',
 	'secureurl' => 'https://192.168.9.149',
 	'staticurl' => '//192.168.9.149',
+	//'staticurl' => '//static.twothousandtimes.com/'.GIT_VER,//not the prettiest, but it sure works.
 	'imageurl' => 'http://192.168.9.149/uploads/final_images',
 	'cdn_upload' => false,//set to true if you want your images to go to S3.
 );

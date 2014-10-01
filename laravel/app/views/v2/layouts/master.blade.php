@@ -63,9 +63,8 @@
 	@yield('css')
 	
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="{{Config::get('app.staticurl')}}/js/html5shiv.js"></script>
-      <script src="{{Config::get('app.staticurl')}}/js/respond.min.js"></script>
+    <!--[if lte IE 10]>
+      <link href="{{Config::get('app.staticurl')}}/css/compiled/v2/99_ie_problems.css?v={{$version}}" rel="stylesheet" media="screen">
     <![endif]-->
   </head>
 <body>

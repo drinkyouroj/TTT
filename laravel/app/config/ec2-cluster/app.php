@@ -4,6 +4,9 @@
 define('APP_HOST', 'http://twothousandtimes.com'); #push all through load balancer
 #define('APP_HOST', ''); #relative
 #define('APP_HOST', 'http://54.68.96.139'); #my External IP -- means direct traffic to box, not through LB. also cross-origin problem, and specific config per box required.
+$file_path = base_path().'/gitversion';
+$version = str_replace("\n", "", fread(fopen($file_path, "r"), filesize($file_path)) );
+define('GIT_VER', $version);
 
 return array(
 
@@ -37,7 +40,7 @@ return array(
 	'url' => APP_HOST, #constant defined at top
 	'secureurl' => 'https://twothousandtimes.com',
 	'imageurl' => 'http://images.twothousandtimes.com',
-	'staticurl' => '//twothousandtimes.com',//not the prettiest, but it sure works.
+	'staticurl' => '//static.twothousandtimes.com/'.GIT_VER,//not the prettiest, but it sure works.
 	'cdn_upload' => true,//set to true if you want your images to go to S3.
 	/*
 	|--------------------------------------------------------------------------
