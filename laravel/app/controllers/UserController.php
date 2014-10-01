@@ -63,6 +63,7 @@ class UserController extends BaseController {
         } else {
             //Auto Login on Creation.
             $user = $this->user->login($data);
+            Session::put('signup_success',true);
             //Gotta send out email
             if(!empty($data['email']) ) {
                 $email_data = array(

@@ -49,6 +49,14 @@
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/moment-timezone/moment-timezone-with-data.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/photo/photo.js?v={{$version}}"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/myprofile/profile.js?v={{$version}}"></script>
+
+	<!--Signup success {{Session::get('signup_success')}}-->
+	@if(Session::get('signup_success',false))
+		<?php Session::forget('signup_success');?>
+		<script type="text/javascript">
+			ga('send', 'event', 'signup','success','{{$profile_user->username}}');
+		</script>
+	@endif
 	
 @stop
 
@@ -277,6 +285,7 @@
 
 
 <?php
+
 	if(Auth::check()) {
 		$user = Auth::user();
 		$is_mod = $user->hasRole('Moderator');

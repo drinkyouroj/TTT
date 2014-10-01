@@ -93,7 +93,6 @@
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/header-swipe.js"></script>
 	@endif -->
 	
-	
 	@if( $have_user )
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/global-loggedin.js?v={{$version}}"></script>
 	@else
@@ -124,9 +123,9 @@
 	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
 	  ga('create', 'UA-53883988-4', 'auto');
-	ga('require', 'displayfeatures');
+	  ga('require', 'displayfeatures');
 	  ga('send', 'pageview');
-
+	  window.ga = ga;
 	</script>
 	@endif
 </body>
