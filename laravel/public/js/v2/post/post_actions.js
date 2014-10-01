@@ -38,6 +38,10 @@ function UserAction () {
 				this.ajaxFlag( callback );
 				break;
 		}
+		
+		if(typeof(window.ga) === 'function') {
+			window.ga('send','event','post',this.action, this.post_id);
+		}
 	};
 
 	// Save/Un-save the post

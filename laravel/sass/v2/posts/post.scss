@@ -291,6 +291,9 @@
 						font-size: 70px;
 						text-transform: uppercase;
 						margin:.2em .15em .1em 0;
+						@media (max-width:$break-lg) and (min-width:$break-md-min) {
+							margin: .3em .15em .1em 0;
+						}
 					}
 					&::first-line {
 

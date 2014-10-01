@@ -44,17 +44,21 @@ $(function() {
 		});
 	}
 	// ==================== Show Flagged and Mark as Read ==================
-	/*
+	
 	utilities = $('.post-comment-wrapper').position();
 	window.show_utilities = utilities.top -150;
+	window.reached = false;
 	
 	$(window).scroll(function(event) {
 		current = $(window).scrollTop();
-		if(current > window.show_utilities) {
-			$('.utility-container').removeClass('hidden').fadeIn();
+		if(current > window.show_utilities && window.reached == false) {
+			window.reached = true;
+			if(typeof(window.ga) === 'function') {
+				window.ga('send','event','post', 'bottom');//mostly to just record the time.
+			}
 		}
 	});
-	*/
+	
 	// ========================== LOAD COMMENTS ===========================
 
 	var post_id = $('.post-action-bar').data('post-id');
@@ -88,7 +92,6 @@ $(function() {
 		}
 	});
 
-
 	// ========================== COMMENT REPLY ===========================
 	$('.comments-listing').on('click', '.comment.published a.reply', function() {
 		if ( $(this).hasClass('auth') ) {
@@ -106,6 +109,9 @@ $(function() {
 			$(this).hide();
 			$(this).siblings('a').hide();
 			$comment_container.append( new_form );
+			if(typeof(window.ga) === 'function') {
+				window.ga('send','event','post', 'comment', post_id);
+			}
 		}
 	});
 

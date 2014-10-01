@@ -422,6 +422,12 @@ function ProfileActions() {
 				break;
 		}
 
+		if(typeof(window.ga) === 'function') {
+			if(this.page <= 1) {
+				window.ga('send','event','profile', this.view, window.post_id);
+			}
+		}
+
 	};
 
 	//Clears the content before filters
