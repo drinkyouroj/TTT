@@ -32,3 +32,15 @@ $(function() {
 	});
 
 });
+
+$(window).load(function(){
+    if(!window.disable_signup) {
+        var signup = $.cookie("signup");
+        console.log(signup);
+        if(typeof signup == 'undefined') {
+            $.cookie("signup", 1, {expires: 4, path: '/'});
+            $('#signupModal').modal('show');
+            $('.modal-backdrop.in').addClass('half');
+        }
+    }
+});
