@@ -30,7 +30,7 @@
 		<div class="captcha-equation">
 			<img src="{{Config::get('app.url')}}/user/captcha">
 		</div>		
-		<input type="text" name="captcha" id="captcha" placeholder="What's the answer above?">
+		<input type="text" name="captcha" id="captcha" placeholder="What's the answer?">
 
 
         <div class="errors">

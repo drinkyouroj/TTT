@@ -67,3 +67,10 @@ $(function() {
         }
     });
 });
+
+$(window).load(function(){
+    $('#signupModal').modal('show');
+});
+
+
+
