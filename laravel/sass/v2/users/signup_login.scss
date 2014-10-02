@@ -13,6 +13,33 @@ body {
 	background-attachment: fixed;
 }
 
+.signup-form {
+	input {
+		&.error {
+			margin-bottom:0px !important;
+			background-color:#fc9595;
+			&::-webkit-input-placeholder {
+				color:$white;
+			}
+
+			&:-moz-placeholder { /* Firefox 18- */
+				color:$white; 
+			}
+
+			&::-moz-placeholder {  /* Firefox 19+ */
+				color:$white; 
+			}
+
+			&:-ms-input-placeholder {  
+				color:$white;
+			}
+		}
+	}
+	label.error {
+		width:100%;
+		color:$red;
+	}
+}
 .errors, .alert-error {
 	background-color:$red !important;
 	color:$white;
