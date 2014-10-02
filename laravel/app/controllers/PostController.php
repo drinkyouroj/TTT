@@ -123,6 +123,12 @@ class PostController extends BaseController {
 						->with('is_editable', $this->post->checkEditable($post->published_at))
 						;
 
+			// If we need to populate the comment form ( after user signup )
+			if ( Session::has( 'restore_comment' ) ) {
+				$restore_comment = Session::get( 'restore_comment' );
+				Session::forget( 'restore_comment' );
+				$view->with( 'restore_comment', $restore_comment );
+			}
 			// If admin or mod, we need some additional info for the view
 			if ( $is_mod || $is_admin ) {
 				$featured = $this->featured->findByPostId( $post->id );
