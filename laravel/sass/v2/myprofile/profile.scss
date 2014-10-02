@@ -844,3 +844,28 @@ a:focus {
 #photoModal {
 	@include photo_selection;
 }
+
+#avatarModal {
+	.modal-content {
+		max-width: 400px;
+		
+		.modal-title {
+			@include word-break(break-all);
+		}
+		.modal-body > .avatar-image {
+			height: 300px;
+			width: 300px;
+			@media (max-width:$break-xs) {
+				height: 200px;
+				width: 200px;
+			}
+			border-radius: 50%;
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			background-position: center center;
+			background-size: cover;
+			background-repeat: no-repeat;
+		}
+	}	
+}

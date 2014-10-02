@@ -67,9 +67,9 @@
 				<div class="col-md-6 col-xs-6 header-left">
 					<h2>
 						@if($profile_user->image)
-							<span class="avatar-image" data-toggle="modal" data-target="#photoModal" style="background-image:url('{{Config::get('app.imageurl')}}/{{$profile_user->image}}');"></span>
+							<span class="avatar-image" data-toggle="modal" data-target="<?php echo $myprofile ? '#photoModal': '#avatarModal';?>" style="background-image:url('{{Config::get('app.imageurl')}}/{{$profile_user->image}}');"></span>
 						@else
-							<span class="avatar-image" data-toggle="modal" data-target="#photoModal" style="background-image:url('{{Config::get('app.url')}}/images/profile/avatar-default.png');"></span>
+							<span class="avatar-image" data-toggle="modal" data-target="<?php echo $myprofile ? '#photoModal': '#avatarModal';?>" style="background-image:url('{{Config::get('app.url')}}/images/profile/avatar-default.png');"></span>
 						@endif
 						<a>	
 							{{$profile_user->username}}
@@ -160,7 +160,7 @@
 	</div>
 
 	
-	@if($myprofile)
+@if($myprofile)
 	{{--Contains modals for My Profile --}}
 
 
@@ -278,8 +278,30 @@
 			</div>
 		</div>
 	</div>
-
-	@endif
+@else
+	{{-- If not your profile, provide modal when clicking user's avatar --}}
+	<div class="modal fade" id="avatarModal" tabindex="-1" role="dialog" aria-labelledby="avatarModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">
+						{{$profile_user->username}}
+					</h4>
+				</div>
+				<div class="modal-body">
+					@if($profile_user->image)
+						<span class="avatar-image" style="background-image:url('{{Config::get('app.imageurl')}}/{{$profile_user->image}}');"></span>
+					@else
+						<span class="avatar-image" style="background-image:url('{{Config::get('app.url')}}/images/profile/avatar-default.png');"></span>
+					@endif
+				</div><!--End of Modal Body-->
+				<div class="modal-footer">
+					<button class="btn-flat-blue pull-right" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+@endif
 
 @stop
 
