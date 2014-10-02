@@ -30,6 +30,7 @@
     
     <!--Fonts-->
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700|Fjalla+One' rel='stylesheet' type='text/css'>    
+    <link href='http://fonts.googleapis.com/css?family=Vollkorn:400italic,400,700' rel='stylesheet' type='text/css'>
     
     <!--{{App::environment()}} {{$version}} -->
 	<script>

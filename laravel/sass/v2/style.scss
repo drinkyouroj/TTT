@@ -157,6 +157,7 @@ input, textarea, button:focus {outline: none !important;}
 					padding:5px 10px;
 					margin-top:5px;
 					@media (max-width:$break-xs) {
+						width:54px;
 						font-size:11px;
 						padding:0 3px;
 						margin:0;

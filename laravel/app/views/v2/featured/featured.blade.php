@@ -39,6 +39,21 @@
 			<div class="row">
 				<div class="col-md-12 heading-title">
 					<h1>Two Thousand Times</h1>
+					@if(!Auth::check())
+						<div class="line"></div>
+						<h3>For the Stories We Tell</h3>
+						<p><a href="{{Config::get('app.url')}}/profile/{{$featured{0}->post->user->username}}" class="user-link">{{$featured{0}->post->user->username}}</a> and many other storymakers post on Two Thousand Times.</p>
+						<div class="signup-btn">
+							<a href="{{ URL::to( 'user/signup' ) }}" class="btn btn-flat-blue signup">Signup and Post Your Story</a>
+						</div>
+						<div class="login-header">
+							- or  &nbsp;<a href="{{ URL::to( 'user/login' ) }}" class="login">Log in</a> -
+						</div>
+					@else
+						<div class="line"></div>
+						<h3 class="signed-in">welcome <a href="{{Config::get('app.url')}}/myprofile">{{ Session::get('username') }}</a></h3>
+					@endif
+					
 				</div>
 				<div class="col-md-12 date">
 					<div class="date-circle">

@@ -33,7 +33,7 @@
         @endif
         
         <div class="form-actions">
-            <button tabindex="3" type="submit" class="btn btn-flat-gray">Login</button> 
+            <button tabindex="3" type="submit" class="btn btn-flat-gray">Log in</button> 
         </div>
         <div class="forgot-pw">
             <a href="{{Config::get('app.url')}}/user/forgot">forget your password?</a>

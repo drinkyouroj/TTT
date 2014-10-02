@@ -20,7 +20,7 @@
 	<div class="container">
 		<div class="col-md-8 col-md-offset-2 login-container">
 			<div class="login-form">
-				<h2>Login</h2>
+				<h2>Log in</h2>
 				{{ View::make('v2.users.forms.login') }}
 				 <div class="redirect-other">
 		            Don't have an account? <a href="{{Config::get('app.url')}}/user/signup">Sign up now</a>

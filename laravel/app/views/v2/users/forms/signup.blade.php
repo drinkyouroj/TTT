@@ -51,7 +51,7 @@
         </div>
 		
         <div class="form-actions">
-          <button type="submit" class="btn btn-flat-gray">Submit</button>
+          <button type="submit" class="btn btn-flat-gray">Signup</button>
         </div>
         <div class="redirect-other">
 	        Already have an account? <a href="{{Config::get('app.url')}}/user/login">Login now</a>
