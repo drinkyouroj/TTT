@@ -44,7 +44,7 @@ class UserController extends BaseController {
      * Stores new account and also validates the captcha
      */
     public function postIndex()
-    {	
+    {
         //Data input
         $data = array();
         $data['username']   = Request::get('username');
@@ -52,6 +52,9 @@ class UserController extends BaseController {
         $data['password']   = Request::get('password');
         $data['password_confirmation'] = Request::get('password_confirmation');
         $data['captcha']    = Request::get('captcha');
+
+        $redirect = Request::has('redirect') ? Request::get('redirect') : false;
+        $restore_comment = Request::has('restore-comment') ? Request::get('restore-comment') : false;
 
         $result = $this->user->create($data);
 
@@ -77,7 +80,16 @@ class UserController extends BaseController {
                 $this->email->create($email_data);
             }
 
-            return Redirect::secure('myprofile');
+            // Redirect accordingly. If user signed up from a 
+            if ( $redirect ) {
+                if ( $restore_comment ) {
+                    return Redirect::to( $redirect )->with( 'restore_comment', $restore_comment );    
+                } else {
+                    return Redirect::to( $redirect );
+                }
+            } else {
+                return Redirect::secure('myprofile');    
+            }
         }
     }
 

@@ -43,6 +43,15 @@
 	<!-- Go to www.addthis.com/dashboard to customize your tools -->
 	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53f22b3f69014ed4"></script>
 
+	{{-- This only applies to the case where a new user tried commenting on a post, signs up, and is redirected back to comment --}}
+	@if ( isset( $restore_comment ) )
+		<script type="text/javascript">
+			$(document).ready(function() {
+				window.scrollTo(0, $('.comment-form').offset().top - 100);
+			});
+		</script>
+	@endif
+
 @stop
 
 @section('title')
@@ -300,7 +309,7 @@
 			</div>
 		</div>
 		{{-- Admin edit capabilities --}}
-		@if ( $is_admin )	
+		@if ( $is_admin )
 			<div class="post-content-container container hidden">
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1 post-content-page-wrapper">
@@ -323,7 +332,7 @@
 						<input name="reply_id" type="hidden" value="">
 							<div class="form-group comment-form ">
 							<label for="body" class="control-label">Comments ({{ $post->comment_count }})</label>
-							<textarea class="form-control" required="required" minlength="5" name="body" cols="50" rows="10" id="body"></textarea>
+							<textarea class="form-control" required="required" minlength="5" name="body" cols="50" rows="10" id="body"><?php echo isset( $restore_comment ) ? $restore_comment : ''; ?></textarea>
 							<span class="error"></span>
 						</div>
 										
