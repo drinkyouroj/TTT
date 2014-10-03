@@ -366,6 +366,17 @@ textarea {
       background-position:left -26px;
       color:$blue;
     }
+    @media (max-width:$break-xs) {
+      height:11px;
+      font-size:7px;
+      line-height:10px;
+      padding-left:15px;
+      background-size:10px 22px;
+        &:hover {
+          background-position:left -11px;
+          color:$blue;
+        }
+    }
 }
 
 //==========POST Page Content==========
