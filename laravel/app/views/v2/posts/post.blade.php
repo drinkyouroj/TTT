@@ -265,6 +265,23 @@
 							</a>
 						</div>
 					@endif--}}
+
+					@if( $is_guest )
+						<div class="join-banner">
+							<a href="{{ URL::to( 'user/signup' ) }}">
+								<div class="join-text col-md-7 col-sm-8 col-xs-8">
+									<h4>Join the Community</h4>
+									<p>post your own stories, follow users, save stories, comment and join the discussion.</p>
+								</div>
+								<div class="join-button col-md-5 col-sm-4 col-xs-4">
+									<a class="btn-flat-blue" href="{{ URL::to( 'user/signup' ) }}">
+										Create an account
+									</a>
+								</div>
+							</a>
+						</div>
+					@endif
+
 						<div class="sharing">
 							<div class="addthis_custom_sharing"></div>
 						<div class="clearfix"></div>

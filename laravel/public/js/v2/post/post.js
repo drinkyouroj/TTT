@@ -59,6 +59,16 @@ $(function() {
 		}
 	});
 	
+	// ========================== Fixed signup Bar ===========================
+
+	if ( !window.logged_in ) {
+		$('.content-wrapper').css('margin-bottom',$('.join-banner').height());
+		
+		$( window ).resize(function() {
+	  		$('.content-wrapper').css('margin-bottom',$('.join-banner').height());
+		});
+	}
+
 	// ========================== LOAD COMMENTS ===========================
 
 	var post_id = $('.post-action-bar').data('post-id');
