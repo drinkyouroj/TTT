@@ -42,7 +42,7 @@ class LaunchEmailCommand extends Command {
 		//
 		$paginate = 50;//just to make sure that we only really do 1.
 		$page = 0;//default;
-
+		$total = 0;
 		$reserved_users = $this->reservedQuery($paginate, $page);//initial pull
 
 		while ( count( $reserved_users ) > 0 ) {
@@ -56,11 +56,13 @@ class LaunchEmailCommand extends Command {
 					} else {
 						$this->line('its a test');
 					}
+					$total ++;
 				}
 			}
 			$page++;
 			$reserved_users = $this->reservedQuery($paginate, $page);
 		}
+		$this->line("We've sent ".$total." Emails");
 
 	}
 
@@ -88,7 +90,7 @@ class LaunchEmailCommand extends Command {
 			$data = array(
 					'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
 					'to' => array($user->email),
-					'subject' => 'Welcome to Two Thousand Times!',
+					'subject' => 'Final Reminder from Two Thousand Times',
 					'plaintext' => $plain,
 					'html' => $html
 				);
