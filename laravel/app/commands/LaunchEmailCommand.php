@@ -51,7 +51,11 @@ class LaunchEmailCommand extends Command {
 					//reset and send out a password.
 					$reset = $this->user->resetPassword($user->id);	
 					$this->line($user->username. ' email sent');
-					$this->sendEmail($user,$reset['new_password']);
+					if($this->option('mock') == false) {
+						$this->sendEmail($user,$reset['new_password']);
+					} else {
+						$this->line('its a test');
+					}
 				}
 			}
 			$page++;
@@ -101,6 +105,7 @@ class LaunchEmailCommand extends Command {
 	{
 		return array(
             array('page', InputOption::VALUE_OPTIONAL, 'What page are we processing from?'),
+
         );
 	}
 
@@ -112,7 +117,7 @@ class LaunchEmailCommand extends Command {
 	protected function getOptions()
 	{
 		return array(
-			array('example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null),
+			array('mock', null, InputOption::VALUE_OPTIONAL, 'An example option.', true),
 		);
 	}
 
