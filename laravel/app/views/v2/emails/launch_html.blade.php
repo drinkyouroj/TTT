@@ -3,7 +3,7 @@
 @section('content')
 	<h1 style="margin-top:50px; color:#000000; font-family:Helvetica Neue,Helvetica,Arial,sans-serif; font-weight:bold; font-size:21px;">Hi {{$user->username}},</h1>
 
-	<p style="color:#000000; font-family: Baskerville,Baskerville Old Face,Hoefler Text, Garamond,Times New Roman,Gerogia,serif; font-weight:normal; font-size:16px;">This is your final reminder to activate your Two Thousand Times account before it goes back up for grabs on <span style="font-weight:bold;">Thursday October 9th</span>. Please visit the link below and enter your password to activate your account.</p>
+	<p style="color:#000000; font-family: Baskerville,Baskerville Old Face,Hoefler Text, Garamond,Times New Roman,Gerogia,serif; font-weight:normal; font-size:16px;">This is your final reminder to activate your Two Thousand Times account before it goes back up for grabs in <span style="font-weight:bold;">24 hours</span>. Please visit the link below and enter your password to activate your account.</p>
 
 	<p style="color:#000000; font-family: Baskerville,Baskerville Old Face,Hoefler Text, Garamond,Times New Roman,Gerogia,serif; font-weight:normal; font-size:16px;">Enjoy!</p>
 
