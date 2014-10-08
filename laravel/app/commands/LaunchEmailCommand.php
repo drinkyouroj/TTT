@@ -47,7 +47,7 @@ class LaunchEmailCommand extends Command {
 
 		while ( count( $reserved_users ) > 0 ) {
 			foreach($reserved_users as $k=>$user) {
-				if(is_object($user) && isset($user->email) && strlen($user->email) > 2 )  {
+				if(is_object($user) && isset($user->email) && strlen($user->email) > 2 && strpos($user->email, 'twothousandtimes.com') === false )  {
 					//reset and send out a password.
 					$reset = $this->user->resetPassword($user->id);	
 					$this->line($user->username. ' email sent');
@@ -88,7 +88,7 @@ class LaunchEmailCommand extends Command {
 						->render();
 
 			$data = array(
-					'from' => 'Two Thousand Times <team@twothousandtimes.com>',
+					'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
 					'to' => array($user->email),
 					'subject' => 'Final Reminder from Two Thousand Times',
 					'plaintext' => $plain,
