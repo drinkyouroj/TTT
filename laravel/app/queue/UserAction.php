@@ -32,7 +32,6 @@ class UserAction {
 		
 		$action_user = User::where('id', $data['user_id'])->first();
 		
-			//process notification for each follower
 			foreach($followers as $follower) {
 				
 				//below statement is to ensure that the user who owns the content doesn't get the repost.
@@ -66,12 +65,7 @@ class UserAction {
 		
 		$action_user = User::where('id', $data['user_id'])->first();
 		
-		//process notification for each follower
 		foreach($followers as $follower) {
-
-			//pull the user out of notifications.
-			$this->not->pullUsers($not, $action_user->username);
-			
 			//below statement is to ensure that the user who owns the content doesn't get the repost.
 			if($follower->follower_id != $post->user->id) {
 
