@@ -64,7 +64,7 @@
 	@yield('css')
 	
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lte IE 10]>
+    <!--[if lte IE 11]>
       <link href="{{Config::get('app.staticurl')}}/css/compiled/v2/99_ie_problems.css?v={{$version}}" rel="stylesheet" media="screen">
     <![endif]-->
   </head>
