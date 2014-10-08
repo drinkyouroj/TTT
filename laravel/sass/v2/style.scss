@@ -1247,3 +1247,27 @@ fieldset .errors, fieldset .alert-error  {
 		}
 	}
 }
+
+//Fuck the IE
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
+   .post-title {
+		word-break:normal !important;
+		a {
+			word-break:normal !important;
+		}
+	}
+
+	.post-taglines {
+		li {
+			word-break:normal !important;
+		}
+	}
+
+	.post-heading h2 {
+		word-break: normal !important;
+	}
+
+	.featured-item h2, .featured-item ul, .featured-item p  {
+		word-break: normal !important;
+	}
+}
