@@ -51,10 +51,11 @@ class ReservedDumpCommand extends Command {
 
 			$query->forceDelete();
 		} else {
-			User::where('reserved',1)
+			$query = User::where('reserved',1)
 				->whereNull('last_logged_in')
 				->whereNotNull('email');
 			$total = $query->count();
+			$this->line('its a mock!');
 		}
 
 		$this->line("We've deleted ".$total." Reserved Users");
