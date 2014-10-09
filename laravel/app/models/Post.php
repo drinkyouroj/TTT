@@ -13,7 +13,9 @@ class Post extends Eloquent {
 		parent::__construct();
 		Validator::extend('Twothousand', function($attribute, $value, $parameters) {		
 		    if(!is_null($value)) {//make sure its not empty.
-		    	if(strlen($value) <= 11500) {
+		    	$chars = strlen($value);
+		    	// Character limits 800 <= chars <= 14000
+		    	if ( $chars >= 800 && $chars <= 14000 ) {
 		    		//currently only includes alphanumeric.
 			    	$word_count = count(str_word_count($value, 1, '0..9'));
 					//might want to add a character limit in the future also.

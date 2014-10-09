@@ -180,8 +180,8 @@ var save_post = new function() {
 			},
 			body: {
 				required: true,
-				minlength: 400,
-				maxlength: 14000,//This is generalized.
+				minlength: 800,
+				maxlength: 14000,
 			},
 			story_type: {
 				required: true
