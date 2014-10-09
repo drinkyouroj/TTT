@@ -1,11 +1,11 @@
-Welcome {{$user->username}},
+Hi {{$user->username}},
 
-	Your account is ready to be activated. Please click the link below enter your password to activate your account.
+This is your final reminder to activate your Two Thousand Times account before it goes back up for grabs in 24 hours. Please visit the link below and enter your password to activate your account.
+ 
+Enjoy!
 
-	password: {{$pass}}
+password: {{$pass}}
 
-	twothousandtimes.com
+twothousandtimes.com/user/login
 
-	You only have 1 week to log in before your username goes back up for grabs. Enjoy!
-
-	TTT
+TTT

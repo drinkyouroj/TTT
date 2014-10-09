@@ -25,8 +25,12 @@ class MoloquentNotificationRepository implements NotificationRepository {
 	 * 	@return The notification object.
 	 */
 	public function create ( $data, $action_user ) {		
-		$not = self::find( $data['post_id'], $data['user_id'], $data['notification_type'] );
-
+		if($data['notification_type'] != 'follow') {
+			$not = self::find( $data['post_id'], $data['user_id'], $data['notification_type'] );
+		} else {
+			$not = false;
+		}
+		
 		// If the notification does not already exist, create one.
 		if ( !$not ) {
 			$not = self::instance();
@@ -49,9 +53,7 @@ class MoloquentNotificationRepository implements NotificationRepository {
 		// Push the action_user to the notification object
 		self::pushUsers( $not, $action_user );
 
-
 		return $not;
-
 	}
 
 

@@ -23,7 +23,7 @@ $(function() {
 		    $('.comment-form textarea').focus();
 		});
 		// Actions (like, flag, etc...)
-		$('.post-action-bar a, .extra-actions a').click(function(event) {
+		$('.post-action-bar a, .extra-actions a, .author-actions a.follow-button').click(function(event) {
 			event.preventDefault();
 			var $action = $(this);
 			var Action = new UserAction();
@@ -45,12 +45,16 @@ $(function() {
 	}
 	// ==================== Show Flagged and Mark as Read ==================
 	
-	utilities = $('.post-comment-wrapper').position();
-	window.show_utilities = utilities.top -150;
+	utilities = $('.author-info').offset();
+	window.show_utilities = utilities.top - 1000;
 	window.reached = false;
 	
 	$(window).scroll(function(event) {
 		current = $(window).scrollTop();
+		if(current > window.show_utilities && !window.logged_in) {
+			$('.join-banner').show().fadeIn();
+			$('.content-wrapper').css('margin-bottom',$('.join-banner').height());
+		}
 		if(current > window.show_utilities && window.reached == false) {
 			window.reached = true;
 			if(typeof(window.ga) === 'function') {
@@ -59,6 +63,14 @@ $(function() {
 		}
 	});
 	
+	// ========================== Fixed signup Bar ===========================
+
+	if ( !window.logged_in ) {
+		$( window ).resize(function() {
+	  		$('.content-wrapper').css('margin-bottom',$('.join-banner').height());
+		});
+	}
+
 	// ========================== LOAD COMMENTS ===========================
 
 	var post_id = $('.post-action-bar').data('post-id');

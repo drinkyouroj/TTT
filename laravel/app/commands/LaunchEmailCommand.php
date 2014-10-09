@@ -42,21 +42,27 @@ class LaunchEmailCommand extends Command {
 		//
 		$paginate = 50;//just to make sure that we only really do 1.
 		$page = 0;//default;
-
+		$total = 0;
 		$reserved_users = $this->reservedQuery($paginate, $page);//initial pull
 
 		while ( count( $reserved_users ) > 0 ) {
 			foreach($reserved_users as $k=>$user) {
-				if(is_object($user) && isset($user->email) && strlen($user->email) > 2 )  {
+				if(is_object($user) && isset($user->email) && strlen($user->email) > 2 && strpos($user->email, 'twothousandtimes.com') === false )  {
 					//reset and send out a password.
 					$reset = $this->user->resetPassword($user->id);	
 					$this->line($user->username. ' email sent');
-					$this->sendEmail($user,$reset['new_password']);
+					if($this->option('mock') == false) {
+						$this->sendEmail($user,$reset['new_password']);
+					} else {
+						$this->line('its a test');
+					}
+					$total ++;
 				}
 			}
 			$page++;
 			$reserved_users = $this->reservedQuery($paginate, $page);
 		}
+		$this->line("We've sent ".$total." Emails");
 
 	}
 
@@ -82,9 +88,9 @@ class LaunchEmailCommand extends Command {
 						->render();
 
 			$data = array(
-					'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
+					'from' => 'Two Thousand Times <team@twothousandtimes.com>',
 					'to' => array($user->email),
-					'subject' => 'Welcome to Two Thousand Times!',
+					'subject' => 'Final Reminder from Two Thousand Times',
 					'plaintext' => $plain,
 					'html' => $html
 				);
@@ -101,6 +107,7 @@ class LaunchEmailCommand extends Command {
 	{
 		return array(
             array('page', InputOption::VALUE_OPTIONAL, 'What page are we processing from?'),
+
         );
 	}
 
@@ -112,7 +119,7 @@ class LaunchEmailCommand extends Command {
 	protected function getOptions()
 	{
 		return array(
-			array('example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null),
+			array('mock', null, InputOption::VALUE_OPTIONAL, 'An example option.', true),
 		);
 	}
 

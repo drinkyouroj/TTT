@@ -116,7 +116,7 @@
 						</div>
 
 						<div class=" comment-container">
-							<a class="comment-button action-comment" href="#">Comment</a>
+							<a class="comment-button action-comment" href="#">Comment ({{ $post->comment_count }})</a>
 							
 							{{-- THE BELOW IS ONLY OUTPUT FOR SEARCH ENGINE BOTS/CRAWLERS FOR SEO PURPOSES --}}
 								@if ( isset( $comments ) )
@@ -199,7 +199,7 @@
 						<a href="{{ URL::to('profile/'.$post->user->username ) }}">
 							<img class="post-author-avatar" src="">
 						</a>
-						story by <a class="author-name" href="{{ URL::to('profile/'.$post->user->username ) }}"> {{ $post->user->username }} </a>
+						{{ $post->story_type }} by <a class="author-name" href="{{ URL::to('profile/'.$post->user->username ) }}"> {{ $post->user->username }} </a>
 					</div>
 
 					<ul class="post-categories list-inline">
@@ -249,7 +249,7 @@
 			@endif
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1 extra-actions">
-					@if( $is_guest )
+					{{--@if( $is_guest )
 						<div class="banner-mid">
 							<a href="{{ URL::to( 'user/signup' ) }}">
 								<img class="banner-mid-desktop" src="{{ URL::to('images/posts/banner-mid.jpg') }}" alt="Join the community. Post your own stories, follow users, save stories, comment and join the discussion. Create an Account.">
@@ -257,7 +257,7 @@
 							</a>
 						</div>
 					@endif
-					{{--@if( $is_guest )
+					@if( $is_guest )
 						<div class="banner-bottom">
 							<a href="{{ URL::to( 'user/signup' ) }}">
 								<img class="banner-bottom-desktop" src="{{ URL::to('images/posts/banner-bottom-desktop.jpg') }}">
@@ -265,6 +265,23 @@
 							</a>
 						</div>
 					@endif--}}
+
+					@if( $is_guest )
+						<div class="join-banner">
+							<a href="{{ URL::to( 'user/signup' ) }}">
+								<div class="join-text col-md-7 col-sm-8 col-xs-8">
+									<h4>Join the Community</h4>
+									<p>post your own stories, follow users, save stories, comment and join the discussion.</p>
+								</div>
+								<div class="join-button col-md-5 col-sm-4 col-xs-4">
+									<a class="btn-flat-blue" href="{{ URL::to( 'user/signup' ) }}">
+										Create an account
+									</a>
+								</div>
+							</a>
+						</div>
+					@endif
+
 						<div class="sharing">
 							<div class="addthis_custom_sharing"></div>
 						<div class="clearfix"></div>
@@ -278,6 +295,33 @@
 								Flag</a>
 						</div>
 					@endif
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			{{-- Author content --}}
+			<div class="row author-container">
+				<div class="col-md-10 col-md-offset-1  author-content">
+					<div class="author author-info" itemprop="author" content="{{$post->user->username}}">
+						<a href="{{ URL::to('profile/'.$post->user->username ) }}">
+							<?php $user_image = $post->user->image ? Config::get('app.imageurl').'/'.$post->user->image : Config::get('app.url').'/images/profile/avatar-default.png' ;?>
+							<span class="post-author-avatar" style="background-image:url('{{$user_image}}');"></span>
+						</a>
+						<div class="author-text">
+							{{ $post->story_type }} by 
+							<a class="author-name" href="{{ URL::to('profile/'.$post->user->username ) }}"> {{ $post->user->username }} </a>
+						</div>
+					</div>
+
+					<div class="author-actions">
+						<a class="read-more" href="{{ URL::to('profile/'.$post->user->username ) }}">read more by {{ $post->user->username }}</a>
+						@if( !$is_author )
+							<a data-action="follow" class="follow-button follow {{ $is_following ? 'active' : '' }}" href="#">
+								<span class="{{ $is_following ? 'hidden' : '' }}"> {{ $follow_term }} {{ $post->user->username }} </span>
+								<span class="{{ $is_following ? '' : 'hidden' }}"> {{ $follow_term_active }} {{ $post->user->username }} </span>
+							</a>
+						@endif
+					</div>
+					<div class="clearfix"></div>
 				</div>
 			</div>
 		</div>
@@ -294,14 +338,6 @@
 			</div>
 		@endif
 	</section>
-
-	<div class="footer-cat-container container">
-		<div class="row">
-			<div class="footer-cat col-md-10 col-md-offset-1">
-				@include( 'v2/partials/category-listing' )
-			</div>
-		</div>
-	</div>
 
 	<section class="post-comment-wrapper">
 		<div class="post-comment-container container">
@@ -334,6 +370,15 @@
 			</div>
 		</div>
 	</section>
+
+	<div class="footer-cat-container container">
+		<div class="row">
+			<div class="footer-cat col-md-10 col-md-offset-1">
+				@include( 'v2/partials/category-listing' )
+			</div>
+		</div>
+	</div>
+
 </article>
 @stop
 

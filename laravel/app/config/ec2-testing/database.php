@@ -1,5 +1,6 @@
 <?php
 
+define('DATASERVER_HOST', '172.31.46.241');
 return array(
 
 	/*
@@ -54,9 +55,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
+			'host'      => DATASERVER_HOST,
+			'port'      => 3306,
 			'database'  => 'twothousand',
-			'username'  => 'root',
+			'username'  => 'twothousand',
 			'password'  => 'TT99**',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
@@ -86,7 +88,7 @@ return array(
 		//setup : db.addUser({user: "twothousand", pwd: "TT99!!!", roles: ["userAdminAnyDatabase"]})
 		'mongodb' => array(
 		    'driver'   => 'mongodb',
-		    'host'     => 'localhost',
+		    'host'     => DATASERVER_HOST,
 		    'port'     => 27017, 
 		    'username' => 'twothousand',
 		    'password' => 'TT99!!!',
@@ -123,7 +125,7 @@ return array(
 		'cluster' => false,
 
 		'default' => array(
-			'host'     => '127.0.0.1',
+			'host'     => DATASERVER_HOST,
 			'port'     => 6379,
 			'database' => 0,
 		),

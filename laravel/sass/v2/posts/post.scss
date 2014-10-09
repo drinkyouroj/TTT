@@ -336,9 +336,13 @@
 		
 
 		.extra-actions {
-			padding:0px;
-
-
+			background-color:$white;
+			padding:0 20px;
+			border-left:solid 1px $lightgray;
+			border-right:solid 1px $lightgray;
+			@media (max-width:$break-xs) {
+				padding:0 10px;
+			}
 			.banner-mid {
 				padding:0px;
 				background:$white;
@@ -426,6 +430,166 @@
 	}
 }
 
+.author-container {
+	.author-content {
+		background-color:$white;
+		margin-bottom:20px;
+		padding:10px 20px;
+		border:solid 1px $lightgray;
+		@media (max-width:$break-xs) {
+			padding:10px 10px;
+		}
+		.author-info {
+			width:50%;
+			position:relative;
+			display:block;
+			float:left;
+			span.post-author-avatar {
+				position:relative;
+				display:block;
+				float:left;
+				width:70px;
+				height:70px;
+				@include border-radius(35px);
+				margin-right:10px;
+				background-size:cover;
+				background-position:center center;
+				background-repeat:no-repeat;
+				@media (max-width:$break-xs) {
+					width:40px;
+					height:40px;
+					@include border-radius(20px);
+				}
+			}
+			.author-text {
+				position:relative;
+				display:block;
+				float:left;
+				a.author-name {
+					@include montserrat;
+					font-size:18px;
+				}
+			}
+			@media (max-width:$break-sm) {
+				width:100%;
+			}
+		}
+		.author-actions {
+			width:50%;
+			text-align:right;
+			position:relative;
+			display:block;
+			float:left;
+			a.read-more {
+				display:inline-block;
+				font-size:9px;
+				padding:5px 10px;
+				@include montserrat;
+				text-transform:uppercase;
+				letter-spacing:1px;
+				background-color:$dark_gray;
+				color:$white;
+				@media (max-width:$break-xs) {
+					padding:5px 5px;
+					font-size:7px;
+					letter-spacing:1px;
+				}
+			}
+
+			a.follow-button {
+				font-size:9px;
+				padding:4px 10px 4px 30px;
+				border:solid 1px $blue;
+				@include montserrat;
+				text-transform:uppercase;
+				letter-spacing:1px;
+				color:$blue;
+				background-size: 20px 20px;
+				@media (min-width:$break-sm-min)  {
+					margin-top:3px;
+				}
+				@media (max-width:$break-xs) {
+					margin-top:3px;
+					padding:4px 5px 4px 20px;
+					font-size:7px;
+					letter-spacing:1px;
+					background-position:center left;
+				}
+				&.active {
+					color:$white;
+					border:solid 1px $gray;
+					background-color:$gray;
+					background-image:url("../../../../images/global/following.png");
+				}
+			}
+
+			@media (max-width:$break-sm) {
+				text-align:center;
+				width:100%;
+				margin-top:5px;
+			}
+		}
+	}
+}
+
+//fixed signup banner
+.join-banner {
+	width:100%;
+	position:fixed;
+	display:none;
+	bottom:0;
+	left:0;
+	background:#fff;
+	z-index:100;
+	-moz-box-shadow:    0px 0px 3px 1px #aaa;
+  	-webkit-box-shadow: 0px 0px 3px 1px #aaa;
+  	box-shadow:         0px 0px 3px 1px #aaa;
+	.join-text {
+		h4 {
+			@include montserrat(bold);
+			text-transform:uppercase;
+			letter-spacing:2px;
+			margin-bottom:0px;
+			@media (max-width:$break-md) {
+				font-size:18px;
+			}
+			@media (max-width:$break-xs) {
+				font-size:13px;
+			}
+		}
+		p {
+			@include garamond-italic;
+			font-size:18px;
+			line-height:125%;
+			@media (max-width:$break-md) {
+				font-size:14px;
+			}
+			@media (max-width:$break-xs) {
+				font-size:11px;
+			}
+		}
+	}
+	.join-button {
+		margin-top:10px;
+		text-align:right;
+		a {
+			@media (max-width:$break-md) {
+				font-size:10px;
+			}
+			@media (max-width:$break-xs) {
+				font-size:8px;
+				letter-spacing:1px;
+				padding:5px;
+			}
+		}
+		@media (max-width:$break-xs) {
+			text-align:center;
+			margin-top:0px;
+			margin-bottom:10px;
+		}
+	}
+}
+
 .footer-cat-container {
 	.footer-cat {
     	padding-left:0px;
@@ -436,7 +600,6 @@
 
 .post-comment-wrapper {
 	background-color: $beige;
-	padding-top:30px;
 	.post-comment-container {
 		.comments {
 			textarea, .comment-body {
@@ -455,6 +618,14 @@
 					@include montserrat;
 					text-transform:uppercase;
 					padding-bottom:5px;
+				}
+				&.pull-right {
+					input {
+						@media (max-width:$break-xs) {
+							font-size:10px;
+							padding:5px 10px;
+						}
+					}
 				}
 			}
 
@@ -628,11 +799,15 @@
 
 			div.comment-loading-container {
 				text-align: center;
-				height: 200px;
+				height: 100px;
 				img {
 					height: 100%;
 				}
 			}
 		}
 	}
+}
+//padding for footer when not signed in
+.content-wrapper.guest {
+
 }
