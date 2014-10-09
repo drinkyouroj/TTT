@@ -32,18 +32,10 @@ class UserAction {
 		
 		$action_user = User::where('id', $data['user_id'])->first();
 		
-			//process notification for each follower
 			foreach($followers as $follower) {
 				
 				//below statement is to ensure that the user who owns the content doesn't get the repost.
 				if($follower->follower_id != $post->user->id) {
-					$activity = array(
-							'action_id' => $data['user_id'],
-							'user_id' => $follower->follower_id,
-							'post_id' => $data['post_id'],
-							'post_type' => 'repost'
-							);					
-					$this->activity->create($activity);
 
 					//New Feed System replaces the old activity;
 					$new_feed = array(
@@ -73,28 +65,9 @@ class UserAction {
 		
 		$action_user = User::where('id', $data['user_id'])->first();
 		
-		//process notification for each follower
 		foreach($followers as $follower) {
-			/*
-			$not = $this->not->find(
-							$data['post_id'], 
-							$follower->follower_id, 
-							'repost'
-							);
-			*/
-
-			//pull the user out of notifications.
-			$this->not->pullUsers($not, $action_user->username);
-			
 			//below statement is to ensure that the user who owns the content doesn't get the repost.
 			if($follower->follower_id != $post->user->id) {
-				$activity = array(
-						'action_id' => $data['user_id'],
-						'user_id' => $follower->follower_id,
-						'post_id' => $data['post_id'],
-						'post_type' => 'repost'
-					);
-				$this->activity->delete($activity);
 
 				$del_feed = array(
 						'user_id' => $follower->follower_id,
@@ -122,26 +95,6 @@ class UserAction {
 		
 		//process notification for each follower
 		foreach($followers as $follower) {
-
-			/*  New notifications are no longer sent on new post
-			$not_data = array(
-				'post_id' => $data['post_id'],
-				'post_title' => $post->title,
-				'post_alias' => $post->alias,
-				'user_id'    => $follower->follower_id,
-				'noticed'    => 0,
-				'notification_type' => 'post'
-				);
-			$not = $this->not->create($not_data, $data['username']);
-			*/
-
-			$activity = array(
-						'action_id' => $data['user_id'],
-						'user_id' => $follower->follower_id,
-						'post_id' => $data['post_id'],
-						'post_type' => 'post'
-						);					
-			$this->activity->create($activity);
 
 			$new_feed = array(
 					'user_id' => $follower->follower_id,

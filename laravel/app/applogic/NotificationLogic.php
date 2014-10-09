@@ -191,7 +191,7 @@ class NotificationLogic {
 		if ( $comment->parent_comment != null ) {
 			$orig_comment = $this->comment->findById( $comment->parent_comment );
 			//Gotta make sure to not notify you replying to you.
-			if ( $orig_comment->author['user_id'] != $user_id ) {
+			if ( $orig_comment->author['user_id'] != $user_id  && $orig_comment->author['user_id'] != $post->user_id ) {
 				
 				$not_params = array(
 					'post_id' => $post->id,

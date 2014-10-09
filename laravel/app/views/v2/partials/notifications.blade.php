@@ -5,7 +5,7 @@
 	@if($not->notification_type == 'follow')
 		<a href="{{Config::get('app.url')}}/profile/{{$not->users{0} }}">
 			<span class="username">
-				{{$not->user}}
+				{{ $not->users{0} }}
 			</span>
 			followed you.
 		</a>

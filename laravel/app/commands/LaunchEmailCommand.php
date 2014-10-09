@@ -88,7 +88,7 @@ class LaunchEmailCommand extends Command {
 						->render();
 
 			$data = array(
-					'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
+					'from' => 'Two Thousand Times <team@twothousandtimes.com>',
 					'to' => array($user->email),
 					'subject' => 'Final Reminder from Two Thousand Times',
 					'plaintext' => $plain,
