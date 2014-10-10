@@ -1,4 +1,15 @@
 @extends('v2/layouts/master')
+	<?php
+		if(Auth::check()) {
+			$user = Auth::user();
+			$is_mod = $user->hasRole('Moderator');
+			$is_admin = $user->hasRole('Admin');
+		} else {
+			$is_admin = false;
+			$is_mod = false;
+		}
+		$is_guest = Auth::guest();
+	?>
 
 @section('js')
 
@@ -39,7 +50,7 @@
 			<div class="row">
 				<div class="col-md-12 heading-title">
 					<h1>Two Thousand Times</h1>
-					@if(!Auth::check())
+					{{--@if(!Auth::check())
 						<div class="line"></div>
 						<h3>For the Stories We Tell</h3>
 						<p><a href="{{Config::get('app.url')}}/profile/{{$featured{0}->post->user->username}}" class="user-link">{{$featured{0}->post->user->username}}</a> and many other storymakers post on Two Thousand Times.</p>
@@ -52,7 +63,7 @@
 					@else
 						<div class="line"></div>
 						<h3 class="signed-in">welcome <a href="{{Config::get('app.url')}}/myprofile">{{ Session::get('username') }}</a></h3>
-					@endif
+					@endif--}}
 					
 				</div>
 				<div class="col-md-12 date">
@@ -74,6 +85,22 @@
 
 	@include('v2.featured.featured-trending')
 
+	{{--Fixed Join banner--}}
+	@if( $is_guest )
+		<div class="join-banner">
+			<a class="banner-link" href="{{ URL::to( 'user/signup' ) }}">
+				<div class="join-text col-md-7 col-sm-8 col-xs-8">
+					<h4>Our stories live here.</h4>
+					<p>Sign up to post your stories, follow, and comment.</p>
+				</div>
+				<div class="join-button col-md-5 col-sm-4 col-xs-4">
+					<button class="btn-flat-blue">
+						Create an account
+					</button>
+				</div>
+			</a>
+		</div>
+	@endif
 	
 </div>
 @stop

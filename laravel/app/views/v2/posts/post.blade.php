@@ -266,28 +266,29 @@
 						</div>
 					@endif--}}
 
+					{{--Fixed Join banner--}}
 					@if( $is_guest )
 						<div class="join-banner">
-							<a href="{{ URL::to( 'user/signup' ) }}">
+							<a class="banner-link" href="{{ URL::to( 'user/signup' ) }}">
 								<div class="join-text col-md-7 col-sm-8 col-xs-8">
-									<h4>Join the Community</h4>
-									<p>post your own stories, follow users, save stories, comment and join the discussion.</p>
+									<h4>Our stories live here.</h4>
+									<p>Sign up to post your stories, follow, and comment.</p>
 								</div>
 								<div class="join-button col-md-5 col-sm-4 col-xs-4">
-									<a class="btn-flat-blue" href="{{ URL::to( 'user/signup' ) }}">
+									<button class="btn-flat-blue">
 										Create an account
-									</a>
+									</button>
 								</div>
 							</a>
 						</div>
 					@endif
 
-						<div class="sharing">
+						<div class="sharing col-md-7">
 							<div class="addthis_custom_sharing"></div>
 						<div class="clearfix"></div>
 						</div>
 					@if( !$is_author )
-						<div class="col-md-12 utility-container">
+						<div class="col-md-5 utility-container">
 							@if($favorited)
 								<a data-action="read" class="read">Mark as Read</a>
 							@endif

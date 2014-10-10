@@ -199,6 +199,23 @@ class PostController extends BaseController {
 	}
 
 	/**
+	 *	Parse the post body. 
+	 *	Returns the post in an array of 'pages'. 
+	 *	Note: I also attached the auther (current logged in user) to the response
+	 *		just so I have their username when showing the preview of the post (at
+	 *		this time this is only used for post preview).
+	 */
+	public function parsePostBody() {
+		$post_body = Input::has('body') ? Input::get('body') : '';
+		$body_array = PostLogic::divide_text($post_body, 1500);
+		$author = Auth::user()->username;
+		return Response::json( array( 
+			'body_array' => $body_array,
+			'author' => $author
+			), 200 );
+	}
+
+	/**
 	 * The REST version
 	 * Sends back a JSON Response instead of a Redirect.
 	*/

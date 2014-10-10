@@ -40,6 +40,7 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 
 	//Post Save Route.
 	Route::post('savepost','PostController@postSavePost');
+	Route::post('parse-post-body', 'PostController@parsePostBody');
 
 	// Comment routes!
 	Route::post('comment', 'CommentController@postRestComment');

@@ -379,11 +379,12 @@ function ProfileActions() {
 				this.renderCollection();
 				if(init) {
 					this.renderComments();					
+					window.scrollTo(0,0);
 				}
 				if((init || this.type == 'all' || this.type == 'post') && window.featured_id && this.page == 1 ) {
 					this.renderFeatured();//only renders when the person has a featured article.
 				}
-				window.scrollTo(0,0);
+				
 				break;
 
 			case 'feed':

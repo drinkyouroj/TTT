@@ -2,6 +2,7 @@
 
 $border_color: #eee;
 
+@include post_styles; // used for post preview
 @include photo_selection;
 #image-error {
 	display:none !important;//are we trying to do something with this?
@@ -33,6 +34,10 @@ $border_color: #eee;
 			@media (max-width:$break-sm) {
 				margin-right: 1px;
 			}
+		}
+		&.preview-button {
+			background: #a4a4a4;
+			float: left;
 		}
 	}
 }
@@ -88,7 +93,7 @@ $border_color: #eee;
 				margin-top:3px;
 			}
 		}
-		.draft-publish {
+		.draft-publish, .preview {
 			@include draftPublishButtons();
 			a {
 				font-size:11px;
@@ -104,7 +109,7 @@ $border_color: #eee;
 		}
 
 		.preview {//until we finalize this feature
-			.preview-button, .article-link {
+			.article-link {
 				display:none;
 			}
 		}
@@ -536,4 +541,47 @@ $border_color: #eee;
 			}
 		}
 	}
+}
+
+
+#previewModal {
+	.modal-dialog {
+		margin: 0;
+		width: 100%;
+		padding: 0;
+		background-color: $beige;
+
+		.modal-content {
+			margin: 0;
+			width: 100%;
+			max-width: 100%;
+			padding-top: $navbar_height;
+
+			.modal-header {
+				background-color: $dark;
+				height: $post_actionbar_height;
+				h4 {
+					font-size: 13px;
+					color: $lightgray;
+					margin: 0;
+				}
+				button.close {
+					opacity: 0.8;
+					color: $lightgray;
+					font-size: 50px;
+					position: absolute;
+					top: -4px;
+					right: 10px;
+					height: $post_actionbar_height;
+				}
+			}
+			.modal-body {
+				padding: 0;
+				.post-content-wrapper {
+					padding-bottom: 40px;
+				}
+			}
+		}
+	}
+
 }
