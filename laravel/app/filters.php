@@ -151,7 +151,7 @@ Route::filter('csrf', function()
  * This is called everytime any view is rendered.  Most of the views in our site require the below right now.
  * This will need to be figured out later as the view composer is unable to figure out how to reach the layouts.master.blade.php file 
  */
-
+use Carbon\Carbon;
 View::composer('*', function($view) {
 	//Below is the filters for the Categories.  Its stored here since we needed to iterate through to see what is or is not active.
 	//We can probably make this an admin function later.
@@ -167,8 +167,15 @@ View::composer('*', function($view) {
 					);
 
 	//Grab all the categories
-	$category = App::make('AppStorage\Category\CategoryRepository');
-	$categories = $category->all();
+	if(Cache::has('categories')) {
+		$categories = Cache::get('categories');
+	} else {
+		$category = App::make('AppStorage\Category\CategoryRepository');
+		$categories = $category->all();
+		$expiresAt = Carbon::now()->addMinutes(10);
+		Cache::put('categories', $categories, $expiresAt);
+	}
+	
 
 	if(!Auth::guest()) {
 		$user = Auth::user();

@@ -37,6 +37,15 @@
 					</div>
 					<ul class="filter-dropdown list-unstyled">
 						{{-- I dont display the active category in the dropdown list --}}
+						
+						@if($current_category != 'all')
+							<li><a href="{{ URL::to('categories/all') }}" class="filter filter-category" data-category-filter="all">All</a><li>
+						@endif
+
+						@if($current_category != 'new')
+							<li><a href="{{ URL::to('categories/new') }}" class="filter filter-category" data-category-filter="new">New</a><li>
+						@endif						
+
 						@foreach ( $categories as $category )
 							<?php
 								$is_active = $category->alias == $current_category;
