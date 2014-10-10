@@ -435,7 +435,325 @@ textarea {
   height: 6px;
 }
 
+@mixin post_styles() {
+  .post-heading-wrapper {
+    background-color: $lightgray;
+    border-bottom:solid 1px $lightgray;
+    @media (max-width:$break-md) {
+      background-color: $white;
+      padding-bottom:20px;  
+    }
 
+    .post-heading-container {
+      position: relative;
+
+      img.no-show-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        @include opacity(0);
+      }
+      
+      @media (min-width: $break-lg-min) {
+        width: 100%;
+        padding-left:0px;
+        padding-right:0px;
+        display: table;
+        -moz-box-sizing: border-box;
+          box-sizing: border-box;
+          .row {
+          display: table-row;
+          .post-heading, .post-image {
+            display: table-cell;
+            height: auto;
+            float: none;
+            overflow: hidden;         
+          }
+          }
+      }
+
+      .row {
+        .post-heading {
+          vertical-align:middle;
+          text-align: center;
+          background-color: #fff;
+          padding-left:25px;
+          padding-right:25px;
+          h2 {
+            @include post_page_title;
+            margin-top:-100px;
+            font-size:32px;
+            @media (max-width: $break-md) and (min-width: $break-sm-min) {
+              margin-top:50px;
+            }
+            @media (max-width: $break-xs) {
+              margin-top: 25px;
+              margin-bottom: 0px;
+              font-size:24px;
+            }
+          }
+          .line {
+            display: inline-block;
+            width: 50px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid $dark;
+            margin-left: auto;
+            margin-right: auto;
+            @media (max-width: $break-xs) {
+              width: 20px;
+              margin-bottom: 5px;
+            }
+          }
+
+          ul.post-taglines {
+            @include post_page_tagline;
+            margin-bottom: 20px;
+            li {
+              line-height: 12px;
+            }
+            li:nth-child(1), li:nth-child(2) {
+              border-right: 1px solid $dark;
+            }
+            @media (max-width: $break-lg) and (min-width: $break-lg-min) {
+              font-size:14px;
+              margin-bottom: 10px;
+            }
+            @media (max-width: $break-xs) {
+              margin-bottom: 20px;
+              font-size:14px;
+            }
+          }
+
+          .author {
+            letter-spacing:1px;
+            @include word-break(break-all);
+            .author-name {
+              @include montserrat(bold);
+              letter-spacing:1px;     
+            }
+          }
+
+          ul.post-categories {
+            position: absolute;
+            width:100%;
+            bottom:5px;
+            left:0px;
+            margin-top: 100px;
+            margin-bottom: 0px;
+            padding-bottom: 25px;
+            font-size:15px;
+            letter-spacing:2px;
+            @include fjalla;
+            li {
+              padding: 0;
+              a {
+                color: $dark;
+              }
+            }
+            @media (max-width:$break-md) {
+              position: relative;
+              margin-top:20px;
+              bottom:0px;
+            }
+            @media (max-width: $break-xs) {
+              margin-top:10px;
+              padding-bottom:10px;
+              font-size:12px;
+            }
+          }
+        }
+        .post-image {
+          height: 0;
+          padding-top:42%;
+          background-color:#000;//temporary DELETE
+          -webkit-background-size: cover;
+              -moz-background-size: cover;
+              -o-background-size: cover;
+              background-size: cover;
+              background-position: center;
+
+              @media (max-width:$break-md) {
+                width: 75%;
+                height:0px;
+                padding-top:47.25%;
+                margin:0px auto;
+              }
+        } 
+      }
+    }
+  }
+
+  .post-content-wrapper {
+    background-color: $beige;
+
+    .post-content-container {
+      @media (max-width:$break-xs) {
+        margin:0px 15px;
+      }
+
+      .post-content-page-wrapper {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+
+        .post-content-page {
+          font-size:20px;
+          line-height:175%;
+          text-align:justify;
+          padding: 50px 0 10px 0;
+          -moz-column-gap:40px; /* Firefox */
+          -webkit-column-gap:40px; /* Safari and Chrome */
+          column-gap:40px;
+          -moz-column-count:2; /* Firefox */
+          -webkit-column-count:2; /* Safari and Chrome */
+          column-count:2;
+          overflow: visible;
+
+          &#one {
+            &::first-letter {
+              float:left;
+              font-size: 70px;
+              text-transform: uppercase;
+              margin:.2em .15em .1em 0;
+              @media (max-width:$break-lg) and (min-width:$break-md-min) {
+                margin: .3em .15em .1em 0;
+              }
+            }
+            &::first-line {
+
+            }
+          }
+          @media (max-width:$break-lg) and (min-width:$break-md-min) {
+            font-size:18px;
+            line-height:150%;
+          }
+          @media (max-width:$break-md) and (min-width:$break-md-min) {
+            padding-left:20px;
+            padding-right:20px;
+          }
+          @media (max-width:$break-sm) {
+            text-align:left;
+            line-height:150%;
+            -moz-column-gap:0px; /* Firefox */
+            -webkit-column-gap:0px; /* Safari and Chrome */
+            column-gap:0px;
+            -moz-column-count:1 !important; /* Firefox */
+            -webkit-column-count:1 !important; /* Safari and Chrome */
+            column-count:1 !important;
+            padding: 50px 20px 10px 20px;
+          }
+          @media (max-width:$break-xs) {
+            font-size:18px;
+            padding: 20px 0px 10px 0px;
+          }
+        }
+      }
+
+      .row-divider {
+        border-bottom: 3px solid $dark;
+
+        .page-count {
+          @include montserrat(bold);
+          float: right;
+        }
+      }
+      
+
+      .extra-actions {
+        background-color:$white;
+        padding:0 20px;
+        border-left:solid 1px $lightgray;
+        border-right:solid 1px $lightgray;
+        @media (max-width:$break-xs) {
+          padding:0 10px;
+        }
+        .banner-mid {
+          padding:0px;
+          background:$white;
+          img {
+            width:100%;
+            height:auto;
+            &.banner-mid-desktop {
+              @media (max-width:$break-sm) {
+                display:none;
+              }
+            }
+            &.banner-mid-mobile {
+              @media (min-width:$break-md-min) {
+                display:none;
+              }
+              @media (max-width:$break-md-min) and (min-width:$break-xs) {
+                width:70%;
+                margin:0px 15%;
+              }
+            }
+          }
+        }
+
+        .banner-bottom {
+          @media (max-width:700px) and (min-width:450px) {
+            background:$white;
+          }
+          img {
+            width:100%;
+            height:auto;
+            &.banner-bottom-desktop {
+              @media (max-width:699px) {
+                display:none;
+              }
+            }
+            &.banner-bottom-mobile {
+              @media (min-width:700px) {
+                display:none;
+              }
+              @media (max-width:700px) and (min-width:450px) {
+                width:70%;
+                margin:0px 15%;
+              }
+            }
+          }
+        }
+
+        .sharing {
+          padding-top:10px;
+          padding-bottom:10px;
+        }
+        .utility-container {
+          float:right;
+          text-align:right;
+          padding:0 0 10px 0;
+          @media (max-width:$break-sm) {
+                    padding:0 0 20px 0;
+                  }
+          a.read {
+            @include extra_actions_label;
+            background-image:url('../../../../images/posts/mark-read.png');
+            cursor:pointer;
+            margin-right:20px;
+            &.active {
+              background-position: left 0 top -26px;
+              color: $blue;
+              cursor: default;
+            }
+          }
+          a.flag {
+            @include extra_actions_label;
+            background-image:url('../../../../images/posts/flag.png');
+            cursor:pointer;
+            &:hover {
+              color:$red;
+            }
+            &.active {
+              background-position: left 0 top -26px;
+              color:$red;
+              cursor: default;
+            }
+          }
+        }
+      }
+    }
+  }
+}
 @mixin navbar_container_widths() {
   @media screen and (min-width: 768px) and (max-width: 996px) {
     width: 100%;

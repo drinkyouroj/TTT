@@ -17,6 +17,7 @@
 	@section('js')
 
 		@include( 'v2/partials/photo-input' )
+		@include( 'v2/posts/partials/post-preview-handlebars-template' )
 
 		<!--New script-->
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/validation/jquery.validate.min.js"></script>
@@ -76,10 +77,10 @@
 				<div class="container controls-container">
 					<div class="row">
 						<div class="col-sm-4 preview">
-							<a class="preview-button @if(!$edit) hidden @endif" data-toggle="modal" data-target="#previewModal">
+							<a class="preview-button" data-toggle="modal" data-target="#previewModal">
 								Preview
 							</a>
-							<a 	class="article-link @if(!$edit) hidden @endif"
+							<a class="article-link @if(!$edit) hidden @endif"
 								@if($edit)
 								href="{{Config::get('app.url')}}/posts/{{$post->alias}}"
 								@endif
@@ -151,7 +152,7 @@
 													<?php $checked = '' ?>
 													@endif
 												@endif											
-												{{Form::checkbox('category[]', $category->id, 0, array('class'=>'category','id' => 'cat-'.$category->id, $checked ) ) }}
+												{{Form::checkbox('category[]', $category->id, 0, array('class'=>'category','id' => 'cat-'.$category->id, $checked, 'data-title' => $category->title ) ) }}
 												<label for="cat-{{$category->id}}" data-toggle="tooltip" data-placement="top" title="{{$category->description}}">{{$category->title}}</label>
 											</li>
 										@endforeach
@@ -335,7 +336,7 @@
 						</h4>
 					</div>
 					<div class="modal-body">
-						Preview of the post to come here soon-ish.
+						
 					</div><!--End of Modal Body-->
 				</div>
 			</div>

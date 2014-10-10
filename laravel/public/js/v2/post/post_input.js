@@ -25,6 +25,44 @@ $(function() {
 		$('.modal-header span.image-error',this).remove();
 	});
 
+	// ======= POST PREVIEW =======
+	var source   = $("#post-preview-template").html();
+	var post_preview_template = Handlebars.compile(source);
+	$('.preview-button').click( function() {
+		// Gather the post data, compute the post array
+		save_post.grabData();
+		$.ajax({
+			type: 'POST',
+			url: window.site_url+'rest/parse-post-body',
+			data: {
+				body: save_post.body
+			},
+			success: function( data ) {
+				// Compile handlebars script and populate the modal
+				console.log(save_post.story_type);
+				// Have to fetch categories manually
+				var categories = [];
+				$('.category:checked').each(function() {
+					var title = $(this).data('title'); 
+					categories.push(title);
+				});
+				var preview = post_preview_template({
+					title: save_post.title,
+					tagline_1: save_post.tagline_1,
+					tagline_2: save_post.tagline_2,
+					tagline_3: save_post.tagline_3,
+					author: data.author,
+					story_type: save_post.story_type,
+					categories: categories,
+					image_url: window.image_url + '/' + save_post.image,
+					body_array_count: data.body_array.length + '',
+					body_array: data.body_array
+				});
+				$('#previewModal .modal-body').html(preview);
+			}
+		});
+	});
+
 	//
 	$('body').on('dragstart dragover dragenter dragleave drop', function (event) {
 	    event.preventDefault();
