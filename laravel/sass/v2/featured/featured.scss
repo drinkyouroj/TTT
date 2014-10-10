@@ -441,7 +441,9 @@
 					list-style:none;
 					li {
 						margin-bottom:5px;
-						color:$gray_text;
+						color:$white;
+						font-style:italic;
+						letter-spacing:1px;
 					}
 				}
 			}

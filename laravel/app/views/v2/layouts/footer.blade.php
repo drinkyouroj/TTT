@@ -30,7 +30,6 @@
 </div>
 @endif
 
-
 <div class="footer-container">
 	<div class="container">
 		<div class="row">

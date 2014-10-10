@@ -16,6 +16,27 @@ $(function() {
 			$('.header-inner-wrapper').removeClass('active');
 		}
 	});
+
+
+
+// ========================== Fixed signup Bar ===========================
+	middle = $('.middle-wrapper').offset();
+	window.show_join = middle.top - 200;
+	window.reached = false;
+
+	$(window).scroll(function(event) {
+		current = $(window).scrollTop();
+		if(current > window.show_join && !window.logged_in) {
+			$('.join-banner').show().fadeIn();
+			$('.content-wrapper').css('margin-bottom',$('.join-banner').height());
+		}
+	});
+
+	if ( !window.logged_in ) {
+		$( window ).resize(function() {
+	  		$('.content-wrapper').css('margin-bottom',$('.join-banner').height());
+		});
+	}
 });
 
 /*

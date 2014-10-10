@@ -1,5 +1,7 @@
 @import '../_base';
 
+@include post_styles;
+
 .post-action-bar-wrapper {
 	height: $post_actionbar_height;
 
@@ -112,8 +114,6 @@
 	}
 }
 
-@include post_styles;
-
 .author-container {
 	.author-content {
 		background-color:$white;
@@ -216,64 +216,6 @@
 	}
 }
 
-//fixed signup banner
-.join-banner {
-	width:100%;
-	position:fixed;
-	display:none;
-	bottom:0;
-	left:0;
-	background:#fff;
-	z-index:100;
-	-moz-box-shadow:    0px 0px 3px 1px #aaa;
-  	-webkit-box-shadow: 0px 0px 3px 1px #aaa;
-  	box-shadow:         0px 0px 3px 1px #aaa;
-	.join-text {
-		h4 {
-			@include montserrat(bold);
-			text-transform:uppercase;
-			letter-spacing:2px;
-			margin-bottom:0px;
-			@media (max-width:$break-md) {
-				font-size:18px;
-			}
-			@media (max-width:$break-xs) {
-				font-size:13px;
-			}
-		}
-		p {
-			@include garamond-italic;
-			font-size:18px;
-			line-height:125%;
-			@media (max-width:$break-md) {
-				font-size:14px;
-			}
-			@media (max-width:$break-xs) {
-				font-size:11px;
-			}
-		}
-	}
-	.join-button {
-		margin-top:10px;
-		text-align:right;
-		a {
-			@media (max-width:$break-md) {
-				font-size:10px;
-			}
-			@media (max-width:$break-xs) {
-				font-size:8px;
-				letter-spacing:1px;
-				padding:5px;
-			}
-		}
-		@media (max-width:$break-xs) {
-			text-align:center;
-			margin-top:0px;
-			margin-bottom:10px;
-		}
-	}
-}
-
 .footer-cat-container {
 	.footer-cat {
     	padding-left:0px;
@@ -286,6 +228,7 @@
 	background-color: $beige;
 	.post-comment-container {
 		.comments {
+			margin-top:20px;
 			textarea, .comment-body {
 				@include garamond;
 				font-size:16px;
@@ -304,6 +247,7 @@
 					padding-bottom:5px;
 				}
 				&.pull-right {
+					margin-bottom: 0 !important;
 					input {
 						@media (max-width:$break-xs) {
 							font-size:10px;
