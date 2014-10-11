@@ -558,6 +558,7 @@ $border_color: #eee;
 			padding-top: $navbar_height;
 
 			.modal-header {
+				padding: 10px !important;
 				background-color: $dark;
 				height: $post_actionbar_height;
 				h4 {
@@ -566,8 +567,9 @@ $border_color: #eee;
 					margin: 0;
 				}
 				button.close {
-					opacity: 0.8;
-					color: $lightgray;
+					opacity: 1;
+					color: $blue;
+					text-shadow: none;
 					font-size: 50px;
 					position: absolute;
 					top: -4px;
@@ -583,5 +585,4 @@ $border_color: #eee;
 			}
 		}
 	}
-
 }
