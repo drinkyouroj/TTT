@@ -5,7 +5,7 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 				<h3 class="modal-title" id="signupModalLabel">
-					For the stories we tell.
+					Our Stories Live here.
 				</h3>
 				<h4 class="modal-subtitle" id="signupModalSublabel">
 					Sign up to post your stories, follow, and comment.

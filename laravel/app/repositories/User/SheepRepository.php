@@ -380,7 +380,7 @@ class SheepRepository implements UserRepository {
 		return $this->user->where( 'banned', 0 )->count();
 	}
 	public function getConfirmedUserCount() {
-		return $this->user->where( 'banned', 0 )->where( 'confirmed', 1 )->count();
+		return $this->user->where( 'banned', 0 )->where( 'verified', 1 )->count();
 	}
 	public function getUserCreatedTodayCount() {
 		return $this->user->where( 'created_at', '>=', new \DateTime('today') )->count();

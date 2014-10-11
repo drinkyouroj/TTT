@@ -24,11 +24,14 @@ class MoloquentNotificationRepository implements NotificationRepository {
 	 *	@param $action_user: the user performing the action -> favoriting, reposting, etc...
 	 * 	@return The notification object.
 	 */
-	public function create ( $data, $action_user ) {		
-		if($data['notification_type'] != 'follow') {
-			$not = self::find( $data['post_id'], $data['user_id'], $data['notification_type'] );
-		} else {
+	public function create ( $data, $action_user ) {
+
+		//Always create a new notification on the below items.
+		$creates = array('follow','comment','reply');
+		if( in_array($data['notification_type'], $creates ) ) {
 			$not = false;
+		} else {
+			$not = self::find( $data['post_id'], $data['user_id'], $data['notification_type'] );
 		}
 		
 		// If the notification does not already exist, create one.
