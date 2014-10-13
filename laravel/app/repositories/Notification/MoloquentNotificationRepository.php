@@ -1,6 +1,6 @@
 <?php namespace AppStorage\Notification;
 
-use Motification ,DB;
+use Motification, \Carbon\Carbon ,DB;
 
 class MoloquentNotificationRepository implements NotificationRepository {
 
@@ -138,6 +138,8 @@ class MoloquentNotificationRepository implements NotificationRepository {
 
 	public function pushUsers($not, $username) {
 		$not->push('users', $username, true);
+		$not->updated_at = Carbon::now();
+		$not->save();
 	}
 	
 	/**
@@ -149,7 +151,7 @@ class MoloquentNotificationRepository implements NotificationRepository {
 	 */
 	public function pullUsers($not, $username) {
 		if( $not ) {
-			$not->pull('users', $username);
+			$not->pull('users', $username);			
 			//delete the notification all together if there are no other users left.
 			if(count($not->first()->users) == 0) {
 				$not->delete();

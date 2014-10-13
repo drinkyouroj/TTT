@@ -1,10 +1,28 @@
 <!-- Notification template -->
 <script type="text/javascript">
+	Array.prototype.last = function() {
+	    return this[this.length-1];
+	}
 	Handlebars.registerHelper('substring', function(v1, v2) {
 		if ( v1.length > v2 )
 			return v1.substring(0,v2) + '...';
 		else
 			return v1;
+	});
+	Handlebars.registerHelper('ifGt', function(v1, v2, options) {
+		if(v1 > v2) {
+			return options.fn(this);
+		} 
+		return options.inverse(this);
+	});
+	Handlebars.registerHelper('lastArr',function(v1,v2,options) {
+		return v1.last();
+	});
+	Handlebars.registerHelper('folks', function(v1){
+		if(v1.length-1 == 1) {
+			return 1 + ' person';
+		}
+		return v1.length-1 + ' people';
 	});
 </script>
 <script type="text/x-handlebars-template" id="notifications-template">
@@ -21,12 +39,6 @@
 				<span class="notification-post-title">{{ notification.post_title }}</span>
 			</a>
 		{{/ifCond}}
-		{{#ifCond notification.notification_type 'repost'}}
-			<a class="repost" href="{{site_url}}posts/{{notification.post_alias}}">
-				<span class="action-user">{{ notification.users.[0] }}</span> reposted your post 
-				<span class="notification-post-title">{{ notification.post_title }}</span>
-			</a>
-		{{/ifCond}}
 		{{#ifCond notification.notification_type 'comment'}}
 			<a class="comment" href="{{site_url}}posts/{{notification.post_alias}}#comment-{{notification.comment_id}}">
 				<span class="action-user">{{ notification.users.[0] }}</span> commented on your post 
@@ -40,10 +52,46 @@
 			</a>
 		{{/ifCond}}
 		
+		{{#ifCond notification.notification_type 'repost'}}
+			<a class="repost" href="{{site_url}}posts/{{notification.post_alias}}">
+				{{#ifGt notification.users.length 1}}
+					<span class="action-user">{{#lastArr notification.users }}{{/lastArr}}</span> reposted your post <span class="notification-post-title">{{ notification.post_title }}</span> 
+					along with 
+					<span class="others">{{#folks notification.users }}{{/folks}} 
+						<ul>
+							{{#each notification.users}}
+								{{#ifGt @index 0}}
+									<li>{{this}}</li>
+								{{/ifGt}}
+							{{/each}}
+						</ul>
+					</span>
+				{{else}}
+					<span class="action-user">{{ notification.users.[0] }}</span> reposted your post 
+					<span class="notification-post-title">{{ notification.post_title }}</span>
+				{{/ifGt}}
+			</a>
+		{{/ifCond}}
+
 		{{#ifCond notification.notification_type 'like'}}
 			<a class="like" href="{{site_url}}posts/{{notification.post_alias}}">
-				<span class="action-user">{{ notification.users.[0] }}</span> liked your post 
-				<span class="notification-post-title">{{#substring notification.post_title 25}}{{/substring}}</span>
+				{{#ifGt notification.users.length 1}}
+					<span class="action-user">{{#lastArr notification.users }}{{/lastArr}}</span> liked your post <span class="notification-post-title">{{#substring notification.post_title 25}}{{/substring}}</span> 
+					along with 
+					<span class="others">{{#folks notification.users }}{{/folks}} 
+						<ul>
+							{{#each notification.users}}
+								{{#ifGt @index 0}}
+									<li>{{this}}</li>
+								{{/ifGt}}
+							{{/each}}
+						</ul>
+					</span>
+					
+				{{else}}
+					<span class="action-user">{{ notification.users.[0] }}</span> liked your post
+					<span class="notification-post-title">{{#substring notification.post_title 25}}{{/substring}}</span>
+				{{/ifGt}}
 			</a>
 		{{/ifCond}}
 
