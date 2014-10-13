@@ -662,21 +662,21 @@ input, textarea, button:focus {outline: none !important;}
 	display:inline-block;
 	@include montserrat(normal);
 	text-transform:uppercase;
-	color: $blue;
+	color: $white;
 	font-size: 12px;
 	letter-spacing:1px;
-	background: transparent;
+	background: $blue;
 	padding: 8px 15px 8px 50px;
 	text-decoration: none;
 	border: 2px solid $blue;
 	cursor: pointer;
-	background-image:url('../../../images/global/follow-blue.png');
+	background-image:url('../../../images/global/follow.png');
 	background-repeat: no-repeat;
 	background-position:left center;
 	background-size:40px 40px;
 	&:hover {
 		// background-color: $gray;
-		color: $blue;
+		color: $white;
 		text-decoration: none;	
 	}
 	@media (max-width:$break-xs) {
