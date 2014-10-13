@@ -76,7 +76,7 @@
 			<div class="controls-wrapper">
 				<div class="container controls-container">
 					<div class="row">
-						<div class="col-sm-4 preview">
+						<div class="col-sm-4 preview hidden-xs">
 							<a class="preview-button" data-toggle="modal" data-target="#previewModal">
 								Preview
 							</a>
