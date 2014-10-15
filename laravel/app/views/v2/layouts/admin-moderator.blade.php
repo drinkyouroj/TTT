@@ -87,8 +87,8 @@
 				<span class="glyphicon glyphicon-plus pull-right"></span>
 			</a>
 			<div id="adminItemFour" class="collapse">
-				@yield('admin-mod-post-controls')	
-			</div>
+				@yield('admin-mod-post-controls')				
+			</div>			
 		</li>
 		@endif
 

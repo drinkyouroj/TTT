@@ -1,7 +1,8 @@
 <?php namespace AppLogic\PostLogic;
 
 use App, 
-	AppStorage\Post\PostRepository
+	AppStorage\Post\PostRepository,
+	DaveChild\TextStatistics as TS
 	;
 
 /**
@@ -56,6 +57,16 @@ class PostLogic {
 		    }
 		}
 		return $arrayOutput;
+	}
+
+	/**
+	*	Takes post body and does analysis as to how readable the text is.
+	*/
+	public function readability($body)
+	{
+		$ts = new TS\TextStatistics;
+		$reading_ease = $ts->fleschKincaidReadingEase(strip_tags($body));
+		return $reading_ease;
 	}
 
 }

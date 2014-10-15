@@ -385,6 +385,7 @@
 
 
 @section('admin-mod-post-controls')
+
 	<?php 
 		$featured = isset($featured) ? $featured : false; 
 	?>
@@ -395,6 +396,9 @@
 			@endif
 		</span>
 	</p>
+	@if ( $is_admin )
+		<p class="post-title">Readability: {{$readability}}</p>
+	@endif
 	<hr>
 	{{-- Admin only access to featured controls --}}
 	@if ( $is_admin )
@@ -407,7 +411,7 @@
 		<hr>
 	@endif
 
-	<div class="mod-post-controls">
+	<div class="mod-post-controls">		
 		@if ( $is_admin )
 			<button class="admin-edit-post btn btn-xs btn-warning">Edit Post</button>
 			<button class="admin-edit-post-submit btn btn-xs btn-success hidden">Submit Changes</button>

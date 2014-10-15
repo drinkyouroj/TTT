@@ -288,6 +288,16 @@ View::composer('*', function($view) {
 			$view->with( 'is_profile_page', true );
 		} else if ( $seg == 'posts') {
 			$view->with( 'is_post_page', true );
+
+			if(Request::segment(2,0)){
+				$post = $post_rep->findByAlias(Request::segment(2));
+				if(is_object($post)) {
+					$post_logic = App::make('AppLogic\PostLogic\PostLogic');
+					$readability =  $post_logic->readability($post->body);
+					$view->with( 'readability', $readability);
+				}
+			}
+				
 		} else if ( $seg == 'categories' ) {
 			$view->with( 'is_categories_page', true );
 		}
