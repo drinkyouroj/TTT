@@ -97,7 +97,7 @@ class Post extends Eloquent {
 
 	public function scopeRecent()
 	{
-		return $this->where('published', true)->orderBy('created_at','DESC');
+		return $this->where('published', true)->orderBy('published_at','DESC');
 	}
 	
 	public function scopePostsdiscussed()
