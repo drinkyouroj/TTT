@@ -398,6 +398,7 @@
 	</p>
 	@if ( $is_admin )
 		<p class="post-title">Readability: {{$readability}}</p>
+		<p class="post-title">Grade Level: {{$grade}}</a>
 	@endif
 	<hr>
 	{{-- Admin only access to featured controls --}}

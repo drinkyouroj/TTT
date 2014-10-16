@@ -294,7 +294,9 @@ View::composer('*', function($view) {
 				if(is_object($post)) {
 					$post_logic = App::make('AppLogic\PostLogic\PostLogic');
 					$readability =  $post_logic->readability($post->body);
-					$view->with( 'readability', $readability);
+					$grade =  $post_logic->grade($post->body);
+					$view->with( 'readability', $readability)
+						 ->with( 'grade', $grade);
 				}
 			}
 				

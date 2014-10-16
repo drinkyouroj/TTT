@@ -69,4 +69,14 @@ class PostLogic {
 		return $reading_ease;
 	}
 
+	/**
+	*	Takes post body and does analysis as to how readable the text is.
+	*/
+	public function grade($body)
+	{
+		$ts = new TS\TextStatistics;
+		$reading_ease = $ts->fleschKincaidGradeLevel(strip_tags($body));
+		return $reading_ease;
+	}
+
 }
