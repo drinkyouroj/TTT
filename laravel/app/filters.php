@@ -22,20 +22,26 @@ Blade::extend(function($value) {
 
 App::before(function($request)
 {	
-	if(Auth::check() && Auth::user()->deleted_at) {
+	$have_user = Auth::check();
+	if($have_user && Auth::user()->deleted_at) {
 		Auth::logout();
 		Session::flush();
 		Session::regenerate();
 		return Redirect::to('user/logout');
 	}
-	if (Auth::check() && !Session::has('user_id'))
+	if ($have_user && !Session::has('user_id'))
 	{
 	   return Redirect::to('user/logout');
+	}
+	
+	if ($have_user && Request::segment(1) != 'rest' ) {
+		AnalyticsLogic::createSessionEngagement( 'navigate', Request::path() );
 	}
 
 	$contents = File::get(base_path().'/gitversion');
 	$version =str_replace("\n", "", $contents);//gotta get rid of the returns.
 	View::share('version', $version);
+
 });
 
 

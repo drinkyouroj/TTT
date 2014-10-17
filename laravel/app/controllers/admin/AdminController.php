@@ -31,7 +31,7 @@ class AdminController extends Controller {
 			if ( $new_description ) {
 				$input['new_description'] = $new_description;
 			}
-			if ( $new_title ) {
+			if ( $new_title && (strtolower($new_title) != 'new'|| strtolower($new_title) != 'all'))  {
 				$input['new_title'] = $new_title;
 			}
 			$result = $this->category->update( $input );

@@ -159,6 +159,7 @@ class MyProfileController extends BaseController {
 				$user->updated_email = $new_email;
 				$user->update_confirm = md5(date('YMDHiS').$new_email.rand(1,10));
 				$user->save();
+				AnalyticsLogic::createSessionEngagement( 'account-update-email' );
 
 				//Send email to the new email.
 				$email_data = array(
@@ -196,6 +197,11 @@ class MyProfileController extends BaseController {
 		$paginate = 20;
 		$notifications = $this->not->getByUserId( $user->id, $page, $paginate, false );
 		$count = count( $notifications );
+
+		if ( $page == 1 ) {
+			AnalyticsLogic::createSessionEngagement( 'navigate', Request::path().'#notifications' );
+		}	
+
 		if ( $count > 0 ) {
 			return Response::json( array( 'notifications' => $notifications->toArray(), 'page' => $page, 'paginate' => $paginate), 200);
 		} else {
@@ -221,6 +227,10 @@ class MyProfileController extends BaseController {
 	public function getRestCollection ($type = 'all', $user_id = 0, $page = 1) {
 		if(!$user_id) {
 			$user_id = Auth::user()->id;
+		}
+
+		if ( $page == 1 && $type == 'all' ) {
+			AnalyticsLogic::createSessionEngagement( 'navigate', Request::path().'#collection' );
 		}
 		
 		$types = array( 'all', 'post', 'repost' );
@@ -281,6 +291,10 @@ class MyProfileController extends BaseController {
 
 			if($post->user_id == $user->id) {
 				$this->post->delete($post_id);
+			}
+
+			if ( $page == 1 && $type == 'all' ) {
+				AnalyticsLogic::createSessionEngagement( 'post-delete' );
 			}
 			
 			return Response::json(
