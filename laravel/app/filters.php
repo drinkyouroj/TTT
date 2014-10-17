@@ -37,6 +37,11 @@ App::before(function($request)
 	if ($have_user && Request::segment(1) != 'rest' ) {
 		AnalyticsLogic::createSessionEngagement( 'navigate', Request::path() );
 	}
+
+	$contents = File::get(base_path().'/gitversion');
+	$version =str_replace("\n", "", $contents);//gotta get rid of the returns.
+	View::share('version', $version);
+
 });
 
 
@@ -163,8 +168,8 @@ $category_views = array(
 
 View::composers(array(
 	'AdminModComposer' => 'v2.layouts.admin-moderator',
+	'HeaderComposer' => 'v2.layouts.header',
 	'CategoryComposer' => $category_views,
 	'PostComposer' => 'v2/posts/post',
-	'ProfileComposer' => 'v2/myprofile/profile',
-	'AllComposer' => '*'//Make sure to have this at the bottom of this stack.
+	'ProfileComposer' => 'v2/myprofile/profile'
 ));

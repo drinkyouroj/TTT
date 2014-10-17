@@ -38,7 +38,7 @@
 	@include( 'v2/myprofile/partials/no-content-handlebars-template' )
 	@include( 'v2/partials/photo-input' )
 
-	@if($myprofile)
+	@if($myprofile|| Auth::user()->hasRole('Admin'))
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/form/jquery.form.js"></script>
 	@endif
 	{{--This is for the follow action--}}
@@ -354,7 +354,18 @@
 					@endforeach
 				</ul>
 			@endif
-		@endif	
+
+			<br/>
+			<hr>
+
+			<form role="form" class="form-horizontal" id="featureUser" method="post" action="{{ URL::to('admin/feature/user') }}">
+				Feature this user.
+				<input type="hidden" name="user_id" value="{{$profile_user->id}}">
+				<textarea name="excerpt" value="" placeholder="Excerpt"></textarea>
+				<button class="btn btn-default btn-flat-dark-gray">Change Featured User</button>
+			</form>
+
+		@endif
 	@endif
 	</div>
 @stop

@@ -1,7 +1,5 @@
 <?php
-//use \App, Auth, File, NotificationLogic, Carbon\Carbon;
-
-class AllComposer {
+class HeaderComposer {
 	public function compose($view) {
 		if(!Auth::guest()) {
 			$user = Auth::user();
@@ -17,8 +15,7 @@ class AllComposer {
 			$notification_ids = array();
 			foreach($compiled as $k => $nots) {
 				$notification_ids[$k] = $nots->_id;
-			}
-			
+			}			
 			$user_image = $user->image ? $user->image : false;
 
 			$view->with('notifications', $compiled)
@@ -28,21 +25,5 @@ class AllComposer {
 				 ->with('user_image', $user_image);
 				 
 		}
-		
-		$contents = File::get(base_path().'/gitversion');
-		$version =str_replace("\n", "", $contents);//gotta get rid of the returns.
-		$view->with('version', $version);
-
-		/*
-		$expiresAt = Carbon::now()->addMinutes(10);
-		if(Cache::has('viewtimes')) {
-			$viewtimes = Cache::get('viewtimes');
-			Cache::put('viewtimes', 1, $expiresAt);
-		} else {
-			$viewtimes = 1;
-			Cache::put('viewtimes', 1, $expiresAt);
-		}
-		$view->with('times',$viewtimes);
-		*/
 	}
 }

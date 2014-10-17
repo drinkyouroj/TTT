@@ -10,12 +10,16 @@ class HomeController extends BaseController {
 							FeaturedRepository $featured,
 							FeedRepository $feed,
 							EmailRepository $email,
-							PostRepository $post
+							PostRepository $post,
+							FollowRepository $follow,
+							FeaturedUserRepository $featureduser
 							){
 		$this->featured = $featured;
 		$this->feed = $feed;
 		$this->email = $email;
 		$this->post = $post;
+		$this->follow = $follow;
+		$this->featureduser = $featureduser;
 	}
 
 	/**
@@ -36,8 +40,17 @@ class HomeController extends BaseController {
 			Cache::put('featured',$featured,$expiresAt);
 		}
 
+		if(Cache::has('featureduser') && !Session::get('admin') ) {
+			$fuser = Cache::get('featureduser');
+		} else {
+			$fuser = $this->featureduser->find();
+			$expiresAt = Carbon::now()->addMinutes(10);
+			Cache::put('featureduser',$fuser,$expiresAt);
+		}
+
 		$view = View::make('v2/featured/featured')
-						->with('featured', $featured);
+						->with('featured', $featured)
+						->with('fuser', $fuser);
 
 		if(Auth::check()) {
 			$user = Auth::user();
@@ -51,8 +64,11 @@ class HomeController extends BaseController {
 				$random = $this->featured->random();
 				$view->with('from_feed', $random->post);
 			}
+			$fuser_follow = $this->follow->is_following(Auth::user()->id, $fuser->user_id);
+			$view->with('fuser_follow', $fuser_follow);
 		} else {
-			$view->with('from_feed', false);
+			$view->with('from_feed', false)
+				 ->with('fuser_follow', false);
 		}
 
 		//Get the randomized featured lis

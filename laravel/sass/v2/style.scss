@@ -78,15 +78,15 @@ input, textarea, button:focus {outline: none !important;}
 // ================= HEADER ========================
 .header-wrapper {
 	height: $navbar_height;
-
 	.header-inner-wrapper {
 		width: 100%;
 		height: $navbar_height;
 		position: fixed;
 		z-index: 9999;
-
 		background-color: white;
-		border-bottom:solid 1px $lightgray;
+		-moz-box-shadow:    1px 1px 1px 0px #999;
+  		-webkit-box-shadow: 1px 1px 1px 0px #999;
+  		box-shadow:         1px 1px 1px 0px #999;
 		.header-container {
 			height: $navbar_height;
 			

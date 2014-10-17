@@ -14,6 +14,11 @@
 @section('js')
 
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/featured/featured.js?v={{$version}}"></script>
+	
+	@if(Auth::check())
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post_actions.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/featured/logged_in.js"></script>		
+	@endif
 
 	@include('v2.partials.post-listing-template')
 
@@ -50,6 +55,11 @@
 			<div class="row">
 				<div class="col-md-12 heading-title">
 					<h1>Two Thousand Times</h1>
+					<ul class="header-taglines list-inline">
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
 					{{--@if(!Auth::check())
 						<div class="line"></div>
 						<h3>For the Stories We Tell</h3>
@@ -78,6 +88,18 @@
 				</div>
 			</div>
 		</div>
+		
+		<div class="header-cat-links">
+			<ul>
+				<li>
+					<a href="{{ URL::to('categories/all') }}">Popular</a>
+				</li>
+				<li class="category-all">
+					<a href="{{ URL::to('categories/new') }}">New</a>
+				</li>
+			</ul>
+		</div>
+		<div class="clearfix"></div>
 	</div>
 
 	{{--We're caching the DB query right now for 10 minutes, but hopefully we'll get to caching the view--}}

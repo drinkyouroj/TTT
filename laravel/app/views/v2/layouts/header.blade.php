@@ -3,6 +3,12 @@
 	$is_mobile = Agent::isMobile();
 ?>
 
+@if(!$is_guest)
+<script>
+	window.cur_notifications = {{ json_encode($notifications_ids) }};
+</script>
+@endif
+
 <div class="header-wrapper">
 	<div class="header-inner-wrapper">
 		<div class="header-container">

@@ -17,7 +17,7 @@ class AnalyticsLogic {
 	 *	Save an engagement/interaction to the current session analytics
 	 *
 	 *	@param $action: string - one of the following
-	 *							'navigate', 
+	 *							'navigate',
 	 *							'like', 'unlike',
 	 *							'repost', 'unrepost',
 	 *							'save', 'unsave',
@@ -27,7 +27,7 @@ class AnalyticsLogic {
 	 *							'featured-set',
 	 *							'flag-comment', 'flag-post',
 	 *							'unflag-comment', 'unflag-post',
-	 *							'account-deactivate', 'account-restore'
+	 *							'account-deactivate', 'account-restore', 'account-update-email'
 	 *							
 	 *	@param $path: string - the uri path only if $action == 'navigate'
 	 */

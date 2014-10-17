@@ -8,13 +8,15 @@ class AdminController extends Controller {
 						CommentRepository $comment,
 						FeaturedRepository $featured,
 						EmailRepository $email,
-						CategoryRepository $category ) {
+						CategoryRepository $category,
+						FeaturedUserRepository $featureduser ) {
 		$this->user = $user;
 		$this->post = $post;
 		$this->comment = $comment;
 		$this->featured = $featured;
 		$this->email = $email;
 		$this->category = $category;
+		$this->featureduser = $featureduser;
 	}
 
 	/**
@@ -29,7 +31,7 @@ class AdminController extends Controller {
 			if ( $new_description ) {
 				$input['new_description'] = $new_description;
 			}
-			if ( $new_title ) {
+			if ( $new_title && (strtolower($new_title) != 'new'|| strtolower($new_title) != 'all'))  {
 				$input['new_title'] = $new_title;
 			}
 			$result = $this->category->update( $input );
@@ -164,6 +166,23 @@ class AdminController extends Controller {
 		return Response::json(
 				array( 'success' => true, 'case' => $case ),
 				200 );
+	}
+
+	//Set the fucking featured user
+	function setFeaturedUser() {
+		$request = Request::all();
+		$result = $this->featureduser->create($request['user_id'], $request['excerpt']);
+		if($result) {
+			return Response::json(
+					array('success' => true),
+					200
+				);
+		} else {
+			return Response::json(
+					array('error'),
+					400
+				);
+		}
 	}
 
 	/**

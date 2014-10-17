@@ -99,9 +99,9 @@
 				<span class="glyphicon glyphicon-plus pull-right"></span>
 			</a>
 			<div id="adminItemFive" class="collapse">
-				@yield('admin-mod-user-controls')	
+				@yield('admin-mod-user-controls')
 			</div>
-		</li>
+		</li>		
 		@endif
 
 		@if ( isset( $is_categories_page ) )
@@ -115,6 +115,7 @@
 			</div>
 		</li>
 		@endif
+
 	</ul>
 
 </div>

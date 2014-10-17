@@ -108,13 +108,14 @@ Route::group( array('prefix'=>'myprofile', 'before' => array('auth', 'force_ssl'
 Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
 	Route::get('featured/post/{post_id}/remove', 'AdminController@removeFromFeatured');
 	Route::get('featured/post/{post_id}/position/{position}', 'AdminController@setFeaturedPosition');
+	Route::post('feature/user', 'AdminController@setFeaturedUser');
 	Route::get('assign/moderator/user/{user_id}', 'AdminController@assignModerator');
 	Route::get('unassign/moderator/user/{user_id}', 'AdminController@unassignModerator');
 	Route::get('delete/user/{user_id}', 'AdminController@deleteUser');
 	Route::get('restore/user/{user_id}', 'AdminController@restoreUser');
 	Route::get('reset/user/{user_id}', 'AdminController@resetUser');
 	Route::post('post/edit', 'AdminController@editPost');
-	Route::post('category/description', 'AdminController@editCategoryDescription');
+	Route::post('category/description', 'AdminController@editCategoryDescription');	
 	Route::controller('/','AdminController');
 });
 
