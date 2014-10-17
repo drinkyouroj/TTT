@@ -48,9 +48,15 @@ class HomeController extends BaseController {
 			Cache::put('featureduser',$fuser,$expiresAt);
 		}
 
+		$post_count = $this->post->countUserPublished($fuser->user_id);
+		$fuser_recent = $this->post->lastPostUserId($fuser->user_id, true);
+
 		$view = View::make('v2/featured/featured')
 						->with('featured', $featured)
-						->with('fuser', $fuser);
+						->with('fuser', $fuser)
+						->with('post_count', $post_count)
+						->with('fuser_recent',$fuser_recent)
+						;
 
 		if(Auth::check()) {
 			$user = Auth::user();
@@ -66,7 +72,7 @@ class HomeController extends BaseController {
 			}
 			if(is_object($fuser)) {
 				$fuser_follow = $this->follow->is_following($user->id, $fuser->user_id);
-				$view->with('fuser_follow', $fuser_follow);
+				$view->with('fuser_follow', $fuser_follow);				
 			} else {
 				$view->with('fuser_follow', false);
 			}

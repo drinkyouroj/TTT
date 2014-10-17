@@ -184,6 +184,13 @@ class EloquentPostRepository implements PostRepository {
 		return $this->post->where('published', 1)->count();
 	}
 
+	public function countUserPublished($user_id) {
+		return $this->post->where('published', 1)
+						->where('user_id',$user_id)
+						->where('deleted_at',NULL)
+						->count();
+	}
+
 	//Check
 	public function owns($post_id, $user_id) {
 		return $this->post->where('id', $post_id)

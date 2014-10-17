@@ -24,7 +24,7 @@
 						<span class="text">Following</span>
 					</div>
 					<div class="featured-stats post-count">
-						<span class="count">{{count($fuser->user->posts)}}</span>
+						<span class="count">{{$post_count}}</span>
 						<span class="text">Posts</span>
 					</div>
 				</div>
@@ -37,7 +37,7 @@
 			<div class="recent-container col-md-7 col-md-offset-5">
 				<div class="row">
 					<h5 class="recent-label col-md-12">Most Recent Post</h4>
-					<?php $recent = $fuser->user->posts{0}; ?>
+					<?php $recent = $fuser_recent ?>
 				</div>
 				<div class="row">
 					<div class="recent-post col-md-6 col-sm-6 col-xs-7">
