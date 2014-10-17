@@ -59,7 +59,11 @@
 						View {{$fuser->user->username}}'s Profile
 					</a>
 					<a class="follow-button follow-action {{ $fuser_follow ? 'following' : '' }}" data-userid="{{$fuser->user_id}}">
-						Follow {{$fuser->user->username}}
+						@if($fuser_follow)
+							Following {{$fuser->user->username}}
+						@else
+							Follow {{$fuser->user->username}}
+						@endif
 					</a>
 				</div>
 			</div>
