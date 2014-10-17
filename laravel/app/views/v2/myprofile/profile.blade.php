@@ -38,7 +38,7 @@
 	@include( 'v2/myprofile/partials/no-content-handlebars-template' )
 	@include( 'v2/partials/photo-input' )
 
-	@if($myprofile|| Auth::user()->hasRole('Admin'))
+	@if($myprofile|| Session::get('admin') )
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/form/jquery.form.js"></script>
 	@endif
 	{{--This is for the follow action--}}

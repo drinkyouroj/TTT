@@ -216,7 +216,8 @@ h3.category-label {
 					letter-spacing:2px;
 					color:$white;
 					background:$dark_cream;
-					margin-bottom:2px;
+					margin-bottom:5px;
+					@include secondary_drop_shadow();
 					&:hover {
 						background:$blue;
 					}
@@ -659,13 +660,16 @@ h3.category-label {
 			@media (max-width: $break-md){
 				text-align:center;
 			}
-		img.avatar {
-			background-image:url('../../../../images/cat-listing/adversity.jpg');
-			background-size:cover;
-		    background-position:center center;
+		span.avatar {
+			display:block;
 			width:250px;
 			height:250px;
 			border-radius: 50%;
+			background-size:cover;
+		    background-position:center center;
+		    @media (max-width: $break-md){
+				margin:0 auto;
+			}
 			@media (max-width: $break-sm){
 				width:70px;
 				height:70px;
@@ -682,6 +686,11 @@ h3.category-label {
 			padding-top:0px;
 			padding-bottom:10px;
 			border-bottom:solid 1px $dark_gray;
+			a {
+				&:hover {
+					color:$blue;
+				}
+			}
 			@media (max-width: $break-md){
 				text-align:center;
 			}
