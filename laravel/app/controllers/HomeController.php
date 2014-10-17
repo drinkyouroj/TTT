@@ -10,12 +10,14 @@ class HomeController extends BaseController {
 							FeaturedRepository $featured,
 							FeedRepository $feed,
 							EmailRepository $email,
-							PostRepository $post
+							PostRepository $post,
+							FeaturedUserRepository $featureduser
 							){
 		$this->featured = $featured;
 		$this->feed = $feed;
 		$this->email = $email;
 		$this->post = $post;
+		$this->featureduser = $featureduser;
 	}
 
 	/**
@@ -36,8 +38,18 @@ class HomeController extends BaseController {
 			Cache::put('featured',$featured,$expiresAt);
 		}
 
+		if(Cache::has('featureduser') && !Session::get('admin') ) {
+			$fuser = Cache::get('featureduser');
+		} else {
+			$fuser = $this->featureduser->find();
+			$expiresAt = Carbon::now()->addMinutes(10);
+			Cache::put('featureduser',$fuser,$expiresAt);
+		}
+
+
 		$view = View::make('v2/featured/featured')
-						->with('featured', $featured);
+						->with('featured', $featured)
+						->with('fuser', $fuser);
 
 		if(Auth::check()) {
 			$user = Auth::user();

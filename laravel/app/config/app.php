@@ -153,6 +153,7 @@ return array(
 		'AppStorage\PostFlaggedStorageServiceProvider',
 		'AppStorage\PhotoStorageServiceProvider',
 		'AppStorage\SearchStorageServiceProvider',
+		'AppStorage\FeaturedUserStorageServiceProvider', 
 
 		//Image system for when we make our captcha.
 		'Intervention\Image\ImageServiceProvider',

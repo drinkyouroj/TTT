@@ -14,6 +14,11 @@
 @section('js')
 
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/featured/featured.js?v={{$version}}"></script>
+	
+	@if(Auth::check())
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post_actions.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/featured/logged_in.js"></script>		
+	@endif
 
 	@include('v2.partials.post-listing-template')
 
@@ -51,9 +56,9 @@
 				<div class="col-md-12 heading-title">
 					<h1>Two Thousand Times</h1>
 					<ul class="header-taglines list-inline">
-						<li>Chicken</li>
-						<li>Rape</li>
-						<li>Contest</li>
+						<li></li>
+						<li></li>
+						<li></li>
 					</ul>
 					{{--@if(!Auth::check())
 						<div class="line"></div>
