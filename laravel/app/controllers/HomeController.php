@@ -64,8 +64,12 @@ class HomeController extends BaseController {
 				$random = $this->featured->random();
 				$view->with('from_feed', $random->post);
 			}
-			$fuser_follow = $this->follow->is_following(Auth::user()->id, $fuser->user_id);
-			$view->with('fuser_follow', $fuser_follow);
+			if(is_object($fuser)) {
+				$fuser_follow = $this->follow->is_following($user->id, $fuser->user_id);
+				$view->with('fuser_follow', $fuser_follow);
+			} else {
+				$view->with('fuser_follow', false);
+			}
 		} else {
 			$view->with('from_feed', false)
 				 ->with('fuser_follow', false);
