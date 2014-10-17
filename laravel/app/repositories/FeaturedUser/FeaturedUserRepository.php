@@ -8,6 +8,8 @@ interface FeaturedUserRepository {
 
 	public function create($user_id, $excerpt);
 
+	public function find();
+
 	public function delete($id);
 
 }

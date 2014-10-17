@@ -93,7 +93,6 @@
 				{{--Under normal circumstances...--}}
 				<div class="col-md-4 col-sm-6 middle-grid">
 					@include('v2.partials.post-listing-partial', array('post'=> $f->post))
-					<!--{{$f->position}}-->
 				</div>
 					@if($k == 5)
 						<?php break;?>
