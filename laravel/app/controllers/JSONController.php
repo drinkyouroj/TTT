@@ -50,6 +50,7 @@ class JSONController extends BaseController {
 				$this->post->incrementLike(Request::segment(3));
 
 				NotificationLogic::like($post_id);
+				AnalyticsLogic::createSessionEngagement( 'like' );
 				
 				if($like->id) {
 					return Response::json(
@@ -64,6 +65,7 @@ class JSONController extends BaseController {
 				$this->post->decrementLike(Request::segment(3));
 
 				NotificationLogic::unlike($post_id);
+				AnalyticsLogic::createSessionEngagement( 'unlike' );
 				
 				return Response::json(
 					array('result'=>'deleted'),
@@ -83,7 +85,8 @@ class JSONController extends BaseController {
 		if(is_array($notification_ids)) {
 			
 			$this->not->noticed($notification_ids, Auth::user()->id);
-						
+			AnalyticsLogic::createSessionEngagement( 'notification-read' );
+
 			return Response::json(
 				array('result'=>'success'),
 				200//response is OK!
@@ -96,7 +99,7 @@ class JSONController extends BaseController {
 		}
 	}
 
-	//Mark a post as a Favorite
+	//Mark a post as a Favorite (aka Save)
 	public function getFavorites() {
 		if(Request::segment(3) != 0) {
 			
@@ -112,7 +115,8 @@ class JSONController extends BaseController {
 				
 				//Add to favorite.
 				$this->favorite->create($user_id, $post_id);
-				
+				AnalyticsLogic::createSessionEngagement( 'save' );
+
 				return Response::json(
 					array('result'=>'success'),
 					200//response is OK!
@@ -122,7 +126,8 @@ class JSONController extends BaseController {
 				
 				//Delete from Favorites
 				$this->favorite->delete($user_id, $post_id);
-	
+				AnalyticsLogic::createSessionEngagement( 'unsave' );
+
 				return Response::json(
 					array('result'=>'deleted'),
 					200//response is OK!
@@ -151,7 +156,8 @@ class JSONController extends BaseController {
 				$this->follow->delete($other_user_id, $my_user_id);
 				
 				NotificationLogic::unfollow($other_user_id);
-				
+				AnalyticsLogic::createSessionEngagement( 'unfollow' );
+
 				return Response::json(
 					array('result'=>'deleted'),
 					200//response is OK!
@@ -161,7 +167,8 @@ class JSONController extends BaseController {
 				$this->follow->create($other_user_id, $my_user_id);
 				
 				NotificationLogic::follow($other_user_id);
-				
+				AnalyticsLogic::createSessionEngagement( 'follow' );
+
 				return Response::json(
 					array('result'=>'success'),
 					200//response is OK!
@@ -241,7 +248,8 @@ class JSONController extends BaseController {
 
 				// Notify the repost to owner
 				NotificationLogic::repost( $post_id );
-				
+				AnalyticsLogic::createSessionEngagement( 'repost' );
+
 				//This has to be outside 
 				return Response::json(
 					array('result'=>'success'),
@@ -262,6 +270,7 @@ class JSONController extends BaseController {
 
 				// Delete the notification of the repost					
 				NotificationLogic::unrepost( $post_id );
+				AnalyticsLogic::createSessionEngagement( 'unrepost' );
 				
 				return Response::json(
 					array('result'=>'deleted'),
@@ -285,7 +294,8 @@ class JSONController extends BaseController {
 				->update(array('featured'=> $id));
 				
 			Session::put('featured', $id);
-						
+			AnalyticsLogic::createSessionEngagement( 'featured-set' );
+
 			return Response::json(
 					array('result'=>'success'),
 					200//response is OK!
@@ -305,6 +315,8 @@ class JSONController extends BaseController {
 
 		if( $owns || Auth::user()->hasRole('Moderator') ) {
 			$this->comment->unpublish($id, $user_id);  //unpublished = deleted.
+			AnalyticsLogic::createSessionEngagement( 'comment-delete' );
+
 			return Response::json(
 				array(
 					'result' => 'deleted'
@@ -321,16 +333,17 @@ class JSONController extends BaseController {
 		}
 	}
 
-	//Delete Users
+	//Delete Users ( deactivate accounts )
 	public function postUserdelete() {
 		$id = Input::has('id') ? Input::get('id') : null;
 		$password = Input::has('password') ? Input::get('password') : null;
 		//Was the ID passed and is it the Authenticated user?
 		if ( $id && Auth::user()->id == $id ) {
-			// TODO: make sure user password is correct before delete.
 
 			if ( Auth::validate(array( 'id' => $id, 'password' => $password )) ) {
 				$this->user->delete( $id );	
+				AnalyticsLogic::createSessionEngagement( 'account-deactivate' );
+
 				return Response::json(
 					array('success'=>true),
 					200//response is OK!
@@ -370,7 +383,8 @@ class JSONController extends BaseController {
 				
 				//unpublish the post.
 				$this->post->unpublish($id);
-				
+				AnalyticsLogic::createSessionEngagement( 'post-delete' );
+
 				//Take it out of the activities. (maybe queue this too?)
 				$this->activity->deleteAll($user_id, $id);
 								
@@ -404,6 +418,8 @@ class JSONController extends BaseController {
 		if(Auth::check()) {
 			$user = Auth::user();
 			$this->favorite->read($user->id, $post_id);
+			AnalyticsLogic::createSessionEngagement( 'post-read' );
+
 			return Response::json(
 					array('result' => 'success'),//great success!
 					200
@@ -417,8 +433,10 @@ class JSONController extends BaseController {
 			// If the flag exists, delete it, otherwise create it
 			if ( $this->postFlagged->exists($user->id, $post_id) ) {
 				$this->postFlagged->delete($user->id, $post_id);
+				AnalyticsLogic::createSessionEngagement( 'unflag-post' );
 			} else {
-				$this->postFlagged->create($user->id, $post_id);	
+				$this->postFlagged->create($user->id, $post_id);
+				AnalyticsLogic::createSessionEngagement( 'flag-post' );	
 			}
 			
 

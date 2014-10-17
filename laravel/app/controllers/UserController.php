@@ -1,6 +1,7 @@
 <?php
 use \Carbon\Carbon;
 
+
 class UserController extends BaseController {
 
 	public function __construct(
@@ -196,6 +197,9 @@ class UserController extends BaseController {
                 $this->user->logout();
                 return Redirect::secure('user/banned');
             }
+
+            // USER ANALYTICS - Start measuring user activity here
+            AnalyticsLogic::createSession( Session::getId(), $user );
 
 			//Gotta redirect to an acknowledge page if the user happens to have softDeleted their account
 			if(Session::get('restored')) {

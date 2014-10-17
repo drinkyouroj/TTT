@@ -129,6 +129,8 @@
 	  window.ga = ga;
 	</script>
 	@endif
+
 </body>
 </html>
-<!-- {{ $app->environment() }}  {{$_SERVER['SERVER_ADDR']}}-->
+ <!-- {{ $app->environment() }}  {{$_SERVER['SERVER_ADDR']}} -->
+ <!-- {{ Request::path() }} -->

@@ -6,6 +6,9 @@ $(function() {
         // Replace the description with input field
         var description = $('.category-description').html().trim();
         $('.category-description').html('<input type="text" value="' + description + '">');
+        // Replace the title with input field
+        var title = $('h1.category-title').html().trim();
+        $('h1.category-title').html('<input type="text" value="' + title + '" style="text-align:center">');
     
         // Toggle the button
         $('#offcanvas-admin-sidebar .admin-edit-category-description-submit').removeClass('hidden');
@@ -14,6 +17,7 @@ $(function() {
     $('#offcanvas-admin-sidebar .admin-edit-category-description-submit').click(function() {
         // Replace the description with input field
         var new_description = $('.category-description > input').val().trim();
+        var new_title = $('.category-title > input').val().trim();
         var category_alias = $('.category-description').data('category-alias');
 
         $.ajax({
@@ -22,12 +26,14 @@ $(function() {
             data: {
                 category_alias: category_alias,
                 new_description: new_description,
+                new_title: new_title
             },
             success: function ( data ) {
                 if ( data.success ) {
                     console.log('success');
                     // Remove the input fields and replace with new text
                     $('.category-description').html( new_description );
+                    $('.category-title').html( new_title );
                     // Toggle the button
                     $('#offcanvas-admin-sidebar .admin-edit-category-description-submit').addClass('hidden');
                     $('#offcanvas-admin-sidebar .admin-edit-category-description').removeClass('hidden');            
