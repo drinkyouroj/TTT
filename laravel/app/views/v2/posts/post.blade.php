@@ -171,7 +171,7 @@
 	</section>
 
 	<section class="post-heading-wrapper">
-		<div class="post-heading-container container">
+		<div class="post-heading-container">
 			<div class="row">
 				<div class="post-heading col-md-4">
 					<h2 itemprop="name" content="{{ $post->title }}">{{ $post->title }}</h2>

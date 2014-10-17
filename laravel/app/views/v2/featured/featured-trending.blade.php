@@ -1,9 +1,14 @@
-	<div class="trending-wrapper">
+	<div class="featured-user-container">	
+		<h3 class="user-label">- Featured User -</h3>
+		@include('v2.partials.featured-user')
+	</div>
+
+	<div class="category-wrapper">
 		{{--
 		<section class="filters">
 			<div class="filters-container category-filter-container">
 				<div class="category-filter-title cat-container">
-					Categories
+					categorycategoCategories
 				</div>
 				<ul class="filter-dropdown list-unstyled">					
 					@foreach ( $categories as $category )
@@ -14,21 +19,28 @@
 		<div class="clearfix"></div>
 		</section>
 		--}}
-		<div class="trending-content">
-			<h3>Past Featured</h3>
-			@foreach($randoms as $featured)
-				<?php $post = $featured->post ?>
-				@include('v2.partials.post-listing-partial')
-			@endforeach
+		<div class="new-pop-container container">
+			<h3 class="category-label">- Explore Our Categories -</h3>
+			<div class="new-container">
+				<div class="new-inner">
+					<h4>New</h4>
+				</div>
+			</div>
+			<div class="popular-container">
+				<div class="popular-inner">
+					<h4> Popular</h4>
+				</div>
+			</div>
 		</div>
 		<div class="clearfix"></div>
-	</div>
 
-	<div class="sectional-line"></div>
-	<div class="footer-cat-container container">
-		<div class="row">
-			<div class="footer-cat col-md-12">
-				@include( 'v2/partials/category-listing' )
+		<div class="footer-cat-wrapper">
+			<div class="footer-cat-container container">
+				<div class="row">
+					<div class="footer-cat col-md-12">
+						@include( 'v2/partials/category-listing' )
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

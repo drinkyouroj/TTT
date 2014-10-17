@@ -50,6 +50,11 @@
 			<div class="row">
 				<div class="col-md-12 heading-title">
 					<h1>Two Thousand Times</h1>
+					<ul class="header-taglines list-inline">
+						<li>Chicken</li>
+						<li>Rape</li>
+						<li>Contest</li>
+					</ul>
 					{{--@if(!Auth::check())
 						<div class="line"></div>
 						<h3>For the Stories We Tell</h3>
