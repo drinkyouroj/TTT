@@ -1064,45 +1064,73 @@ input, textarea, button:focus {outline: none !important;}
 		.modal-body {
 			padding-bottom:0px;
 			form {
-				input {
-					height:40px;
-					font-size:12px;
-					border:solid 1px #ddd;
-					&#username, &#email, &#password, &#password_confirmation, &#captcha {
-						width:50%;
-						float:left;
-						@media (max-width:$break-sm) {
+				.inputs {
+					width: 50%;
+					@media (max-width: $break-xs) {
+						width: 90%;
+					}
+					margin-left: auto;
+					margin-right: auto;
+					position: relative;
+
+					input {
+						height:40px;
+						font-size:12px;
+						border:solid 1px #ddd;
+						&#username, &#email, &#password, &#password_confirmation, &#captcha {
 							width:100%;
+							float:left;
+							@media (max-width:$break-sm) {
+								width:100%;
+							}
+						}
+
+						&#captcha {
+							margin-top:10px;
+							@media (max-width:$break-sm) {
+								margin-top:0px;
+							}
+						}
+						&.error {
+							width:100% !important;
+							margin-top:5px;
+							margin-bottom:5px;
+							background-color:#fc9595;
+							&::-webkit-input-placeholder {
+								color:$white;
+							}
+
+							&:-moz-placeholder { /* Firefox 18- */
+								color:$white; 
+							}
+
+							&::-moz-placeholder {  /* Firefox 19+ */
+								color:$white; 
+							}
+
+							&:-ms-input-placeholder {  
+								color:$white;
+							}
 						}
 					}
-					&#captcha {
-						margin-top:10px;
-						@media (max-width:$break-sm) {
-							margin-top:0px;
-						}
+
+					// Initially hidden inputs
+					#password_confirmation, #captcha, .captcha-equation {
+						display: none;
 					}
-					&.error {
-						width:100% !important;
-						margin-top:5px;
-						margin-bottom:5px;
-						background-color:#fc9595;
-						&::-webkit-input-placeholder {
-							color:$white;
-						}
 
-						&:-moz-placeholder { /* Firefox 18- */
-							color:$white; 
-						}
-
-						&::-moz-placeholder {  /* Firefox 19+ */
-							color:$white; 
-						}
-
-						&:-ms-input-placeholder {  
-							color:$white;
-						}
+					span.rando {
+						position: absolute;
+						right: 0;
+						top: 0;
+						height: 40px;
+						padding-right: 30px;
+						padding-top: 14px;
+						padding-left: 14px;
+						cursor: pointer;
 					}
 				}
+
 				label.error {
 						width:100%;
 						color:$red;

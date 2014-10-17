@@ -86,9 +86,13 @@ class SheepRepository implements UserRepository {
 			return false;
 		}
 	}
-
-	public function usernameExists($username) {
-		return $this->user->where('username', $username)->count();
+	public function usernameExists( $username ) {
+		$exists = $this->user->withTrashed()->where( 'username', '=', $username )->count();	
+		if($exists) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	 
 	public function find($id) {

@@ -57,6 +57,31 @@ $(function() {
        	}
 	}
 
+	// The dynamic input fields for signup
+	$('#password').on('input', function() {
+		$('#password_confirmation').slideDown();
+	});
+	$('.signup_form .inputs').on('input', function() {
+		// If username, password, and password confirmation fields are all populated => display captcha
+		var username = $('#username').val();
+		var password = $('#password').val();
+		var password_confirmation = $('#password_confirmation').val();
+
+		if ( username.length && password.length && password_confirmation.length ) {
+			$('#captcha, .captcha-equation').slideDown();
+		}
+	});
+	// Random username generate (used in signup)
+	$('.rando').click( function() {
+		$.ajax({
+			url: window.site_url + 'rest/random',
+			success: function ( data ) {
+				if ( data && data.username ) {
+					$('#username').val( data.username );
+				}
+			}
+		});
+	});
 });
 
 

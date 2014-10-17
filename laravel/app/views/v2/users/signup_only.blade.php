@@ -19,11 +19,14 @@ Sign up! | Two Thousand Times
 
 @section('content')
 	<div class="container">
-		<div class="col-md-6 col-md-offset-3 signup-container">
+		<div class="col-sm-6 col-sm-offset-3 signup-container">
 			<div class="signup-form">
 				<h2>Signup</h2>
 				{{ View::make('v2.users.forms.signup') }}
 				<div class="terms-agree">
+					<div class="email-subtext">
+						* Emails are optional, you'll need it if you forget your password.
+					</div>
 					By creating an account you agree to our <a class="terms" href="{{Config::get('app.url')}}/terms">Terms Of Use</a> and <a class="terms" href="{{Config::get('app.url')}}/privacy">Privacy Policy</a>.
 					<br/>
 		            Read our guidelines on <a href="{{Config::get('app.url')}}/etiquette">Community Etiquette</a>.
