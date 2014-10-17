@@ -49,7 +49,7 @@
 							@else
 								<span class="navbar-dropdown-toggle avatar" style="background-image:url('{{Config::get('app.url')}}/images/profile/avatar-default.png');"></span>
 							@endif
-							@if ( count($notifications) )
+							@if ( $notification_count )
 								<div class="notification-label">
 									{{ $notification_count > 10 ? '10+' : $notification_count }}
 								</div>

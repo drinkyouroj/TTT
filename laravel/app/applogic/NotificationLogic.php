@@ -19,7 +19,7 @@ class NotificationLogic {
 	
 	// Fetch the last few notifications to pre-populate the view
 	public function top ( $user_id ) {
-		return $this->not->getByUserId( $user_id, 1, 10, true );
+		return $this->not->getByUserId( $user_id, 1, 5, false );
 	}
 
 	public function getUnreadCount ( $user_id ) {
