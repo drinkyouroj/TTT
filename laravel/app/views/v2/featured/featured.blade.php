@@ -88,6 +88,18 @@
 				</div>
 			</div>
 		</div>
+		
+		<div class="header-cat-links">
+			<ul>
+				<li>
+					<a href="{{ URL::to('categories/all') }}">Popular</a>
+				</li>
+				<li class="category-all">
+					<a href="{{ URL::to('categories/new') }}">New</a>
+				</li>
+			</ul>
+		</div>
+		<div class="clearfix"></div>
 	</div>
 
 	{{--We're caching the DB query right now for 10 minutes, but hopefully we'll get to caching the view--}}

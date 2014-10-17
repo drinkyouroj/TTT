@@ -20,17 +20,21 @@
 		</section>
 		--}}
 		<div class="new-pop-container container">
-			<h3 class="category-label">- Explore Our Categories -</h3>
-			<div class="new-container">
-				<div class="new-inner">
-					<h4>New</h4>
+			<a href="{{ URL::to('categories/new') }}">
+				<h3 class="category-label">- Explore Our Categories -</h3>
+				<div class="new-container">
+					<div class="new-inner">
+						<h4>New</h4>
+					</div>
 				</div>
-			</div>
-			<div class="popular-container">
-				<div class="popular-inner">
-					<h4> Popular</h4>
+			</a>
+			<a href="{{ URL::to('categories/all') }}">
+				<div class="popular-container">
+					<div class="popular-inner">
+						<h4> Popular</h4>
+					</div>
 				</div>
-			</div>
+			</a>
 		</div>
 		<div class="clearfix"></div>
 

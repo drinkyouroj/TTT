@@ -20,7 +20,7 @@
 								<div class="author col-md-12">
 									<?php $user_image = $main->user->image ? Config::get('app.imageurl').'/'.$main->user->image : Config::get('app.url').'/images/profile/avatar-default.png' ;?>
 									<a href="{{Config::get('app.url')}}/profile/{{$main->user->username}}"> 
-										<span class="avatar" style="background:{{$user_image}};"></span>
+										<span class="avatar" style="background-image:url({{$user_image}});"></span>
 									</a>
 									{{$main->story_type}} by 
 									<a href="{{Config::get('app.url')}}/profile/{{$main->user->username}}"> 

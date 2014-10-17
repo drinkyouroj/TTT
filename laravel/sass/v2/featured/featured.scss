@@ -18,9 +18,9 @@
 		}
 	}
 	&.active {
-		-moz-box-shadow:    1px 1px 8px 0px #999;
-  		-webkit-box-shadow: 1px 1px 8px 0px #999;
-  		box-shadow:         1px 1px 8px 0px #999;
+		-moz-box-shadow:    1px 1px 1px 0px #999;
+  		-webkit-box-shadow: 1px 1px 1px 0px #999;
+  		box-shadow:         1px 1px 1px 0px #999;
 		.header-logo {
 			opacity: 1;
 			@include transition (opacity, 1s, linear, 0);
@@ -68,26 +68,14 @@ h3.category-label {
 
 .featured-page {
 	.top-wrapper {
+		position:relative;
 		background:$white;
-		padding:0px 0 25px 0;
-		@media (max-width:$break-md) { 
-   			padding:0px 0 5px 0; 
- 		}
- 		@media (max-width:$break-sm) { 
-   			padding:0px 0 10px 0; 
- 		}
- 		@media (max-width:$break-xs) { 
-   			padding:0;
+		padding:0 0 25px 0;
+		@media (max-width:$break-xs) { 
+   			padding:0 0 35px 0;
  		}
 		.heading-title {
 			position:relative;
-			@media (max-width:$break-md) { 
-	   			margin-bottom:30px;
-	 		}
-	 		@media (max-width:$break-xs) {
-				margin-bottom:50px;
-			}
-			
 			h1 {
 				margin:0px 0;
 				background:$white;
@@ -100,12 +88,10 @@ h3.category-label {
 		 		}
 		 		@media (max-width:$break-md) { 
 		   			font-size:40px; 
-		   			margin-bottom:10px;
 		 		}
 		 		@media (max-width:$break-xs) { 
 		   			font-size:27px; 
 		   			letter-spacing:2px;
-		   			margin:0px 0 15px 0;
 		 		}
 			}
 			ul.header-taglines {
@@ -115,6 +101,10 @@ h3.category-label {
               		line-height: 12px;
               		font-size:20px;
               		padding:0 20px;
+              		@media (max-width:$break-md) { 
+              			font-size:16px;
+              			padding:0 10px;
+              		}
 	            }
 	            li:nth-child(1), li:nth-child(2) {
 	              border-right: 1px solid $dark;
@@ -202,7 +192,41 @@ h3.category-label {
 			}
 		}
 
-
+	.header-cat-links {
+		position:absolute;
+		bottom:0px;
+		left:0px;
+		@media (max-width:$break-sm) { 
+			top:80px;
+		}
+		@media (max-width:$break-xs) { 
+			display:none;
+		}
+		ul {
+			margin:0px;
+			padding:0px;
+			list-style:none;
+			li {
+				a {
+					display:inline-block;
+					padding:5px 15px;
+					@include garamond-italic;
+					font-size:14px;
+					text-transform:uppercase;
+					letter-spacing:2px;
+					color:$white;
+					background:$dark_cream;
+					margin-bottom:2px;
+					&:hover {
+						background:$blue;
+					}
+					@media (max-width:$break-sm) { 
+		   				font-size:12px;
+		 			}
+				}
+			}
+		}
+	}
 	.date {
 		.date-circle {
 				position:absolute;
@@ -239,20 +263,22 @@ h3.category-label {
 					
 				}
 				@media (max-width:$break-lg) { 
-		   			right:50px;
+		   			right:30px;
 		 		}
 				@media (max-width:$break-md) { 
-					bottom:-20px;
+					right:0px;
+					bottom:-50px;
 		 		}
 		 		@media (max-width:$break-sm) {
 		 			width:70px;
 					height:70px;
+					right:50px;
 					@include border-radius(35px);
-					bottom:-30px;
+					bottom:-50px;
 					padding:15px 5px 5px 5px;
 		 		}
 		 		@media (max-width:$break-xs) { 
-					bottom:-25px;
+					bottom:-55px;
 					right:10px;
 		 		}
 			}
@@ -293,6 +319,9 @@ h3.category-label {
 				}
 				@media (max-width:$break-lg) and (min-width:$break-lg-min) { 
 					padding:70px 40px 40px 40px;
+				}
+				@media (max-width:$break-md) { 
+					background:transparent;
 				}
 				@media (max-width:$break-xs) { 
 					padding:20px 0px;
@@ -371,11 +400,10 @@ h3.category-label {
 						vertical-align:middle;
 						display:inline-block;
 						text-align:center;
-						background-image:url('../../../../images/cat-listing/adversity.jpg');
 						background-size:cover;
 		    			background-position:center center;
-						width:40px;
-						height:40px;
+						width:30px;
+						height:30px;
 						border-radius: 50%;
 						margin-right:5px;
 					}
@@ -442,8 +470,9 @@ h3.category-label {
 						padding-top:31.5%;
 					}
 					@media (max-width:$break-xs) {
-						width:100%;
-						padding-top:63%;
+						width:90%;
+						padding-top:56.7%;
+						margin:0 5%;
 					}
 				}
 			}
@@ -468,10 +497,13 @@ h3.category-label {
   			-moz-border-radius: 2px; 
   			border-radius: 2px; 
 			@media (min-width:$break-lg) {
-				padding:0px 20px 20px 20px;
+				padding:0px 40px 20px 40px;
 			}
 			@media (max-width:$break-sm) and (min-width:$break-sm-min)  {
 				padding:0px 90px 20px 90px;
+			}
+			@media (max-width:$break-xs) {
+				padding:0px 15px 20px 15px;
 			}
 		}
 		.middle-grid {
@@ -554,9 +586,9 @@ h3.category-label {
 			}
 			@media (max-width: $break-xs){ 
 				position:relative;
-				width:80%;
+				width:100%;
 				top:0px; 
-				margin:0 10% 20px 10%; 
+				margin:0 0 20px 0; 
 			}
 			.signup-top {
 				width:100%;
@@ -829,7 +861,8 @@ h3.category-label {
 				letter-spacing:5px;
 				margin:0px;
 				@media (max-width:$break-sm) {
-					font-size:16px;
+					font-size:14px;
+					letter-spacing:2px;
 				}
 			}
 		}
