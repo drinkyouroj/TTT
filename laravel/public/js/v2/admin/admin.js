@@ -179,8 +179,10 @@ $(function() {
     });
 
     //Edit the featured user.
-    $('#offcanvas-admin-sidebar .mod-user-controls ').ajaxForm({
+    if(typeof(callback) == 'ajaxForm') {
+        $('#offcanvas-admin-sidebar .mod-user-controls ').ajaxForm({
             dataType: 'json'
         }).submit();
+    }
 
 });

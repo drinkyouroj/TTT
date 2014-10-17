@@ -4,6 +4,15 @@ $(function() {
 		event.preventDefault();
 		user_action.action = 'follow';
 		user_action.user_id = $(this).data('userid');
-		user_action.send();
+		that = $(this);
+		user_action.send(function(data) {
+			if(data.result == 'success') {
+				that.addClass('following');
+
+			} else {
+				that.removeClass('following');
+				
+			}
+		});
 	});
 });
