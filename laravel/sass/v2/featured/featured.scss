@@ -835,6 +835,9 @@ h3.category-label {
 			.follow-action {
 				padding-left:30px;
 				background-size:30px 30px;
+				&.following {
+					display:none;
+				}
 			}
 		}
 	}
