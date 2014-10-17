@@ -11,6 +11,7 @@ $lightgray: #eee;
 $gray_text:#bbb;//for text over a dark background
 $beige: #fff9f0;
 $cream: #fff8ee;
+$off_cream:#faf9f7;
 $dark_cream: #dbd3ca;
 $darker_cream: #cebfaf;
 $dark: #181919;//color that's not black, but looks like black.
@@ -437,8 +438,7 @@ textarea {
 
 @mixin post_styles() {
   .post-heading-wrapper {
-    background-color: $lightgray;
-    border-bottom:solid 1px $lightgray;
+    background-color: $off_cream;
     @media (max-width:$break-md) {
       background-color: $white;
       padding-bottom:20px;  
@@ -446,7 +446,9 @@ textarea {
 
     .post-heading-container {
       position: relative;
-
+      width:100%;
+      max-width:1400px;
+      margin:0 auto;
       img.no-show-image {
         position: absolute;
         top: 0;
@@ -478,12 +480,19 @@ textarea {
           vertical-align:middle;
           text-align: center;
           background-color: #fff;
-          padding-left:25px;
-          padding-right:25px;
+          padding-left:40px;
+          padding-right:40px;
+          @media (max-width: $break-lg) and (min-width: $break-lg-min) {
+            padding-left:20px;
+            padding-right:20px;
+          }
           h2 {
             @include post_page_title;
-            margin-top:-100px;
+            margin-top:-75px;
             font-size:32px;
+            @media (max-width: $break-lg) and (min-width: $break-lg-min) {
+              font-size:27px;
+            }
             @media (max-width: $break-md) and (min-width: $break-sm-min) {
               margin-top:50px;
             }
@@ -511,17 +520,16 @@ textarea {
             margin-bottom: 20px;
             li {
               line-height: 12px;
+              font-size:16px;
             }
             li:nth-child(1), li:nth-child(2) {
               border-right: 1px solid $dark;
             }
             @media (max-width: $break-lg) and (min-width: $break-lg-min) {
-              font-size:14px;
               margin-bottom: 10px;
             }
             @media (max-width: $break-xs) {
               margin-bottom: 20px;
-              font-size:14px;
             }
           }
 
@@ -817,7 +825,7 @@ textarea {
       text-align:center;
       li {
         position:relative;
-        width:16.65%;
+        width:16.6666667%;
         display:block;
         float:left;
         list-style:none;
@@ -827,7 +835,7 @@ textarea {
           width:25%;
         }
         @media (max-width:$break-xs) {
-          width:33.33%;
+          width:33.3333333%;
         }
         a {
           position:relative;
@@ -1017,7 +1025,7 @@ textarea {
         position:absolute;
         width: 100%;
         height:99px;
-        background-image:url('../../../../images/categories/post-image-overlay.png');
+        background-image:url('../../../../images/categories/post-image-overlay2.png');
         background-position:top;
         background-repeat:repeat-x;
         z-index:1;

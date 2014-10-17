@@ -282,8 +282,7 @@ $border_color: #eee;
 }
 
 .top-submit-wrapper {
-	background:$lightgray;
-	border-bottom:solid 1px $lightgray;
+	background:$off_cream;
 	@media (max-width:$break-md) {
 		background:$white;
 	}

@@ -179,7 +179,7 @@
 			{{--Wrapper is to be set as 100% and background black--}}
 			<div class="top-submit-wrapper">
 				{{--The big container so that we can assign the images to it. max-width 1440 or something like that--}}
-				<div class="top-submit-container container">
+				<div class="top-submit-container">
 					<div class="row">
 						<div class="col-md-4 form-heading">
 							{{--Title Input--}}
