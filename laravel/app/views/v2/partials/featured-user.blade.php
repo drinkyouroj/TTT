@@ -41,20 +41,20 @@
 				</div>
 				<div class="row">
 					<div class="recent-post col-md-6 col-sm-6 col-xs-7">
-						<div class="recent-image" style="background-image:url('{{Config::get('app.imageurl')}}/{{$recent->image}}')">
-						</div>
-						<div class="recent-text">
-							<p class="recent-title"> 
-								<a href="{{URL::to( 'posts/'.$recent->alias)}}">
+						<a href="{{URL::to( 'posts/'.$recent->alias)}}">
+							<div class="recent-image" style="background-image:url('{{Config::get('app.imageurl')}}/{{$recent->image}}')">
+							</div>
+							<div class="recent-text">
+								<p class="recent-title"> 
 									{{$recent->title}}
-								</a>
-							</p>
-							<ul class="recent-taglines list-inline">
-								<li> {{$recent->tagline_1}} </li>
-								<li> {{$recent->tagline_2}} </li>
-								<li> {{$recent->tagline_3}} </li>
-							</ul>
-						</div>
+								</p>
+								<ul class="recent-taglines list-inline">
+									<li> {{$recent->tagline_1}} </li>
+									<li> {{$recent->tagline_2}} </li>
+									<li> {{$recent->tagline_3}} </li>
+								</ul>
+							</div>
+						</a>
 					</div>
 					<div class="user-actions col-md-4 col-sm-6 col-xs-5">
 						<a class="btn-flat-light-gray profile-action" href="{{URL::to('profile/'.$fuser->user->username)}}">
