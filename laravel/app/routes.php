@@ -84,6 +84,8 @@ Route::group(array('prefix'=>'rest'), function() {
 	//Auto Load of for featured.
 	Route::get( 'featured/{page}', 'HomeController@getRestFeatured');
 	Route::get( 'featured', 'HomeController@getRestFeatured');
+
+	Route::get( 'random', 'UserController@getRandomUsername');
 	
 });
 

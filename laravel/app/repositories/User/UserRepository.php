@@ -10,6 +10,7 @@ interface UserRepository {
 
 //Read
 	public function exists($id);
+	public function usernameExists( $username );
 
 	public function find($id);
 	
