@@ -500,9 +500,6 @@ h3.category-label {
 			@media (min-width:$break-lg) {
 				padding:0px 40px 20px 40px;
 			}
-			@media (max-width:$break-sm) and (min-width:$break-sm-min)  {
-				padding:0px 90px 20px 90px;
-			}
 			@media (max-width:$break-xs) {
 				padding:0px 15px 20px 15px;
 			}
@@ -577,13 +574,13 @@ h3.category-label {
 				margin:0 20px;
 			}
 			@media (max-width: $break-md) and (min-width: $break-md-min){ 
-				top:-20px; 
+				top:-40px; 
 			}
 			@media (max-width: $break-sm) and (min-width: $break-sm-min){ 
 				position:relative;
-				width:50%;
+				width:70%;
 				top:0px; 
-				margin:0 25% 20px 25%; 
+				margin:0 15% 20px 15%; 
 			}
 			@media (max-width: $break-xs){ 
 				position:relative;
