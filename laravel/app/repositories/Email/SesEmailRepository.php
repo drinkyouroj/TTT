@@ -65,8 +65,6 @@ class SesEmailRepository implements EmailRepository {
 			$data['reply']		= empty($data['reply']) ? array($this->default['returnPath']) : $data['reply'];
 			$data['cc']			= empty($data['cc']) ? array() : $data['cc'];
 			$data['bcc']		= empty($data['bcc']) ? array() : $data['bcc'];
-
-
 			return $data;
 		}
 

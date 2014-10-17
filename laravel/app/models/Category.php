@@ -76,7 +76,7 @@ class Category extends Eloquent {
 		return $this->belongsToMany('Post', 'category_post')
 					->where('published',1)
 					->select($this->select)
-					->orderBy('created_at','DESC');
+					->orderBy('published_at','DESC');
 	}
 
 	public function validate($input) {

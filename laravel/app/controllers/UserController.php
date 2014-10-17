@@ -24,6 +24,41 @@ class UserController extends BaseController {
         $this->beforeFilter('force_ssl', array('except' => 'getUserCheck'));
 	}
 
+    public function getRandomUsername () {
+        // Fetch random usernames until we find one that is valid/doesnt exists already
+        $username = self::randomValidUsername();
+        return Response::json( array(
+                'username' => $username
+                ), 200 );
+    }
+    /**
+     *  Generates a random username that is not taken and fits length constraints
+     */
+    public function randomValidUsername () {
+        $invalid = true;
+        $username = '';
+        while ( $invalid ) {
+            $username = self::generateRandomUsername();
+            $invalid = !self::validUsername( $username );
+        }
+        return $username;
+    }
+        private function generateRandomUsername () {
+            $noun_file = file(storage_path().'/data/nouns.txt');
+            $noun = $noun_file[array_rand($noun_file)];
+            $adj_file = file(storage_path().'/data/adjectives.txt');
+            $adjective = $adj_file[array_rand($adj_file)];
+            $random = trim($adjective).trim($noun);
+            return $random;
+        }
+        private function validUsername ( $username ) {
+            $length = strlen( $username );
+            if ( $length == 0 || $length > 15 ) {
+                return false;
+            }
+            return !$this->user->usernameExists( $username );
+        }
+
 	/**
 	 * Signup
 	 */

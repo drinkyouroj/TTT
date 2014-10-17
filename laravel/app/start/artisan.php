@@ -21,3 +21,4 @@ Artisan::add(new BetaImageMigrateCommand);
 Artisan::add(new ImageUploadSweepCommand);
 Artisan::add(new CommentRecountCommand);
 Artisan::add(new ReservedDumpCommand);
+Artisan::add(new PostCreatedCommand);

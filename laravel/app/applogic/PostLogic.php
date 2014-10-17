@@ -1,7 +1,10 @@
 <?php namespace AppLogic\PostLogic;
 
-use App, 
-	AppStorage\Post\PostRepository
+use App,
+	Config,
+	ArrayObject,
+	AppStorage\Post\PostRepository,
+	DaveChild\TextStatistics as TS
 	;
 
 /**
@@ -57,5 +60,53 @@ class PostLogic {
 		}
 		return $arrayOutput;
 	}
+
+	/**
+	*	Takes post body and does analysis as to how readable the text is.
+	*/
+	public function readability($body)
+	{
+		$ts = new TS\TextStatistics;
+		$reading_ease = $ts->fleschKincaidReadingEase(strip_tags($body));
+		return $reading_ease;
+	}
+
+	/**
+	*	Takes post body and does analysis as to how readable the text is.
+	*/
+	public function grade($body)
+	{
+		$ts = new TS\TextStatistics;
+		$reading_ease = $ts->fleschKincaidGradeLevel(strip_tags($body));
+		return $reading_ease;
+	}
+
+	public function sentiment($body)
+	{
+		$words = urlencode($this->clean(strip_tags($body)));
+		$data = false;
+		/*
+		try
+		{
+			$data = file_get_contents(Config::get('sentiment.server').'/sentiment/'.$words);
+		}
+		catch(Exception $e)
+		{
+			
+		}
+		*/
+		if(!$data) {
+			$data = new ArrayObject();
+			$data->positive = 0;
+			$data->negative = 0;
+			return $data;
+		}
+		return json_decode($data);
+	}
+
+		private function clean($string)
+		{
+			return preg_replace('/[^A-Za-z0-9\-]/', '', $string);
+		}
 
 }

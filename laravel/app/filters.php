@@ -32,6 +32,10 @@ App::before(function($request)
 	{
 	   return Redirect::to('user/logout');
 	}
+
+	$contents = File::get(base_path().'/gitversion');
+	$version =str_replace("\n", "", $contents);//gotta get rid of the returns.
+	View::share('version', $version);
 });
 
 
@@ -144,174 +148,22 @@ Route::filter('csrf', function()
 });
 
 
-
 /** 
- * View Composer
- * 
- * This is called everytime any view is rendered.  Most of the views in our site require the below right now.
- * This will need to be figured out later as the view composer is unable to figure out how to reach the layouts.master.blade.php file 
+ * View Composers
+ *  IMPORTANT NOTE: Laravel is stupid at using slash or dot on the layout paths so try both if one or the other is not working.
  */
-use Carbon\Carbon;
-View::composer('*', function($view) {
-	//Below is the filters for the Categories.  Its stored here since we needed to iterate through to see what is or is not active.
-	//We can probably make this an admin function later.
-	$filters = array(
-					'popular'=> 'Most Popular',
-					'recent' => 'Most Recent',
-					'viewed' => 'Most Viewed',
-					'discussed' => 'Most Discussed',
-					/*
-					'longest' => 'Longest',
-					'shortest' => 'Shortest'
-					 */ 
-					);
+$category_views = array(
+							'v2/category/category',
+							'v2/featured/featured-trending',
+							'v2.layouts.header',
+							'v2/partials/category-listing',
+							'v2/posts/post_form'
+						);
 
-	//Grab all the categories
-	if(Cache::has('categories')) {
-		$categories = Cache::get('categories');
-	} else {
-		$category = App::make('AppStorage\Category\CategoryRepository');
-		$categories = $category->all();
-		$expiresAt = Carbon::now()->addMinutes(10);
-		Cache::put('categories', $categories, $expiresAt);
-	}
-	
-
-	if(!Auth::guest()) {
-		$user = Auth::user();
-		// ===================== ITEMS FOR THE SIDEBAR =====================
-		$favRep = App::make('AppStorage\Favorite\FavoriteRepository');
-		$saves = $favRep->allByUserId( $user->id, 6 );
-
-
-
-		//The new Mongo notifications
-		$compiled = NotificationLogic::top( $user->id );
-		// Count of how many unread notifications the user has
-		$notification_count = NotificationLogic::getUnreadCount( $user->id );
-
-		//Unfortunately, we'll have to do this for now.
-		$notification_ids = array();
-		foreach($compiled as $k => $nots) {
-			$notification_ids[$k] = $nots->_id;
-		}
-		
-		$user_image = $user->image ? $user->image : false;
-
-		$view->with('categories',$categories)
-			 ->with('filters', $filters)
-			 ->with('notifications', $compiled)
-			 ->with('notification_count', $notification_count)
-			 ->with('saves', $saves)
-			 ->with('notifications_ids', $notification_ids)
-			 ->with('user_image', $user_image);
-			 
-	} else {
-		//Guests
-		$view->with('categories', $categories )
-			 ->with('filters', $filters);
-	}
-	
-	//do we need this anymore?
-	if(Request::segment(1) == 'profile') {
-		$alias = Request::segment(2);
-		
-		//Unfortunately view composer currently sucks at things so this is a crappy work around.
-		$not_segment = array(
-					Session::get('username'),
-					'newpost',
-					'editpost',
-					'newmessage',
-					'replymessage',
-					'submitpost',
-					'comment',
-					'commentform',
-					'messages',
-					'submitmessage',
-					'notifications',
-					'myposts',
-					'settings'
-					);
-		
-		if($alias && !in_array($alias, $not_segment) ) {//This is for other users. not yourself
-			$user = User::where('username', '=', $alias)->first();
-			// If you are mod or admin, you may view soft deleted user profiles as well
-			if ( !is_object($user) && Auth::check() && Auth::user()->hasRole('Moderator') ) {
-				$user = User::withTrashed()->where('username', '=', $alias)->first();
-			}
-			$user_id = $user->id;//set the profile user id for rest of the session.
-		} else {
-			//We're doing the user info loading this way to keep the view clean.
-			$user_id = Session::get('user_id');
-			
-			//This isn't most ideal, but let's just place the banned detector here
-			if(User::where('id', $user_id)->where('banned', true)->count()) {
-				//this guy's session will terminate right as he/she clicks on any profile action.
-				Auth::logout();
-				return Redirect::to('/banned');
-			}
-		}
-		
-
-		$follow = App::make('AppStorage\Follow\FollowRepository');
-
-		$followers = $follow->follower_count($user_id);
-		$following = $follow->following_count($user_id);
-		
-		$view->with('followers', $followers)
-			 ->with('following', $following);
-	}
-
-	// Admin/Moderator
-	$is_mod = Session::get('mod');
-	$is_admin = Session::get('admin');
-	if ( $is_mod || $is_admin ) {
-
-		$flagged = App::make('AppStorage\FlaggedContent\FlaggedContentRepository');
-		$users_rep = App::make('AppStorage\User\UserRepository');
-		$post_rep = App::make('AppStorage\Post\PostRepository');
-		// Include the flagged content
-		$flagged_post_content = $flagged->getFlaggedOfType( 'post' );
-		$flagged_comment_content = $flagged->getFlaggedOfType( 'comment' );
-		// Include some stats
-		$num_users = $users_rep->getUserCount();
-		$num_confirmed_users = $users_rep->getConfirmedUserCount();
-		$num_users_created_today = $users_rep->getUserCreatedTodayCount();
-
-		$num_published_posts = $post_rep->getPublishedCount();
-		$num_published_posts_today = $post_rep->getPublishedTodayCount();
-		$num_drafts_today = $post_rep->getDraftsTodayCount();
-
-		// Check if we are on user and/or post page (additional functionalities will be given)
-		$seg = Request::segment(1);
-		if( $seg == 'profile') {
-			$view->with( 'is_profile_page', true );
-		} else if ( $seg == 'posts') {
-			$view->with( 'is_post_page', true );
-		} else if ( $seg == 'categories' ) {
-			$view->with( 'is_categories_page', true );
-		}
-		$view->with( 'flagged_post_content', $flagged_post_content )
-			 ->with( 'flagged_comment_content', $flagged_comment_content )
-			 ->with( 'num_users', $num_users )
-			 ->with( 'num_confirmed_users', $num_confirmed_users )
-			 ->with( 'num_users_created_today', $num_users_created_today )
-			 ->with( 'num_published_posts', $num_published_posts )
-			 ->with( 'num_published_posts_today', $num_published_posts_today )
-			 ->with( 'num_drafts_today', $num_drafts_today );
-	}
-	
-	$contents = File::get(base_path().'/gitversion');
-	$version =str_replace("\n", "", $contents);//gotta get rid of the returns.
-	$view->with('version', $version);
-	
-});
-
-
-
-/**
- * Below are Entrust Filters for the admin system
- */
- 
-
-
+View::composers(array(
+	'AdminModComposer' => 'v2.layouts.admin-moderator',
+	'HeaderComposer' => 'v2.layouts.header',
+	'CategoryComposer' => $category_views,
+	'PostComposer' => 'v2/posts/post',
+	'ProfileComposer' => 'v2/myprofile/profile'
+));

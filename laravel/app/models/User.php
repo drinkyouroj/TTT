@@ -85,7 +85,7 @@ class User extends Eloquent implements UserInterface {
 			// Error messages
 			array(
 				'username.unique' => 'This username is taken.',
-				'email.reservation.cap' => "You can only create 3 usernames per email.",
+				'email.reservation_cap' => "You can only create 3 usernames per email.",
 				'password.confirmed' => 'Your two passwords don’t match! Please try again.',
 				'captcha.required' => 'Let us know that you are a human: fill out the captcha!',
 				'captcha.math_captcha' => 'Are you a human? You got the captcha wrong!'
