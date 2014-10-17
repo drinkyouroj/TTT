@@ -13,7 +13,7 @@ class CategoryComposer {
 						);
 
 		//Grab all the categories
-		if(Cache::has('categories')) {
+		if(Cache::has('categories') && !Session::get('admin') ) {
 			$categories = Cache::get('categories');
 		} else {
 			$category = App::make('AppStorage\Category\CategoryRepository');
