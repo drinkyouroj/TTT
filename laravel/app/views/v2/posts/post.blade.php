@@ -27,7 +27,6 @@
 	<meta name="twitter:title" content="{{$post->title}}">
 	<meta name="twitter:description" content="{{$excerpt}}">
 	<meta name="twitter:image:src" content="{{Config::get('app.imageurl')}}/{{$post->image}}">
-	
 @stop
 
 @section('js')
@@ -399,6 +398,12 @@
 	@if ( $is_admin )
 		<p class="post-title">Readability: {{$readability}}</p>
 		<p class="post-title">Grade Level: {{$grade}}</a>
+		<p class="post-title">Post Sentiment:
+			<ul>
+				<li> Positive: {{$sentiment->positive}}</li>
+				<li> Negative: {{$sentiment->negative}}</li>
+			</ul>
+		</p>
 	@endif
 	<hr>
 	{{-- Admin only access to featured controls --}}

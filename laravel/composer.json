@@ -29,6 +29,7 @@
 			"app/controllers/admin",
 			"app/controllers/moderator",
 			"app/controllers",
+			"app/composers",
 			"app/applogic",
 			"app/applogic/facades",
 			"app/applogic/providers",
