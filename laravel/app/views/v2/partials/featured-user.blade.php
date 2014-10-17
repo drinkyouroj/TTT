@@ -14,19 +14,19 @@
 					</a>
 				</h4>
 				<div class="followers-container">
-					<a href="#followers" class="followers" id="followers">
+					<div class="featured-stats followers" id="followers">
 						<span class="count">{{count($fuser->user->followers)}}</span>
 						<span class="text">Followers</span>
-					</a>
+					</div>
 
-					<a href="#following" class="following" id="following">
+					<div class="featured-stats following" id="following">
 						<span class="count">{{count($fuser->user->following)}}</span>
 						<span class="text">Following</span>
-					</a>
-					<a href="" class="post-count">
+					</div>
+					<div class="featured-stats post-count">
 						<span class="count">{{count($fuser->user->posts)}}</span>
 						<span class="text">Posts</span>
-					</a>
+					</div>
 				</div>
 				<div class="quote">
 					{{$fuser->excerpt}}
