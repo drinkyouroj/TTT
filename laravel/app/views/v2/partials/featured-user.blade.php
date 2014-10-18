@@ -60,7 +60,7 @@
 						<a class="btn-flat-light-gray profile-action" href="{{URL::to('profile/'.$fuser->user->username)}}">
 							View {{$fuser->user->username}}'s Profile
 						</a>
-						<a class="follow-button follow-action {{ $fuser_follow ? 'following' : '' }}" data-userid="{{$fuser->user_id}}">
+						<a class="follow-button follow-action {{ $fuser_follow ? 'following' : '' }}" data-userid="{{$fuser->user_id}}" href="{{ URL::to('user/signup') }}">
 							@if($fuser_follow)
 								Following {{$fuser->user->username}}
 							@else
