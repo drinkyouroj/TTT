@@ -10,14 +10,14 @@ class PostViewStorageServiceProvider extends ServiceProvider {
 	{
 		$this->app->bind(
 		'AppStorage\PostView\PostViewRepository',
-		'AppStorage\PostView\EloquentPostViewRepository'
+		'AppStorage\PostView\MongoPostViewRepository'
 		);
 		
 		$this->app->booting(function()
         {
             $loader = AliasLoader::getInstance();
             $loader->alias('PostViewRepository',
-            		'AppStorage\PostView\PostViewRepository');
+            		'AppStorage\PostView\MongoPostViewRepository');
         });
 	}
 }

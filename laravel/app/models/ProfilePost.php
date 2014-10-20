@@ -17,20 +17,33 @@ class ProfilePost extends Eloquent {
 	}
 	
 	public function post() {
+		$select = array(
+						'id',
+						'user_id',
+						'title',
+						'alias',
+						'tagline_1',
+						'tagline_2',
+						'tagline_3',
+						'story_type',
+						'image',
+						'published_at',
+						'views'
+						);
+
+		//Let's make sure to add "view" count if the user is logged in.
+		if(Auth::check()) {
+			//I would rather not tie things down here this far, but there isn't an easier way right now.
+			if(Request::segment(2) == Auth::user()->username || 
+				Request::segment(1) == 'myprofile' ) 
+			{
+				array_push($select, 'views');
+			}
+		}
+
 		return $this->belongsTo('Post')
 					->select(
-						array(
-							'id',
-							'user_id',
-							'title',
-							'alias',
-							'tagline_1',
-							'tagline_2',
-							'tagline_3',
-							'story_type',
-							'image',
-							'published_at'
-							)
+							$select
 						)
 					;
 	}

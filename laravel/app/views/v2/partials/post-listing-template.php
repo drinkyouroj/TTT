@@ -22,12 +22,18 @@
 		}
 	);
 	Handlebars.registerHelper('userImage', function(v1, v2, options) {
-			//v2 is site url
-			if(v1 && v1 != 0 && v1 != '0') {
-				return window.image_url + '/' + v1;
-			}else {
-				return window.site_url + 'images/profile/avatar-default.png';
-			}
+		//v2 is site url
+		if(v1 && v1 != 0 && v1 != '0') {
+			return window.image_url + '/' + v1;
+		}else {
+			return window.site_url + 'images/profile/avatar-default.png';
+		}
+	});
+	Handlebars.registerHelper('isViews', function ( views, options ) {
+	  	if ( views > 0 )
+	  		return options.fn(this);
+	  	else
+	  		return options.inverse(this);
 	});
 </script>
 <script type="text/x-handlebars-template" id="post-item-template">	
@@ -38,8 +44,6 @@
 				<img class="post-author-avatar" src="{{#userImage post.user.image }}{{/userImage}}">
 			</a>
 			{{post.story_type}} by <a href="{{ site_url }}profile/{{ post.user.username }}"> {{ post.user.username }} </a>
-
-			
 		</div>
 
 		{{#ifCond feed_type 'repost' }}
@@ -88,6 +92,14 @@
 						Remove Repost
 					</a>
 				</div>
+			{{else}}
+				{{#ifCond post.user.id user_id }}
+					{{#isViews post.views }}
+						<div class="views">
+							<span>Viewed: {{post.views}}</span>
+						</div>
+					{{/isViews}}
+				{{/ifCond}}
 			{{/ifCond}}
 		{{/ifCond}}
 		{{#ifCond post_type 'repost' }}

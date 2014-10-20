@@ -97,13 +97,14 @@ class PostController extends BaseController {
 			}
 			
 			//Add the fact that the post has been viewed if you're not the owner and you're logged in.
-			if( $user_id != $my_id && Auth::check() ) {
-				$exists = $this->postview->exists($my_id, $post->id);
+			if( $user_id != $my_id ) {
+				$session_id = Session::get('current_session');//set in filters
+				$exists = $this->postview->exists($session_id, $post->id);
 
 				//If the record doesn't exist, increment on the post view count and also add to the "viewed" in PostView
 				if( !$exists ) {
 					$view = array(
-						'user_id' => $my_id,
+						'session_id' => $session_id,
 						'post_id' => $post->id
 						);
 					$this->postview->create($view);

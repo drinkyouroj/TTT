@@ -38,6 +38,11 @@ App::before(function($request)
 		AnalyticsLogic::createSessionEngagement( 'navigate', Request::path() );
 	}
 
+	//This is meant for tracking sessions since the sessionId from laravel changes everytime.
+	if (!Session::has('current_session')) {
+		Session::put('current_session', str_random(40));
+	}
+
 	$contents = File::get(base_path().'/gitversion');
 	$version =str_replace("\n", "", $contents);//gotta get rid of the returns.
 	View::share('version', $version);

@@ -58,7 +58,7 @@
 @stop
 
 @section('content')
-
+	
 	<?php
 		$save_tooltip = 'Save this to your profile';
 		$save_term_active = 'Saved';

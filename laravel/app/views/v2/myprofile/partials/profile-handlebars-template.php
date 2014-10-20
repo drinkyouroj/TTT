@@ -356,7 +356,17 @@
 			</p>
 			<div class="read-more">
 				<a href="{{site_url}}posts/{{post.alias}}">Read More</a>
+				{{post.view}}
 			</div>
+			{{#ifCond myprofile true }}
+				{{#ifCond post.user.id user_id }}
+					{{#isViews post.views }}
+						<div class="views">
+							<span>Viewed: {{post.views}}</span>
+						</div>
+					{{/isViews}}
+				{{/ifCond}}
+			{{/ifCond}}
 		</div>
 
 		<a  href="{{site_url}}posts/{{post.alias}}"

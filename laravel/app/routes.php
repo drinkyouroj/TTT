@@ -99,7 +99,7 @@ Route::group(array('before' => 'auth'), function() {
 Route::group( array('prefix'=>'myprofile', 'before' => array('auth', 'force_ssl') ), function() {
 	Route::get( 'editpost/{id}', 'PostController@getPostForm');
 	Route::get( 'newpost', 'PostController@getPostForm');
-	Route::get('/{alias}', 'MyProfileController@getPublicProfile');
+	//Route::get('/{alias}', 'MyProfileController@getPublicProfile');
 
 	Route::get('/', 'MyProfileController@getMyProfile' );
 });
