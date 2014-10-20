@@ -1,4 +1,13 @@
 <?php
+
+#define('APP_HOST', 'http://janus00-483730696.us-west-2.elb.amazonaws.com'); #push all through load balancer
+define('APP_HOST', 'http://staging-web.twothousandtimes.com'); #push all through load balancer
+#define('APP_HOST', ''); #relative
+#define('APP_HOST', 'http://54.68.96.139'); #my External IP -- means direct traffic to box, not through LB. also cross-origin problem, and specific config per box required.
+$file_path = base_path().'/gitversion';
+$version = str_replace("\n", "", fread(fopen($file_path, "r"), filesize($file_path)) );
+define('GIT_VER', $version);
+
 return array(
 
 	/*
@@ -13,6 +22,9 @@ return array(
 	*/
 
 	'debug' => true,
+	'stack' => false,//errors automatically redirects to a specified location.
+	'email_send' => true,
+	'enable_ssl' => true,//enables SSL force on the user and myprofile routes.
 
 	/*
 	|--------------------------------------------------------------------------
@@ -24,9 +36,12 @@ return array(
 	| your application so that it is used when running Artisan tasks.
 	|
 	*/
-
-	'url' => 'http://staging.2000tim.es',
-	'imageurl' => 'http://staging.2000tim.es/uploads/final_images',
+	
+	'url' => APP_HOST, #constant defined at top
+	'secureurl' => 'https://staging-web.twothousandtimes.com',
+	'imageurl' => 'http://staging-web.twothousandtimes.com/uploads/final_images',
+	'staticurl' => '//static.twothousandtimes.com/'.GIT_VER,//not the prettiest, but it sure works.
+	'cdn_upload' => false,//set to true if you want your images to go to S3.
 	/*
 	|--------------------------------------------------------------------------
 	| Application Timezone
@@ -39,6 +54,9 @@ return array(
 	*/
 
 	'timezone' => 'America/Los_Angeles',
+
+	/*Encryption*/
+	'cipher' => MCRYPT_RIJNDAEL_256,//Needed for upgrade to Laravel 4.2
 
 	/*
 	|--------------------------------------------------------------------------
@@ -68,85 +86,6 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
-	| Autoloaded Service Providers
-	|--------------------------------------------------------------------------
-	|
-	| The service providers listed here will be automatically loaded on the
-	| request to your application. Feel free to add your own services to
-	| this array to grant expanded functionality to your applications.
-	|
-	*/
-
-	'providers' => array(
-		/*
-		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
-		'Illuminate\Auth\AuthServiceProvider',
-		'Illuminate\Cache\CacheServiceProvider',
-		'Illuminate\Foundation\Providers\CommandCreatorServiceProvider',
-		'Illuminate\Session\CommandsServiceProvider',
-		'Illuminate\Foundation\Providers\ComposerServiceProvider',
-		'Illuminate\Routing\ControllerServiceProvider',
-		'Illuminate\Cookie\CookieServiceProvider',
-		'Illuminate\Database\DatabaseServiceProvider',
-		'Illuminate\Encryption\EncryptionServiceProvider',
-		'Illuminate\Filesystem\FilesystemServiceProvider',
-		'Illuminate\Hashing\HashServiceProvider',
-		'Illuminate\Html\HtmlServiceProvider',
-		'Illuminate\Foundation\Providers\KeyGeneratorServiceProvider',
-		'Illuminate\Log\LogServiceProvider',
-		'Illuminate\Mail\MailServiceProvider',
-		'Illuminate\Foundation\Providers\MaintenanceServiceProvider',
-		'Illuminate\Database\MigrationServiceProvider',
-		'Illuminate\Foundation\Providers\OptimizeServiceProvider',
-		'Illuminate\Pagination\PaginationServiceProvider',
-		'Illuminate\Foundation\Providers\PublisherServiceProvider',
-		'Illuminate\Queue\QueueServiceProvider',
-		'Illuminate\Redis\RedisServiceProvider',
-		'Illuminate\Auth\Reminders\ReminderServiceProvider',
-		'Illuminate\Foundation\Providers\RouteListServiceProvider',
-		'Illuminate\Database\SeedServiceProvider',
-		'Illuminate\Foundation\Providers\ServerServiceProvider',
-		'Illuminate\Session\SessionServiceProvider',
-		'Illuminate\Foundation\Providers\TinkerServiceProvider',
-		'Illuminate\Translation\TranslationServiceProvider',
-		'Illuminate\Validation\ValidationServiceProvider',
-		'Illuminate\View\ViewServiceProvider',
-		'Illuminate\Workbench\WorkbenchServiceProvider',
-		*/
-		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
-		'Illuminate\Auth\AuthServiceProvider',
-		'Illuminate\Cache\CacheServiceProvider',
-		'Illuminate\Session\CommandsServiceProvider',
-		'Illuminate\Foundation\Providers\ConsoleSupportServiceProvider',
-		'Illuminate\Routing\ControllerServiceProvider',
-		'Illuminate\Cookie\CookieServiceProvider',
-		'Illuminate\Database\DatabaseServiceProvider',
-		'Illuminate\Encryption\EncryptionServiceProvider',
-		'Illuminate\Filesystem\FilesystemServiceProvider',
-		'Illuminate\Hashing\HashServiceProvider',
-		'Illuminate\Html\HtmlServiceProvider',
-		'Illuminate\Log\LogServiceProvider',
-		'Illuminate\Mail\MailServiceProvider',
-		'Illuminate\Database\MigrationServiceProvider',
-		'Illuminate\Pagination\PaginationServiceProvider',
-		'Illuminate\Queue\QueueServiceProvider',
-		'Illuminate\Redis\RedisServiceProvider',
-		'Illuminate\Remote\RemoteServiceProvider',
-		'Illuminate\Auth\Reminders\ReminderServiceProvider',
-		'Illuminate\Database\SeedServiceProvider',
-		'Illuminate\Session\SessionServiceProvider',
-		'Illuminate\Translation\TranslationServiceProvider',
-		'Illuminate\Validation\ValidationServiceProvider',
-		'Illuminate\View\ViewServiceProvider',
-		'Illuminate\Workbench\WorkbenchServiceProvider',
-		
-		'Zizaco\Entrust\EntrustServiceProvider',
-		'Way\Console\GuardLaravelServiceProvider',
-		'Way\Generators\GeneratorsServiceProvider'
-	),
-
-	/*
-	|--------------------------------------------------------------------------
 	| Service Provider Manifest
 	|--------------------------------------------------------------------------
 	|
@@ -161,7 +100,7 @@ return array(
 	/*
 	|--------------------------------------------------------------------------
 	| Class Aliases
-	|--------------------------------------------------------------------------
+	|-------------------------------------------------------------------------- 
 	|
 	| This array of class aliases will be registered when this application
 	| is started. However, feel free to register as many as you wish as
@@ -170,44 +109,7 @@ return array(
 	*/
 
 	'aliases' => array(
-		/*
-		'App'             => 'Illuminate\Support\Facades\App',
-		'Artisan'         => 'Illuminate\Support\Facades\Artisan',
-		'Auth'            => 'Illuminate\Support\Facades\Auth',
-		'Blade'           => 'Illuminate\Support\Facades\Blade',
-		'Cache'           => 'Illuminate\Support\Facades\Cache',
-		'ClassLoader'     => 'Illuminate\Support\ClassLoader',
-		'Config'          => 'Illuminate\Support\Facades\Config',
-		'Controller'      => 'Illuminate\Routing\Controllers\Controller',
-		'Cookie'          => 'Illuminate\Support\Facades\Cookie',
-		'Crypt'           => 'Illuminate\Support\Facades\Crypt',
-		'DB'              => 'Illuminate\Support\Facades\DB',
-		'Eloquent'        => 'Illuminate\Database\Eloquent\Model',
-		'Event'           => 'Illuminate\Support\Facades\Event',
-		'File'            => 'Illuminate\Support\Facades\File',
-		'Form'            => 'Illuminate\Support\Facades\Form',
-		'Hash'            => 'Illuminate\Support\Facades\Hash',
-		'HTML'            => 'Illuminate\Support\Facades\HTML',
-		'Input'           => 'Illuminate\Support\Facades\Input',
-		'Lang'            => 'Illuminate\Support\Facades\Lang',
-		'Log'             => 'Illuminate\Support\Facades\Log',
-		'Mail'            => 'Illuminate\Support\Facades\Mail',
-		'Paginator'       => 'Illuminate\Support\Facades\Paginator',
-		'Password'        => 'Illuminate\Support\Facades\Password',
-		'Queue'           => 'Illuminate\Support\Facades\Queue',
-		'Redirect'        => 'Illuminate\Support\Facades\Redirect',
-		'Redis'           => 'Illuminate\Support\Facades\Redis',
-		'Request'         => 'Illuminate\Support\Facades\Request',
-		'Response'        => 'Illuminate\Support\Facades\Response',
-		'Route'           => 'Illuminate\Support\Facades\Route',
-		'Schema'          => 'Illuminate\Support\Facades\Schema',
-		'Seeder'          => 'Illuminate\Database\Seeder',
-		'Session'         => 'Illuminate\Support\Facades\Session',
-		'Str'             => 'Illuminate\Support\Str',
-		'URL'             => 'Illuminate\Support\Facades\URL',
-		'Validator'       => 'Illuminate\Support\Facades\Validator',
-		'View'            => 'Illuminate\Support\Facades\View',
-		*/
+		'Agent'            => 'Jenssegers\Agent\Facades\Agent',
 		'App'             => 'Illuminate\Support\Facades\App',
 		'Artisan'         => 'Illuminate\Support\Facades\Artisan',
 		'Auth'            => 'Illuminate\Support\Facades\Auth',
@@ -246,6 +148,15 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Entrust'    => 'Zizaco\Entrust\EntrustFacade',
+		'Image' => 'Intervention\Image\Facades\Image',
+		
+		//Note, below: Original Eloquent has been overridden by Jessenger's Eloquent.
+		//This allows us to relate Mongo Data to MySQL data through the ORM.
+		'Moloquent'       => 'Jenssegers\Mongodb\Model',
+		'Eloquent' 		=> 'Jenssegers\Eloquent\Model',
+
+		'Captcha' => 'Mews\Captcha\Facades\Captcha',
+		'OpenCloud' => 'Thomaswelton\LaravelRackspaceOpencloud\Facades\OpenCloud',
 	),
 
 );
