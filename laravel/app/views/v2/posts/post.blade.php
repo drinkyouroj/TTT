@@ -89,6 +89,12 @@
 						<div class=" hidden hidden-sm hidden-xs utility-container">
 						</div>
 
+						@if($is_author)
+							<div class="view-count-container">
+								{{$post->views}}
+							</div>
+						@endif
+
 						<div class=" actions-container">
 							<ul class="actions {{ $is_author ? 'author' : 'reader' }}">
 								<li class="like">
