@@ -152,6 +152,15 @@ class PostController extends BaseController {
 						->with('is_editable', $this->post->checkEditable($post->published_at))
 						;
 
+			//If this is the user who owns the post (OP)
+			if($post->user->id == $my_id) {
+				/*
+				$view->with('likes', $likes)
+					->with('reposts', $reposts)
+					;
+				*/
+			}
+
 			// If we need to populate the comment form ( after user signup )
 			if ( Session::has( 'restore_comment' ) ) {
 				$restore_comment = Session::get( 'restore_comment' );

@@ -101,6 +101,19 @@
 									<a data-action="like" class="like-button {{ $liked ? 'active' : '' }}" href="#" title="{{ $like_tooltip }}" data-toggle="tooltip" data-placement="bottom">
 										<span class="{{ $liked ? 'hidden' : '' }}"> <span class="action-counts"> {{ $liked ? $post->likes->count() - 1 : $post->likes->count() }} </span> </span>
 										<span class="{{ $liked ? '' : 'hidden' }}"> <span class="action-counts"> {{ $liked ? $post->likes->count() : $post->likes->count() + 1 }} </span> </span>
+
+										@if($is_author)
+											<ul class="liker-list">
+												@foreach($post->likes as $like)
+													<li>
+														<a href="{{URL::to('profile/'.$like->user->username)}}">
+															{{$like->user->username}}
+														<a/>
+													</li>
+												@endforeach
+											</ul>
+										@endif
+
 									</a>
 								</li>
 
@@ -108,6 +121,19 @@
 									<a data-action="repost" class="repost-button {{ $reposted ? 'active' : '' }}" href="#" title="{{ $repost_tooltip }}" data-toggle="tooltip" data-placement="bottom">
 										<span class="{{ $reposted ? 'hidden' : '' }}"> <span class="action-counts"> {{ $reposted ? $post->reposts->count() - 1 : $post->reposts->count() }} </span> </span>
 										<span class="{{ $reposted ? '' : 'hidden' }}"> <span class="action-counts"> {{ $reposted ? $post->reposts->count() : $post->reposts->count() + 1 }} </span> </span>
+
+										@if($is_author)
+											<ul class="reposter-list">
+												@foreach($post->reposts as $repost)
+													<li>
+														<a href="{{URL::to('profile/'.$repost->users->username)}}">
+															{{$repost->users->username}}
+														<a/>
+													</li>
+												@endforeach
+											</ul>
+										@endif
+
 									</a>
 								</li>
 
