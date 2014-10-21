@@ -1,6 +1,7 @@
 <?php
 
 define('DATASERVER_HOST', '172.31.46.241');
+define('MYSQL_HOST', 'mysql-test-1.cifsmbfx3f1t.us-west-2.rds.amazonaws.com');
 return array(
 
 	/*
@@ -55,11 +56,11 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => DATASERVER_HOST,
+			'host'      => MYSQL_HOST,
 			'port'      => 3306,
 			'database'  => 'twothousand',
 			'username'  => 'twothousand',
-			'password'  => 'TT99**',
+			'password'  => '8nrPT6WSgAT2sUR7',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

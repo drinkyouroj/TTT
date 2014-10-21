@@ -28,75 +28,125 @@
 <script type="text/x-handlebars-template" id="notifications-template">
 	<div class="notification-container col-md-12">
 		{{#ifCond notification.notification_type 'postview'}}
-			<a class="post" href="{{site_url}}posts/{{notification.post_alias}}">
-				<span class="notification-post-title">{{ notification.post_title }}</span> was viwed {{ notification.view_count}} times!
-			</a>
+			<div class="post-title">
+				<a href="{{site_url}}posts/{{notification.post_alias}}">
+					<span class="notification-post-title">{{ notification.post_title }}</span> was viwed {{ notification.view_count}} times!
+				</a>
+			</div>
 		{{/ifCond}}
 		{{#ifCond notification.notification_type 'follow'}}
-			<a class="follow" href="{{site_url}}profile/{{notification.user}}">
-				<span class="action-user">{{ notification.users.[0] }}</span> started following you
-			</a>
+			<div class="follow">
+				<a href="{{site_url}}profile/{{notification.users.[0] }}">
+					<span class="action-user">{{ notification.users.[0] }}</span>
+				</a>
+				started following you
+			</div>
 		{{/ifCond}}
 		{{#ifCond notification.notification_type 'post'}}
-			<a class="post" href="{{site_url}}posts/{{notification.post_alias}}">
-				<span class="action-user">{{ notification.users.[0] }}</span> submitted a new post
-				<span class="notification-post-title">{{ notification.post_title }}</span>
-			</a>
+			<div class="post">
+				<a href="{{site_url}}profile/{{notification.users.[0] }}">
+					<span class="action-user">{{ notification.users.[0] }}</span>
+				</a> 
+					submitted a new post
+				<a href="{{site_url}}posts/{{notification.post_alias}}">
+					<span class="notification-post-title">{{ notification.post_title }}</span>
+				</a>
+			</div>
 		{{/ifCond}}
 		{{#ifCond notification.notification_type 'comment'}}
-			<a class="comment" href="{{site_url}}posts/{{notification.post_alias}}#comment-{{notification.comment_id}}">
-				<span class="action-user">{{ notification.users.[0] }}</span> commented on your post 
-				<span class="notification-post-title">{{ notification.post_title }}</span>
-			</a>
+			<div class="comment">
+				<a href="{{site_url}}profile/{{notification.users.[0] }}">
+					<span class="action-user">{{ notification.users.[0] }}</span>
+				</a>
+				commented on your post 
+				<a href="{{site_url}}posts/{{notification.post_alias}}#comment-{{notification.comment_id}}">
+					<span class="notification-post-title">{{ notification.post_title }}</span>
+				</a>
+			</div>
 		{{/ifCond}}
 		{{#ifCond notification.notification_type 'reply'}}
-			<a class="reply" href="{{site_url}}posts/{{notification.post_alias}}#comment-{{notification.comment_id}}">
-				<span class="action-user">{{ notification.users.[0] }}</span> replied to your commment on 
-				<span class="notification-post-title">{{#substring notification.post_title 25}}{{/substring}}</span>
-			</a>
+			<div class="reply">
+				<a href="{{site_url}}profile/{{notification.users.[0] }}">
+					<span class="action-user">{{ notification.users.[0] }}</span> 
+				</a>
+					replied to your commment on 
+				<a href="{{site_url}}posts/{{notification.post_alias}}#comment-{{notification.comment_id}}">
+					<span class="notification-post-title">{{#substring notification.post_title 25}}{{/substring}}</span>
+				</a>
+			</div>
 		{{/ifCond}}
 		
 		{{#ifCond notification.notification_type 'repost'}}
-			<a class="repost" href="{{site_url}}posts/{{notification.post_alias}}">
+			<div class="repost">
 				{{#ifGt notification.users.length 1}}
-					<span class="action-user">{{#lastArr notification.users }}{{/lastArr}}</span> reposted your post <span class="notification-post-title">{{ notification.post_title }}</span> 
+					<a href="{{site_url}}profile/{{#lastArr notification.users }}{{/lastArr}}">
+						<span class="action-user">{{#lastArr notification.users }}{{/lastArr}}</span>
+					</a> 
+					reposted your post 
+					<a href="{{site_url}}posts/{{notification.post_alias}}">
+						<span class="notification-post-title">{{ notification.post_title }}</span> 
+					</a>
 					along with 
 					<span class="others">{{#folks notification.users }}{{/folks}} 
 						<ul>
 							{{#each notification.users}}
 								{{#ifGt @index 0}}
-									<li>{{this}}</li>
+								<li>
+									<a href="{{../site_url}}profile/{{this}}">
+										{{this}}
+									</a>
+								</li>
 								{{/ifGt}}
 							{{/each}}
 						</ul>
 					</span>
 				{{else}}
-					<span class="action-user">{{ notification.users.[0] }}</span> reposted your post 
+				<a href="{{site_url}}profile/{{notification.users.[0]}}">
+					<span class="action-user">{{ notification.users.[0] }}</span>
+				</a> 
+					reposted your post 
+				<a href="{{site_url}}posts/{{notification.post_alias}}">
 					<span class="notification-post-title">{{ notification.post_title }}</span>
+				</a>
 				{{/ifGt}}
-			</a>
+			</div>
 		{{/ifCond}}
 
 		{{#ifCond notification.notification_type 'like'}}
-			<a class="like" href="{{site_url}}posts/{{notification.post_alias}}">
+			<div class="like">
 				{{#ifGt notification.users.length 1}}
-					<span class="action-user">{{#lastArr notification.users }}{{/lastArr}}</span> liked your post <span class="notification-post-title">{{#substring notification.post_title 25}}{{/substring}}</span> 
+					<a href="{{site_url}}profile/{{#lastArr notification.users }}{{/lastArr}}">
+						<span class="action-user">{{#lastArr notification.users }}{{/lastArr}}</span> 
+					</a>
+					liked your post 
+					<a href="{{site_url}}posts/{{notification.post_alias}}">
+						<span class="notification-post-title">{{#substring notification.post_title 25}}{{/substring}}</span> 
+					</a>
 					along with 
 					<span class="others">{{#folks notification.users }}{{/folks}} 
 						<ul>
 							{{#each notification.users}}
 								{{#ifGt @index 0}}
-									<li>{{this}}</li>
+									<li>
+										<a href="{{../site_url}}profile/{{this}}">
+											{{this}}
+										</a>
+									</li>
 								{{/ifGt}}
 							{{/each}}
 						</ul>
 					</span>
 					
 				{{else}}
-					<span class="action-user">{{ notification.users.[0] }}</span> liked your post
-					<span class="notification-post-title">{{#substring notification.post_title 25}}{{/substring}}</span>
+					<a href="{{site_url}}profile/{{notification.users.[0]}}">
+						<span class="action-user">{{ notification.users.[0] }}</span> 
+					</a>
+						liked your post
+					<a href="{{site_url}}posts/{{notification.post_alias}}">
+						<span class="notification-post-title">{{#substring notification.post_title 25}}{{/substring}}</span>
+					</a>
 				{{/ifGt}}
-			</a>
+			</div>
 		{{/ifCond}}
 
 	</div>
