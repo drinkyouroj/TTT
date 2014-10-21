@@ -24,9 +24,9 @@ class PostLogic {
 	 * @return array $arrayOutput The output is the divided text. 
 	 */
 	public function divide_text($longString, $maxLineLength)
-	{		
-		$arrayWords = explode(' ', $longString);
-		
+	{
+		$sanitized = preg_replace("/<([a-z][a-z0-9]*)[^>]*?(\/?)>/i",'<$1$2>', $longString);
+		$arrayWords = explode(' ', $sanitized);		
 		// Auxiliar counters, foreach will use them
 		$currentLength = 0;
 		$index = 0;
