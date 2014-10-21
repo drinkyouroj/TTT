@@ -92,14 +92,6 @@
 						Remove Repost
 					</a>
 				</div>
-			{{else}}
-				{{#ifCond post.user.id user_id }}
-					{{#isViews post.views }}
-						<div class="views">
-							<span>Viewed: {{post.views}}</span>
-						</div>
-					{{/isViews}}
-				{{/ifCond}}
 			{{/ifCond}}
 		{{/ifCond}}
 		{{#ifCond post_type 'repost' }}
@@ -110,7 +102,17 @@
 			<div class="top-fade"> </div>
 				<div class="post-image" style="background-image:url('{{ image_url }}/{{ post.image }}')">
 
-					</div>
+				</div>
+			{{#ifCond myprofile true }}
+				{{#ifCond post.user.id user_id }}
+					{{#isViews post.views }}
+						<div class="views">
+							<img class="post-repost-image {{#ifCond myprofile true }}mine{{/ifCond}}" src="{{ site_url }}images/global/views-icon.png" width="15px" height="9px">
+							<span>{{post.views}}</span>
+						</div>
+					{{/isViews}}
+				{{/ifCond}}
+			{{/ifCond}}
 		</a>
 		<p class="post-title"> 
 			<a href="{{ site_url }}posts/{{ post.alias }}">

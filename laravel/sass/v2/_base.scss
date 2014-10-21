@@ -318,15 +318,6 @@ textarea {
         margin-top:-5px;
       }
   }
-  .like-button {
-    background-image:url('../../../../images/global/like.png');
-  }
-  .save-button {
-    background-image:url('../../../../images/global/save.png');
-  }
-  .repost-button {
-    background-image:url('../../../../images/global/repost.png');
-  }
 }
 //post actions with label next to icon (see comment and read) just add bg-image
 @mixin post_actions_label {
@@ -1218,7 +1209,7 @@ textarea {
             &::before {
               position: absolute;
               content: url("../../../../images/global/black-pointer.png");
-              top:-10px;
+              top:-14px;
             }
             li {
               font-size:12px;
