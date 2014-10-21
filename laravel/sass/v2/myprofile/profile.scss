@@ -295,6 +295,29 @@ a:focus {
 								top:30px;
 							}
 						}
+						.image-link {
+							position:relative;
+							.views {
+								position:absolute;
+								display:block;
+								bottom:0px;
+								right:0px;
+					            background: url('../../../../images/global/blue-60.png');
+								z-index:3;
+					            // Center the repost image when the repost count expands the container.
+					            margin:0px;
+					            padding: 0px 5px;
+					            text-align:right;
+					            img {
+					            	margin-right:1px;
+					            	margin-bottom:3px;
+					            }
+					            span {
+					            	@include montserrat;
+					            	color:$cream;
+					            }
+					          }
+				         }
 						.post-image {
 							position:relative;
 							width:100% !important;
@@ -412,6 +435,26 @@ a:focus {
 								margin-right:5%;
 								margin-bottom:5%;
 							}
+							.views {
+								position:absolute;
+								display:block;
+								bottom:0px;
+								right:0px;
+					            background: url('../../../../images/global/blue-60.png');
+								z-index:3;
+					            // Center the repost image when the repost count expands the container.
+					            margin:0px;
+					            padding: 0px 5px;
+					            text-align:right;
+					            img {
+					            	margin-right:1px;
+					            	margin-bottom:3px;
+					            }
+					            span {
+					            	@include montserrat;
+					            	color:$cream;
+					            }
+					          }
 						}
 						.read-more {
 							@include montserrat(bold);

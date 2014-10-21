@@ -362,20 +362,21 @@
 				<a href="{{site_url}}posts/{{post.alias}}">Read More</a>
 				{{post.view}}
 			</div>
-			{{#ifCond myprofile true }}
-				{{#ifCond post.user.id user_id }}
-					{{#isViews post.views }}
-						<div class="views">
-							<span>Viewed: {{post.views}}</span>
-						</div>
-					{{/isViews}}
-				{{/ifCond}}
-			{{/ifCond}}
 		</div>
 
 		<a  href="{{site_url}}posts/{{post.alias}}"
 				class="image feature-inner col-md-8 col-sm-8"
 				style="background-image: url('{{image_url}}/{{post.image}}');">
+				{{#ifCond myprofile true }}
+				{{#ifCond post.user.id user_id }}
+					{{#isViews post.views }}
+						<div class="views">
+							<img class="post-repost-image {{#ifCond myprofile true }}mine{{/ifCond}}" src="{{ site_url }}images/global/views-icon.png" width="15px" height="9px">
+							<span>{{post.views}}</span>
+						</div>
+					{{/isViews}}
+				{{/ifCond}}
+				{{/ifCond}}
 		</a>
 		{{#ifCond myprofile true }}
 			{{#ifCond post.user.id user_id }}
