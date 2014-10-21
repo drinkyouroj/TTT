@@ -33,6 +33,21 @@ class NotificationLogic {
 	{
 		
 	}
+
+	public function postview($post_id) {
+		$post = $this->post->findById($post_id);
+		
+		$not_params = array(
+				'post_id' => $post->id,
+				'post_title' => $post->title,
+				'post_alias' => $post->alias,
+				'user_id'	=> $post->user->id,
+				'notification_type' => 'postview',
+				'view_count' => $post->views
+			);
+
+		$this->not->create( $not_params ,NULL);
+	}
 	
 	public function like($post_id) {
 		$post = $this->post->findById($post_id);

@@ -17,7 +17,8 @@ class PostController extends BaseController {
 							FeedRepository $feed,
 							FeaturedRepository $featured,
 							SearchRepository $search,
-							PostFlaggedRepository $post_flagged ) {
+							PostFlaggedRepository $post_flagged,
+							EmailRepository $email ) {
 		$this->post = $post;
 		$this->repost = $repost;
 		$this->favorite = $favorite;
@@ -31,6 +32,7 @@ class PostController extends BaseController {
 		$this->featured = $featured;
 		$this->search = $search;
 		$this->post_flagged = $post_flagged;
+		$this->email = $email;
 	}
 
 	public function getIndex() {
@@ -108,7 +110,33 @@ class PostController extends BaseController {
 						'post_id' => $post->id
 						);
 					$this->postview->create($view);
-					$this->post->incrementView($post->id);//increment on this post.
+					$post_views = $this->post->incrementView($post->id);//increment on this post.
+					
+					$intervals = array(10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000);
+					if( in_array($post_views, $intervals) ) {
+						//Send the user a notification on the system.
+						NotificationLogic::postview($post->id);
+						if($post->user->email) {
+							$plain = View::make('v2/emails/post_view_notification_plain')
+											->with('user', $post->user)
+											->with('post', $post)
+											->render();
+
+							$html = View::make('v2/emails/post_view_notification_html')
+											->with('user', $post->user)
+											->with('post', $post)
+											->render();
+
+							$email_data = array(
+				                    'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
+				                    'to' => array($post->user->email),
+				                    'subject' => 'Your post has been viewed '.$post_views.' many times!',
+				                    'plaintext' => $plain,
+				                    'html'  => $html
+								);
+							$this->email->create($email_data);
+						}
+					}
 				}
 			}
 

@@ -9,6 +9,10 @@
 			</span>
 			followed you.
 		</a>
+	@elseif($not->notification_type == 'postview')
+		<a href="{{Config::get('app.url')}}/posts/{{$not->post_alias}}">
+			Your Post {{$not->post_title}} was viewed {{$not->view_count}} times!
+		</a>
 	@else
 
 		@if ( $not->notification_type == 'reply' || $not->notification_type == 'comment' )
@@ -56,7 +60,7 @@
 			@elseif($not->notification_type == 'comment')
 				commented on your post
 			@elseif($not->notification_type == 'reply')
-				replied to your comment on 
+				replied to your comment on 			
 			@endif
 
 			@if(isset($not->post_title))

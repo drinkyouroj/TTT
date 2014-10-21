@@ -27,7 +27,7 @@ class MoloquentNotificationRepository implements NotificationRepository {
 	public function create ( $data, $action_user ) {
 
 		//Always create a new notification on the below items.
-		$creates = array('follow','comment','reply');
+		$creates = array('follow','comment','reply','postview');
 		if( in_array($data['notification_type'], $creates ) ) {
 			$not = false;
 		} else {
@@ -47,15 +47,21 @@ class MoloquentNotificationRepository implements NotificationRepository {
 			$not->comment_id = (!empty($data['comment_id'])) ? $data['comment_id'] : 0 ;
 			// Update the noticed field ( may be used to update an existing notification )
 			$not->noticed = (!empty($data['noticed'])) ? $data['noticed'] : 0;
+			if($data['notification_type'] == 'postview') {
+				$not->view_count = $data['view_count'];
+			}
 			$not->save();
 		} else {
 			$not = $not->first();
 			$not->noticed = (!empty($data['noticed'])) ? $data['noticed'] : 0;
 			$not->update();
 		}
-		// Push the action_user to the notification object
-		self::pushUsers( $not, $action_user );
 
+		if($data['notification_type'] != 'postview' ) {
+			// Push the action_user to the notification object
+			self::pushUsers( $not, $action_user );
+		}
+		
 		return $not;
 	}
 

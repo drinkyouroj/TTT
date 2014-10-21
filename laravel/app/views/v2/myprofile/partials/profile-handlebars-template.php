@@ -27,7 +27,11 @@
 </script>
 <script type="text/x-handlebars-template" id="notifications-template">
 	<div class="notification-container col-md-12">
-	
+		{{#ifCond notification.notification_type 'postview'}}
+			<a class="post" href="{{site_url}}posts/{{notification.post_alias}}">
+				<span class="notification-post-title">{{ notification.post_title }}</span> was viwed {{ notification.view_count}} times!
+			</a>
+		{{/ifCond}}
 		{{#ifCond notification.notification_type 'follow'}}
 			<a class="follow" href="{{site_url}}profile/{{notification.user}}">
 				<span class="action-user">{{ notification.users.[0] }}</span> started following you
