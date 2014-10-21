@@ -117,24 +117,7 @@ class PostController extends BaseController {
 						//Send the user a notification on the system.
 						NotificationLogic::postview($post->id);
 						if($post->user->email) {
-							$plain = View::make('v2/emails/post_view_notification_plain')
-											->with('user', $post->user)
-											->with('post', $post)
-											->render();
-
-							$html = View::make('v2/emails/post_view_notification_html')
-											->with('user', $post->user)
-											->with('post', $post)
-											->render();
-
-							$email_data = array(
-				                    'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
-				                    'to' => array($post->user->email),
-				                    'subject' => 'Your post has been viewed '.$post_views.' many times!',
-				                    'plaintext' => $plain,
-				                    'html'  => $html
-								);
-							$this->email->create($email_data);
+							EmailLogic::post_view($post, $post_views);
 						}
 					}
 				}

@@ -129,6 +129,7 @@ return array(
 		'AppLogic\PostLogic\PostLogicServiceProvider',
 		'AppLogic\CommentLogic\CommentLogicServiceProvider',
 		'AppLogic\AnalyticsLogic\AnalyticsLogicServiceProvider',
+		'AppLogic\EmailLogic\EmailLogicServiceProvider',
 		
 		//Helpers provide non-core services to the system (Solr, Instaham filters)
 		'Helper\SolariumHelper\SolariumHelperServiceProvider',
