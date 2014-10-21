@@ -26,6 +26,23 @@
 			max-width:1200px;
 			margin:0px auto;
 		}
+		.view-count-container {
+        	width:auto;
+        	float:left;
+            margin:0px;
+            margin-top:3px;
+            padding: 5px 5px;
+            background: url('../../../../images/global/blue-60.png');
+			-webkit-border-radius: 5px; 
+			-moz-border-radius: 5px; 
+			border-radius: 5px; 
+            @include montserrat;
+            color:$cream;
+            img {
+            	margin-right:1px;
+            	margin-bottom:3px;
+            }
+      	}
 		.actions-container, .comment-container {
 			padding-top:3px;
 			@media (max-width:$break-sm) {
@@ -46,6 +63,22 @@
 					a.active {
 						color: $blue;
 					}
+					&.like {
+						&>a.like-button {
+			    			background-image:url('../../../../images/global/like.png');
+			   		 	}
+					}
+					&.repost {
+						&>a.repost-button {
+			     			background-image:url('../../../../images/global/repost.png');
+			    		}
+					}
+					&.save {
+						&>a.save-button {
+			     			background-image:url('../../../../images/global/save.png');
+			    		}
+					}
+			     
 				}
 				@media (max-width: $break-xs) {
 					padding-left:0px;
@@ -54,11 +87,49 @@
 			//actions when user's looking at their own post
 			ul.author {
 				li {
-					a {
-						cursor:default;
-						&:hover {
-        					background-position:left 0px;
-      					}
+					position:relative;
+					&.like {
+						&:hover ul.liker-list {
+			    			display:block;
+			   		 	}
+					}
+					&.repost {
+						&:hover ul.reposter-list {
+			    			display:block;
+			   		 	}
+					}
+					cursor:default;
+					&:hover {
+    					background-position:left 0px;
+  					}
+					ul.liker-list, ul.reposter-list {
+						display:none;
+						position:absolute;
+						left:0px;
+						margin:0;
+						background:url('../../../../images/global/black-80.png');
+						li {
+							margin:0;
+							padding-left:5px;
+							padding-right:5px;
+							&:first-child {
+								padding-top:5px;
+							}
+							&:last-child {
+								padding-bottom:5px;
+							}
+							a {
+								margin:0px;
+								padding:5px 10px;
+								@include montserrat;
+								font-size:12px;
+								color:$blue;
+								letter-spacing:1px;
+								&:hover {
+									color:$blue_dark;
+								}
+							}
+						}
 					}
 				}
 				@media (max-width: $break-xs) {

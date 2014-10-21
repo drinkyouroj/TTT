@@ -300,10 +300,13 @@ a:focus {
 							.views {
 								position:absolute;
 								display:block;
-								bottom:0px;
-								right:0px;
+								bottom:2px;
+								right:2px;
 					            background: url('../../../../images/global/blue-60.png');
 								z-index:3;
+								-webkit-border-radius: 5px; 
+								-moz-border-radius: 5px; 
+								border-radius: 5px; 
 					            // Center the repost image when the repost count expands the container.
 					            margin:0px;
 					            padding: 0px 5px;
@@ -438,14 +441,17 @@ a:focus {
 							.views {
 								position:absolute;
 								display:block;
-								bottom:0px;
-								right:0px;
+								bottom:2px;
+								right:2px;
 					            background: url('../../../../images/global/blue-60.png');
 								z-index:3;
 					            // Center the repost image when the repost count expands the container.
 					            margin:0px;
 					            padding: 0px 5px;
 					            text-align:right;
+					            -webkit-border-radius: 5px; 
+								-moz-border-radius: 5px; 
+								border-radius: 5px; 
 					            img {
 					            	margin-right:1px;
 					            	margin-bottom:3px;

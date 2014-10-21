@@ -371,7 +371,7 @@
 				{{#ifCond post.user.id user_id }}
 					{{#isViews post.views }}
 						<div class="views">
-							<img class="post-repost-image {{#ifCond myprofile true }}mine{{/ifCond}}" src="{{ site_url }}images/global/views-icon.png" width="15px" height="9px">
+							<img class="views-icon" src="{{ site_url }}images/global/views-icon.png" width="15px" height="9px">
 							<span>{{post.views}}</span>
 						</div>
 					{{/isViews}}
