@@ -403,7 +403,7 @@ function ProfileActions() {
 				break;
 
 			case 'settings':
-				this.url = base_url + this.page;
+				this.url = base_url;
 				this.renderSettings();
 				break;
 
@@ -547,7 +547,7 @@ function ProfileActions() {
 				user_id : window.user_id,
 				editable: editable,
 				myprofile: window.myprofile,
-							image_url: window.image_url
+				image_url: window.image_url
 			}
 			$('#collection-content',target).prepend( feature_item_template(view_data) );
 
@@ -822,21 +822,26 @@ function ProfileActions() {
 		} else {
 			user_image = '/images/profile/avatar-default.png';
 		}
-		
-		view_data = {
-			site_url: this.site_url,
-			user_image: user_image,
-			email: window.email,
-			image_url: window.image_url
-		};
-		$('#default-content', this.target).append(this.settings_template(view_data));
-		$('.loading-container img').fadeOut();
-		this.renderAvatarModal();
+		var parent = this;
 
-		$('body').on('click', '.avatar-modal', function(event) {
-			event.preventDefault();			
-			$('#photoModal').modal('show');
-		})
+		this.getData(this.url, function(data) {
+			view_data = {
+				site_url: window.site_url,
+				user_image: user_image,
+				email: window.email,
+				image_url: window.image_url,
+				emailpref: data.emailpref
+			};
+			$('#default-content', parent.target).append(parent.settings_template(view_data));
+			$('.loading-container img').fadeOut();
+			parent.renderAvatarModal();
+
+			$('body').on('click', '.avatar-modal', function(event) {
+				event.preventDefault();
+				$('#photoModal').modal('show');
+			});
+		});
+		
 	}
 
 		this.avatarUpload = function() {
