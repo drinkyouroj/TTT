@@ -4,6 +4,7 @@
 //Colors
 $blue: #32b1c6;
 $blue_dark:#2c9ca8;
+$blue_darker:#19767f;
 $red: #f74141;
 $dark_gray: #333;
 $gray: #ccc;
@@ -1141,9 +1142,9 @@ textarea {
 @mixin notifications_style {
   .notification-container {
 
-    a {
-      display:inline-block;
+    >div {
       width:100%;
+      display:inline-block;
       padding:25px 15px 25px 50px; 
       background:$white;
       border-bottom:solid 1px $lightgray;
@@ -1174,15 +1175,14 @@ textarea {
       }
       span {
         position:relative;
-        @include montserrat(bold);
-        color:$dark_gray;
         font-size:14px;
+        color:$blue;
+        @include montserrat;
+        &:hover {
+          color:$blue_darker;
+        }
         @media (max-width:$break-xs) {
           font-size:12px;
-        }
-        &.action-user {
-          color:$blue;
-          @include montserrat;
         }
         &.notification-post-title {
           text-transform:uppercase;
@@ -1191,10 +1191,17 @@ textarea {
           display:block; 
         }
         &.others {
-          text-decoration:underline;
+          display:inline-block;
+          cursor:pointer;
+          font-size:10px;
+          letter-spacing:1px;
+          color:$white;
+          background: $gray;
+          padding:3px 5px;
+          -webkit-border-radius: 2px; 
+          -moz-border-radius: 2px; 
+          border-radius: 2px; 
           @media (max-width:$break-xs) {
-            display:block;
-            clear:both;
             font-size:10px;
           }
           ul {
@@ -1202,24 +1209,34 @@ textarea {
             position:absolute;
             top:25px;
             list-style:none;
-            padding:10px 20px;
+            padding:10px 0;
             z-index:3;
             min-width:150px;
             background-image: url("../../../../images/global/black-80.png");
+           
             &::before {
               position: absolute;
               content: url("../../../../images/global/black-pointer.png");
-              top:-14px;
+              left:5px;
+              top:-10px;
             }
+
             li {
               font-size:12px;
-              color:#fff;
+              padding:5px 20px;
+              &:first-child a {
+                padding-top:30px;
+              }
+              a {
+                color:$blue;
+                letter-spacing:1px;
+                &:hover {
+                  color:$blue_darker;
+                }
+              }
             }
           }
         }
-      }
-      &:hover {
-        background-color:$white_hover;
       }
     }
   }
