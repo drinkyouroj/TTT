@@ -33,8 +33,14 @@
 		@endif
 	</script>
 
+	{{--Handlebars--}}
 	@include( 'v2/partials/post-listing-template' )
+	
+	{{--Profile Stuff--}}
 	@include( 'v2/myprofile/partials/profile-handlebars-template' )
+	@include( 'v2/myprofile/partials/notifications-handlebars-template' )
+	@include( 'v2/myprofile/partials/settings-handlebars-template' )
+
 	@include( 'v2/myprofile/partials/no-content-handlebars-template' )
 	@include( 'v2/partials/photo-input' )
 
