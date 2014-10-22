@@ -458,7 +458,19 @@ class MyProfileController extends BaseController {
 	}
 
 		public function postRestEmailPref() {
-			
+			$data = array();
+			$data['user_id'] = Auth::user()->id;
+			$data['views'] = Request::get('views',0);
+			$data['comment'] = Request::get('comment',0);
+			$data['reply'] = Request::get('reply',0);
+			$data['like'] = Request::get('like',0);
+			$data['repost'] = Request::get('repost',0);
+			$data['follow'] = Request::get('follow',0);
+			$this->emailpref->update($data);
+			return Response::json(
+					array('result' => $data ),
+					200
+				);
 		}
 
 	public function getRestComments($user_id = 0, $page = 1) {

@@ -200,6 +200,10 @@ $(function() {
 		profile.changePassword();
 	});
 
+	$('body').on('click', '#emailPref button',function() {
+		profile.emailPref();
+	});
+
 	//update email
 	$('body').on('submit', '#email-update-form', function(event) {
 		event.preventDefault();
@@ -825,6 +829,7 @@ function ProfileActions() {
 		var parent = this;
 
 		this.getData(this.url, function(data) {
+			console.log(data.emailpref);
 			view_data = {
 				site_url: window.site_url,
 				user_image: user_image,
@@ -875,6 +880,15 @@ function ProfileActions() {
 		        $errors.show();
 		    }
 		}
+
+	this.emailPref = function() {
+		$('form#emailPref').ajaxForm({
+			successs: function(xhr) {
+				console.log(xhr);
+
+			}
+		}).submit();
+	}
 
 	this.updateEmail = function( form ) {
 		// Fetch fields
