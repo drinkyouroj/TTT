@@ -27,6 +27,8 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 		Route::post( 'image/upload', 'MyProfileController@postAvatar');
 		Route::post( 'password', 'UserController@postNewpass'); //I know its not in myprofile!
 		Route::post( 'email/update', 'MyProfileController@postUpdateEmail');
+		Route::post( 'email/pref', 'MyProfileController@postRestEmailPref');
+		Route::get( 'settings', 'MyProfileController@getRestSettings');
 	});
 
 	//Profile Image for the Follower/Following buttons.

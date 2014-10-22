@@ -51,6 +51,7 @@ class JSONController extends BaseController {
 
 				NotificationLogic::like($post_id);
 				AnalyticsLogic::createSessionEngagement( 'like' );
+				EmailLogic::like($post_id, Auth::user());
 				
 				if($like->id) {
 					return Response::json(
@@ -167,6 +168,7 @@ class JSONController extends BaseController {
 				$this->follow->create($other_user_id, $my_user_id);
 				
 				NotificationLogic::follow($other_user_id);
+				EmailLogic::follow($other_user_id, $my_user_id);
 				AnalyticsLogic::createSessionEngagement( 'follow' );
 
 				return Response::json(
@@ -248,6 +250,7 @@ class JSONController extends BaseController {
 
 				// Notify the repost to owner
 				NotificationLogic::repost( $post_id );
+				EmailLogic::repost($post_id, Auth::user());
 				AnalyticsLogic::createSessionEngagement( 'repost' );
 
 				//This has to be outside 

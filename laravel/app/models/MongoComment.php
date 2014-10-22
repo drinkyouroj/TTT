@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 use Jenssegers\Mongodb\Model as Eloquent;
 
 class MongoComment extends Eloquent {
@@ -28,6 +27,10 @@ class MongoComment extends Eloquent {
 	 */
 	public function post() {
 		return $this->belongsTo('Post', 'post_id')->withTrashed()->select('id', 'title','user_id','alias');
+	}
+
+	public function user() {
+		return $this->belongsTo('User', 'author.user_id')->select('id', 'username', 'email');
 	}
 
 }

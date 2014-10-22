@@ -121,13 +121,20 @@ class CommentController extends BaseController {
 		} else {
 			// Proceed to increment comment count for the given post
 			$post = $this->post->findById( intval( $post_id ) );
-			if($post->user_id != $user->user_id) {
+			if($post->user_id != $user->id) {
 				//Should the comment counter be incremented if you're the owner? no!
 				$this->post->incrementComment( $post->id );
+				EmailLogic::comment($comment, $user);
 			}
+			
+			//This is a reply.
+			if($comment->depth > 0) {
+				EmailLogic::reply($comment, $user);
+			}
+
 			//Notification code for new comments
 			NotificationLogic::comment($post, $comment);
-			
+
 			$is_mod = $user->hasRole('Moderator');
 
 			return Response::json( array(

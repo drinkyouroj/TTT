@@ -50,6 +50,10 @@ class Post extends Eloquent {
 	public function user() {
 		return $this->belongsTo('User')->select('id','username','image');//maybe take out the id later.
 	}
+
+	public function useremail() {
+		return $this->belongsTo('User', 'user_id')->select('id','username','image','email');//maybe take out the id later.
+	}
 	
 	public function comments()
     {
