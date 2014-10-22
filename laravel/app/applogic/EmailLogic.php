@@ -14,9 +14,10 @@ class EmailLogic {
 		$this->comment = App::make('AppStorage\Comment\CommentRepository');
 		$this->email = App::make('AppStorage\Email\EmailRepository');
 		$this->emailpref = App::make('AppStorage\EmailPref\EmailPrefRepository');
+	}
 
+	private function getPref($user_id) {
 		//Below ensures that the email preference record exists.
-		$user_id = Auth::user()->id;
 		if($this->emailpref->exists($user_id, true)) {
 			$this->pref = $this->emailpref->find($user_id)->first();
 		} else {
@@ -26,21 +27,23 @@ class EmailLogic {
 		}
 	}
 
-	public function post_view($post_id, $post_view) {
-		if($this->pref->views) {
-			$post = $this->post->findById($post_id);
+	public function post_view($post, $post_view) {
+		self::getPref($post->user->id);
+		if($this->pref->views) {			
 			$plain = View::make('v2/emails/notifications/post_view_plain')
 							->with('post', $post)
+							->with('views',$post_view)
 							->render();
 
 			$html = View::make('v2/emails/notifications/post_view_html')
 							->with('post', $post)
+							->with('views',$post_view)
 							->render();
 
 			$email_data = array(
 	                'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
-	                'to' => array($post->user->email),
-	                'subject' => 'Your Broke '.$post_views.' views on Two Thousand Times!',
+	                'to' => array($post->useremail->email),
+	                'subject' => 'Your Broke '.$post_view.' views on Two Thousand Times!',
 	                'plaintext' => $plain,
 	                'html'  => $html
 				);
@@ -48,7 +51,9 @@ class EmailLogic {
 		}
 	}
 
-	public function like($post, $user) {
+	public function like($post_id, $user) {
+		$post = $this->post->findById($post_id);
+		self::getPref($post->user->id);
 		if($this->pref->like) {
 			$plain = View::make('v2/emails/notifications/like_plain')
 							->with('user', $user)
@@ -62,7 +67,7 @@ class EmailLogic {
 
 			$email_data = array(
 	                'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
-	                'to' => array($post->user->email),
+	                'to' => array($post->useremail->email),
 	                'subject' => 'A New Like on Two Thousand Times!',
 	                'plaintext' => $plain,
 	                'html'  => $html
@@ -71,7 +76,9 @@ class EmailLogic {
 		}
 	}
 
-	public function repost($post, $user) {
+	public function repost($post_id, $user) {
+		$post = $this->post->findById($post_id);
+		self::getPref($post->user->id);
 		if($this->pref->repost) {
 			$plain = View::make('v2/emails/notifications/repost_plain')
 							->with('user', $user)
@@ -85,7 +92,7 @@ class EmailLogic {
 
 			$email_data = array(
 	                'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
-	                'to' => array($post->user->email),
+	                'to' => array($post->useremail->email),
 	                'subject' => 'A New Like on Two Thousand Times!',
 	                'plaintext' => $plain,
 	                'html'  => $html
@@ -95,6 +102,7 @@ class EmailLogic {
 	}
 
 	public function follow($user_id, $follower_id) {
+		self::getPref($user_id);
 		if($this->pref->follow) {
 			$user = $this->user->find($user_id);
 			$follower = $this->user->find($follower_id);
@@ -121,7 +129,7 @@ class EmailLogic {
 	}
 
 	public function comment($comment, $user) {
-		
+		self::getPref($comment->post->user->id);
 		if($this->pref->comment) {
 			$plain = View::make('v2/emails/notifications/comment_plain')
 						->with('comment',$comment)
@@ -145,8 +153,9 @@ class EmailLogic {
 	}
 
 	public function reply($comment, $user) {
+		$parent = $this->comment->findById($comment->parent_comment);
+		self::getPref($parent->author['user_id']);
 		if($this->pref->reply) {
-			$parent = $this->comment->findById($comment->parent_comment);
 			$parent_user = $this->user->find($parent->author['user_id']);
 
 			$plain = View::make('v2/emails/notifications/reply_plain')
