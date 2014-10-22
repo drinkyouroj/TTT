@@ -397,6 +397,21 @@
 
 <script type="text/x-handlebars-template" id="feature-item-template">
 	<div class="feature-item" id="post-{{post.id}}">
+		<a  href="{{site_url}}posts/{{post.alias}}"
+				class="image feature-inner col-md-12 col-sm-12"
+				style="background-image: url('{{image_url}}/{{post.image}}');">
+				{{#ifCond myprofile true }}
+				{{#ifCond post.user.id user_id }}
+					{{#isViews post.views }}
+						<div class="views">
+							<img class="views-icon" src="{{ site_url }}images/global/views-icon.png" width="15px" height="9px">
+							<span>{{post.views}}</span>
+						</div>
+					{{/isViews}}
+				{{/ifCond}}
+				{{/ifCond}}
+		</a>
+		
 		<div class="text feature-inner col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
 			<h2>
 				<a href="{{site_url}}posts/{{post.alias}}">
@@ -413,21 +428,6 @@
 				{{post.view}}
 			</div>
 		</div>
-
-		<a  href="{{site_url}}posts/{{post.alias}}"
-				class="image feature-inner col-md-12 col-sm-12"
-				style="background-image: url('{{image_url}}/{{post.image}}');">
-				{{#ifCond myprofile true }}
-				{{#ifCond post.user.id user_id }}
-					{{#isViews post.views }}
-						<div class="views">
-							<img class="views-icon" src="{{ site_url }}images/global/views-icon.png" width="15px" height="9px">
-							<span>{{post.views}}</span>
-						</div>
-					{{/isViews}}
-				{{/ifCond}}
-				{{/ifCond}}
-		</a>
 
 		{{#ifCond myprofile true }}
 			{{#ifCond post.user.id user_id }}

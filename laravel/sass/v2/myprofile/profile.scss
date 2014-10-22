@@ -413,7 +413,7 @@ a:focus {
 							}
 							@media (max-width:$break-xs) {
 								position:relative;
-								bottom:auto;
+								bottom:inherit;
 							}
 							h2 {
 								@include title_listing;
