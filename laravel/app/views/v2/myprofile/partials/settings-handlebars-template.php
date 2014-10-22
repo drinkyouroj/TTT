@@ -1,4 +1,10 @@
-
+<script>
+	Handlebars.registerHelper('checkBox',function(v1,v2,options) {
+		if(v1) {
+			return 'checked="checked"';
+		}
+	});
+</script>
 <!--Settings Template-->
 <script type="text/x-handlebars-template" id="settings-template">
 	<div class="col-md-4 avatar">
@@ -77,6 +83,36 @@
 		<p class="email-update-error hidden">
 		</p>
 	</div>
+
+	{{#ifCond email 1}}
+	<div class="col-md-6 email-pref">
+		<h2>Email Preferences</h2>
+		<p>What would you like to receive notifications for?</p>
+		<form role="form" class="form-horizontal" id="emailPref" method="post" action="{{this.site_url}}rest/profile/email/pref">
+			<ul>
+				<li>
+					Views: <input type="checkbox" name="views" {{#checkBox emailpref.views}}{{/checkBox}}>
+				</li>
+				<li>
+					Comments: <input type="checkbox" name="comment" {{#checkBox emailpref.comment}}{{/checkBox}}>
+				</li>
+				<li>
+					Reply: <input type="checkbox" name="reply" {{#checkBox emailpref.reply}}{{/checkBox}}>
+				</li>
+				<li>
+					Like: <input type="checkbox" name="like" {{#checkBox emailpref.like}}{{/checkBox}}>
+				</li>
+				<li>
+					Follow: <input type="checkbox" name="follow" {{#checkBox emailpref.follow}}{{/checkBox}}>
+				</li>
+				<li>
+					Repost: <input type="checkbox" name="repost" {{#checkBox emailpref.repost}}{{/checkBox}}>
+				</li>
+			</ul>
+			<button class="btn btn-default btn-flat-dark-gray">Change Preferences</button>
+		</form>
+	</div>
+	{{/ifCond}}
 
 	<div class="col-md-12 del-acc">
 		<h2>Deactivate Your Account</h2>

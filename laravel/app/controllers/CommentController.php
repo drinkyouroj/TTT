@@ -124,11 +124,11 @@ class CommentController extends BaseController {
 			if($post->user_id != $user->id) {
 				//Should the comment counter be incremented if you're the owner? no!
 				$this->post->incrementComment( $post->id );
-				EmailLogic::comment($comment, $user);
+				EmailLogic::comment($comment, $user);				
 			}
-			
+
 			//This is a reply.
-			if($comment->depth > 0) {
+			if($comment->depth > 0 && $comment->author['user_id'] != $user->id) {
 				EmailLogic::reply($comment, $user);
 			}
 

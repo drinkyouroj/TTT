@@ -46,12 +46,12 @@ class MongoEmailPrefRepository implements EmailPrefRepository {
 	}
 
 		private function dataInit($data, $pref) {
-			$pref->views 	=	(!empty($data['views'])) ? $data['views'] : 1;
-			$pref->comment  =	(!empty($data['comment'])) ? $data['comment'] : 1;
-			$pref->reply 	=	(!empty($data['reply'])) ? $data['reply'] : 1;
-			$pref->follow 	= 	(!empty($data['follow'])) ? $data['follow'] : 1;
-			$pref->like 	=	(!empty($data['like'])) ? $data['like'] : 0;
-			$pref->repost 	=	(!empty($data['repost'])) ? $data['repost'] : 0;
+			$pref->views 	=	(!empty($data['views'])) ? strlen($data['views']) : 1;
+			$pref->comment  =	(!empty($data['comment'])) ? strlen($data['comment']) : 1;
+			$pref->reply 	=	(!empty($data['reply'])) ? strlen($data['reply']) : 1;
+			$pref->follow 	= 	(!empty($data['follow'])) ? strlen($data['follow']) : 1;
+			$pref->like 	=	(!empty($data['like'])) ? strlen($data['like']) : 0;
+			$pref->repost 	=	(!empty($data['repost'])) ? strlen($data['repost']) : 0;
 			return $pref;
 		}
 
