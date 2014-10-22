@@ -85,7 +85,7 @@
 	</div>
 
 	{{#ifCond email 1}}
-	<div class="col-md-6 email-pref">
+	<div class="col-md-12 email-pref">
 		<h2>Email Preferences</h2>
 		<p>What would you like to receive notifications for?</p>
 		<form role="form" class="form-horizontal" id="emailPref" method="post" action="{{this.site_url}}rest/profile/email/pref">
@@ -111,6 +111,7 @@
 			</ul>
 			<button class="btn btn-default btn-flat-dark-gray">Change Preferences</button>
 		</form>
+	<div class="clearfix"></div>
 	</div>
 	{{/ifCond}}
 

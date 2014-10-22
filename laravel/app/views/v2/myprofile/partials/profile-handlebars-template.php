@@ -63,8 +63,8 @@
 	<div class="col-md-12 default-container">
 		{{#ifCond view 'feed'}}
 			<div class="feed-controls generic-controls">
-				<a data-type="all" class="active">All</a> |
-				<a data-type="post">Post</a> |
+				<a data-type="all" class="active">All</a>
+				<a data-type="post">Post</a>
 				<a data-type="repost">Reposts</a>
 			</div>
 		{{/ifCond}}

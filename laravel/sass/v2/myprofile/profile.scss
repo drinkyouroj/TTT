@@ -69,6 +69,9 @@ a:focus {
 			}
 			.follow-container {
 				text-align: right;
+				@media (min-width:$break-md-min) {
+					padding-right:0px;
+				}
 				@media (max-width:$break-sm) {
 					padding-left:0px;
 				}
@@ -119,9 +122,6 @@ a:focus {
 						-webkit-border-radius: 5px; 
 						-moz-border-radius: 5px; 
 						border-radius: 5px; 
-						&:hover {
-							background:$dark_gray;
-						}
 						@media (max-width:$break-sm) {
 							padding:3px 3px 5px 3px;
 						}
@@ -222,15 +222,10 @@ a:focus {
 					width: 100%;
 				}
 				#collection-content {
-					margin-top:50px;
 					margin-left: auto;
   					margin-right: auto;
-  					background:white;
-  					@media (min-width:$break-lg-min) {
-	  					-moz-box-shadow:    0px 1px 2px 0px #ccc;
-						-webkit-box-shadow: 0px 1px 2px 0px #ccc;
-						box-shadow:         0px 1px 2px 0px #ccc;
-					}
+  					
+  					
   					
   					@media (max-width:$break-md) {
   						
@@ -294,56 +289,37 @@ a:focus {
 					}
 
 					.post-container {
+						width:49%;
+						margin-bottom:1%;
+						margin-left:0.5%;
+						margin-right:0.5%;
 						padding-bottom:10px;
+						background:$white;
+						-moz-box-shadow:    0px 1px 2px 0px #ccc;
+						-webkit-box-shadow: 0px 1px 2px 0px #ccc;
+						box-shadow:         0px 1px 2px 0px #ccc;
 						@media (min-width:$break-lg) {
 							height:410px;
 						}
-						@media (min-width:$break-lg-min) {
-							width:50%;
-							margin-left:0px;
-							margin-right:0px;
-						}
+						
 						@media (max-width:$break-lg) and (min-width:$break-lg-min) {
 							height:340px;
 						}
-						@media (max-width:$break-lg) and (min-width:$break-lg-min) {
-							margin-left:0px;
-							margin-right:0px;
-						}
+						
 						@media (max-width:$break-md) and (min-width:$break-md-min) {
-							width:345px;
 							height:350px;
 						}
 						@media (max-width:$break-sm) and (min-width:$break-sm-min) {
-							width:48%;
 							height:330px;
-						}
-						&:nth-child(even) {
-							@media (min-width:$break-lg-min) {
-								background:#f9f9f9;
-							}
-							@media (max-width:$break-sm) and (min-width:$break-sm-min) {
-								margin-right:2%;
-								margin-left:0px;
-							}
-						}
-						&:nth-child(odd) {
-							@media (min-width:$break-lg-min) {
-								background:$white;
-							}
-							@media (max-width:$break-sm) and (min-width:$break-sm-min) {
-								margin-left:2%;
-								margin-right:0px;
-							}
 						}
 						@media (max-width:$break-xs) {
 							width:100%;
 							height:auto;
 							margin-left:0%;
 							margin-right:0%;
-							margin-bottom:30px;
 						}
 						&.repost {
+							background:$dark_gray;
 							.post-repost-image {
 								position:absolute;
 								display:block;
@@ -358,15 +334,25 @@ a:focus {
 							.post-repost-image.mine {
 								top:30px;
 							}
+							.post-title {
+								a {
+									color:$lightgray;
+								}
+							}
+							.post-taglines {
+								li {
+									color:$lightgray;
+								}
+							}
 						}
 						.image-link {
 							position:relative;
 							.views {
 								position:absolute;
 								display:block;
-								bottom:2px;
-								right:2px;
-					            background: url('../../../../images/global/blue-60.png');
+								bottom:5px;
+								right:5px;
+					            background: $blue;
 								z-index:3;
 								-webkit-border-radius: 5px; 
 								-moz-border-radius: 5px; 
@@ -410,6 +396,10 @@ a:focus {
 								margin-left:15px;
 								margin-right:15px;
 							}
+							@media (max-width:$break-md-min) {
+								margin-left:15px;
+								margin-right:15px;
+							}
 							a {
 								@media (max-width:$break-lg) and (min-width:$break-lg-min)  {
 									font-size:16px;
@@ -430,19 +420,18 @@ a:focus {
 					}
 
 					.feature-item {
+						width:99%;
+						margin:0 0.5% 1% 0.5%;
 						position:relative;
 						display:block;
-						margin-bottom:50px;
 						position: relative;
 						-moz-box-shadow:    0px 1px 2px 0px #ccc;
   						-webkit-box-shadow: 0px 1px 2px 0px #ccc;
   						box-shadow:         0px 1px 2px 0px #ccc;
-						@media (min-width:$break-lg-min) {
-							margin-bottom:0px;
-						}
+						
 						@media (max-width:$break-sm) {
-							margin-left:0px;
-							margin-right:0px;
+							width:100%;
+							margin:0;
 						}
 						.text {
 							position:absolute;
@@ -516,10 +505,10 @@ a:focus {
 							.views {
 								position:absolute;
 								display:block;
-								bottom:2px;
-								right:2px;
-					            background: url('../../../../images/global/blue-60.png');
-								z-index:3;
+								bottom:5px;
+								right:5px;
+					            background: $blue;
+								z-index:5;
 					            // Center the repost image when the repost count expands the container.
 					            margin:0px;
 					            padding: 0px 5px;
@@ -555,9 +544,9 @@ a:focus {
 
 			.comment-container {
 				float: left;
-				width: 23%;
+				width: 22%;
 				margin-top:67px;
-				margin-left:1%;	
+				margin-left:2%;	
 
 				@media screen and (max-width:$break-md) {
 					display:none;
@@ -583,7 +572,7 @@ a:focus {
 					.comment-box {
 						position: relative;
 						padding: 13px 25px;
-						margin: 20px 0 5px 0;
+						margin: 12px 0 15px 0;
 						background:$white;
 						border-top:solid 1px $lightgray;
 
@@ -641,6 +630,11 @@ a:focus {
 			}
 
 			//Generic Controls
+			.feed-controls {
+				@media (min-width:$break-md-min) {
+					margin-left:-15px;
+				}
+			}
 			.generic-controls {
 				padding-top: 7px;
 				padding-bottom: 10px;
@@ -723,8 +717,11 @@ a:focus {
 						background-position:center center;
 					}
 					&.saves, &.drafts, &.notifications {
-						margin-top:20px;
+						margin-top:10px;
     					background:$white;
+						-moz-box-shadow:    0px 1px 2px 0px #ccc;
+						-webkit-box-shadow: 0px 1px 2px 0px #ccc;
+						box-shadow:         0px 1px 2px 0px #ccc;
     				}
 					&.saves {
 						.saves-box {
@@ -879,6 +876,7 @@ a:focus {
 					    }
 					}
 					&.settings {
+						margin-top:30px;
 						.avatar {
 							margin-top:20px;
 							text-align:center;
@@ -922,6 +920,40 @@ a:focus {
 						.change-password {
 							@media (max-width:$break-md) {
 								margin-bottom:30px;
+							}
+						}
+						.email-pref {
+							margin-top:50px;
+							h2 {
+								border-top:solid 1px $dark;
+								margin-top:0px;
+								padding-top:30px;
+							}
+							p {
+								font-size:16px;
+							}
+							ul {
+								width:100%;
+								display:inline-block;
+								float:left;
+								list-style:none;
+								margin-left:0px;
+								padding-left:0px;
+								li {
+									float:left;
+									margin-right:20px;
+									@include montserrat;
+									font-size:13px;
+									letter-spacing:1px;
+									input {
+										width:auto;
+										box-shadow:none !important;
+									}
+								}
+							}
+							button {
+								float:left;
+								margin-top:5px;
 							}
 						}
 						h2 {
@@ -968,25 +1000,34 @@ a:focus {
 					}
 				}
 				&.collection {
+					padding:10px 15px;
 					@media (max-width:$break-sm) {
 						padding-left:0px;
 						padding-right:0px;
 					}
+					p {
+						margin:0px;
+					}
 				}
 				&.feed {
+					background:$white;
 					margin-top:-20px;
+					padding-top:10px;
+					-moz-box-shadow:    0px 1px 2px 0px #ccc;
+					-webkit-box-shadow: 0px 1px 2px 0px #ccc;
+					box-shadow:         0px 1px 2px 0px #ccc;
 					@media (max-width:$break-md) {
 						margin-top:0px;
 					}
 				}
 				&.saves {
-					margin-top:20px;
+					margin-top:10px;
 				}
 				&.drafts {
-					margin-top:20px;
+					margin-top:10px;
 				}
 				&.notifications {
-					margin-top:20px;
+					margin-top:10px;
 				}
 			}
 		}
