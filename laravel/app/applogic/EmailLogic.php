@@ -15,15 +15,15 @@ class EmailLogic {
 		$this->email = App::make('AppStorage\Email\EmailRepository');
 		$this->emailpref = App::make('AppStorage\EmailPref\EmailPrefRepository');
 
-		//Below ensures that the record exists.
+		//Below ensures that the email preference record exists.
 		$user_id = Auth::user()->id;
 		if($this->emailpref->exists($user_id, true)) {
-			$this->pref = $this->emailpref->find($user_id);
+			$this->pref = $this->emailpref->find($user_id)->first();
 		} else {
 			$data = array();
 			$data['user_id'] = $user_id;
 			$this->pref = $this->emailpref->create($data);
-		}		
+		}
 	}
 
 	public function post_view($post_id, $post_view) {
@@ -121,6 +121,7 @@ class EmailLogic {
 	}
 
 	public function comment($comment, $user) {
+		
 		if($this->pref->comment) {
 			$plain = View::make('v2/emails/notifications/comment_plain')
 						->with('comment',$comment)
@@ -134,7 +135,7 @@ class EmailLogic {
 
 			$email_data = array(
 	            'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
-	            'to' => array($comment->post->user->email),
+	            'to' => array($comment->post->useremail->email),
 	            'subject' => 'A New Comment on Two Thousand Times!',
 	            'plaintext' => $plain,
 	            'html'  => $html

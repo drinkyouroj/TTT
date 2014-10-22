@@ -116,7 +116,7 @@ class PostController extends BaseController {
 					if( in_array($post_views, $intervals) ) {
 						//Send the user a notification on the system.
 						NotificationLogic::postview($post->id);
-						if($post->user->email) {
+						if($post->useremail->email) {
 							EmailLogic::post_view($post, $post_views);
 						}
 					}
