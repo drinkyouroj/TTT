@@ -29,7 +29,7 @@ class EmailLogic {
 
 	public function post_view($post, $post_view) {
 		self::getPref($post->user->id);
-		if($this->pref->views) {			
+		if($this->pref->views && isset($post->useremail->email) ) {			
 			$plain = View::make('v2/emails/notifications/post_view_plain')
 							->with('post', $post)
 							->with('views',$post_view)
@@ -54,7 +54,7 @@ class EmailLogic {
 	public function like($post_id, $user) {
 		$post = $this->post->findById($post_id);
 		self::getPref($post->user->id);
-		if($this->pref->like) {
+		if($this->pref->like && isset($post->useremail->email) ) {
 			$plain = View::make('v2/emails/notifications/like_plain')
 							->with('user', $user)
 							->with('post', $post)
@@ -79,7 +79,7 @@ class EmailLogic {
 	public function repost($post_id, $user) {
 		$post = $this->post->findById($post_id);
 		self::getPref($post->user->id);
-		if($this->pref->repost) {
+		if($this->pref->repost && isset($post->useremail->email) ) {
 			$plain = View::make('v2/emails/notifications/repost_plain')
 							->with('user', $user)
 							->with('post', $post)
@@ -103,8 +103,8 @@ class EmailLogic {
 
 	public function follow($user_id, $follower_id) {
 		self::getPref($user_id);
-		if($this->pref->follow) {
-			$user = $this->user->find($user_id);
+		$user = $this->user->find($user_id);
+		if($this->pref->follow && isset($user->email) ) {			
 			$follower = $this->user->find($follower_id);
 
 			$plain = View::make('v2/emails/notifications/follow_plain')
@@ -130,7 +130,7 @@ class EmailLogic {
 
 	public function comment($comment, $user) {
 		self::getPref($comment->post->user->id);
-		if($this->pref->comment) {
+		if($this->pref->comment && isset($comment->post->useremail->email) ) {
 			$plain = View::make('v2/emails/notifications/comment_plain')
 						->with('comment',$comment)
 						->with('user', $user)
@@ -155,7 +155,7 @@ class EmailLogic {
 	public function reply($comment, $user) {
 		$parent = $this->comment->findById($comment->parent_comment);
 		self::getPref($parent->author['user_id']);
-		if($this->pref->reply) {
+		if($this->pref->reply && isset($parent->user->email) ) {
 			$parent_user = $this->user->find($parent->author['user_id']);
 
 			$plain = View::make('v2/emails/notifications/reply_plain')

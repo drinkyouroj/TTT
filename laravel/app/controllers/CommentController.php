@@ -128,7 +128,7 @@ class CommentController extends BaseController {
 			}
 			
 			//This is a reply.
-			if($comment->depth > 0) {
+			if($comment->depth > 0 ) {
 				EmailLogic::reply($comment, $user);
 			}
 
