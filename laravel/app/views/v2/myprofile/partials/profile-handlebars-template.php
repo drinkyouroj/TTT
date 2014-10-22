@@ -152,14 +152,14 @@
 	</div>
 </script>
 
-<!--Note that this is the collection tempalte for holding the collection together-->
+<!--Note that this is the collection template for holding the collection together-->
 <!--Below is used for the front page.-->
 <script type="text/x-handlebars-template" id="collection-template">
 	<div class="collection-container">
 		<div class="collection-controls generic-controls">
 			<div class="col-md-12">
-				<a data-type="all" class="active">All</a> |
-				<a data-type="post">Post</a> |
+				<a data-type="all" class="active">All</a>
+				<a data-type="post">Post</a>
 				<a data-type="repost">Reposts</a>
 			</div>
 		</div>
@@ -168,7 +168,7 @@
 		
 		<div id="collection-content" class="clearfix">
 		</div>
-
+		
 		<div class="loading-container">
 			<img src="{{site_url}}images/posts/comment-loading.gif">
 		</div>
@@ -396,8 +396,8 @@
 
 
 <script type="text/x-handlebars-template" id="feature-item-template">
-	<div class="feature-item row" id="post-{{post.id}}">
-		<div class="text feature-inner col-md-4 col-sm-4">
+	<div class="feature-item" id="post-{{post.id}}">
+		<div class="text feature-inner col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
 			<h2>
 				<a href="{{site_url}}posts/{{post.alias}}">
 					{{post.title}}
@@ -415,7 +415,7 @@
 		</div>
 
 		<a  href="{{site_url}}posts/{{post.alias}}"
-				class="image feature-inner col-md-8 col-sm-8"
+				class="image feature-inner col-md-12 col-sm-12"
 				style="background-image: url('{{image_url}}/{{post.image}}');">
 				{{#ifCond myprofile true }}
 				{{#ifCond post.user.id user_id }}
@@ -428,6 +428,7 @@
 				{{/ifCond}}
 				{{/ifCond}}
 		</a>
+
 		{{#ifCond myprofile true }}
 			{{#ifCond post.user.id user_id }}
 				<div class="options-link"> </div>
@@ -447,5 +448,6 @@
 				</div>
 			{{/ifCond}}
 		{{/ifCond}}
+	<div class="clearfix"></div>
 	</div>
 </script>

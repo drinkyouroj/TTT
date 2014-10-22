@@ -1141,15 +1141,11 @@ textarea {
 
 @mixin notifications_style {
   .notification-container {
-
     >div {
       width:100%;
       display:inline-block;
       padding:25px 15px 25px 50px; 
-      background:$white;
       border-bottom:solid 1px $lightgray;
-      border-left:solid 1px $lightgray;
-      border-right:solid 1px $lightgray;
       color:$dark_gray;
       background-position:center left;
       background-repeat:no-repeat;

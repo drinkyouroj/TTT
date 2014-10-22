@@ -6,8 +6,10 @@ a:focus {
 
 //Profile Page headers.
 .profile-header-wrapper {
+	padding-top:20px;
+	background:$white;
+	border-bottom:solid 1px $lightgray;
 	.profile-header-container {
-		margin-top:20px;
 		.header-left {
 			h2 {
 				background-position: left center;
@@ -16,14 +18,15 @@ a:focus {
 				font-size:40px;
 				text-transform:none;
 				vertical-align: middle;
+				margin:0px;
 				@include word-break(break-all);
 				span.avatar-image {
 					display:inline-block;
 					vertical-align: middle;
-					width: 40px;
-					height: 40px;
+					width: 150px;
+					height: 150px;
 					cursor:pointer;
-					@include border-radius(20px);
+					@include border-radius(75px);
 					background-position: center center;
 					background-size: cover;
 					background-repeat: no-repeat;
@@ -32,9 +35,14 @@ a:focus {
 						display:block;
 						clear:both;
 						margin-bottom:3px;
+						width: 40px;
+						height: 40px;
+						cursor:pointer;
+						@include border-radius(20px);
 					}
 				}
 				a {	
+					margin-left:20px;
 					cursor:pointer;
 					&:hover {
 						color:$blue;
@@ -60,7 +68,7 @@ a:focus {
 					padding-left:0px;
 				}
 				.follow-btn-container {
-					margin-top:5px;
+					margin-top:30px;
 					.follow {
 						@media (min-width:$break-md-min) {
 							padding:8px 30px 8px 90px
@@ -89,11 +97,19 @@ a:focus {
 					&.followers, &.following {
 						text-transform: uppercase;
 						@include montserrat();
-						color:#000;
+						color:$white;
 						text-decoration: none;
+						padding:10px 10px 20px 10px;
+						background:$dark_cream;
+						-webkit-border-radius: 5px; 
+						-moz-border-radius: 5px; 
+						border-radius: 5px; 
+						&:hover {
+							background:$dark_gray;
+						}
 					}
 					&.followers {
-						margin-right: 10px;
+						
 					}
 					&.following {
 					}
@@ -126,6 +142,7 @@ a:focus {
 			}
 		}
 		.section-selectors {
+			margin-top:30px;
 			@media (max-width:$break-xs) {
 				border-top:solid 1px $gray;
 				padding-top:10px;
@@ -160,8 +177,7 @@ a:focus {
 		
 		.border {
 			.border-box {
-				border-bottom: 3px solid $dark;
-				padding-bottom: 7px;
+				
 			}
 		}
 	}
@@ -177,15 +193,26 @@ a:focus {
 			//Collection
 			.collection-container {
 				float: left;
-				width: 74%;
-				margin-right:2%;
+				width: 76%;
 				//Note to MAX, We will have to deal with the container widths when we do some mobile work.
 				@media (max-width:$break-md) {
 					width: 100%;
 				}
 				#collection-content {
+					background:$white;
+					margin-top:50px;
+					padding-top:30px;
 					margin-left: auto;
   					margin-right: auto;
+  					@media (min-width:$break-lg) {
+  						padding-left:21px;
+  					}
+  					@media (max-width:$break-lg) and (min-width:$break-lg-min) {
+  						padding-left:10px;
+  					}
+  					@media (max-width:$break-md) {
+  						background:transparent;
+  					}
   					@media (max-width:$break-sm) {
 						margin-left: 15px;
   						margin-right: 15px;
@@ -250,7 +277,7 @@ a:focus {
 							height:340px;
 						}
 						@media (min-width:$break-lg) {
-								margin-right:0px;
+							margin-right:0px;
 						}
 						@media (max-width:$break-md) and (min-width:$break-md-min) {
 							width:345px;
@@ -355,40 +382,44 @@ a:focus {
 					}
 
 					.feature-item {
-						margin-left:15px;
-						margin-right:15px;
-						margin-bottom:30px;
-						background:$white;
-						border:solid 1px $lightgray;
+						position:relative;
+						display:block;
+						margin-top:-30px;
+						margin-bottom:50px;
 						position: relative;
+						-moz-box-shadow:    0px 1px 2px 0px #ccc;
+  						-webkit-box-shadow: 0px 1px 2px 0px #ccc;
+  						box-shadow:         0px 1px 2px 0px #ccc;
 						@media (min-width:$break-lg) {
-							margin-right:32px;
+							margin-left:-21px;
 						}
 						@media (max-width:$break-sm) {
 							margin-left:0px;
 							margin-right:0px;
 						}
-						.text, .image {
-							height:350px; // featured post height
-							@media (max-width:$break-lg) and (min-width:$break-lg-min) {
-								height:310px;
-							}
-						}
 						.text {
-							background:$white;
+							position:absolute;
+							bottom:0px;
+							background: url('../../../../images/global/white-90.png');
+							padding:25px 50px;
+							z-index:3;
 							text-align:center;
-							padding:25px 20px 0 20px;
 							@media (max-width:$break-lg) and (min-width:$break-lg-min)  {
-								padding:10px 15px 0 15px;
+								padding:10px 15px;
 							}
 							@media (max-width:$break-sm) {
 								height:auto;
 								padding-bottom:30px;
 							}
+							@media (max-width:$break-xs) {
+								position:relative;
+								bottom:auto;
+							}
 							h2 {
 								@include title_listing;
 								font-size:20px;
 								line-height:21px;
+								margin-top:10px;
 								@media (max-width:$break-lg) {
 									font-size:17px;
 								}
@@ -413,6 +444,7 @@ a:focus {
 								}
 							}
 							p.excerpt {
+								display:none;
 								text-align:justify;
 								font-size:14px;
 								line-height:150%;
@@ -427,16 +459,15 @@ a:focus {
 						}
 						.image {
 							display:block;
+							height:0px;
+							padding-top:63%;
 							background-size:cover;
 							background-repeat:no-repeat;
 							background-position:center center;
 							@media (max-width:$break-sm) {
-								width: 90%;
+								width: 100%;
 								height:0px;
-								padding-top:56%;
-								margin-left:5%;
-								margin-right:5%;
-								margin-bottom:5%;
+								padding-top:63%;
 							}
 							.views {
 								position:absolute;
@@ -468,6 +499,7 @@ a:focus {
 							text-align:left;
 							font-size:10px;
 							letter-spacing:1px;
+							text-align:center;
 							@media (max-width:$break-sm) and (min-width:$break-sm-min)  {
 								text-align:center;
 							}
@@ -480,21 +512,25 @@ a:focus {
 			.comment-container {
 				float: left;
 				width: 24%;
+				margin-top:67px;
+				background:#f9f9f9;
+				border-top: 17px solid $dark;				
+
 				@media screen and (max-width:$break-md) {
 					display:none;
 				}
 				.comment-border {
-					border-top: 17px solid $dark;
-					margin-right: 14px;//gotta change this value on the break. somehow its a pixel off.
+					
 				}
 				#comment-content {
 					margin-right: 15px;
-					margin-bottom: 100px;
-					padding: 10px 0px 30px 18px;
-					border-left: 1px solid $dark_cream;
+					margin-left:5px;
+					margin-bottom: 50px;
+					padding: 10px 0px 30px 3px;
 					h3 {
-						margin: 0;
-						font-size: 14px;
+						margin: 10px 0px 30px 0px;
+						font-size: 18px;
+						text-align:center;
 						text-transform: uppercase;
 						@include montserrat(bold);
 						letter-spacing: 1px;
@@ -502,9 +538,18 @@ a:focus {
 					.comment-box {
 						position: relative;
 						padding: 13px 25px;
-						margin: 20px 0;
-						background:#fff;
-						border:solid 1px $lightgray;
+						margin: 20px 0 5px 0;
+						background:$white;
+						border-top:solid 1px $lightgray;
+
+						-moz-box-shadow:    0px 1px 2px 0px #ccc;
+  						-webkit-box-shadow: 0px 1px 2px 0px #ccc;
+  						box-shadow:         0px 1px 2px 0px #ccc;
+
+  						-webkit-border-radius: 5px; 
+						-moz-border-radius: 5px; 
+						border-radius: 5px; 
+
 						@include word-break(break-all);
 						span.date {
 							display:none;
@@ -527,6 +572,9 @@ a:focus {
 							}
 							.comment {
 								margin-bottom: 10px;
+								font-size:16px;
+								@include garamond-italic;
+								line-height:150%;
 								.readmore {
 									display:block;
 									margin-top: 5px;
@@ -552,16 +600,17 @@ a:focus {
 				padding-top: 7px;
 				padding-bottom: 10px;
 				margin-bottom: 23px;
-				color:$gray;
 				@include montserrat();
 				font-size: 14px;
 				letter-spacing:1px;
+				color:$darker_cream;
 				a {
-
+					text-align:left;
 					text-transform: lowercase;
 					text-decoration: none;
-					color:$gray;
+					color:$darker_cream;
 					cursor: pointer;
+					padding:10px 20px 10px 0;
 					&:hover {
 						color:$dark;
 					}
@@ -623,10 +672,14 @@ a:focus {
 						background-size:cover;
 						background-position:center center;
 					}
+					&.saves, &.drafts, &.notifications {
+						margin-top:20px;
+    					background:$white;
+    				}
 					&.saves {
 						.saves-box {
-							border-bottom:solid 1px $dark;
-							padding:5px 0;
+							border-bottom:solid 1px $lightgray;
+							padding:5px 15px;
 							.image {
 								display:block;
 								width:150px;
@@ -702,8 +755,8 @@ a:focus {
 
 					&.drafts {
 						.drafts-box {
-							border-bottom:solid 1px $dark;
-							padding:5px 0;
+							border-bottom:solid 1px $lightgray;
+							padding:5px 15px;
 							.date {
 								span {
 									@include montserrat;
