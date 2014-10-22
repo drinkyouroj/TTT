@@ -19,7 +19,7 @@ class EmailLogic {
 	private function getPref($user_id) {
 		//Below ensures that the email preference record exists.
 		if($this->emailpref->exists($user_id, true)) {
-			$this->pref = $this->emailpref->find($user_id)->first();
+			$this->pref = $this->emailpref->find($user_id);
 		} else {
 			$data = array();
 			$data['user_id'] = $user_id;
