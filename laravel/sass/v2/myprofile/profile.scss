@@ -7,13 +7,11 @@ a:focus {
 //Profile Page headers.
 .profile-header-wrapper {
 	padding-top:20px;
-	background:$white;
+	background:$dark;
 	border-bottom:solid 1px $lightgray;
 	.profile-header-container {
 		.header-left {
-			@media (min-width:$break-md-min) {
-				padding-left:0px;
-			}
+			
 			h2 {
 				background-position: left center;
 				background-repeat: no-repeat;
@@ -34,6 +32,11 @@ a:focus {
 					background-size: cover;
 					background-repeat: no-repeat;
 					@include word-break(break-all);
+
+					-moz-box-shadow:    0px 0px 2px 0px #333;
+					-webkit-box-shadow: 0px 0px 2px 0px #333;
+					box-shadow:         0px 0px 2px 0px #333;
+
 					@media (max-width:$break-sm) {
 						display:block;
 						clear:both;
@@ -69,9 +72,6 @@ a:focus {
 			}
 			.follow-container {
 				text-align: right;
-				@media (min-width:$break-md-min) {
-					padding-right:0px;
-				}
 				@media (max-width:$break-sm) {
 					padding-left:0px;
 				}
@@ -79,11 +79,8 @@ a:focus {
 					padding-right:0px;
 				}
 				.follow-btn-container {
-					margin-top:30px;
+					margin-top:5px;
 					padding-right:0px;
-					@media (max-width:$break-sm) {
-						margin-top:20px;
-					}
 					@media (max-width:$break-xs) {
 						margin-top:0px;
 					}
@@ -115,10 +112,10 @@ a:focus {
 					&.followers, &.following {
 						text-transform: uppercase;
 						@include montserrat();
-						color:$white;
+						color:$lightgray;
 						text-decoration: none;
 						padding:10px 5px 15px 5px;
-						background:$dark_cream;
+						background:#525252;
 						-webkit-border-radius: 5px; 
 						-moz-border-radius: 5px; 
 						border-radius: 5px; 
@@ -145,14 +142,20 @@ a:focus {
 			a#settings {
 				font-size: 10px;
 				background-image:url('../../../../images/global/settings.png');
+				background-color:#525252;
 				@media (max-width:$break-xs) {
-					width:30px;
-					height:20px;
+					width:40px;
+					height:30px;
 					border:0px;
 					padding:0px;
 					font-size:0px;
+					-webkit-border-radius: 5px; 
+					-moz-border-radius: 5px; 
+					border-radius: 5px; 
 				}
-				
+				&:hover {
+					color:$dark;
+				}
 				&:visited, &:focus {
 					text-decoration:none !important;
 					color:$dark;
@@ -161,36 +164,31 @@ a:focus {
 		}
 		.section-selectors {
 			margin-top:30px;
-			@media (min-width:$break-md-min) {
-				padding-left:0px;
-			}
-			@media (max-width:$break-xs) {
-				
-			}
+			
 			a {
 				display:block;
 				float:left;
 				margin-right: 20px;
 				@include montserrat(bold);
 				font-size: 14px;
-				color: $gray;
+				color: #888;
 				text-transform: uppercase;
 				text-decoration: none;
 				letter-spacing:1px;
 				padding:5px 0px;
 				@media (max-width:$break-sm) {
+					font-size: 11px;
 					margin-right: 15px;
 				}
 				@media (max-width:$break-xs) {
-					font-size: 11px;
 					letter-spacing:0px;
 				}
 				&:hover {
-					color:$dark;
+					color:$white;
 				}
 
 				&.active {
-					color:$dark;
+					color:$white;
 				}
 			}
 			@media (max-width:$break-sm) {
@@ -224,11 +222,8 @@ a:focus {
 				#collection-content {
 					margin-left: auto;
   					margin-right: auto;
-  					
-  					
-  					
-  					@media (max-width:$break-md) {
-  						
+  					@media (min-width:$break-md-min) {
+  						padding-left:7px;
   					}
   					@media (max-width:$break-sm) {
   						margin-top:10px;
@@ -289,37 +284,32 @@ a:focus {
 					}
 
 					.post-container {
-						width:49%;
-						margin-bottom:1%;
-						margin-left:0.5%;
-						margin-right:0.5%;
+						width:48%;
+						margin-bottom:0;
+						margin-left:1%;
+						margin-right:1%;
 						padding-bottom:10px;
-						background:$white;
-						-moz-box-shadow:    0px 1px 2px 0px #ccc;
-						-webkit-box-shadow: 0px 1px 2px 0px #ccc;
-						box-shadow:         0px 1px 2px 0px #ccc;
+						
+						
 						@media (min-width:$break-lg) {
 							height:410px;
 						}
 						
 						@media (max-width:$break-lg) and (min-width:$break-lg-min) {
-							height:340px;
+							height:330px;
 						}
 						
 						@media (max-width:$break-md) and (min-width:$break-md-min) {
 							height:350px;
 						}
-						@media (max-width:$break-sm) and (min-width:$break-sm-min) {
-							height:330px;
-						}
-						@media (max-width:$break-xs) {
+						@media (max-width:$break-sm) {
 							width:100%;
 							height:auto;
 							margin-left:0%;
 							margin-right:0%;
+							margin-bottom:10px;
 						}
 						&.repost {
-							background:$dark_gray;
 							.post-repost-image {
 								position:absolute;
 								display:block;
@@ -333,16 +323,6 @@ a:focus {
 							}
 							.post-repost-image.mine {
 								top:30px;
-							}
-							.post-title {
-								a {
-									color:$lightgray;
-								}
-							}
-							.post-taglines {
-								li {
-									color:$lightgray;
-								}
 							}
 						}
 						.image-link {
@@ -374,6 +354,10 @@ a:focus {
 						.post-image {
 							position:relative;
 							width:100% !important;
+
+							-moz-box-shadow:    0px 1px 2px 0px #ccc;
+							-webkit-box-shadow: 0px 1px 2px 0px #ccc;
+							box-shadow:         0px 1px 2px 0px #ccc;
 							@media (min-width:$break-lg) {
 								height:0px;
 								padding-top:63%;
@@ -396,15 +380,18 @@ a:focus {
 								margin-left:15px;
 								margin-right:15px;
 							}
+							@media (max-width:$break-lg) {
+								margin-top:10px;
+							}
 							@media (max-width:$break-md-min) {
 								margin-left:15px;
 								margin-right:15px;
 							}
 							a {
 								@media (max-width:$break-lg) and (min-width:$break-lg-min)  {
-									font-size:16px;
+									font-size:14px;
 								}
-								@media (max-width:$break-sm) and (min-width:$break-sm-min) {
+								@media (max-width:$break-sm) {
 									font-size:13px;
 								}
 							}
@@ -412,7 +399,7 @@ a:focus {
 						.post-taglines {
 							@include word-break(break-all);
 							li {
-								@media (max-width:$break-sm) and (min-width:$break-sm-min) {
+								@media (max-width:$break-sm) {
 									font-size:13px;
 								}
 							}
@@ -420,8 +407,8 @@ a:focus {
 					}
 
 					.feature-item {
-						width:99%;
-						margin:0 0.5% 1% 0.5%;
+						width:98%;
+						margin:0 1% 5% 1%;
 						position:relative;
 						display:block;
 						position: relative;
@@ -431,7 +418,8 @@ a:focus {
 						
 						@media (max-width:$break-sm) {
 							width:100%;
-							margin:0;
+							margin:0 0 10px 0;
+							
 						}
 						.text {
 							position:absolute;
@@ -444,12 +432,9 @@ a:focus {
 								padding:15px 15px;
 							}
 							@media (max-width:$break-sm) {
-								height:auto;
-								padding:20px 15px;
-							}
-							@media (max-width:$break-xs) {
 								position:relative;
 								bottom:auto;
+								padding:10px 10px;
 							}
 							h2 {
 								@include title_listing;
@@ -458,6 +443,9 @@ a:focus {
 								margin-top:0px;
 								@media (max-width:$break-lg) {
 									font-size:17px;
+								}
+								@media (max-width:$break-sm) {
+									margin-bottom:5px;
 								}
 								a {
 									color:$dark;
@@ -468,12 +456,15 @@ a:focus {
 								border-top:solid 1px $dark;
 								margin:0px auto;
 								padding:10px 0 0 0;
+								@media (max-width:$break-sm) {
+									padding:5px 0 0 0;
+								}
 							}
 							p.tagline {
 								@include tagline_listing;
 								font-size:15px;
 								@media (max-width:$break-lg) {
-									font-size:12px;
+									font-size:13px;
 								}
 							}
 							p.excerpt {
@@ -544,9 +535,9 @@ a:focus {
 
 			.comment-container {
 				float: left;
-				width: 22%;
-				margin-top:67px;
-				margin-left:2%;	
+				width: 23%;
+				margin-top:39px;
+				margin-left:1%;	
 
 				@media screen and (max-width:$break-md) {
 					display:none;
@@ -557,7 +548,7 @@ a:focus {
 				#comment-content {
 					margin-left:15px;
 					margin-bottom: 50px;
-					padding: 0px 0px 30px 0px;
+					padding: 0px 15px 30px 0px;
 					h3 {
 						margin: 0px 0px 5px 0px;
 						padding:10px 10px;
@@ -571,14 +562,9 @@ a:focus {
 					}
 					.comment-box {
 						position: relative;
-						padding: 13px 25px;
+						padding: 20px 25px 10px 25px;
 						margin: 12px 0 15px 0;
-						background:$white;
-						border-top:solid 1px $lightgray;
-
-						-moz-box-shadow:    0px 1px 2px 0px #ccc;
-  						-webkit-box-shadow: 0px 1px 2px 0px #ccc;
-  						box-shadow:         0px 1px 2px 0px #ccc;
+						background: $dark_cream;
 
   						-webkit-border-radius: 5px; 
 						-moz-border-radius: 5px; 
@@ -593,11 +579,11 @@ a:focus {
 						}
 						.inner-content {
 							.where {
-								color:$gray;
-								padding-bottom: 14px;
-								margin-bottom: 10px;
-								border-bottom: 1px solid $gray;
+								color:$cream;
+								margin-top: 15px;
 								font-size:10px;
+								letter-spacing: 1px;
+								line-height:130%;
 								a {
 									text-decoration: none;
 									color: $blue;
@@ -605,13 +591,17 @@ a:focus {
 								}
 							}
 							.comment {
-								margin-bottom: 10px;
-								font-size:16px;
+								font-size:18px;
 								@include garamond-italic;
 								line-height:150%;
+								color:$cream;
+								letter-spacing:1px;
+								@media (max-width:$break-lg) {
+									font-size:15px;
+								}
 								.readmore {
 									display:block;
-									margin-top: 5px;
+									margin-top: 0px;
 									color:$blue;
 									font-size: 10px;
 									text-transform: uppercase;
@@ -621,8 +611,8 @@ a:focus {
 						}
 						&::before {
 							position: absolute;
-							content: url(../../../../images/profile/profile-comment-arrow.png);
-							top: -13px;
+							content: url(../../../../images/global/beige-arrow.png);
+							top: -8px;
 							left:10px;
 						}
 					}
@@ -644,15 +634,13 @@ a:focus {
 				letter-spacing:1px;
 				color:$darker_cream;
 				&>.col-md-12 {
-					@media (min-width:$break-md-min) {
-						padding-left:0px;
-					}
+					
 				}
 				a {
 					text-align:left;
 					text-transform: lowercase;
 					text-decoration: none;
-					color:$gray;
+					color:#aaa;
 					cursor: pointer;
 					padding:10px 20px 10px 0;
 					&:hover {
@@ -678,6 +666,14 @@ a:focus {
 				#default-content {
 					&.feed {
 						@include post_listing(1);
+						.post-container {
+							@media (max-width:$break-sm) {
+								display:block;
+								float:inherit;
+								margin-left:auto;
+								margin-right:auto;
+							}
+						}
 						.post-repost-container {
 							position:absolute;
 							top:0px;
@@ -717,7 +713,6 @@ a:focus {
 						background-position:center center;
 					}
 					&.saves, &.drafts, &.notifications {
-						margin-top:10px;
     					background:$white;
 						-moz-box-shadow:    0px 1px 2px 0px #ccc;
 						-webkit-box-shadow: 0px 1px 2px 0px #ccc;

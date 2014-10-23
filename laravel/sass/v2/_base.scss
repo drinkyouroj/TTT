@@ -433,7 +433,7 @@ textarea {
     background-color: $off_cream;
     @media (max-width:$break-md) {
       background-color: $white;
-      padding-bottom:20px;  
+      padding-bottom:20px;
     }
 
     .post-heading-container {
@@ -586,6 +586,7 @@ textarea {
 
   .post-content-wrapper {
     background-color: $beige;
+    border-top:solid 1px $lightgray;
 
     .post-content-container {
       @media (max-width:$break-xs) {
@@ -593,14 +594,15 @@ textarea {
       }
 
       .post-content-page-wrapper {
+        margin-top:20px;
         padding-left: 0px !important;
         padding-right: 0px !important;
 
         .post-content-page {
           font-size:20px;
-          line-height:175%;
+          line-height:165%;
           text-align:justify;
-          padding: 50px 0 10px 0;
+          padding: 30px 0 10px 0;
           -moz-column-gap:40px; /* Firefox */
           -webkit-column-gap:40px; /* Safari and Chrome */
           column-gap:40px;
@@ -608,6 +610,10 @@ textarea {
           -webkit-column-count:2; /* Safari and Chrome */
           column-count:2;
           overflow: visible;
+
+          p {
+            margin-bottom:15px;
+          }
 
           &#one {
             &::first-letter {
@@ -1028,6 +1034,10 @@ textarea {
         background-size:cover;
         background-position:center center;
         background-repeat:no-repeat;
+
+        -moz-box-shadow:    0px 1px 2px 0px #ccc;
+        -webkit-box-shadow: 0px 1px 2px 0px #ccc;
+        box-shadow:         0px 1px 2px 0px #ccc;
       }
     }
 
