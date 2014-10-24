@@ -436,6 +436,18 @@
 				<li> Negative: {{$sentiment->negative}}</li>
 			</ul>
 		</p>
+		<hr>
+		{{-- Manipulate Post Views --}}
+		<div> Current view count: {{$post->views}}
+			<br>
+			Modify view count: 
+		</div>
+		<div class="input-group">
+			<input class="form-control" type="number" value="{{$post->views}}">
+			<span class="input-group-btn">
+		        <button class="btn btn-warning admin-update-view-count" type="button">Set</button>
+		    </span>
+		</div>
 	@endif
 	<hr>
 	{{-- Admin only access to featured controls --}}

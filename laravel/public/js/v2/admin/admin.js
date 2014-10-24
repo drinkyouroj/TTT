@@ -149,6 +149,12 @@ $(function() {
 
         });
     });
+    // Update view count for a given post
+    $('#offcanvas-admin-sidebar .admin-update-view-count').click( function() {
+        var input = $(this).closest('.input-group').find('input');
+        var new_count = input.val();
+        // TODO
+    });
 
     // ========================== ADMIN USER FUNCTIONALITIES ============================
     // User delete
