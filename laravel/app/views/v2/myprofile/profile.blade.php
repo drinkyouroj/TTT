@@ -332,7 +332,7 @@
 	@if ( $profile_user_is_admin )
 		<p>This user is an admin</p>
 	@else
-		<p class="user-name">{{$profile_user->username}}</p>
+		<p class="user-name">Current user: {{$profile_user->username}}</p>
 
 		<button class="mod-ban-user btn btn-xs btn-warning {{ $profile_user_banned ? 'hidden' : '' }}">Ban</button>
 		<button class="mod-unban-user btn btn-xs btn-default {{ $profile_user_banned ? '' : 'hidden' }}">Un-Ban</button>
@@ -346,7 +346,68 @@
 			<br>
 			<button class="admin-user-reset btn btn-xs btn-warning">Reset User Password</button>
 			<br>
+
+			<hr>
 			
+			<form role="form" class="form-horizontal" id="featureUser" method="post" action="{{ URL::to('admin/feature/user') }}">
+				Feature this user
+				<input type="hidden" name="user_id" value="{{$profile_user->id}}">
+				<textarea name="excerpt" value="" placeholder="Excerpt"></textarea>
+				<button class="btn btn-default btn-flat-dark-gray">Set Featured</button>
+			</form>
+
+			<hr>
+
+			{{-- Show the user's email preferences --}}
+			<p>{{$profile_user->username}}'s Email Preferences</p>
+			@if ( $email_prefs == false )
+				<p><span class="label label-danger">Email Preferences have not been set!</span></p>
+			@else
+				<p>Views:
+					@if( $email_prefs->views )
+						<span class="label label-success">Yes</span> 
+					@else
+						<span class="label label-danger">No</span> 
+					@endif
+				</p>
+				<p>Comments:
+					@if( $email_prefs->comment )
+						<span class="label label-success">Yes</span> 
+					@else
+						<span class="label label-danger">No</span> 
+					@endif
+				</p>
+				<p>Replies:
+					@if( $email_prefs->reply )
+						<span class="label label-success">Yes</span> 
+					@else
+						<span class="label label-danger">No</span> 
+					@endif
+				</p>
+				<p>Likes:
+					@if( $email_prefs->like )
+						<span class="label label-success">Yes</span> 
+					@else
+						<span class="label label-danger">No</span> 
+					@endif
+				</p>
+				<p>Follows:
+					@if( $email_prefs->follow )
+						<span class="label label-success">Yes</span> 
+					@else
+						<span class="label label-danger">No</span> 
+					@endif
+				</p>
+				<p>Reposts:
+					@if( $email_prefs->repost )
+						<span class="label label-success">Yes</span> 
+					@else
+						<span class="label label-danger">No</span> 
+					@endif
+				</p>
+			@endif
+			
+
 			@if ( count( $deleted_posts ) )
 				<hr>
 				<p>{{$profile_user->username}}'s Deleted Posts</p>
@@ -357,17 +418,8 @@
 						</li>
 					@endforeach
 				</ul>
-			@endif
-
-			<br/>
-			<hr>
-
-			<form role="form" class="form-horizontal" id="featureUser" method="post" action="{{ URL::to('admin/feature/user') }}">
-				Feature this user.
-				<input type="hidden" name="user_id" value="{{$profile_user->id}}">
-				<textarea name="excerpt" value="" placeholder="Excerpt"></textarea>
-				<button class="btn btn-default btn-flat-dark-gray">Change Featured User</button>
-			</form>
+			@endif			
+			
 
 		@endif
 	@endif

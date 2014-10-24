@@ -61,8 +61,9 @@ class MyProfileController extends BaseController {
 			}
 
 			if ( $user->hasRole('Admin') ) {
-				// If admin, attach deleted posts of the current user to admin sidebar
+				// If admin, attach deleted posts of the current user to admin sidebar, also email prefs
 				$deleted_posts = $this->post->allDeletedByUserId( $profile_user->id );
+				$email_prefs = $this->emailpref->find( $profile_user->id );
 			}
 
 		} else {
@@ -81,6 +82,7 @@ class MyProfileController extends BaseController {
 
 		
 		$deleted_posts = isset( $deleted_posts ) ? $deleted_posts : array();
+		$email_prefs = isset( $email_prefs ) ? $email_prefs : false;
 
 		//Follower/Following count
 		$follower_count = $this->follow->follower_count($profile_user->id);
@@ -97,6 +99,7 @@ class MyProfileController extends BaseController {
 					->with('following_count', $following_count)//Number of people this user is following
 					->with('follower_count', $follower_count)//Number of people following this user
 					->with('deleted_posts', $deleted_posts)
+					->with('email_prefs', $email_prefs)
 					//->with('featured', $featured)			//Featured Post
 					//->with('collection', $collection)		//Actual posts and reposts.
 					;
