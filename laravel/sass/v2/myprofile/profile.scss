@@ -330,7 +330,7 @@ a:focus {
 							position:relative;
 							.views {
 								position:absolute;
-								display:block;
+								display:none;//delete when ready
 								bottom:5px;
 								right:5px;
 					            background: $blue;
