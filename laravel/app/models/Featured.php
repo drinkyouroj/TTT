@@ -24,7 +24,8 @@ class Featured extends Eloquent {
 									'story_type',
 									'image',
 									'published_at',
-									'body'
+									'body',
+									'nsfw'
 								)
 							);
 	}

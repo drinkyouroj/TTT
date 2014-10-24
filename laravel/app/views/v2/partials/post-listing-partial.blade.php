@@ -31,9 +31,10 @@
 
 	<a class="image-link" href="{{ URL::to('posts/'.$post->alias) }}">
 		<div class="top-fade"> </div>
-			<div class="post-image" style="background-image:url('{{ Config::get('app.imageurl').'/'.$post->image }}')">
-
-			</div>
+		<div class="post-image" style="background-image:url('{{ Config::get('app.imageurl').'/'.$post->image }}')"> </div>
+		@if ( $post->nsfw )
+			<div class="nsfw"></div>
+		@endif
 	</a>
 
 	<p class="post-title"> 

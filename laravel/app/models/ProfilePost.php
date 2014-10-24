@@ -28,7 +28,8 @@ class ProfilePost extends Eloquent {
 						'story_type',
 						'image',
 						'published_at',
-						'views'
+						'views',
+						'nsfw'
 						);
 
 		//Let's make sure to add "view" count if the user is logged in.

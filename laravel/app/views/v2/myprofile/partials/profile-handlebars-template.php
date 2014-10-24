@@ -129,6 +129,11 @@
 				</div>
 			{{/ifCond}}
 		{{/ifCond}}
+
+		{{#ifCond post.nsfw 1}}
+			<div class="nsfw"></div>
+		{{/ifCond}}
+
 	<div class="clearfix"></div>
 	</div>
 </script>
