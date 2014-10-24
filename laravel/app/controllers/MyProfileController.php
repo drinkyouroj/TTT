@@ -11,7 +11,8 @@ class MyProfileController extends BaseController {
 							FollowRepository $follow,
 							CommentRepository $comment,
 							UserRepository $user,
-							EmailRepository $email ) {
+							EmailRepository $email,
+							EmailPrefRepository $emailpref ) {
 		$this->not = $not;
 		$this->feed = $feed;
 		$this->profilepost = $profilepost;
@@ -22,6 +23,7 @@ class MyProfileController extends BaseController {
 		$this->comment = $comment;
 		$this->user = $user;
 		$this->email = $email;
+		$this->emailpref = $emailpref;
 	}
 
 	protected $paginate = 12;
@@ -367,7 +369,7 @@ class MyProfileController extends BaseController {
 				return Response::json(
 					array( 'feed' => $feed->toArray() ),
 					200
-				);	
+				);
 			}
 		} else {
 			return Response::json(
@@ -437,6 +439,39 @@ class MyProfileController extends BaseController {
 			);
 		}
 	}
+
+	public function getRestSettings() {
+		$user_id = Auth::user()->id;
+		if($this->emailpref->exists($user_id, true)) {
+			$emailpref = $this->emailpref->exists($user_id);
+		} else {
+			//brand spanking new user.
+			$data = array();
+			$data['user_id'] = $user_id;
+			$emailpref = $this->emailpref->create($data);
+		}
+
+		return Response::json(
+				array('emailpref' => $emailpref->toArray() ),
+				200
+			);
+	}
+
+		public function postRestEmailPref() {
+			$data = array();
+			$data['user_id'] = Auth::user()->id;
+			$data['views'] = Request::get('views',0);
+			$data['comment'] = Request::get('comment',0);
+			$data['reply'] = Request::get('reply',0);
+			$data['like'] = Request::get('like',0);
+			$data['repost'] = Request::get('repost',0);
+			$data['follow'] = Request::get('follow',0);
+			$this->emailpref->update($data);
+			return Response::json(
+					array('result' => $data ),
+					200
+				);
+		}
 
 	public function getRestComments($user_id = 0, $page = 1) {
 		if(!$user_id) {

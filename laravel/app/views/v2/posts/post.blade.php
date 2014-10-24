@@ -244,6 +244,9 @@
 				</div>
 				<div class="post-image col-md-8" style="background-image: url('{{Config::get('app.imageurl')}}/{{$post->image}}');">
 					<img class="no-show-image" itemprop="image" src="{{Config::get('app.imageurl')}}/{{$post->image}}">
+					@if($post->nsfw)
+						<div class="nsfw">NSFW</div>
+					@endif
 				</div>
 			</div>
 		</div>
@@ -442,6 +445,17 @@
 			<button class="admin-set-featured btn btn-xs btn-success">Set Featured Position</button>
 			<button class="admin-unset-featured btn btn-xs btn-warning {{ $featured ? '' : 'hidden' }}">Remove from Featured</button>
 			<br>
+		</div>
+		<hr>
+
+		<div class="admin-post-nsfw-controls">
+			<button class="admin-nsfw">
+				@if($post->nsfw)
+					Unset NSFW
+				@else
+					Set NSFW
+				@endif
+			</button>
 		</div>
 		<hr>
 	@endif

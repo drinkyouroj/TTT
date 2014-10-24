@@ -65,6 +65,9 @@ interface PostRepository {
 	
 	public function incrementLike($id);
 	public function decrementLike($id);
+
+	public function setNSFW($id);
+	public function unsetNSFW($id);
 	
 	//Delete
 	public function delete($id);

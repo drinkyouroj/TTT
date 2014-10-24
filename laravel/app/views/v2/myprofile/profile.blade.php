@@ -33,8 +33,14 @@
 		@endif
 	</script>
 
+	{{--Handlebars--}}
 	@include( 'v2/partials/post-listing-template' )
+	
+	{{--Profile Stuff--}}
 	@include( 'v2/myprofile/partials/profile-handlebars-template' )
+	@include( 'v2/myprofile/partials/notifications-handlebars-template' )
+	@include( 'v2/myprofile/partials/settings-handlebars-template' )
+
 	@include( 'v2/myprofile/partials/no-content-handlebars-template' )
 	@include( 'v2/partials/photo-input' )
 
@@ -82,37 +88,35 @@
 
 						</div>
 						<div class="col-md-7 follow-container">
-							<div class="row">
-								<div class="col-md-12 col-sm-12 col-xs-12 fing-fer">
-									<a href="#followers" class="followers" id="followers">
-										<span class="count">{{$follower_count}}</span>
-										<span class="text">Followers</span>
-									</a>
+							<div class="col-md-12 col-sm-12 col-xs-12 fing-fer">
+								<a href="#followers" class="followers" id="followers">
+									<span class="count">{{$follower_count}}</span>
+									<span class="text">Followers</span>
+								</a>
 
-									<a href="#following" class="following" id="following">
-										<span class="count">{{$following_count}}</span>
-										<span class="text">Following</span>
+								<a href="#following" class="following" id="following">
+									<span class="count">{{$following_count}}</span>
+									<span class="text">Following</span>
+								</a>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12 follow-btn-container">
+								@if($myprofile)
+									<div class="settings">
+										<a class="icon-button" href="#settings" id="settings">
+											Settings
+										</a>
+									</div>
+								@else
+									@if(!$is_following)
+									<a class="follow follow-button">
+										Follow
 									</a>
-								</div>
-								<div class="col-md-12 col-sm-12 col-xs-12 follow-btn-container">
-									@if($myprofile)
-										<div class="settings">
-											<a class="icon-button" href="#settings" id="settings">
-												Settings
-											</a>
-										</div>
 									@else
-										@if(!$is_following)
-										<a class="follow follow-button">
-											Follow
-										</a>
-										@else
-										<a class="follow following-button">
-											Following
-										</a>
-										@endif
+									<a class="follow following-button">
+										Following
+									</a>
 									@endif
-								</div>
+								@endif
 							</div>
 						</div>
 					</div>

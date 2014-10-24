@@ -6,9 +6,12 @@ a:focus {
 
 //Profile Page headers.
 .profile-header-wrapper {
+	padding-top:20px;
+	background:$dark;
+	border-bottom:solid 1px $lightgray;
 	.profile-header-container {
-		margin-top:20px;
 		.header-left {
+			
 			h2 {
 				background-position: left center;
 				background-repeat: no-repeat;
@@ -16,25 +19,38 @@ a:focus {
 				font-size:40px;
 				text-transform:none;
 				vertical-align: middle;
+				margin:0px;
 				@include word-break(break-all);
 				span.avatar-image {
 					display:inline-block;
 					vertical-align: middle;
-					width: 40px;
-					height: 40px;
+					width: 150px;
+					height: 150px;
 					cursor:pointer;
-					@include border-radius(20px);
+					@include border-radius(75px);
 					background-position: center center;
 					background-size: cover;
 					background-repeat: no-repeat;
 					@include word-break(break-all);
+
+					-moz-box-shadow:    0px 0px 2px 0px #333;
+					-webkit-box-shadow: 0px 0px 2px 0px #333;
+					box-shadow:         0px 0px 2px 0px #333;
+
 					@media (max-width:$break-sm) {
 						display:block;
 						clear:both;
 						margin-bottom:3px;
+						width: 40px;
+						height: 40px;
+						cursor:pointer;
+						@include border-radius(20px);
 					}
 				}
 				a {	
+					@media (min-width:$break-md-min) {
+						margin-left:20px;
+					}
 					cursor:pointer;
 					&:hover {
 						color:$blue;
@@ -59,8 +75,15 @@ a:focus {
 				@media (max-width:$break-sm) {
 					padding-left:0px;
 				}
+				.fing-fer {
+					padding-right:0px;
+				}
 				.follow-btn-container {
 					margin-top:5px;
+					padding-right:0px;
+					@media (max-width:$break-xs) {
+						margin-top:0px;
+					}
 					.follow {
 						@media (min-width:$break-md-min) {
 							padding:8px 30px 8px 90px
@@ -73,27 +96,35 @@ a:focus {
 					span.count{
 						@include montserrat(bold);
 						display:block;
-						font-size: 30px;
+						font-size: 21px;
 						@media (max-width:$break-sm) {
 							font-size:17px;
 						}
 					}
 					span.text{
 						display:block;
-						font-size: 13px;
+						font-size: 12px;
 						line-height:5px;
 						@media (max-width:$break-sm) {
-							font-size:10px;
+							font-size:8px;
 						}
 					}
 					&.followers, &.following {
 						text-transform: uppercase;
 						@include montserrat();
-						color:#000;
+						color:$lightgray;
 						text-decoration: none;
+						padding:10px 5px 15px 5px;
+						background:#525252;
+						-webkit-border-radius: 5px; 
+						-moz-border-radius: 5px; 
+						border-radius: 5px; 
+						@media (max-width:$break-sm) {
+							padding:3px 3px 5px 3px;
+						}
 					}
 					&.followers {
-						margin-right: 10px;
+						
 					}
 					&.following {
 					}
@@ -111,14 +142,20 @@ a:focus {
 			a#settings {
 				font-size: 10px;
 				background-image:url('../../../../images/global/settings.png');
+				background-color:#525252;
 				@media (max-width:$break-xs) {
-					width:30px;
-					height:20px;
+					width:40px;
+					height:30px;
 					border:0px;
 					padding:0px;
 					font-size:0px;
+					-webkit-border-radius: 5px; 
+					-moz-border-radius: 5px; 
+					border-radius: 5px; 
 				}
-				
+				&:hover {
+					color:$dark;
+				}
 				&:visited, &:focus {
 					text-decoration:none !important;
 					color:$dark;
@@ -126,31 +163,32 @@ a:focus {
 			}
 		}
 		.section-selectors {
-			@media (max-width:$break-xs) {
-				border-top:solid 1px $gray;
-				padding-top:10px;
-			}
+			margin-top:30px;
+			
 			a {
 				display:block;
 				float:left;
 				margin-right: 20px;
 				@include montserrat(bold);
 				font-size: 14px;
-				color: $gray;
+				color: #888;
 				text-transform: uppercase;
 				text-decoration: none;
 				letter-spacing:1px;
 				padding:5px 0px;
-				@media (max-width:$break-xs) {
+				@media (max-width:$break-sm) {
 					font-size: 11px;
+					margin-right: 15px;
+				}
+				@media (max-width:$break-xs) {
 					letter-spacing:0px;
 				}
 				&:hover {
-					color:$dark;
+					color:$white;
 				}
 
 				&.active {
-					color:$dark;
+					color:$white;
 				}
 			}
 			@media (max-width:$break-sm) {
@@ -160,8 +198,7 @@ a:focus {
 		
 		.border {
 			.border-box {
-				border-bottom: 3px solid $dark;
-				padding-bottom: 7px;
+				
 			}
 		}
 	}
@@ -186,7 +223,11 @@ a:focus {
 				#collection-content {
 					margin-left: auto;
   					margin-right: auto;
+  					@media (min-width:$break-md-min) {
+  						padding-left:7px;
+  					}
   					@media (max-width:$break-sm) {
+  						margin-top:10px;
 						margin-left: 15px;
   						margin-right: 15px;
 					}
@@ -244,40 +285,30 @@ a:focus {
 					}
 
 					.post-container {
-						margin-bottom:10px;
-						@media (max-width:$break-lg) and (min-width:$break-lg-min) {
-							width:328px;
-							height:340px;
-						}
+						width:48%;
+						margin-bottom:0;
+						margin-left:1%;
+						margin-right:1%;
+						padding-bottom:10px;
+						
+						
 						@media (min-width:$break-lg) {
-								margin-right:0px;
+							height:390px;
 						}
-						@media (max-width:$break-md) and (min-width:$break-md-min) {
-							width:345px;
-							height:350px;
-						}
-						@media (max-width:$break-sm) and (min-width:$break-sm-min) {
-							width:48%;
+						
+						@media (max-width:$break-lg) and (min-width:$break-lg-min) {
 							height:330px;
 						}
-						&:nth-child(even) {
-							@media (max-width:$break-sm) and (min-width:$break-sm-min) {
-								margin-right:2%;
-								margin-left:0px;
-							}
+						
+						@media (max-width:$break-md) and (min-width:$break-md-min) {
+							height:350px;
 						}
-						&:nth-child(odd) {
-							@media (max-width:$break-sm) and (min-width:$break-sm-min) {
-								margin-left:2%;
-								margin-right:0px;
-							}
-						}
-						@media (max-width:$break-xs) {
+						@media (max-width:$break-sm) {
 							width:100%;
 							height:auto;
 							margin-left:0%;
 							margin-right:0%;
-							margin-bottom:30px;
+							margin-bottom:10px;
 						}
 						&.repost {
 							.post-repost-image {
@@ -300,9 +331,9 @@ a:focus {
 							.views {
 								position:absolute;
 								display:block;
-								bottom:2px;
-								right:2px;
-					            background: url('../../../../images/global/blue-60.png');
+								bottom:5px;
+								right:5px;
+					            background: $blue;
 								z-index:3;
 								-webkit-border-radius: 5px; 
 								-moz-border-radius: 5px; 
@@ -325,6 +356,13 @@ a:focus {
 							position:relative;
 							width:100% !important;
 
+							-moz-box-shadow:    0px 1px 2px 0px #ccc;
+							-webkit-box-shadow: 0px 1px 2px 0px #ccc;
+							box-shadow:         0px 1px 2px 0px #ccc;
+							@media (min-width:$break-lg) {
+								height:0px;
+								padding-top:63%;
+							}
 							@media (max-width:$break-lg) and (min-width:$break-lg-min) {
 								height:206px !important;
 							}
@@ -338,8 +376,23 @@ a:focus {
 						}
 						.post-title {
 							@include word-break(break-all);
+							@media (min-width:$break-lg-min) {
+								margin-top:20px;
+								margin-left:15px;
+								margin-right:15px;
+							}
+							@media (max-width:$break-lg) {
+								margin-top:10px;
+							}
+							@media (max-width:$break-md-min) {
+								margin-left:15px;
+								margin-right:15px;
+							}
 							a {
-								@media (max-width:$break-sm) and (min-width:$break-sm-min) {
+								@media (max-width:$break-lg) and (min-width:$break-lg-min)  {
+									font-size:14px;
+								}
+								@media (max-width:$break-sm) {
 									font-size:13px;
 								}
 							}
@@ -347,7 +400,7 @@ a:focus {
 						.post-taglines {
 							@include word-break(break-all);
 							li {
-								@media (max-width:$break-sm) and (min-width:$break-sm-min) {
+								@media (max-width:$break-sm) {
 									font-size:13px;
 								}
 							}
@@ -355,45 +408,45 @@ a:focus {
 					}
 
 					.feature-item {
-						margin-left:15px;
-						margin-right:15px;
-						margin-bottom:30px;
-						background:$white;
-						border:solid 1px $lightgray;
+						width:98%;
+						margin:0 1% 3% 1%;
+						position:relative;
+						display:block;
 						position: relative;
-						@media (min-width:$break-lg) {
-							margin-right:32px;
-						}
+						-moz-box-shadow:    0px 1px 2px 0px #ccc;
+  						-webkit-box-shadow: 0px 1px 2px 0px #ccc;
+  						box-shadow:         0px 1px 2px 0px #ccc;
+						
 						@media (max-width:$break-sm) {
-							margin-left:0px;
-							margin-right:0px;
-						}
-						.text, .image {
-							height:350px; // featured post height
-							@media (max-width:$break-lg) and (min-width:$break-lg-min) {
-								height:310px;
-							}
+							width:100%;
+							margin:0 0 10px 0;
+							
 						}
 						.text {
-							background:$white;
+							position:absolute;
+							bottom:0px;
+							background: url('../../../../images/global/white-90.png');
+							padding:25px 50px;
+							z-index:3;
 							text-align:center;
-							padding:25px 20px 0 20px;
 							@media (max-width:$break-lg) and (min-width:$break-lg-min)  {
-								padding:10px 15px 0 15px;
+								padding:15px 15px;
 							}
 							@media (max-width:$break-sm) {
-								height:auto;
-								padding-bottom:30px;
+								position:relative;
+								bottom:auto;
+								padding:10px 10px;
 							}
 							h2 {
 								@include title_listing;
 								font-size:20px;
 								line-height:21px;
+								margin-top:0px;
 								@media (max-width:$break-lg) {
 									font-size:17px;
 								}
-								@media (max-width:$break-xs) {
-									padding-top:10px;
+								@media (max-width:$break-sm) {
+									margin-bottom:5px;
 								}
 								a {
 									color:$dark;
@@ -404,15 +457,19 @@ a:focus {
 								border-top:solid 1px $dark;
 								margin:0px auto;
 								padding:10px 0 0 0;
+								@media (max-width:$break-sm) {
+									padding:5px 0 0 0;
+								}
 							}
 							p.tagline {
 								@include tagline_listing;
 								font-size:15px;
 								@media (max-width:$break-lg) {
-									font-size:12px;
+									font-size:13px;
 								}
 							}
 							p.excerpt {
+								display:none;
 								text-align:justify;
 								font-size:14px;
 								line-height:150%;
@@ -427,24 +484,23 @@ a:focus {
 						}
 						.image {
 							display:block;
+							height:0px;
+							padding-top:63%;
 							background-size:cover;
 							background-repeat:no-repeat;
 							background-position:center center;
 							@media (max-width:$break-sm) {
-								width: 90%;
+								width: 100%;
 								height:0px;
-								padding-top:56%;
-								margin-left:5%;
-								margin-right:5%;
-								margin-bottom:5%;
+								padding-top:63%;
 							}
 							.views {
 								position:absolute;
 								display:block;
-								bottom:2px;
-								right:2px;
-					            background: url('../../../../images/global/blue-60.png');
-								z-index:3;
+								bottom:5px;
+								right:5px;
+					            background: $blue;
+								z-index:4;
 					            // Center the repost image when the repost count expands the container.
 					            margin:0px;
 					            padding: 0px 5px;
@@ -468,8 +524,25 @@ a:focus {
 							text-align:left;
 							font-size:10px;
 							letter-spacing:1px;
+							text-align:center;
 							@media (max-width:$break-sm) and (min-width:$break-sm-min)  {
 								text-align:center;
+							}
+						}
+						.nsfw {
+							position:absolute;
+							top:0px;
+							left:0px;
+							display:inline-block;
+							float:left;
+							padding:10px;
+							@include fjalla;
+							font-size:14px;
+							text-transform:uppercase;
+							color:$white;
+							background-image:url('../../../../images/global/blue-75.png');
+							&:before {
+								content:"NSFW";
 							}
 						}
 					}
@@ -479,32 +552,43 @@ a:focus {
 
 			.comment-container {
 				float: left;
-				width: 24%;
+				width: 23%;
+				margin-top:39px;
+				margin-left:1%;	
+
 				@media screen and (max-width:$break-md) {
 					display:none;
 				}
 				.comment-border {
-					border-top: 17px solid $dark;
-					margin-right: 14px;//gotta change this value on the break. somehow its a pixel off.
+					
 				}
 				#comment-content {
-					margin-right: 15px;
-					margin-bottom: 100px;
-					padding: 10px 0px 30px 18px;
-					border-left: 1px solid $dark_cream;
+					margin-left:15px;
+					margin-bottom: 50px;
+					padding: 0px 15px 30px 0px;
 					h3 {
-						margin: 0;
-						font-size: 14px;
+						margin: 0px 0px 5px 0px;
+						padding:10px 10px;
+						text-align:center;
+						font-size: 15px;
 						text-transform: uppercase;
 						@include montserrat(bold);
 						letter-spacing: 1px;
+						color:$cream;
+						background:$dark_cream;
 					}
 					.comment-box {
 						position: relative;
-						padding: 13px 25px;
-						margin: 20px 0;
-						background:#fff;
-						border:solid 1px $lightgray;
+						padding: 25px 25px 25px 25px;
+						margin: 12px 0 15px 0;
+						background: #ede8e2;
+
+  						-webkit-border-radius: 5px; 
+						-moz-border-radius: 5px; 
+						border-radius: 5px; 
+
+						
+
 						@include word-break(break-all);
 						span.date {
 							display:none;
@@ -514,11 +598,11 @@ a:focus {
 						}
 						.inner-content {
 							.where {
-								color:$gray;
-								padding-bottom: 14px;
-								margin-bottom: 10px;
-								border-bottom: 1px solid $gray;
+								color:$cream;
+								margin-top: 15px;
 								font-size:10px;
+								letter-spacing: 1px;
+								line-height:130%;
 								a {
 									text-decoration: none;
 									color: $blue;
@@ -526,10 +610,17 @@ a:focus {
 								}
 							}
 							.comment {
-								margin-bottom: 10px;
+								font-size:16px;
+								@include garamond-italic;
+								line-height:135%;
+								color:#777;
+								letter-spacing:1px;
+								@media (max-width:$break-lg) {
+									font-size:15px;
+								}
 								.readmore {
 									display:block;
-									margin-top: 5px;
+									margin-top: 0px;
 									color:$blue;
 									font-size: 10px;
 									text-transform: uppercase;
@@ -539,8 +630,8 @@ a:focus {
 						}
 						&::before {
 							position: absolute;
-							content: url(../../../../images/profile/profile-comment-arrow.png);
-							top: -13px;
+							content: url(../../../../images/global/arrow-beige.png);
+							top: -9px;
 							left:10px;
 						}
 					}
@@ -548,20 +639,26 @@ a:focus {
 			}
 
 			//Generic Controls
+			.feed-controls {
+			}
 			.generic-controls {
 				padding-top: 7px;
 				padding-bottom: 10px;
 				margin-bottom: 23px;
-				color:$gray;
 				@include montserrat();
 				font-size: 14px;
 				letter-spacing:1px;
+				color:$darker_cream;
+				&>.col-md-12 {
+					
+				}
 				a {
-
+					text-align:left;
 					text-transform: lowercase;
 					text-decoration: none;
-					color:$gray;
+					color:#aaa;
 					cursor: pointer;
+					padding:10px 20px 10px 0;
 					&:hover {
 						color:$dark;
 					}
@@ -569,7 +666,7 @@ a:focus {
 						color:$dark;
 					}
 					@media (max-width:$break-xs) {
-						padding:10px;
+						padding:10px 10px 10px 0;
 					}
 				}
 				@media (max-width:$break-xs) {
@@ -578,13 +675,21 @@ a:focus {
 					margin-bottom: 5px;
 				}
 			}
-
+ 
 			//All other content containers
 			.default-container {
 
 				#default-content {
 					&.feed {
 						@include post_listing(1);
+						.post-container {
+							@media (max-width:$break-sm) {
+								display:block;
+								float:inherit;
+								margin-left:auto;
+								margin-right:auto;
+							}
+						}
 						.post-repost-container {
 							position:absolute;
 							top:0px;
@@ -623,10 +728,16 @@ a:focus {
 						background-size:cover;
 						background-position:center center;
 					}
+					&.saves, &.drafts, &.notifications {
+    					background:$white;
+						-moz-box-shadow:    0px 1px 2px 0px #ccc;
+						-webkit-box-shadow: 0px 1px 2px 0px #ccc;
+						box-shadow:         0px 1px 2px 0px #ccc;
+    				}
 					&.saves {
 						.saves-box {
-							border-bottom:solid 1px $dark;
-							padding:5px 0;
+							border-bottom:solid 1px $lightgray;
+							padding:5px 15px;
 							.image {
 								display:block;
 								width:150px;
@@ -702,8 +813,8 @@ a:focus {
 
 					&.drafts {
 						.drafts-box {
-							border-bottom:solid 1px $dark;
-							padding:5px 0;
+							border-bottom:solid 1px $lightgray;
+							padding:5px 15px;
 							.date {
 								span {
 									@include montserrat;
@@ -727,7 +838,9 @@ a:focus {
 									@include title_listing;
 									@media (max-width:$break-sm) {
 										margin-top:5px;
+										font-size:13px;
 									}
+
 								}
 								p {
 									@include tagline_listing;
@@ -776,6 +889,7 @@ a:focus {
 					    }
 					}
 					&.settings {
+						margin-top:30px;
 						.avatar {
 							margin-top:20px;
 							text-align:center;
@@ -819,6 +933,40 @@ a:focus {
 						.change-password {
 							@media (max-width:$break-md) {
 								margin-bottom:30px;
+							}
+						}
+						.email-pref {
+							margin-top:50px;
+							h2 {
+								border-top:solid 1px $dark;
+								margin-top:0px;
+								padding-top:30px;
+							}
+							p {
+								font-size:16px;
+							}
+							ul {
+								width:100%;
+								display:inline-block;
+								float:left;
+								list-style:none;
+								margin-left:0px;
+								padding-left:0px;
+								li {
+									float:left;
+									margin-right:20px;
+									@include montserrat;
+									font-size:13px;
+									letter-spacing:1px;
+									input {
+										width:auto;
+										box-shadow:none !important;
+									}
+								}
+							}
+							button {
+								float:left;
+								margin-top:5px;
 							}
 						}
 						h2 {
@@ -865,25 +1013,34 @@ a:focus {
 					}
 				}
 				&.collection {
+					padding:10px 15px;
 					@media (max-width:$break-sm) {
 						padding-left:0px;
 						padding-right:0px;
 					}
+					p {
+						margin:0px;
+					}
 				}
 				&.feed {
+					background:$white;
 					margin-top:-20px;
+					padding-top:10px;
+					-moz-box-shadow:    0px 1px 2px 0px #ccc;
+					-webkit-box-shadow: 0px 1px 2px 0px #ccc;
+					box-shadow:         0px 1px 2px 0px #ccc;
 					@media (max-width:$break-md) {
 						margin-top:0px;
 					}
 				}
 				&.saves {
-					margin-top:20px;
+					margin-top:10px;
 				}
 				&.drafts {
-					margin-top:20px;
+					margin-top:10px;
 				}
 				&.notifications {
-					margin-top:20px;
+					margin-top:10px;
 				}
 			}
 		}

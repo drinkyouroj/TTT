@@ -1,7 +1,10 @@
+	
+	@if( is_object($fuser) )
 	<div class="featured-user-container">	
 		<h3 class="user-label">- Featured User -</h3>
 		@include('v2.partials.featured-user')
 	</div>
+	@endif
 
 	<div class="category-wrapper">
 		{{--

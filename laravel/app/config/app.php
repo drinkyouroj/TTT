@@ -129,6 +129,7 @@ return array(
 		'AppLogic\PostLogic\PostLogicServiceProvider',
 		'AppLogic\CommentLogic\CommentLogicServiceProvider',
 		'AppLogic\AnalyticsLogic\AnalyticsLogicServiceProvider',
+		'AppLogic\EmailLogic\EmailLogicServiceProvider',
 		
 		//Helpers provide non-core services to the system (Solr, Instaham filters)
 		'Helper\SolariumHelper\SolariumHelperServiceProvider',
@@ -155,6 +156,7 @@ return array(
 		'AppStorage\PhotoStorageServiceProvider',
 		'AppStorage\SearchStorageServiceProvider',
 		'AppStorage\FeaturedUserStorageServiceProvider', 
+		'AppStorage\EmailPrefStorageServiceProvider', 
 
 		//Image system for when we make our captcha.
 		'Intervention\Image\ImageServiceProvider',

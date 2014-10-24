@@ -1,6 +1,13 @@
 <?php
 	$is_mod = Session::get('mod');
 	$is_admin = Session::get('admin');
+
+	// Fetch the current weekly digest posts (if any)
+	$digest_featured_post = Session::has('digest_featured_post') ? Session::get('digest_featured_post') : '';
+	$digest_post_2 = Session::has('digest_post_2') ? Session::get('digest_post_2') : '';
+	$digest_post_3 = Session::has('digest_post_3') ? Session::get('digest_post_3') : '';
+	$digest_post_4 = Session::has('digest_post_4') ? Session::get('digest_post_4') : '';
+	$digest_post_5 = Session::has('digest_post_5') ? Session::get('digest_post_5') : '';
 ?>
 
 <div id="offcanvas-admin-sidebar">
@@ -54,6 +61,61 @@
 						<li>There are currently no flagged comments.</li>
 					@endif
 				</ul>
+			</div>
+		</li>
+
+		{{-- Weekly Digest --}}
+		<li class="admin-sidebar-option">
+			<a href="#adminItemSeven" data-toggle="collapse" data-parent="#admin-accordion">
+				Weekly Digest
+				<span class="glyphicon glyphicon-plus pull-right"></span>
+			</a>
+			<div id="adminItemSeven" class="collapse">
+				<h5 class="digest-title"><small>Provide 5 post aliases (found in url)</small></h5>
+				<form id="weeklyDigest" @if( isset( $is_post_page ) ) data-post-alias="{{$post->alias}}" @endif>
+					<div class="input-group">
+						<input type="text" class="form-control" name="digest_featured_post" placeholder="Featured Post" value="{{$digest_featured_post}}">
+						@if ( isset( $is_post_page ) )
+					      	<span class="input-group-btn">
+					        	<button class="btn set-digest" type="button">Set</button>
+					      	</span>
+					    @endif
+				    </div><!-- /input-group -->
+					<div class="input-group">
+						<input type="text" class="form-control" name="digest_post_2" placeholder="2nd Post" value="{{$digest_post_2}}">
+				      	@if ( isset( $is_post_page ) )
+					      	<span class="input-group-btn">
+					        	<button class="btn set-digest" type="button">Set</button>
+					      	</span>
+					    @endif
+				    </div><!-- /input-group -->
+				    <div class="input-group">
+						<input type="text" class="form-control" name="digest_post_3" placeholder="3rd Post" value="{{$digest_post_3}}">
+				      	@if ( isset( $is_post_page ) )
+					      	<span class="input-group-btn">
+					        	<button class="btn set-digest" type="button">Set</button>
+					      	</span>
+					    @endif
+				    </div><!-- /input-group -->
+				    <div class="input-group">
+						<input type="text" class="form-control" name="digest_post_4" placeholder="4th Post" value="{{$digest_post_4}}">
+				      	@if ( isset( $is_post_page ) )
+					      	<span class="input-group-btn">
+					        	<button class="btn set-digest" type="button">Set</button>
+					      	</span>
+					    @endif
+				    </div><!-- /input-group -->
+				    <div class="input-group">
+						<input type="text" class="form-control" name="digest_post_5" placeholder="5th Post" value="{{$digest_post_5}}">
+				      	@if ( isset( $is_post_page ) )
+					      	<span class="input-group-btn">
+					        	<button class="btn set-digest" type="button">Set</button>
+					      	</span>
+					    @endif
+				    </div><!-- /input-group -->
+				    <div class="error"></div>
+					<button class="btn btn-primary" type="submit">Send Emails</button>
+				</form>
 			</div>
 		</li>
 

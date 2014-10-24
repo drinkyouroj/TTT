@@ -27,6 +27,8 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 		Route::post( 'image/upload', 'MyProfileController@postAvatar');
 		Route::post( 'password', 'UserController@postNewpass'); //I know its not in myprofile!
 		Route::post( 'email/update', 'MyProfileController@postUpdateEmail');
+		Route::post( 'email/pref', 'MyProfileController@postRestEmailPref');
+		Route::get( 'settings', 'MyProfileController@getRestSettings');
 	});
 
 	//Profile Image for the Follower/Following buttons.
@@ -116,6 +118,12 @@ Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
 	Route::get('reset/user/{user_id}', 'AdminController@resetUser');
 	Route::post('post/edit', 'AdminController@editPost');
 	Route::post('category/description', 'AdminController@editCategoryDescription');	
+	// Weekly Digest Routes
+	Route::post('digest/setpost', 'AdminController@setDigestPost');
+	Route::post('digest/submit', 'AdminController@sendWeeklyDigest');
+	//NSFW
+	Route::get('nsfw/post/{post_id}', 'AdminController@setNSFW');
+
 	Route::controller('/','AdminController');
 });
 

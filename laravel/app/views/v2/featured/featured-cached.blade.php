@@ -38,6 +38,9 @@
 							<a class="image-link col-md-8" href="{{Config::get('app.url')}}/posts/{{$main->alias}}">
 								<div class="image" style="background-image: url({{Config::get('app.imageurl')}}/{{$main->image}} )">
 								</div>
+								@if ( $main->nsfw )
+									<div class="nsfw"></div>
+								@endif
 							</a>
 							
 							<?php unset($featured{0});?>

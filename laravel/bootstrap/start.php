@@ -45,6 +45,7 @@ $env = $app->detectEnvironment(array(
 	'web' => array('web*','hhvmtest','RESCUE-hhvmtest','rescue-hhvmtest'),//sometimes the hhvm server sucks and goes into stupid mode.
 	
 	'vagrant' => array('localhost:4567', 'vagrant-fedora-19*'),
+	'ryvagrant' => array('ryvagrant*'),
 	'local' => array('localhost.localdomain'),
 	'sharktopus' => array('sharktopus.localdomain'),//Ryuhei's local machine
 	'sneakyturtle' => array('sneakyturtle.localdomain'),//Neil's

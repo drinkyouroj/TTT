@@ -58,6 +58,16 @@
 		}
 	}
 
+	#adminItemSeven {
+		padding: 7px;
+		.input-group {
+			margin-bottom: 5px;
+		}
+		.error {
+			color: red;
+		}
+	}
+
 	hr {
 		clear: both;
 	}

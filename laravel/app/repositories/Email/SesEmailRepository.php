@@ -21,10 +21,10 @@ class SesEmailRepository implements EmailRepository {
 	/*
 	* Sends an e-mail.
 	*/
-	public function create($data) {
+	public function create($data, $override = false) {
 
 		//system level block on whether to send email or not.
-		if(Config::get('app.email_send')) {
+		if( Config::get('app.email_send') || $override ) {
 			$data = self::dataInit($data);
 
 			$result = $this->ses->sendEmail(array(
@@ -71,19 +71,16 @@ class SesEmailRepository implements EmailRepository {
 
 	public function test($data) {
 
-		$data['subject'] = 'test';
-		$data['plaintext'] = 'test';
-		$data['html'] = 'test';
+		// $data['subject'] = 'test';
+		// $data['plaintext'] = 'test';
+		// $data['html'] = 'test';
 
-		$data['to'] = array('ryuhei@twothousandtimes.com');
+		$data['to'] = array('max@y-designs.com');
 		unset($data['cc']);
 		unset($data['bcc']);
 		$data = self::dataInit($data);
 
-		$result = self::create($data);
-
-		dd($result);
-
+		$result = self::create($data, true);
 	}
 
 }

@@ -100,9 +100,7 @@
 		
 		<a class="image-link" href="{{ site_url }}posts/{{ post.alias }}">
 			<div class="top-fade"> </div>
-				<div class="post-image" style="background-image:url('{{ image_url }}/{{ post.image }}')">
-
-				</div>
+			<div class="post-image" style="background-image:url('{{ image_url }}/{{ post.image }}')"> </div>
 			{{#ifCond myprofile true }}
 				{{#ifCond post.user.id user_id }}
 					{{#isViews post.views }}
@@ -112,6 +110,10 @@
 						</div>
 					{{/isViews}}
 				{{/ifCond}}
+			{{/ifCond}}
+
+			{{#ifCond post.nsfw 1 }}
+				<div class="nsfw"></div>
 			{{/ifCond}}
 		</a>
 		<p class="post-title"> 
@@ -124,6 +126,5 @@
 			<li> {{ post.tagline_2 }} </li>
 			<li> {{ post.tagline_3 }} </li>
 		</ul>
-		
 	</div>
 </script>

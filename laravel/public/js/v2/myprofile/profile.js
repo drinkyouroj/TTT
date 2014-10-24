@@ -4,27 +4,29 @@ $(function() {
 
 //Non user specific code
 	var user_action = new UserAction;
-	$('div.follow-container a.follow').click(function(event) {
-		event.preventDefault();
-		user_action.user_id = window.user_id;
-		user_action.action = 'follow';
+	if (window.logged_in) {
+		$('div.follow-container a.follow').click(function(event) {
+			event.preventDefault();
+			user_action.user_id = window.user_id;
+			user_action.action = 'follow';
 
-		if( $(this).hasClass('follow-button') ) {
-			current_state = false;//currently 
-		} else {
-			current_state = true;//currently following
-		}
-		that = $(this);
-		user_action.send(function(data){
-			if(data.result == 'deleted') {
-				that.removeClass('following-button').addClass('follow-button');
-				that.html('Follow');
+			if( $(this).hasClass('follow-button') ) {
+				current_state = false;//currently 
 			} else {
-				that.removeClass('follow-button').addClass('following-button');
-				that.html('Following');
+				current_state = true;//currently following
 			}
+			that = $(this);
+			user_action.send(function(data){
+				if(data.result == 'deleted') {
+					that.removeClass('following-button').addClass('follow-button');
+					that.html('Follow');
+				} else {
+					that.removeClass('follow-button').addClass('following-button');
+					that.html('Following');
+				}
+			});
 		});
-	});
+	}
 
 //Initialize Profile class
 	var profile = new ProfileActions;
@@ -198,6 +200,10 @@ $(function() {
 	//password change
 	$('body').on('click', '#changePassword button',function() {
 		profile.changePassword();
+	});
+
+	$('body').on('click', '#emailPref button',function() {
+		profile.emailPref();
 	});
 
 	//update email
@@ -403,7 +409,7 @@ function ProfileActions() {
 				break;
 
 			case 'settings':
-				this.url = base_url + this.page;
+				this.url = base_url;
 				this.renderSettings();
 				break;
 
@@ -547,7 +553,7 @@ function ProfileActions() {
 				user_id : window.user_id,
 				editable: editable,
 				myprofile: window.myprofile,
-							image_url: window.image_url
+				image_url: window.image_url
 			}
 			$('#collection-content',target).prepend( feature_item_template(view_data) );
 
@@ -822,21 +828,27 @@ function ProfileActions() {
 		} else {
 			user_image = '/images/profile/avatar-default.png';
 		}
-		
-		view_data = {
-			site_url: this.site_url,
-			user_image: user_image,
-			email: window.email,
-			image_url: window.image_url
-		};
-		$('#default-content', this.target).append(this.settings_template(view_data));
-		$('.loading-container img').fadeOut();
-		this.renderAvatarModal();
+		var parent = this;
 
-		$('body').on('click', '.avatar-modal', function(event) {
-			event.preventDefault();			
-			$('#photoModal').modal('show');
-		})
+		this.getData(this.url, function(data) {
+			console.log(data.emailpref);
+			view_data = {
+				site_url: window.site_url,
+				user_image: user_image,
+				email: window.email,
+				image_url: window.image_url,
+				emailpref: data.emailpref
+			};
+			$('#default-content', parent.target).append(parent.settings_template(view_data));
+			$('.loading-container img').fadeOut();
+			parent.renderAvatarModal();
+
+			$('body').on('click', '.avatar-modal', function(event) {
+				event.preventDefault();
+				$('#photoModal').modal('show');
+			});
+		});
+		
 	}
 
 		this.avatarUpload = function() {
@@ -870,6 +882,15 @@ function ProfileActions() {
 		        $errors.show();
 		    }
 		}
+
+	this.emailPref = function() {
+		$('form#emailPref').ajaxForm({
+			successs: function(xhr) {
+				console.log(xhr);
+
+			}
+		}).submit();
+	}
 
 	this.updateEmail = function( form ) {
 		// Fetch fields
