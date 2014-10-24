@@ -43,7 +43,7 @@ class EmailLogic {
 			$email_data = array(
 	                'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
 	                'to' => array($post->useremail->email),
-	                'subject' => 'Your Broke '.$post_view.' views on Two Thousand Times!',
+	                'subject' => 'You Broke '.$post_view.' views on Two Thousand Times!',
 	                'plaintext' => $plain,
 	                'html'  => $html
 				);
@@ -93,7 +93,7 @@ class EmailLogic {
 			$email_data = array(
 	                'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
 	                'to' => array($post->useremail->email),
-	                'subject' => 'A New Like on Two Thousand Times!',
+	                'subject' => 'A New Repost on Two Thousand Times!',
 	                'plaintext' => $plain,
 	                'html'  => $html
 				);
@@ -120,7 +120,7 @@ class EmailLogic {
 			$email_data = array(
 	                'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
 	                'to' => array($user->email),
-	                'subject' => 'A New Like on Two Thousand Times!',
+	                'subject' => 'You Have a New Follower on Two Thousand Times!',
 	                'plaintext' => $plain,
 	                'html'  => $html
 				);

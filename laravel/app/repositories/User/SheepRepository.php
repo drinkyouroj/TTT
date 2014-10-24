@@ -109,7 +109,7 @@ class SheepRepository implements UserRepository {
 	}
 	
 	public function all() {
-		//probably don't need it at all.
+		return $this->user->get();
 	}
 
 	public function allByIds( $user_ids ) {

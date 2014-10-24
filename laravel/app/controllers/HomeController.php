@@ -47,10 +47,13 @@ class HomeController extends BaseController {
 			$expiresAt = Carbon::now()->addMinutes(10);
 			Cache::put('featureduser',$fuser,$expiresAt);
 		}
-
-		$post_count = $this->post->countUserPublished($fuser->user_id);
-		$fuser_recent = $this->post->lastPostUserId($fuser->user_id, true);
-
+		if ( is_object($fuser) ) {
+			$post_count = $this->post->countUserPublished($fuser->user_id);
+			$fuser_recent = $this->post->lastPostUserId($fuser->user_id, true);
+		} else {
+			$post_count = 0;
+			$fuser_recent = null;
+		}
 		$view = View::make('v2/featured/featured')
 						->with('featured', $featured)
 						->with('fuser', $fuser)

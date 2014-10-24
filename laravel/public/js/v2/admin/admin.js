@@ -47,6 +47,55 @@ $(function() {
         
     });
 
+    // ========================== ADMIN WEEKLY DIGEST ===================================
+    $('#offcanvas-admin-sidebar form#weeklyDigest .set-digest').click( function() {
+        // Get the current post alias, and target position
+        var alias = $('form#weeklyDigest').data('post-alias');
+        var $inputField = $(this).closest('.input-group').find('input');
+        var self = this;
+        var position = $inputField.attr('name');
+        
+        $.ajax({
+            url: window.site_url + 'admin/digest/setpost',
+            type: 'POST',
+            data: {
+                position: position,
+                alias: alias
+            },
+            success: function ( data ) {
+                if ( data.success ) {
+                    $inputField.val(alias);
+                    $(self).addClass('disabled');
+                } else {
+                    // assume error
+                    $('form#weeklyDigest').find('.error').html('Error!');
+                }
+            }
+        });
+    });
+    $('#offcanvas-admin-sidebar form#weeklyDigest').submit( function(event) {
+        event.preventDefault();
+
+        $.ajax({
+            url: window.site_url + 'admin/digest/submit',
+            type: 'POST',
+            data: {
+                digest_featured_post: $('input[name="digest_featured_post"]').val(),
+                digest_post_2: $('input[name="digest_post_2"]').val(),
+                digest_post_3: $('input[name="digest_post_3"]').val(),
+                digest_post_4: $('input[name="digest_post_4"]').val(),
+                digest_post_5: $('input[name="digest_post_5"]').val()
+            },
+            success: function ( data ) {
+                if ( data.success ) {
+                    $('form#weeklyDigest').slideUp();
+                    $('.digest-title').html('Weekly Digest Sent');
+                } else {
+                    $('form#weeklyDigest').find('.error').html( data.error );
+                }
+            }
+        });
+    });
 
     // ========================== ADMIN POST FUNCTIONALITIES ============================
 	// Set post as featured
