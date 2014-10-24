@@ -568,17 +568,32 @@ textarea {
           padding-top:42%;
           background-color:#000;//temporary DELETE
           -webkit-background-size: cover;
-              -moz-background-size: cover;
-              -o-background-size: cover;
-              background-size: cover;
-              background-position: center;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+          background-position: center;
 
-              @media (max-width:$break-md) {
-                width: 75%;
-                height:0px;
-                padding-top:47.25%;
-                margin:0px auto;
-              }
+          @media (max-width:$break-md) {
+            width: 75%;
+            height:0px;
+            padding-top:47.25%;
+            margin:0px auto;
+          }
+
+          .nsfw {
+            position:absolute;
+            top:0px;
+            left:0px;
+            display:inline-block;
+            float:left;
+            padding:10px;
+            @include fjalla;
+            font-size:18px;
+            text-transform:uppercase;
+            color:$white;
+            background-image:url('../../../../images/global/blue-75.png');
+          }
+
         } 
       }
     }

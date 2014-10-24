@@ -245,7 +245,7 @@
 				<div class="post-image col-md-8" style="background-image: url('{{Config::get('app.imageurl')}}/{{$post->image}}');">
 					<img class="no-show-image" itemprop="image" src="{{Config::get('app.imageurl')}}/{{$post->image}}">
 					@if($post->nsfw)
-						<div class="nsfw">This is Not Safe For Work</div>
+						<div class="nsfw">NSFW</div>
 					@endif
 				</div>
 			</div>
