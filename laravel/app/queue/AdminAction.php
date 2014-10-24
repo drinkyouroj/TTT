@@ -14,7 +14,8 @@ class AdminAction {
 	 */
 	function weeklyDigest( $job, $data ) {
 		// Fetch the users (TODO: reduce the users to only those with emails)
-		$users = $this->user->all();
+		// $users = $this->user->all();
+        
 		// Render the emails (plain text and html). Only need to render once
 		$plaintext = View::make('v2/emails/weekly_digest_plain')
     						->with( 'featured_post', $data['featured_post'] )
@@ -33,7 +34,7 @@ class AdminAction {
     						->render();
     	// Setup the email data (everything but the 'to' field)
 		$email_data = array(
-            'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
+            // 'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
             'to' => array(),
             'subject' => 'Two Thousand Times - Weekly Digest',
             'plaintext' => $plaintext,
