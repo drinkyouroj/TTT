@@ -34,7 +34,7 @@ class AdminAction {
     						->render();
     	// Setup the email data (everything but the 'to' field)
 		$email_data = array(
-            // 'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
+            'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
             'to' => array(),
             'subject' => 'Two Thousand Times - Weekly Digest',
             'plaintext' => $plaintext,
