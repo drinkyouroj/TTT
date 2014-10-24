@@ -101,7 +101,8 @@ class CategoryLogic {
 									'tagline_3',
 									'story_type',
 									'image',
-									'published_at'
+									'published_at',
+									'nsfw'
 								)
 							)
 

@@ -369,7 +369,7 @@ class MyProfileController extends BaseController {
 				return Response::json(
 					array( 'feed' => $feed->toArray() ),
 					200
-				);	
+				);
 			}
 		} else {
 			return Response::json(

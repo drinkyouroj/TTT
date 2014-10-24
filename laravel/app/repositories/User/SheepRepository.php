@@ -109,7 +109,9 @@ class SheepRepository implements UserRepository {
 	}
 	
 	public function all() {
-		return $this->user->get();
+		return $this->user->where('confirmed', 1)
+						  ->where('banned', 0)
+						  ->get();
 	}
 
 	public function allByIds( $user_ids ) {

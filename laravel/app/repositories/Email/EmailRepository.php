@@ -7,7 +7,7 @@ interface EmailRepository {
 	public function instance();
 
 	//Create
-	public function create($data);
+	public function create($data, $override);
 
 	public function test($data);
 }
