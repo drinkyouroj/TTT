@@ -16,7 +16,7 @@ class ElasticSearchRepository implements SearchRepository {
 		$params['body']['fields'] = array( 'id' );
 		// Fuzzy search
 		$fuzzy = array();
-		$fuzzy['fields'] = array('title', 'taglines', 'body');
+		$fuzzy['fields'] = array('title', 'taglines');
 		$fuzzy['like_text'] = $search_string;
 		$fuzzy['fuzziness'] = 1;
 
