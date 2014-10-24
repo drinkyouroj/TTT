@@ -49,7 +49,7 @@ class AdminAction {
         // 	}
         // }
         
-        $this->email->test($email_data);
+        $this->email->test( $email_data );
 
         $job->delete();
 	}
