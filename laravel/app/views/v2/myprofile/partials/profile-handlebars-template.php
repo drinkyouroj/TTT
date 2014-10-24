@@ -138,12 +138,12 @@
 	<div class="comment-box">
 		<span class="date">{{comment.created_at}}</span>
 		<div class="inner-content">
-			<div class="where">
-				Commented on <a href="{{site_url}}posts/{{comment.post.alias}}#comment-{{comment._id}}">{{comment.post.title}}</a>
-			</div>
 			<div class="comment">
 				{{#substring comment.body 200}}{{/substring}}
 				<br/>
+				<div class="where">
+					<a href="{{site_url}}posts/{{comment.post.alias}}#comment-{{comment._id}}">{{comment.post.title}}</a>
+				</div>
 				<a class="readmore" href="{{site_url}}posts/{{comment.post.alias}}#comment-{{comment._id}}"> Read more<a/>
 			</div>
 		</div>
