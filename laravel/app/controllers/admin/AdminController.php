@@ -77,6 +77,32 @@ class AdminController extends Controller {
 		}
 	}
 
+	/**
+	 *  Post is NSFW-IYWSCE (not safe for work if you work at a shitty corporate environment)
+	 */
+	function setNSFW($post_id) {
+		$post = $this->post->findById($post_id);
+		if(is_object($post)) {
+			if($post->nsfw){
+				$this->post->unsetNSFW($post_id);
+				return Response::json(
+					array( 'nsfw' => false),
+					200
+				);
+			} else {
+				$this->post->setNSFW($post_id);
+				return Response::json(
+					array( 'nsfw' => true),
+					200
+				);
+			}
+		} else {
+			return Response::json(
+					array( 'failed' => true),
+					200
+				);
+		}
+	}
 
 	/**
 	 *	Edit a category description

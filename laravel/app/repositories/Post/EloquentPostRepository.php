@@ -274,6 +274,16 @@ class EloquentPostRepository implements PostRepository {
 		$this->post->where('id', $id)
 					->decrement('like_count',1);
 	}
+
+	public function setNSFW($id) {
+		$this->post->where('id', $id)
+					->update(array('nsfw'=> true));
+	}
+
+	public function unsetNSFW($id) {
+		$this->post->where('id', $id)
+					->update(array('nsfw'=> false));
+	}
 	
 	//Delete
 	public function delete( $id ) {
