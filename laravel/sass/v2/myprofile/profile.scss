@@ -822,7 +822,9 @@ a:focus {
 									@include title_listing;
 									@media (max-width:$break-sm) {
 										margin-top:5px;
+										font-size:13px;
 									}
+
 								}
 								p {
 									@include tagline_listing;
