@@ -529,6 +529,22 @@ a:focus {
 								text-align:center;
 							}
 						}
+						.nsfw {
+							position:absolute;
+							top:0px;
+							left:0px;
+							display:inline-block;
+							float:left;
+							padding:10px;
+							@include fjalla;
+							font-size:14px;
+							text-transform:uppercase;
+							color:$white;
+							background-image:url('../../../../images/global/blue-75.png');
+							&:before {
+								content:"NSFW";
+							}
+						}
 					}
 
 				}
