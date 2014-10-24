@@ -121,7 +121,8 @@ Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
 	// Weekly Digest Routes
 	Route::post('digest/setpost', 'AdminController@setDigestPost');
 	Route::post('digest/submit', 'AdminController@sendWeeklyDigest');
-
+	//NSFW
+	Route::get('nsfw/post/{post_id}', 'AdminController@setNSFW');
 
 	Route::controller('/','AdminController');
 });

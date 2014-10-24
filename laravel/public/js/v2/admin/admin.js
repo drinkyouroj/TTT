@@ -131,6 +131,25 @@ $(function() {
         });
     });
 
+    $('#offcanvas-admin-sidebar .admin-nsfw').click( function() {
+        var post_id = getPostId();
+        var that = this;
+        $.ajax({
+            url: window.site_url + 'admin/nsfw/post/' + post_id,
+            type: 'GET',
+            success: function(data) {
+                if(data.nsfw) {
+                    $(that).html('Unset NSFW');
+                } else if(!data.nsfw) {
+                    $(that).html('Set NSFW');
+                } else {
+                    console.log(data);
+                }
+            }
+
+        });
+    });
+
     // ========================== ADMIN USER FUNCTIONALITIES ============================
     // User delete
     $('#offcanvas-admin-sidebar .admin-soft-delete').click( function() {
