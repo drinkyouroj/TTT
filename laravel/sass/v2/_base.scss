@@ -277,7 +277,7 @@ textarea {
 //==========POST ACTIONS==========
 //like,save,repost
 @mixin post_actions {
-  a {
+  &>a {
       display: inline-block;
       height:25px;
       color:#fff;
