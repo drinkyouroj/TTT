@@ -146,14 +146,30 @@ $(function() {
                     console.log(data);
                 }
             }
-
         });
     });
     // Update view count for a given post
     $('#offcanvas-admin-sidebar .admin-update-view-count').click( function() {
         var input = $(this).closest('.input-group').find('input');
+        var button = $(this);
+        button.addClass('disabled');
         var new_count = input.val();
-        // TODO
+        $.ajax({
+            url: window.site_url + 'admin/post/update-view-count',
+            type: 'POST',
+            data: {
+                new_count: new_count,
+                post_id: getPostId()
+            },
+            success: function ( data ) {
+                if ( data.success ) {
+                    $('.view-count').html(new_count);
+                    button.removeClass('disabled');
+                } else {
+                    $('.view-count').html('ERROR').css('color', 'red');
+                }
+            }
+        });
     });
 
     // ========================== ADMIN USER FUNCTIONALITIES ============================

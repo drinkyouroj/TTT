@@ -213,6 +213,16 @@ class EloquentPostRepository implements PostRepository {
 	//Update
 	public function update($input) {}
 	
+	public function updateViewCount ( $post_id, $count ) {
+		$post = $this->post->where('id', $post_id)->first();
+		if ( $post instanceof Post ) {
+			$post->views = $count;
+			$post->save();
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	public function publish($id) {
 		// update published field

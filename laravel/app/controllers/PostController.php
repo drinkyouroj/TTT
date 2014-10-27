@@ -111,7 +111,7 @@ class PostController extends BaseController {
 						);
 					$this->postview->create($view);
 					$post_views = $this->post->incrementView($post->id);//increment on this post.
-					
+					// NOTE: I coppied this code into AdminController (may factor out later on)
 					$intervals = array(10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000);
 					if( in_array($post_views, $intervals) ) {
 						//Send the user a notification on the system.
@@ -120,6 +120,7 @@ class PostController extends BaseController {
 							EmailLogic::post_view($post, $post_views);
 						}
 					}
+					// NOTE: end of note =)
 				}
 			}
 

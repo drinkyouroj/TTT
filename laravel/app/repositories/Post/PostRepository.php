@@ -52,6 +52,7 @@ interface PostRepository {
 
 	//Update
 	public function update($input);
+	public function updateViewCount($post_id, $count);
 	
 	public function publish($id);
 	public function unpublish($id);

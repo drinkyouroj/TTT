@@ -104,6 +104,27 @@ class AdminController extends Controller {
 		}
 	}
 
+	function updatePostViewCount () {
+		$new_count = Input::has('new_count') ? Input::get('new_count') : -1;
+		$post_id = Input::has('post_id') ? Input::get('post_id') : -1;
+		$post = $this->post->findById( $post_id );
+		if ( $new_count < 0 || !($post instanceof Post) ) {
+			return Response::json( array( 'error' => 'invalid input' ), 200 );
+		} else {
+			$this->post->updateViewCount( $post_id, $new_count );
+			// NOTE: I coppied this code from PostController
+			$intervals = array(10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000);
+			if( in_array($new_count, $intervals) ) {
+				//Send the user a notification on the system.
+				NotificationLogic::postview($post_id);
+				if($post->useremail->email) {
+					EmailLogic::post_view($post, $new_count);
+				}
+			}
+			return Response::json( array( 'success' => true ), 200 );
+		}
+	}
+
 	/**
 	 *	Edit a category description
 	 */

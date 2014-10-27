@@ -438,7 +438,7 @@
 		</p>
 		<hr>
 		{{-- Manipulate Post Views --}}
-		<div> Current view count: {{$post->views}}
+		<div> Current view count: <span class="view-count">{{$post->views}}</span>
 			<br>
 			Modify view count: 
 		</div>
