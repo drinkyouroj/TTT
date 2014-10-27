@@ -716,6 +716,12 @@ function ProfileActions() {
 			} else {
 				if ( data.drafts && data.drafts.length ) {
 					$.each(data.drafts, function(idx, val) {
+						// Set any empty fields accordingly
+						val.title = val.title ? val.title : '(No Title)';
+						val.tagline_1 = val.tagline_1 ? val.tagline_1 : '(Empty)';
+						val.tagline_2 = val.tagline_2 ? val.tagline_2 : '(Empty)';
+						val.tagline_3 = val.tagline_3 ? val.tagline_3 : '(Empty)';
+
 						view_data = {
 							site_url: window.site_url,
 							draft: val,

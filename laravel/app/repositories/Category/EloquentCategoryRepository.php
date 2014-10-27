@@ -1,6 +1,6 @@
 <?php namespace AppStorage\Category;
 
-use Category,DB, Request;
+use Category, DB, Request;
 
 class EloquentCategoryRepository implements CategoryRepository {
 
@@ -15,18 +15,17 @@ class EloquentCategoryRepository implements CategoryRepository {
 		return new Category;
 	}
 
-
 	//Create
 	public function create( $title, $description ) {
-
-		$category = new Category;
+		$category = self::instance();
+		$alias = preg_replace('/[^A-Za-z0-9]/', '', $title );
+		$category->parent_id = 0;
 		$category->title = $title;
-		$category->alias = preg_replace('/[^A-Za-z0-9]/', '', $title );
+		$category->alias = $alias;
 		$category->description = $description;
 
 		$validator = $category->validate( $category->toArray() );
-		if ( !$validator->fails() ) {
-			// dd($category);
+		if ( $validator->passes() ) {
 			$category->save();
 		}
 	}
