@@ -120,7 +120,7 @@ class PostController extends BaseController {
 							EmailLogic::post_view($post, $post_views);
 						}
 					}
-					// NOTE: end of note =)
+					// NOTE: this is a note to tell you that this is the end of note =)
 				}
 			}
 
