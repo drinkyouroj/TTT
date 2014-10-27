@@ -128,9 +128,10 @@ class Post extends Eloquent {
 		// New Post
 		if($id == false) {
 			if ($input['draft']) {
-				// Validation for new post that is a draft (fewer required fields)
+				// Validation for new post that is a draft (only need title or body)
 				$rules = array(
-					'title' => 'required'
+					'title' => 'required_without:body',
+					'body' => 'required_without:title'
 				);
 			} else {
 				// Validation for new post -> published
@@ -150,7 +151,8 @@ class Post extends Eloquent {
 			if ($input['draft']) {
 				// Validation for existing post -> save as draft
 				$rules = array(
-					'title' => 'required'
+					'title' => 'required_without:body',
+					'body' => 'required_without:title'
 				);
 			} else {
 				// Validation for existing post -> published

@@ -261,7 +261,7 @@
 							<div class="story {{$errors->first('body') ? 'has-error' : '' }}">
 								{{ Form::label('body','Post', array('class'=>'control-label')) }}
 								{{ Form::textarea('body', $body, array('class'=>'form-control normal-input', 'required', 'minlength' =>'5')) }}
-								<div class="text-input editable" name="body" required>
+								<div id="post-content-editable" class="text-input editable" name="body" required>
 									@if($edit) {{$body}} @endif
 								</div>
 

@@ -15,7 +15,6 @@ class EloquentCategoryRepository implements CategoryRepository {
 		return new Category;
 	}
 
-
 	//Create
 	public function create( $title, $description ) {
 		$category = self::instance();
@@ -29,7 +28,6 @@ class EloquentCategoryRepository implements CategoryRepository {
 		if ( $validator->passes() ) {
 			$category->save();
 		}
-		
 	}
 
 	//Read
