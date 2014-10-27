@@ -125,6 +125,17 @@ class AdminController extends Controller {
 		}
 	}
 
+	function createCategory () {
+		$new_category_name = Input::has('new_category_name') ? Input::get('new_category_name') : false;
+		$new_category_description = Input::has('new_category_description') ? Input::get('new_category_description') : false;
+		if ( $new_category_name && $new_category_description ) {
+			$this->category->create( $new_category_name, $new_category_description );
+			return Response::json( array( 'success' => true ), 200 );
+		} else {
+			return Response::json( array( 'error' => 'invalid input' ), 200 );
+		}
+	}
+
 	/**
 	 *	Edit a category description
 	 */

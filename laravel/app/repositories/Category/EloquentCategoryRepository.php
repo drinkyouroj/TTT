@@ -17,8 +17,18 @@ class EloquentCategoryRepository implements CategoryRepository {
 
 
 	//Create
-	public function create($input) {
+	public function create( $title, $description ) {
 
+		$category = new Category;
+		$category->title = $title;
+		$category->alias = preg_replace('/[^A-Za-z0-9]/', '', $title );
+		$category->description = $description;
+
+		$validator = $category->validate( $category->toArray() );
+		if ( !$validator->fails() ) {
+			// dd($category);
+			$category->save();
+		}
 	}
 
 	//Read

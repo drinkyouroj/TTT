@@ -17,7 +17,7 @@
 		<li class="admin-sidebar-option">
 			<a href="#adminItemOne" data-toggle="collapse" data-parent="#admin-accordion">
 				Flagged Posts
-				<span class="glyphicon glyphicon-plus pull-right"></span>
+				<span class="glyphicon glyphicon-plus pull-right" @if ( count( $flagged_post_content ) ) style="color: red;" @endif></span>
 			</a>
 			<div id="adminItemOne" class="collapse">
 				<ul class="list-unstyled">
@@ -40,7 +40,7 @@
 		<li class="admin-sidebar-option">
 			<a href="#adminItemTwo" data-toggle="collapse" data-parent="#admin-accordion">
 				Flagged Comments
-				<span class="glyphicon glyphicon-plus pull-right"></span>
+				<span class="glyphicon glyphicon-plus pull-right" @if ( count( $flagged_comment_content ) ) style="color: red;" @endif></span>
 			</a>
 			<div id="adminItemTwo" class="collapse">
 				<ul class="list-unstyled">
@@ -173,6 +173,15 @@
 				<span class="glyphicon glyphicon-plus pull-right"></span>
 			</a>
 			<div id="adminItemSix" class="collapse">
+				<button class="btn admin-add-category">Add Category</button>
+				<div class="hidden">
+					<input type="text" class="form-control admin-new-category-input" placeholder="Title">
+					<input type="text" class="form-control admin-new-category-description" placeholder="Description">
+					<span class="input-group-btn">
+						<button class="btn btn-warning admin-add-category-submit pull-right">Add</button>
+					</span>
+				</div>
+				<div class="admin-add-category-error hidden">Error!</div>
 				@yield('admin-mod-category-controls')	
 			</div>
 		</li>

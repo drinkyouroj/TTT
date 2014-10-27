@@ -43,8 +43,35 @@ $(function() {
                     $('#offcanvas-admin-sidebar .admin-edit-category-description').removeClass('hidden');
                 }
             }
-        })
-        
+        }) 
+    });
+    // Add new category
+    $('#offcanvas-admin-sidebar .admin-add-category').click( function() {
+        $button = $(this);
+        $button.hide();
+        $button.next().removeClass('hidden');
+    });
+    $('#offcanvas-admin-sidebar .admin-add-category-submit').click( function() {
+        var new_category_name = $('.admin-new-category-input').val();
+        var new_category_description = $('.admin-new-category-description').val();
+        $.ajax({
+            url: window.site_url + 'admin/category/create',
+            type: 'POST',
+            data: {
+                new_category_name: new_category_name,
+                new_category_description: new_category_description
+            },
+            success: function ( data ) {
+                if ( data.success ) {
+                    $('.admin-new-category-input').val(''); // Clear input
+                    $('.admin-new-category-description').val('');
+                    $('.admin-new-category-input').parent().addClass('hidden'); // Hide the input field
+                    $('.admin-add-category').show(); // Show the add cat button again
+                } else {
+                    $('.admin-add-category-error').removeClass('hidden');
+                }
+            }
+        });
     });
 
     // ========================== ADMIN WEEKLY DIGEST ===================================

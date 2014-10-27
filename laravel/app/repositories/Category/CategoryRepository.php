@@ -7,7 +7,7 @@ interface CategoryRepository {
 	public function instance();
 
 	//Create
-	public function create($input);
+	public function create( $title, $description );
 
 	//Read
 	public function findById($id);
