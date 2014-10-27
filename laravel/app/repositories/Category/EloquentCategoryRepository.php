@@ -26,7 +26,7 @@ class EloquentCategoryRepository implements CategoryRepository {
 
 		$validator = $category->validate( $category->toArray() );
 		if ( !$validator->fails() ) {
-			// dd($category);
+			dd($category);
 			$category->save();
 		}
 	}

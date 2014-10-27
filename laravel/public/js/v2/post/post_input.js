@@ -161,6 +161,14 @@ $(function() {
 					stop_save();
 				}
 			});
+			// Listen for change on contenteditable
+			document.getElementById("post-content-editable").addEventListener("input", function() {
+			    if(this.innerHTML.length >= 100) {
+					start_save();
+				} else if($(this).val().length < 100) {
+					stop_save();
+				}
+			}, false);
 		}
 	}
 
@@ -392,8 +400,7 @@ var save_post = new function() {
 				// console.log(xhr.status);
 			},
 			error: function(xhr, status) {
-				// console.log(xhr.status);
-				switch(data.error) {
+				switch(xhr.responseJSON.error) {
 					default:
 					case '72':
 						//72 hours limit has passed for editting.
@@ -406,7 +413,7 @@ var save_post = new function() {
 					case '405':
 						//Validation is really bad (as in they bypassed our client side validation scheme)
 						//Redirect this person to terms.
-						console.log('you have done some bad things');
+						console.log('you have done some bad things (failed validation)');
 						break;
 				}
 			}
