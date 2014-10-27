@@ -5,18 +5,6 @@ class Category extends Eloquent {
 	protected $table = 'categories';
 	
 	public function __construct() {
-		$this->select = array(
-
-									'user_id',
-									'title',
-									'alias',
-									'tagline_1',
-									'tagline_2',
-									'tagline_3',
-									'story_type',
-									'image',
-									'published_at'
-								);
 	}
 	
 	public function posts()
@@ -75,7 +63,17 @@ class Category extends Eloquent {
 	{
 		return $this->belongsToMany('Post', 'category_post')
 					->where('published',1)
-					->select($this->select)
+					->select(array(
+									'user_id',
+									'title',
+									'alias',
+									'tagline_1',
+									'tagline_2',
+									'tagline_3',
+									'story_type',
+									'image',
+									'published_at'
+								))
 					->orderBy('published_at','DESC');
 	}
 
