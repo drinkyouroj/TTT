@@ -34,7 +34,7 @@
 		<div class="collection-controls generic-controls">
 			<div class="col-md-12">
 				<a data-type="all" class="active">All</a>
-				<a data-type="post">Post</a>
+				<a data-type="post">Posts</a>
 				<a data-type="repost">Reposts</a>
 			</div>
 		</div>
@@ -64,7 +64,7 @@
 		{{#ifCond view 'feed'}}
 			<div class="feed-controls generic-controls">
 				<a data-type="all" class="active">All</a>
-				<a data-type="post">Post</a>
+				<a data-type="post">Posts</a>
 				<a data-type="repost">Reposts</a>
 			</div>
 		{{/ifCond}}
