@@ -23,7 +23,7 @@ $(function() {
 		    $('.comment-form textarea').focus();
 		});
 		// Actions (like, flag, etc...)
-		$('.post-action-bar ul.actions>li>a, .extra-actions a, .author-actions a.follow-button').click(function(event) {
+		$('.post-action-bar ul.actions>li>a, .post-action-bar a.follow, .extra-actions a, .author-actions a.follow-button').click(function(event) {
 			event.preventDefault();
 			var $action = $(this);
 			var Action = new UserAction();
