@@ -113,11 +113,11 @@
 						position:absolute;
 						left:0px;
 						margin:0;
+						text-align:left;
 						background:url('../../../../images/global/black-80.png');
 						li {
+							float:none;
 							margin:0;
-							padding-left:5px;
-							padding-right:5px;
 							&:first-child {
 								padding-top:5px;
 							}
@@ -125,8 +125,9 @@
 								padding-bottom:5px;
 							}
 							a {
+								width:100%;
 								margin:0px;
-								padding:5px 10px;
+								padding:5px 20px;
 								@include montserrat;
 								font-size:12px;
 								color:$blue;
