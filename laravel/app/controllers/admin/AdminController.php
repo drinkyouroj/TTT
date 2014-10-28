@@ -19,6 +19,12 @@ class AdminController extends Controller {
 		$this->featureduser = $featureduser;
 	}
 
+	function getPrompts () {
+		// TODO: fetch all prompts.
+		$view = View::make('v2/admin/prompts');
+		return $view;
+	}
+
 	/**
 	 *	Submit the weekly digest
 	 */
