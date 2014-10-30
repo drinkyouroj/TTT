@@ -268,7 +268,7 @@ class EloquentPostRepository implements PostRepository {
 	public function incrementView($id) {
 		$this->post->where('id', $id)->increment('views', 1);
 		$query = $this->post->where('id', $id)->select('views')->first();
-		return $query->views;
+		return isset($query->views) ? $query->views : 1;
 	}
 	
 	public function incrementComment($id) {

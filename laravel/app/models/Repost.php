@@ -11,7 +11,7 @@ class Repost extends Eloquent {
 	
 	public function users()
 	{
-		return $this->belongsTo('User','user_id');
+		return $this->belongsTo('User','user_id')->withTrashed();
 	}
 	
 }
