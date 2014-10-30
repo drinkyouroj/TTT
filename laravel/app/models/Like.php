@@ -6,7 +6,7 @@ class Like extends Eloquent {
 	
 	public function user()
 	{
-		return $this->belongsTo('User');
+		return $this->belongsTo('User')->withTrashed();
 	}
 	
 	public function post()
