@@ -231,7 +231,14 @@
 					</div>
 
 					<ul class="post-categories list-inline">
-						
+						@for ($i = 0; $i < count($post->categories); $i++)
+							<li> 
+								<a href="{{ URL::to( 'categories/'.$post->categories[$i]->alias ) }}"> {{ strtoupper( $post->categories[$i]->title ) }} </a> 
+								@if ( $i != count($post->categories) - 1 )
+									/
+								@endif
+							</li>
+						@endfor
 					</ul>
 
 				</div>
