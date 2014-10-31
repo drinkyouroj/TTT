@@ -1,7 +1,7 @@
 @extends('v2.emails.email_layout')
 
 @section('content')
-	<h1 style="margin-top:50px; margin-bottom:50px; color:#000000; font-family:Helvetica Neue,Helvetica,Arial,sans-serif; font-weight:bold; font-size:21px;">Recommended by Two Thousand Times</h1>
+	<h1 style="margin-top:50px; margin-bottom:50px; text-align:center; color:#000000; font-family:Helvetica Neue,Helvetica,Arial,sans-serif; font-weight:bold; font-size:21px;">Recommended by Two Thousand Times</h1>
 	<div>
 		<a href="{{Config::get('app.url')}}/posts/{{ $featured_post['alias'] }}">
 			<img src="{{Config::get('app.imageurl')}}/{{ $featured_post['image'] }}" alt="Cover Photo" style="width: 100%;height: auto;background-color: lightgrey;">
