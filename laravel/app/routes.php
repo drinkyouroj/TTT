@@ -185,6 +185,9 @@ Route::group(array('before'=>'profile'), function() {
 	Route::get( 'profile', 'MyProfileController@getPublicProfile');
 });
 
+//Handling Prompts (keep track of statistics)
+Route::get('prompts/{action}', 'PromptController@routePrompt');
+
 //For Error Logging if the user wishes to contribute.
 Route::get('error/form', 'HomeController@getErrorForm');
 
