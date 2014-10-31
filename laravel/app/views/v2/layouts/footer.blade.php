@@ -1,3 +1,31 @@
+{{--Fixed Join banner (Not necesarrily join, could have other info)--}}
+@if ( $prompt instanceof Prompt )
+	<div class="join-banner">
+		<div class="join-text col-md-7 col-sm-8 col-xs-8">
+			<h4>{{$prompt->body}}</h4>
+			<p>
+			@if ( Auth::guest() )
+				Sign up to post your stories, follow, and comment.
+			@else 
+				Go out there and be somebody.
+			@endif
+			</p>
+		</div>
+		<div class="join-button col-md-5 col-sm-4 col-xs-4">
+			<a class="btn-flat-blue" href="{{$prompt_link}}">
+				
+				@if( $prompt->link == 'signup' )
+					Create An Account
+				@elseif ( $prompt->link == 'post_input' )
+					Post Now
+				@endif
+
+			</a>
+		</div>
+	</div>
+@endif
+
+
 @if(Request::segment(1) != 'user')
 <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -5,7 +33,9 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 				<h3 class="modal-title" id="signupModalLabel">
-					Our Stories Live here.
+					<?php 
+						echo ( isset($prompt) && $prompt instanceof Prompt ) ? $prompt['body'] : 'Our Stories Live here.';
+					?>
 				</h3>
 				<h4 class="modal-subtitle" id="signupModalSublabel">
 					Sign up to post your stories, follow, and comment.

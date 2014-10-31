@@ -106,23 +106,6 @@
 	@include('v2.featured.featured-cached')
 
 	@include('v2.featured.featured-trending')
-
-	{{--Fixed Join banner--}}
-	@if( $is_guest )
-		<div class="join-banner">
-			<a class="banner-link" href="{{ URL::to( 'user/signup' ) }}">
-				<div class="join-text col-md-7 col-sm-8 col-xs-8">
-					<h4>Our stories live here.</h4>
-					<p>Sign up to post your stories, follow, and comment.</p>
-				</div>
-				<div class="join-button col-md-5 col-sm-4 col-xs-4">
-					<button class="btn-flat-blue">
-						Create an account
-					</button>
-				</div>
-			</a>
-		</div>
-	@endif
 	
 </div>
 @stop
