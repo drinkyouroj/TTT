@@ -42,9 +42,9 @@ return array(
 
 		'sqs' => array(
 			'driver' => 'sqs',
-			'key'    => 'AKIAIG5Q654GMX7YO4CQ',
-			'secret' => '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',
-			'queue'  => 'https://sqs.us-west-2.amazonaws.com/327127412329/laravel',
+			'key'    => 'AKIAII2BXAKJ6BM7BIKA',
+			'secret' => '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',
+			'queue'  => 'https://sqs.us-west-2.amazonaws.com/754366166319/laravel-queue',
 			'region' => 'us-west-2',
 		),
 
