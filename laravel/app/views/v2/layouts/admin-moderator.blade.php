@@ -187,6 +187,18 @@
 		</li>
 		@endif
 
+		<li class="admin-sidebar-option">
+			<a href="#adminItemEight" data-toggle="collapse" data-parent="#admin-accordion">
+				Prompts
+				<span class="glyphicon glyphicon-plus pull-right"></span>
+			</a>
+			<div id="adminItemEight" class="collapse">
+				<div class="text-center">
+					<a href="/admin/prompts" class="centered">Prompts Page</a>			
+				</div>
+			</div>			
+		</li>
+
 	</ul>
 
 </div>

@@ -81,7 +81,6 @@ class MongoCommentRepository implements CommentRepository {
 		$validation = $new_comment->validate( $new_comment->toArray() );
 
 		if ( $validation->fails() ) {
-			dd($validation->messages());
 			return 'Invalid comment';
 		} else {
 			// Step 5: Save the beast

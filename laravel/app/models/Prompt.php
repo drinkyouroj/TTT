@@ -7,12 +7,14 @@ class Prompt extends Eloquent {
 	protected $collection = 'prompts';
 	protected $dates = array('created_at');
 
+	/*
+		NOTE: link field simply tells us where to link to, not the actual link
+	*/
 	public function validate ( $input ) {
 		$rules = array(
 				'body' => 'required|max:140',
 				'clicks' => 'required|integer|min:0',
-				'link_type' => 'required', // link to signup page, post page, category page, etc...
-				'link' => 'required'  // The actual link: /signup, /posts/Post-Alias-12-22-1, etc...
+				'link' => 'required'
 		);
 		return Validator::make( $input, $rules );
 	}

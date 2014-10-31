@@ -127,7 +127,9 @@ Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
 	Route::get('nsfw/post/{post_id}', 'AdminController@setNSFW');
 	// Prompts
 	Route::get('prompts', 'AdminController@getPrompts');
-
+	Route::post('prompts', 'AdminController@createPrompt');
+	Route::post('prompt/toggle-active', 'AdminController@togglePromptActive');
+	Route::post('prompt/delete', 'AdminController@deletePrompt');
 	Route::controller('/','AdminController');
 });
 

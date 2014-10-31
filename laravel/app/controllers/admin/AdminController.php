@@ -9,7 +9,8 @@ class AdminController extends Controller {
 						FeaturedRepository $featured,
 						EmailRepository $email,
 						CategoryRepository $category,
-						FeaturedUserRepository $featureduser ) {
+						FeaturedUserRepository $featureduser,
+						PromptRepository $prompt ) {
 		$this->user = $user;
 		$this->post = $post;
 		$this->comment = $comment;
@@ -17,12 +18,45 @@ class AdminController extends Controller {
 		$this->email = $email;
 		$this->category = $category;
 		$this->featureduser = $featureduser;
+		$this->prompt = $prompt;
 	}
 
 	function getPrompts () {
-		// TODO: fetch all prompts.
+		$prompts = $this->prompt->getAll();
 		$view = View::make('v2/admin/prompts');
+		$view->with('prompts', $prompts);
 		return $view;
+	}
+
+	function createPrompt () {
+		$body = Input::has('body') ? Input::get('body') : false;
+		$link = Input::has('link') ? Input::get('link') : false;
+		$data = array(
+			'body' => $body,
+			'link' => $link
+		);
+		// Create the prompt
+		$this->prompt->create( $data );
+		return Redirect::action('AdminController@getPrompts'); 
+	}
+
+	function deletePrompt () {
+		$prompt_id = Input::has('prompt_id') ? Input::get('prompt_id') : false;
+		if ( $prompt_id ) {
+			$this->prompt->delete( $prompt_id );
+		}
+		return Response::json( array( 'success' => true ), 200 );
+	}
+
+	function togglePromptActive () {
+		$prompt_id = Input::has('prompt_id') ? Input::get('prompt_id') : false;
+		$active = Input::has('active') ? Input::get('active') : false;
+		if ( $active == 'true' ) {
+			$this->prompt->activate( $prompt_id );
+		} else {
+			$this->prompt->deactivate( $prompt_id );
+		}
+		return Response::json( array( 'success' => true ), 200 );
 	}
 
 	/**

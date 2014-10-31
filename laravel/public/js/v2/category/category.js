@@ -137,7 +137,7 @@ $(function() {
 
 	$(window).scroll(function(event) {
 		current = $(window).scrollTop();
-		if(current > window.show_join && !window.logged_in) {
+		if(current > window.show_join) {
 			$('.join-banner').show().fadeIn();
 			$('.content-wrapper').css('margin-bottom',$('.join-banner').height());
 		}

@@ -21,7 +21,7 @@ Blade::extend(function($value) {
 
 
 App::before(function($request)
-{	
+{
 	$have_user = Auth::check();
 	if($have_user && Auth::user()->deleted_at) {
 		Auth::logout();
@@ -174,6 +174,7 @@ $category_views = array(
 View::composers(array(
 	'AdminModComposer' => 'v2.layouts.admin-moderator',
 	'HeaderComposer' => 'v2.layouts.header',
+	'FooterComposer' => 'v2.layouts.footer',
 	'CategoryComposer' => $category_views,
 	'PostComposer' => 'v2/posts/post',
 	'ProfileComposer' => 'v2/myprofile/profile'
