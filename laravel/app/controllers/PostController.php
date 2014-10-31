@@ -296,6 +296,8 @@ class PostController extends BaseController {
 				
 				$validator = $post->validate($post->toArray(),$check_post->id);//validation takes arrays.  Also if this is an update, it needs an id.
 
+				// The user has edited the post, now Clear the Cache!
+				Cache::forget($post->alias);
 
 			} else {
 				//New Post.
