@@ -13,8 +13,6 @@ class AdminAction {
 	 * Send out weekly digest to all authenticated users ( users with emails )
 	 */
 	function weeklyDigest( $job, $data ) {
-		// Fetch the users (TODO: reduce the users to only those with emails)
-		// $users = $this->user->all();
         
 		// Render the emails (plain text and html). Only need to render once
 		$plaintext = View::make('v2/emails/weekly_digest_plain')
@@ -40,8 +38,9 @@ class AdminAction {
             'plaintext' => $plaintext,
             'html'  => $html
         );
+
         // Now send out all the emails
-        
+        // $users = $this->user->all();
         // foreach ($users as $user) {
         // 	if ( isset( $user->email ) ) {
         // 		$email_data['to'] = array($user->email);
