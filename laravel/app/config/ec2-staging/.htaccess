@@ -1,0 +1,27 @@
+DirectoryIndex index.php invite.php
+
+<Files "index.php">
+	AuthType Basic
+	AuthName "Website Site with Restriced Access"
+	AuthUserFile /var/www/2000/laravel/public/.htpasswd
+	AuthGroupFile /dev/null
+	require valid-user
+	Order allow,deny
+        Allow from 172.31.33.51
+        satisfy any
+    FileETag None
+    Header unset ETag
+    Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
+</Files>
+
+<IfModule mod_rewrite.c>
+    Options -MultiViews
+    Options +FollowSymLinks
+    RewriteEngine On
+
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
