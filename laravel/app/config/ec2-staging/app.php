@@ -22,9 +22,9 @@ return array(
 	*/
 
 	'debug' => true,
-	'stack' => false,//errors automatically redirects to a specified location.
+	'stack' => true,//errors automatically redirects to a specified location.
 	'email_send' => false,
-	'enable_ssl' => true,//enables SSL force on the user and myprofile routes.
+	'enable_ssl' => false,//enables SSL force on the user and myprofile routes.
 
 	/*
 	|--------------------------------------------------------------------------
