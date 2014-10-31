@@ -1,7 +1,5 @@
 <?php
 
-define('DATASERVER_HOST', '10.0.1.32');
-define('MYSQL_HOST', 'sondry.c3sqmkl9shpm.us-west-2.rds.amazonaws.com');
 return array(
 
 	/*
@@ -56,11 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => MYSQL_HOST,
-			'port'      => 3306,
-			'database'  => 'sondry',
-			'username'  => 'sondry',
-			'password'  => 'dO34Wr5$',
+			'host'      => '54.68.75.205',
+			'database'  => 'twothousand',
+			'username'  => 'root',
+			'password'  => 'TT99**',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
@@ -89,7 +86,7 @@ return array(
 		//setup : db.addUser({user: "twothousand", pwd: "TT99!!!", roles: ["userAdminAnyDatabase"]})
 		'mongodb' => array(
 		    'driver'   => 'mongodb',
-		    'host'     => DATASERVER_HOST,
+		    'host'     => '54.68.75.205',
 		    'port'     => 27017, 
 		    'username' => 'twothousand',
 		    'password' => 'TT99!!!',
@@ -126,7 +123,7 @@ return array(
 		'cluster' => false,
 
 		'default' => array(
-			'host'     => DATASERVER_HOST,
+			'host'     => '54.68.75.205',
 			'port'     => 6379,
 			'database' => 0,
 		),

@@ -1,7 +1,7 @@
 <?php
 
 #define('APP_HOST', 'http://janus00-483730696.us-west-2.elb.amazonaws.com'); #push all through load balancer
-define('APP_HOST', 'http://staging-web.twothousandtimes.com'); #push all through load balancer
+define('APP_HOST', 'http://test.sondry.com'); #push all through load balancer
 #define('APP_HOST', ''); #relative
 #define('APP_HOST', 'http://54.68.96.139'); #my External IP -- means direct traffic to box, not through LB. also cross-origin problem, and specific config per box required.
 $file_path = base_path().'/gitversion';
@@ -23,7 +23,7 @@ return array(
 
 	'debug' => true,
 	'stack' => false,//errors automatically redirects to a specified location.
-	'email_send' => true,
+	'email_send' => false,
 	'enable_ssl' => true,//enables SSL force on the user and myprofile routes.
 
 	/*
@@ -38,10 +38,10 @@ return array(
 	*/
 	
 	'url' => APP_HOST, #constant defined at top
-	'secureurl' => 'https://staging-web.twothousandtimes.com',
-	'imageurl' => 'http://staging-web.twothousandtimes.com/uploads/final_images',
-	'staticurl' => '//static.twothousandtimes.com/'.GIT_VER,//not the prettiest, but it sure works.
-	'cdn_upload' => false,//set to true if you want your images to go to S3.
+	'secureurl' => 'https://test.sondry.com',
+	'imageurl' => 'http://images.sondry.com',
+	'staticurl' => '//static.sondry.com/'.GIT_VER,//not the prettiest, but it sure works.
+	'cdn_upload' => true,//set to true if you want your images to go to S3.
 	/*
 	|--------------------------------------------------------------------------
 	| Application Timezone
