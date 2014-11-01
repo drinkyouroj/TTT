@@ -41,15 +41,15 @@ class AdminAction {
         );
 
         // Now send out all the emails
-        // $users = $this->user->all();
-        // foreach ($users as $user) {
-        // 	if ( isset( $user->email ) ) {
-        // 		$email_data['to'] = array($user->email);
-        // 		$this->email->create( $email_data );
-        // 	}
-        // }
+        $users = $this->user->all(true);
+        foreach ($users as $user) {
+        	if ( isset( $user->email ) ) {
+        		$email_data['to'] = array($user->email);
+        		$this->email->create( $email_data );
+        	}
+        }
         
-        $this->email->test( $email_data );
+        // $this->email->test( $email_data );
 
         $job->delete();
 	}

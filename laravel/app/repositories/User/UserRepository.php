@@ -19,7 +19,7 @@ interface UserRepository {
 	 */
 	public function findByImage( $image, $with_trashed );
 
-	public function all();
+	public function all($emails_only);
 	public function allByIds( $user_ids );
 
 //Update
