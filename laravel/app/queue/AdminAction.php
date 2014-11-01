@@ -77,6 +77,7 @@ class AdminAction {
                 }
             }
         }
+        $job->delete();
     }
 
 	function messageAll($job, $data) {
