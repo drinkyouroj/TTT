@@ -118,6 +118,7 @@ Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
 	Route::get('reset/user/{user_id}', 'AdminController@resetUser');
 	Route::post('post/edit', 'AdminController@editPost');
 	Route::post('post/update-view-count', 'AdminController@updatePostViewCount');
+	Route::post('add-random-view-counts', 'AdminController@addRandomViewCountsToAllPosts');
 	Route::post('category/description', 'AdminController@editCategoryDescription');
 	Route::post('category/create', 'AdminController@createCategory');
 	// Weekly Digest Routes

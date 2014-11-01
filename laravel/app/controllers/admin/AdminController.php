@@ -165,6 +165,12 @@ class AdminController extends Controller {
 		}
 	}
 
+	// Think the funciton name explains it all
+	function addRandomViewCountsToAllPosts () {
+		Queue::push('AdminAction@addRandomViewCounts', array() );
+		return Response::json( array( 'success' => true ), 200);
+	}
+
 	function createCategory () {
 		$new_category_name = Input::has('new_category_name') ? Input::get('new_category_name') : false;
 		$new_category_description = Input::has('new_category_description') ? Input::get('new_category_description') : false;

@@ -142,17 +142,23 @@
 		</li>
 
 		{{-- Post Admin/Mod controls. Only visible at the post page --}}
-		@if ( isset( $is_post_page ) )
+		
 		<li class="admin-sidebar-option">
 			<a href="#adminItemFour" data-toggle="collapse" data-parent="#admin-accordion">
 				Post Controls
 				<span class="glyphicon glyphicon-plus pull-right"></span>
 			</a>
 			<div id="adminItemFour" class="collapse">
-				@yield('admin-mod-post-controls')				
+				<div class="text-center">
+					<button class="btn-primary btn btn-xs admin-add-random-view-counts">Add Random View Counts To All Posts</button>
+				</div>
+				@if ( isset( $is_post_page ) )
+					<hr>
+					@yield('admin-mod-post-controls')
+				@endif
 			</div>			
 		</li>
-		@endif
+		
 
 		@if ( isset( $is_profile_page ) )
 		<li class="admin-sidebar-option">

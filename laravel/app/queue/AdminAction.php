@@ -7,6 +7,7 @@ class AdminAction {
 	public function __construct() {
 		$this->email = App::make('AppStorage\Email\EmailRepository');
 		$this->user = App::make('AppStorage\User\UserRepository');
+        $this->post = App::make('AppStorage\Post\PostRepository');
 	}
 
 	/**
@@ -52,6 +53,31 @@ class AdminAction {
 
         $job->delete();
 	}
+
+    /**
+     *  Add random view counts to all posts
+     */
+    function addRandomViewCounts( $job, $data ) {
+        $posts = $this->post->all( false );
+        foreach ($posts as $post) {
+            if ( $post instanceof Post ) { // safety check
+                $random_views = rand( 1, 5 );
+                $new_view_count = $post->views + $random_views;
+                $this->post->updateViewCount( $post->id, $new_view_count );
+                // TODO: Reeally need to factor this out (its in 3 diff places now!)
+                // TODO: Need to add a catch for this case: post has 7 views, we add 5, post now has 12 views and user was not notified
+                // because of logic below...
+                $intervals = array(10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000);
+                if( in_array($new_view_count, $intervals) ) {
+                    //Send the user a notification on the system.
+                    NotificationLogic::postview($post->id);
+                    if($post->useremail->email) {
+                        EmailLogic::post_view($post, $new_view_count);
+                    }
+                }
+            }
+        }
+    }
 
 	function messageAll($job, $data) {
 		$users = User::select('id')->get();//get the entire list.
