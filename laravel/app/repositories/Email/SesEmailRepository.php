@@ -73,9 +73,9 @@ class SesEmailRepository implements EmailRepository {
 
 		// $data['subject'] = 'test';
 		// $data['plaintext'] = 'test';
-		// $data['html'] = 'test';
+		$data['html'].= '<p>TEST</p>';
 
-		$data['to'] = array('neil@y-designs.com', 'max@y-designs.com', 'anthony@twothousandtimes.com');
+		$data['to'] = array('neil@y-designs.com');
 		unset($data['cc']);
 		unset($data['bcc']);
 		$data = self::dataInit($data);
