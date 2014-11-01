@@ -46,7 +46,7 @@ class AdminAction {
         foreach ($users as $user) {
         	if ( isset( $user->email ) ) {
         		$email_data['to'] = array($user->email);
-        		$this->email->create( $email_data, true );
+        		$this->email->create( $email_data );
         	}
         }
 
