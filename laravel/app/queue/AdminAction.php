@@ -61,7 +61,7 @@ class AdminAction {
         $posts = $this->post->all( false );
         foreach ($posts as $post) {
             if ( $post instanceof Post ) { // safety check
-                $random_views = rand( 1, 5 );
+                $random_views = 1; // rand( 1, 5 )
                 $new_view_count = $post->views + $random_views;
                 $this->post->updateViewCount( $post->id, $new_view_count );
                 // TODO: Reeally need to factor this out (its in 3 diff places now!)
