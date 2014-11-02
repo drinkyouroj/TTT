@@ -31,25 +31,35 @@ class AdminAction {
     						->with( 'post_4', $data['post_4'] )
     						->with( 'post_5', $data['post_5'] )
     						->render();
-    	// Setup the email data (everything but the 'to' field)
-		$email_data = array(
-            'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
-            'to' => array(),
-            'subject' => 'Two Thousand Times - Weekly Digest',
-            'plaintext' => $plaintext,
-            'html'  => $html
-        );
+
+		
 
         // Now send out all the emails
         $users = $this->user->all(true);
+        $test = '';
 
         foreach ($users as $user) {
         	if ( isset( $user->email ) ) {
-        		$email_data['to'] = array($user->email);
+                $test.= $user->email.', ';
+                $email_data = array(
+                    'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
+                    'to' => array($user->email),
+                    'subject' => 'Two Thousand Times - Weekly Digest',
+                    'plaintext' => $plaintext,
+                    'html'  => $html
+                );
         		$this->email->create( $email_data );
         	}
         }
 
+        // This is just for testing
+        $email_data = array(
+            'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
+            'to' => array(),
+            'subject' => 'Two Thousand Times - Weekly Digest TEST',
+            'plaintext' => $plaintext,
+            'html'  => $html.= $test
+        );
         $this->email->test( $email_data );
 
         $job->delete();
@@ -59,7 +69,7 @@ class AdminAction {
      *  Add random view counts to all posts
      */
     function addRandomViewCounts( $job, $data ) {
-        $posts = $this->post->all( false );
+        $posts = $this->post->allPublished();
         foreach ($posts as $post) {
             if ( $post instanceof Post ) { // safety check
                 $random_views = 1; // rand( 1, 5 )

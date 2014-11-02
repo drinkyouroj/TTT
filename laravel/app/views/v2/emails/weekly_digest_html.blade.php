@@ -10,7 +10,7 @@
 		<p> <a href="{{Config::get('app.url')}}/posts/{{ $featured_post['alias'] }}" style="margin-top:50px;color:#000000;font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:14px;text-decoration:none;"><?php echo substr( strip_tags($featured_post['body']), 0, 100) ?>...</a>  </p>
 		<div>
 			<a href="{{Config::get('app.url')}}/profile/{{ $featured_post['user']['username'] }}" style="text-decoration: none;">
-				<img src="{{Config::get('app.imageurl')}}/{{ $featured_post['user']['image'] }}" alt="avatar" style="height: 30px;width: 30px;background-color: black;vertical-align: middle;border-radius: 50%;margin-left: 5px;margin-right: 10px;">
+				<img src="{{Config::get('app.imageurl')}}/{{ $featured_post['user']['image'] }}" alt="avatar" height="30px" width="30px" style="height: 30px;width: 30px;background-color: black;vertical-align: middle;border-radius: 50%;margin-left: 5px;margin-right: 10px;">
 				<span style="color: #000000;font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;margin-right: 5px;">{{ $featured_post['user']['username'] }}</span>
 			</a>
 			<span>-</span>
@@ -23,9 +23,9 @@
 		<div>
 			<a href="{{Config::get('app.url')}}/profile/{{ $post_2['user']['username'] }}" style="text-decoration: none;">
 				@if ( isset($post_2['user']['image']) && ($post_2['user']['image'] != 0) )
-					<img src="{{Config::get('app.imageurl')}}/{{ $post_2['user']['image'] }}" alt="avatar" style="height: 30px;width: 30px;background-color: black;vertical-align: middle;border-radius: 50%;margin-left: 5px;margin-right: 10px;">
+					<img src="{{Config::get('app.imageurl')}}/{{ $post_2['user']['image'] }}" alt="avatar" height="30px" width="30px" style="height: 30px;width: 30px;background-color: black;vertical-align: middle;border-radius: 50%;margin-left: 5px;margin-right: 10px;">
 				@else
-					<img src="{{Config::get('app.url')}}/images/profile/avatar-default.png" alt="avatar" style="height: 30px;width: 30px;background-color: black;vertical-align: middle;border-radius: 50%;margin-left: 5px;margin-right: 10px;">
+					<img src="{{Config::get('app.url')}}/images/profile/avatar-default.png" alt="avatar" height="30px" width="30px" style="height: 30px;width: 30px;background-color: black;vertical-align: middle;border-radius: 50%;margin-left: 5px;margin-right: 10px;">
 				@endif
 				<span style="color: #000000;font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;margin-right: 5px;">{{ $post_2['user']['username'] }}</span>
 			</a>
@@ -39,9 +39,9 @@
 		<div>
 			<a href="{{Config::get('app.url')}}/profile/{{ $post_3['user']['username'] }}" style="text-decoration: none;">
 				@if ( isset($post_3['user']['image']) && ($post_3['user']['image'] != 0) )
-					<img src="{{Config::get('app.imageurl')}}/{{ $post_3['user']['image'] }}" alt="avatar" style="height: 30px;width: 30px;background-color: black;vertical-align: middle;border-radius: 50%;margin-left: 5px;margin-right: 10px;">
+					<img src="{{Config::get('app.imageurl')}}/{{ $post_3['user']['image'] }}" alt="avatar" height="30px" width="30px" style="height: 30px;width: 30px;background-color: black;vertical-align: middle;border-radius: 50%;margin-left: 5px;margin-right: 10px;">
 				@else
-					<img src="{{Config::get('app.url')}}/images/profile/avatar-default.png" alt="avatar" style="height: 30px;width: 30px;background-color: black;vertical-align: middle;border-radius: 50%;margin-left: 5px;margin-right: 10px;">
+					<img src="{{Config::get('app.url')}}/images/profile/avatar-default.png" alt="avatar" height="30px" width="30px" style="height: 30px;width: 30px;background-color: black;vertical-align: middle;border-radius: 50%;margin-left: 5px;margin-right: 10px;">
 				@endif
 				<span style="color: #000000;font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;margin-right: 5px;">{{ $post_3['user']['username'] }}</span>
 			</a>
@@ -55,9 +55,9 @@
 		<div>
 			<a href="{{Config::get('app.url')}}/profile/{{ $post_4['user']['username'] }}" style="text-decoration: none;">
 				@if ( isset($post_4['user']['image']) && ($post_4['user']['image'] != 0) )
-					<img src="{{Config::get('app.imageurl')}}/{{ $post_4['user']['image'] }}" alt="avatar" style="height: 30px;width: 30px;background-color: black;vertical-align: middle;border-radius: 50%;margin-left: 5px;margin-right: 10px;">
+					<img src="{{Config::get('app.imageurl')}}/{{ $post_4['user']['image'] }}" alt="avatar" height="30px" width="30px" style="height: 30px;width: 30px;background-color: black;vertical-align: middle;border-radius: 50%;margin-left: 5px;margin-right: 10px;">
 				@else
-					<img src="{{Config::get('app.url')}}/images/profile/avatar-default.png" alt="avatar" style="height: 30px;width: 30px;background-color: black;vertical-align: middle;border-radius: 50%;margin-left: 5px;margin-right: 10px;">
+					<img src="{{Config::get('app.url')}}/images/profile/avatar-default.png" alt="avatar" height="30px" width="30px" style="height: 30px;width: 30px;background-color: black;vertical-align: middle;border-radius: 50%;margin-left: 5px;margin-right: 10px;">
 				@endif
 				<span style="color: #000000;font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;margin-right: 5px;">{{ $post_4['user']['username'] }}</span>
 			</a>
@@ -71,9 +71,9 @@
 		<div>
 			<a href="{{Config::get('app.url')}}/profile/{{ $post_5['user']['username'] }}" style="text-decoration: none;">
 				@if ( isset($post_5['user']['image']) && ($post_5['user']['image'] != 0) )
-					<img src="{{Config::get('app.imageurl')}}/{{ $post_5['user']['image'] }}" alt="avatar" style="height: 30px;width: 30px;background-color: black;vertical-align: middle;border-radius: 50%;margin-left: 5px;margin-right: 10px;">
+					<img src="{{Config::get('app.imageurl')}}/{{ $post_5['user']['image'] }}" alt="avatar" height="30px" width="30px" style="height: 30px;width: 30px;background-color: black;vertical-align: middle;border-radius: 50%;margin-left: 5px;margin-right: 10px;">
 				@else
-					<img src="{{Config::get('app.url')}}/images/profile/avatar-default.png" alt="avatar" style="height: 30px;width: 30px;background-color: black;vertical-align: middle;border-radius: 50%;margin-left: 5px;margin-right: 10px;">
+					<img src="{{Config::get('app.url')}}/images/profile/avatar-default.png" alt="avatar" height="30px" width="30px" style="height: 30px;width: 30px;background-color: black;vertical-align: middle;border-radius: 50%;margin-left: 5px;margin-right: 10px;">
 				@endif
 				<span style="color: #000000;font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;margin-right: 5px;">{{ $post_5['user']['username'] }}</span>
 			</a>

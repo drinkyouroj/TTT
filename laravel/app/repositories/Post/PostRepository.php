@@ -31,6 +31,7 @@ interface PostRepository {
 	
 	//Read Multi
 	public function all( $with_trashed );
+	public function allPublished();
 	
 	public function allFeatured();
 	
