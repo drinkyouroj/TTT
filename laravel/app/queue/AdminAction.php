@@ -32,8 +32,6 @@ class AdminAction {
     						->with( 'post_5', $data['post_5'] )
     						->render();
 
-		
-
         // Now send out all the emails
         $users = $this->user->all(true);
         $test = '';

@@ -17,7 +17,7 @@
 			<a href="{{Config::get('app.url')}}/posts/{{ $featured_post['alias'] }}" style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;margin-left: 5px;font-weight: bold;text-decoration: none;color: #32b1c6;">Read Now</a>
 		</div>
 	</div>
-	<hr>
+	<hr style="margin-bottom: 30px; margin-top: 30px;">
 	<div>
 		<h2> <a href="{{Config::get('app.url')}}/posts/{{ $post_2['alias'] }}" style="margin-top:50px;color:#000000;font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:20px;text-decoration:none;"> <?php echo strtoupper($post_2['title']); ?> </a> </h2>
 		<div>
@@ -33,7 +33,7 @@
 			<a href="{{Config::get('app.url')}}/posts/{{ $post_2['alias'] }}" style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;margin-left: 5px;font-weight: bold;text-decoration: none;color: #32b1c6;">Read Now</a>
 		</div>
 	</div>
-	<hr>
+	<hr style="margin-bottom: 30px; margin-top: 30px;">
 	<div>
 		<h2> <a href="{{Config::get('app.url')}}/posts/{{ $post_3['alias'] }}" style="margin-top:50px;color:#000000;font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:20px;text-decoration:none;"> <?php echo strtoupper($post_3['title']); ?> </a> </h2>
 		<div>
@@ -49,7 +49,7 @@
 			<a href="{{Config::get('app.url')}}/posts/{{ $post_3['alias'] }}" style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;margin-left: 5px;font-weight: bold;text-decoration: none;color: #32b1c6;">Read Now</a>
 		</div>
 	</div>
-	<hr>
+	<hr style="margin-bottom: 30px; margin-top: 30px;">
 	<div>
 		<h2> <a href="{{Config::get('app.url')}}/posts/{{ $post_4['alias'] }}" style="margin-top:50px;color:#000000;font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:20px;text-decoration:none;"> <?php echo strtoupper($post_4['title']); ?> </a> </h2>
 		<div>
@@ -65,7 +65,7 @@
 			<a href="{{Config::get('app.url')}}/posts/{{ $post_4['alias'] }}" style="font-family: Helvetica Neue,Helvetica,Arial,sans-serif;font-size: 14px;margin-left: 5px;font-weight: bold;text-decoration: none;color: #32b1c6;">Read Now</a>
 		</div>
 	</div>
-	<hr>
+	<hr style="margin-bottom: 30px; margin-top: 30px;">
 	<div style="margin-bottom: 50px;">
 		<h2> <a href="{{Config::get('app.url')}}/posts/{{ $post_5['alias'] }}" style="margin-top:50px;color:#000000;font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-size:20px;text-decoration:none;"> <?php echo strtoupper($post_5['title']); ?> </a> </h2>
 		<div>
