@@ -192,11 +192,6 @@ $(function() {
 		profile.viewInit(profile.view);
 	});
 
-	//image upload code.
-	$('body').on('change', '#uploadAvatar input.image', function() {
-		profile.avatarUpload();
-	});
-
 	//password change
 	$('body').on('click', '#changePassword button',function() {
 		profile.changePassword();
@@ -821,6 +816,7 @@ function ProfileActions() {
 			photo_input.target = $('#photoModal .modal-body');
 			photo_input.input = $('#uploadAvatar input.image');
 			photo_input.image_dom = '#uploadAvatar .thumb-container, .avatar-image, .header-container .avatar';
+			photo_input.application = 'avatar';
 			photoInit(photo_input);  // Found in photo.js
 			
 			photo_input.viewInit();

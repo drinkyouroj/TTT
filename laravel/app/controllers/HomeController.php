@@ -156,5 +156,9 @@ class HomeController extends BaseController {
 	{
 		return View::make('v2.static.terms');
 	}
+
+	public function getNamechange() {
+		return View::make('v2.static.namechange');
+	}
 	
 }

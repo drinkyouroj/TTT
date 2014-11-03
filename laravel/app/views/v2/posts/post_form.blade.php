@@ -318,7 +318,7 @@
 						
 					</div><!--End of Modal Body-->
 					<div class="modal-footer hidden">
-						<button type="button" class="btn btn-default btn-flat-white pull-right" data-dismiss="modal">OK</button>
+						<button type="button" class="btn btn-default btn-flat-white pull-right accept-photo" data-dismiss="modal">OK</button>
 					</div>
 				</div>
 			</div>
