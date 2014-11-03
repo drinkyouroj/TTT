@@ -43,7 +43,9 @@
 			<a href="{{ site_url }}profile/{{ post.user.username }}">
 				<img class="post-author-avatar" src="{{#userImage post.user.image }}{{/userImage}}">
 			</a>
-			{{post.story_type}} by <a href="{{ site_url }}profile/{{ post.user.username }}"> {{ post.user.username }} </a>
+			<span class="author-text">
+				{{post.story_type}} by <a href="{{ site_url }}profile/{{ post.user.username }}"> {{ post.user.username }} </a>
+			</span>
 		</div>
 
 		{{#ifCond feed_type 'repost' }}

@@ -577,7 +577,7 @@ textarea {
             li {
               padding: 0;
               a {
-                color: $dark;
+                color: #525252;
               }
             }
             @media (max-width:$break-md) {
@@ -1121,12 +1121,21 @@ textarea {
          font-size:11px;
          letter-spacing:1px;
         .post-author-avatar {
+          display:block;
+          float:left;
           height: 30px;
           width: 30px;
           border-radius: 50%;
           margin: 5px;
-          background-color: lightgrey;
+          background-position: center center;
+          background-size: cover;
+          background-repeat: no-repeat;
         }
+      }
+      .author-text {
+        display:block;
+        float:left;
+        margin-top:5px;
       }
 
       @if $isFeed {
