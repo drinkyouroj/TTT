@@ -106,9 +106,9 @@ class UserController extends BaseController {
             //Gotta send out email
             if(!empty($data['email']) ) {
                 $email_data = array(
-                    'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
+                    'from' => 'Sondry <no_reply@sondry.com>',
                     'to' => array($data['email']),
-                    'subject' => 'Thanks for Joining Two Thousand Times!',
+                    'subject' => 'Thanks for Joining Sondry!',
                     'plaintext' => View::make('v2/emails/new_user_plain')->with('user', $user)->render(),
                     'html'  => View::make('v2/emails/new_user_html')->with('user', $user)->render()
                     );
@@ -210,9 +210,9 @@ class UserController extends BaseController {
                 $user->save();
 
                 $email_data = array(
-                    'from' => 'no_reply@twothousandtimes.com',
+                    'from' => 'no_reply@sondry.com',
                     'to' => array($user->email),
-                    'subject' => 'Welcome back to Two Thousand Times!',
+                    'subject' => 'Welcome back to Sondry!',
                     'plaintext' => View::make('v2/emails/restore_user_plain')->with('user', $user)->render(),
                     'html'  => View::make('v2/emails/restore_user_html')->with('user', $user)->render()
                     );
@@ -369,9 +369,9 @@ class UserController extends BaseController {
 
                 //send them the email
                 $email_data = array(
-                    'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
+                    'from' => 'Sondry <no_reply@sondry.com>',
                     'to' => array($user->email),
-                    'subject' => "Here's your new credentials for Two Thousand Times.",
+                    'subject' => "Here's your new credentials for Sondry.",
                     'plaintext' => $plain,
                     'html'  => $html
                     );

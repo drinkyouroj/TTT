@@ -1,6 +1,6 @@
 <?php
 return array(
-	'from' => 'team@twothousandtimes.com',
-	'returnPath' => 'team@twothousandtimes.com',
+	'from' => 'team@sondry.com',
+	'returnPath' => 'team@sondry.com',
 
 	);

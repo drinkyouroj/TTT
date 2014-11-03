@@ -168,9 +168,9 @@ class MyProfileController extends BaseController {
 
 				//Send email to the new email.
 				$email_data = array(
-                    'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
+                    'from' => 'Sondry <no_reply@sondry.com>',
                     'to' => array($send_to),
-                    'subject' => 'Change Your Email Address | Two Thousand Times!',
+                    'subject' => 'Change Your Email Address | Sondry!',
                     'plaintext' => View::make('v2/emails/change_email_plain')->with('user', $user)->render(),
                     'html'  => View::make('v2/emails/change_email_html')->with('user',$user)->render()
                     );

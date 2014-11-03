@@ -41,9 +41,9 @@ class EmailLogic {
 							->render();
 
 			$email_data = array(
-	                'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
+	                'from' => 'Sondry <no_reply@sondry.com>',
 	                'to' => array($post->useremail->email),
-	                'subject' => 'You Broke '.$post_view.' views on Two Thousand Times!',
+	                'subject' => 'You Broke '.$post_view.' views on Sondry!',
 	                'plaintext' => $plain,
 	                'html'  => $html
 				);
@@ -66,9 +66,9 @@ class EmailLogic {
 							->render();
 
 			$email_data = array(
-	                'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
+	                'from' => 'Sondry <no_reply@sondry.com>',
 	                'to' => array($post->useremail->email),
-	                'subject' => 'A New Like on Two Thousand Times!',
+	                'subject' => 'A New Like on Sondry!',
 	                'plaintext' => $plain,
 	                'html'  => $html
 				);
@@ -91,9 +91,9 @@ class EmailLogic {
 							->render();
 
 			$email_data = array(
-	                'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
+	                'from' => 'Sondry <no_reply@sondry.com>',
 	                'to' => array($post->useremail->email),
-	                'subject' => 'A New Repost on Two Thousand Times!',
+	                'subject' => 'A New Repost on Sondry!',
 	                'plaintext' => $plain,
 	                'html'  => $html
 				);
@@ -118,9 +118,9 @@ class EmailLogic {
 							->render();
 
 			$email_data = array(
-	                'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
+	                'from' => 'Sondry <no_reply@sondry.com>',
 	                'to' => array($user->email),
-	                'subject' => 'You Have a New Follower on Two Thousand Times!',
+	                'subject' => 'You Have a New Follower on Sondry!',
 	                'plaintext' => $plain,
 	                'html'  => $html
 				);
@@ -142,9 +142,9 @@ class EmailLogic {
 						->render();
 
 			$email_data = array(
-	            'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
+	            'from' => 'Sondry <no_reply@sondry.com>',
 	            'to' => array($comment->post->useremail->email),
-	            'subject' => 'A New Comment on Two Thousand Times!',
+	            'subject' => 'A New Comment on Sondry!',
 	            'plaintext' => $plain,
 	            'html'  => $html
 			);
@@ -173,9 +173,9 @@ class EmailLogic {
 						->render();
 
 			$email_data = array(
-	            'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
+	            'from' => 'Sondry <no_reply@sondry.com>',
 	            'to' => array($parent->user->email),
-	            'subject' => 'A New Reply on Two Thousand Times!',
+	            'subject' => 'A New Reply on Sondry!',
 	            'plaintext' => $plain,
 	            'html'  => $html
 			);

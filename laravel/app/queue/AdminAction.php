@@ -40,9 +40,9 @@ class AdminAction {
         	if ( isset( $user->email ) ) {
                 $test.= $user->email.', ';
                 $email_data = array(
-                    'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
+                    'from' => 'Sondry <no_reply@sondry.com>',
                     'to' => array($user->email),
-                    'subject' => 'Two Thousand Times - Weekly Digest',
+                    'subject' => 'Sondry - Weekly Digest',
                     'plaintext' => $plaintext,
                     'html'  => $html
                 );
@@ -52,9 +52,9 @@ class AdminAction {
 
         // This is just for testing
         $email_data = array(
-            'from' => 'Two Thousand Times <no_reply@twothousandtimes.com>',
+            'from' => 'Sondry <no_reply@sondry.com>',
             'to' => array(),
-            'subject' => 'Two Thousand Times - Weekly Digest TEST',
+            'subject' => 'Sondry - Weekly Digest TEST',
             'plaintext' => $plaintext,
             'html'  => $html.= $test
         );
