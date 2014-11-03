@@ -334,7 +334,7 @@ input, textarea, button:focus {outline: none !important;}
 									span {
 										color: $dark;
 										font-size: 12px;
-										@include montserrat(bold);
+										@include montserrat;
 										@media (max-width:$break-sm) {
 											font-size: 10px;
 										}
@@ -881,6 +881,7 @@ input, textarea, button:focus {outline: none !important;}
 	background-size:40px 25px;
 	&:hover {
 		background-color: $lightgray;
+		color:$dark;
 		text-decoration: none;
 	}
 }
@@ -960,7 +961,7 @@ input, textarea, button:focus {outline: none !important;}
 		h4 {
 			margin-top:70px;
 			text-align:center;
-			@include montserrat(bold);
+			@include montserrat;
 			font-size:32px;
 			text-transform:uppercase;
 			letter-spacing:1px;
@@ -1265,7 +1266,7 @@ input, textarea, button:focus {outline: none !important;}
 					margin-top:20px;
 					color:$gray;
 					a {
-						@include montserrat(bold);
+						@include montserrat;
 					}
 				}
 			}
@@ -1285,7 +1286,7 @@ input, textarea, button:focus {outline: none !important;}
 					border-top:solid 1px $lightgray;
 					color:$gray;
 					a {
-						@include montserrat(bold);
+						@include montserrat;
 						font-size:12px;
 					}
 				}

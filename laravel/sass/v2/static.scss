@@ -64,7 +64,7 @@ body {
 		li {
 			margin-bottom:15px;
 			span {
-				@include montserrat(bold);
+				@include montserrat;
 			}
 		}
 		@media (max-width:$break-xs) {
@@ -72,7 +72,7 @@ body {
 		}
 	}
 	a {
-		@include montserrat(bold);
+		@include montserrat;
 		@media (max-width:$break-xs) {
 			font-size:12px;
 		}
@@ -185,7 +185,7 @@ body {
 		margin-bottom:50px;
 	}
 	p.bold {
-		@include montserrat(bold);
+		@include montserrat;
 		letter-spacing:2px;
 		text-transform:uppercase;
 	}

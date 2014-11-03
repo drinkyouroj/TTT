@@ -15,12 +15,11 @@ $border_color: #eee;
 		display:inline-block;
 		width: 130px;
 		padding: 12px 0;
-		background: $blue;
-
 		@include montserrat(normal);
 		text-transform: uppercase;
 		font-size: 11px;
 		color:#fff;
+		@include border-radius(2px);
 		@media (max-width:$break-md) {
 			width:auto;
 			padding: 12px 15px;
@@ -38,6 +37,13 @@ $border_color: #eee;
 		&.preview-button {
 			background: $gold;
 			float: left;
+		}
+		&.submit-post {
+			width:130px;
+			background: $blue;
+			@media (max-width:$break-sm) {
+				width:auto;
+			}
 		}
 	}
 }
@@ -404,7 +410,7 @@ $border_color: #eee;
 					text-align: center;
 					height: 150px;
 					@include border-radius(0);
-					background: #222;
+					background: #171717;
 					line-height:49.5px;
 					margin-left:0px;
 					@media (max-width: $break-lg) and (min-width: $break-lg-min) {
@@ -420,26 +426,26 @@ $border_color: #eee;
 				margin-top: 10px;
 				.tag {
 					color: $gold;
-					background: #222;
+					background: #171717;
 					border-bottom:solid 1px $dark;
 					float:left;
 					width: 100%;
 					font-size: 0;
 					display:inline-block;
 					::-webkit-input-placeholder {
-			   			color: $gold_dark !important;
+			   			color: $gold_darker !important;
 					}
 
 					:-moz-placeholder { /* Firefox 18- */
-					   color: $gold_dark !important;  
+					   color: $gold_darker !important;  
 					}
 
 					::-moz-placeholder {  /* Firefox 19+ */
-					   color: $gold_dark !important;  
+					   color: $gold_darker !important;  
 					}
 
 					:-ms-input-placeholder {  
-					   color: $gold_dark !important;  
+					   color: $gold_darker !important;  
 					}
 					input {
 						width: 100%;

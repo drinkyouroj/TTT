@@ -15,7 +15,7 @@ a:focus {
 			h2 {
 				background-position: left center;
 				background-repeat: no-repeat;
-				@include montserrat(bold);
+				@include montserrat;
 				font-size:40px;
 				text-transform:none;
 				vertical-align: middle;
@@ -94,7 +94,7 @@ a:focus {
 					display:inline-block;
 					text-align: center;
 					span.count{
-						@include montserrat(bold);
+						@include montserrat;
 						display:block;
 						font-size: 21px;
 						@media (max-width:$break-sm) {
@@ -115,7 +115,7 @@ a:focus {
 						color:$lightgray;
 						text-decoration: none;
 						padding:10px 5px 15px 5px;
-						background:#525252;
+						background:#222;
 						-webkit-border-radius: 5px; 
 						-moz-border-radius: 5px; 
 						border-radius: 5px; 
@@ -142,7 +142,7 @@ a:focus {
 			a#settings {
 				font-size: 10px;
 				background-image:url('../../../../images/global/settings.png');
-				background-color:#525252;
+				background-color:$gold;
 				@media (max-width:$break-xs) {
 					width:40px;
 					height:30px;
@@ -169,7 +169,7 @@ a:focus {
 				display:block;
 				float:left;
 				margin-right: 20px;
-				@include montserrat(bold);
+				@include montserrat;
 				font-size: 14px;
 				color: #888;
 				text-transform: uppercase;
@@ -520,7 +520,7 @@ a:focus {
 					          }
 						}
 						.read-more {
-							@include montserrat(bold);
+							@include montserrat;
 							text-transform:uppercase;
 							text-align:left;
 							font-size:10px;
@@ -573,7 +573,7 @@ a:focus {
 						text-align:center;
 						font-size: 15px;
 						text-transform: uppercase;
-						@include montserrat(bold);
+						@include montserrat;
 						letter-spacing: 1px;
 						color:$cream;
 						background:$dark_cream;
@@ -606,8 +606,8 @@ a:focus {
 								line-height:130%;
 								a {
 									text-decoration: none;
-									color: $blue;
-									@include montserrat(bold);
+									color: $gold;
+									@include montserrat;
 								}
 							}
 							.comment {
@@ -625,7 +625,7 @@ a:focus {
 									color:$blue;
 									font-size: 10px;
 									text-transform: uppercase;
-									@include montserrat(bold);
+									@include montserrat;
 								}
 							}
 						}

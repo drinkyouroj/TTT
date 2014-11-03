@@ -7,6 +7,7 @@ $blue_dark:#2c9ca8;
 $blue_darker:#19767f;
 $gold:#917847;
 $gold_dark:#7f6840;
+$gold_darker:#56442a;
 $red: #f74141;
 $dark_gray: #333;
 $gray: #ccc;
@@ -66,7 +67,7 @@ font-family: 'TradeGothicLTPro-BdCn20Obl';
 	@if $weight == 'normal' {
 		font-weight: 400;
 	} @else if $weight == 'bold' {
-		font-weight: 700;
+		font-weight: 400;
 	}
 }
 
@@ -275,7 +276,7 @@ textarea {
   }
   .redirect-other {
       a {
-        @include montserrat(bold);
+        @include montserrat;
         font-size:12px;
       }
     }
@@ -558,7 +559,7 @@ textarea {
             letter-spacing:1px;
             @include word-break(break-all);
             .author-name {
-              @include montserrat(bold);
+              @include montserrat;
               letter-spacing:1px;     
             }
           }
@@ -709,7 +710,7 @@ textarea {
         border-bottom: 5px solid $dark;
 
         .page-count {
-          @include montserrat(bold);
+          @include trade;
           float: right;
         }
       }
@@ -851,7 +852,7 @@ textarea {
       display:block;
       width:100%;
       margin-bottom:5px;
-      @include montserrat(bold);
+      @include montserrat;
       text-transform:uppercase;
       letter-spacing:2px;
       font-size:14px;
