@@ -225,6 +225,9 @@ $(function() {
 						$(form).find('textarea').val( '' );
 					}
 					
+				} else {
+					console.log('Error with comment submit.');
+					console.log( data );
 				}
 			}
 		});

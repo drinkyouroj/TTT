@@ -6,8 +6,8 @@
 			<p>
 			@if ( Auth::guest() )
 				Sign up to post your stories, follow, and comment.
-			@else 
-				Go out there and be somebody.
+			@else
+				Post your stories, follow, and comment.
 			@endif
 			</p>
 		</div>

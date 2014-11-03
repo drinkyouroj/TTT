@@ -244,6 +244,23 @@ $(function() {
             }
         });
     });
+    // Add random view counts to all posts
+    $('#offcanvas-admin-sidebar .admin-add-random-view-counts').click( function() {
+        var $self = $(this);
+        $.ajax({
+            url: window.site_url + 'admin/add-random-view-counts',
+            type: 'POST',
+            success: function ( data ) {
+                if ( data.success ) {
+                    $self.addClass('disabled');
+                    $self.addClass('btn-default');
+                    $self.removeClass('btn-primary');
+                } else {
+
+                }
+            }
+        })
+    });
 
     // ========================== ADMIN USER FUNCTIONALITIES ============================
     // User delete

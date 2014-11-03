@@ -16,4 +16,6 @@ interface PromptRepository {
 	public function getPromptForSignup();
 	public function getPromptForPostInput();
 
+	public function incrementPromptClicks( $id );
+
 }

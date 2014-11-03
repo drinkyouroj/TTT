@@ -137,6 +137,10 @@ class EloquentPostRepository implements PostRepository {
 			return $this->post->get();//unlikely
 		}
 	}
+
+	public function allPublished () {
+		return $this->post->where('published', 1)->get();
+	}
 	
 	public function allFeatured() {
 		return $this->post->where('featured',1)
@@ -165,7 +169,6 @@ class EloquentPostRepository implements PostRepository {
 						->orderBy('updated_at', 'DESC')
 						->skip(($page-1)*$paginate)
 						->take($paginate);
-						;
 		if($rest) {
 			return $query->with('user')->get();
 		} else {

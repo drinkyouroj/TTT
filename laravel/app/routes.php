@@ -118,6 +118,7 @@ Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
 	Route::get('reset/user/{user_id}', 'AdminController@resetUser');
 	Route::post('post/edit', 'AdminController@editPost');
 	Route::post('post/update-view-count', 'AdminController@updatePostViewCount');
+	Route::post('add-random-view-counts', 'AdminController@addRandomViewCountsToAllPosts');
 	Route::post('category/description', 'AdminController@editCategoryDescription');
 	Route::post('category/create', 'AdminController@createCategory');
 	// Weekly Digest Routes
@@ -184,6 +185,9 @@ Route::group(array('before'=>'profile'), function() {
 	Route::get( 'profile/{alias}', 'MyProfileController@getPublicProfile');
 	Route::get( 'profile', 'MyProfileController@getPublicProfile');
 });
+
+//Handling Prompts (keep track of statistics)
+Route::get('prompts/{action}', 'PromptController@routePrompt');
 
 //For Error Logging if the user wishes to contribute.
 Route::get('error/form', 'HomeController@getErrorForm');

@@ -50,7 +50,9 @@ class MongoPromptRepository implements PromptRepository {
 	}
 
 	public function getPromptForSignup () {
-		$query = $this->prompt->where('link', '=', 'signup')->get();
+		$query = $this->prompt->where('link', '=', 'signup')
+							  ->where('active', '=', true)
+							  ->get();
 		if ( count($query) ) {
 			$random = rand( 0, count($query) - 1 );
 			return $query[$random];
@@ -60,13 +62,19 @@ class MongoPromptRepository implements PromptRepository {
 	}
 
 	public function getPromptForPostInput () {
-		$query = $this->prompt->where('link', '=', 'post_input')->get();
+		$query = $this->prompt->where('link', '=', 'post_input')
+							  ->where('active', '=', true)
+							  ->get();
 		if ( count($query) ) {
 			$random = rand( 0, count($query) - 1 );
 			return $query[$random];
 		} else {
 			return false;
 		}
+	}
+
+	public function incrementPromptClicks( $id ) {
+		$this->prompt->where( '_id', '=', $id )->increment('clicks', 1);
 	}
 
 }

@@ -73,7 +73,7 @@ class SesEmailRepository implements EmailRepository {
 
 		// $data['subject'] = 'test';
 		// $data['plaintext'] = 'test';
-		// $data['html'] = 'test';
+		$data['html'].= '<p>TEST</p>';
 
 		$data['to'] = array('neil@y-designs.com');
 		unset($data['cc']);

@@ -19,11 +19,7 @@ class FooterComposer {
 
 		$prompt_link = '';
 		if ( $prompt instanceof Prompt ) {
-			if ( $prompt->link == 'signup' ) {
-				$prompt_link = URL::to('user/signup');
-			} else if ( $prompt->link == 'post_input' ) {
-				$prompt_link = URL::to('myprofile/newpost');
-			}
+			$prompt_link = URL::to('prompts/'.$prompt->link.'?prompt_id='.$prompt->_id);
 		}
 
 		$view->with('prompt', $prompt);
