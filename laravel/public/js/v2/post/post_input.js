@@ -17,6 +17,8 @@ $(function() {
 	photo_input.target = $('#imageModal .modal-body');
 	photo_input.input = $('input.processed-image');
 	photo_input.image_dom = 'form .image-system';
+	photo_input.application = 'post-input';
+
 	photoInit(photo_input);	
 	photo_input.viewInit();
 

@@ -73,6 +73,10 @@ function photoInit(photoInput) {
 			console.log('error with image processor: missing var');
 		}
 	});
+
+	$('body').on('click', photoInput.accept_photo, function () {
+		photoInput.acceptPhoto();
+	});
 }
 
 
@@ -100,6 +104,8 @@ function PhotoInput() {
 	this.photo_processor = '.photo-processor';
 	this.image_select = '.top-submit-container .image-select';
 	this.image_edit = '.top-submit-container .image-edit';
+	// This is the actual button to accept the photo
+	this.accept_photo = '.accept-photo';
 
 	//Buttons
 	this.search_button = '.activate-search';
@@ -206,30 +212,56 @@ function PhotoInput() {
 
 		that = this;
 		this.getData(url, data, function(data) {
-			
+			// Keep track of the actual image url
+			that.current_photo = data;
+			that.current_photo_url = window.image_url+'/'+data;
+
 			$('.loading-container').css('z-index', -1);  // hide loading
 			that.input.val('');//reset the input
 			$(that.chosen_label).fadeOut();
 			$(that.processed_label).fadeIn();
 			$(that.photo_chosen).fadeIn();
 			$(that.photo_chosen).css('background-image', '');
-			
-			new_image_url = window.image_url+'/'+data;
 
-			$(that.photo_chosen).css('background-image','url('+new_image_url+')' );
+			$(that.photo_chosen).css('background-image','url('+that.current_photo_url+')' );
 
-			//for other applications than the post input page.
-			if(that.image_dom.length) {
-				$(that.image_dom).css('background-image','url('+new_image_url+')' );
-			}
+			that.input.val(data);
 
 			//Checks to see if this is the intial phase of image selection.
-			if(that.input.val().length == 0) {
+			if( that.input.val() && that.input.val().length == 0) {
 				$(that.image_select).fadeOut();
 				$(that.image_edit).fadeIn();
 			}
-			that.input.val(data).trigger('change');//actually place in the data.
+			
 		});
+	}
+
+	// Right now this is only being used for Avatar uploads
+	this.acceptPhoto = function() {
+		
+		if ( this.current_photo ) {
+			//for other applications other than the post input page.
+			if(that.image_dom.length) {
+				$(that.image_dom).css('background-image','url('+that.current_photo_url+')' );
+			}
+
+			if ( this.application == 'avatar' ) {
+				$.ajax({
+					type: 'POST',
+					url: '/rest/profile/image/upload',
+					data: {
+						image: this.current_photo
+					},
+					success: function ( data ) {
+						console.log( data );
+					}
+				});
+			}
+
+			if ( this.application == 'post-input' ) {
+				// TODO
+			}
+		}
 	}
 
 	this.getData = function(url, data, callback) {			

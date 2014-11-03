@@ -252,7 +252,7 @@
 					
 				</div><!--End of Modal Body-->
 				<div class="modal-footer hidden">
-					<button class="btn-flat-blue pull-right" data-dismiss="modal">Ok</button>
+					<button class="btn-flat-blue pull-right accept-photo" data-dismiss="modal">Ok</button>
 				</div>
 			</div>
 		</div>
