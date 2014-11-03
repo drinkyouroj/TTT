@@ -138,8 +138,14 @@ body {
 	}
 	img.ttt-icon {
 		position:absolute;
-		top:-25px;
-		right:-20px;
+		top:-35px;
+		right:-50px;
+		@media (max-width:$break-md) {
+			width:70px;
+			height:70px;
+			top:-35px;
+			right:-30px;
+		}
 	}
 	p {
 		font-size:18px;

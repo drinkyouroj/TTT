@@ -195,9 +195,9 @@
 .author-container {
 	.author-content {
 		background-color:$white;
-		margin-bottom:20px;
 		padding:10px 20px;
-		border:solid 1px $lightgray;
+		border-right:solid 1px $lightgray;
+		border-left:solid 1px $lightgray;
 		@media (max-width:$break-xs) {
 			padding:10px 10px;
 		}
@@ -249,7 +249,7 @@
 				@include montserrat;
 				text-transform:uppercase;
 				letter-spacing:1px;
-				background-color:$dark_gray;
+				background-color:$gold;
 				color:$white;
 				@media (max-width:$break-xs) {
 					padding:5px 5px;
@@ -303,10 +303,17 @@
 }
 
 .post-comment-wrapper {
+	margin-bottom:50px;
 	background-color: $beige;
 	.post-comment-container {
 		.comments {
-			margin-top:20px;
+			padding:30px 50px;
+			background:$white;
+			border:solid 1px $lightgray;
+			@media (max-width:$break-xs) {
+				margin:0 15px;
+				padding:20px 20px;
+			}
 			textarea, .comment-body {
 				@include garamond;
 				font-size:16px;
@@ -316,16 +323,17 @@
 				color:$gray;
 			}
 			.form-group {
-				margin-top:0px;
-				margin-left: 0;
-				margin-right: 0;
+				margin:0 0 5px 0;
 				label {
-					@include montserrat;
+					@include trade;
 					text-transform:uppercase;
 					padding-bottom:5px;
 				}
+				textarea {
+					background:$off_cream;
+				}
 				&.pull-right {
-					margin-bottom: 0 !important;
+					margin-bottom: 10px !important;
 					input {
 						@media (max-width:$break-xs) {
 							font-size:10px;
@@ -340,11 +348,16 @@
 				background-color: white;
 				
 				div.comment {
-					
-					border-top: 2px solid $lightgray;
+					border-top: 1px solid $gray;
+					border-right: 1px solid $lightgray;
+					border-bottom: 1px solid $lightgray;
+					border-left: 1px solid $lightgray;
+					background:$off_cream;
 					padding: 10px 20px 5px 10px;
+
+					@include border-radius(5px);
 					@include transition (background-color, 3s, linear, 0s);
-				
+					
 					// Styles only applied to PUBLISHED comments
 					&.published {
 						.flag-comment, .like-comment {
@@ -481,7 +494,7 @@
 
 							form.comment-reply, form.comment-edit {
 								textarea {
-									border-radius: 0;	
+									border-radius: 0;
 								}
 								input {
 									border: 0;
@@ -492,13 +505,16 @@
 									text-align: center;
 								}
 							}
+							textarea {
+								background:$white;
+							}
 						}
 					}
 
 				}
 
 				div.thread-parent-divider {
-					background-color: $beige;
+					background-color: $white;
 					height: 20px;
 				}				
 			}

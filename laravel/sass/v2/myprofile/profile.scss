@@ -462,6 +462,7 @@ a:focus {
 								}
 							}
 							p.tagline {
+								color:$gold;
 								@include tagline_listing;
 								font-size:15px;
 								@media (max-width:$break-lg) {

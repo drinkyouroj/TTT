@@ -31,7 +31,7 @@
 				<div class="col-sm-4 col-xs-8 col-middle">
 					<div class="header-logo">
 						<a  href="{{Config::get('app.url')}}">
-							TWO THOUSAND TIMES
+							<img src="{{ URL::to('images/global/sondry-logo-min.png') }}" alt="SONDRY">
 						</a> 
 					</div>
 				</div>

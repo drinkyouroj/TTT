@@ -13,7 +13,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2 info-container about-container">
-			<img class="ttt-icon" width="53" height="53" src="{{Config::get('app.url')}}/images/global/ttt-icon-outline.png">
+			<img class="ttt-icon" src="{{Config::get('app.url')}}/images/global/gold-icon.png">
 			<h1>About</h1>
 			<p class="first-paragraph">A couple years ago, we got fed up with the daily grind of social media and “went off the grid,” so to speak. After leaving these networks of instant accessibility behind, we found ourselves more comfortable talking openly with strangers. They were willing to share and we were ready to listen.</p>
 			<p>These revealing and genuine conversations garnered retellable stories, introspective thoughts, and life-guiding advice from individuals we’d never hear from again. The only trouble: we wanted to hear more, but had no control over when these exchanges would occur.</p>

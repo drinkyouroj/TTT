@@ -57,7 +57,7 @@
 						</a>
 					</div>
 					<div class="user-actions col-md-4 col-sm-6 col-xs-5">
-						<a class="btn-flat-light-gray profile-action" href="{{URL::to('profile/'.$fuser->user->username)}}">
+						<a class="btn-outline-gold profile-action" href="{{URL::to('profile/'.$fuser->user->username)}}">
 							View {{$fuser->user->username}}'s Profile
 						</a>
 						<a class="follow-button follow-action {{ $fuser_follow ? 'following' : '' }}" data-userid="{{$fuser->user_id}}" href="{{ URL::to('user/signup') }}">

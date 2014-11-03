@@ -30,13 +30,13 @@ $border_color: #eee;
 			font-size: 10px;
 		}
 		&.save-draft {
-			background: #a4a4a4;
+			background: $gold;
 			@media (max-width:$break-sm) {
 				margin-right: 1px;
 			}
 		}
 		&.preview-button {
-			background: #a4a4a4;
+			background: $gold;
 			float: left;
 		}
 	}
@@ -151,6 +151,7 @@ $border_color: #eee;
 		border-top:1px solid $dark;
 		@include draftPublishButtons();
 		a {
+			padding:12px 15px;
 			cursor: pointer;
 		}
 	}
@@ -282,17 +283,26 @@ $border_color: #eee;
 }
 
 .top-submit-wrapper {
-	background:$off_cream;
-	@media (max-width:$break-md) {
-		background:$white;
+	margin-top:41px;
+	background:$dark;
+	@media (max-width:$break-xs) {
+		margin-top:35px;
 	}
 	.top-submit-container {
 		position: relative;
 		margin-top: 41px;
 		@media (min-width: $break-lg-min) {
 			width: 100%;
+			max-width:1440px;
+			margin:0 auto;
 			padding-left:0px;
 			padding-right:0px;
+		}
+		@media (max-width:$break-md) {
+			margin-right: auto;
+			margin-left: auto;
+			padding-left: 15px;
+			padding-right: 15px;
 		}
 		@media (max-width:$break-xs) {
 			margin-top: 31px;
@@ -334,9 +344,12 @@ $border_color: #eee;
 		.form-heading {
 			position:relative;
 			height: auto;
-			background-color: #fff;
+			background-color: $dark;
 			@media (min-width: $break-lg-min) {
 				vertical-align:middle;
+			}
+			@media (max-width: $break-md) {
+				padding-bottom:20px;
 			}
 			.title, .tags {
 				margin-left:15px;
@@ -345,8 +358,25 @@ $border_color: #eee;
 			.title {
 				position:relative;
 				@include post_page_title;
+				background:$dark;
+				border:0px;
 				@media (min-width: $break-lg-min) {
 					margin-top:-100px;
+				}
+				::-webkit-input-placeholder {
+				   color: #333;
+				}
+
+				:-moz-placeholder { /* Firefox 18- */
+				   color: #333;  
+				}
+
+				::-moz-placeholder {  /* Firefox 19+ */
+				   color: #333;  
+				}
+
+				:-ms-input-placeholder {  
+				   color: #333;  
 				}
 				label {
 					margin-bottom: 8px;
@@ -362,12 +392,7 @@ $border_color: #eee;
 					text-align: center;
 					height: 150px;
 					@include border-radius(0);
-					background: none;
-					border-color: $border_color;
-					font-size: 32px;
-					@include montserrat(bold);
-					text-transform:uppercase;
-					color:$dark;
+					background: #222;
 					line-height:49.5px;
 					margin-left:0px;
 					@media (max-width: $break-lg) and (min-width: $break-lg-min) {
@@ -380,15 +405,35 @@ $border_color: #eee;
 			}
 
 			.tags {
-				margin-top: 20px;
+				margin-top: 10px;
 				.tag {
+					color: $gold;
+					background: #222;
+					border-bottom:solid 1px $dark;
 					float:left;
-					width: 33.33%;
+					width: 100%;
 					font-size: 0;
 					display:inline-block;
+					::-webkit-input-placeholder {
+			   			color: $gold_dark !important;
+					}
+
+					:-moz-placeholder { /* Firefox 18- */
+					   color: $gold_dark !important;  
+					}
+
+					::-moz-placeholder {  /* Firefox 19+ */
+					   color: $gold_dark !important;  
+					}
+
+					:-ms-input-placeholder {  
+					   color: $gold_dark !important;  
+					}
 					input {
 						width: 100%;
+						text-align:center;
 						@include post_page_tagline;
+						border:0px;
 					}
 				}
 				label {
@@ -426,6 +471,7 @@ $border_color: #eee;
 	        	height:0px;
 	        	padding-top:63%;
 	        	margin:5px auto 0 auto;
+	        	border-top:solid 1px $gold;
 	        }
 			.image-select {
 				position:absolute;
@@ -436,6 +482,7 @@ $border_color: #eee;
 				margin: 0px 0;//This determines the height of the image.
 
 				width: 100%;
+				cursor:pointer;
 				label {
 					position:absolute;
 					top:-40px;
@@ -458,11 +505,13 @@ $border_color: #eee;
 				.image-link {
 					img {
 						width:10%;
-						margin-bottom: 2%;
+						margin-bottom: 10px;
 					}
 					span {
 						@include montserrat(normal);
-						color:#525252;
+						color:$white;
+						padding:5px 10px;
+						background-image:url('../../../../images/global/black-55.png');
 						font-size: 16px;
 						text-transform: uppercase;
 						letter-spacing:2px;

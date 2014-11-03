@@ -1,4 +1,3 @@
-	
 	@if( is_object($fuser) )
 	<div class="featured-user-container">	
 		<h3 class="user-label">- Featured User -</h3>

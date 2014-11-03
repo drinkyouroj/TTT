@@ -1,8 +1,10 @@
 @import '../base';
 
+body,html {background:$white;}
+
 @include post_listing(0);
 .header-wrapper .header-inner-wrapper {
-
+	background:transparent;
 	-moz-box-shadow:    none;
   	-webkit-box-shadow: none;
   	box-shadow:         none;
@@ -18,6 +20,7 @@
 		}
 	}
 	&.active {
+		background:$white;
 		-moz-box-shadow:    1px 1px 1px 0px #999;
   		-webkit-box-shadow: 1px 1px 1px 0px #999;
   		box-shadow:         1px 1px 1px 0px #999;
@@ -48,7 +51,7 @@ h3.featured-label, h3.user-label, h3.category-label {
 
 h3.featured-label {
 	text-align:center;
-	color:$darker_cream;
+	color:$gold;
 	margin:30px 0 25px 0;
 	@media (max-width:$break-lg) { 
 		margin-bottom:20px;
@@ -70,13 +73,38 @@ h3.category-label {
 	.top-wrapper {
 		position:relative;
 		background:$white;
-		padding:0 0 25px 0;
+		padding:0;
 		@media (max-width:$break-xs) { 
    			padding:0 0 35px 0;
  		}
 		.heading-title {
+			display:block;
 			position:relative;
+			margin-top:-15px;
+			padding-bottom:33px;
+			@media (max-width:$break-sm) {
+	   			padding-bottom:20px;
+	 		}
 			h1 {
+				float:left;
+				width:100%;
+				text-align:center;
+				display:inline-block;
+				img.featured-logo {
+					width:300px;
+					height:auto;
+					margin:0 auto;
+					vertical-align:baseline;
+			 		@media (max-width:$break-md) { 
+			   			width:250px;
+			 		}
+			 		@media (max-width:$break-sm) { 
+			   			width:200px;
+		 			}
+		 			@media (max-width:$break-xs) { 
+			   			width:150px;
+		 			}
+				}
 				margin:0px 0;
 				background:$white;
 				@include fjalla;
@@ -95,19 +123,29 @@ h3.category-label {
 		 		}
 			}
 			ul.header-taglines {
-				@include post_page_tagline;
+				width:100%;
+				display:inline-block;
 				text-align:center;
+				margin-bottom:5px;
 				 li {
-              		line-height: 12px;
+              		line-height: 18px;
+              		letter-spacing:1px;
               		font-size:20px;
               		padding:0 20px;
+              		color:$gold;
+              		@include trade-italic;
+					text-transform:uppercase;
+					letter-spacing:1px;
               		@media (max-width:$break-md) { 
               			font-size:16px;
               			padding:0 10px;
               		}
+              		@media (max-width:$break-xs) { 
+              			font-size:14px;
+              		}
 	            }
 	            li:nth-child(1), li:nth-child(2) {
-	              border-right: 1px solid $dark;
+	              border-right: 2px solid $gold;
 	            }
 			}
 			//for non-user heading
@@ -192,34 +230,43 @@ h3.category-label {
 			}
 		}
 
+	.links-date {
+	}
 	.header-cat-links {
 		position:absolute;
-		bottom:0px;
+		bottom:-10px;
 		left:0px;
-		@media (max-width:$break-sm) { 
-			top:80px;
-		}
+		z-index:50;
 		@media (max-width:$break-xs) { 
 			display:none;
 		}
 		ul {
+			display:inline-block;
 			margin:0px;
 			padding:0px;
 			list-style:none;
+			border:solid 2px $white;
 			li {
+				
+				float:left;
+				&.new {
+					a {
+						background:$gold_dark;
+					}
+				}
 				a {
 					display:inline-block;
-					padding:5px 15px;
-					@include garamond-italic;
+					padding:5px 15px 2px 15px;
+					@include trade-italic;
 					font-size:14px;
 					text-transform:uppercase;
-					letter-spacing:2px;
+					letter-spacing:3px;
 					color:$white;
-					background:$dark_cream;
-					margin-bottom:5px;
+					background:$gold;
+					margin-bottom:0px;
 					@include secondary_drop_shadow();
 					&:hover {
-						background:$blue;
+						background:$dark;
 					}
 					@media (max-width:$break-sm) { 
 		   				font-size:12px;
@@ -228,64 +275,69 @@ h3.category-label {
 			}
 		}
 	}
-	.date {
-		.date-circle {
-				position:absolute;
-				width:86px;
-				height:86px;
-				bottom:-60px;
-				right:90px;
-				z-index:3;
-				@include border-radius(43px);
-				border:solid 5px $white;
-				text-align:center;
-				padding:18px 5px 5px 5px;
-				background:$dark;
-				color:$lightgray;
+	
+	.date-circle {
+			position:absolute;
+			width:105px;
+			height:105px;
+			bottom:-30px;
+			right:20px;
+			z-index:3;
+			background-image:url('../../../../images/featured/stamp-bg.png');
+			background-size:cover;
+			background-position:center center;
+			background-repeat:no-repeat;
+			@include border-radius(50px);
+			text-align:center;
+			padding:32px 5px 5px 5px;
+			color:$lightgray;
+			span.month {
+				@include fjalla;
+				font-size:16px;
+				text-transform:uppercase;
 				@media (max-width:$break-sm) { 
-					border:solid 3px $white;
+					font-size:12px;
 				}
-				span.month {
-					@include fjalla;
-					font-size:14px;
-					@media (max-width:$break-sm) { 
-						font-size:12px;
-					}
+				@media (max-width:$break-xs) { 
+					font-size:11px;
 				}
-				span.day {
-					@include montserrat(bold);
-					font-size:30px;
-					letter-spacing:1px;
-					line-height:24px;
-					@media (max-width:$break-sm) { 
-						font-size:27px;
-						line-height:20px;
-					}
-					
-				}
-				@media (max-width:$break-lg) { 
-		   			right:30px;
-		 		}
-				@media (max-width:$break-md) { 
-					right:0px;
-					bottom:-50px;
-		 		}
-		 		@media (max-width:$break-sm) {
-		 			width:70px;
-					height:70px;
-					right:50px;
-					@include border-radius(35px);
-					bottom:-50px;
-					padding:15px 5px 5px 5px;
-		 		}
-		 		@media (max-width:$break-xs) { 
-					bottom:-55px;
-					right:10px;
-		 		}
 			}
+			span.day {
+				@include montserrat(bold);
+				font-size:37px;
+				letter-spacing:1px;
+				line-height:27px;
+				@media (max-width:$break-sm) { 
+					font-size:27px;
+					line-height:20px;
+				}
+				
+			}
+			@media (max-width:$break-lg) { 
+	   			right:30px;
+	 		}
+			@media (max-width:$break-md) { 
+				right:0px;
+				bottom:-50px;
+	 		}
+	 		@media (max-width:$break-sm) {
+	 			width:90px;
+				height:90px;
+				right:50px;
+				bottom:-30px;
+				padding:25px 5px 5px 5px;
+	 		}
+	 		@media (max-width:$break-xs) { 
+	 			width:80px;
+				height:80px;
+				bottom:-55px;
+				right:10px;
+				padding:21px 5px 5px 5px;
+	 		}
 		}
-		
 	}
+		
+	
 	.main-wrapper {
 		background:#000;
 		@media (max-width:$break-lg) {
@@ -293,7 +345,7 @@ h3.category-label {
 		}
 		.main-container {
 			width:100%;
-			max-width:1400px;
+			max-width:1440px;
 			margin:0 auto;
 			padding:0 15px;
 			@media (min-width:$break-lg-min) { 
@@ -347,22 +399,22 @@ h3.category-label {
 				}
 
 				h2 {
-					font-size:27px;
+					font-size:32px;
 					line-height:125%;
-					letter-spacing:3px;
+					letter-spacing:1px;
 					margin-bottom:15px;
 					@include word-break(break-all);
 					@media (min-width:$break-lg-min) { 
 						margin-top:-50px;
 					}
-					@media (max-width:$break-lg) { 
+					@media (max-width:$break-lg) and (min-width:$break-lg-min)  { 
 						font-size:21px;
 	 				}
 	 				@media (max-width:$break-sm) {
 						margin-bottom:10px;
 					}
 					@media (max-width:$break-xs) {
-						font-size:17px;
+						font-size:24px;
 					}
 					
 				}
@@ -382,13 +434,14 @@ h3.category-label {
 						margin-bottom:0px;
 						letter-spacing:1px;
 						font-size:16px;
+						color:$gold;
 						@include word-break(break-all);
 						@media (max-width:$break-sm) {
 							margin-bottom:0px;
 							letter-spacing:0px;
 						}
 						&:nth-child(1), &:nth-child(2) {
-							border-right:solid 1px $dark_gray;
+							border-right:solid 1px $gold;
 						}
 					}
 				}
@@ -484,11 +537,10 @@ h3.category-label {
 		position:relative;
 		display:block;
 		margin:0 auto 0 auto;
-		
 		@media (max-width:$break-md) {
 			margin:0px auto;
 		}
-		&>.container {
+		.middle-container {
 			max-width:1150px;
 			background:white;
 			border:solid 1px $lightgray;
@@ -563,6 +615,75 @@ h3.category-label {
 			@media (max-width: $break-sm){
 				height:auto;
 				margin-bottom:30px;
+			}
+		}
+		.promotional-container {
+			height:365px;
+			@media (max-width: $break-md) { 
+				height:auto;
+			}
+			@media (max-width: $break-sm){ 
+				width:100%;
+				position:relative;
+				display:block;
+				float:left;
+				margin:0 0 20px 0;
+			}
+			.promotional-box {
+				background:$dark;
+				height:345px;
+				text-align:center;
+				@media (max-width: $break-md) { 
+					height:auto;
+					padding-bottom:50px;
+				}
+				img.new-cat {
+					width:210px;
+					height:auto;
+					margin:15px auto 5px auto;
+				}
+				h3 {
+					@include fjalla;
+					text-transform:uppercase;
+					color:$white;
+					font-size:55px;
+					margin:0px;
+					@media (max-width:$break-lg) { 
+						font-size:40px;
+ 					}
+				}
+				ul.new-cat-tags {
+					text-align:center;
+					display:block;
+					width:100%;
+					list-style:none;
+					li {
+						padding:0 10px;
+						color:$gold;
+						font-style:italic;
+						font-size:16px;
+						letter-spacing:1px;
+						&:nth-child(1), &:nth-child(2) {
+							border-right: 1px solid $gold;
+						}
+					}
+				}
+				p.subtext {
+					font-size:20px;
+					color:$white;
+					letter-spacing:1px;
+					padding:0px 30px;
+					margin-bottom:20px;
+					@media (max-width:$break-lg) { 
+						margin-top:20px;
+						font-size:17px;
+ 					}
+					span {
+						font-style:italic;
+					}
+				}
+				a {
+				}
 			}
 		}
 		.signup-box {
@@ -645,6 +766,36 @@ h3.category-label {
 .sectional-line {
 	margin:0px 15px 40px 15px;
 	border-bottom:solid 2px $dark_cream;
+}
+
+.signup-container {
+	max-width: 1150px;
+	.signup-bg {
+		padding-top:55px;
+		padding-bottom:60px;
+		text-align:center;
+		background:url('../../../../images/featured/signup-bg.jpg') !important;
+		background-size:cover;
+		background-repeat:no-repeat;
+		background-position:center top;
+		border-bottom:solid 3px $white;
+		h3, p {
+			color:$white;
+		}
+		h3 {
+			font-size:27px;
+			margin:0;
+			@include montserrat;
+			text-transform:uppercase;
+			letter-spacing:3px;
+		}
+		p {
+			margin:5px 0 20px 0;
+			font-size:22px;
+			letter-spacing:2px;
+			color:$gold;
+		}
+	}
 }
 
 .featured-user-container {
@@ -826,7 +977,7 @@ h3.category-label {
 				}
 			} 
 			.profile-action {
-				margin-bottom:3px;
+				margin-bottom:10px;
 				padding:8px 15px;
 				@media (max-width:$break-md) and (min-width:$break-sm-min) {
 					margin-right:3px;
@@ -918,5 +1069,6 @@ h3.category-label {
 }
 
 .content-wrapper {
+	background:$cream;
 	padding-bottom:0px;
 }

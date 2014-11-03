@@ -54,11 +54,11 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 heading-title">
-					<h1>Two Thousand Times</h1>
+					<h1><img class="featured-logo" src="{{ URL::to('images/global/sondry-logo.png') }}" alt="SONDRY"></h1>
 					<ul class="header-taglines list-inline">
-						<li></li>
-						<li></li>
-						<li></li>
+						<li>Read</li>
+						<li>Post</li>
+						<li>Share</li>
 					</ul>
 					{{--@if(!Auth::check())
 						<div class="line"></div>
@@ -74,9 +74,18 @@
 						<div class="line"></div>
 						<h3 class="signed-in">welcome <a href="{{Config::get('app.url')}}/myprofile">{{ Session::get('username') }}</a></h3>
 					@endif--}}
-					
 				</div>
-				<div class="col-md-12 date">
+				<div class="col-md-12 links-date">
+					<div class="header-cat-links">
+						<ul>
+							<li class="popular">
+								<a href="{{ URL::to('categories/all') }}">Popular</a>
+							</li>
+							<li class="new">
+								<a href="{{ URL::to('categories/new') }}">New</a>
+							</li>
+						</ul>
+					</div>
 					<div class="date-circle">
 						<span class="month">
 							{{date('F')}}
@@ -85,20 +94,13 @@
 							{{date('j')}}
 						</span>
 					</div>
+
 				</div>
 			</div>
 		</div>
+
 		
-		<div class="header-cat-links">
-			<ul>
-				<li>
-					<a href="{{ URL::to('categories/all') }}">Popular</a>
-				</li>
-				<li class="category-all">
-					<a href="{{ URL::to('categories/new') }}">New</a>
-				</li>
-			</ul>
-		</div>
+		
 		<div class="clearfix"></div>
 	</div>
 
