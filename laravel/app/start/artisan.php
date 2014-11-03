@@ -22,3 +22,4 @@ Artisan::add(new ImageUploadSweepCommand);
 Artisan::add(new CommentRecountCommand);
 Artisan::add(new ReservedDumpCommand);
 Artisan::add(new PostCreatedCommand);
+Artisan::add(new NameChangeEmailCommand);
