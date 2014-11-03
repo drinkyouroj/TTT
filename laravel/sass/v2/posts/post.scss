@@ -2,6 +2,13 @@
 
 @include post_styles;
 
+//NO NAV BOX SHADOW
+.header-inner-wrapper {
+	-moz-box-shadow:    none !important;
+	-webkit-box-shadow: none !important;
+	box-shadow:         none !important;
+}
+
 .post-action-bar-wrapper {
 	height: $post_actionbar_height;
 
@@ -14,8 +21,12 @@
 		width: 100%;
 		height: $post_actionbar_height;
 		z-index: 999;
-		background-image:url('../../../../images/posts/black-90.png');
+		background-image:url('../../../../images/global/white-95.png');
 		padding: 3px 15px;
+
+		-moz-box-shadow:    1px 1px 1px 0px #999;
+  		-webkit-box-shadow: 1px 1px 1px 0px #999;
+  		box-shadow:         1px 1px 1px 0px #999;
 
 		@media (max-width:$break-sm) {
 			height:35px;
@@ -71,17 +82,17 @@
 					}
 					&.like {
 						&>a.like-button {
-			    			background-image:url('../../../../images/global/like.png');
+			    			background-image:url('../../../../images/global/like-v2.png');
 			   		 	}
 					}
 					&.repost {
 						&>a.repost-button {
-			     			background-image:url('../../../../images/global/repost.png');
+			     			background-image:url('../../../../images/global/repost-v2.png');
 			    		}
 					}
 					&.save {
 						&>a.save-button {
-			     			background-image:url('../../../../images/global/save.png');
+			     			background-image:url('../../../../images/global/save-v2.png');
 			    		}
 					}
 			     
@@ -152,7 +163,7 @@
 			 }
 			.comment-button {
 				@include post_actions_label;
-				background-image:url('../../../../images/global/comment.png');
+				background-image:url('../../../../images/global/comment-v2.png');
 				@media (max-width: $break-xs) {
 					font-size:9px;
 			    	background-size:15px 35px;
@@ -181,11 +192,14 @@
 
 				&.active {
 					margin-top:2px;
-					background-image: none;
-					background: none;
-					border: 0;
-					color: #666;
 					cursor: default;
+					color: $white;
+					background: $gray;
+					border: 1px solid $gray;
+					background-image:url('../../../../images/global/following.png');
+					background-repeat: no-repeat;
+					background-position:left center;
+					background-size:40px 40px;
 				}
 			}
 		}

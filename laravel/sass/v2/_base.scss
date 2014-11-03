@@ -290,7 +290,7 @@ textarea {
   &>a {
       display: inline-block;
       height:25px;
-      color:#fff;
+      color:$gold;
       margin-left:20px;
       padding-left:25px;
       background-repeat: no-repeat;
@@ -334,7 +334,7 @@ textarea {
 @mixin post_actions_label {
     display: inline-block;
     height:25px;
-    color:$lightgray;
+    color:$gold;
     padding-left:27px;
     background-repeat: no-repeat;
     background-position:left 0px;
