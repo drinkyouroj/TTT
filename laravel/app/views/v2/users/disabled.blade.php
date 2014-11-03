@@ -13,14 +13,14 @@
 @stop
 
 @section('title')
-Disabled | Two Thousand Times
+Disabled | Sondry
 @stop
 
 
 @section('content')
     <div class="col-md-4 col-md-offset-4 signup-container forgot-container info-container">
 	    <h2>Your account has been disabled.</h2>
-	    <p>After multiple bans, it’s best for this account to take some time away from the Two Thousand Times community. Please contact <a href="mailto:team@twothousandtimes.com">team@twothousandtimes.com</a> with any questions or concerns.</p>
+	    <p>After multiple bans, it’s best for this account to take some time away from the Sondry community. Please contact <a href="mailto:team@sondry.com">team@sondry.com</a> with any questions or concerns.</p>
         
     <div class="clearfix"></div>
     </div>

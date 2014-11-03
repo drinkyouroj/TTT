@@ -54,7 +54,7 @@
 @stop
 
 @section('title')
-	{{ $post->title }} | Two Thousand Times
+	{{ $post->title }} | Sondry
 @stop
 
 @section('content')
@@ -187,7 +187,7 @@
 						</div>
 						@if( !$is_author )
 							<div class="hidden-sm hidden-xs follow-container">
-								<a data-action="follow" class="follow-button-white follow {{ $is_following ? 'active' : '' }}" href="#">
+								<a data-action="follow" class="follow-button follow {{ $is_following ? 'active' : '' }}" href="#">
 									<span class="{{ $is_following ? 'hidden' : '' }}"> {{ $follow_term }} {{ $post->user->username }} </span>
 									<span class="{{ $is_following ? '' : 'hidden' }}"> {{ $follow_term_active }} {{ $post->user->username }} </span>
 								</a>
@@ -211,17 +211,19 @@
 						</h2>
 					@endif
 					<div class="line"></div>
-					<ul class="post-taglines list-inline" itemprop="description">
-						<li> {{ $post->tagline_1 }} </li>
-						<li> {{ $post->tagline_2 }} </li>
-						<li> {{ $post->tagline_3 }} </li>
-						{{-- Admin edit capabilities --}}
-						@if ( $is_admin )	
-							<li class="hidden"> <input class="admin-post-tagline-1 form-control" type="text" value="{{ $post->tagline_1 }}"> </li>
-							<li class="hidden"> <input class="admin-post-tagline-2 form-control" type="text" value="{{ $post->tagline_2 }}"> </li>
-							<li class="hidden"> <input class="admin-post-tagline-3 form-control" type="text" value="{{ $post->tagline_3 }}"> </li>
-						@endif
-					</ul>
+					<div class="taglines-container">
+						<ul class="post-taglines list-inline" itemprop="description">
+							<li> {{ $post->tagline_1 }} </li>
+							<li> {{ $post->tagline_2 }} </li>
+							<li> {{ $post->tagline_3 }} </li>
+							{{-- Admin edit capabilities --}}
+							@if ( $is_admin )	
+								<li class="hidden"> <input class="admin-post-tagline-1 form-control" type="text" value="{{ $post->tagline_1 }}"> </li>
+								<li class="hidden"> <input class="admin-post-tagline-2 form-control" type="text" value="{{ $post->tagline_2 }}"> </li>
+								<li class="hidden"> <input class="admin-post-tagline-3 form-control" type="text" value="{{ $post->tagline_3 }}"> </li>
+							@endif
+						</ul>
+					</div>
 
 					<div class="author" itemprop="author" content="{{$post->user->username}}">
 						<a href="{{ URL::to('profile/'.$post->user->username ) }}">

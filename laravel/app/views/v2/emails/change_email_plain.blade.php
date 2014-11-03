@@ -7,7 +7,7 @@ Hi {{$user->username}},
 
 	{{Config::get('app.secureurl')}}/user/emailupdate/{{$user->update_confirm}}
 
-	twothousandtimes.com
+	sondry.com
 
 	Thanks,
 	TTT

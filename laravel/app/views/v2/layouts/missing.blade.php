@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-	404 - Can't Find it! | The Twothousand Times
+	404 - Can't Find it! | Sondry
 @stop
 
 @section('content')

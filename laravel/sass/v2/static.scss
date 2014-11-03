@@ -21,7 +21,7 @@ body {
 		margin-right:15px;
 	}
 	h1 {
-	@include montserrat(bold);
+	@include trade;
 	letter-spacing:3px;
 	text-transform:uppercase;
 	margin-top:30px;
@@ -100,7 +100,7 @@ body {
 .contact {
 	padding:20px 70px 80px 70px;
 	h1 {
-		@include montserrat(bold);
+		@include trade;
 	}
 	p {
 		font-size:16px;
@@ -138,8 +138,14 @@ body {
 	}
 	img.ttt-icon {
 		position:absolute;
-		top:-25px;
-		right:-20px;
+		top:-35px;
+		right:-50px;
+		@media (max-width:$break-md) {
+			width:70px;
+			height:70px;
+			top:-35px;
+			right:-30px;
+		}
 	}
 	p {
 		font-size:18px;
@@ -171,6 +177,26 @@ body {
 	}
 	p {
 		text-align:center !important;
+	}
+}
+
+.namechange {
+	h1 {
+		margin-bottom:50px;
+	}
+	p.bold {
+		@include montserrat(bold);
+		letter-spacing:2px;
+		text-transform:uppercase;
+	}
+	p.signoff {
+		margin-bottom:5px;
+	}
+	img.sign-logo {
+		@media (max-width:$break-sm) {
+			width:100px;
+			height:auto;
+		}
 	}
 }
 

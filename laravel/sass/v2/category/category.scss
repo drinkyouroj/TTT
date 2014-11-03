@@ -1,5 +1,91 @@
 @import '../base';
 
+.promotional-wrapper {
+	background-image:url('../../../../images/featured/signup-bg.jpg') !important;
+	background-size:cover;
+	background-repeat:no-repeat;
+	background-position:center bottom;
+	padding-bottom:3px;
+	@media (max-width:$break-sm) {
+		padding-bottom:10px;
+	}
+	&>.container {
+		@media (max-width:$break-md) {
+			width:100% !important;
+		}
+	}
+	.promotional-container {
+		.image-container {
+			text-align:center;
+			img {
+				width:100%;
+				height:auto;
+				max-width:150px;
+				margin-top:10px;
+				@media (max-width:$break-sm) {
+					margin-top:15px;
+				}
+			}
+		}
+		h3, p {
+			color:$white;
+		}
+		h3 {
+			font-size:40px;
+			margin:10px 0;
+			color:$gold;
+			text-transform:uppercase;
+			letter-spacing:2px;
+			border-right:solid 1px $gold;
+			@media (max-width:$break-lg) {
+				font-size:35px;
+			}
+			@media (max-width:$break-md) {
+				text-align:center;
+			}
+			@media (max-width:$break-sm) {
+				height:40px;
+				font-size:40px;
+				border-left:solid 1px $gold;
+				border-right:0px;
+			}
+			@media (max-width:$break-xs) {
+				padding-top:5px;
+				font-size:24px;
+			}
+		}
+		p {
+			font-size:20px;
+			letter-spacing:1px;
+			margin-top:17px;
+			@media (max-width:$break-lg) {
+				font-size:16px;
+			}
+			@media (max-width:$break-xs) {
+				margin-top:5px;
+			}
+		}
+		a {
+			width:100%;
+			text-align:center;
+			margin-top:12px;
+			@media (max-width:$break-lg) {
+				margin-top:8px;
+			}
+			@media (max-width:$break-md) {
+				width:100%;
+			}
+			@media (max-width:$break-sm) {
+				margin-top:10px;
+			}
+			@media (max-width:$break-xs) {
+				font-size:8px;
+				padding:10px 2px;
+				margin-top:13px;
+			}
+		}
+	}
+}
 .category-header {
 	position: relative;
 	width:100%;
@@ -25,6 +111,7 @@
 		font-size:50px;
 		letter-spacing:2px;
 		margin-bottom:0px;
+		text-transform:uppercase;
 		@media (max-width:$break-sm) {
 			font-size:32px;
 		}

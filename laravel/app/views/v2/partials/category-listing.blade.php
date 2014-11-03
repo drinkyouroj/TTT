@@ -11,12 +11,6 @@
 				</a> 
 			</li>
 		@endforeach
-		<li class="category-all">
-			<a href="{{ URL::to('categories/new') }}">
-				<div class="cat-img new"> </div>
-				<h4>New</h4>
-			</a>
-		</li>
 	</ul>
 	<div class="clearfix"></div>
 </div>

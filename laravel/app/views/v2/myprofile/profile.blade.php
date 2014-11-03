@@ -1,7 +1,7 @@
 @extends('v2.layouts.master')
 	
 @section('title')
-	{{$profile_user->username}}'s Profile | Two Thousand Times
+	{{$profile_user->username}}'s Profile | Sondry
 @stop
 
 @section('css')

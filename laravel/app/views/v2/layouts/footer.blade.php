@@ -1,21 +1,21 @@
 {{--Fixed Join banner (Not necesarrily join, could have other info)--}}
 @if ( $prompt instanceof Prompt )
 	<div class="join-banner">
-		<div class="join-text col-md-7 col-sm-8 col-xs-8">
+		<div class="join-text col-md-10 col-sm-9">
 			<h4>{{$prompt->body}}</h4>
 			<p>
 			@if ( Auth::guest() )
 				Sign up to post your stories, follow, and comment.
 			@else
-				Post your stories, follow, and comment.
+				Write about it now.
 			@endif
 			</p>
 		</div>
-		<div class="join-button col-md-5 col-sm-4 col-xs-4">
+		<div class="join-button col-md-2 col-sm-3">
 			<a class="btn-flat-blue" href="{{$prompt_link}}">
 				
 				@if( $prompt->link == 'signup' )
-					Create An Account
+					Signup
 				@elseif ( $prompt->link == 'post_input' )
 					Post Now
 				@endif

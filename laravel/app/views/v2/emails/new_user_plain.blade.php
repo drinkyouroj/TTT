@@ -5,4 +5,4 @@ Welcome {{$user->username}},
 
 	TTT
 
-	twothousandtimes.com
+	sondry.com

@@ -1,4 +1,4 @@
-Two Thousand Times - Weekly Digest
+Sondry - Weekly Digest
 	{{$featured_post['title']}}
 	Read Now {{Config::get('app.url')}}/posts/{{ $featured_post['alias'] }}
 

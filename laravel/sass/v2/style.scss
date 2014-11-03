@@ -49,8 +49,7 @@ a {
 }
 
 h1, h2, h3 {
-	@include montserrat(bold);
-	text-transform:uppercase;
+	@include trade;
 }
 
 h1, h2, h3, h4, p {
@@ -76,6 +75,37 @@ body {
 input, textarea, button:focus {outline: none !important;}
 
 // ================= HEADER ========================
+.what-button {
+	position:fixed;
+	bottom:80px;
+	left:0px;
+	cursor: pointer;
+	display: inline-block;
+	background:$gold;
+	padding:5px;
+	line-height:14px;
+	letter-spacing:1px;
+	@include trade;
+	text-transform:uppercase;
+	color:$dark;
+	font-size:14px;
+
+	-moz-box-shadow:    1px 1px 1px 0px #999;
+	-webkit-box-shadow: 1px 1px 1px 0px #999;
+	box-shadow:         1px 1px 1px 0px #999;
+
+	z-index:9999;
+	@media (max-width:$break-xs) {
+		bottom:50px;
+		font-size:12px;
+		line-height:13px;
+		padding:5px 1px 5px 5px;
+	}
+	&:hover, &:visited {
+		color:$dark;
+	}
+}
+
 .header-wrapper {
 	height: $navbar_height;
 	.header-inner-wrapper {
@@ -89,8 +119,6 @@ input, textarea, button:focus {outline: none !important;}
   		box-shadow:         1px 1px 1px 0px #999;
 		.header-container {
 			height: $navbar_height;
-			
-
 			.col-left {
 				margin-top: 0px;
 				button.read-button {
@@ -116,7 +144,7 @@ input, textarea, button:focus {outline: none !important;}
 
 			.col-middle {
 				.header-logo {
-					margin-top: 9px;
+					margin-top: 5px;
 					text-align: center;
 					a {
 						font-size: 21px;
@@ -131,12 +159,16 @@ input, textarea, button:focus {outline: none !important;}
 							font-size: 15px;
 							letter-spacing:1px;
 						}
+						img {
+							width:120px;
+							height:auto;
+						}
 					}
 					@media (max-width:$break-sm) and (min-width:$break-sm-min) {
-						margin-top: 12px;
+						margin-top: 10px;
 					}
 					@media (max-width:$break-xs) {
-						margin-top: 14px;
+						margin-top: 11px;
 					}
 				}
 			}
@@ -154,8 +186,8 @@ input, textarea, button:focus {outline: none !important;}
 					padding-right:15px;
 				}
 				.signup {
-					padding:5px 10px;
-					margin-top:5px;
+					padding:10px 10px;
+					margin-top:0px;
 					@media (max-width:$break-xs) {
 						width:54px;
 						font-size:11px;
@@ -364,7 +396,7 @@ input, textarea, button:focus {outline: none !important;}
 					color:$white;
 					margin-top:5px;
 					padding:5px 10px;
-					@include garamond;
+					@include trade;
 					@include drop_shadow;
 					&::before {
 						@include notifications_arrow_top;
@@ -380,9 +412,10 @@ input, textarea, button:focus {outline: none !important;}
 
 #offcanvas-sidebar {
 	@include offcanvas-sidebar( left, $offcanvas_sidebar_width );
-	@media (max-width:$break-md) {
-		border-right:solid 10px $black;
-	}
+		border-right:solid 10px #222;
+		@media (max-width:$break-md) {
+			border-right:solid 10px #222;
+		}
 		ul#accordion.sidebar-options {
 			li input.search-input {
 				width:98%;
@@ -473,7 +506,7 @@ input, textarea, button:focus {outline: none !important;}
 					a {
 						color:$dark;
 						padding-left: 35px;
-						background-color:$white;
+						background-color:$gold;
 						background-image:url('../../../images/notifications/post-notifications.png');
 						background-repeat: no-repeat;
 						background-position:left center;
@@ -524,6 +557,43 @@ input, textarea, button:focus {outline: none !important;}
 	}
 }
 
+.btn-flat-gold {
+	display:inline-block;
+	@include montserrat(normal);
+	color: white;
+	font-size: 12px;
+	background: $gold;
+	padding: 10px 15px;
+	text-decoration: none;
+	text-transform:uppercase;
+	border: 2px solid $gold;
+	cursor: pointer;
+
+	@include border-radius(2px);
+	&:hover {
+		// background-color: $dark_gray;
+		color: white;
+		text-decoration: none;	
+	}
+}
+
+.btn-outline-gold {
+	display:inline-block;
+	@include montserrat(normal);
+	color: $gold;
+	font-size: 12px;
+	background: transparent;
+	padding: 10px 15px;
+	text-decoration: none;
+	text-transform:uppercase;
+	border: 2px solid $gold;
+	cursor: pointer;
+	&:hover {
+		// background-color: $dark_gray;
+		border: 2px solid $blue;
+		color:$blue;
+	}
+}
 
 .btn-flat-gray {
 	display:inline-block;
@@ -634,6 +704,7 @@ input, textarea, button:focus {outline: none !important;}
 	text-transform:uppercase;
 	border: 2px solid $blue;
 	cursor: pointer;
+	@include border-radius(2px);
 	&:hover {
 		// background-color: $gray;
 		color: white;
@@ -693,6 +764,7 @@ input, textarea, button:focus {outline: none !important;}
 	background-repeat: no-repeat;
 	background-position:left center;
 	background-size:40px 40px;
+	@include border-radius(2px);
 	&:hover {
 		// background-color: $gray;
 		color: $white;
@@ -777,7 +849,7 @@ input, textarea, button:focus {outline: none !important;}
 	border-top: 2px solid $dark;
 	border-right: 0;
 	border-left: 0;
-	border-bottom:solid 3px $dark_gray;
+	border-bottom:solid 3px $dark;
 	cursor: pointer;
 	&:hover {
 		// background-color: $gray;
@@ -1052,12 +1124,14 @@ input, textarea, button:focus {outline: none !important;}
 				line-height:24px;
 			}
 			h3 {
-				margin-top:0px;
+				margin-top:10px;
 				margin-bottom:0px;
 				padding-top:20px;
-				font-size:24px;
+				font-size:21px;
 				@media (max-width:$break-sm) {
-					font-size:16px;
+					padding-left:20px;
+					padding-right:20px;
+					font-size:18px;
 				}
 			}
 			h4 {
@@ -1242,7 +1316,9 @@ input, textarea, button:focus {outline: none !important;}
 	bottom:0;
 	left:0;
 	background:$dark;
-	.footer-nav {float:left;
+	padding:10px 0;
+	.footer-nav {
+		float:left;
 		width:100%;
 		overflow:hidden;
 		position:relative;
@@ -1268,7 +1344,7 @@ input, textarea, button:focus {outline: none !important;}
 					display:block;
    					margin:0 0 0 1px;
    					padding:3px 10px;
-					color:$gray;
+					color:$gold;
 					@include montserrat;
 					text-transform:uppercase;
 					font-size:8px;
@@ -1307,18 +1383,24 @@ fieldset .errors, fieldset .alert-error  {
 	-moz-box-shadow:    0px 1px 2px 1px #333;
   	-webkit-box-shadow: 0px 1px 2px 1px #333;
   	box-shadow:         0px 1px 2px 1px #333;
+  	@media (max-width:$break-sm) {
+		display:none !important;
+	}
 	.join-text {
 		padding-right:0px;
 		h4 {
-			@include montserrat(bold);
-			text-transform:uppercase;
-			letter-spacing:2px;
+			@include trade;
 			margin-bottom:0px;
-			@media (max-width:$break-md) {
-				font-size:18px;
+			letter-spacing:1px;
+			font-size:18px;
+			@media (max-width:$break-lg) {
+				font-size:16px;
+			}
+			@media (max-width:$break-sm) {
+				font-size:14px;
 			}
 			@media (max-width:$break-xs) {
-				font-size:12px;
+				font-size:14px;
 			}
 		}
 		p {

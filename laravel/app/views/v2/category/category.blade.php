@@ -13,7 +13,7 @@
 	?>
 	
 	@section('title')
-		{{$cat_title}} | Two Thousand Times
+		{{$cat_title}} | Sondry
 	@stop
 
 	@section('css')
@@ -27,8 +27,34 @@
 
 	@section('content')
 
+		<div class="promotional-wrapper" >
+			<div class="container">
+				<div class="row">
+					<div class="promotional-container">
+						<div class="col-md-2 col-sm-4 col-xs-4 image-container">
+							<img class="new-cat" src="{{ URL::to('images/featured/new-cat-banner.png') }}" alt="New Category">
+						</div>
+						<div class="col-md-3 col-sm-4 col-xs-8">
+							<h3>First Time</h3>
+						</div>
+						<div class="col-md-5 hidden-sm col-xs-8">
+							<p class="subtext">Be one of the first to share your <span>“first time”</span> story.</p>
+						</div>
+						<div class="col-md-2 col-xs-4">
+							@if( $is_guest )
+								<a href="{{ URL::to( 'user/signup' ) }}" class="btn-flat-blue">Post Now</a>
+							@else
+								@if(Route::current()->uri() != 'myprofile/newpost')
+									<a href="{{Config::get('app.url')}}/myprofile/newpost" class="btn-flat-blue">Post Now</a>
+								@endif
+							@endif
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<section class="category-header">
-			<img class="corner-icon" src="{{ URL::to('images/global/ttt-icon.png') }}">
 			<h1 class="category-title">
 				{{ $cat_title }}
 			</h1>

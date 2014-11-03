@@ -13,7 +13,7 @@
 @stop
 
 @section('title')
-Restored  | Two Thousand Times
+Restored  | Sondry
 @stop
 
 

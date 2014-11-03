@@ -2,9 +2,9 @@
 
 	@section('title')
 		@if(!$edit)
-			New Post | Two Thousand Times
+			New Post | Sondry
 		@else
-			Edit Post | Two Thousand Times
+			Edit Post | Sondry
 		@endif
 	@stop
 
@@ -214,7 +214,7 @@
 						</div>
 						<div class="col-md-8 image-system"
 							@if(!$edit)
-								style="background-image: url('{{Config::get('app.url')}}/images/posts/sample-img2.jpg');"
+								style="background-image: url('{{Config::get('app.url')}}/images/posts/sample-image.jpg');"
 							@else
 								style="background-image: url('{{Config::get('app.url')}}/uploads/final_images/{{$image}}');"
 							@endif
@@ -230,7 +230,7 @@
 							<div class="image-select <?php if ( $draft ) { echo 'hidden'; } ?>">
 								{{ Form::label('image','Image') }}
 								<div onclick="#image" class="image-select-modal image-link" data-toggle="modal" data-target="#imageModal">
-									<img src="{{Config::get('app.url')}}/images/posts/add-image.png">
+									<img src="{{Config::get('app.url')}}/images/posts/gold-plus.png">
 									<br/>
 									<span>
 										Select Your Image.

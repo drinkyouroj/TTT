@@ -13,7 +13,7 @@
 @stop
 
 @section('title')
-Disabled | Two Thousand Times
+Disabled | Sondry
 @stop
 
 

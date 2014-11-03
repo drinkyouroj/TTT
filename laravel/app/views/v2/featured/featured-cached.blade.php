@@ -52,22 +52,46 @@
 	</div>
 
 	<div class="middle-wrapper">
-		<div class="container">
+		<div class="container middle-container">
 			<div class="col-md-12">
 				<h3 class="featured-label">- Featured Posts -</h3>
 			</div>
 			@foreach($featured as $k=>$f)
 				
 				@if($k == 3)
+
+
+					<div class="col-md-4 col-sm-6 middle-grid promotional-container">
+						<div class="promotional-box">
+							<img class="new-cat" src="{{ URL::to('images/featured/new-cat-banner.png') }}" alt="New Category">
+							<h3>First Time</h3>
+							<ul class="new-cat-tags list-inline">
+								<li>chicken</li>
+								<li>rape</li>
+								<li>contest</li>
+							</ul>
+							<p class="subtext">Be one of the first to share your <span>“first time”</span> story.</p>
+
+							@if( $is_guest )
+								<a href="{{ URL::to( 'user/signup' ) }}" class="btn-flat-blue">Post your “First Time”</a>
+							@else
+								@if(Route::current()->uri() != 'myprofile/newpost')
+									<a href="{{Config::get('app.url')}}/myprofile/newpost" class="btn-flat-blue">Post your “First Time”</a>
+								@endif
+							@endif
+
+						</div>
+					</div>
+
 					{{--if this is the third item--}}
-					@if(Auth::check() && is_object($from_feed))
+					{{--@if(Auth::check() && is_object($from_feed))
 						{{--Somethign from the user's feed--}}
-						<div class="col-md-4 col-sm-6 middle-grid">
+						{{--<div class="col-md-4 col-sm-6 middle-grid">
 						@include('v2.partials.post-listing-partial', array('post'=> $from_feed))
 						</div>
 					@else
 						{{--Signup box thing--}}
-						<div class="col-md-4 col-sm-6 middle-grid">
+						{{--<div class="col-md-4 col-sm-6 middle-grid">
 							<div class="post-container">
 								<div class="signup-box">
 									<div class="signup-top">
@@ -88,7 +112,7 @@
 								</div>
 							</div>
 						</div>
-					@endif
+					@endif--}}
 					<!--Feed Listing or Signup-->
 					<div class="bar"></div>
 				@endif
@@ -102,6 +126,22 @@
 					@endif
 			@endforeach
 		</div>
+
+		@if(!Auth::check())
+		<div class="container signup-container">
+			<div class="row">
+				<div class="signup-bg">
+					<div class="col-md-12 sign-up-row">
+						<h3>Our stories live here.</h3>
+						<p>Sign up to post your stories, follow, and comment.</p>
+						<a href="{{ URL::to( 'user/signup' ) }}" class="btn-flat-blue">Create an account</a>
+					</div>
+				<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+		@endif
+
 		<div class="clearfix"></div>
 	</div>
 	

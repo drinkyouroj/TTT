@@ -8,7 +8,7 @@
 <html>
   <head>
     <title>
-    	@yield('title','Two Thousand Times')
+    	@yield('title','Sondry')
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -29,6 +29,7 @@
 	<link href="{{Config::get('app.staticurl')}}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     
     <!--Fonts-->
+    <link rel="stylesheet" type="text/css" href="{{Config::get('app.staticurl')}}/fonts/tradegothic/MyFontsWebfontsKit.css">
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700|Fjalla+One' rel='stylesheet' type='text/css'>    
     <link href='http://fonts.googleapis.com/css?family=Vollkorn:400italic,400,700' rel='stylesheet' type='text/css'>
     
@@ -45,7 +46,7 @@
 	@endif
 	
 	{{--Opengraph--}}
-	<meta property="og:site_name" content="Two Thousand Times" />
+	<meta property="og:site_name" content="Sondry" />
 	<meta property="og:url" content="{{Request::url()}}" />
 
 	{{--Schema.org--}}
@@ -56,7 +57,7 @@
 
 	{{--Twitter--}}
 	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:site" content="@twothousandx">
+	<meta name="twitter:site" content="@sondrystories">
 
 
 	<!--Page Specific CSS-->
