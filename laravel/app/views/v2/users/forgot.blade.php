@@ -14,7 +14,7 @@
 @stop
 
 @section('title')
-Forgot your password? | Two Thousand Times
+Forgot your password? | Sondry
 @stop
 
 

@@ -13,7 +13,7 @@
 @stop
 
 @section('title')
-Banned | Two Thousand Times
+Banned | Sondry
 @stop
 
 
@@ -22,7 +22,7 @@ Banned | Two Thousand Times
     <div class="row">
 	    <div class="col-md-6 col-md-offset-3 signup-container forgot-container info-container">
 	        <h2>Your account has been temporarily banned.</h2>
-	        <p>To avoid future bans or permanent account deactivation please review and respect the Two Thousand Times community etiquette. Please contact <a href="mailto:team@twothousandtimes.com">team@twothousandtimes.com</a> with any questions or concerns.</p>
+	        <p>To avoid future bans or permanent account deactivation please review and respect the Sondry community etiquette. Please contact <a href="mailto:team@sondry.com">team@sondry.com</a> with any questions or concerns.</p>
 	        
 	    <div class="clearfix"></div>
 	    </div>

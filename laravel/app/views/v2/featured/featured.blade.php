@@ -37,14 +37,14 @@
 
 	{{--CSS and heading is the same so its not an issue to put that stuff here.--}}
 	<meta name="description" content="Every life is a story waiting to be heard.">
-	<meta property="og:title" content="Two Thousand Times" />
+	<meta property="og:title" content="Sondry" />
 	<meta property="og:description" content="Every life is a story waiting to be heard." />
-	<meta property="og:image" content="{{ Config::get('app.url').'/images/global/TTT-logo-main.jpg' }}" />
+	<meta property="og:image" content="{{ Config::get('app.url').'/images/logos/sondry-icon.jpg' }}" />
 	<meta property="og:type" content="article" />
 
-	<meta name="twitter:title" content="Two Thousand Times">
+	<meta name="twitter:title" content="Sondry">
 	<meta name="twitter:description" content="Every life is a story waiting to be heard.">
-	<meta name="twitter:image:src" content="{{ Config::get('app.url').'/images/global/TTT-logo-main.jpg' }}">
+	<meta name="twitter:image:src" content="{{ Config::get('app.url').'/images/logos/sondry-icon.jpg' }}">
 
 @stop
 
@@ -56,9 +56,9 @@
 				<div class="col-md-12 heading-title">
 					<h1><img class="featured-logo" src="{{ URL::to('images/global/sondry-logo.png') }}" alt="SONDRY"></h1>
 					<ul class="header-taglines list-inline">
-						<li>Read</li>
-						<li>Post</li>
-						<li>Share</li>
+						<li>Stories</li>
+						<li>Live</li>
+						<li>Here</li>
 					</ul>
 					{{--@if(!Auth::check())
 						<div class="line"></div>

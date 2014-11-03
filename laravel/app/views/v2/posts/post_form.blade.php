@@ -2,9 +2,9 @@
 
 	@section('title')
 		@if(!$edit)
-			New Post | Two Thousand Times
+			New Post | Sondry
 		@else
-			Edit Post | Two Thousand Times
+			Edit Post | Sondry
 		@endif
 	@stop
 

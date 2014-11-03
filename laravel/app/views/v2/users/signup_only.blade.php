@@ -14,7 +14,7 @@
 @stop
 
 @section('title')
-Sign up! | Two Thousand Times
+Sign up! | Sondry
 @stop
 
 @section('content')

@@ -15,9 +15,9 @@
 
 @section('title')
 	@if ( isset($default) )
-		Search | Two Thousand Times
+		Search | Sondry
 	@else
-		Search: {{ $term }} | Two Thousand Times
+		Search: {{ $term }} | Sondry
 	@endif
 @stop
 
@@ -31,7 +31,7 @@
 			</form>
 		</div>
 
-
+ 
 	@else
 		<script type="text/javascript">
 			window.search_term = '{{ $term }}';

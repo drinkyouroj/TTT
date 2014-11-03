@@ -54,7 +54,7 @@
 @stop
 
 @section('title')
-	{{ $post->title }} | Two Thousand Times
+	{{ $post->title }} | Sondry
 @stop
 
 @section('content')

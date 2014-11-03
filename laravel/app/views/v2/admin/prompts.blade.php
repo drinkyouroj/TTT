@@ -1,7 +1,7 @@
 @extends('v2.layouts.master')
 
 @section('title')
-	Admin - Prompts | Two Thousand Times
+	Admin - Prompts | Sondry
 @stop
 
 @section('css')

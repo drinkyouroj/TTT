@@ -9,7 +9,7 @@
 @stop
 
 @section('title')
-	Beta | The Twothousand Times
+	Beta | Sondry
 @stop
 
 @section('content')

@@ -1,7 +1,7 @@
 @extends('v2.layouts.master')
 	
 	@section('title')
-		Feed | Two Thousand Times
+		Feed | Sondry
 	@stop
 
 	@section('css')

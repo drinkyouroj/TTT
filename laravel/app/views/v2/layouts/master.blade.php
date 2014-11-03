@@ -46,7 +46,7 @@
 	@endif
 	
 	{{--Opengraph--}}
-	<meta property="og:site_name" content="Two Thousand Times" />
+	<meta property="og:site_name" content="Sondry" />
 	<meta property="og:url" content="{{Request::url()}}" />
 
 	{{--Schema.org--}}
@@ -57,7 +57,7 @@
 
 	{{--Twitter--}}
 	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:site" content="@twothousandx">
+	<meta name="twitter:site" content="@sondrystories">
 
 
 	<!--Page Specific CSS-->

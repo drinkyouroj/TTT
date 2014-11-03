@@ -128,7 +128,7 @@ h3.category-label {
 				text-align:center;
 				margin-bottom:5px;
 				 li {
-              		line-height: 18px;
+              		line-height: 16px;
               		letter-spacing:1px;
               		font-size:20px;
               		padding:0 20px;
@@ -138,10 +138,12 @@ h3.category-label {
 					letter-spacing:1px;
               		@media (max-width:$break-md) { 
               			font-size:16px;
+              			line-height: 14px;
               			padding:0 10px;
               		}
               		@media (max-width:$break-xs) { 
               			font-size:14px;
+              			line-height: 12px;
               		}
 	            }
 	            li:nth-child(1), li:nth-child(2) {

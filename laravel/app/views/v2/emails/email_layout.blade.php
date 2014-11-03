@@ -5,10 +5,10 @@
 		<table width="600" border="0" cellspacing="0" cellpadding="0">
 			<tr style="padding:0;margin:0">
 				<td>
-					<table width="600" height="122" border="0" cellspacing="0" cellpadding="0" bgcolor="#fff8ee">
+					<table width="600" height="122" border="0" cellspacing="0" cellpadding="0" style="border:1px solid #917847; padding:0; margin:0">
 						<tr>
 							<td align="center">
-								<img class="header-logo" width="313" height="30" src="{{Config::get('app.url')}}/images/email/email-logo.gif">
+								<img class="header-logo" width="320" height="61" src="{{Config::get('app.url')}}/images/email/email-logo-2.gif">
 							</td>
 						</tr>
 					</table>
@@ -39,10 +39,10 @@
 
 							</td>
 							<td width="467">
-								<a style="color:#ffffff !important;" href="http://twothousandtimes.com" target="_blank">twothousandtimes.com</a>
+								<a style="color:#ffffff !important;" href="http://sondry.com" target="_blank">sondry.com</a>
 							</td>
 							<td width="60">
-								<img class="header-logo" width="50" height="50" src="{{Config::get('app.url')}}/images/email/email-icon.gif">
+								<img class="header-logo" width="50" height="50" src="{{Config::get('app.url')}}/images/email/email-icon-2.gif">
 							</td>
 						</tr>
 					</table>

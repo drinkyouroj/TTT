@@ -17,7 +17,7 @@
 			<p>Last Updated: August 12, 2014</p>
 
 			<p>
-				This privacy policy (“Policy”) describes how Two Thousand Times, Inc. and its related companies (“Company”) collect, use and share personal information of consumer users of this website, twothousandtimes.com (the “Site”). This Policy also applies to any of our other websites that post this Policy. This Policy does not apply to websites that post different statements.
+				This privacy policy (“Policy”) describes how Two Thousand Times, Inc. and its related companies (“Company”) collect, use and share personal information of consumer users of this website, sondry.com (the “Site”). This Policy also applies to any of our other websites that post this Policy. This Policy does not apply to websites that post different statements.
 			</p>
 
 			<h3>What we collect</h3>

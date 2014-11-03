@@ -644,6 +644,9 @@ textarea {
         margin-top:25px;
         padding-left: 0px !important;
         padding-right: 0px !important;
+        @media (max-width:$break-xs) {
+          margin-top:10px;
+        }
 
         .post-content-page {
           font-size:20px;

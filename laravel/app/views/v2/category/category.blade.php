@@ -13,7 +13,7 @@
 	?>
 	
 	@section('title')
-		{{$cat_title}} | Two Thousand Times
+		{{$cat_title}} | Sondry
 	@stop
 
 	@section('css')

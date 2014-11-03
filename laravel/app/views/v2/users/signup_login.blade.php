@@ -13,7 +13,7 @@
 @stop
 
 @section('title')
-	Login or Signup  | Two Thousand Times
+	Login or Signup  | Sondry
 @stop
 
 @section('content')
