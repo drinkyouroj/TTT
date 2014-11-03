@@ -50,6 +50,8 @@ $env = $app->detectEnvironment(array(
 	'sharktopus' => array('sharktopus.localdomain'),//Ryuhei's local machine
 	'sneakyturtle' => array('sneakyturtle.localdomain'),//Neil's
 
+    // twothousandtimes is now: Sondry![
+    'prod' => array('*.sondry.com'),
 ));
 
 /*
