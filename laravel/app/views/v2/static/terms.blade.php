@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-	Terms of Use | Two Thousand Times
+	Terms of Use | Sondry
 @stop
 
 @section('content')
@@ -17,7 +17,7 @@
 			<p>Version 1.0</p>
 			<p>Last revised on: August 12, 2014</p>
 			<p>
-				The website located at twothousandtimes.com (the “Site”) is a copyrighted work belonging to Two Thousand Times , Inc. (“Company”, “us”, “our”, and “we”).  Certain features of the Site may be subject to additional guidelines, terms, or rules, which will be posted on the Site in connection with such features.  All such additional terms, guidelines, and rules are incorporated by reference into these Terms.
+				The website located at sondry.com (the “Site”) is a copyrighted work belonging to Two Thousand Times , Inc. (“Company”, “us”, “our”, and “we”).  Certain features of the Site may be subject to additional guidelines, terms, or rules, which will be posted on the Site in connection with such features.  All such additional terms, guidelines, and rules are incorporated by reference into these Terms.
 				These Terms of Use (these “Terms”) set forth the legally binding terms and conditions that govern your use of the Site.  By accessing or using the Site, you are accepting these Terms (on behalf of yourself or the entity that you represent), and you represent and warrant that you have the right, authority, and capacity to enter into these Terms (on behalf of yourself or the entity that you represent).  you may not access or use the Site or accept the Terms if you are not at least 18 years old.  If you do not agree with all of the provisions of these Terms, do not access and/or use the Site.
 			<p>
 				These terms require the use of arbitration (Section 10.2) on an individual basis to resolve disputes, rather than jury trials or class actions, and also limit the remedies available to you in the event of a dispute.
@@ -151,7 +151,7 @@
 				<br/>PO Box 11807
 				<br/>Bainbridge Island, Washington 98110
 				<br/>Telephone: (415) 570-4183
-				<br/>Email: feedback@twothousandtimes.com
+				<br/>Email: feedback@sondry.com
 			</p>
 		</div>
 	</div>

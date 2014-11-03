@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-	Privacy Policy | Two Thousand Times
+	Privacy Policy | Sondry
 @stop
 
 @section('content')

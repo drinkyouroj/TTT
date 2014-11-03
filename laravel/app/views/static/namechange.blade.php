@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-	About | Two Thousand Times
+	What's Sondry? | Two Thousand Times
 @stop
 
 @section('content')
@@ -14,12 +14,18 @@
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2 info-container about-container">
 			<img class="ttt-icon" width="53" height="53" src="{{Config::get('app.url')}}/images/global/ttt-icon-outline.png">
-			<h1>About</h1>
-			<p class="first-paragraph">A couple years ago, we got fed up with the daily grind of social media and “went off the grid,” so to speak. After leaving these networks of instant accessibility behind, we found ourselves more comfortable talking openly with strangers. They were willing to share and we were ready to listen.</p>
-			<p>These revealing and genuine conversations garnered retellable stories, introspective thoughts, and life-guiding advice from individuals we’d never hear from again. The only trouble: we wanted to hear more, but had no control over when these exchanges would occur.</p>
-			<p>With this in mind, we sought out to make these exchanges more accessible, which resulted in The Two Thousand Times – an online collection for the stories you love to tell and the conversations you need to have.</p>
-			<p>Just keep in mind: all submissions must be two thousand words or less.</p>
-			<p>Feel free to take a look around, read a post or two, and if your interest is piqued, we would love to welcome you into our community. We encourage you to visit our Community Guidelines before posting.</p>
+			<h1>What's Sondry?</h1>
+
+			<p>Hey Everyone,</p>
+ 
+			<p>Sondry originates from Middle English, and is often used to refer to sondry folk, meaning a diverse group of people. Which is exactly what we have here.</p>
+			 
+			<p>After receiving feedback from many of our incredible storymakers, this change is being made to better define the platform you’ve helped grow, and grow it has. 250,000 people have viewed the stories you made in just two months. But we’re just getting started. Sondry both signifies and accompanies the increased expansion of our community. With your help, we are growing exponentially. So thank you. Please continue to share our site with storymakers all over the world.</p>
+			 
+			<p>As always, feel free to email us directly at team@sondry.com.</p>
+			 
+			<p>Thanks again. Let’s change the world.</p>
+			<p>Team Sondry</p>
 		</div>
 	</div>
 </div>

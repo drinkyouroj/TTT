@@ -8,7 +8,7 @@
 <html>
   <head>
     <title>
-    	@yield('title','Two Thousand Times')
+    	@yield('title','Sondry')
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 

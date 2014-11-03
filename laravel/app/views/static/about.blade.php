@@ -20,7 +20,7 @@
 
 	<p>These revealing and genuine conversations garnered re-tellable stories, introspective thoughts, and life-guiding advice from individuals we’d never hear from again. The only trouble: we wanted to hear more, but had no control over when these exchanges would occur.</p>
 
-	<p>With this in mind, we sought out to make these exchanges more accessible, which resulted in The Two Thousand Times – an online collection for the stories you love to tell and the conversations you need to have.</p>
+	<p>With this in mind, we sought out to make these exchanges more accessible, which resulted in Sondry – an online collection for the stories you love to tell and the conversations you need to have.</p>
 
 	<p>Just keep in mind: all submissions must be two thousand words or less.</p>
 

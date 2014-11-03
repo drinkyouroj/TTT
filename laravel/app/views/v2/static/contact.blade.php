@@ -5,7 +5,7 @@
 @stop
 
 @section('title')
-	Contact | Two Thousand Times
+	Contact | Sondry
 @stop
 
 @section('content')
@@ -16,9 +16,9 @@
 			<p>If you have any questions, feedback, or concerns please don’t hesitate to reach out to us.</p>
 			<p>Here are some options to get in touch with us:</p>
 			<div class="emails">
-				<p><span>Report Bugs</span> <a href="mailto:bugs@twothousandtimes.com">bugs@twothousandtimes.com</a></p>
-				<p><span>Press Enquiries:</span> <a href="mailto:press@twothousandtimes.com">press@twothousandtimes.com</a></p>	
-				<p><span>General Feedback/Help:</span> <a href="team@twothousandtimes.com">team@twothousandtimes.com</a></p>	
+				<p><span>Report Bugs</span> <a href="mailto:bugs@sondry.com">bugs@sondry.com</a></p>
+				<p><span>Press Enquiries:</span> <a href="mailto:press@sondry.com">press@sondry.com</a></p>	
+				<p><span>General Feedback/Help:</span> <a href="team@sondry.com">team@sondry.com</a></p>	
 			</div>
 		</div>
 	</div>

@@ -9,6 +9,8 @@
 </script>
 @endif
 
+<a class="what-button" href="{{Config::get('app.url')}}/namechange">S<br/>o<br/>n<br/>d<br/>r<br/>y<br/>?</a>
+
 <div class="header-wrapper">
 	<div class="header-inner-wrapper">
 		<div class="header-container">
@@ -26,7 +28,6 @@
 							<a class="post-btn post-button" href="{{Config::get('app.url')}}/myprofile/newpost">POST</a>
 						@endif
 					@endif
-
 				</div>
 				<div class="col-sm-4 col-xs-8 col-middle">
 					<div class="header-logo">
@@ -113,11 +114,9 @@
 				</div>
 
 			</div>
-
 		</div>
 	</div>
 </div> <!--End of Header Wrapper-->
-
 
 {{-- ============ OFFCANVAS SIDEBAR ============= --}}
 <div id="offcanvas-sidebar">

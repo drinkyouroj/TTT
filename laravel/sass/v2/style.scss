@@ -75,6 +75,36 @@ body {
 input, textarea, button:focus {outline: none !important;}
 
 // ================= HEADER ========================
+.what-button {
+	position:fixed;
+	bottom:50px;
+	left:0px;
+	cursor: pointer;
+	display: inline-block;
+	background:$gold;
+	padding:5px;
+	line-height:14px;
+	letter-spacing:1px;
+	@include trade;
+	text-transform:uppercase;
+	color:$dark;
+	font-size:14px;
+
+	-moz-box-shadow:    1px 1px 1px 0px #999;
+	-webkit-box-shadow: 1px 1px 1px 0px #999;
+	box-shadow:         1px 1px 1px 0px #999;
+
+	z-index:9999;
+	@media (max-width:$break-xs) {
+		font-size:12px;
+		line-height:13px;
+		padding:5px 1px 5px 5px;
+	}
+	&:hover, &:visited {
+		color:$dark;
+	}
+}
+
 .header-wrapper {
 	height: $navbar_height;
 	.header-inner-wrapper {
@@ -88,8 +118,6 @@ input, textarea, button:focus {outline: none !important;}
   		box-shadow:         1px 1px 1px 0px #999;
 		.header-container {
 			height: $navbar_height;
-			
-
 			.col-left {
 				margin-top: 0px;
 				button.read-button {
@@ -367,7 +395,7 @@ input, textarea, button:focus {outline: none !important;}
 					color:$white;
 					margin-top:5px;
 					padding:5px 10px;
-					@include garamond;
+					@include trade;
 					@include drop_shadow;
 					&::before {
 						@include notifications_arrow_top;
@@ -1286,7 +1314,8 @@ input, textarea, button:focus {outline: none !important;}
 	left:0;
 	background:$dark;
 	padding:10px 0;
-	.footer-nav {float:left;
+	.footer-nav {
+		float:left;
 		width:100%;
 		overflow:hidden;
 		position:relative;

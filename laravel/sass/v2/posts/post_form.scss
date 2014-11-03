@@ -48,13 +48,13 @@ $border_color: #eee;
 	text-align:left;
 	margin-top: 5px;
 	padding: 5px 15px 3px 0px;
-	color:$lightgray;
+	color:$dark;
 
 	cursor: pointer;
     @include montserrat(normal);
     text-transform:uppercase;
     font-size:13px;
-    background-image:url('../../../../images/posts/cat-arrow-white.png');
+    background-image:url('../../../../images/posts/black-pointer-down.png');
     background-position:right center;
     background-repeat:no-repeat;
     background-size:10px 7px;
@@ -70,6 +70,7 @@ $border_color: #eee;
 	-moz-box-shadow:    none !important;
 	-webkit-box-shadow: none !important;
 	box-shadow:         none !important;
+	border-bottom:solid 1px $lightgray;
 }
 
 //Top Controls Fixed (Post Type, Category, Drafe, Publish)
