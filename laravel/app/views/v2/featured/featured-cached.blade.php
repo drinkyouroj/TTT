@@ -66,9 +66,9 @@
 							<img class="new-cat" src="{{ URL::to('images/featured/new-cat-banner.png') }}" alt="New Category">
 							<h3>First Time</h3>
 							<ul class="new-cat-tags list-inline">
-								<li>chicken</li>
-								<li>rape</li>
-								<li>contest</li>
+								<li>butterflies</li>
+								<li>rave</li>
+								<li>tattoo</li>
 							</ul>
 							<p class="subtext">Be one of the first to share your <span>“first time”</span> story.</p>
 
