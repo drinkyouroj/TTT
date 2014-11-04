@@ -20,6 +20,7 @@
 			<p>With this in mind, we sought out to make these exchanges more accessible, which resulted in Sondry – an online collection for the stories you love to tell and the conversations you need to have.</p>
 			<p>Just keep in mind: all submissions must be two thousand words or less.</p>
 			<p>Feel free to take a look around, read a post or two, and if your interest is piqued, we would love to welcome you into our community. We encourage you to visit our Community Guidelines before posting.</p>
+			<img class="sign-logo" src="{{ URL::to('images/global/sondry-logo-min.png') }}" alt="SONDRY">
 		</div>
 	</div>
 </div>

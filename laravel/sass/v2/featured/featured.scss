@@ -796,7 +796,7 @@ h3.category-label {
 }
 
 .featured-user-container {
-	background-color:$dark;
+	background:$dark;
 	padding:40px 0 50px 0;
 	@media (max-width: $break-sm){
 		padding:10px 0 50px 0;
@@ -809,6 +809,7 @@ h3.category-label {
 			display:block;
 			width:250px;
 			height:250px;
+			margin-top:30px;
 			border-radius: 50%;
 			background-size:cover;
 		    background-position:center center;
@@ -905,7 +906,9 @@ h3.category-label {
 		}
 	}
 	.recent-container {		
-		margin-top:20px;
+		@media (max-width:$break-md) {
+			margin-top:20px;
+		}
 		h5.recent-label {
 			display:block;
 			@include montserrat;
@@ -926,13 +929,9 @@ h3.category-label {
 		    	background-position:center center;
 			}
 			.recent-text {
-				background:$white;
 				padding:10px;
 				.recent-title, .recent-taglines {
 			    	text-align: center;
-			    }
-			    .recent-title a, .recent-taglines {
-			    	color:$dark;
 			    }
 			    .recent-title {
 			    	margin-top:0px;
@@ -940,9 +939,10 @@ h3.category-label {
 			    	line-height:13px !important;
 			    	margin-bottom:5px;
 			    	letter-spacing:1px;
-			    	@include montserrat;
-			    	text-transform:uppercase;
-			    	font-size:13px !important;
+			    	@include trade;
+			    	text-transform:capitalize;
+			    	font-size:17px !important;
+			    	color:$white;
 			    }
 			    .recent-taglines {
 			    	li:nth-child(1), li:nth-child(2) {
@@ -964,11 +964,16 @@ h3.category-label {
 				padding-top:0px;
 				padding-left:0px;
 			}
+			@media (max-width:$break-sm) {
+				margin-top:20px;
+				padding-left:15px;
+			}
 			.profile-action, .follow-action {
 				width:100%;
 				font-size:10px;
 				@media (max-width:$break-xs) {
-					font-size:8px;
+					font-size:10px;
+					text-align:center;
 				}
 			} 
 			.profile-action {
@@ -977,12 +982,17 @@ h3.category-label {
 				@media (max-width:$break-md) and (min-width:$break-sm-min) {
 					margin-right:3px;
 				}
+				
 			}
 			.follow-action {
 				padding-left:30px;
 				background-size:30px 30px;
+				background-position:center left;
 				&.following {
 					display:none;
+				}
+				@media (max-width:$break-xs) {
+					font-size:10px;
 				}
 			}
 		}
@@ -996,56 +1006,6 @@ h3.category-label {
 	@media (max-width:$break-sm) {
 		padding-top:10px;
 	}
-	.new-pop-container {
-		max-width:1100px;
-		padding:0px;
-		@media (max-width:$break-sm) {
-			padding:0 15px;
-		}
-		.new-container, .popular-container {
-			width:50%;
-			float:left;
-			h4 {
-				text-align:center;
-				color:$white;
-				font-size:21px;
-				@include montserrat;
-				text-transform:uppercase;
-				letter-spacing:5px;
-				margin:0px;
-				@media (max-width:$break-sm) {
-					font-size:14px;
-					letter-spacing:2px;
-				}
-			}
-		}
-		.new-inner, .popular-inner {
-			height:250px;
-			padding-top:110px;
-			@media (max-width:$break-sm) {
-				height:100px;
-				padding-top:45px;
-			}
-		}
-		.new-container {
-			background-image:url('../../../../images/cat-listing/new-2.jpg');
-			background-size:cover;
-	        background-position:center center;
-	        .new-inner {
-	        	background-image:url('../../../../images/global/black-55.png');
-	        }
-		}
-		.popular-container {
-			background-image:url('../../../../images/cat-listing/popular.jpg');
-	    	background-size:cover;
-	    	background-repeat:no-repeat;
-	    	background-position:center center;
-			
-	        .popular-inner {
-	        	background-image:url('../../../../images/global/blue-60.png');
-	        }
-		}
-	}
 
 	.footer-cat-wrapper {
 	}
@@ -1056,9 +1016,6 @@ h3.category-label {
 		margin-bottom:50px;
 		label {
 			display:none !important;
-		}
-		@media (max-width:$break-sm) {
-			padding:0 15px;
 		}
 	}
 }
