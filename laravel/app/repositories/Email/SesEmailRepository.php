@@ -26,33 +26,37 @@ class SesEmailRepository implements EmailRepository {
 		//system level block on whether to send email or not.
 		if( Config::get('app.email_send') || $override ) {
 			$data = self::dataInit($data);
+			try {
+				$result = $this->ses->sendEmail(array(
+						'Source' => $data['from'],
+						'Destination' => array(
+							'ToAddresses' => $data['to'],
+							'CcAddresses' => $data['cc'],
+		        			'BccAddresses' => $data['bcc']
+							),//end destination
 
-			$result = $this->ses->sendEmail(array(
-					'Source' => $data['from'],
-					'Destination' => array(
-						'ToAddresses' => $data['to'],
-						'CcAddresses' => $data['cc'],
-	        			'BccAddresses' => $data['bcc']
-						),//end destination
+						'Message' => array(
 
-					'Message' => array(
+							'Subject' => array(
+								'Data' => $data['subject']
+								),//end subject
 
-						'Subject' => array(
-							'Data' => $data['subject']
-							),//end subject
-
-						'Body' => array(
-							'Text' => array(
-								'Data' => $data['plaintext']
-								),
-							'Html' => array(
-								'Data' => $data['html']
-								),
-							),//end body
-						),
-					'ReplyToAddresses' => $data['reply'],
-					'ReturnPath' => $data['complaint']
-				));
+							'Body' => array(
+								'Text' => array(
+									'Data' => $data['plaintext']
+									),
+								'Html' => array(
+									'Data' => $data['html']
+									),
+								),//end body
+							),
+						'ReplyToAddresses' => $data['reply'],
+						'ReturnPath' => $data['complaint']
+					));
+			} catch (\Aws\Ses\Exception\SesException $e) {
+				//Log the deamn exception
+				Log::error($data['to']);
+			}
 		}
 	}
 

@@ -1,7 +1,7 @@
 <?php
 namespace AppStorage\Search;
 
-use Elasticsearch, Config;
+use Elasticsearch, Config, Log;
 
 class ElasticSearchRepository implements SearchRepository {
 
@@ -63,7 +63,12 @@ class ElasticSearchRepository implements SearchRepository {
 			'body' => $post->body
 		);
 		$params['refresh'] = true;  // Refresh the index after performing operation.
-		return $this->client->index( $params );  // This will update if post with id already exists.
+		try {
+			return $this->client->index( $params );  // This will update if post with id already exists.
+		} catch(Elasticsearch\Common\Exceptions\Curl\CouldNotConnectToHost $e) {
+			Log::error($e);
+			return false;
+		}
 	}
 
 	public function updateUser( $user ) {
@@ -76,7 +81,12 @@ class ElasticSearchRepository implements SearchRepository {
 			'username' => $user->username
 		);
 		$params['refresh'] = true;  // Refresh the index after performing operation.
-		return $this->client->index( $params );  // This will update if post with id already exists.
+		try {
+			return $this->client->index( $params );  // This will update if post with id already exists.
+		} catch(Elasticsearch\Common\Exceptions\Curl\CouldNotConnectToHost $e) {
+			Log::error($e);
+			return false;
+		}
 	}
 
 	public function deletePost( $post_id ) {
