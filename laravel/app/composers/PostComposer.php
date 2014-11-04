@@ -11,8 +11,8 @@ class PostComposer {
 				$post = $post_rep->findByAlias(Request::segment(2));
 				if(is_object($post)) {
 					$post_logic = App::make('AppLogic\PostLogic\PostLogic');
-					$readability =  $post_logic->readability($post->body);
-					$grade =  $post_logic->grade($post->body);
+					$readability =  0;//$post_logic->readability($post->body);
+					$grade =  0;//$post_logic->grade($post->body);
 					$sentiment = $post_logic->sentiment($post->body);
 
 					$view->with( 'readability', $readability)
