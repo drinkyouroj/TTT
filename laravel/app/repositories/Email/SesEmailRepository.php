@@ -1,7 +1,8 @@
 <?php namespace AppStorage\Email;
 
 use Aws\Ses\SesClient, 
-	Config
+	Config,
+	Log
 	;
 
 class SesEmailRepository implements EmailRepository {
@@ -79,7 +80,7 @@ class SesEmailRepository implements EmailRepository {
 		// $data['plaintext'] = 'test';
 		$data['html'].= '<p>TEST</p>';
 
-		$data['to'] = array('neil@y-designs.com', 'max@y-designs.com', 'anthony@twothousandtimes.com');
+		$data['to'] = array('neil@y-designs.com', 'max@y-designs.com', 'anthony@twothousandtimes.com', 'ryuhei@twothousandtimes.com');
 		unset($data['cc']);
 		unset($data['bcc']);
 		$data = self::dataInit($data);
