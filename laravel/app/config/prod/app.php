@@ -21,8 +21,8 @@ return array(
 	|
 	*/
 
-	'debug' => false,
-	'stack' => false,//errors automatically redirects to a specified location.
+	'debug' => true,
+	'stack' => true,//errors automatically redirects to a specified location.
 	'email_send' => true,
 	'enable_ssl' => true,//enables SSL force on the user and myprofile routes.
 
