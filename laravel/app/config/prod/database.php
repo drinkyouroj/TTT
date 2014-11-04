@@ -1,6 +1,6 @@
 <?php
 
-define('DATASERVER_HOST', '54.201.159.191');
+define('DATASERVER_HOST', '10.0.0.228');
 define('MYSQL_HOST', 'sondry.c3sqmkl9shpm.us-west-2.rds.amazonaws.com');
 return array(
 
