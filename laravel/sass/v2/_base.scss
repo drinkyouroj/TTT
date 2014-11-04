@@ -7,6 +7,7 @@ $blue_dark:#2c9ca8;
 $blue_darker:#19767f;
 $gold:#917847;
 $gold_dark:#7f6840;
+$gold_darker:#56442a;
 $red: #f74141;
 $dark_gray: #333;
 $gray: #ccc;
@@ -66,7 +67,7 @@ font-family: 'TradeGothicLTPro-BdCn20Obl';
 	@if $weight == 'normal' {
 		font-weight: 400;
 	} @else if $weight == 'bold' {
-		font-weight: 700;
+		font-weight: 400;
 	}
 }
 
@@ -84,7 +85,6 @@ font-family: 'TradeGothicLTPro-BdCn20Obl';
   font-size:19px;
   color:$dark;
   line-height:20px;
-  @include word-break(break-all);
 }
 
 @mixin tagline_listing {
@@ -92,7 +92,6 @@ font-family: 'TradeGothicLTPro-BdCn20Obl';
   text-transform:lowercase;
   font-size:15px;
   color:$gold;
-  @include word-break(break-all);
 }
 
 //TTT Defaults:
@@ -128,6 +127,14 @@ textarea {
 	text-transform: uppercase;
 	font-size: 11px;
 	@include montserrat();
+}
+
+@mixin trans_fade {
+  -webkit-transition: all .2s ease-in;
+  -moz-transition: all .2s ease-in;
+  -o-transition: all .2s ease-in;
+  -ms-transition: all .2s ease-in;
+  transition: all .2s ease-in;
 }
 
 
@@ -275,7 +282,7 @@ textarea {
   }
   .redirect-other {
       a {
-        @include montserrat(bold);
+        @include montserrat;
         font-size:12px;
       }
     }
@@ -388,7 +395,6 @@ textarea {
   @include trade;
   font-size: 40px;
   color:$white;
-  @include word-break(break-all);
 }
 
 @mixin post_page_tagline {
@@ -396,7 +402,6 @@ textarea {
   text-transform:lowercase;
   font-size:18px;
   color:$gold;
-  @include word-break(break-all);
 }
 
 //shadow for nav elements
@@ -508,7 +513,6 @@ textarea {
             font-size:40px;
             text-transform:capitalize;
             margin-top:-75px;
-            @include word-break(break-all);
             @media (max-width: $break-lg) and (min-width: $break-lg-min) {
               font-size:27px;
             }
@@ -556,9 +560,8 @@ textarea {
 
           .author {
             letter-spacing:1px;
-            @include word-break(break-all);
             .author-name {
-              @include montserrat(bold);
+              @include montserrat;
               letter-spacing:1px;     
             }
           }
@@ -709,7 +712,7 @@ textarea {
         border-bottom: 5px solid $dark;
 
         .page-count {
-          @include montserrat(bold);
+          @include trade;
           float: right;
         }
       }
@@ -851,7 +854,7 @@ textarea {
       display:block;
       width:100%;
       margin-bottom:5px;
-      @include montserrat(bold);
+      @include montserrat;
       text-transform:uppercase;
       letter-spacing:2px;
       font-size:14px;
@@ -1131,6 +1134,9 @@ textarea {
           background-size: cover;
           background-repeat: no-repeat;
         }
+        &:hover {
+          color:$blue-dark;
+        }
       }
       .author-text {
         display:block;
@@ -1207,7 +1213,6 @@ textarea {
     .post-title {
       margin-top:10px;
       margin-bottom: 3px;
-      @include word-break(break-all);
       a {
         @include title_listing;
       }
@@ -1219,7 +1224,6 @@ textarea {
       }
       li {
         color:$gold;
-        @include word-break(break-all);
       }
       @include tagline_listing;
     }
@@ -1237,7 +1241,6 @@ textarea {
       background-position:center left;
       background-repeat:no-repeat;
       background-size:30px 19px;
-      @include word-break(break-all);
       &.post {
         background-image:url('../../../../images/notifications/post-notifications.png');
       }
@@ -1366,7 +1369,6 @@ textarea {
     text-transform:none;
     @include montserrat;
     font-size:14px;
-    @include word-break(break-all);
     @media (max-width:$break-sm) and (min-width:$break-sm-min)  {
       font-size:11px;
     }
@@ -1402,29 +1404,34 @@ textarea {
           padding: 6px 12px;
           font-size: 14px;
           line-height: 1.428571429;
-          color: #555;
+          color: $dark;
           vertical-align: middle;
+          border:1px solid #eee;
           background-color: #fff;
           -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
           box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
           -webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
           transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
           @media (max-width:$break-sm) {
-            width:74%;
+            width:90%;
             max-width:700px;
             margin-right:1%;
             float:left;
           }
+          @media (max-width:$break-xs) {
+            height:40px;
+          }
         }
         .activate-search {
           padding:15px 15px;
+          font-size:18px;
+          color:$gold;
           @media (max-width:$break-sm) {
-            width:25%;
+            width:5%;
             float:left;
           }
           @media (max-width:$break-xs) {
             padding:6px 5px;
-            font-size: 10px;
           }
         }
         .reset-search {
@@ -1455,21 +1462,36 @@ textarea {
       .photo-results {
         margin-top:20px;
         img {
-
+          width:10%;
+          float:left;
+          @media (max-width:$break-md) {
+            width:20%;
+          }
         }
          a.pager{
-          display:inline-block;
+          width:49%;
+          display:block;
+          float:left;
           vertical-align:top;
-          margin: 10px 5px;
           padding:10px 15px;
           cursor:pointer;
-
+          background:$lightgray;
+          @include border-radius(2px);
           @include montserrat;
-          font-size:12px;
+          font-size:16px;
           text-transform:uppercase;
           letter-spacing:1px;
-          background-color:$dark;
-          color:#fff;
+          color:$gold;
+          &.more {
+            margin-left:1%;
+          }
+          &.previous {
+            margin-right:1%;
+          }
+          &:hover {
+            background:$gray;
+            @include trans_fade;
+          }
         }
         // a.pager.previous{
         //   border-right:1px solid #ddd;
@@ -1482,17 +1504,16 @@ textarea {
       .chosen {
         .processor-container {
           .photo-processor {
-            background:$dark;
-            border-top:solid 1px $lightgray;
             margin-top:10px;
+            border-top:solid 1px $lightgray;
             h4 {
               margin-top:20px;
               margin-bottom:20px;
-              @include montserrat();
+              @include montserrat;
               text-transform:uppercase;
-              font-size:21px;
+              font-size:18px;
               letter-spacing:2px;
-              color:$lightgray;
+              color:$gold;
                @media (max-width:$break-sm) {
                 font-size:14px;
                 margin-top:5px;

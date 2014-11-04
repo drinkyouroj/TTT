@@ -31,12 +31,16 @@
 			<div class="container">
 				<div class="row">
 					<div class="promotional-container">
-						<div class="col-md-2 col-sm-4 col-xs-4 image-container">
-							<img class="new-cat" src="{{ URL::to('images/featured/new-cat-banner.png') }}" alt="New Category">
-						</div>
-						<div class="col-md-3 col-sm-4 col-xs-8">
-							<h3>First Time</h3>
-						</div>
+							<div class="col-md-2 col-sm-4 col-xs-4 image-container">
+								<a class="promotional-link" href="{{Config::get('app.url')}}/myprofile/newpost">
+									<img class="new-cat" src="{{ URL::to('images/featured/new-cat-banner.png') }}" alt="New Category">
+								</a>
+							</div>
+							<div class="col-md-3 col-sm-4 col-xs-8">
+								<a class="promotional-link" href="{{Config::get('app.url')}}/myprofile/newpost">
+									<h3>First Time</h3>
+								</a>
+							</div>
 						<div class="col-md-5 hidden-sm col-xs-8">
 							<p class="subtext">Be one of the first to share your <span>“first time”</span> story.</p>
 						</div>

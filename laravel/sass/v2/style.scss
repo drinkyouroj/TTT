@@ -299,6 +299,7 @@ input, textarea, button:focus {outline: none !important;}
 								&:hover {
 									background-color:$lightgray;
 									color:$blue;
+									@include trans_fade;
 								}
 							}
 						}
@@ -334,12 +335,11 @@ input, textarea, button:focus {outline: none !important;}
 									span {
 										color: $dark;
 										font-size: 12px;
-										@include montserrat(bold);
+										@include montserrat;
 										@media (max-width:$break-sm) {
 											font-size: 10px;
 										}
 										&.post-title {
-											@include word-break(break-all);
 										}
 									}
 								}
@@ -427,6 +427,11 @@ input, textarea, button:focus {outline: none !important;}
 				font-size:12px;
 			}
 			li.sidebar-option {
+				&>a {
+					@include trade;
+					font-size:17px;
+					text-transform:uppercase;
+				}
 				&.feed {
 
 				}
@@ -485,7 +490,6 @@ input, textarea, button:focus {outline: none !important;}
 							font-size:11px;
 							text-transform:uppercase;
 							letter-spacing:1px;
-							@include word-break(break-all);
 						}
 						span {
 							font-size:10px;
@@ -493,7 +497,6 @@ input, textarea, button:focus {outline: none !important;}
 						.post-author {
 							@include montserrat(normal);
 							font-size:12px;
-							@include word-break(break-all);
 						}
 						// This is the 'by: ' text
 						span {
@@ -573,7 +576,7 @@ input, textarea, button:focus {outline: none !important;}
 	&:hover {
 		// background-color: $dark_gray;
 		color: white;
-		text-decoration: none;	
+		text-decoration: none;
 	}
 }
 
@@ -590,8 +593,9 @@ input, textarea, button:focus {outline: none !important;}
 	cursor: pointer;
 	&:hover {
 		// background-color: $dark_gray;
-		border: 2px solid $blue;
-		color:$blue;
+		border: 2px solid $white;
+		color:$white;
+		@include trans_fade;
 	}
 }
 
@@ -608,8 +612,11 @@ input, textarea, button:focus {outline: none !important;}
 	cursor: pointer;
 	&:hover {
 		// background-color: $dark_gray;
+		background:$dark_gray;
+		border: 2px solid $dark_gray;
 		color: white;
 		text-decoration: none;	
+		@include trans_fade;
 	}
 }
 
@@ -631,6 +638,7 @@ input, textarea, button:focus {outline: none !important;}
 		text-decoration: none;
 		background: $dark;
 		border: 2px solid $white;
+		@include trans_fade;
 	}
 }
 
@@ -668,7 +676,6 @@ input, textarea, button:focus {outline: none !important;}
 		// background-color: $gray;
 		// border-color: $gray;
 		color: $dark;
-
 		text-decoration: none;	
 	}
 }
@@ -688,7 +695,6 @@ input, textarea, button:focus {outline: none !important;}
 		// background-color: $gray;
 		// border-color: $gray;
 		color: $dark;
-
 		text-decoration: none;	
 	}
 }
@@ -709,6 +715,9 @@ input, textarea, button:focus {outline: none !important;}
 		// background-color: $gray;
 		color: white;
 		text-decoration: none;	
+		background: $blue_dark;
+		border: 2px solid $blue_dark;
+		@include trans_fade;
 	}
 }
 
@@ -745,6 +754,7 @@ input, textarea, button:focus {outline: none !important;}
 		color: $dark;
 		border: 2px solid $dark;
 		text-decoration: none;	
+		@include trans_fade;
 	}
 }
 
@@ -799,6 +809,7 @@ input, textarea, button:focus {outline: none !important;}
 		border: 1px solid $blue;
 		text-decoration: none;	
 		background-position:left -45px;
+		@include trans_fade;
 	}
 	@media (max-width:$break-xs) {
 		font-size:10px;
@@ -853,9 +864,9 @@ input, textarea, button:focus {outline: none !important;}
 	cursor: pointer;
 	&:hover {
 		// background-color: $gray;
-		border-top: 2px solid $black;
-		border-bottom:solid 3px $black;
-		background-color: $black;
+		border-top: 2px solid $dark;
+		border-bottom:solid 3px $dark;
+		background-color: $dark;
 	}
 
 }
@@ -881,7 +892,9 @@ input, textarea, button:focus {outline: none !important;}
 	background-size:40px 25px;
 	&:hover {
 		background-color: $lightgray;
+		color:$dark;
 		text-decoration: none;
+		@include trans_fade;
 	}
 }
 
@@ -927,6 +940,7 @@ input, textarea, button:focus {outline: none !important;}
 	&:hover {
 		// background-color: $gray;
 		background-color: $lightgray;
+		@include trans_fade;
 	}
 }
 
@@ -948,6 +962,7 @@ input, textarea, button:focus {outline: none !important;}
 	&:hover {
 		// background-color: $gray;
 		background-color: $lightgray;
+		@include trans_fade;
 	}
 }
 
@@ -960,9 +975,8 @@ input, textarea, button:focus {outline: none !important;}
 		h4 {
 			margin-top:70px;
 			text-align:center;
-			@include montserrat(bold);
+			@include trade;
 			font-size:32px;
-			text-transform:uppercase;
 			letter-spacing:1px;
 	        @media (max-width:$break-xs) {
 	          	font-size:16px;
@@ -1265,7 +1279,7 @@ input, textarea, button:focus {outline: none !important;}
 					margin-top:20px;
 					color:$gray;
 					a {
-						@include montserrat(bold);
+						@include montserrat;
 					}
 				}
 			}
@@ -1285,7 +1299,7 @@ input, textarea, button:focus {outline: none !important;}
 					border-top:solid 1px $lightgray;
 					color:$gray;
 					a {
-						@include montserrat(bold);
+						@include montserrat;
 						font-size:12px;
 					}
 				}

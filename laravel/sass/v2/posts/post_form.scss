@@ -15,12 +15,11 @@ $border_color: #eee;
 		display:inline-block;
 		width: 130px;
 		padding: 12px 0;
-		background: $blue;
-
 		@include montserrat(normal);
 		text-transform: uppercase;
 		font-size: 11px;
 		color:#fff;
+		@include border-radius(2px);
 		@media (max-width:$break-md) {
 			width:auto;
 			padding: 12px 15px;
@@ -34,10 +33,32 @@ $border_color: #eee;
 			@media (max-width:$break-sm) {
 				margin-right: 1px;
 			}
+			&:hover {
+				background:$gold_dark;
+				@include trans_fade;
+			}
 		}
 		&.preview-button {
-			background: $gold;
+			color:$white;
+			background:$gray;
+			border:solid 1px $lightgray;
 			float: left;
+			&:hover {
+				background:#999;
+				border:solid 1px #999;
+				@include trans_fade;
+			}
+		}
+		&.submit-post {
+			width:130px;
+			background: $blue;
+			@media (max-width:$break-sm) {
+				width:auto;
+			}
+			&:hover {
+				background:$blue_dark;
+				@include trans_fade;
+			}
 		}
 	}
 }
@@ -135,11 +156,17 @@ $border_color: #eee;
 		text-align:center;
 		position:relative;
 		margin-bottom:50px;
+		background:$dark;
+		@include border-radius(3px);
+		cursor:pointer;
+		&:hover {
+			background:#222;
+		}
 		label {
 			@include label;
 			position:absolute;
 			bottom:-30px;
-			right:40%;
+			right:0;
 			margin-top: 8px;
 			margin-right: 1px;
 			&:after {
@@ -148,19 +175,29 @@ $border_color: #eee;
 			}
 		}
 		a.categorization {
-			@include categoriesLink();
+			display:inline-block;
+			@include montserrat(normal);
+			text-transform:uppercase;
 			color: $white;
-			background:$dark;
-			border:solid 2px $dark;
-			font-size:12px;
-			padding:10px 15px !important;
-			margin-right:10px;
+			font-size: 12px;
+			letter-spacing:1px;
+			padding: 22px 0px 22px 60px;
+			margin:0px;
+			text-decoration: none;
+			cursor: pointer;
+			background-image:url('../../../../images/global/follow.png');
+			background-repeat: no-repeat;
+			background-position:left center;
+			background-size:40px 40px;
+			@include border-radius(3px);
+			@media (max-width:$break-xs) {
+				padding: 22px 0 22px 40px;
+			}
 		}	
 	}
 	.draft-publish {
 		display:block;
-		padding-top:10px;
-		border-top:1px solid $dark;
+		padding-top:50px;
 		@include draftPublishButtons();
 		a {
 			padding:12px 15px;
@@ -220,7 +257,7 @@ $border_color: #eee;
 				list-style: none;
 				margin: 0;
 				padding: 15px 0px 15px 15px;
-				border:solid 1px  #525252;
+				border:solid 1px  $gold;
 				@media (max-width:$break-xs) {
 					padding: 10px 0px 10px 10px;
 				}
@@ -271,7 +308,6 @@ $border_color: #eee;
 			}
 		}
 		.close-category {
-			border-top: solid 1px $lightgray;
 			margin-top:30px;
 			padding-top:30px;
 			text-align:center;
@@ -281,8 +317,8 @@ $border_color: #eee;
 			a {
 				background:none;
 				&:hover {
-					color:$blue;
-					border: solid 2px $blue;
+					color:$gold;
+					border: solid 2px $gold;
 				}
 			}
 			@media (max-width:$break-sm) {
@@ -390,6 +426,9 @@ $border_color: #eee;
 				:-ms-input-placeholder {  
 				   color: #333;  
 				}
+				@media (max-width:$break-lg) and (min-width:$break-lg-min) {
+					margin-top:-10px;
+				}
 				label {
 					margin-bottom: 8px;
 					&:after {
@@ -404,7 +443,7 @@ $border_color: #eee;
 					text-align: center;
 					height: 150px;
 					@include border-radius(0);
-					background: #222;
+					background: #171717;
 					line-height:49.5px;
 					margin-left:0px;
 					@media (max-width: $break-lg) and (min-width: $break-lg-min) {
@@ -420,26 +459,26 @@ $border_color: #eee;
 				margin-top: 10px;
 				.tag {
 					color: $gold;
-					background: #222;
+					background: #171717;
 					border-bottom:solid 1px $dark;
 					float:left;
 					width: 100%;
 					font-size: 0;
 					display:inline-block;
 					::-webkit-input-placeholder {
-			   			color: $gold_dark !important;
+			   			color: $gold_darker !important;
 					}
 
 					:-moz-placeholder { /* Firefox 18- */
-					   color: $gold_dark !important;  
+					   color: $gold_darker !important;  
 					}
 
 					::-moz-placeholder {  /* Firefox 19+ */
-					   color: $gold_dark !important;  
+					   color: $gold_darker !important;  
 					}
 
 					:-ms-input-placeholder {  
-					   color: $gold_dark !important;  
+					   color: $gold_darker !important;  
 					}
 					input {
 						width: 100%;
@@ -483,7 +522,7 @@ $border_color: #eee;
 	        	height:0px;
 	        	padding-top:63%;
 	        	margin:5px auto 0 auto;
-	        	border-top:solid 1px $gold;
+	        	border-top:solid 1px #222;
 	        }
 			.image-select {
 				position:absolute;
@@ -589,14 +628,24 @@ $border_color: #eee;
 				min-height: 600px;
 				border: 1px solid $border_color;
 				background:#fff;
-				font-size:16px;
-				line-height:150%;
+				font-size:20px;
+				line-height:165%;
 				text-align:left;
-				padding: 25px;
+				padding: 40px 50px;
 				outline: none;
-				
-				&:after {
+				@media (max-width:$break-sm) {
+					font-size:18px;
 					padding: 25px;
+				}
+				p {
+            		margin-bottom:15px;
+          		}
+				&:after {
+					padding: 40px 50px;
+					color:#d1d1d1;
+					@media (max-width:$break-sm) {
+						padding: 25px;
+					}
 				}
 			}
 		}
@@ -619,14 +668,14 @@ $border_color: #eee;
 
 			.modal-header {
 				padding: 10px !important;
-				background-color: $dark;
+				background-color: $white;
 				height: $post_actionbar_height;
 				h4 {
 					@include trade;
-					font-size: 13px;
-					color: $gray;
+					font-size: 15px;
+					color: $dark_gray;
 					margin: 0;
-					letter-spacing:5px;
+					letter-spacing:2px;
 				}
 				button.close {
 					opacity: 1;

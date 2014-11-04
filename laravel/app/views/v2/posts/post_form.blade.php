@@ -255,7 +255,7 @@
 			<div class="body-submit-wrapper">
 				<div class="body-submit-container container">
 					<div class="row">
-						<div class="col-md-8 col-md-offset-2">
+						<div class="col-md-10 col-md-offset-1">
 							<div class="story {{$errors->first('body') ? 'has-error' : '' }}">
 								{{ Form::label('body','Post', array('class'=>'control-label')) }}
 								{{ Form::textarea('body', $body, array('class'=>'form-control normal-input', 'required', 'minlength' =>'5')) }}
@@ -273,7 +273,7 @@
 		{{ Form::close() }}
 		<div class="bottom-controls-container container">
 			<div class="row">
-				<div class="col-md-8 col-md-offset-2">
+				<div class="col-md-10 col-md-offset-1">
 					<div class="info">
 						{{ Form::label('info','Info') }}
 						<a class="categorization">
