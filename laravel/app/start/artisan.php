@@ -20,6 +20,6 @@ Artisan::add(new ESReindexCommand);
 Artisan::add(new BetaImageMigrateCommand);
 Artisan::add(new ImageUploadSweepCommand);
 Artisan::add(new CommentRecountCommand);
-Artisan::add(new ReservedDumpCommand);
+//Artisan::add(new ReservedDumpCommand);
 Artisan::add(new PostCreatedCommand);
 Artisan::add(new NameChangeEmailCommand);
