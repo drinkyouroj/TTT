@@ -120,16 +120,16 @@ a:focus {
 						@media (max-width:$break-sm) {
 							padding:3px 3px 5px 3px;
 						}
+						&:hover {
+							text-decoration: none;
+							background:#333;
+							@include trans_fade;
+						}
 					}
 					&.followers {
 						
 					}
 					&.following {
-					}
-					&:hover {
-						text-decoration: none;
-						background:#333;
-						@include trans_fade;
 					}
 				}
 			}

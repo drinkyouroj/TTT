@@ -134,7 +134,7 @@ body {
 	margin-top:50px;
 	padding:20px 70px 70px 70px;
 	@media (max-width:$break-sm) {
-		padding:10px 30px 30px 30px;
+		padding:10px 20px 30px 20px;
 	}
 	img.ttt-icon {
 		position:absolute;
@@ -145,6 +145,12 @@ body {
 			height:70px;
 			top:-35px;
 			right:-30px;
+		}
+	}
+	h1 {
+		margin-bottom:50px;
+		@media (max-width:$break-sm) {
+			margin-bottom:20px;
 		}
 	}
 	p {
@@ -163,9 +169,17 @@ body {
 			}
 		}
 		@media (max-width:$break-sm) {
-			font-size: 14px;
+			font-size: 18px;
 			text-align:left;
 			margin-bottom:20px;
+		}
+	}
+	img.sign-logo {
+		margin-top:30px;
+		@media (max-width:$break-sm) {
+			margin-top:10px;
+			width:100px;
+			height:auto;
 		}
 	}
 }

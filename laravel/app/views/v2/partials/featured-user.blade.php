@@ -1,4 +1,7 @@
 @if(isset($fuser))
+<?php $recent = $fuser_recent ?>
+<div class="featured-user-container">	
+		<h3 class="user-label">- Featured User -</h3>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4 col-md-offset-1 avatar-container">
@@ -40,7 +43,7 @@
 					<?php $recent = $fuser_recent ?>
 				</div>
 				<div class="row">
-					<div class="recent-post col-md-6 col-sm-6 col-xs-7">
+					<div class="recent-post col-md-6 col-sm-6">
 						<a href="{{URL::to( 'posts/'.$recent->alias)}}">
 							<div class="recent-image" style="background-image:url('{{Config::get('app.imageurl')}}/{{$recent->image}}')">
 							</div>
@@ -56,7 +59,7 @@
 							</div>
 						</a>
 					</div>
-					<div class="user-actions col-md-4 col-sm-6 col-xs-5">
+					<div class="user-actions col-md-4 col-sm-6">
 						<a class="btn-outline-gold profile-action" href="{{URL::to('profile/'.$fuser->user->username)}}">
 							View {{$fuser->user->username}}'s Profile
 						</a>
@@ -72,4 +75,5 @@
 			</div>
 		</div>
 	</div>
+</div>
 @endif

@@ -778,7 +778,13 @@ input, textarea, button:focus {outline: none !important;}
 	&:hover {
 		// background-color: $gray;
 		color: $white;
+		background-color:#525252;
+		border: 2px solid #525252;
+		background-repeat: no-repeat;
+		background-position:left center;
+		background-size:40px 40px;
 		text-decoration: none;	
+		@include trans_fade;
 	}
 	@media (max-width:$break-xs) {
 		font-size:10px;
@@ -825,15 +831,16 @@ input, textarea, button:focus {outline: none !important;}
 	color: $white;
 	font-size: 12px;
 	letter-spacing:1px;
-	background: $gray;
+	background: #525252;
 	padding: 10px 15px 10px 50px;
 	text-decoration: none;
-	border: 1px solid $gray;
+	border: 1px solid #525252;
 	cursor: pointer;
 	background-image:url('../../../images/global/following.png');
 	background-repeat: no-repeat;
 	background-position:left center;
 	background-size:40px 40px;
+	@include border-radius(2px);
 	&:hover {
 		// background-color: $gray;
 		color: white;
