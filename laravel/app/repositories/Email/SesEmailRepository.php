@@ -57,6 +57,7 @@ class SesEmailRepository implements EmailRepository {
 			} catch (\Aws\Ses\Exception\SesException $e) {
 				//Log the deamn exception
 				Log::error($data['to']);
+				Log::error($e);
 			}
 		}
 	}
