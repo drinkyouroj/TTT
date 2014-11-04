@@ -4,7 +4,7 @@
 		<div class="photo-system">
 			<div class="input-append">
 				<input type="text" class="span2 search-query" placeholder="Search Photos*">
-				<a class="btn activate-search btn-flat-gray">Search</a>
+				<a class="btn activate-search glyphicon glyphicon-search"> </a>
 				<br/>
 				<br/>
 			<div class="clearfix"></div>

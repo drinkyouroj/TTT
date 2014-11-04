@@ -269,6 +269,7 @@ h3.category-label {
 					@include secondary_drop_shadow();
 					&:hover {
 						background:$dark;
+						@include trans_fade;
 					}
 					@media (max-width:$break-sm) { 
 		   				font-size:12px;
@@ -394,7 +395,6 @@ h3.category-label {
 	 			}			
 				h2, ul, p {
 					color:$lightgray;
-					@include word-break(break-all);
 				}
 				a {
 					
@@ -405,7 +405,7 @@ h3.category-label {
 					line-height:125%;
 					letter-spacing:1px;
 					margin-bottom:15px;
-					@include word-break(break-all);
+					text-transform: capitalize;
 					@media (min-width:$break-lg-min) { 
 						margin-top:-50px;
 					}
@@ -437,7 +437,6 @@ h3.category-label {
 						letter-spacing:1px;
 						font-size:16px;
 						color:$gold;
-						@include word-break(break-all);
 						@media (max-width:$break-sm) {
 							margin-bottom:0px;
 							letter-spacing:0px;
@@ -451,7 +450,6 @@ h3.category-label {
 					color:#525252;
 					margin:0px auto;
 					padding:0px;
-					@include word-break(break-all);
 					span.avatar {
 						vertical-align:middle;
 						display:inline-block;
@@ -468,7 +466,7 @@ h3.category-label {
 						font-size:14px;
 						letter-spacing:1px;
 						&:hover {
-							color:$white !important;
+							color:$blue_dark !important;
 						}
 					}
 					@media (max-width:$break-md) {
@@ -583,7 +581,6 @@ h3.category-label {
 				margin-top:0px;
 				margin-bottom:0px;
 				padding:10px 0;
-				@include word-break(break-all);
 				a {
 					
 				}
@@ -594,7 +591,6 @@ h3.category-label {
 				margin:10px auto;
 			}
 			.post-taglines {
-				@include word-break(break-all);
 				@media (min-width:$break-lg-min) { 
 					font-size:16px;
  				}
@@ -603,7 +599,6 @@ h3.category-label {
 				font-size:14px;
 				text-align:center;
 				color:$darker_cream;
-				@include word-break(break-all);
 				a {
 					@include montserrat(normal);
 					font-size:14px;
@@ -942,7 +937,6 @@ h3.category-label {
 			    .recent-title {
 			    	margin-top:0px;
 			    	margin-bottom: 3px;
-			    	@include word-break(break-all);
 			    	line-height:13px !important;
 			    	margin-bottom:5px;
 			    	letter-spacing:1px;
@@ -955,7 +949,6 @@ h3.category-label {
 			    		border-right: 1px solid gray;
 			    	}
 			    	li {
-			    		@include word-break(break-all);
 			    	}
 			    	@include tagline_listing;
 			  	}

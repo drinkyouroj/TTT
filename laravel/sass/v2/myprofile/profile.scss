@@ -20,7 +20,6 @@ a:focus {
 				text-transform:none;
 				vertical-align: middle;
 				margin:0px;
-				@include word-break(break-all);
 				span.avatar-image {
 					display:inline-block;
 					vertical-align: middle;
@@ -31,7 +30,6 @@ a:focus {
 					background-position: center center;
 					background-size: cover;
 					background-repeat: no-repeat;
-					@include word-break(break-all);
 
 					-moz-box-shadow:    0px 0px 2px 0px #333;
 					-webkit-box-shadow: 0px 0px 2px 0px #333;
@@ -130,6 +128,8 @@ a:focus {
 					}
 					&:hover {
 						text-decoration: none;
+						background:#333;
+						@include trans_fade;
 					}
 				}
 			}
@@ -155,6 +155,11 @@ a:focus {
 				}
 				&:hover {
 					color:$dark;
+					background-color:$gold_dark;
+					background-repeat:no-repeat;
+					background-position:left center;
+					background-size:38px 38px;
+					@include trans_fade;
 				}
 				&:visited, &:focus {
 					text-decoration:none !important;
@@ -375,7 +380,6 @@ a:focus {
 							}
 						}
 						.post-title {
-							@include word-break(break-all);
 							@media (min-width:$break-lg-min) {
 								margin-top:20px;
 								margin-left:15px;
@@ -390,15 +394,11 @@ a:focus {
 							}
 							a {
 								@media (max-width:$break-lg) and (min-width:$break-lg-min)  {
-									font-size:14px;
-								}
-								@media (max-width:$break-sm) {
-									font-size:13px;
+									font-size:15px;
 								}
 							}
 						}
 						.post-taglines {
-							@include word-break(break-all);
 							li {
 								@media (max-width:$break-sm) {
 									font-size:13px;
@@ -439,7 +439,7 @@ a:focus {
 							}
 							h2 {
 								@include title_listing;
-								font-size:20px;
+								font-size:27px;
 								line-height:21px;
 								margin-top:0px;
 								@media (max-width:$break-lg) {
@@ -474,7 +474,6 @@ a:focus {
 								text-align:justify;
 								font-size:14px;
 								line-height:150%;
-								@include word-break(break-all);
 								@media (max-width:$break-lg) and (min-width:$break-lg-min)  {
 									font-size:13px;
 								}
@@ -568,15 +567,15 @@ a:focus {
 					margin-bottom: 50px;
 					padding: 0px 15px 30px 0px;
 					h3 {
-						margin: 0px 0px 5px 0px;
-						padding:10px 10px;
+						margin:0px;
+						padding:10px 3px;
 						text-align:center;
-						font-size: 15px;
-						text-transform: uppercase;
-						@include montserrat;
-						letter-spacing: 1px;
-						color:$cream;
-						background:$dark_cream;
+						font-size:15px;
+						letter-spacing:3px;
+						@include trade;
+						text-transform:uppercase;
+						background:$dark;
+						color:$white;
 					}
 					.comment-box {
 						position: relative;
@@ -590,7 +589,6 @@ a:focus {
 
 						
 
-						@include word-break(break-all);
 						span.date {
 							display:none;
 							color: $gray;
@@ -798,16 +796,16 @@ a:focus {
 									display:inline-block;
 									float:right;
 									margin-top:30px;
+									font-size:8px;
 									background-image:url('../../../../images/global/remove.png');
-									@media (max-width:$break-sm) {
-										margin-top:10px;
-										font-size:8px;
-										background-size:25px 25px;
-										background-position:3px center;
-										padding:5px 5px 5px 30px;
-										border:solid 1px $dark;
+									background-size:25px 25px;
+									background-position:3px center;
+									padding:5px 5px 5px 30px;
+									border:solid 1px $dark;
+									&:hover {
+										color:$dark;
 									}
-								}
+							}
 							}
 						}
 					}
@@ -858,11 +856,14 @@ a:focus {
 								}
 								.edit-draft {
 									background-image:url('../../../../images/global/edit.png');
-									@media (max-width:$break-sm) {
-										font-size:10px;
-										background-size:25px 25px;
-										background-position:3px center;
-										padding:5px 5px 5px 30px;
+									margin-top:10px;
+									font-size:8px;
+									background-size:25px 25px;
+									background-position:3px center;
+									padding:5px 5px 5px 30px;
+									border:solid 1px $dark;
+									&:hover {
+										color:$dark;
 									}
 								}
 								.publish-draft {
@@ -1057,7 +1058,6 @@ a:focus {
 		max-width: 400px;
 		
 		.modal-title {
-			@include word-break(break-all);
 		}
 		.modal-body > .avatar-image {
 			height: 300px;

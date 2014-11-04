@@ -141,7 +141,7 @@
 
 		<li class="sidebar-option categories">
 			<a href="#itemTwo" data-toggle="collapse" data-parent="#accordion">
-				CATEGORIES
+				Categories
 				<span class="glyphicon glyphicon-<?php echo $is_mobile ? 'plus' : 'minus' ?> pull-right"></span>
 			</a>
 			<div id="itemTwo" class="collapse <?php echo $is_mobile ? '' : 'in' ?>">
@@ -168,7 +168,7 @@
 			@else
 				<a href="{{ URL::to( 'myprofile' ) }}#feed">
 			@endif
-				MY FEED
+				My Feed
 				<span class="glyphicon glyphicon-align-right pull-right"></span>
 			</a>
 		</li>
@@ -176,14 +176,14 @@
 		@if ( $is_guest )
 			<li class="sidebar-option saves disabled">
 				<a href="#" href="{{ URL::to( 'user/signup' ) }}">
-					SAVES
+					Saves
 					<span class="glyphicon glyphicon-plus pull-right"></span>
 				</a>
 			</li>
 		@else
 			<li class="sidebar-option saves">
 				<a href="#itemThree" data-parent="#accordion" data-toggle="collapse">
-					SAVES
+					Saves
 					<span class="glyphicon glyphicon-plus pull-right"></span>
 				</a>
 				<div id="itemThree" class="collapse">
