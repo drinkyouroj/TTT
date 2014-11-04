@@ -229,7 +229,7 @@
 							{{--Select your image --}}
 							<div class="image-select <?php if ( $draft ) { echo 'hidden'; } ?>">
 								{{ Form::label('image','Image') }}
-								<div onclick="#image" class="image-select-modal image-link" data-toggle="modal" data-target="#imageModal">
+								<div class="image-select-modal image-link" data-toggle="modal" data-target="#imageModal">
 									<img src="{{Config::get('app.url')}}/images/posts/gold-plus.png">
 									<br/>
 									<span>
@@ -246,8 +246,6 @@
 
 							<div class="clearfix"></div>
 						</div>
-
-						
 
 					</div>	
 				</div>

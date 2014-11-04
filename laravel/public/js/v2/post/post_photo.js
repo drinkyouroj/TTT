@@ -152,6 +152,7 @@ function image_grab(url, process) {
 
 			//Checks to see if this is the intial phase of image selection.
 			if($('input.processed-image').val().length == 0) {
+				console.log('test');
 				$('.top-submit-container .image-select').fadeOut();
 				$('.top-submit-container .image-edit').fadeIn();
 			}

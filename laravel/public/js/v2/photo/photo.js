@@ -225,14 +225,13 @@ function PhotoInput() {
 
 			$(that.photo_chosen).css('background-image','url('+that.current_photo_url+')' );
 
-			that.input.val(data);
-
 			//Checks to see if this is the intial phase of image selection.
-			if( that.input.val() && that.input.val().length == 0) {
+			if(that.input.val().length == 0) {
 				$(that.image_select).fadeOut();
 				$(that.image_edit).fadeIn();
 			}
-			
+
+			that.input.val(data);
 		});
 	}
 

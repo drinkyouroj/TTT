@@ -124,7 +124,6 @@
 		<li class="visible-sm visible-xs">
 			{{ Form::open(array('url'=> 'search', 'class' => 'form-search', 'role'=>'search', 'method'=>'get' )) }}
 				<input class="search-input" autocomplete="off" name="search" id="search-input" type="text" placeholder="search">
-				</label>
 				<input type="submit" value="Search" class="hidden" >
 				<div class="result-box hidden"></div>
 			{{ Form::close() }}
