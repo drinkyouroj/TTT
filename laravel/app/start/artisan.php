@@ -23,3 +23,4 @@ Artisan::add(new CommentRecountCommand);
 //Artisan::add(new ReservedDumpCommand);
 Artisan::add(new PostCreatedCommand);
 Artisan::add(new NameChangeEmailCommand);
+Artisan::add(new AdminControlCommand);
