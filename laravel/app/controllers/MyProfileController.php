@@ -153,12 +153,16 @@ class MyProfileController extends BaseController {
 			} else {
 				$success = true;
 				
+				/*
 				if(strlen($user->email)) {
 					$send_to = $user->email;
 				} else {
 					//no email to begin with.
 					$send_to = $new_email;
 				}
+				*/
+				//We figured out that this would be the only way that beta users could migrate off of @twothousandtimes.com emails they were assigned.
+				$send_to = $new_email;
 
 				//Update with the new email
 				$user->updated_email = $new_email;
