@@ -1323,6 +1323,66 @@ input, textarea, button:focus {outline: none !important;}
 		}
 	}
 }
+
+//What's Sondry Modal
+#sondryModal {
+	text-align:left;
+	h3 {
+		text-align:center;
+		font-size:40px;
+		text-transform:uppercase;
+		@media (max-width:$break-sm) {
+			margin-top:70px;
+			margin-bottom:20px;
+			font-size:32px;
+		}
+	}
+	img.sign-logo {
+		@media (max-width:$break-xs) {
+			width:120px;
+			height:auto;
+		}
+	}
+	img.ttt-icon {
+		float:right;
+		margin-top:-30px;
+		@media (max-width:$break-xs) {
+			width:70px;
+			height:auto;
+		}
+	}
+	.modal-body {
+		padding:0px 75px;
+		@media (max-width:$break-md) {
+			padding:0px 10px;
+		}
+		p {
+			font-size:20px;
+			line-height:165%;
+			margin-bottom:20px;
+			@media (max-width:$break-sm) {
+				font-size:18px;
+			}
+			&.dear {
+				font-size:27px;
+				@media (max-width:$break-xs) {
+					font-size:21px;
+					margin-bottom:10px;
+				}
+			}
+			&.bold {
+				@include trade;
+			}
+			&.signoff {
+				margin-top:50px;
+				margin-bottom:0px;
+			}
+		}
+	}
+}
+
+
+
 //Places footer at bottom of page
 .content-wrapper {
 	padding:0 0 50px 0;
