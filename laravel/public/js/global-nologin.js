@@ -32,14 +32,15 @@ $(function() {
 	});
 
 	$(window).load(function(){
-	    if(!window.disable_signup) {
-	        var signup = $.cookie("signup");
-	        console.log(signup);
-	        if(typeof signup == 'undefined') {
-	            $.cookie("signup", 1, {expires: 4, path: '/'});
-	            proceedToSignup();
-	        }
-	    }
+		if(window.redirect == false) {
+		    if(!window.disable_signup) {
+		        var signup = $.cookie("signup");
+		        if(typeof signup == 'undefined') {
+		            $.cookie("signup", 1, {expires: 4, path: '/'});
+		            proceedToSignup();
+		        }
+		    }
+		}
 	});
 
 	function proceedToSignup ( save_comment ) {
