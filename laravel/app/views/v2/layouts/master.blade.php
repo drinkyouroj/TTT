@@ -36,6 +36,7 @@
 	<script>
 		window.site_url = '/';//has trailing slash
 		window.image_url = '{{ Config::get('app.imageurl') }}';
+		window.redirect = {{ Input::get('ttt_redirect',0) }} ;
 	</script>
 	
 	@if($have_user)
@@ -43,6 +44,8 @@
 		window.logged_in_user_id = {{ Auth::user()->id }};
 	</script>
 	@endif
+
+
 	
 	{{--Opengraph--}}
 	<meta property="og:site_name" content="Sondry" />
@@ -112,17 +115,15 @@
 	
 	<!--Extra Javascript-->
 	@yield('js')
-    
 
-    @if(Input::get('ttt_redirect',0))
-	<script>
-	$(function() {
-		$('#sondryModal').modal('show');
-	});
-	</script>
+	@if(Input::get('ttt_redirect',0))
+		<script>
+		$(function() {
+			$('#sondryModal').modal('show');
+		});
+		</script>
 	@endif
-	
-	
+
 	@if($app->environment() == 'ec2-cluster' || $app->environment() == 'prod')
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
