@@ -45,7 +45,8 @@ a:focus {
 						@include border-radius(20px);
 					}
 				}
-				a {	
+				a {
+					@include montserrat;
 					@media (min-width:$break-md-min) {
 						margin-left:20px;
 					}
