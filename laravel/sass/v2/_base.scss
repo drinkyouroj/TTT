@@ -561,6 +561,17 @@ textarea {
 
           .author {
             letter-spacing:1px;
+            span.post-author-avatar {
+              vertical-align:middle;
+              display:inline-block;
+              text-align:center;
+              background-size:cover;
+              background-position:center center;
+              width:30px;
+              height:30px;
+              border-radius: 50%;
+              margin-right:5px;
+            }
             .author-name {
               @include montserrat;
               letter-spacing:1px;     
@@ -681,6 +692,17 @@ textarea {
             }
             &::first-line {
 
+            }
+            p:nth-child(1) {
+              &::first-letter {
+                float:left;
+                font-size: 70px;
+                text-transform: uppercase;
+                margin:.2em .15em .1em 0;
+                @media (max-width:$break-lg) and (min-width:$break-md-min) {
+                  margin: .3em .15em .1em 0;
+                }
+              }
             }
           }
           @media (max-width:$break-lg) and (min-width:$break-md-min) {

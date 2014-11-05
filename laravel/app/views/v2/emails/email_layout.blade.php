@@ -39,7 +39,7 @@
 
 							</td>
 							<td width="467">
-								<a style="color:#ffffff !important;" href="http://sondry.com" target="_blank">sondry.com</a>
+								<a style="color:#917847 !important; text-decoration:none;" href="http://sondry.com" target="_blank">sondry.com</a>
 							</td>
 							<td width="60">
 								<img class="header-logo" width="50" height="50" src="{{Config::get('app.url')}}/images/email/email-icon-2.gif">
