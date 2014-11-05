@@ -292,7 +292,7 @@
 							@if(!$edit)
 								Publish
 							@else
-								Update
+								Publish
 							@endif
 						</a>
 					</span>
