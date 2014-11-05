@@ -306,7 +306,7 @@ h3.category-label {
 				}
 			}
 			span.day {
-				@include trade;
+				@include montserrat;
 				font-size:37px;
 				letter-spacing:1px;
 				line-height:27px;
@@ -908,6 +908,14 @@ h3.category-label {
 	.recent-container {		
 		@media (max-width:$break-md) {
 			margin-top:20px;
+		}
+		@media (max-width:$break-sm) {
+			margin-left:110px;
+			margin-right:110px;
+		}
+		@media (max-width:$break-xs) {
+			margin-left:30px;
+			margin-right:30px;
 		}
 		h5.recent-label {
 			display:block;
