@@ -30,7 +30,7 @@
     
     <!--Fonts-->
     <link rel="stylesheet" type="text/css" href="{{Config::get('app.staticurl')}}/fonts/tradegothic/MyFontsWebfontsKit.css">
-    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     
     <!--{{App::environment()}} {{$version}} -->
 	<script>
