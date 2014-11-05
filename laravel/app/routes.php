@@ -69,15 +69,10 @@ Route::group(array('prefix'=>'rest'), function() {
 	Route::get( 'post/{post_id}/comments/deeplink/{comment_id}', 'CommentController@getDeepLinkedComments');
 	Route::get( 'post/{post_id}/comments/{paginate}/{page}', 'CommentController@getRestComments');
 
-
 	//Category autload
 	Route::get( 'categories/{alais}/{sort}/{page}', 'CategoryController@getRestCategory');
 	Route::get( 'categories/{alais}/{sort}', 'CategoryController@getRestCategory');
 	Route::get( 'categories/{alais}', 'CategoryController@getRestCategory');
-
-	// Route for staging username reservations. 
-	// TODO: this will/should be removed post launch
-	Route::post( 'username/reserve', 'StagingController@postReserveUsername' );
 
 	//Profile autload
 	Route::get( 'profile/{alias}', 'ProfileController@getRestProfile');

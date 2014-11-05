@@ -148,4 +148,13 @@ class AuthRestTest extends TestCase {
 		$this->assertEquals( 'failed', $content->result, 'User should not have been able to unpublish this comment!.' );
 	}
 
+	/*
+	public function testProfileCollection() {
+		$response = $this->call('GET', 'rest/profile/collection/all/2/1');
+		$this->assertResponseOk();
+		$content = json_decode( $response->getContent() );
+
+	}
+	*/
+
 }

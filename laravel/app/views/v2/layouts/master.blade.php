@@ -30,7 +30,7 @@
     
     <!--Fonts-->
     <link rel="stylesheet" type="text/css" href="{{Config::get('app.staticurl')}}/fonts/tradegothic/MyFontsWebfontsKit.css">
-    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     
     <!--{{App::environment()}} {{$version}} -->
 	<script>
@@ -113,6 +113,14 @@
 	<!--Extra Javascript-->
 	@yield('js')
     
+
+    @if(Input::get('ttt_redirect',0))
+	<script>
+	$(function() {
+		$('#sondryModal').modal('show');
+	});
+	</script>
+	@endif
 	
 	
 	@if($app->environment() == 'ec2-cluster' || $app->environment() == 'prod')
