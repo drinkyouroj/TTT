@@ -8,7 +8,7 @@
 					<table width="600" height="122" border="0" cellspacing="0" cellpadding="0" style="border:1px solid #917847; padding:0; margin:0">
 						<tr>
 							<td align="center">
-								<img class="header-logo" alt="Sondry" width="320" height="61" src="{{Config::get('app.staticurl')}}/images/email/email-logo-2.gif">
+								<img class="header-logo" alt="Sondry" width="320" height="61" src="http:{{Config::get('app.staticurl')}}/images/email/email-logo-2.gif">
 							</td>
 						</tr>
 					</table>
@@ -42,7 +42,7 @@
 								<a style="color:#917847 !important; text-decoration:none;" href="http://sondry.com" target="_blank">sondry.com</a>
 							</td>
 							<td width="60">
-								<img class="header-logo" alt="Sondry" width="50" height="50" src="{{Config::get('app.staticurl')}}/images/email/email-icon-2.gif">
+								<img class="header-logo" alt="Sondry" width="50" height="50" src="http:{{Config::get('app.staticurl')}}/images/email/email-icon-2.gif">
 							</td>
 						</tr>
 					</table>

@@ -26,9 +26,6 @@
 					</ul>
 
 					<div class="author" itemprop="author" content="{{author}}">
-						<a href="#">
-							<img class="post-author-avatar" src="">
-						</a>
 						{{ story_type }} by <a class="author-name" href="#"> {{ author }} </a>
 					</div>
 

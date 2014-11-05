@@ -34,7 +34,7 @@
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 				<h3 class="modal-title" id="signupModalLabel">
 					<?php 
-						echo ( isset($prompt) && $prompt instanceof Prompt ) ? $prompt['body'] : 'Our Stories Live here.';
+						echo ( isset($prompt) && $prompt instanceof Prompt ) ? $prompt['body'] : 'Our Stories Live Here.';
 					?>
 				</h3>
 				<h4 class="modal-subtitle" id="signupModalSublabel">
