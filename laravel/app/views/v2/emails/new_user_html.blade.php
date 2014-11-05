@@ -9,5 +9,5 @@
 
 	<p class="signature" style="color:#000000; font-family:Helvetica Neue,Helvetica,Arial,sans-serif; font-weight:bold; font-size:18px;">Team</p>
 
-	<img style="margin-bottom:50px;" alt="Sondry" class="header-logo" width="150" height="28" src="{{Config::get('app.staticurl')}}/images/email/email-logo-2.gif">
+	<img style="margin-bottom:50px;" alt="Sondry" class="header-logo" width="150" height="28" src="http:{{Config::get('app.staticurl')}}/images/email/email-logo-2.gif">
 @stop

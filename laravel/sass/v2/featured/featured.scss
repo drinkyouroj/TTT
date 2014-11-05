@@ -909,6 +909,14 @@ h3.category-label {
 		@media (max-width:$break-md) {
 			margin-top:20px;
 		}
+		@media (max-width:$break-sm) {
+			margin-left:110px;
+			margin-right:110px;
+		}
+		@media (max-width:$break-xs) {
+			margin-left:30px;
+			margin-right:30px;
+		}
 		h5.recent-label {
 			display:block;
 			@include montserrat;
