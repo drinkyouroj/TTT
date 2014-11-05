@@ -6,6 +6,7 @@
 
 <p style="color:#000000; font-family: Baskerville,Baskerville Old Face,Hoefler Text, Garamond,Times New Roman,Gerogia,serif; font-weight:normal; font-size:16px;">Your post, “{{$post->title}}” has reached over {{$views}} views. To view your post click <a href="{{URL::to('posts/'.$post->alias)}}">here</a>.</p>
 
-<p style="color:#000000; font-family: Baskerville,Baskerville Old Face,Hoefler Text, Garamond,Times New Roman,Gerogia,serif; font-weight:normal; font-size:10px;">You can edit your email notifications in account settings.</p>
+<p style="margin-bottom:50px; color:#000000; font-family: Baskerville,Baskerville Old Face,Hoefler Text, Garamond,Times New Roman,Gerogia,serif; font-weight:normal; font-size:13px;">You can edit your email notifications in account settings.</p>
 
+<img class="header-logo" width="150" height="28" src="{{Config::get('app.url')}}/images/email/email-logo-2.gif">
 @stop

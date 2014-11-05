@@ -226,8 +226,9 @@
 					</div>
 
 					<div class="author" itemprop="author" content="{{$post->user->username}}">
+						<?php $user_image = $post->user->image ? Config::get('app.imageurl').'/'.$post->user->image : Config::get('app.url').'/images/profile/avatar-default.png' ;?>
 						<a href="{{ URL::to('profile/'.$post->user->username ) }}">
-							<img class="post-author-avatar" src="">
+							<span class="post-author-avatar" style="background-image:url({{$user_image}});"></span>
 						</a>
 						{{ $post->story_type }} by <a class="author-name" href="{{ URL::to('profile/'.$post->user->username ) }}"> {{ $post->user->username }} </a>
 					</div>
