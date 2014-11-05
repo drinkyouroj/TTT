@@ -128,7 +128,7 @@ class CommentController extends BaseController {
 			}
 
 			//This is a reply.
-			if($comment->depth > 0 && $comment->author['user_id'] != $user->id) {
+			if($comment->depth > 0 && $comment->author['user_id'] != $post->user->id) {
 				EmailLogic::reply($comment, $user);
 			}
 
