@@ -35,7 +35,7 @@ class UserAction {
 			foreach($followers as $follower) {
 				
 				//below statement is to ensure that the user who owns the content doesn't get the repost.
-				if($follower->follower_id != $post->user->id) {
+				if($follower->follower_id != $post->user_id) {
 
 					//New Feed System replaces the old activity;
 					$new_feed = array(
