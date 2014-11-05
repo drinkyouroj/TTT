@@ -60,6 +60,44 @@
 </div>
 @endif
 
+@if(Input::get('ttt_redirect',0))
+<div class="modal fade" id="sondryModal" tabindex="-1" role="dialog" aria-labelledby="sondryModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h3 class="modal-title" id="sondryModalLabel">
+					WHAT'S SONDRY?
+				</h3>
+			</div>
+			<div class="modal-body hidden-xs">
+				<img class="ttt-icon" src="{{Config::get('app.url')}}/images/global/gold-icon.png">
+				<h4>What's Sondry?</h4>
+
+				<p class="bold">Hey Everyone,</p>
+	 
+				<p>Sondry originates from Middle English, and is often used to refer to sondry folk, meaning a diverse group of people. Which is exactly what we have here.</p>
+				 
+				<p>After receiving feedback from many of our incredible storymakers, this change is being made to better define the platform you’ve helped grow, and grow it has. 250,000 people have viewed the stories you made in just two months. But we’re just getting started. Sondry both signifies and accompanies the increased expansion of our community. With your help, we are growing exponentially. So thank you. Please continue to share our site with storymakers all over the world.</p>
+				 
+				<p>As always, feel free to email us directly at team@sondry.com.</p>
+				 
+				<p>Thanks again. Let’s change the world.</p>
+				<p class="bold signoff">Team</p>
+				<img class="sign-logo" src="{{ URL::to('images/global/sondry-logo-min.png') }}" alt="SONDRY">
+			</div><!--End of Modal Body-->
+
+			<div class="modal-body-mobile visible-xs">				
+				 <div class="redirect-other">
+	        		Already have an account? <a href="{{Config::get('app.url')}}/user/login">Login now</a>
+	   			 </div>
+			</div><!--End of Modal Body-->
+			
+		</div>
+	</div>
+</div>
+@endif
+
 <div class="footer-container">
 	<div class="container">
 		<div class="row">

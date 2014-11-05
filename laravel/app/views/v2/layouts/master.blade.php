@@ -113,6 +113,14 @@
 	<!--Extra Javascript-->
 	@yield('js')
     
+
+    @if(Input::get('ttt_redirect',0))
+	<script>
+	$(function() {
+		$('#sondryModal').modal('show');
+	});
+	</script>
+	@endif
 	
 	
 	@if($app->environment() == 'ec2-cluster' || $app->environment() == 'prod')
