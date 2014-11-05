@@ -192,6 +192,14 @@
 									<span class="{{ $is_following ? '' : 'hidden' }}"> {{ $follow_term_active }} {{ $post->user->username }} </span>
 								</a>
 							</div>
+						@else
+							@if($is_editable)
+							<div class="hidden-sm hidden-xs edit-container">
+								<a class="edit-button" href="{{Config::get('app.url')}}/myprofile/editpost/{{$post->id}}">
+									<span>Edit Post</span>
+								</a>
+							</div>
+							@endif
 						@endif
 					</div>
 				</div>

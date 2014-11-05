@@ -214,9 +214,9 @@
 						</div>
 						<div class="col-md-8 image-system"
 							@if(!$edit)
-								style="background-image: url('{{Config::get('app.url')}}/images/posts/sample-image.jpg');"
+								style="background-image: url('{{Config::get('app.staticurl')}}/images/posts/sample-image.jpg');"
 							@else
-								style="background-image: url('{{Config::get('app.url')}}/uploads/final_images/{{$image}}');"
+								style="background-image: url('{{Config::get('app.imageurl')}}/{{$image}}');"
 							@endif
 							>
 							<?php 
