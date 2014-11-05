@@ -4,5 +4,5 @@
 	Here's your new pass:{{$new_pass}}
 	sondry.com
 
-	Thanks,
-	TTT
+	Team
+	Sondry

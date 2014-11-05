@@ -9,5 +9,5 @@ Hi {{$user->username}},
 
 	sondry.com
 
-	Thanks,
-	TTT
+	Team,
+	Sondry

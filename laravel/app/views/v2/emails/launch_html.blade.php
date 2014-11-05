@@ -11,5 +11,7 @@
 
 	<a href="https://sondry.com/user/login" target="_blank" style="color:#32b1c6; text-decoration:none; font-family:Helvetica Neue,Helvetica,Arial,sans-serif; font-weight:bold; font-size:14px;">sondry.com/user/login</a>
 
-	<p class="signature" style="margin-bottom:50px; color:#000000; font-family:Helvetica Neue,Helvetica,Arial,sans-serif; font-weight:bold; font-size:18px;">TTT</p>
+	<p class="signature" style="color:#000000; font-family:Helvetica Neue,Helvetica,Arial,sans-serif; font-weight:bold; font-size:18px;">Team</p>
+
+	<img style="margin-bottom:50px;" alt="Sondry" class="header-logo" width="150" height="28" src="{{Config::get('app.staticurl')}}/images/email/email-logo-2.gif">
 @stop

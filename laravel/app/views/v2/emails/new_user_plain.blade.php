@@ -3,6 +3,6 @@ Welcome {{$user->username}},
 	
 	{{Config::get('app.secureurl')}}/user/confirm/{{$user->confirmation_code}}
 
-	TTT
+	Team Sondry
 
 	sondry.com
