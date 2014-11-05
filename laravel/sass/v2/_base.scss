@@ -1519,8 +1519,9 @@ textarea {
       }
 
       .photo-results {
+        display:inline-block;
         margin-top:20px;
-        img {
+        img.result-image {
           width:10%;
           float:left;
           cursor:pointer;

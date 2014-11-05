@@ -11,7 +11,8 @@
 			</div>
 			
 			<div class="photo-results">
-				
+			
+			<div class="clearfix"></div>	
 			</div>
 			
 			<div class="chosen">
