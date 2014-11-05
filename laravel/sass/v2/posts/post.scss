@@ -203,6 +203,24 @@
 				}
 			}
 		}
+		.edit-container {
+			.edit-button {
+				@include montserrat();
+				font-size: 11px;
+				padding: 9px 15px;
+				text-decoration: none;
+				text-transform:uppercase;
+				color:$white;
+				background:$gray;
+				border:solid 1px $lightgray;
+				float: left;
+				&:hover {
+					background:#999;
+					border:solid 1px #999;
+					@include trans_fade;
+				}
+			}
+		}
 	}
 }
 
