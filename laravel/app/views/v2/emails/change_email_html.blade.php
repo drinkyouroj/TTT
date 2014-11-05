@@ -11,7 +11,8 @@
 
 	<a href="{{Config::get('app.secureurl')}}/user/emailupdate/{{$user->update_confirm}}" target="_blank" style="color:#32b1c6; text-decoration:none; font-family:Helvetica Neue,Helvetica,Arial,sans-serif; font-weight:bold; font-size:14px;">Email Update</a>
 
-	<p class="signature" style="color:#000000; font-family:Helvetica Neue,Helvetica,Arial,sans-serif; font-weight:bold; font-size:18px;">Sondry</p>
+	<p class="signature" style="margin-top:30px; color:#000000; font-family:Helvetica Neue,Helvetica,Arial,sans-serif; font-weight:bold; font-size:18px;">Sondry</p>
+
 	<img style="margin-bottom:50px;" alt="Sondry" class="header-logo" width="150" height="28" src="http:{{Config::get('app.staticurl')}}/images/email/email-logo-2.gif">
 
 @stop
