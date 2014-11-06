@@ -85,7 +85,10 @@
 				<img class="sign-logo" src="{{ URL::to('images/global/sondry-logo-min.png') }}" alt="SONDRY">
 				<img class="ttt-icon" src="{{Config::get('app.url')}}/images/global/gold-icon.png">
 			</div><!--End of Modal Body-->
-			
+			<div class="modal-footer col-md-12">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<div class="clearfix"></div>
+			</div>
 		</div>
 	</div>
 </div>
