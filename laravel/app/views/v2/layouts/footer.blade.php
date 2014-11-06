@@ -98,7 +98,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="footer-nav">
-				<ul>
+				<ul class="main-footer-nav">
 					<li>
 						<a href="{{Config::get('app.url')}}/about">About</a>
 					</li>
@@ -106,7 +106,8 @@
 					<li>
 						<a href="{{Config::get('app.url')}}/etiquette">etiquette</a>
 					</li>
-					<li> | </li>
+				</ul>
+				<ul>
 					<li>
 						<a href="{{Config::get('app.url')}}/contact">Contact</a>
 					</li>

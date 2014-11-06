@@ -224,9 +224,9 @@
 				position:relative;
 				display:block;
 				float:left;
-				width:70px;
-				height:70px;
-				@include border-radius(35px);
+				width:120px;
+				height:120px;
+				@include border-radius(60px);
 				margin-right:10px;
 				background-size:cover;
 				background-position:center center;
@@ -270,6 +270,12 @@
 					font-size:7px;
 					letter-spacing:1px;
 				}
+				&:hover {
+					color: $white;
+					background-color:#525252;
+					text-decoration: none;	
+					@include trans_fade;
+				}
 			}
 
 			a.follow-button {
@@ -296,6 +302,9 @@
 					border:solid 1px $gray;
 					background-color:$gray;
 					background-image:url("../../../../images/global/following.png");
+				}
+				&:hover {
+					border:solid 1px #525252;
 				}
 			}
 
