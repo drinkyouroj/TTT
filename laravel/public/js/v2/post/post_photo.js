@@ -10,9 +10,9 @@ function photoSelection() {
 	
 	//Search catch on enter keydown (prevents the form from being submitted)
 	$('.photos input.search-query').bind('keyup keypress', function(e) {
+		e.preventDefault();
 		var code = e.keyCode || e.which; 
-		if (code  == 13) {               
-			e.preventDefault();
+		if (code  == 13) {			
 			window.photo_search_page = 1;
 			image_pull();//Pulls in images from Flickr
 			$('.photo-results').fadeIn();
@@ -32,7 +32,6 @@ function photoSelection() {
 	
 	$('.photo-results').on('click', 'a.pager', function() {
 		window.photo_search_page = $(this).data('page');
-		console.log(window.photo_search_page);
 		image_pull();
 	});
 	
@@ -107,9 +106,6 @@ function image_pull() {
 					image_counter = index;
 				});
 				
-				//number of images on this page.
-				console.log(image_counter);
-				
 				next_page = window.photo_search_page + 1;
 				
 				if(next_page > 2 || image_counter >= 29) {
@@ -152,7 +148,6 @@ function image_grab(url, process) {
 
 			//Checks to see if this is the intial phase of image selection.
 			if($('input.processed-image').val().length == 0) {
-				console.log('test');
 				$('.top-submit-container .image-select').fadeOut();
 				$('.top-submit-container .image-edit').fadeIn();
 			}

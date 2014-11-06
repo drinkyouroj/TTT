@@ -288,6 +288,7 @@ class MyProfileController extends BaseController {
 	public function getRestPostDelete($post_id) {
 		if($post_id) {
 			$user = Auth::user();
+			$post_id = intval($post_id);
 			$data = array(
 					'user_id' => $user->id,
 					'post_id' => $post_id,
@@ -296,15 +297,13 @@ class MyProfileController extends BaseController {
 			$this->profilepost->delete($data);
 
 			//let's make sure that this belongs to the user.
-			$post = $this->post->findById($post_id);
+			$post = $this->post->findById($post_id, 'any');
 
 			if($post->user_id == $user->id) {
 				$this->post->delete($post_id);
 			}
 
-			if ( $page == 1 && $type == 'all' ) {
-				AnalyticsLogic::createSessionEngagement( 'post-delete' );
-			}
+			AnalyticsLogic::createSessionEngagement( 'post-delete' );
 			
 			return Response::json(
 					array('success' => true),
