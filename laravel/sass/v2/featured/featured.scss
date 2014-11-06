@@ -771,7 +771,7 @@ h3.category-label {
 		padding-top:55px;
 		padding-bottom:60px;
 		text-align:center;
-		background:url('../../../../images/featured/signup-bg.jpg') !important;
+		background-image:url('../../../../images/featured/signup-bg.jpg') !important;
 		background-size:cover;
 		background-repeat:no-repeat;
 		background-position:center top;
@@ -785,12 +785,18 @@ h3.category-label {
 			@include montserrat;
 			text-transform:uppercase;
 			letter-spacing:3px;
+			@media (max-width: $break-sm){
+				font-size:18px;
+			}
 		}
 		p {
 			margin:5px 0 20px 0;
 			font-size:22px;
 			letter-spacing:2px;
 			color:$gold;
+			@media (max-width: $break-sm){
+				font-size:18px;
+			}
 		}
 	}
 }

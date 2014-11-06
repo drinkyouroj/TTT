@@ -24,10 +24,8 @@
 
 		<div class="footer-cat-wrapper">
 			<div class="footer-cat-container container">
-				<div class="row">
-					<div class="footer-cat col-md-12">
-						@include( 'v2/partials/category-listing' )
-					</div>
+				<div class="footer-cat col-md-12">
+					@include( 'v2/partials/category-listing' )
 				</div>
 			</div>
 		</div>
