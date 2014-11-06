@@ -61,8 +61,9 @@ class NameChangeEmailCommand extends Command {
         	// Now send out all the emails
         	$users = $this->user->all(true);
         	$count = 0;
-        	foreach ($users as $user) {
+        	foreach ($users as $user) {        		
 	        	if ( isset( $user->email ) ) {
+	        		$this->line($user->email);
 	        		$count++;
 	                $email_data = array(
 	                    'from' => 'Sondry <team@sondry.com>',
