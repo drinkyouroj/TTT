@@ -91,10 +91,12 @@
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/handlebars/handlebars.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/sidr/jquery.sidr.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/header.js?v={{$version}}"></script>
-	<!-- @if ( $is_mobile )
+	<!-- 
+	@if ( $is_mobile )
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/touch-swipe/jquery.touchSwipe.min.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/header-swipe.js"></script>
-	@endif -->
+	@endif
+	-->
 	
 	@if( $have_user )
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/global-loggedin.js?v={{$version}}"></script>
@@ -102,7 +104,7 @@
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/jquery.cookie.js?v={{$version}}"></script>
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/global-nologin.js?v={{$version}}"></script>
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/jquery.validate.min.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/views/signup-form.js?v={{$version}}"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/user/signup-form.js?v={{$version}}"></script>
 	@endif
 
 	@if( $is_mod )
