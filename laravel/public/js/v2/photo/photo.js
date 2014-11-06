@@ -12,14 +12,13 @@ $(function() {
 //Below starts the events. Had to separate out the scopes for the events entirely.
 function photoInit(photoInput) {
 	
-	$('body').bind('keyup', photoInput.query_input, function(e) {
-		
-		var code = e.keyCode || e.which; 
-		if (code  == 13  ) { //$(this).val().length >=3
+	$('body').on('keypress', photoInput.query_input, function(e) {
+		var code = e.keyCode || e.which;
+		if ( code == 13 ) { //$(this).val().length >=3
 			e.preventDefault();
 			photoInput.photo_search_page = 1;//reset the page.
 			photoInput.keyword = $(photoInput.query_input).val();
-			photoInput.searchImages();//Pulls in images from Flickr
+			photoInput.searchImages();//Pulls in images from Flickr			
 			return false;
 		}
 	});
