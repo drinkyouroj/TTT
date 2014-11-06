@@ -38,6 +38,9 @@
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/comment-pagination.js?v={{$version}}"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post_actions.js?v={{$version}}"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post.js?v={{$version}}"></script>
+	@if($is_mod)
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post_mod.js?v={{$version}}"></script>
+	@endif
 	
 	<!-- Go to www.addthis.com/dashboard to customize your tools -->
 	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53f22b3f69014ed4"></script>

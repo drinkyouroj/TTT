@@ -62,6 +62,8 @@
 				{{#ifEqual is_mod true }}
 					{{#ifEqual comment.published 1}}
 						<a class="delete mod-del-comment" data-delid="{{ comment._id }}" title="Delete Comment" >Moderator Delete </a>
+					{{else}}
+						<a class="mod-hide-comment" data-hideid="{{ comment._id }}" title="Hide Comment" >Moderator Hide </a>
 					{{/ifEqual}}
 				{{/ifEqual}}
 				<span class="flag-comment glyphicon glyphicon-flag {{#contains comment.flags active_user_id}}active{{/contains}}"></span>

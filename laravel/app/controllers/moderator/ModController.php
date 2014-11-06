@@ -5,7 +5,6 @@ class ModController extends Controller {
 								UserRepository $user,
 								PostRepository $post,
 								CommentRepository $comment,
-								CategoryRepository $category,
 								FlaggedContentRepository $flagged
 								) {
 		$this->user = $user;
@@ -32,6 +31,16 @@ class ModController extends Controller {
 		$this->flagged->delete( $flagged_id );
 		return Response::json(
 				array( 'success' => true ),
+				200 );
+	}
+
+	/**
+	 *  Hide comment
+	 */
+	function hideComment($comment_id) {
+		$this->comment->hide($comment_id);
+		return Response::json(
+				array( 'success' => true),
 				200 );
 	}
 

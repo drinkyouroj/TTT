@@ -138,7 +138,7 @@ Route::group(array('prefix'=> 'mod', 'before'=> 'mod'), function() {
 	Route::get('unban/user/{user_id}', 'ModController@unbanUser');
 	Route::get('remove/flagged/comment/{flagged_id}', 'ModController@removeFlaggedComment');
 	Route::get('remove/flagged/post/{flagged_id}', 'ModController@removeFlaggedPost');
-
+	Route::get('hide/comment/{comment_id}', 'ModController@hideComment');
 });
 
 /********************The Authentication Routes  ************************/
