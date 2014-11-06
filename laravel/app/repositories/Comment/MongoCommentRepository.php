@@ -97,6 +97,13 @@ class MongoCommentRepository implements CommentRepository {
 
 	}
 
+	public function hide($comment_id) {
+		$comment = $this->findById($comment_id);
+		$comment->hidden = true;
+		$comment->save();
+		return $comment;
+	}
+
 	public function editBody($comment_id, $body) {
 		$comment = $this->findById( $comment_id );
 		if ($comment instanceof MongoComment) {
@@ -131,6 +138,7 @@ class MongoCommentRepository implements CommentRepository {
 	 */
 	public function findByPostId ( $post_id, $paginate = 10, $page = 1 ) {
 		return MongoComment::where( 'post_id', intval( $post_id ) )
+						   ->where( 'hidden' ,'!=', true)
 						   ->orderBy( 'full_slug_desc', 'desc' )
 						   // ->orderBy( 'full_slug_asc', 'asc' ) // Used for sorting in ascending order
 						   ->skip( ($page - 1) * $paginate )
