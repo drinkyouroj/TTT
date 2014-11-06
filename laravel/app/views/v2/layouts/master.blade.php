@@ -104,7 +104,7 @@
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/jquery.cookie.js?v={{$version}}"></script>
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/global-nologin.js?v={{$version}}"></script>
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/jquery.validate.min.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/user/signup-form.js?v={{$version}}"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/user/signup_form.js?v={{$version}}"></script>
 	@endif
 
 	@if( $is_mod )
