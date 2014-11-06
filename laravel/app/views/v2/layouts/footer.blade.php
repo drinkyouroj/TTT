@@ -98,28 +98,52 @@
 	<div class="container">
 		<div class="row">
 			<div class="footer-nav">
-				<ul class="main-footer-nav">
-					<li>
-						<a href="{{Config::get('app.url')}}/about">About</a>
-					</li>
-					<li> | </li>
-					<li>
-						<a href="{{Config::get('app.url')}}/etiquette">etiquette</a>
-					</li>
-				</ul>
-				<ul>
-					<li>
-						<a href="{{Config::get('app.url')}}/contact">Contact</a>
-					</li>
-					<li> | </li>
-					<li>
-						<a href="{{Config::get('app.url')}}/privacy">Privacy Policy</a>
-					</li>
-					<li> | </li>
-					<li>
-						<a href="{{Config::get('app.url')}}/terms">Terms of Use</a>
-					</li>
-				</ul>
+				@if(Request::segment(1) != 'categories')
+					<ul class="main-footer-nav">
+						<li>
+							<a href="{{Config::get('app.url')}}/about">About</a>
+						</li>
+						<li> | </li>
+						<li>
+							<a href="{{Config::get('app.url')}}/etiquette">etiquette</a>
+						</li>
+					</ul>
+					<ul>
+						<li>
+							<a href="{{Config::get('app.url')}}/contact">Contact</a>
+						</li>
+						<li> | </li>
+						<li>
+							<a href="{{Config::get('app.url')}}/privacy">Privacy Policy</a>
+						</li>
+						<li> | </li>
+						<li>
+							<a href="{{Config::get('app.url')}}/terms">Terms of Use</a>
+						</li>
+					</ul>
+				@else
+					<ul>
+						<li>
+							<a class="main-link" href="{{Config::get('app.url')}}/about">About</a>
+						</li>
+						<li> | </li>
+						<li>
+							<a class="main-link" href="{{Config::get('app.url')}}/etiquette">etiquette</a>
+						</li>
+						<li> | </li>
+						<li>
+							<a href="{{Config::get('app.url')}}/contact">Contact</a>
+						</li>
+						<li> | </li>
+						<li>
+							<a href="{{Config::get('app.url')}}/privacy">Privacy Policy</a>
+						</li>
+						<li> | </li>
+						<li>
+							<a href="{{Config::get('app.url')}}/terms">Terms of Use</a>
+						</li>
+					</ul>
+				@endif
 			</div>
 		</div>
 	</div>
