@@ -515,6 +515,7 @@ input, textarea, button:focus {outline: none !important;}
 				}
 				&.signup-mobile, &.login-mobile {
 					a {
+						text-transform:none;
 						color:$blue;
 						font-size:11px;
 						pointer:cursor;

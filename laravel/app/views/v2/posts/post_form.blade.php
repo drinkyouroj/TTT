@@ -239,7 +239,7 @@
 							</div>
 
 							<div class="image-edit" <?php if ( $draft ) { echo 'style="display:block"'; } ?>>
-								<a href="#image" class="image-select-modal btn-flat-white" data-toggle="modal" data-target="#imageModal">
+								<a href="#image" class="image-select-modal icon-button" data-toggle="modal" data-target="#imageModal">
 									Edit Image
 								</a>
 							</div>
@@ -343,4 +343,4 @@
 
 
 
-	@stop
+	@stop          

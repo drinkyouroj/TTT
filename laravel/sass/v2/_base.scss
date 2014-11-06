@@ -1488,12 +1488,18 @@ textarea {
           padding:15px 15px;
           font-size:18px;
           color:$gold;
+          background:transparent;
+          border:0px;
+          text-decoration:none;
           @media (max-width:$break-sm) {
             width:5%;
             float:left;
           }
           @media (max-width:$break-xs) {
             padding:6px 5px;
+          }
+          &:hover {
+            text-decoration:none;
           }
         }
         .reset-search {
