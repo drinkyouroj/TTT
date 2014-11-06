@@ -49,6 +49,7 @@ $env = $app->detectEnvironment(array(
 
     // twothousandtimes is now: Sondry![
     'prod' => array('*prod.sondry.com'),
+    'stage' => array('*stage.sondry.com'),
 ));
 
 /*
