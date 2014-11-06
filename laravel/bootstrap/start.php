@@ -48,7 +48,7 @@ $env = $app->detectEnvironment(array(
 	'sneakyturtle' => array('sneakyturtle.localdomain'),//Neil's
 
     // twothousandtimes is now: Sondry![
-    'prod' => array('*.sondry.com'),
+    'prod' => array('*prod.sondry.com'),
 ));
 
 /*
