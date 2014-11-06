@@ -4,6 +4,12 @@
 	<link rel="stylesheet" media="screen" href="{{Config::get('app.url')}}/css/compiled/v2/static.css?v={{$version}}">
 @stop
 
+@section('js')
+	<script type="text/javascript">
+		window.disable_signup =1;
+	</script>
+@stop
+
 @section('title')
 	What's Sondry? | Sondry
 @stop
