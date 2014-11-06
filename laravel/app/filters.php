@@ -100,6 +100,11 @@ Route::filter('force_ssl',function() {
 	}
 });
 
+Route::filter('cors_allow',function() {
+	header('Access-Control-Allow-Origin: http://sondry.com');
+	header('Access-Control-Allow-Methods: GET');
+});
+
 
 Route::filter('auth.basic', function()
 {

@@ -23,6 +23,8 @@ class UserController extends BaseController {
                                 )
                             );
         $this->beforeFilter('force_ssl', array('except' => 'getUserCheck'));
+
+        $this->beforeFilter('cors_allow', array('only' => 'getRandomUsername'));
 	}
 
     public function getRandomUsername () {
