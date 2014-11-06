@@ -95,11 +95,8 @@ input, textarea, button:focus {outline: none !important;}
 	box-shadow:         1px 1px 1px 0px #999;
 
 	z-index:9999;
-	@media (max-width:$break-xs) {
-		bottom:50px;
-		font-size:12px;
-		line-height:13px;
-		padding:5px 1px 5px 5px;
+	@media (max-width:$break-sm) {
+		display:none;
 	}
 	&:hover, &:visited {
 		color:$dark;
@@ -1377,6 +1374,21 @@ input, textarea, button:focus {outline: none !important;}
 				margin-top:50px;
 				margin-bottom:0px;
 			}
+		}
+	}
+	.modal-footer { 
+		position:relative;
+		margin-top:50px;
+		padding-top:10px;
+		button.close {
+			position:absolute;
+			top:0px;
+			right:-5px;
+			font-size:100px;
+			color:$dark;
+			@media (max-width:$break-xs) {
+	      		font-size:50px;
+	    	}
 		}
 	}
 }

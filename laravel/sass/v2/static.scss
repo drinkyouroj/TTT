@@ -197,6 +197,9 @@ body {
 .namechange {
 	h1 {
 		margin-bottom:50px;
+		@media (max-width:$break-sm) {
+			margin-bottom:30px;
+		}
 	}
 	p.bold {
 		@include montserrat;
