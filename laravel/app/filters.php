@@ -86,7 +86,7 @@ Route::filter('auth', function()
 
 Route::filter('force_ssl',function() {
 	//detect ec2 situation first.
-	if(	App::environment() == 'prod' &&
+	if(	( App::environment() == 'prod' || App::environment() == 'stage' ) &&
 		!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
 		$_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https'
 		) {
@@ -101,7 +101,7 @@ Route::filter('force_ssl',function() {
 });
 
 Route::filter('cors_allow',function() {
-	header('Access-Control-Allow-Origin: http://sondry.com');
+	header('Access-Control-Allow-Origin: '.Config::get('app.url') );
 	header('Access-Control-Allow-Methods: GET');
 });
 
