@@ -64,6 +64,8 @@
 				<span class="glyphicon glyphicon-plus pull-right"></span>
 			</a>
 			<div id="adminItemSeven" class="collapse">
+				<a href="{{ URL::to('admin/digests') }}" class="centered">View Weekly Digests</a>
+
 				<h5 class="digest-title"><small>Provide 5 post aliases (found in url)</small></h5>
 				<form id="weeklyDigest" @if( isset( $is_post_page ) ) data-post-alias="{{$post->alias}}" @endif>
 					<div class="input-group">
@@ -197,7 +199,7 @@
 			</a>
 			<div id="adminItemEight" class="collapse">
 				<div class="text-center">
-					<a href="/admin/prompts" class="centered">Prompts Page</a>			
+					<a href="{{ URL::to('admin/prompts') }}" class="centered">Prompts Page</a>			
 				</div>
 			</div>			
 		</li>
