@@ -17,7 +17,7 @@ class AdminModComposer {
 			$flagged_comment_content = $flagged->getFlaggedOfType( 'comment' );
 			// Include some stats
 			$num_users = $users_rep->getUserCount();
-			$num_confirmed_users = $users_rep->getConfirmedUserCount();
+			$num_confirmed_users = $users_rep->getVerifiedUserCount();
 			$num_users_created_today = $users_rep->getUserCreatedTodayCount();
 			$num_published_posts = $post_rep->getPublishedCount();
 			$num_published_posts_today = $post_rep->getPublishedTodayCount();

@@ -109,7 +109,7 @@
 					    @endif
 				    </div><!-- /input-group -->
 				    <div class="error"></div>
-				    @if ( $weekly_digest->sent )
+				    @if ( $weekly_digest && $weekly_digest->sent )
 				    	<p style="color: red;">Emails have been sent!</p>
 				    @endif
 					<button class="btn btn-primary" type="submit">Send Emails</button>
