@@ -86,7 +86,6 @@
  </div>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/jquery-1.11.0.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/bootstrap.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/jquery.scrolltofixed.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/global.js?v={{$version}}"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/handlebars/handlebars.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/sidr/jquery.sidr.min.js"></script>
@@ -103,7 +102,7 @@
 	@else
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/jquery.cookie.js?v={{$version}}"></script>
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/global-nologin.js?v={{$version}}"></script>
-		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/jquery.validate.min.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/validation/jquery.validate.min.js"></script>
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/user/signup_form.js?v={{$version}}"></script>
 	@endif
 
