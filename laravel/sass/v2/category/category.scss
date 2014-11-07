@@ -169,3 +169,13 @@
 		}
 	}
 }
+
+.footer-container {
+	padding:10px 0;
+	a.main-link {
+		color:$white !important;
+		&:hover {
+			color:$gray !important;
+		}
+	}
+}

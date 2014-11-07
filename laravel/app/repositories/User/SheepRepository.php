@@ -109,7 +109,7 @@ class SheepRepository implements UserRepository {
 	}
 	
 	public function all( $emails_only ) {
-		$query = $this->user->where('confirmed', 1)
+		$query = $this->user->where('verified', 1)
 						    ->where('banned', 0);
 		if ( $emails_only == true ) {
 			return $query->select('id', 'email')->get();

@@ -176,7 +176,7 @@ $(function() {
 
 	function start_save() {
 		if(save_post.autosave_started == false) {
-			// console.log('auto save started!');
+			console.log('auto save started!');
 			save_post.autosave = true;
 			save_post.sendAutoSaveDraft();//send draft the moment this system starts.
 			save_post.autoSaveInterval = setInterval(function() {
@@ -193,6 +193,8 @@ $(function() {
 
 	function stop_save() {
 		// console.log('auto save cleared!');
+		console.log('auto save stopped!');
+		save_post.autosave_started = false;
 		clearInterval(save_post.autoSaveInterval);
 	}
 
