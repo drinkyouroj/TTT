@@ -4,7 +4,7 @@
 		<div class="join-text col-md-10 col-sm-9">
 			<h4>{{$prompt->body}}</h4>
 			<p>
-			@if ( Auth::guest() )
+			@if ( $is_guest )
 				Sign up to post your stories, follow, and comment.
 			@else
 				Write about it now.

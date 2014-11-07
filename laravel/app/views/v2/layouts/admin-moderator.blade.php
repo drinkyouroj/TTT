@@ -1,7 +1,3 @@
-<?php
-	$is_mod = Session::get('mod');
-	$is_admin = Session::get('admin');
-?>
 
 <div id="offcanvas-admin-sidebar">
 	
@@ -66,10 +62,10 @@
 			<div id="adminItemSeven" class="collapse">
 				<a href="{{ URL::to('admin/digests') }}" class="centered">View Weekly Digests</a>
 
-				<h5 class="digest-title"><small>Provide 5 post aliases (found in url)</small></h5>
+				<h5 class="digest-title"><small>Set from post pages</small></h5>
 				<form id="weeklyDigest" @if( isset( $is_post_page ) ) data-post-alias="{{$post->alias}}" @endif>
 					<div class="input-group">
-						<input type="text" class="form-control" name="digest_post_0" placeholder="Featured Post" value="{{ $weekly_digest ? $weekly_digest['posts'][0]['post_alias'] : '' }}">
+						<input disabled type="text" class="form-control" name="digest_post_0" placeholder="Featured Post" value="{{ $weekly_digest ? $weekly_digest['posts'][0]['post_alias'] : '' }}">
 						@if ( isset( $is_post_page ) )
 					      	<span class="input-group-btn">
 					        	<button class="btn set-digest" type="button">Set</button>
@@ -77,7 +73,7 @@
 					    @endif
 				    </div><!-- /input-group -->
 					<div class="input-group">
-						<input type="text" class="form-control" name="digest_post_1" placeholder="2nd Post" value="{{ $weekly_digest ? $weekly_digest['posts'][1]['post_alias'] : '' }}">
+						<input disabled type="text" class="form-control" name="digest_post_1" placeholder="2nd Post" value="{{ $weekly_digest ? $weekly_digest['posts'][1]['post_alias'] : '' }}">
 				      	@if ( isset( $is_post_page ) )
 					      	<span class="input-group-btn">
 					        	<button class="btn set-digest" type="button">Set</button>
@@ -85,7 +81,7 @@
 					    @endif
 				    </div><!-- /input-group -->
 				    <div class="input-group">
-						<input type="text" class="form-control" name="digest_post_2" placeholder="3rd Post" value="{{ $weekly_digest ? $weekly_digest['posts'][2]['post_alias'] : '' }}">
+						<input disabled type="text" class="form-control" name="digest_post_2" placeholder="3rd Post" value="{{ $weekly_digest ? $weekly_digest['posts'][2]['post_alias'] : '' }}">
 				      	@if ( isset( $is_post_page ) )
 					      	<span class="input-group-btn">
 					        	<button class="btn set-digest" type="button">Set</button>
@@ -93,7 +89,7 @@
 					    @endif
 				    </div><!-- /input-group -->
 				    <div class="input-group">
-						<input type="text" class="form-control" name="digest_post_3" placeholder="4th Post" value="{{ $weekly_digest ? $weekly_digest['posts'][3]['post_alias'] : '' }}">
+						<input disabled type="text" class="form-control" name="digest_post_3" placeholder="4th Post" value="{{ $weekly_digest ? $weekly_digest['posts'][3]['post_alias'] : '' }}">
 				      	@if ( isset( $is_post_page ) )
 					      	<span class="input-group-btn">
 					        	<button class="btn set-digest" type="button">Set</button>
@@ -101,7 +97,7 @@
 					    @endif
 				    </div><!-- /input-group -->
 				    <div class="input-group">
-						<input type="text" class="form-control" name="digest_post_4" placeholder="5th Post" value="{{ $weekly_digest ? $weekly_digest['posts'][4]['post_alias'] : '' }}">
+						<input disabled type="text" class="form-control" name="digest_post_4" placeholder="5th Post" value="{{ $weekly_digest ? $weekly_digest['posts'][4]['post_alias'] : '' }}">
 				      	@if ( isset( $is_post_page ) )
 					      	<span class="input-group-btn">
 					        	<button class="btn set-digest" type="button">Set</button>
@@ -127,14 +123,14 @@
 			<div id="adminItemThree" class="collapse">
 				<h5>User Stats</h5>
 				<ul class="list-unstyled">
+					<li>New Users (Today): {{ $num_users_created_today }}</li>
 					<li>Total Users: {{ $num_users }}</li>
-					<li>Total Confirmed Users: {{ $num_confirmed_users }}</li>
-					<li>Users Created Today: {{ $num_users_created_today }}</li>
+					<li>Total Verified Users: {{ $num_confirmed_users }}</li>
 				</ul>
 				<h5>Post Stats</h5>
 				<ul class="list-unstyled">
+					<li>New Posts (Today): {{ $num_published_posts_today }}</li>
 					<li>Total Published Posts: {{ $num_published_posts }}</li>
-					<li>Posts Published Today: {{ $num_published_posts_today }}</li>
 					<li>Posts Drafted Today: {{ $num_drafts_today }}</li>
 				</ul>
 			</div>

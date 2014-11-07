@@ -1,10 +1,5 @@
 <!DOCTYPE html>
-<?php
-	$have_user = Auth::check();
-	$is_mod = Session::get('mod');
-	$is_admin = Session::get('admin');
-	$is_mobile = Agent::isMobile();
-?>
+
 <html>
 	<head>
 	    <title>
