@@ -1,13 +1,6 @@
 <?php
 	$is_mod = Session::get('mod');
 	$is_admin = Session::get('admin');
-
-	// Fetch the current weekly digest posts (if any)
-	$digest_featured_post = Session::has('digest_featured_post') ? Session::get('digest_featured_post') : '';
-	$digest_post_2 = Session::has('digest_post_2') ? Session::get('digest_post_2') : '';
-	$digest_post_3 = Session::has('digest_post_3') ? Session::get('digest_post_3') : '';
-	$digest_post_4 = Session::has('digest_post_4') ? Session::get('digest_post_4') : '';
-	$digest_post_5 = Session::has('digest_post_5') ? Session::get('digest_post_5') : '';
 ?>
 
 <div id="offcanvas-admin-sidebar">
@@ -74,7 +67,7 @@
 				<h5 class="digest-title"><small>Provide 5 post aliases (found in url)</small></h5>
 				<form id="weeklyDigest" @if( isset( $is_post_page ) ) data-post-alias="{{$post->alias}}" @endif>
 					<div class="input-group">
-						<input type="text" class="form-control" name="digest_featured_post" placeholder="Featured Post" value="{{$digest_featured_post}}">
+						<input type="text" class="form-control" name="digest_post_0" placeholder="Featured Post" value="{{ $weekly_digest ? $weekly_digest['posts'][0]['post_alias'] : '' }}">
 						@if ( isset( $is_post_page ) )
 					      	<span class="input-group-btn">
 					        	<button class="btn set-digest" type="button">Set</button>
@@ -82,7 +75,7 @@
 					    @endif
 				    </div><!-- /input-group -->
 					<div class="input-group">
-						<input type="text" class="form-control" name="digest_post_2" placeholder="2nd Post" value="{{$digest_post_2}}">
+						<input type="text" class="form-control" name="digest_post_1" placeholder="2nd Post" value="{{ $weekly_digest ? $weekly_digest['posts'][1]['post_alias'] : '' }}">
 				      	@if ( isset( $is_post_page ) )
 					      	<span class="input-group-btn">
 					        	<button class="btn set-digest" type="button">Set</button>
@@ -90,7 +83,7 @@
 					    @endif
 				    </div><!-- /input-group -->
 				    <div class="input-group">
-						<input type="text" class="form-control" name="digest_post_3" placeholder="3rd Post" value="{{$digest_post_3}}">
+						<input type="text" class="form-control" name="digest_post_2" placeholder="3rd Post" value="{{ $weekly_digest ? $weekly_digest['posts'][2]['post_alias'] : '' }}">
 				      	@if ( isset( $is_post_page ) )
 					      	<span class="input-group-btn">
 					        	<button class="btn set-digest" type="button">Set</button>
@@ -98,7 +91,7 @@
 					    @endif
 				    </div><!-- /input-group -->
 				    <div class="input-group">
-						<input type="text" class="form-control" name="digest_post_4" placeholder="4th Post" value="{{$digest_post_4}}">
+						<input type="text" class="form-control" name="digest_post_3" placeholder="4th Post" value="{{ $weekly_digest ? $weekly_digest['posts'][3]['post_alias'] : '' }}">
 				      	@if ( isset( $is_post_page ) )
 					      	<span class="input-group-btn">
 					        	<button class="btn set-digest" type="button">Set</button>
@@ -106,7 +99,7 @@
 					    @endif
 				    </div><!-- /input-group -->
 				    <div class="input-group">
-						<input type="text" class="form-control" name="digest_post_5" placeholder="5th Post" value="{{$digest_post_5}}">
+						<input type="text" class="form-control" name="digest_post_4" placeholder="5th Post" value="{{ $weekly_digest ? $weekly_digest['posts'][4]['post_alias'] : '' }}">
 				      	@if ( isset( $is_post_page ) )
 					      	<span class="input-group-btn">
 					        	<button class="btn set-digest" type="button">Set</button>
@@ -114,7 +107,11 @@
 					    @endif
 				    </div><!-- /input-group -->
 				    <div class="error"></div>
+				    @if ( $weekly_digest->sent )
+				    	<p style="color: red;">Emails have been sent!</p>
+				    @endif
 					<button class="btn btn-primary" type="submit">Send Emails</button>
+					
 				</form>
 			</div>
 		</li>

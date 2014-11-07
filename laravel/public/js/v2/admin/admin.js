@@ -126,14 +126,14 @@ $(function() {
         var alias = $('form#weeklyDigest').data('post-alias');
         var $inputField = $(this).closest('.input-group').find('input');
         var self = this;
-        var position = $inputField.attr('name');
-        
+        var position = $inputField.attr('name').split('digest_post_')[1];
+
         $.ajax({
-            url: window.site_url + 'admin/digest/setpost',
+            url: window.site_url + 'admin/digest/add/post',
             type: 'POST',
             data: {
                 position: position,
-                alias: alias
+                post_alias: alias
             },
             success: function ( data ) {
                 if ( data.success ) {
@@ -146,19 +146,12 @@ $(function() {
             }
         });
     });
+
     $('#offcanvas-admin-sidebar form#weeklyDigest').submit( function(event) {
         event.preventDefault();
-
         $.ajax({
             url: window.site_url + 'admin/digest/submit',
             type: 'POST',
-            data: {
-                digest_featured_post: $('input[name="digest_featured_post"]').val(),
-                digest_post_2: $('input[name="digest_post_2"]').val(),
-                digest_post_3: $('input[name="digest_post_3"]').val(),
-                digest_post_4: $('input[name="digest_post_4"]').val(),
-                digest_post_5: $('input[name="digest_post_5"]').val()
-            },
             success: function ( data ) {
                 if ( data.success ) {
                     $('form#weeklyDigest').slideUp();
