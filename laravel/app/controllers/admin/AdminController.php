@@ -152,15 +152,6 @@ class AdminController extends Controller {
 			return Response::json( array( 'error' => 'invalid input' ), 200 );
 		} else {
 			$this->post->updateViewCount( $post_id, $new_count );
-			// NOTE: I coppied this code from PostController
-			$intervals = array(10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000);
-			if( in_array($new_count, $intervals) ) {
-				//Send the user a notification on the system.
-				NotificationLogic::postview($post_id);
-				if($post->useremail->email) {
-					EmailLogic::post_view($post, $new_count);
-				}
-			}
 			return Response::json( array( 'success' => true ), 200 );
 		}
 	}

@@ -4,7 +4,9 @@ use Post, DB, Request, Auth, Session,
  				  FeaturedRepository, 
  				    SearchRepository,
  			   ProfilePostRepository,
- 				     		   Cache;
+ 				     		   Cache,
+ 				   NotificationLogic,
+ 				          EmailLogic;
 
 class EloquentPostRepository implements PostRepository {
 
@@ -221,6 +223,7 @@ class EloquentPostRepository implements PostRepository {
 		if ( $post instanceof Post ) {
 			$post->views = $count;
 			$post->save();
+			$this->notifyViewCount($count, $post);
 			return true;
 		} else {
 			return false;
@@ -270,9 +273,22 @@ class EloquentPostRepository implements PostRepository {
 	
 	public function incrementView($id) {
 		$this->post->where('id', $id)->increment('views', 1);
-		$query = $this->post->where('id', $id)->select('views')->first();
-		return isset($query->views) ? $query->views : 1;
+		$query = $this->post->where('id', $id)->first();
+		$view_count = isset($query->views) ? $query->views : 1;
+		$this->notifyViewCount($view_count, $query);
+		return $view_count;
 	}
+
+		private function notifyViewCount($view_count, $post) {
+			$intervals = array(10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000);
+			if( in_array($view_count, $intervals) ) {
+				//Send the user a notification on the system.
+				NotificationLogic::postview($id);
+				if($post->useremail->email) {
+					EmailLogic::post_view($post, $view_count);
+				}
+			}
+		}
 	
 	public function incrementComment($id) {
 		$this->post->where('id', $id)->increment('comment_count', 1);
