@@ -120,7 +120,6 @@ return array(
 		'Jenssegers\Mongodb\MongodbServiceProvider',
 		'Jenssegers\Agent\AgentServiceProvider',
 		'Mews\Captcha\CaptchaServiceProvider',
-		'Thomaswelton\LaravelRackspaceOpencloud\LaravelRackspaceOpencloudServiceProvider',
 		
 		//Below are service providers for the business logic that's been separated for ease of use.
 		'AppLogic\CategoryLogic\CategoryLogicServiceProvider',
@@ -164,7 +163,8 @@ return array(
 		'Intervention\Image\ImageServiceProvider',
 
 		//Compression of html
-		'Fitztrev\LaravelHtmlMinify\LaravelHtmlMinifyServiceProvider'
+		'Fitztrev\LaravelHtmlMinify\LaravelHtmlMinifyServiceProvider',
+		'Sidney\Latchet\LatchetServiceProvider'
 
 	),
 
@@ -240,7 +240,7 @@ return array(
 		'Eloquent' 		=> 'Jenssegers\Eloquent\Model',
 
 		'Captcha' => 'Mews\Captcha\Facades\Captcha',
-		'OpenCloud' => 'Thomaswelton\LaravelRackspaceOpencloud\Facades\OpenCloud',
+		'Latchet'    => 'Sidney\Latchet\LatchetFacade',
 	),
 
 );
