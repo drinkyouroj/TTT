@@ -1,10 +1,5 @@
 <!DOCTYPE html>
-<?php
-	$have_user = Auth::check();
-	$is_mod = Session::get('mod');
-	$is_admin = Session::get('admin');
-	$is_mobile = Agent::isMobile();
-?>
+
 <html>
   <head>
     <title>
@@ -39,6 +34,7 @@
 		window.redirect = {{ Input::get('ttt_redirect',0) }} ;
 	</script>
 	
+
 	@if($have_user)
 		<script>
 			window.logged_in_user_id = {{ Auth::user()->id }};

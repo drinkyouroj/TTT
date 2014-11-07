@@ -1,7 +1,3 @@
-<?php
-	$is_guest = Auth::guest();
-	$is_mobile = Agent::isMobile();
-?>
 
 @if(!$is_guest)
 <script>

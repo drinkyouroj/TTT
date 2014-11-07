@@ -1,16 +1,4 @@
 @extends('v2.layouts.master')
-
-	<?php
-		if(Auth::check()) {
-			$user = Auth::user();
-			$is_mod = $user->hasRole('Moderator');
-			$is_admin = $user->hasRole('Admin');
-		} else {
-			$is_admin = false;
-			$is_mod = false;
-		}
-		$is_guest = Auth::guest();
-	?>
 	
 	@section('title')
 		{{$cat_title}} | Sondry
@@ -23,6 +11,9 @@
 	@section('js')
 		@include( 'v2/partials/post-listing-template' )
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/category/category.js?v={{$version}}"></script>
+		@if ( $is_admin )
+			<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/category/category-admin.js?v={{$version}}"></script>
+		@endif
 	@stop
 
 	@section('content')

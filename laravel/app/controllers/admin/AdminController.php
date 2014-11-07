@@ -60,64 +60,6 @@ class AdminController extends Controller {
 	}
 
 	/**
-	 *	Submit the weekly digest
-	 */
-	function sendWeeklyDigest () {
-		$featured_post = Input::has('digest_featured_post') ? Input::get('digest_featured_post') : false;
-		$post_2 = Input::has('digest_post_2') ? Input::get('digest_post_2') : false;
-		$post_3 = Input::has('digest_post_3') ? Input::get('digest_post_3') : false;
-		$post_4 = Input::has('digest_post_4') ? Input::get('digest_post_4') : false;
-		$post_5 = Input::has('digest_post_5') ? Input::get('digest_post_5') : false;
-
-		if ( $featured_post && $post_2 && $post_3 && $post_4 && $post_5 ) {
-			// Check to make sure that all 5 posts are valid!
-			$featured_post = $this->post->findByAlias( $featured_post );
-			$post_2 = $this->post->findByAlias( $post_2 );
-			$post_3 = $this->post->findByAlias( $post_3 );
-			$post_4 = $this->post->findByAlias( $post_4 );
-			$post_5 = $this->post->findByAlias( $post_5 );
-
-			if ( $featured_post && $post_2 && $post_3 && $post_4 && $post_5 ) {
-				// Proceed to send the weekly newsletter
-				Queue::push('AdminAction@weeklyDigest', 
-								array(
-									'featured_post' => $featured_post,
-									'post_2' => $post_2,
-									'post_3' => $post_3,
-									'post_4' => $post_4,
-									'post_5' => $post_5
-									)
-								);
-
-				return Response::json( array( 'success' => true ), 200);
-			} else {
-				// Invalid post alias
-				return Response::json( array( 'error' => 'Invalid alias' ), 200);
-			}
-
-		} else {
-			// Invalid input params
-			return Response::json( array( 'error' => 'Invalid parameters' ), 200);
-		}
-	}
-
-	/**
-	 *	Set a post to be part of the weekly digest. For now this is just stored
-	 *	in a session, can be stored in db later on if necassary.
-	 */
-	function setDigestPost () {
-		$position = Input::has('position') ? Input::get('position') : false;
-		$alias = Input::has('alias') ? Input::get('alias') : false;
-		if ( $position != false && $alias != false ) {
-			// Stuff in session
-			Session::put( $position, $alias );
-			return Response::json( array( 'success' => true ), 200);
-		} else {
-			return Response::json( array( 'error' => true ), 200);
-		}
-	}
-
-	/**
 	 *  Post is NSFW-IYWSCE (not safe for work if you work at a shitty corporate environment)
 	 */
 	function setNSFW($post_id) {
