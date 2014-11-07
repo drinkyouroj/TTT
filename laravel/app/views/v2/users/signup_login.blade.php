@@ -1,7 +1,7 @@
 @extends('v2.layouts.master')
 
 @section('css')
-	<link href="{{Config::get('app.staticurl')}}/css/views/user.css?v={{$version}}" rel="stylesheet" media="screen">
+	<link href="{{Config::get('app.staticurl')}}/css/compiled/v2/users/signup_login.css?v={{$version}}" rel="stylesheet" media="screen">
 @stop
 
 @section('js')

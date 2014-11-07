@@ -93,7 +93,9 @@
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/header.js?v={{$version}}"></script>
 	
 	@if( $have_user )
-		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/global/global-loggedin.js?v={{$version}}"></script>
+		<script type="text/javascript">
+			window.logged_in = true;
+		</script>
 	@else
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/jquery.cookie.js?v={{$version}}"></script>
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/global/global-nologin.js?v={{$version}}"></script>
