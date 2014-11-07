@@ -1,12 +1,12 @@
 @extends('v2.layouts.master')
 
 @section('css')
-	<link href="{{Config::get('app.staticurl')}}/css/views/user.css?v={{$version}}" rel="stylesheet" media="screen">
+	<link href="{{Config::get('app.staticurl')}}/css/compiled/v2/users/signup_login.css?v={{$version}}" rel="stylesheet" media="screen">
 @stop
 
 @section('js')
-<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/jquery.validate.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/views/signup-form.js?v={{$version}}"></script>
+<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/validation/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/user/signup_form.js?v={{$version}}"></script>
 	<script type="text/javascript">
 		window.disable_signup =1;
 	</script>

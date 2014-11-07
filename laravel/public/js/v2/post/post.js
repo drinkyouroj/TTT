@@ -258,4 +258,107 @@ $(function() {
 		})
 	}
 
+	//Rest of the comment stuff that was stuffed in global.
+	//Delete Comment**********************************************
+	$('.comments-listing').on('click', 'a.delete', function(event) {
+		event.preventDefault();
+		comment_delete($(this).data('delid'));
+	});
+	// Like/Unlike Comment****************************************
+	$('.comments-listing').on('click', '.comment.published .like-comment', function() {
+		var comment_id = $(this).closest('.comment').attr('id');
+		comment_id = comment_id.split('-')[1];
+		if ( $(this).hasClass('active') ) {
+			comment_unlike( comment_id, $(this) );
+		} else {
+			comment_like( comment_id, $(this) );
+		}
+	});
+	// Flag/Unflag Comment*****************************************
+	$('.comments-listing').on('click', '.comment.published .flag-comment', function() {
+		var comment_id = $(this).closest('.comment').attr('id');
+		comment_id = comment_id.split('-')[1];
+		if ( $(this).hasClass('active') ) {
+			comment_unflag( comment_id, $(this) );
+		} else {
+			comment_flag( comment_id, $(this) );
+		}
+	});
+
+	function comment_delete(id) {
+		$.ajax({
+			url: window.site_url+'rest/comments/'+id,
+			type:"GET",//This used to be delete, but not anymore.
+			success: function(data) {
+				if(data.result == 'deleted') {
+					$comment = $('#comment-'+id);
+					
+					$comment.find('a.delete').fadeOut(function() {
+						$(this).remove();
+						// Remove comment body
+						$comment.find('.comment-body').html('<span class="deleted">(This comment has been deleted)</span>');
+						// Update comment css
+						$comment.addClass('deleted').removeClass('published');
+						// Remove comment author
+						$comment.find('.user').html('<span>Nobody</span>');
+					});
+					
+				}
+			}
+		});
+	}
+
+	function comment_like(id, scope) {
+		$.ajax({
+			url: window.site_url + 'rest/comment/like/' + id,
+			type: 'GET',
+			success: function(data) {
+				if ( data.success ) {
+					$(scope).toggleClass('active');
+					var $count_element = $(scope).closest('.comment').find('.like-comment-count');
+					var count = $count_element.html();
+					count++;
+					$count_element.html(count);
+				}
+			}
+		});
+	}
+	function comment_unlike(id, scope) {
+		$.ajax({
+			url: window.site_url + 'rest/comment/unlike/' + id,
+			type: 'GET',
+			success: function(data) {
+				if ( data.success ) {
+					$(scope).toggleClass('active');
+					var $count_element = $(scope).closest('.comment').find('.like-comment-count');
+					var count = $count_element.html();
+					count--;
+					$count_element.html(count);
+				}
+			}
+		});
+	}
+	function comment_flag(id, scope) {
+		$.ajax({
+			url: window.site_url + 'rest/comment/flag/' + id,
+			type: 'GET',
+			success: function(data) {
+				if ( data.success ) {
+					$(scope).toggleClass('active');	
+				}
+			}
+		});
+	}
+	function comment_unflag(id, scope) {
+		$.ajax({
+			url: window.site_url + 'rest/comment/unflag/' + id,
+			type: 'GET',
+			success: function(data) {
+				if ( data.success ) {
+					$(scope).toggleClass('active');
+				}
+			}
+		});
+	}
+
 });

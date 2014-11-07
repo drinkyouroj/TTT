@@ -5,8 +5,8 @@
 @stop
 
 @section('js')
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/jquery.validate.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/views/signup-form.js?v={{$version}}"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/validation/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/user/signup_form.js?v={{$version}}"></script>
 	<script type="text/javascript">
 		window.disable_signup =1;
 	</script>
