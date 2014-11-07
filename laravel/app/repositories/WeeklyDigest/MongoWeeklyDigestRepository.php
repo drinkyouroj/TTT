@@ -67,8 +67,10 @@ class MongoWeeklyDigestRepository implements WeeklyDigestRepository {
 		if ( $digest instanceof WeeklyDigest ) {
 			// Loop through posts to try and find post_alias
 			for ( $i = 0; $i < 5; $i++ ) {
-				if ( is_array($digest->posts[$i]) && $digest->posts[$i]['post_alias'] == $alias ) {
-					$digest->posts[$i]['clicks'] += 1;
+				if ( $digest->posts[$i]['post_alias'] == $alias ) {
+					$posts = $digest->posts;
+					$posts[$i]['clicks'] += 1;
+					$digest->posts = $posts;
 					$digest->save();
 					break;
 				}

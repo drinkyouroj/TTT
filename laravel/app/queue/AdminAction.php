@@ -22,6 +22,7 @@ class AdminAction {
     						->with( 'post_3', $data['post_3'] )
     						->with( 'post_4', $data['post_4'] )
     						->with( 'post_5', $data['post_5'] )
+                            ->with( 'digest_id', $data['digest_id'] )
     						->render();
 
     	$html = View::make('v2/emails/weekly_digest_html')
@@ -30,6 +31,7 @@ class AdminAction {
     						->with( 'post_3', $data['post_3'] )
     						->with( 'post_4', $data['post_4'] )
     						->with( 'post_5', $data['post_5'] )
+                            ->with( 'digest_id', $data['digest_id'] )
     						->render();
 
         // Now send out all the emails

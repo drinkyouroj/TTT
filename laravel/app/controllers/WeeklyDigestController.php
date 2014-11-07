@@ -69,7 +69,8 @@ class WeeklyDigestController extends BaseController {
 									'post_2' => $posts[1],
 									'post_3' => $posts[2],
 									'post_4' => $posts[3],
-									'post_5' => $posts[4]
+									'post_5' => $posts[4],
+									'digest_id' => $weekly_digest['_id']
 									)
 								);
 				return Response::json( array( 'success' => true ), 200);
