@@ -775,7 +775,7 @@ h3.category-label {
 		background-size:cover;
 		background-repeat:no-repeat;
 		background-position:center top;
-		border-bottom:solid 3px $white;
+		border-bottom:solid 1px $cream;
 		h3, p {
 			color:$white;
 		}
@@ -912,9 +912,7 @@ h3.category-label {
 		}
 	}
 	.recent-container {		
-		@media (max-width:$break-md) {
-			margin-top:20px;
-		}
+		margin-top:40px;
 		@media (max-width:$break-sm) {
 			margin-left:110px;
 			margin-right:110px;
