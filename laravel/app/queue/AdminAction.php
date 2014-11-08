@@ -34,11 +34,11 @@ class AdminAction {
 
         // Now send out all the emails
         $users = $this->user->all(true);
-        $test = '';
+        //$test = '';
 
         foreach ($users as $user) {
         	if ( isset( $user->email ) ) {
-                $test.= $user->email.', ';
+                //$test.= $user->email.', ';
                 $email_data = array(
                     'from' => 'Sondry <no_reply@sondry.com>',
                     'to' => array($user->email),
@@ -46,10 +46,10 @@ class AdminAction {
                     'plaintext' => $plaintext,
                     'html'  => $html
                 );
-        		/*$this->email->create( $email_data );*/
+        		$this->email->create( $email_data );
         	}
         }
-
+        /*
         // This is just for testing
         $email_data = array(
             'from' => 'Sondry <no_reply@sondry.com>',
@@ -59,6 +59,7 @@ class AdminAction {
             'html'  => $html.= $test
         );
         $this->email->test( $email_data );
+        */
 
         $job->delete();
 	}
