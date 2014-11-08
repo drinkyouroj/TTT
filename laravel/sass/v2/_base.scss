@@ -91,8 +91,12 @@ font-family: 'TradeGothicLTPro-BdCn20Obl';
 @mixin tagline_listing {
   @include garamond-italic;
   text-transform:lowercase;
-  font-size:15px;
+  font-size:16px;
+  line-height:12px;
   color:$gold;
+  li {
+    margin-bottom:5px;
+  }
 }
 
 //TTT Defaults:
@@ -635,7 +639,7 @@ textarea {
             font-size:18px;
             text-transform:uppercase;
             color:$white;
-            background-image:url('../../../../images/global/blue-75.png');
+            background-image:url('../../../../images/global/gold-90.png');
             @media (max-width:$break-md) {
               font-size:13px;
             }
@@ -1166,7 +1170,7 @@ textarea {
         font-size:14px;
         text-transform:uppercase;
         color:$white;
-        background-image:url('../../../../images/global/blue-75.png');
+        background:url('../../../../images/global/gold-90.png');
           &:before {
             content:"NSFW";
           }
@@ -1274,7 +1278,7 @@ textarea {
 
     .post-title {
       margin-top:10px;
-      margin-bottom: 3px;
+      margin-bottom: 7px;
       a {
         @include title_listing;
       }

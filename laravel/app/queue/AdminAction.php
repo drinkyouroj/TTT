@@ -46,7 +46,7 @@ class AdminAction {
                     'plaintext' => $plaintext,
                     'html'  => $html
                 );
-        		$this->email->create( $email_data );
+        		/*$this->email->create( $email_data );*/
         	}
         }
 

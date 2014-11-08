@@ -100,7 +100,11 @@
 				</a>
 			</h2>
 			<div class="line"></div>
-			<p class="tagline">{{post.tagline_1}} | {{post.tagline_2}} | {{post.tagline_3}}</p>
+			<ul class="tagline list-inline">
+				<li> {{ post.tagline_1 }} </li>
+				<li> {{ post.tagline_2 }} </li>
+				<li> {{ post.tagline_3 }} </li>
+			</ul>
 			<p class="excerpt">
 				{{post.excerpt}}...
 			</p>
