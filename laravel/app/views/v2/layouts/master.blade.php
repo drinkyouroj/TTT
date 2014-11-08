@@ -92,6 +92,8 @@
 		<script type="text/javascript">
 			window.logged_in = true;
 		</script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/autobahn.min.js?v={{$version}}"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/global/messaging.js?v={{$version}}"></script>
 	@else
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/jquery.cookie.js?v={{$version}}"></script>
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/global/global-nologin.js?v={{$version}}"></script>

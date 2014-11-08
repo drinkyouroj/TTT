@@ -15,7 +15,6 @@
 		"pda/pheanstalk": "2.0.*",
 		"jenssegers/mongodb": "~2.0",
 		"mews/captcha": "dev-master",
-		"thomaswelton/laravel-rackspace-opencloud": "dev-master",
 		"phpunit/phpunit": "4.2.*",
 		"aws/aws-sdk-php": "2.*",
 		"elasticsearch/elasticsearch": "~1.0",
