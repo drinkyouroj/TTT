@@ -46,20 +46,19 @@ class AdminAction {
                     'plaintext' => $plaintext,
                     'html'  => $html
                 );
-        		$this->email->create( $email_data );
+        		/*$this->email->create( $email_data );*/
         	}
         }
-        /*
+        
         // This is just for testing
         $email_data = array(
             'from' => 'Sondry <no_reply@sondry.com>',
             'to' => array(),
             'subject' => 'Sondry - Weekly Digest TEST',
             'plaintext' => $plaintext,
-            'html'  => $html.= $test
+            'html'  => $html
         );
         $this->email->test( $email_data );
-        */
 
         $job->delete();
 	}
