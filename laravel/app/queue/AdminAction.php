@@ -46,10 +46,10 @@ class AdminAction {
                     'plaintext' => $plaintext,
                     'html'  => $html
                 );
-        		/*$this->email->create( $email_data );*/
+        		$this->email->create( $email_data );
         	}
         }
-        
+        /*
         // This is just for testing
         $email_data = array(
             'from' => 'Sondry <no_reply@sondry.com>',
@@ -59,7 +59,7 @@ class AdminAction {
             'html'  => $html
         );
         $this->email->test( $email_data );
-
+        */
         $job->delete();
 	}
 
