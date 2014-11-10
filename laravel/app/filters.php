@@ -70,7 +70,8 @@ App::after(function($request, $response)
 
 	if(Auth::check()) {
 		if($id = Auth::user()->id) {
-			Redis::set($current_session, $id);
+			$redis = Illuminate\Support\Facades\Redis::connection();
+			$redis->set($current_session, $id);
 		}
 	}
 });
