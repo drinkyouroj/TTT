@@ -2,13 +2,7 @@
 	<?php
 		if(Auth::check()) {
 			$user = Auth::user();
-			$is_mod = $user->hasRole('Moderator');
-			$is_admin = $user->hasRole('Admin');
-		} else {
-			$is_admin = false;
-			$is_mod = false;
 		}
-		$is_guest = Auth::guest();
 	?>
 
 @section('js')

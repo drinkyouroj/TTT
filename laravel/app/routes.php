@@ -116,9 +116,12 @@ Route::group(array('prefix'=> 'admin', 'before'=> 'admin'), function() {
 	Route::post('add-random-view-counts', 'AdminController@addRandomViewCountsToAllPosts');
 	Route::post('category/description', 'AdminController@editCategoryDescription');
 	Route::post('category/create', 'AdminController@createCategory');
-	// Weekly Digest Routes
-	Route::post('digest/setpost', 'AdminController@setDigestPost');
-	Route::post('digest/submit', 'AdminController@sendWeeklyDigest');
+
+	// New Weekly Digest Routes
+	Route::post('digest/add/post', 'WeeklyDigestController@addPostToDigest');
+	Route::post('digest/submit', 'WeeklyDigestController@sendWeeklyDigest');
+	Route::get('digests', 'WeeklyDigestController@getWeeklyDigests');
+
 	//NSFW
 	Route::get('nsfw/post/{post_id}', 'AdminController@setNSFW');
 	// Prompts
@@ -183,6 +186,8 @@ Route::group(array('before'=>'profile'), function() {
 
 //Handling Prompts (keep track of statistics)
 Route::get('prompts/{action}', 'PromptController@routePrompt');
+// Keep track of routes coming from emails via weekly digest
+Route::get('email/{digest_id}/{action}/{id}', 'WeeklyDigestController@routeEmailLink');
 
 //For Error Logging if the user wishes to contribute.
 Route::get('error/form', 'HomeController@getErrorForm');
@@ -191,7 +196,7 @@ Route::get('error/form', 'HomeController@getErrorForm');
 Route::get('banned', 'UserController@getBanned');
 
 //The featured page (since it wasn't part of the categories)
-Route::get( 'featured', 'HomeController@getIndex');
+Route::get('featured', 'HomeController@getIndex');
 
 //The front page.
 Route::controller( '/', 'HomeController');

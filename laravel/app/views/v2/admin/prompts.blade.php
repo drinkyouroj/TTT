@@ -9,7 +9,7 @@
 @stop
 
 @section('js')
-	<!-- <script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/category/category.js?v={{$version}}"></script> -->
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/admin/admin-prompts.js?v={{$version}}"></script>
 @stop
 
 @section('content')

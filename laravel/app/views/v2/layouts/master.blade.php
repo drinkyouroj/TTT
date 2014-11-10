@@ -1,10 +1,5 @@
 <!DOCTYPE html>
-<?php
-	$have_user = Auth::check();
-	$is_mod = Session::get('mod');
-	$is_admin = Session::get('admin');
-	$is_mobile = Agent::isMobile();
-?>
+
 <html>
   <head>
     <title>
@@ -39,10 +34,11 @@
 		window.redirect = {{ Input::get('ttt_redirect',0) }} ;
 	</script>
 	
+
 	@if($have_user)
-	<script>		
-		window.logged_in_user_id = {{ Auth::user()->id }};
-	</script>
+		<script>
+			window.logged_in_user_id = {{ Auth::user()->id }};
+		</script>
 	@endif
 
 
@@ -78,31 +74,29 @@
 @endif
 	
 <div class="content-wrapper">
-@yield('filters')
+	@yield('filters')
 
-@yield('content','Fudge no content defined.')
+	@yield('content','Fudge no content defined.')
 
-@include('v2.layouts.footer')
- </div>
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/jquery-1.11.0.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/bootstrap.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/jquery.scrolltofixed.min.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/global.js?v={{$version}}"></script>
+	@include('v2.layouts.footer')
+</div>
+
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/bootstrap.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/handlebars/handlebars.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/sidr/jquery.sidr.min.js"></script>
+
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/header.js?v={{$version}}"></script>
-	<!-- @if ( $is_mobile )
-		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/touch-swipe/jquery.touchSwipe.min.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/header-swipe.js"></script>
-	@endif -->
 	
 	@if( $have_user )
-		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/global-loggedin.js?v={{$version}}"></script>
+		<script type="text/javascript">
+			window.logged_in = true;
+		</script>
 	@else
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/jquery.cookie.js?v={{$version}}"></script>
-		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/global-nologin.js?v={{$version}}"></script>
-		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/jquery.validate.min.js"></script>
-		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/views/signup-form.js?v={{$version}}"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/global/global-nologin.js?v={{$version}}"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/validation/jquery.validate.min.js"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/user/signup_form.js?v={{$version}}"></script>
 	@endif
 
 	@if( $is_mod )

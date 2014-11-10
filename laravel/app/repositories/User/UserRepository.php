@@ -78,6 +78,6 @@ interface UserRepository {
 
 
 	public function getUserCount();
-	public function getConfirmedUserCount();
+	public function getVerifiedUserCount();
 	public function getUserCreatedTodayCount();
 }

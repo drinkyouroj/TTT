@@ -2,13 +2,7 @@
 	<?php
 		if(Auth::check()) {
 			$user = Auth::user();
-			$is_mod = $user->hasRole('Moderator');
-			$is_admin = $user->hasRole('Admin');
-		} else {
-			$is_admin = false;
-			$is_mod = false;
 		}
-		$is_guest = Auth::guest();
 	?>
 
 @section('css')
@@ -41,6 +35,10 @@
 	@if($is_mod)
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post_mod.js?v={{$version}}"></script>
 	@endif
+	@if( $is_admin )
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post-admin.js?v={{$version}}"></script>
+	@endif
+
 	
 	<!-- Go to www.addthis.com/dashboard to customize your tools -->
 	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-53f22b3f69014ed4"></script>

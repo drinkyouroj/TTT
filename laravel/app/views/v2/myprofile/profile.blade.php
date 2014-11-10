@@ -44,9 +44,13 @@
 	@include( 'v2/myprofile/partials/no-content-handlebars-template' )
 	@include( 'v2/partials/photo-input' )
 
-	@if($myprofile|| Session::get('admin') )
+	@if( $myprofile || $is_admin )
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/form/jquery.form.js"></script>
 	@endif
+	@if( $is_admin )
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/myprofile/profile-admin.js"></script>
+	@endif
+
 	{{--This is for the follow action--}}
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post_actions.js?v={{$version}}"></script>
 	
@@ -314,11 +318,6 @@
 
 	if(Auth::check()) {
 		$user = Auth::user();
-		$is_mod = $user->hasRole('Moderator');
-		$is_admin = $user->hasRole('Admin');
-	} else {
-		$is_admin = false;
-		$is_mod = false;
 	}
 
 	$profile_user_is_mod = $profile_user->hasRole('Moderator');

@@ -47,6 +47,16 @@ App::before(function($request)
 	$version =str_replace("\n", "", $contents);//gotta get rid of the returns.
 	View::share('version', $version);
 
+	$is_guest = Auth::guest();
+	$is_mod = Session::get('mod');
+	$is_admin = Session::get('admin');
+	$is_mobile = Agent::isMobile();
+	View::share('have_user', $have_user);
+	View::share('is_guest', $is_guest);
+	View::share('is_admin', $is_admin);
+	View::share('is_mod', $is_mod);
+	View::share('is_mobile', $is_mobile);
+
 });
 
 

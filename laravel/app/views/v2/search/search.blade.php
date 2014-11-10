@@ -5,9 +5,6 @@
 @stop
 
 @section('js')
-	
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/libs/handlebars-v1.3.0.js"></script>
-	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/views/generic-listing.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/search/search.js?v={{$version}}"></script>
 	
 	@include( 'v2/partials/post-listing-template' )
