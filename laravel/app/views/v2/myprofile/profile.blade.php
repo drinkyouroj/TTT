@@ -181,13 +181,13 @@
 	      </div>
 	      <div class="modal-footer">
 
-	        <div class="input-group col-md-8 col-md-offset-2">
+	        <div class="input-group">
 		      <input type="password" placeholder="Password" class="form-control delete-account-password">
 		      <span class="input-group-btn">
-		        <button type="button" class="btn btn-danger delete-account" data-user="{{$profile_user->id}}">
-		        	Deactivate The Account Already!
+		      	<button type="button" class="btn btn-danger delete-account" data-user="{{$profile_user->id}}">
+		        	Deactivate Already!
 		        </button>
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		      	<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 		      </span>
 		    </div>
 

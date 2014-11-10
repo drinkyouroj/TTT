@@ -918,10 +918,10 @@ a:focus {
 							}
 						}
 						.del-acc {
+							margin-top:40px;
 							h2 {
+								border-top:solid 1px $lightgray;
 								padding-top:30px;
-								margin-top:50px;
-								border-top:solid 1px $dark;
 							}
 							.delete-button {
 								display:block;
@@ -938,10 +938,49 @@ a:focus {
 								margin-bottom:30px;
 							}
 						}
+						.panel, .panel-heading {
+							background-color:transparent;
+							border:0px;
+
+							-moz-box-shadow:    none;
+ 							-webkit-box-shadow: none;
+  							box-shadow:         none;
+						}
+						.advanced-settings {
+							.panel {
+								border-top:solid 1px $darker_cream;
+								margin-top:50px;
+								@include border-radius(0px);
+								.panel-heading {
+									padding-left:0px;
+									padding-right:0px;
+									text-align:right;
+								}
+								h4 a {
+	  								display:inline-block;
+									@include montserrat;
+									color: $dark;
+									font-size: 12px;
+									padding: 10px 0;
+									text-decoration: none;
+									text-transform:uppercase;
+									&:hover {
+										// background-color: $dark_gray;
+										color: #525252;
+										text-decoration: none;
+										@include trans_fade;
+									}
+	  							}
+	  							.panel-body {
+	  								border-top:0px;
+	  								background:$white;
+	  								padding-top:30px;
+	  								padding-bottom:30px;
+	  							}
+							}
+						}
 						.email-pref {
-							margin-top:50px;
 							h2 {
-								border-top:solid 1px $dark;
 								margin-top:0px;
 								padding-top:30px;
 							}
@@ -980,14 +1019,19 @@ a:focus {
 						}
 						input {
 							width:100%;
+							height:40px;
 							margin-bottom:10px;
-							padding:5px;
+							padding:5px 10px;
 							background:$white;
 							box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
-							border:solid 1px $gray;
+							border:solid 1px $lightgray;
 							@media (max-width:$break-md) and (min-width:$break-sm-min) {
 								width:50%;
 							}
+						}
+						button {
+							font-size:10px;
+							letter-spacing:1px;
 						}
 					}
 
@@ -1080,4 +1124,40 @@ a:focus {
 			background-repeat: no-repeat;
 		}
 	}	
+}
+
+#deleteModal {
+	.modal-body {
+		font-size:18px;
+	}
+	.input-group {
+		display:block;
+		width:80%;
+		margin:0 10%;
+		@media (max-width:$break-xs) {
+			width:100%;
+			margin:0;
+		}
+		input {
+			@include border-radius(2px);
+		}
+		span.input-group-btn {
+			display:block;
+			clear:both;
+			margin-top:20px;
+			button {
+				@include montserrat;
+				font-size:12px;
+				padding: 10px 15px;
+				text-decoration: none;
+				text-transform:uppercase;
+			}
+		}
+	}
+	.modal-footer {
+		@media (max-width:$break-xs) {
+			padding-left:0px;
+			padding-right:0px;
+		}
+	}
 }

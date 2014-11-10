@@ -640,6 +640,27 @@ input, textarea, button:focus {outline: none !important;}
 	}
 }
 
+.btn-flat-dark {
+	display:inline-block;
+	@include montserrat(normal);
+	color: white;
+	font-size: 12px;
+	background: $dark;
+	padding: 10px 15px;
+	text-decoration: none;
+	text-transform:uppercase;
+	border: 2px solid $dark;
+	cursor: pointer;
+	&:hover {
+		// background-color: $gray;
+		// border-color: $dark_gray;
+		color: $white;
+		text-decoration: none;
+		background: $dark;
+		border: 2px solid $dark;
+	}
+}
+
 .btn-flat-light-gray {
 	display:inline-block;
 	@include montserrat(normal);

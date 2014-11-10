@@ -15,7 +15,7 @@
 	            <div class="thumb-container" style="background-image:url('{{user_image}}');">
 	            </div>
 			</form>
-			<a class="btn-flat-light-gray avatar-modal">Choose an Avatar</a>
+			<a class="btn-flat-gold avatar-modal">Choose an Avatar</a>
 
 			<div id="avatarErrors"></div>
 
@@ -48,15 +48,15 @@
 					</div>
 				</div>
 
-				<button class="btn btn-default btn-flat-dark-gray">Change Password</button>
+				<button class="btn btn-default btn-flat-dark">Change Password</button>
 
 				<div class="message-box"></div>
 			</form>
 
 		</div>
 	</div>
+
 	<div class="col-md-4">
-		
 		{{#ifCond email 1}}
 		<h2>Update Your Email</h2>
 		{{/ifCond}}
@@ -75,7 +75,7 @@
 					<input type="password" name="password" class="current-password" placeholder="password">
 				</div>
 			</div>
-			<button class="btn btn-default btn-flat-dark-gray">Change Email</button>
+			<button class="btn btn-default btn-flat-dark">Change Email</button>
 		</form>
 		<p class="email-update-success hidden">
 			Thank you! Please check your email for a verification link.
@@ -84,43 +84,60 @@
 		</p>
 	</div>
 
-	{{#ifCond email 1}}
-	<div class="col-md-12 email-pref">
-		<h2>Email Preferences</h2>
-		<p>What would you like to receive notifications for?</p>
-		<form role="form" class="form-horizontal" id="emailPref" method="post" action="{{this.site_url}}rest/profile/email/pref">
-			<ul>
-				<li>
-					Views: <input type="checkbox" name="views" {{#checkBox emailpref.views}}{{/checkBox}}>
-				</li>
-				<li>
-					Comments: <input type="checkbox" name="comment" {{#checkBox emailpref.comment}}{{/checkBox}}>
-				</li>
-				<li>
-					Reply: <input type="checkbox" name="reply" {{#checkBox emailpref.reply}}{{/checkBox}}>
-				</li>
-				<li>
-					Like: <input type="checkbox" name="like" {{#checkBox emailpref.like}}{{/checkBox}}>
-				</li>
-				<li>
-					Follow: <input type="checkbox" name="follow" {{#checkBox emailpref.follow}}{{/checkBox}}>
-				</li>
-				<li>
-					Repost: <input type="checkbox" name="repost" {{#checkBox emailpref.repost}}{{/checkBox}}>
-				</li>
-			</ul>
-			<button class="btn btn-default btn-flat-dark-gray">Change Preferences</button>
-		</form>
-	<div class="clearfix"></div>
-	</div>
-	{{/ifCond}}
 
-	<div class="col-md-12 del-acc">
-		<h2>Deactivate Your Account</h2>
-		<p>
-			This will deactivate your account from the system.  All of your content will be unpublished (but they will remain in place)
-		</p>
-		<p>Should you decide to come back, all of your content will be republished and your user will re-appear.</p>
-		<a class="delete-button" data-toggle="modal" data-target="#deleteModal">Deactivate My Account</a>
+
+
+	<div class="advanced-settings panel-group col-md-12" id="accordion" role="tablist" aria-multiselectable="true">
+	  <div class="panel panel-default">
+	    <div class="panel-heading" role="tab" id="headingOne">
+	      <h4 class="panel-title">
+	        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+	          Advanced Settings
+	        </a>
+	      </h4>
+	    </div>
+	    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+	    	<div class="panel-body">
+				{{#ifCond email 1}}
+				<div class="col-md-12 email-pref">
+					<h2>Email Preferences</h2>
+					<p>What would you like to receive notifications for?</p>
+					<form role="form" class="form-horizontal" id="emailPref" method="post" action="{{this.site_url}}rest/profile/email/pref">
+						<ul>
+							<li>
+								Views: <input type="checkbox" name="views" {{#checkBox emailpref.views}}{{/checkBox}}>
+							</li>
+							<li>
+								Comments: <input type="checkbox" name="comment" {{#checkBox emailpref.comment}}{{/checkBox}}>
+							</li>
+							<li>
+								Reply: <input type="checkbox" name="reply" {{#checkBox emailpref.reply}}{{/checkBox}}>
+							</li>
+							<li>
+								Like: <input type="checkbox" name="like" {{#checkBox emailpref.like}}{{/checkBox}}>
+							</li>
+							<li>
+								Follow: <input type="checkbox" name="follow" {{#checkBox emailpref.follow}}{{/checkBox}}>
+							</li>
+							<li>
+								Repost: <input type="checkbox" name="repost" {{#checkBox emailpref.repost}}{{/checkBox}}>
+							</li>
+						</ul>
+						<button class="btn btn-default btn-flat-dark-gray">Change Preferences</button>
+					</form>
+				<div class="clearfix"></div>
+				</div>
+				{{/ifCond}}
+
+				<div class="col-md-12 del-acc">
+					<h2>Deactivate Your Account</h2>
+					<p>
+						This will deactivate your account from the system.  All of your content will be unpublished (but they will remain in place)
+					</p>
+					<p>Should you decide to come back, all of your content will be republished and your user will re-appear.</p>
+					<a class="delete-button" data-toggle="modal" data-target="#deleteModal">Deactivate My Account</a>
+				</div>
+			</div>
+		</div>
 	</div>
 </script>
