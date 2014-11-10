@@ -172,7 +172,7 @@ input, textarea, button:focus {outline: none !important;}
 
 			.col-right {
 				margin-top: 2px;
-				padding-right:25px;
+				padding-right:30px;
 				padding-left:0px;
 				&>*, &>form>* {
 					float: right;
@@ -262,7 +262,7 @@ input, textarea, button:focus {outline: none !important;}
 						content: url("../../../../images/profile/repost-arrow.png");
 						position: absolute;
 						top: -14px;
-						right: 12px;
+						right: 15px;
 						width: 14px;
 						height: 20px;
 					}

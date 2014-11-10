@@ -150,86 +150,6 @@ h3.category-label {
 	              border-right: 2px solid $gold;
 	            }
 			}
-			//for non-user heading
-			.line {
-				width:50px;
-				margin:0 auto;
-				border-top:solid 2px $dark;
-			}
-			h3, p, .signup-btn,.login-header {
-				width:100%;
-				text-align:center;
-			}
-			h3 {
-				@include montserrat;
-				letter-spacing:3px;
-				font-size:24px;
-				@media (max-width:$break-md) {
-		   			font-size:14px;
-		   			margin-bottom:5px;
-		 		}
-		 		@media (max-width:$break-xs) { 
-		   			margin-top:15px;
-		 		}
-		 		&.signed-in {
-		 			font-size:21px;
-		 			letter-spacing:1px;
-		 			a {
-		 				text-transform:none;
-		 				font-size:24px;
-		 				@media (max-width:$break-md) { 
-			   				font-size:16px;
-				 		}
-		 			}
-		 			@media (max-width:$break-md) { 
-		   			font-size:12px; 
-		   			margin-bottom:5px;
-			 		}
-			 		@media (max-width:$break-xs) {
-			   			margin-top:15px;
-			   			margin-bottom:15px;
-			 		}
-		 		}
-			}
-			p {
-				@include garamond;
-				font-size:18px;
-				letter-spacing:1px;
-				a.user-link {
-					position:relative;
-					@include montserrat;
-					&:before {
-						content: url("../../../../images/featured/featured-arrow.png");
-						position: absolute;
-						top: 10px;
-						left: -50px;
-						width: 44px;
-						height: 55px;
-						@media (max-width:$break-sm) { 
-		   					display:none;
-		 				}
-					}
-				}
-				@media (max-width:$break-md) { 
-		   			font-size:16px;
-		 		}
-			}
-			a.signup {
-				margin-top:10px;
-				letter-spacing:1px;
-		 		@media (max-width:$break-xs) { 
-   					margin-top:5px;
- 				}
-			}
-			.login-header {
-				margin-top:10px;
-				color:$gray;
-				a.login {
-					@include montserrat;
-					font-size:14px;
-					color:$blue;
-				}
-			}
 		}
 
 	.links-date {
@@ -775,7 +695,7 @@ h3.category-label {
 		background-size:cover;
 		background-repeat:no-repeat;
 		background-position:center top;
-		border-bottom:solid 3px $white;
+		border-bottom:solid 1px $cream;
 		h3, p {
 			color:$white;
 		}
@@ -912,9 +832,7 @@ h3.category-label {
 		}
 	}
 	.recent-container {		
-		@media (max-width:$break-md) {
-			margin-top:20px;
-		}
+		margin-top:40px;
 		@media (max-width:$break-sm) {
 			margin-left:110px;
 			margin-right:110px;
@@ -949,9 +867,8 @@ h3.category-label {
 			    }
 			    .recent-title {
 			    	margin-top:0px;
-			    	margin-bottom: 3px;
+			    	margin-bottom: 7px;
 			    	line-height:13px !important;
-			    	margin-bottom:5px;
 			    	letter-spacing:1px;
 			    	@include trade;
 			    	text-transform:capitalize;

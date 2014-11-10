@@ -27,19 +27,6 @@ $app = new Illuminate\Foundation\Application;
 */
 
 $env = $app->detectEnvironment(array(
-	
-	//All them Rackspace servers
-	'dev' => array('twothousand14','ttt4gb'),
-	//'testing' => array('rescue-hhvmtest','RESCUE-hhvmtest'),
-	
-	//Single server production
-	'ec2-beta' => array('beta*'),
-	'ec2-staging' => array('staging*'),
-	'ec2-testing' => array('testing*'),
-	
-	//Cluster production
-	'ec2-cluster' => array('web0*'),
-
 	// personal dev machines
 	'vagrant' => array('localhost:4567', 'vagrant-fedora-19*'),
 	'ryvagrant' => array('ryvagrant*'),

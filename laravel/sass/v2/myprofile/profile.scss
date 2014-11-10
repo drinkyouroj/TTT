@@ -402,7 +402,7 @@ a:focus {
 						.post-taglines {
 							li {
 								@media (max-width:$break-sm) {
-									font-size:13px;
+									font-size:16px;
 								}
 							}
 						}
@@ -444,7 +444,7 @@ a:focus {
 								line-height:21px;
 								margin-top:0px;
 								@media (max-width:$break-lg) {
-									font-size:17px;
+									font-size:19px;
 								}
 								@media (max-width:$break-sm) {
 									margin-bottom:5px;
@@ -456,19 +456,19 @@ a:focus {
 							.line {
 								width:20px;
 								border-top:solid 1px $dark;
-								margin:0px auto;
-								padding:10px 0 0 0;
+								margin:10px auto;
+								padding:0;
 								@media (max-width:$break-sm) {
 									padding:5px 0 0 0;
+									margin:7px auto 5px auto;
 								}
 							}
-							p.tagline {
+							ul.tagline {
 								color:$gold;
 								@include tagline_listing;
-								font-size:15px;
-								@media (max-width:$break-lg) {
-									font-size:13px;
-								}
+								li:nth-child(1), li:nth-child(2) {
+                					border-right: 1px solid $gold;
+             					}
 							}
 							p.excerpt {
 								display:none;
@@ -541,7 +541,7 @@ a:focus {
 							font-size:14px;
 							text-transform:uppercase;
 							color:$white;
-							background-image:url('../../../../images/global/blue-75.png');
+							background-image:url('../../../../images/global/gold-90.png');
 							&:before {
 								content:"NSFW";
 							}
