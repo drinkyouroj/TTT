@@ -10,7 +10,7 @@ class MessageStorageServiceProvider extends ServiceProvider {
 	{
 		$this->app->bind(
 		'AppStorage\Message\MessageRepository',
-		'AppStorage\Message\EloquentMessageRepository'
+		'AppStorage\Message\MongoMessageRepository'
 		);
 		
 		$this->app->booting(function()
