@@ -40,7 +40,8 @@ App::before(function($request)
 
 	//This is meant for tracking sessions since the sessionId from laravel changes everytime.
 	if (!Session::has('current_session')) {
-		Session::put('current_session', str_random(40));
+		$current_session = str_random(40);
+		Session::put('current_session', $current_session);		
 	}
 
 	$contents = File::get(base_path().'/gitversion');
@@ -62,7 +63,16 @@ App::before(function($request)
 
 App::after(function($request, $response)
 {
-	//
+	$current_session = Session::get('current_session');
+	
+	$expires = time() + (3600 * 6); //expiration in 6 hours from now.
+	setcookie('dirtytalk', $current_session, $expires , "/" );//Use native function when you want to actually pass things to another app.
+
+	if(Auth::check()) {
+		if($id = Auth::user()->id) {
+			Redis::set($current_session, $id);
+		}
+	}
 });
 
 /*
