@@ -21,8 +21,7 @@
 		"intervention/image": "2.*",
 		"jenssegers/agent": "~2.0",
 		"fitztrev/laravel-html-minify": "1.*",
-		"davechild/textstatistics": "dev-master",
-		"sidney/latchet": "1.0.*@dev"
+		"davechild/textstatistics": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

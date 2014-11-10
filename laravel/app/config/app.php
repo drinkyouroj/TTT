@@ -163,8 +163,7 @@ return array(
 		'Intervention\Image\ImageServiceProvider',
 
 		//Compression of html
-		'Fitztrev\LaravelHtmlMinify\LaravelHtmlMinifyServiceProvider',
-		'Sidney\Latchet\LatchetServiceProvider'
+		'Fitztrev\LaravelHtmlMinify\LaravelHtmlMinifyServiceProvider'
 
 	),
 
@@ -239,8 +238,6 @@ return array(
 		'Moloquent'       => 'Jenssegers\Mongodb\Model',
 		'Eloquent' 		=> 'Jenssegers\Eloquent\Model',
 
-		'Captcha' => 'Mews\Captcha\Facades\Captcha',
-		'Latchet'    => 'Sidney\Latchet\LatchetFacade',
+		'Captcha' => 'Mews\Captcha\Facades\Captcha'
 	),
-
 );
