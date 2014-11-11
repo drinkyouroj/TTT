@@ -160,5 +160,9 @@ class HomeController extends BaseController {
 	public function getNamechange() {
 		return View::make('v2.static.namechange');
 	}
+
+	/*public function getPresskit() {
+		return View::make('v2.media.presskit');
+	}*/
 	
 }
