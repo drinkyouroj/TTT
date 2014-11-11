@@ -92,8 +92,14 @@
 		<script type="text/javascript">
 			window.logged_in = true;
 		</script>
-		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/autobahn.min.js?v={{$version}}"></script>
-		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/global/messaging.js?v={{$version}}"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/underscore/underscore.js?v={{$version}}"></script>
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/backbone/backbone.js?v={{$version}}"></script>
+		<script type="text/javascript" src="//cdn.socket.io/socket.io-1.2.0.js"></script>
+		{{--Below contain the script views for the messaging systems.--}}
+		@include('v2.messaging.message-app')
+		@include('v2.messaging.message-listing')
+
+		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/global/messaging/app.js?v={{$version}}"></script>
 	@else
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/jquery.cookie.js?v={{$version}}"></script>
 		<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/global/global-nologin.js?v={{$version}}"></script>
