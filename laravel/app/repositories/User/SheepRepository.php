@@ -6,6 +6,7 @@ use User,
 	Hash,
 	Auth,
 	Session,
+	Validator,
 	SolariumHelper,
 	CommentRepository,
 	PostRepository,
@@ -150,6 +151,26 @@ class SheepRepository implements UserRepository {
 			return false;
 		} else {
 			return false;
+		}
+	}
+
+	public function updateProfile($data) {
+		$user = $this->user->where('id', $data['id'])->first();
+		unset($data['id']);
+		$validator = Validator::make(
+				$data,
+				array(
+					'name' => 'max:50',
+					'website' => 'url'
+					)
+			);
+		if ($validator->fails()) {
+			return false;
+		} else {
+			$user->name = $data['name'];
+			$user->website = $data['website'];
+			$user->save();
+			return true;
 		}
 	}
 

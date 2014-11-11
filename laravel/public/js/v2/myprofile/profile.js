@@ -201,6 +201,10 @@ $(function() {
 		profile.emailPref();
 	});
 
+	$('body').on('click', '#userProfile button',function() {		
+		profile.updateProfile();
+	});
+
 	//update email
 	$('body').on('submit', '#email-update-form', function(event) {
 		event.preventDefault();
@@ -833,13 +837,14 @@ function ProfileActions() {
 		var parent = this;
 
 		this.getData(this.url, function(data) {
-			console.log(data.emailpref);
 			view_data = {
 				site_url: window.site_url,
 				user_image: user_image,
 				email: window.email,
 				image_url: window.image_url,
-				emailpref: data.emailpref
+				emailpref: data.emailpref,
+				name: data.name,
+				website: data.website
 			};
 			$('#default-content', parent.target).append(parent.settings_template(view_data));
 			$('.loading-container img').fadeOut();
@@ -889,7 +894,29 @@ function ProfileActions() {
 		$('form#emailPref').ajaxForm({
 			successs: function(xhr) {
 				console.log(xhr);
+			}
+		}).submit();
+	}
 
+	this.updateProfile = function() {
+		//Inception... function within a function within a function
+		function profileValidate() {
+			$("form#userProfile").validate({
+				rules: {
+					name: {
+						maxlength: 40
+					},
+					website: {
+						url: true
+					}
+				}
+			});
+		}
+
+		$('form#userProfile').ajaxForm({
+			beforeSubmit: profileValidate(),
+			successs: function(xhr) {
+				console.log(xhr);
 			}
 		}).submit();
 	}

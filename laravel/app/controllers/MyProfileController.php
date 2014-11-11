@@ -447,20 +447,26 @@ class MyProfileController extends BaseController {
 	}
 
 	public function getRestSettings() {
-		$user_id = Auth::user()->id;
-		if($this->emailpref->exists($user_id, true)) {
-			$emailpref = $this->emailpref->exists($user_id);
-		} else {
-			//brand spanking new user.
-			$data = array();
-			$data['user_id'] = $user_id;
-			$emailpref = $this->emailpref->create($data);
-		}
+		if(Auth::check()) {
+			$user = Auth::user();
+			if($this->emailpref->exists($user->id, true)) {
+				$emailpref = $this->emailpref->exists($user->id);
+			} else {
+				//brand spanking new user.
+				$data = array();
+				$data['user_id'] = $user->id;
+				$emailpref = $this->emailpref->create($data);
+			}
 
-		return Response::json(
-				array('emailpref' => $emailpref->toArray() ),
-				200
-			);
+			return Response::json(
+					array(
+						'emailpref' => $emailpref->toArray(),
+						'name' => $user->name,
+						'website' => $user->website
+						),
+					200
+				);
+		}
 	}
 
 		public function postRestEmailPref() {
@@ -477,6 +483,24 @@ class MyProfileController extends BaseController {
 					array('result' => $data ),
 					200
 				);
+		}
+
+		public function postRestProfile() {
+			if( Auth::check() ) {
+				$profile['id'] = Auth::user()->id;
+				$profile['name'] = Request::get('name','');
+				$profile['website'] = Request::get('website','');
+				$result = $this->user->updateProfile($profile);
+				return Response::json(
+						array('success' => $result),
+						200
+					);
+			} else {
+				return Response::json(
+						array('success' => false),
+						200
+					);
+			}
 		}
 
 	public function getRestComments($user_id = 0, $page = 1) {

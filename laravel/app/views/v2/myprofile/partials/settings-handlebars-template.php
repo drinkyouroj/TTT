@@ -84,8 +84,15 @@
 		</p>
 	</div>
 
-
-
+	<div class="col-md-6" id="profile">
+		<h2>Profile Information</h2>
+		<form role="form" class="form-horizontal" id="userProfile" method="post" action="{{this.site_url}}rest/profile/update">
+			<input type="text" name="name" placeholder="Name" value="{{name}}">
+			<input type="text" name="website" placeholder="Website (including http://)" value="{{website}}">
+			<br/>
+			<button class="btn btn-default btn-flat-dark-gray">Update Profile</button>
+		</form>
+	</div>
 
 	<div class="advanced-settings panel-group col-md-12" id="accordion" role="tablist" aria-multiselectable="true">
 	  <div class="panel panel-default">

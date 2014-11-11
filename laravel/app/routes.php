@@ -28,6 +28,7 @@ Route::group(array('prefix' => 'rest', 'before' => 'auth'), function()
 		Route::post( 'password', 'UserController@postNewpass'); //I know its not in myprofile!
 		Route::post( 'email/update', 'MyProfileController@postUpdateEmail');
 		Route::post( 'email/pref', 'MyProfileController@postRestEmailPref');
+		Route::post( 'update', 'MyProfileController@postRestProfile' );
 		Route::get( 'settings', 'MyProfileController@getRestSettings');
 	});
 
