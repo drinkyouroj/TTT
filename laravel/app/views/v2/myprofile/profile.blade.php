@@ -75,38 +75,40 @@
 	<div class="profile-header-wrapper">
 		<div class="profile-header-container container">
 			<div class="row">
-				<div class="col-md-6 col-xs-6 header-left">
-					<h2>
+				<div class="col-sm-8 col-xs-6 header-left">
+					<div class="avatar-container">
 						@if($profile_user->image)
 							<span class="avatar-image" data-toggle="modal" data-target="<?php echo $myprofile ? '#photoModal': '#avatarModal';?>" style="background-image:url('{{Config::get('app.imageurl')}}/{{$profile_user->image}}');"></span>
 						@else
 							<span class="avatar-image" data-toggle="modal" data-target="<?php echo $myprofile ? '#photoModal': '#avatarModal';?>" style="background-image:url('{{Config::get('app.url')}}/images/profile/avatar-default.png');"></span>
 						@endif
-						<a>	
-							{{$profile_user->username}}
-						</a>
+					</div>
+					<div class="name-info">
+						<h2>
+							<a class="username">	
+								{{$profile_user->username}}
+							</a>
+						</h2>
 
-						@if($profile_user->name)
-							<br/>
-							<span class="profile-name">
-								{{$profile_user->name}}
-							</span>
-						@endif
-						
-						@if($profile_user->website)
-							<br/>
-							<span class="profile-website">
-								<a rel="nofollow" href="{{$profile_user->website}}">{{$profile_user->website}}</a>
-							</span>
-						@endif
-					</h2>
-				</div>
-				<div class="col-md-6 col-xs-6 header-right">
-					<div class="row">
-						<div class="col-md-5">
-
+						<div class="info">
+							@if($profile_user->name)
+								<span class="profile-name info-generic">
+									{{$profile_user->name}}
+								</span>
+							@endif
+							
+							@if($profile_user->website)
+								<span class="profile-website info-generic">
+									<a rel="nofollow" href="{{$profile_user->website}}" target="_blank">{{$profile_user->website}}</a>
+								</span>
+							@endif
+						<div class="clearfix"></div>
 						</div>
-						<div class="col-md-7 follow-container">
+					</div>
+				</div>
+				<div class="col-sm-4 col-xs-6 header-right">
+					<div class="row">
+						<div class="col-md-12 follow-container">
 							<div class="col-md-12 col-sm-12 col-xs-12 fing-fer">
 								<a href="#followers" class="followers" id="followers">
 									<span class="count">{{$follower_count}}</span>

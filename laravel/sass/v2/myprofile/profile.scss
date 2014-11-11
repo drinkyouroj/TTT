@@ -11,16 +11,13 @@ a:focus {
 	border-bottom:solid 1px $lightgray;
 	.profile-header-container {
 		.header-left {
-			
-			h2 {
-				background-position: left center;
-				background-repeat: no-repeat;
-				@include montserrat;
-				font-size:40px;
-				text-transform:none;
-				vertical-align: middle;
-				margin:0px;
+			.avatar-container {
+				float:left;
+				@media (max-width:$break-sm) {
+					width:100%;
+				}
 				span.avatar-image {
+					float:left;
 					display:inline-block;
 					vertical-align: middle;
 					width: 150px;
@@ -45,26 +42,80 @@ a:focus {
 						@include border-radius(20px);
 					}
 				}
-				a {
+			}
+			.name-info {
+				float:left;
+				display:inline-block;
+				vertical-align: middle;
+				@media (min-width:$break-md-min) {
+					margin-left:20px;
+				}
+				a.username {
+					display:inline-block;
+					margin-top:45px;
 					@include montserrat;
-					@media (min-width:$break-md-min) {
-						margin-left:20px;
-					}
 					cursor:pointer;
 					&:hover {
 						color:$blue;
 					}
+					@media (max-width:$break-sm) {
+						margin-top:0px;
+					}
 				}
-
-				@media (max-width:$break-sm) {
-					font-size:13px;
-					margin-top:0px;
-					margin-bottom:0px;
+				h2 {
+					@include montserrat;
+					font-size:40px;
+					text-transform:none;
+					vertical-align: middle;
+					margin:0px;
+					@media (max-width:$break-sm) {
+						font-size:15px;
+						margin-top:0px;
+						margin-bottom:0px;
+					}
+				}
+				.info {
+					span.info-generic {
+						float:left;
+						@include garamond-italic;
+						color:$gold;
+						font-size:16px;
+						letter-spacing:1px;
+						&:nth-child(2) {
+							margin-left:10px;
+							padding-left:10px;
+							border-left:solid 1px $dark_gray;
+							@media (max-width:$break-sm) {
+								margin-left:0px;
+								padding-left:0px;
+								border-left:0px;
+							}
+						}
+						@media (max-width:$break-sm) {
+							font-size:13px;
+							width:100%;
+						}
+					}
+					.profile-name {
+					}
+					.profile-website {
+						a {
+							float:left;
+							color:$gold;
+							&:hover {
+								color:$gold_darker;
+								@include trans_fade;
+							}
+						}
+					}
 				}
 			}
 		}
 		.header-right {
 			padding-top: 25px;
+			@media (max-width:$break-md) {
+				padding-top: 45px;
+			}
 			@media (max-width:$break-sm) {
 				padding-top:5px;
 				padding-left:0px;
@@ -96,7 +147,7 @@ a:focus {
 						@include montserrat;
 						display:block;
 						font-size: 21px;
-						@media (max-width:$break-sm) {
+						@media (max-width:$break-md) {
 							font-size:17px;
 						}
 					}
@@ -104,7 +155,7 @@ a:focus {
 						display:block;
 						font-size: 12px;
 						line-height:5px;
-						@media (max-width:$break-sm) {
+						@media (max-width:$break-md) {
 							font-size:8px;
 						}
 					}
@@ -118,7 +169,7 @@ a:focus {
 						-webkit-border-radius: 5px; 
 						-moz-border-radius: 5px; 
 						border-radius: 5px; 
-						@media (max-width:$break-sm) {
+						@media (max-width:$break-md) {
 							padding:3px 3px 5px 3px;
 						}
 						&:hover {
@@ -169,8 +220,7 @@ a:focus {
 			}
 		}
 		.section-selectors {
-			margin-top:30px;
-			
+			margin-top:30px;			
 			a {
 				display:block;
 				float:left;
@@ -198,7 +248,8 @@ a:focus {
 				}
 			}
 			@media (max-width:$break-sm) {
-				margin-top:5px;
+				margin-top:10px;
+				border-top:solid 1px $dark_gray;
 			}
 		}
 		
@@ -893,60 +944,82 @@ a:focus {
 					}
 					&.settings {
 						margin-top:30px;
-						.avatar {
-							margin-top:20px;
-							text-align:center;
-							.upload-form {
+						margin-left:0px;
+						margin-right:0px;
+						.general-settings {
+							.white-bg {
 								background:$white;
-								padding:20px 30px;
 								border:solid 1px $lightgray;
-								form {
-									.thumb-container {
-										position:relative;
-										width:120px;
-										height:120px;
-										overflow:hidden;
-										@include border-radius(60px);
-										background-position: center center;
-										background-size: cover;
-										background-repeat: no-repeat;
-
-										margin:0px auto 10px auto;
+								padding:20px 30px 50px 30px;
+								margin-left:15px;
+								margin-right:15px;
+								.avatar {
+									margin-top:20px;
+									text-align:center;
+									border-right:solid 1px $lightgray;
+									@media (max-width:$break-md) {
+										border-right:0px;
 									}
-									
+									.upload-form {
+										form {
+											.thumb-container {
+												position:relative;
+												width:120px;
+												height:120px;
+												overflow:hidden;
+												@include border-radius(60px);
+												background-position: center center;
+												background-size: cover;
+												background-repeat: no-repeat;
+
+												margin:0px auto 10px auto;
+											}
+											
+										}
+									}
+								}
+								#profile {
+									@media (max-width:$break-md) {
+										text-align:center;
+										border-top:solid 1px $lightgray;
+										margin-top:30px;
+									}
 								}
 							}
 						}
-						.del-acc {
+						.password-settings {
 							margin-top:40px;
-							h2 {
-								border-top:solid 1px $lightgray;
-								padding-top:30px;
+							.change-password {
+								@media (max-width:$break-md) {
+									margin-bottom:30px;
+								}
 							}
-							.delete-button {
-								display:block;
-								margin-top:20px;
-								color:$red;
-								font-size:12px;
-								@include montserrat(normal);
-								text-transform:uppercase;
-								cursor:pointer;
-							}
-						}
-						.change-password {
-							@media (max-width:$break-md) {
-								margin-bottom:30px;
-							}
-						}
-						.panel, .panel-heading {
-							background-color:transparent;
-							border:0px;
-
-							-moz-box-shadow:    none;
- 							-webkit-box-shadow: none;
-  							box-shadow:         none;
 						}
 						.advanced-settings {
+							.del-acc {
+								margin-top:40px;
+								h2 {
+									border-top:solid 1px $lightgray;
+									padding-top:30px;
+								}
+								.delete-button {
+									display:block;
+									margin-top:20px;
+									color:$red;
+									font-size:12px;
+									@include montserrat(normal);
+									text-transform:uppercase;
+									cursor:pointer;
+								}
+							}
+							.panel, .panel-heading {
+								background-color:transparent;
+								border:0px;
+
+								-moz-box-shadow:    none;
+	 							-webkit-box-shadow: none;
+	  							box-shadow:         none;
+							}
 							.panel {
 								border-top:solid 1px $darker_cream;
 								margin-top:50px;
