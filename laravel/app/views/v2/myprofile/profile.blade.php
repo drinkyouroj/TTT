@@ -54,7 +54,8 @@
 	{{--This is for the follow action--}}
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/post/post_actions.js?v={{$version}}"></script>
 	
-	
+
+	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/validation/jquery.validate.min.js"></script>	
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/moment/moment.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/vendor/moment-timezone/moment-timezone-with-data.min.js"></script>
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/photo/photo.js?v={{$version}}"></script>
@@ -84,6 +85,20 @@
 						<a>	
 							{{$profile_user->username}}
 						</a>
+
+						@if($profile_user->name)
+							<br/>
+							<span class="profile-name">
+								{{$profile_user->name}}
+							</span>
+						@endif
+						
+						@if($profile_user->website)
+							<br/>
+							<span class="profile-website">
+								<a rel="nofollow" href="{{$profile_user->website}}">{{$profile_user->website}}</a>
+							</span>
+						@endif
 					</h2>
 				</div>
 				<div class="col-md-6 col-xs-6 header-right">
