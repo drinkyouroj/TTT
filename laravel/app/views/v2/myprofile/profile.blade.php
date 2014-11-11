@@ -99,7 +99,10 @@
 							
 							@if($profile_user->website)
 								<span class="profile-website info-generic">
-									<a rel="nofollow" href="{{$profile_user->website}}" target="_blank">{{$profile_user->website}}</a>
+									
+									<a rel="nofollow" href="{{$profile_user->website}}" target="_blank">
+										{{preg_replace('#^https?://#', '', $profile_user->website)}}
+									</a>
 								</span>
 							@endif
 						<div class="clearfix"></div>
