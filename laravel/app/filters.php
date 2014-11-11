@@ -69,10 +69,14 @@ App::after(function($request, $response)
 	setcookie('dirtytalk', $current_session, $expires , "/" );//Use native function when you want to actually pass things to another app.
 
 	if(Auth::check()) {
-		if($id = Auth::user()->id) {
-			$redis = Illuminate\Support\Facades\Redis::connection();
-			$redis->set($current_session, $id);
-		}
+		$user = Auth::user();
+		unset($user->password);
+		unset($user->email);
+		unset($user->remember_token);
+		unset($user->confirmation_code);
+		//Naming issues with PHP native
+		$redis = Illuminate\Support\Facades\Redis::connection();
+		$redis->set($current_session, $user);
 	}
 });
 
