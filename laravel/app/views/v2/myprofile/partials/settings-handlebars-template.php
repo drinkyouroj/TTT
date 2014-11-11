@@ -30,7 +30,7 @@
 					<h2>Profile Information</h2>
 					<form role="form" class="form-horizontal" id="userProfile" method="post" action="{{this.site_url}}rest/profile/update">
 						<input type="text" name="name" placeholder="Name" value="{{name}}">
-						<input type="text" name="website" placeholder="Website (including http://)" value="{{website}}">
+						<input type="text" class="website" name="website" placeholder="Website (including http://)" value="{{website}}">
 						<br/>
 						<button class="btn btn-default btn-flat-dark-gray">Update Profile</button>
 					</form>

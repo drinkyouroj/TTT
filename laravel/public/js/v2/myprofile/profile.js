@@ -205,6 +205,18 @@ $(function() {
 		profile.updateProfile();
 	});
 
+	$('body').on('focus', 'form#userProfile',function() {
+		var txt = $('form#userProfile .website').val();
+		var http = txt.indexOf('http://');
+
+		if (http > -1) {
+		   $('form#userProfile .website').val(txt);
+		} else if(txt.length > 0) {//must account for not having anything in there.
+		   $('form#userProfile .website').val('http://' + txt);
+		}
+	});
+	
+
 	//update email
 	$('body').on('submit', '#email-update-form', function(event) {
 		event.preventDefault();
@@ -900,7 +912,8 @@ function ProfileActions() {
 
 	this.updateProfile = function() {
 		//Inception... function within a function within a function
-		function profileValidate() {
+		function profileValidate() {		
+
 			$("form#userProfile").validate({
 				rules: {
 					name: {
