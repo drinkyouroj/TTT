@@ -19,6 +19,10 @@
 		<link href="{{Config::get('app.staticurl')}}/css/compiled/v2/admin/admin-moderator.css?v={{$version}}" rel="stylesheet" media="screen">
     @endif
 
+    @if($have_user)
+    	<link href="{{Config::get('app.staticurl')}}/css/compiled/v2/messaging.css?v={{$version}}" rel="stylesheet" media="screen">
+    @endif
+
     <!--Favicon-->
     <link href="{{Config::get('app.staticurl')}}/images/favicon.ico" rel="icon" type="image/x-icon" />
 	<link href="{{Config::get('app.staticurl')}}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -89,6 +93,7 @@
 	<script type="text/javascript" src="{{Config::get('app.staticurl')}}/js/v2/header.js?v={{$version}}"></script>
 	
 	@if( $have_user )
+		<div id="message-app"></div>
 		<script type="text/javascript">
 			window.logged_in = true;
 		</script>
